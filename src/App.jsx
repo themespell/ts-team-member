@@ -47,7 +47,6 @@ function App() {
       setTheme={setTheme}
       />
       <h1 className="text-center text-3xl font-bold mb-8">Team Design 01</h1>
-      
       <div className='flex justify-center'>
       <div 
       id="editorPanel"
