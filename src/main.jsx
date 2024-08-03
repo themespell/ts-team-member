@@ -1,13 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
+import Editor from './editor/Editor.jsx';
 import './index.css'
-import { ChakraProvider } from '@chakra-ui/react'
+import Frontend from './frontend/Frontend.jsx';
+
+const RootComponent = () => {
+  const currentPath = window.location.pathname;
+
+  return (
+    <React.StrictMode>
+      {currentPath === '/editor' ? <Editor /> : <Frontend />}
+    </React.StrictMode>
+  );
+};
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <ChakraProvider>
-        <App />
-    </ChakraProvider>
-  </React.StrictMode>,
-)
+  <RootComponent />
+);

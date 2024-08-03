@@ -1,16 +1,5 @@
-import { Button } from '@chakra-ui/react';
-import {
-  Box,
-  Heading,  
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from '@chakra-ui/react';
-import Sidebar from './components/Sidebar';
+import { Modal } from 'antd';
+
 import Content from './components/Content';
 
 import useStore from '../store';
@@ -20,23 +9,16 @@ function AdminModal() {
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={closeModal} size={'5xl'}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Edit Content</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-                <div className='flex'>
-                    <Sidebar/>
-                    <Content/>
-                </div>
-          </ModalBody>
-
-          <ModalFooter>
-            
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+    <Modal 
+    title="Edit Content" 
+    open={isOpen} 
+    onOk={closeModal} 
+    onCancel={closeModal}
+    width={1000}
+    >
+        <Content />
+    </Modal>
+      
     </>
   );
 }
