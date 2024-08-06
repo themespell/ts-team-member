@@ -16,7 +16,7 @@ const CardLayout = ({ selectedAnimation, type, onModalOpen, onDrawerOpen, onPopo
         <div className="relative">
           <img
             className="w-full h-auto rounded-lg"
-            src="https://www.fionabruce.co.uk/wp-content/uploads/2024/01/phil-porter.png.webp"
+            src="phil-porter.png"
             alt="Phil Porter"
           />
         </div>
