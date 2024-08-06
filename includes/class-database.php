@@ -1,6 +1,6 @@
 <?php
 
-namespace MeetingWP;
+namespace TSTeam;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -10,20 +10,20 @@ class Database {
 
 	public static function init() {
 		$self            = new self();
-		$self->rest_base = 'meetingwp_meeting';
-		add_action( 'init', array( $self, 'meetingwp_meeting_post_type' ) );
-		add_action( 'rest_api_init', array( $self, 'register_meetingwp_meeting_meta' ) );
-		add_action( 'rest_api_init', array( $self, 'meetingwp_meeting_rest_routes' ) );
+		$self->rest_base = 'tsteam-showcase';
+		add_action( 'init', array( $self, 'tsteam_post_type' ) );
+		add_action( 'rest_api_init', array( $self, 'register_tsteam_meta' ) );
+		add_action( 'rest_api_init', array( $self, 'tsteam_rest_routes' ) );
 	}
 
-	public function meetingwp_meeting_post_type() {
+	public function tsteam_post_type() {
 		$args = array(
-			'label'               => __( 'Meeting', 'meetingwp' ),
-			'description'         => __( 'Post Type For MeetingWP Meetings', 'meetingwp' ),
-			'supports'            => array( 'title', 'editor', 'custom-fields', 'author' ),
+			'label'               => __( 'TS Team', 'ts-team' ),
+			'description'         => __( 'Post Type For TS Team', 'ts-team' ),
+			'supports'            => array( 'title', 'author' ),
 			'hierarchical'        => false,
 			'public'              => true,
-			'show_ui'             => false,
+			'show_ui'             => true,
 			'can_export'          => true,
 			'has_archive'         => false,
 			'exclude_from_search' => true,
@@ -35,10 +35,9 @@ class Database {
 		register_post_type( $this->rest_base, $args );
 	}
 
-	public function register_meetingwp_meeting_meta() {
+	public function register_tsteam_meta() {
 		$meeting_meta = array(
-			'meetingwp_meeting_type'     => 'string',
-			'meetingwp_meeting_response' => 'string',
+			'tsteam_information'     => 'string',
 		);
 
 		foreach ( $meeting_meta as $meta_key => $meta_value_type ) {
@@ -46,7 +45,7 @@ class Database {
 				'post',
 				$meta_key,
 				array(
-					'object_subtype' => 'meetingwp_meeting',
+					'object_subtype' => 'tsteam-showcase',
 					'type'           => $meta_value_type,
 					'single'         => true,
 					'show_in_rest'   => true,
@@ -55,19 +54,19 @@ class Database {
 		}
 	}
 
-	public function meetingwp_meeting_rest_routes() {
+	public function tsteam_rest_routes() {
 		register_rest_route(
-			'meetingwp/v1',
+			'tsteam-showcase/v1',
 			'/' . $this->rest_base,
 			array(
 				'methods'             => \WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_meetings' ),
+				'callback'            => array( $this, 'get_team_data' ),
 				'permission_callback' => '__return_true',
 			)
 		);
 	}
 
-	public function get_meetings() {
+	public function get_team_data() {
 		$args = array(
 			'post_type' => $this->rest_base,
 		);
@@ -78,14 +77,8 @@ class Database {
 		if ( ! empty( $meetings ) ) {
 			foreach ( $meetings as $meeting ) {
 				$meeting_meta = array(
-					'meetingwp_meeting_type'     => get_post_meta( $meeting->ID, 'meetingwp_meeting_type', true ),
 					'meetingwp_meeting_title'    => get_the_title( $meeting->ID ),
-					'meetingwp_meeting_id'       => get_post_meta( $meeting->ID, 'meetingwp_meeting_id', true ),
-					'meetingwp_meeting_link'     => get_post_meta( $meeting->ID, 'meetingwp_meeting_link', true ),
-					'meetingwp_meeting_date'     => get_post_meta( $meeting->ID, 'meetingwp_meeting_date', true ),
-					'meetingwp_meeting_duration' => get_post_meta( $meeting->ID, 'meetingwp_meeting_duration', true ),
-					'meetingwp_meeting_timezone' => get_post_meta( $meeting->ID, 'meetingwp_meeting_timezone', true ),
-					'meetingwp_meeting_status'   => get_post_meta( $meeting->ID, 'meetingwp_meeting_status', true ),
+					'tsteam_information'     => get_post_meta( $meeting->ID, 'tsteam_information', true ),
 				);
 
 				$enhanced_meeting    = $meeting_meta;

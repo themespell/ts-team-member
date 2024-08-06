@@ -64,10 +64,9 @@ final class TSTeam {
 
 	public function dispatch_hooks() {
 		TSTeam\Autoload::init();
+		TSTeam\Database::init();
+		TSTeam\AJAX::init();
 		TSTeam\Enqueue::init();
-		// MeetingWP\Database::init();
-		// MeetingWP\Filters::init();
-		// MeetingWP\Channel::init();
 	}
 
 	public function load_textdomain() {
