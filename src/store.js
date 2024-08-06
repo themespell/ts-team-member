@@ -8,6 +8,8 @@ const useStore = create((set) => ({
     setSelectedAnimation: (animation) => set({ selectedAnimation: animation }),
     backgroundColor: '#ffffff',
     setBackgroundColor: (color) => set({ backgroundColor: color }),
+    postId: null,
+    setPostId: (id) => set({ postId: id }),
 }))
 
 export default useStore;

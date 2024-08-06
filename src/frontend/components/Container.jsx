@@ -21,11 +21,11 @@ function Container() {
   return (
     <>
       <div 
-      ref={editorContainerRef}
-      className="">
+      className="editor-container">
         <div
           ref={editorPanelRef}
-          className="tsteam-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-3/6"
+          id="editorPanel"
+          className="tsteam-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-3/6 editor-hover"
         >
           <CardLayout />
           <CardLayout />
