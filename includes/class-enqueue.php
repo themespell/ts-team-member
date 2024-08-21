@@ -1,6 +1,7 @@
 <?php
 
 namespace TSTeam;
+use TSTeam\Common;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -16,11 +17,17 @@ class Enqueue {
 	public function tsteam_admin_scripts() {
 		$current_screen  = get_current_screen();
 		$cpt_screen = 'tsteam-showcase';
+		$isPro = Common::isProActivated();
+		$dependency = array('jquery');
+
+		if ($isPro){
+			$dependency[] = 'tsteampro-admin-script';
+		}
 
 		if ( $cpt_screen === $current_screen->post_type ) {
 			wp_enqueue_media();
 			wp_enqueue_style('tsteam-admin-main', TSTEAM_ROOT_DIR_URL . 'includes/assets/admin.css');
-			wp_enqueue_script('tsteam-admin-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/admin.js', array('jquery'), '2.0', true);
+			wp_enqueue_script('tsteam-admin-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/admin.js', $dependency, '2.0', true);
 			wp_localize_script(
 				'tsteam-admin-script',
 				'tsteam_settings',
