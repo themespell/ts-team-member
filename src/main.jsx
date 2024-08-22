@@ -3,14 +3,15 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import CPT from './common/CPT.jsx';
 import Editor from './editor/Editor.jsx';
-import AdminModal from './admin/Admin.jsx';
+import AdminPanel from './admin/Admin.jsx';
 
 // Load Blank Div using jQuery
 jQuery(document).ready(function($) {
-  var button = $('.page-title-action');
+  var button = $('.wrap');
 
   var newDiv = $('<div></div>', {
       id: 'react-root', // Assign an id to the new div
+      // class: 'page-title-action-div'
       class: 'page-title-action-div'
   });
 
@@ -20,7 +21,7 @@ jQuery(document).ready(function($) {
   // Create a new React root for the new div
   const element = document.getElementById('react-root');
   if (element) {
-      ReactDOM.createRoot(element).render(<CPT />);
+      ReactDOM.createRoot(element).render(<AdminPanel />);
   }
 });
 
