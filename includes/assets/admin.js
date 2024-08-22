@@ -7167,7 +7167,7 @@ reactIs_production_min.typeOf = v$2;
   reactIs.exports = reactIs_production_min;
 }
 var reactIsExports = reactIs.exports;
-function toArray$4(children) {
+function toArray$5(children) {
   var option = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
   var ret = [];
   React.Children.forEach(children, function(child) {
@@ -7175,9 +7175,9 @@ function toArray$4(children) {
       return;
     }
     if (Array.isArray(child)) {
-      ret = ret.concat(toArray$4(child));
+      ret = ret.concat(toArray$5(child));
     } else if (reactIsExports.isFragment(child) && child.props) {
-      ret = ret.concat(toArray$4(child.props.children, option));
+      ret = ret.concat(toArray$5(child.props.children, option));
     } else {
       ret.push(child);
     }
@@ -7478,7 +7478,7 @@ var requestAnimationFrame$1 = function() {
   };
 }();
 var trailingTimeout = 2;
-function throttle(callback, delay) {
+function throttle$1(callback, delay) {
   var leadingCall = false, trailingCall = false, lastCallTime = 0;
   function resolvePending() {
     if (leadingCall) {
@@ -7520,7 +7520,7 @@ var ResizeObserverController = (
       this.mutationsObserver_ = null;
       this.observers_ = [];
       this.onTransitionEnd_ = this.onTransitionEnd_.bind(this);
-      this.refresh = throttle(this.refresh.bind(this), REFRESH_DELAY);
+      this.refresh = throttle$1(this.refresh.bind(this), REFRESH_DELAY);
     }
     ResizeObserverController2.prototype.addObserver = function(observer) {
       if (!~this.observers_.indexOf(observer)) {
@@ -8057,7 +8057,7 @@ var RefSingleObserver = /* @__PURE__ */ reactExports.forwardRef(SingleObserver);
 var INTERNAL_PREFIX_KEY = "rc-observer-key";
 function ResizeObserver$1(props, ref) {
   var children = props.children;
-  var childNodes = typeof children === "function" ? [children] : toArray$4(children);
+  var childNodes = typeof children === "function" ? [children] : toArray$5(children);
   return childNodes.map(function(child, index2) {
     var key = (child === null || child === void 0 ? void 0 : child.key) || "".concat(INTERNAL_PREFIX_KEY, "-").concat(index2);
     return /* @__PURE__ */ reactExports.createElement(RefSingleObserver, _extends({}, props, {
@@ -8472,7 +8472,6 @@ var StyleContext = /* @__PURE__ */ reactExports.createContext({
   cache: createCache(),
   defaultCache: true
 });
-const StyleContext$1 = StyleContext;
 function sameDerivativeOption(left, right) {
   if (left.length !== right.length) {
     return false;
@@ -8765,7 +8764,6 @@ var useCompatibleInsertionEffect = useInsertionEffect$1 ? function(renderEffect,
     return effect();
   }, deps);
 } : useInsertionEffectPolyfill;
-const useCompatibleInsertionEffect$1 = useCompatibleInsertionEffect;
 var fullClone$2 = _objectSpread2({}, React$1);
 var useInsertionEffect = fullClone$2.useInsertionEffect;
 var useCleanupRegister = function useCleanupRegister2(deps) {
@@ -8796,12 +8794,11 @@ var useRun = function useRun2() {
   };
 };
 var useEffectCleanupRegister = typeof useInsertionEffect !== "undefined" ? useCleanupRegister : useRun;
-const useEffectCleanupRegister$1 = useEffectCleanupRegister;
 function useGlobalCache(prefix, keyPath, cacheFn, onCacheRemove, onCacheEffect) {
-  var _React$useContext = reactExports.useContext(StyleContext$1), globalCache = _React$useContext.cache;
+  var _React$useContext = reactExports.useContext(StyleContext), globalCache = _React$useContext.cache;
   var fullPath = [prefix].concat(_toConsumableArray(keyPath));
   var fullPathStr = pathKey(fullPath);
-  var register2 = useEffectCleanupRegister$1([fullPathStr]);
+  var register2 = useEffectCleanupRegister([fullPathStr]);
   var buildCache = function buildCache2(updater) {
     globalCache.opUpdate(fullPathStr, function(prevCache) {
       var _ref = prevCache || [void 0, void 0], _ref2 = _slicedToArray(_ref, 2), _ref2$ = _ref2[0], times = _ref2$ === void 0 ? 0 : _ref2$, cache = _ref2[1];
@@ -8821,7 +8818,7 @@ function useGlobalCache(prefix, keyPath, cacheFn, onCacheRemove, onCacheEffect) 
   );
   var cacheEntity = globalCache.opGet(fullPathStr);
   var cacheContent = cacheEntity[1];
-  useCompatibleInsertionEffect$1(function() {
+  useCompatibleInsertionEffect(function() {
     onCacheEffect === null || onCacheEffect === void 0 || onCacheEffect(cacheContent);
   }, function(polyfill) {
     buildCache(function(_ref3) {
@@ -8881,8 +8878,8 @@ function cleanTokenStyle(tokenKey, instanceId) {
     });
   }
 }
-var getComputedToken$1 = function getComputedToken2(originToken, overrideToken, theme2, format2) {
-  var derivativeToken = theme2.getDerivativeToken(originToken);
+var getComputedToken$1 = function getComputedToken2(originToken, overrideToken, theme, format2) {
+  var derivativeToken = theme.getDerivativeToken(originToken);
   var mergedDerivativeToken = _objectSpread2(_objectSpread2({}, derivativeToken), overrideToken);
   if (format2) {
     mergedDerivativeToken = format2(mergedDerivativeToken);
@@ -8890,9 +8887,9 @@ var getComputedToken$1 = function getComputedToken2(originToken, overrideToken, 
   return mergedDerivativeToken;
 };
 var TOKEN_PREFIX = "token";
-function useCacheToken(theme2, tokens) {
+function useCacheToken(theme, tokens) {
   var option = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
-  var _useContext = reactExports.useContext(StyleContext$1), instanceId = _useContext.cache.instanceId, container = _useContext.container;
+  var _useContext = reactExports.useContext(StyleContext), instanceId = _useContext.cache.instanceId, container = _useContext.container;
   var _option$salt = option.salt, salt = _option$salt === void 0 ? "" : _option$salt, _option$override = option.override, override = _option$override === void 0 ? EMPTY_OVERRIDE : _option$override, formatToken2 = option.formatToken, compute = option.getComputedToken, cssVar = option.cssVar;
   var mergedToken = memoResult(function() {
     return Object.assign.apply(Object, [{}].concat(_toConsumableArray(tokens)));
@@ -8900,9 +8897,9 @@ function useCacheToken(theme2, tokens) {
   var tokenStr = flattenToken(mergedToken);
   var overrideTokenStr = flattenToken(override);
   var cssVarStr = cssVar ? flattenToken(cssVar) : "";
-  var cachedToken = useGlobalCache(TOKEN_PREFIX, [salt, theme2.id, tokenStr, overrideTokenStr, cssVarStr], function() {
+  var cachedToken = useGlobalCache(TOKEN_PREFIX, [salt, theme.id, tokenStr, overrideTokenStr, cssVarStr], function() {
     var _cssVar$key;
-    var mergedDerivativeToken = compute ? compute(mergedToken, override, theme2) : getComputedToken$1(mergedToken, override, theme2, formatToken2);
+    var mergedDerivativeToken = compute ? compute(mergedToken, override, theme) : getComputedToken$1(mergedToken, override, theme, formatToken2);
     var actualToken = _objectSpread2({}, mergedDerivativeToken);
     var cssVarsStr = "";
     if (!!cssVar) {
@@ -9504,7 +9501,7 @@ function Empty$2() {
 var STYLE_PREFIX = "style";
 function useStyleRegister(info, styleFn) {
   var token2 = info.token, path2 = info.path, hashId = info.hashId, layer = info.layer, nonce = info.nonce, clientOnly = info.clientOnly, _info$order = info.order, order = _info$order === void 0 ? 0 : _info$order;
-  var _React$useContext = reactExports.useContext(StyleContext$1), autoClear = _React$useContext.autoClear;
+  var _React$useContext = reactExports.useContext(StyleContext), autoClear = _React$useContext.autoClear;
   _React$useContext.mock;
   var defaultCache = _React$useContext.defaultCache, hashPriority = _React$useContext.hashPriority, container = _React$useContext.container, ssrInline = _React$useContext.ssrInline, transformers = _React$useContext.transformers, linters = _React$useContext.linters, cache = _React$useContext.cache, enableLayer = _React$useContext.layer;
   var tokenKey = token2._tokenKey;
@@ -9634,7 +9631,7 @@ var extract$1 = function extract22(cache, effectStyles, options) {
 var CSS_VAR_PREFIX = "cssVar";
 var useCSSVarRegister = function useCSSVarRegister2(config, fn) {
   var key = config.key, prefix = config.prefix, unitless2 = config.unitless, ignore2 = config.ignore, token2 = config.token, _config$scope = config.scope, scope = _config$scope === void 0 ? "" : _config$scope;
-  var _useContext = reactExports.useContext(StyleContext$1), instanceId = _useContext.cache.instanceId, container = _useContext.container;
+  var _useContext = reactExports.useContext(StyleContext), instanceId = _useContext.cache.instanceId, container = _useContext.container;
   var tokenKey = token2._tokenKey;
   var stylePath = [].concat(_toConsumableArray(config.path), [key, scope, tokenKey]);
   var cache = useGlobalCache(CSS_VAR_PREFIX, stylePath, function() {
@@ -9843,17 +9840,17 @@ function merge$1() {
   });
   return clone;
 }
-function noop$1() {
+function noop$3() {
 }
 const WarningContext = /* @__PURE__ */ reactExports.createContext({});
 const devUseWarning = () => {
   const noopWarning = () => {
   };
-  noopWarning.deprecated = noop$1;
+  noopWarning.deprecated = noop$3;
   return noopWarning;
 };
 const ValidateMessagesContext = /* @__PURE__ */ reactExports.createContext(void 0);
-var locale$3 = {
+var locale$4 = {
   // Options
   items_per_page: "/ page",
   jump_to: "Go to",
@@ -9874,7 +9871,7 @@ var commonLocale = {
   cellMeridiemFormat: "A",
   monthBeforeYear: true
 };
-var locale$2 = _objectSpread2(_objectSpread2({}, commonLocale), {}, {
+var locale$3 = _objectSpread2(_objectSpread2({}, commonLocale), {}, {
   locale: "en_US",
   today: "Today",
   now: "Now",
@@ -9900,11 +9897,11 @@ var locale$2 = _objectSpread2(_objectSpread2({}, commonLocale), {}, {
   previousCentury: "Last century",
   nextCentury: "Next century"
 });
-const locale$1 = {
+const locale$2 = {
   placeholder: "Select time",
   rangePlaceholder: ["Start time", "End time"]
 };
-const locale = {
+const locale$1 = {
   lang: Object.assign({
     placeholder: "Select date",
     yearPlaceholder: "Select year",
@@ -9916,16 +9913,16 @@ const locale = {
     rangeQuarterPlaceholder: ["Start quarter", "End quarter"],
     rangeMonthPlaceholder: ["Start month", "End month"],
     rangeWeekPlaceholder: ["Start week", "End week"]
-  }, locale$2),
-  timePickerLocale: Object.assign({}, locale$1)
+  }, locale$3),
+  timePickerLocale: Object.assign({}, locale$2)
 };
 const typeTemplate$1 = "${label} is not a valid ${type}";
 const localeValues = {
   locale: "en",
-  Pagination: locale$3,
-  DatePicker: locale,
-  TimePicker: locale$1,
-  Calendar: locale,
+  Pagination: locale$4,
+  DatePicker: locale$1,
+  TimePicker: locale$2,
+  Calendar: locale$1,
   global: {
     placeholder: "Please select"
   },
@@ -11454,7 +11451,7 @@ const genFontMapToken = (fontSize) => {
     lineHeightHeading5: lineHeights[2]
   };
 };
-function genSizeMapToken$1(token2) {
+function genSizeMapToken(token2) {
   const {
     sizeUnit,
     sizeStep
@@ -11480,12 +11477,12 @@ function genSizeMapToken$1(token2) {
     // 4
   };
 }
-const getAlphaColor$3 = (baseColor, alpha) => new TinyColor(baseColor).setAlpha(alpha).toRgbString();
-const getSolidColor$1 = (baseColor, brightness) => {
+const getAlphaColor$2 = (baseColor, alpha) => new TinyColor(baseColor).setAlpha(alpha).toRgbString();
+const getSolidColor = (baseColor, brightness) => {
   const instance = new TinyColor(baseColor);
   return instance.darken(brightness).toHexString();
 };
-const generateColorPalettes$1 = (baseColor) => {
+const generateColorPalettes = (baseColor) => {
   const colors = generate$1(baseColor);
   return {
     1: colors[0],
@@ -11503,30 +11500,30 @@ const generateColorPalettes$1 = (baseColor) => {
     // 10: colors[9],
   };
 };
-const generateNeutralColorPalettes$1 = (bgBaseColor, textBaseColor) => {
+const generateNeutralColorPalettes = (bgBaseColor, textBaseColor) => {
   const colorBgBase = bgBaseColor || "#fff";
   const colorTextBase = textBaseColor || "#000";
   return {
     colorBgBase,
     colorTextBase,
-    colorText: getAlphaColor$3(colorTextBase, 0.88),
-    colorTextSecondary: getAlphaColor$3(colorTextBase, 0.65),
-    colorTextTertiary: getAlphaColor$3(colorTextBase, 0.45),
-    colorTextQuaternary: getAlphaColor$3(colorTextBase, 0.25),
-    colorFill: getAlphaColor$3(colorTextBase, 0.15),
-    colorFillSecondary: getAlphaColor$3(colorTextBase, 0.06),
-    colorFillTertiary: getAlphaColor$3(colorTextBase, 0.04),
-    colorFillQuaternary: getAlphaColor$3(colorTextBase, 0.02),
-    colorBgLayout: getSolidColor$1(colorBgBase, 4),
-    colorBgContainer: getSolidColor$1(colorBgBase, 0),
-    colorBgElevated: getSolidColor$1(colorBgBase, 0),
-    colorBgSpotlight: getAlphaColor$3(colorTextBase, 0.85),
+    colorText: getAlphaColor$2(colorTextBase, 0.88),
+    colorTextSecondary: getAlphaColor$2(colorTextBase, 0.65),
+    colorTextTertiary: getAlphaColor$2(colorTextBase, 0.45),
+    colorTextQuaternary: getAlphaColor$2(colorTextBase, 0.25),
+    colorFill: getAlphaColor$2(colorTextBase, 0.15),
+    colorFillSecondary: getAlphaColor$2(colorTextBase, 0.06),
+    colorFillTertiary: getAlphaColor$2(colorTextBase, 0.04),
+    colorFillQuaternary: getAlphaColor$2(colorTextBase, 0.02),
+    colorBgLayout: getSolidColor(colorBgBase, 4),
+    colorBgContainer: getSolidColor(colorBgBase, 0),
+    colorBgElevated: getSolidColor(colorBgBase, 0),
+    colorBgSpotlight: getAlphaColor$2(colorTextBase, 0.85),
     colorBgBlur: "transparent",
-    colorBorder: getSolidColor$1(colorBgBase, 15),
-    colorBorderSecondary: getSolidColor$1(colorBgBase, 6)
+    colorBorder: getSolidColor(colorBgBase, 15),
+    colorBorderSecondary: getSolidColor(colorBgBase, 6)
   };
 };
-function derivative$2(token2) {
+function derivative(token2) {
   presetPrimaryColors.pink = presetPrimaryColors.magenta;
   presetPalettes.pink = presetPalettes.magenta;
   const colorPalettes = Object.keys(defaultPresetColors).map((colorKey) => {
@@ -11541,11 +11538,11 @@ function derivative$2(token2) {
     return prev2;
   }, {});
   return Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, token2), colorPalettes), genColorMapToken(token2, {
-    generateColorPalettes: generateColorPalettes$1,
-    generateNeutralColorPalettes: generateNeutralColorPalettes$1
-  })), genFontMapToken(token2.fontSize)), genSizeMapToken$1(token2)), genControlHeight(token2)), genCommonMapToken(token2));
+    generateColorPalettes,
+    generateNeutralColorPalettes
+  })), genFontMapToken(token2.fontSize)), genSizeMapToken(token2)), genControlHeight(token2)), genCommonMapToken(token2));
 }
-const defaultTheme = createTheme(derivative$2);
+const defaultTheme = createTheme(derivative);
 const defaultConfig = {
   token: seedToken,
   override: {
@@ -11569,7 +11566,7 @@ const ConfigContext = /* @__PURE__ */ reactExports.createContext({
   iconPrefixCls: defaultIconPrefixCls
 });
 const dynamicStyleMark = `-ant-${Date.now()}-${Math.random()}`;
-function getStyle(globalPrefixCls2, theme2) {
+function getStyle$1(globalPrefixCls2, theme) {
   const variables = {};
   const formatColor = (color, updater) => {
     let clone = color.clone();
@@ -11587,9 +11584,9 @@ function getStyle(globalPrefixCls2, theme2) {
     variables[`${type4}-color-deprecated-bg`] = colorPalettes[0];
     variables[`${type4}-color-deprecated-border`] = colorPalettes[2];
   };
-  if (theme2.primaryColor) {
-    fillColor(theme2.primaryColor, "primary");
-    const primaryColor = new TinyColor(theme2.primaryColor);
+  if (theme.primaryColor) {
+    fillColor(theme.primaryColor, "primary");
+    const primaryColor = new TinyColor(theme.primaryColor);
     const primaryColors = generate$1(primaryColor.toRgbString());
     primaryColors.forEach((color, index2) => {
       variables[`primary-${index2 + 1}`] = color;
@@ -11603,17 +11600,17 @@ function getStyle(globalPrefixCls2, theme2) {
     variables["primary-color-active-deprecated-f-30"] = formatColor(primaryActiveColor, (c2) => c2.setAlpha(c2.getAlpha() * 0.3));
     variables["primary-color-active-deprecated-d-02"] = formatColor(primaryActiveColor, (c2) => c2.darken(2));
   }
-  if (theme2.successColor) {
-    fillColor(theme2.successColor, "success");
+  if (theme.successColor) {
+    fillColor(theme.successColor, "success");
   }
-  if (theme2.warningColor) {
-    fillColor(theme2.warningColor, "warning");
+  if (theme.warningColor) {
+    fillColor(theme.warningColor, "warning");
   }
-  if (theme2.errorColor) {
-    fillColor(theme2.errorColor, "error");
+  if (theme.errorColor) {
+    fillColor(theme.errorColor, "error");
   }
-  if (theme2.infoColor) {
-    fillColor(theme2.infoColor, "info");
+  if (theme.infoColor) {
+    fillColor(theme.infoColor, "info");
   }
   const cssList = Object.keys(variables).map((key) => `--${globalPrefixCls2}-${key}: ${variables[key]};`);
   return `
@@ -11622,8 +11619,8 @@ function getStyle(globalPrefixCls2, theme2) {
   }
   `.trim();
 }
-function registerTheme(globalPrefixCls2, theme2) {
-  const style2 = getStyle(globalPrefixCls2, theme2);
+function registerTheme(globalPrefixCls2, theme) {
+  const style2 = getStyle$1(globalPrefixCls2, theme);
   if (canUseDom()) {
     updateCSS(style2, `${dynamicStyleMark}-dynamic-theme`);
   }
@@ -11951,12 +11948,12 @@ function merge() {
   return ret;
 }
 var statistic = {};
-function noop() {
+function noop$2() {
 }
 var statisticToken = function statisticToken2(token2) {
   var tokenKeys2;
   var proxy = token2;
-  var flush = noop;
+  var flush = noop$2;
   if (enableStatistic && typeof Proxy !== "undefined") {
     tokenKeys2 = /* @__PURE__ */ new Set();
     proxy = new Proxy(token2, {
@@ -12168,7 +12165,7 @@ function genStyleUtils(config) {
     var concatComponent = cells.join("-");
     return function(prefixCls) {
       var rootCls = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : prefixCls;
-      var _useToken3 = useToken2(), theme2 = _useToken3.theme, realToken = _useToken3.realToken, hashId = _useToken3.hashId, token2 = _useToken3.token, cssVar = _useToken3.cssVar;
+      var _useToken3 = useToken2(), theme = _useToken3.theme, realToken = _useToken3.realToken, hashId = _useToken3.hashId, token2 = _useToken3.token, cssVar = _useToken3.cssVar;
       var _usePrefix = usePrefix(), rootPrefixCls = _usePrefix.rootPrefixCls, iconPrefixCls = _usePrefix.iconPrefixCls;
       var csp = useCSP();
       var type4 = cssVar ? "css" : "js";
@@ -12184,7 +12181,7 @@ function genStyleUtils(config) {
       }, [type4, component, cssVar === null || cssVar === void 0 ? void 0 : cssVar.prefix]);
       var _genMaxMin = genMaxMin(type4), max = _genMaxMin.max, min = _genMaxMin.min;
       var sharedConfig = {
-        theme: theme2,
+        theme,
         token: token2,
         hashId,
         nonce: function nonce() {
@@ -12269,7 +12266,7 @@ const version$1 = "5.19.4";
 function isStableColor(color) {
   return color >= 0 && color <= 255;
 }
-function getAlphaColor$2(frontColor, backgroundColor) {
+function getAlphaColor$1(frontColor, backgroundColor) {
   const {
     r: fR,
     g: fG,
@@ -12304,7 +12301,7 @@ function getAlphaColor$2(frontColor, backgroundColor) {
     a: 1
   }).toRgbString();
 }
-var __rest$I = function(s2, e2) {
+var __rest$P = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -12315,7 +12312,7 @@ var __rest$I = function(s2, e2) {
 function formatToken(derivativeToken) {
   const {
     override
-  } = derivativeToken, restToken = __rest$I(derivativeToken, ["override"]);
+  } = derivativeToken, restToken = __rest$P(derivativeToken, ["override"]);
   const overrideTokens = Object.assign({}, override);
   Object.keys(seedToken).forEach((token2) => {
     delete overrideTokens[token2];
@@ -12341,7 +12338,7 @@ function formatToken(derivativeToken) {
     colorBgContainerDisabled: mergedToken.colorFillTertiary,
     // ============== Split ============== //
     colorBorderBg: mergedToken.colorBgContainer,
-    colorSplit: getAlphaColor$2(mergedToken.colorBorderSecondary, mergedToken.colorBgContainer),
+    colorSplit: getAlphaColor$1(mergedToken.colorBorderSecondary, mergedToken.colorBgContainer),
     // ============== Text ============== //
     colorTextPlaceholder: mergedToken.colorTextQuaternary,
     colorTextDisabled: mergedToken.colorTextQuaternary,
@@ -12354,8 +12351,8 @@ function formatToken(derivativeToken) {
     colorBgTextActive: mergedToken.colorFill,
     colorIcon: mergedToken.colorTextTertiary,
     colorIconHover: mergedToken.colorText,
-    colorErrorOutline: getAlphaColor$2(mergedToken.colorErrorBg, mergedToken.colorBgContainer),
-    colorWarningOutline: getAlphaColor$2(mergedToken.colorWarningBg, mergedToken.colorBgContainer),
+    colorErrorOutline: getAlphaColor$1(mergedToken.colorErrorBg, mergedToken.colorBgContainer),
+    colorWarningOutline: getAlphaColor$1(mergedToken.colorWarningBg, mergedToken.colorBgContainer),
     // Font
     fontSizeIcon: mergedToken.fontSizeSM,
     // Line
@@ -12370,7 +12367,7 @@ function formatToken(derivativeToken) {
     controlItemBgActiveHover: mergedToken.colorPrimaryBgHover,
     controlItemBgActiveDisabled: mergedToken.colorFill,
     controlTmpOutline: mergedToken.colorFillQuaternary,
-    controlOutline: getAlphaColor$2(mergedToken.colorPrimaryBg, mergedToken.colorBgContainer),
+    controlOutline: getAlphaColor$1(mergedToken.colorPrimaryBg, mergedToken.colorBgContainer),
     lineType: mergedToken.lineType,
     borderRadius: mergedToken.borderRadius,
     borderRadiusXS: mergedToken.borderRadiusXS,
@@ -12469,7 +12466,7 @@ function formatToken(derivativeToken) {
   }), overrideTokens);
   return aliasToken;
 }
-var __rest$H = function(s2, e2) {
+var __rest$O = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -12526,11 +12523,11 @@ const preserve = {
   screenXXL: true,
   screenXXLMin: true
 };
-const getComputedToken = (originToken, overrideToken, theme2) => {
-  const derivativeToken = theme2.getDerivativeToken(originToken);
+const getComputedToken = (originToken, overrideToken, theme) => {
+  const derivativeToken = theme.getDerivativeToken(originToken);
   const {
     override
-  } = overrideToken, components = __rest$H(overrideToken, ["override"]);
+  } = overrideToken, components = __rest$O(overrideToken, ["override"]);
   let mergedDerivativeToken = Object.assign(Object.assign({}, derivativeToken), {
     override
   });
@@ -12540,7 +12537,7 @@ const getComputedToken = (originToken, overrideToken, theme2) => {
       let [key, value] = _ref;
       const {
         theme: componentTheme
-      } = value, componentTokens = __rest$H(value, ["theme"]);
+      } = value, componentTokens = __rest$O(value, ["theme"]);
       let mergedComponentToken = componentTokens;
       if (componentTheme) {
         mergedComponentToken = getComputedToken(Object.assign(Object.assign({}, mergedDerivativeToken), componentTokens), {
@@ -12552,16 +12549,16 @@ const getComputedToken = (originToken, overrideToken, theme2) => {
   }
   return mergedDerivativeToken;
 };
-function useToken$1() {
+function useToken() {
   const {
     token: rootDesignToken,
     hashed,
-    theme: theme2,
+    theme,
     override,
     cssVar
   } = React.useContext(DesignTokenContext);
   const salt = `${version$1}-${hashed || ""}`;
-  const mergedTheme = theme2 || defaultTheme;
+  const mergedTheme = theme || defaultTheme;
   const [token2, hashId, realToken] = useCacheToken(mergedTheme, [seedToken, rootDesignToken], {
     salt,
     override,
@@ -12579,6 +12576,21 @@ function useToken$1() {
   });
   return [mergedTheme, realToken, hashed ? hashId : "", token2, cssVar];
 }
+const operationUnit = (token2) => ({
+  // FIXME: This use link but is a operation unit. Seems should be a colorPrimary.
+  // And Typography use this to generate link style which should not do this.
+  color: token2.colorLink,
+  textDecoration: "none",
+  outline: "none",
+  cursor: "pointer",
+  transition: `color ${token2.motionDurationSlow}`,
+  "&:focus, &:hover": {
+    color: token2.colorLinkHover
+  },
+  "&:active": {
+    color: token2.colorLinkActive
+  }
+});
 const textEllipsis = {
   overflow: "hidden",
   whiteSpace: "nowrap",
@@ -12695,9 +12707,9 @@ const genFocusStyle = (token2) => ({
   "&:focus-visible": Object.assign({}, genFocusOutline(token2))
 });
 const useResetIconStyle = (iconPrefixCls, csp) => {
-  const [theme2, token2] = useToken$1();
+  const [theme, token2] = useToken();
   return useStyleRegister({
-    theme: theme2,
+    theme,
     token: token2,
     hashId: "",
     path: ["ant-design-icons", iconPrefixCls],
@@ -12730,9 +12742,9 @@ const {
     };
   },
   useToken: () => {
-    const [theme2, realToken, hashId, token2, cssVar] = useToken$1();
+    const [theme, realToken, hashId, token2, cssVar] = useToken();
     return {
-      theme: theme2,
+      theme,
       realToken,
       hashId,
       token: token2,
@@ -12773,10 +12785,10 @@ const {
 } = fullClone$1;
 const useEmptyId = () => "";
 const useThemeKey = typeof useId$2 === "undefined" ? useEmptyId : useId$2;
-function useTheme(theme2, parentTheme, config) {
+function useTheme(theme, parentTheme, config) {
   var _a;
   devUseWarning();
-  const themeConfig = theme2 || {};
+  const themeConfig = theme || {};
   const parentThemeConfig = themeConfig.inherit === false || !parentTheme ? Object.assign(Object.assign({}, defaultConfig), {
     hashed: (_a = parentTheme === null || parentTheme === void 0 ? void 0 : parentTheme.hashed) !== null && _a !== void 0 ? _a : defaultConfig.hashed,
     cssVar: parentTheme === null || parentTheme === void 0 ? void 0 : parentTheme.cssVar
@@ -12784,12 +12796,12 @@ function useTheme(theme2, parentTheme, config) {
   const themeKey = useThemeKey();
   return useMemo(() => {
     var _a2, _b2;
-    if (!theme2) {
+    if (!theme) {
       return parentTheme;
     }
     const mergedComponents = Object.assign({}, parentThemeConfig.components);
-    Object.keys(theme2.components || {}).forEach((componentName) => {
-      mergedComponents[componentName] = Object.assign(Object.assign({}, mergedComponents[componentName]), theme2.components[componentName]);
+    Object.keys(theme.components || {}).forEach((componentName) => {
+      mergedComponents[componentName] = Object.assign(Object.assign({}, mergedComponents[componentName]), theme.components[componentName]);
     });
     const cssVarKey = `css-var-${themeKey.replace(/:/g, "")}`;
     const mergedCssVar = ((_a2 = themeConfig.cssVar) !== null && _a2 !== void 0 ? _a2 : parentThemeConfig.cssVar) && Object.assign(Object.assign(Object.assign({
@@ -12807,10 +12819,10 @@ function useTheme(theme2, parentTheme, config) {
     return !isEqual(prevTheme, nextTheme, true);
   }));
 }
-var _excluded$E = ["children"];
+var _excluded$P = ["children"];
 var Context$1 = /* @__PURE__ */ reactExports.createContext({});
 function MotionProvider(_ref) {
-  var children = _ref.children, props = _objectWithoutProperties(_ref, _excluded$E);
+  var children = _ref.children, props = _objectWithoutProperties(_ref, _excluded$P);
   return /* @__PURE__ */ reactExports.createElement(Context$1.Provider, {
     value: props
   }, children);
@@ -12830,7 +12842,7 @@ var DomWrapper = /* @__PURE__ */ function(_React$Component) {
   }]);
   return DomWrapper2;
 }(reactExports.Component);
-function useSyncState$1(defaultValue) {
+function useSyncState$2(defaultValue) {
   var _React$useReducer = reactExports.useReducer(function(x2) {
     return x2 + 1;
   }, 0), _React$useReducer2 = _slicedToArray(_React$useReducer, 2), forceUpdate = _React$useReducer2[1];
@@ -13018,7 +13030,7 @@ const useStepQueue = function(status, prepareOnly, callback) {
 function useStatus(supportMotion, visible, getElement, _ref) {
   var _ref$motionEnter = _ref.motionEnter, motionEnter = _ref$motionEnter === void 0 ? true : _ref$motionEnter, _ref$motionAppear = _ref.motionAppear, motionAppear = _ref$motionAppear === void 0 ? true : _ref$motionAppear, _ref$motionLeave = _ref.motionLeave, motionLeave = _ref$motionLeave === void 0 ? true : _ref$motionLeave, motionDeadline = _ref.motionDeadline, motionLeaveImmediately = _ref.motionLeaveImmediately, onAppearPrepare = _ref.onAppearPrepare, onEnterPrepare = _ref.onEnterPrepare, onLeavePrepare = _ref.onLeavePrepare, onAppearStart = _ref.onAppearStart, onEnterStart = _ref.onEnterStart, onLeaveStart = _ref.onLeaveStart, onAppearActive = _ref.onAppearActive, onEnterActive = _ref.onEnterActive, onLeaveActive = _ref.onLeaveActive, onAppearEnd = _ref.onAppearEnd, onEnterEnd = _ref.onEnterEnd, onLeaveEnd = _ref.onLeaveEnd, onVisibleChanged = _ref.onVisibleChanged;
   var _useState = useSafeState(), _useState2 = _slicedToArray(_useState, 2), asyncVisible = _useState2[0], setAsyncVisible = _useState2[1];
-  var _useSyncState = useSyncState$1(STATUS_NONE), _useSyncState2 = _slicedToArray(_useSyncState, 2), getStatus2 = _useSyncState2[0], setStatus = _useSyncState2[1];
+  var _useSyncState = useSyncState$2(STATUS_NONE), _useSyncState2 = _slicedToArray(_useSyncState, 2), getStatus2 = _useSyncState2[0], setStatus = _useSyncState2[1];
   var _useState3 = useSafeState(null), _useState4 = _slicedToArray(_useState3, 2), style2 = _useState4[0], setStyle = _useState4[1];
   var currentStatus = getStatus2();
   var mountedRef = reactExports.useRef(false);
@@ -13324,7 +13336,7 @@ function diffKeys() {
   });
   return list;
 }
-var _excluded$D = ["component", "children", "onVisibleChanged", "onAllRemoved"], _excluded2$7 = ["status"];
+var _excluded$O = ["component", "children", "onVisibleChanged", "onAllRemoved"], _excluded2$8 = ["status"];
 var MOTION_PROP_NAMES = ["eventProps", "visible", "children", "motionName", "motionAppear", "motionEnter", "motionLeave", "motionLeaveImmediately", "motionDeadline", "removeOnLeave", "leavedClassName", "onAppearPrepare", "onAppearStart", "onAppearActive", "onAppearEnd", "onEnterStart", "onEnterActive", "onEnterEnd", "onLeaveStart", "onLeaveActive", "onLeaveEnd"];
 function genCSSMotionList(transitionSupport) {
   var CSSMotion$1 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : CSSMotion;
@@ -13364,7 +13376,7 @@ function genCSSMotionList(transitionSupport) {
       value: function render2() {
         var _this2 = this;
         var keyEntities = this.state.keyEntities;
-        var _this$props = this.props, component = _this$props.component, children = _this$props.children, _onVisibleChanged = _this$props.onVisibleChanged, onAllRemoved = _this$props.onAllRemoved, restProps = _objectWithoutProperties(_this$props, _excluded$D);
+        var _this$props = this.props, component = _this$props.component, children = _this$props.children, _onVisibleChanged = _this$props.onVisibleChanged, onAllRemoved = _this$props.onAllRemoved, restProps = _objectWithoutProperties(_this$props, _excluded$O);
         var Component = component || reactExports.Fragment;
         var motionProps = {};
         MOTION_PROP_NAMES.forEach(function(prop) {
@@ -13373,7 +13385,7 @@ function genCSSMotionList(transitionSupport) {
         });
         delete restProps.keys;
         return /* @__PURE__ */ reactExports.createElement(Component, restProps, keyEntities.map(function(_ref2, index2) {
-          var status = _ref2.status, eventProps = _objectWithoutProperties(_ref2, _excluded2$7);
+          var status = _ref2.status, eventProps = _objectWithoutProperties(_ref2, _excluded2$8);
           var visible = status === STATUS_ADD || status === STATUS_KEEP;
           return /* @__PURE__ */ reactExports.createElement(CSSMotion$1, _extends({}, motionProps, {
             key: eventProps.key,
@@ -13430,7 +13442,7 @@ function MotionWrapper(props) {
   const {
     children
   } = props;
-  const [, token2] = useToken$1();
+  const [, token2] = useToken();
   const {
     motion: motion2
   } = token2;
@@ -13444,7 +13456,7 @@ function MotionWrapper(props) {
   return children;
 }
 const PropWarning = () => null;
-var __rest$G = function(s2, e2) {
+var __rest$N = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -13463,14 +13475,14 @@ function getGlobalPrefixCls() {
 function getGlobalIconPrefixCls() {
   return globalIconPrefixCls || defaultIconPrefixCls;
 }
-function isLegacyTheme(theme2) {
-  return Object.keys(theme2).some((key) => key.endsWith("Color"));
+function isLegacyTheme(theme) {
+  return Object.keys(theme).some((key) => key.endsWith("Color"));
 }
 const setGlobalConfig = (props) => {
   const {
     prefixCls,
     iconPrefixCls,
-    theme: theme2,
+    theme,
     holderRender
   } = props;
   if (prefixCls !== void 0) {
@@ -13482,11 +13494,11 @@ const setGlobalConfig = (props) => {
   if ("holderRender" in props) {
     globalHolderRender = holderRender;
   }
-  if (theme2) {
-    if (isLegacyTheme(theme2)) {
-      registerTheme(getGlobalPrefixCls(), theme2);
+  if (theme) {
+    if (isLegacyTheme(theme)) {
+      registerTheme(getGlobalPrefixCls(), theme);
     } else {
-      globalTheme = theme2;
+      globalTheme = theme;
     }
   }
 };
@@ -13526,7 +13538,7 @@ const ProviderChildren = (props) => {
     legacyLocale,
     parentContext,
     iconPrefixCls: customIconPrefixCls,
-    theme: theme2,
+    theme,
     componentDisabled,
     segmented,
     statistic: statistic2,
@@ -13598,7 +13610,7 @@ const ProviderChildren = (props) => {
   const iconPrefixCls = customIconPrefixCls || parentContext.iconPrefixCls || defaultIconPrefixCls;
   const csp = customCsp || parentContext.csp;
   useResetIconStyle(iconPrefixCls, csp);
-  const mergedTheme = useTheme(theme2, parentContext.theme, {
+  const mergedTheme = useTheme(theme, parentContext.theme, {
     prefixCls: getPrefixCls("")
   });
   const baseConfig = {
@@ -13733,7 +13745,7 @@ const ProviderChildren = (props) => {
       token: token2,
       components,
       cssVar
-    } = _a, rest = __rest$G(_a, ["algorithm", "token", "components", "cssVar"]);
+    } = _a, rest = __rest$N(_a, ["algorithm", "token", "components", "cssVar"]);
     const themeObj = algorithm && (!Array.isArray(algorithm) || algorithm.length > 0) ? createTheme(algorithm) : defaultTheme;
     const parsedComponents = {};
     Object.entries(components || {}).forEach((_ref) => {
@@ -13760,7 +13772,7 @@ const ProviderChildren = (props) => {
       cssVar
     });
   }, [mergedTheme]);
-  if (theme2) {
+  if (theme) {
     childNode = /* @__PURE__ */ reactExports.createElement(DesignTokenContext.Provider, {
       value: memoTheme
     }, childNode);
@@ -13875,7 +13887,7 @@ var useInsertStyles = function useInsertStyles2(eleRef) {
     });
   }, []);
 };
-var _excluded$C = ["icon", "className", "onClick", "style", "primaryColor", "secondaryColor"];
+var _excluded$N = ["icon", "className", "onClick", "style", "primaryColor", "secondaryColor"];
 var twoToneColorPalette = {
   primaryColor: "#333",
   secondaryColor: "#E6E6E6",
@@ -13891,7 +13903,7 @@ function getTwoToneColors() {
   return _objectSpread2({}, twoToneColorPalette);
 }
 var IconBase = function IconBase2(props) {
-  var icon = props.icon, className = props.className, onClick = props.onClick, style2 = props.style, primaryColor = props.primaryColor, secondaryColor = props.secondaryColor, restProps = _objectWithoutProperties(props, _excluded$C);
+  var icon = props.icon, className = props.className, onClick = props.onClick, style2 = props.style, primaryColor = props.primaryColor, secondaryColor = props.secondaryColor, restProps = _objectWithoutProperties(props, _excluded$N);
   var svgRef = reactExports.useRef();
   var colors = twoToneColorPalette;
   if (primaryColor) {
@@ -13941,10 +13953,10 @@ function getTwoToneColor() {
   }
   return [colors.primaryColor, colors.secondaryColor];
 }
-var _excluded$B = ["className", "icon", "spin", "rotate", "tabIndex", "onClick", "twoToneColor"];
+var _excluded$M = ["className", "icon", "spin", "rotate", "tabIndex", "onClick", "twoToneColor"];
 setTwoToneColor(blue.primary);
 var Icon$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
-  var className = props.className, icon = props.icon, spin = props.spin, rotate = props.rotate, tabIndex = props.tabIndex, onClick = props.onClick, twoToneColor = props.twoToneColor, restProps = _objectWithoutProperties(props, _excluded$B);
+  var className = props.className, icon = props.icon, spin = props.spin, rotate = props.rotate, tabIndex = props.tabIndex, onClick = props.onClick, twoToneColor = props.twoToneColor, restProps = _objectWithoutProperties(props, _excluded$M);
   var _React$useContext = reactExports.useContext(IconContext), _React$useContext$pre = _React$useContext.prefixCls, prefixCls = _React$useContext$pre === void 0 ? "anticon" : _React$useContext$pre, rootClassName = _React$useContext.rootClassName;
   var classString = classNames(rootClassName, prefixCls, _defineProperty(_defineProperty({}, "".concat(prefixCls, "-").concat(icon.name), !!icon.name), "".concat(prefixCls, "-spin"), !!spin || icon.name === "loading"), className);
   var iconTabIndex = tabIndex;
@@ -13980,7 +13992,7 @@ var CheckCircleFilled = function CheckCircleFilled2(props, ref) {
     icon: CheckCircleFilled$1
   }));
 };
-var RefIcon$l = /* @__PURE__ */ reactExports.forwardRef(CheckCircleFilled);
+var RefIcon$u = /* @__PURE__ */ reactExports.forwardRef(CheckCircleFilled);
 var CloseCircleFilled$1 = { "icon": { "tag": "svg", "attrs": { "fill-rule": "evenodd", "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M512 64c247.4 0 448 200.6 448 448S759.4 960 512 960 64 759.4 64 512 264.6 64 512 64zm127.98 274.82h-.04l-.08.06L512 466.75 384.14 338.88c-.04-.05-.06-.06-.08-.06a.12.12 0 00-.07 0c-.03 0-.05.01-.09.05l-45.02 45.02a.2.2 0 00-.05.09.12.12 0 000 .07v.02a.27.27 0 00.06.06L466.75 512 338.88 639.86c-.05.04-.06.06-.06.08a.12.12 0 000 .07c0 .03.01.05.05.09l45.02 45.02a.2.2 0 00.09.05.12.12 0 00.07 0c.02 0 .04-.01.08-.05L512 557.25l127.86 127.87c.04.04.06.05.08.05a.12.12 0 00.07 0c.03 0 .05-.01.09-.05l45.02-45.02a.2.2 0 00.05-.09.12.12 0 000-.07v-.02a.27.27 0 00-.05-.06L557.25 512l127.87-127.86c.04-.04.05-.06.05-.08a.12.12 0 000-.07c0-.03-.01-.05-.05-.09l-45.02-45.02a.2.2 0 00-.09-.05.12.12 0 00-.07 0z" } }] }, "name": "close-circle", "theme": "filled" };
 var CloseCircleFilled = function CloseCircleFilled2(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
@@ -13988,7 +14000,7 @@ var CloseCircleFilled = function CloseCircleFilled2(props, ref) {
     icon: CloseCircleFilled$1
   }));
 };
-var RefIcon$k = /* @__PURE__ */ reactExports.forwardRef(CloseCircleFilled);
+var RefIcon$t = /* @__PURE__ */ reactExports.forwardRef(CloseCircleFilled);
 var CloseOutlined$1 = { "icon": { "tag": "svg", "attrs": { "fill-rule": "evenodd", "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M799.86 166.31c.02 0 .04.02.08.06l57.69 57.7c.04.03.05.05.06.08a.12.12 0 010 .06c0 .03-.02.05-.06.09L569.93 512l287.7 287.7c.04.04.05.06.06.09a.12.12 0 010 .07c0 .02-.02.04-.06.08l-57.7 57.69c-.03.04-.05.05-.07.06a.12.12 0 01-.07 0c-.03 0-.05-.02-.09-.06L512 569.93l-287.7 287.7c-.04.04-.06.05-.09.06a.12.12 0 01-.07 0c-.02 0-.04-.02-.08-.06l-57.69-57.7c-.04-.03-.05-.05-.06-.07a.12.12 0 010-.07c0-.03.02-.05.06-.09L454.07 512l-287.7-287.7c-.04-.04-.05-.06-.06-.09a.12.12 0 010-.07c0-.02.02-.04.06-.08l57.7-57.69c.03-.04.05-.05.07-.06a.12.12 0 01.07 0c.03 0 .05.02.09.06L512 454.07l287.7-287.7c.04-.04.06-.05.09-.06a.12.12 0 01.07 0z" } }] }, "name": "close", "theme": "outlined" };
 var CloseOutlined = function CloseOutlined2(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
@@ -13996,7 +14008,7 @@ var CloseOutlined = function CloseOutlined2(props, ref) {
     icon: CloseOutlined$1
   }));
 };
-var RefIcon$j = /* @__PURE__ */ reactExports.forwardRef(CloseOutlined);
+var RefIcon$s = /* @__PURE__ */ reactExports.forwardRef(CloseOutlined);
 var ExclamationCircleFilled$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm-32 232c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v272c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V296zm32 440a48.01 48.01 0 010-96 48.01 48.01 0 010 96z" } }] }, "name": "exclamation-circle", "theme": "filled" };
 var ExclamationCircleFilled = function ExclamationCircleFilled2(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
@@ -14004,7 +14016,7 @@ var ExclamationCircleFilled = function ExclamationCircleFilled2(props, ref) {
     icon: ExclamationCircleFilled$1
   }));
 };
-var RefIcon$i = /* @__PURE__ */ reactExports.forwardRef(ExclamationCircleFilled);
+var RefIcon$r = /* @__PURE__ */ reactExports.forwardRef(ExclamationCircleFilled);
 var InfoCircleFilled$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm32 664c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V456c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v272zm-32-344a48.01 48.01 0 010-96 48.01 48.01 0 010 96z" } }] }, "name": "info-circle", "theme": "filled" };
 var InfoCircleFilled = function InfoCircleFilled2(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
@@ -14012,7 +14024,7 @@ var InfoCircleFilled = function InfoCircleFilled2(props, ref) {
     icon: InfoCircleFilled$1
   }));
 };
-var RefIcon$h = /* @__PURE__ */ reactExports.forwardRef(InfoCircleFilled);
+var RefIcon$q = /* @__PURE__ */ reactExports.forwardRef(InfoCircleFilled);
 var attributes = "accept acceptCharset accessKey action allowFullScreen allowTransparency\n    alt async autoComplete autoFocus autoPlay capture cellPadding cellSpacing challenge\n    charSet checked classID className colSpan cols content contentEditable contextMenu\n    controls coords crossOrigin data dateTime default defer dir disabled download draggable\n    encType form formAction formEncType formMethod formNoValidate formTarget frameBorder\n    headers height hidden high href hrefLang htmlFor httpEquiv icon id inputMode integrity\n    is keyParams keyType kind label lang list loop low manifest marginHeight marginWidth max maxLength media\n    mediaGroup method min minLength multiple muted name noValidate nonce open\n    optimum pattern placeholder poster preload radioGroup readOnly rel required\n    reversed role rowSpan rows sandbox scope scoped scrolling seamless selected\n    shape size sizes span spellCheck src srcDoc srcLang srcSet start step style\n    summary tabIndex target title type useMap value width wmode wrap";
 var eventsName = "onCopy onCut onPaste onCompositionEnd onCompositionStart onCompositionUpdate onKeyDown\n    onKeyPress onKeyUp onFocus onBlur onChange onInput onSubmit onClick onContextMenu onDoubleClick\n    onDrag onDragEnd onDragEnter onDragExit onDragLeave onDragOver onDragStart onDrop onMouseDown\n    onMouseEnter onMouseLeave onMouseMove onMouseOut onMouseOver onMouseUp onSelect onTouchCancel\n    onTouchEnd onTouchMove onTouchStart onScroll onWheel onAbort onCanPlay onCanPlayThrough\n    onDurationChange onEmptied onEncrypted onEnded onError onLoadedData onLoadedMetadata\n    onLoadStart onPause onPlay onPlaying onProgress onRateChange onSeeked onSeeking onStalled onSuspend onTimeUpdate onVolumeChange onWaiting onLoad onError";
 var propList = "".concat(attributes, " ").concat(eventsName).split(/[\s\n]+/);
@@ -14135,8 +14147,68 @@ function e$1(e2, r2) {
     a.scroll({ top: t2, left: o2, behavior: l2 });
   }
 }
+function isWindow(obj) {
+  return obj !== null && obj !== void 0 && obj === obj.window;
+}
+const getScroll$1 = (target) => {
+  var _a, _b;
+  if (typeof window === "undefined") {
+    return 0;
+  }
+  let result = 0;
+  if (isWindow(target)) {
+    result = target.pageYOffset;
+  } else if (target instanceof Document) {
+    result = target.documentElement.scrollTop;
+  } else if (target instanceof HTMLElement) {
+    result = target.scrollTop;
+  } else if (target) {
+    result = target["scrollTop"];
+  }
+  if (target && !isWindow(target) && typeof result !== "number") {
+    result = (_b = ((_a = target.ownerDocument) !== null && _a !== void 0 ? _a : target).documentElement) === null || _b === void 0 ? void 0 : _b.scrollTop;
+  }
+  return result;
+};
+function easeInOutCubic(t2, b2, c2, d2) {
+  const cc2 = c2 - b2;
+  t2 /= d2 / 2;
+  if (t2 < 1) {
+    return cc2 / 2 * t2 * t2 * t2 + b2;
+  }
+  return cc2 / 2 * ((t2 -= 2) * t2 * t2 + 2) + b2;
+}
+function scrollTo(y2) {
+  let options = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
+  const {
+    getContainer: getContainer2 = () => window,
+    callback,
+    duration = 450
+  } = options;
+  const container = getContainer2();
+  const scrollTop = getScroll$1(container);
+  const startTime = Date.now();
+  const frameFunc = () => {
+    const timestamp = Date.now();
+    const time = timestamp - startTime;
+    const nextScrollTop = easeInOutCubic(time > duration ? duration : time, scrollTop, y2, duration);
+    if (isWindow(container)) {
+      container.scrollTo(window.pageXOffset, nextScrollTop);
+    } else if (container instanceof Document || container.constructor.name === "HTMLDocument") {
+      container.documentElement.scrollTop = nextScrollTop;
+    } else {
+      container.scrollTop = nextScrollTop;
+    }
+    if (time < duration) {
+      wrapperRaf(frameFunc);
+    } else if (typeof callback === "function") {
+      callback();
+    }
+  };
+  wrapperRaf(frameFunc);
+}
 const useCSSVarCls = (prefixCls) => {
-  const [, , , , cssVar] = useToken$1();
+  const [, , , , cssVar] = useToken();
   return cssVar ? `${prefixCls}-css-var` : "";
 };
 var KeyCode = {
@@ -14671,7 +14743,7 @@ var LoadingOutlined = function LoadingOutlined2(props, ref) {
     icon: LoadingOutlined$1
   }));
 };
-var RefIcon$g = /* @__PURE__ */ reactExports.forwardRef(LoadingOutlined);
+var RefIcon$p = /* @__PURE__ */ reactExports.forwardRef(LoadingOutlined);
 const zIndexContext = /* @__PURE__ */ React.createContext(void 0);
 const CONTAINER_OFFSET = 100;
 const CONTAINER_OFFSET_MAX_COUNT = 10;
@@ -14695,7 +14767,7 @@ function isContainerType(type4) {
   return type4 in containerBaseZIndexOffset;
 }
 function useZIndex(componentType, customZIndex) {
-  const [, token2] = useToken$1();
+  const [, token2] = useToken();
   const parentZIndex = React.useContext(zIndexContext);
   const isContainer = isContainerType(componentType);
   let result;
@@ -15202,7 +15274,7 @@ const genWaveStyle = (token2) => {
     }
   };
 };
-const useStyle$k = genComponentStyleHook("Wave", (token2) => [genWaveStyle(token2)]);
+const useStyle$q = genComponentStyleHook("Wave", (token2) => [genWaveStyle(token2)]);
 const TARGET_CLS = `${defaultPrefixCls}-wave-target`;
 function isNotGrey(color) {
   const match2 = (color || "").match(/rgba?\((\d*), (\d*), (\d*)(, [\d.]*)?\)/);
@@ -15349,7 +15421,7 @@ const useWave = (nodeRef, className, component) => {
   const {
     wave
   } = reactExports.useContext(ConfigContext);
-  const [, token2, hashId] = useToken$1();
+  const [, token2, hashId] = useToken();
   const showWave = useEvent((event) => {
     const node2 = nodeRef.current;
     if ((wave === null || wave === void 0 ? void 0 : wave.disabled) || !node2) {
@@ -15387,7 +15459,7 @@ const Wave = (props) => {
   } = reactExports.useContext(ConfigContext);
   const containerRef = reactExports.useRef(null);
   const prefixCls = getPrefixCls("wave");
-  const [, hashId] = useStyle$k(prefixCls);
+  const [, hashId] = useStyle$q(prefixCls);
   const showWave = useWave(containerRef, classNames(prefixCls, hashId), component);
   React.useEffect(() => {
     const node2 = containerRef.current;
@@ -15430,14 +15502,108 @@ const useSize = (customSize) => {
   }, [customSize, size]);
   return mergedSize;
 };
-(function(s2, e2) {
+const genSpaceCompactStyle = (token2) => {
+  const {
+    componentCls
+  } = token2;
+  return {
+    [componentCls]: {
+      "&-block": {
+        display: "flex",
+        width: "100%"
+      },
+      "&-vertical": {
+        flexDirection: "column"
+      }
+    }
+  };
+};
+const genSpaceStyle = (token2) => {
+  const {
+    componentCls,
+    antCls
+  } = token2;
+  return {
+    [componentCls]: {
+      display: "inline-flex",
+      "&-rtl": {
+        direction: "rtl"
+      },
+      "&-vertical": {
+        flexDirection: "column"
+      },
+      "&-align": {
+        flexDirection: "column",
+        "&-center": {
+          alignItems: "center"
+        },
+        "&-start": {
+          alignItems: "flex-start"
+        },
+        "&-end": {
+          alignItems: "flex-end"
+        },
+        "&-baseline": {
+          alignItems: "baseline"
+        }
+      },
+      [`${componentCls}-item:empty`]: {
+        display: "none"
+      },
+      // https://github.com/ant-design/ant-design/issues/47875
+      [`${componentCls}-item > ${antCls}-badge-not-a-wrapper:only-child`]: {
+        display: "block"
+      }
+    }
+  };
+};
+const genSpaceGapStyle = (token2) => {
+  const {
+    componentCls
+  } = token2;
+  return {
+    [componentCls]: {
+      "&-gap-row-small": {
+        rowGap: token2.spaceGapSmallSize
+      },
+      "&-gap-row-middle": {
+        rowGap: token2.spaceGapMiddleSize
+      },
+      "&-gap-row-large": {
+        rowGap: token2.spaceGapLargeSize
+      },
+      "&-gap-col-small": {
+        columnGap: token2.spaceGapSmallSize
+      },
+      "&-gap-col-middle": {
+        columnGap: token2.spaceGapMiddleSize
+      },
+      "&-gap-col-large": {
+        columnGap: token2.spaceGapLargeSize
+      }
+    }
+  };
+};
+const useStyle$p = genStyleHooks("Space", (token2) => {
+  const spaceToken = merge(token2, {
+    spaceGapSmallSize: token2.paddingXS,
+    spaceGapMiddleSize: token2.padding,
+    spaceGapLargeSize: token2.paddingLG
+  });
+  return [genSpaceStyle(spaceToken), genSpaceGapStyle(spaceToken), genSpaceCompactStyle(spaceToken)];
+}, () => ({}), {
+  // Space component don't apply extra font style
+  // https://github.com/ant-design/ant-design/issues/40315
+  resetStyle: false
+});
+var __rest$M = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
     if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i2])) t2[p2[i2]] = s2[p2[i2]];
   }
   return t2;
-});
+};
 const SpaceCompactItemContext = /* @__PURE__ */ reactExports.createContext(null);
 const useCompactItemContext = (prefixCls, direction) => {
   const compactItemContext = reactExports.useContext(SpaceCompactItemContext);
@@ -15471,7 +15637,56 @@ const NoCompactStyle = (_ref) => {
     value: null
   }, children);
 };
-var __rest$F = function(s2, e2) {
+const CompactItem = (_a) => {
+  var {
+    children
+  } = _a, otherProps = __rest$M(_a, ["children"]);
+  return /* @__PURE__ */ reactExports.createElement(SpaceCompactItemContext.Provider, {
+    value: otherProps
+  }, children);
+};
+const Compact = (props) => {
+  const {
+    getPrefixCls,
+    direction: directionConfig
+  } = reactExports.useContext(ConfigContext);
+  const {
+    size,
+    direction,
+    block,
+    prefixCls: customizePrefixCls,
+    className,
+    rootClassName,
+    children
+  } = props, restProps = __rest$M(props, ["size", "direction", "block", "prefixCls", "className", "rootClassName", "children"]);
+  const mergedSize = useSize((ctx) => size !== null && size !== void 0 ? size : ctx);
+  const prefixCls = getPrefixCls("space-compact", customizePrefixCls);
+  const [wrapCSSVar, hashId] = useStyle$p(prefixCls);
+  const clx = classNames(prefixCls, hashId, {
+    [`${prefixCls}-rtl`]: directionConfig === "rtl",
+    [`${prefixCls}-block`]: block,
+    [`${prefixCls}-vertical`]: direction === "vertical"
+  }, className, rootClassName);
+  const compactItemContext = reactExports.useContext(SpaceCompactItemContext);
+  const childNodes = toArray$5(children);
+  const nodes = reactExports.useMemo(() => childNodes.map((child, i2) => {
+    const key = (child === null || child === void 0 ? void 0 : child.key) || `${prefixCls}-item-${i2}`;
+    return /* @__PURE__ */ reactExports.createElement(CompactItem, {
+      key,
+      compactSize: mergedSize,
+      compactDirection: direction,
+      isFirstItem: i2 === 0 && (!compactItemContext || (compactItemContext === null || compactItemContext === void 0 ? void 0 : compactItemContext.isFirstItem)),
+      isLastItem: i2 === childNodes.length - 1 && (!compactItemContext || (compactItemContext === null || compactItemContext === void 0 ? void 0 : compactItemContext.isLastItem))
+    }, child);
+  }), [size, childNodes, compactItemContext]);
+  if (childNodes.length === 0) {
+    return null;
+  }
+  return wrapCSSVar(/* @__PURE__ */ reactExports.createElement("div", Object.assign({
+    className: clx
+  }, restProps), nodes));
+};
+var __rest$L = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -15489,9 +15704,9 @@ const ButtonGroup = (props) => {
     prefixCls: customizePrefixCls,
     size,
     className
-  } = props, others = __rest$F(props, ["prefixCls", "size", "className"]);
+  } = props, others = __rest$L(props, ["prefixCls", "size", "className"]);
   const prefixCls = getPrefixCls("btn-group", customizePrefixCls);
-  const [, , hashId] = useToken$1();
+  const [, , hashId] = useToken();
   let sizeCls = "";
   switch (size) {
     case "large":
@@ -15591,7 +15806,7 @@ const InnerLoadingIcon = /* @__PURE__ */ reactExports.forwardRef((props, ref) =>
     className: mergedIconCls,
     style: style2,
     ref
-  }, /* @__PURE__ */ React.createElement(RefIcon$g, {
+  }, /* @__PURE__ */ React.createElement(RefIcon$p, {
     className: iconClassName
   }));
 });
@@ -15715,7 +15930,7 @@ const genGroupStyle$1 = (token2) => {
     ]
   };
 };
-const prepareToken$2 = (token2) => {
+const prepareToken$3 = (token2) => {
   const {
     paddingInline,
     onlyIconSize,
@@ -15728,7 +15943,7 @@ const prepareToken$2 = (token2) => {
   });
   return buttonToken;
 };
-const prepareComponentToken$g = (token2) => {
+const prepareComponentToken$k = (token2) => {
   var _a, _b, _c, _d, _e, _f;
   const contentFontSize = (_a = token2.contentFontSize) !== null && _a !== void 0 ? _a : token2.fontSize;
   const contentFontSizeSM = (_b = token2.contentFontSizeSM) !== null && _b !== void 0 ? _b : token2.fontSize;
@@ -16086,8 +16301,8 @@ const genBlockButtonStyle = (token2) => {
     }
   };
 };
-const useStyle$j = genStyleHooks("Button", (token2) => {
-  const buttonToken = prepareToken$2(token2);
+const useStyle$o = genStyleHooks("Button", (token2) => {
+  const buttonToken = prepareToken$3(token2);
   return [
     // Shared
     genSharedButtonStyle(buttonToken),
@@ -16102,7 +16317,7 @@ const useStyle$j = genStyleHooks("Button", (token2) => {
     // Button Group
     genGroupStyle$1(buttonToken)
   ];
-}, prepareComponentToken$g, {
+}, prepareComponentToken$k, {
   unitless: {
     fontWeight: true,
     contentLineHeight: true,
@@ -16258,15 +16473,15 @@ const genButtonCompactStyle = (token2) => {
   };
 };
 const CompactCmp = genSubStyleComponent(["Button", "compact"], (token2) => {
-  const buttonToken = prepareToken$2(token2);
+  const buttonToken = prepareToken$3(token2);
   return [
     // Space Compact
     genCompactItemStyle(buttonToken),
     genCompactItemVerticalStyle(buttonToken),
     genButtonCompactStyle(buttonToken)
   ];
-}, prepareComponentToken$g);
-var __rest$E = function(s2, e2) {
+}, prepareComponentToken$k);
+var __rest$K = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -16311,7 +16526,7 @@ const InternalCompoundedButton = /* @__PURE__ */ React.forwardRef((props, ref) =
     classNames: customClassNames,
     style: customStyle = {},
     autoInsertSpace
-  } = props, rest = __rest$E(props, ["loading", "prefixCls", "type", "danger", "shape", "size", "styles", "disabled", "className", "rootClassName", "children", "icon", "iconPosition", "ghost", "block", "htmlType", "classNames", "style", "autoInsertSpace"]);
+  } = props, rest = __rest$K(props, ["loading", "prefixCls", "type", "danger", "shape", "size", "styles", "disabled", "className", "rootClassName", "children", "icon", "iconPosition", "ghost", "block", "htmlType", "classNames", "style", "autoInsertSpace"]);
   const mergedType = type4 || "default";
   const {
     getPrefixCls,
@@ -16320,7 +16535,7 @@ const InternalCompoundedButton = /* @__PURE__ */ React.forwardRef((props, ref) =
   } = reactExports.useContext(ConfigContext);
   const mergedInsertSpace = (_a = autoInsertSpace !== null && autoInsertSpace !== void 0 ? autoInsertSpace : button === null || button === void 0 ? void 0 : button.autoInsertSpace) !== null && _a !== void 0 ? _a : true;
   const prefixCls = getPrefixCls("btn", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$j(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$o(prefixCls);
   const disabled = reactExports.useContext(DisabledContext);
   const mergedDisabled = customDisabled !== null && customDisabled !== void 0 ? customDisabled : disabled;
   const groupSize = reactExports.useContext(GroupSizeContext);
@@ -16444,9 +16659,9 @@ const InternalCompoundedButton = /* @__PURE__ */ React.forwardRef((props, ref) =
   }
   return wrapCSSVar(buttonNode);
 });
-const Button = InternalCompoundedButton;
-Button.Group = ButtonGroup;
-Button.__ANT_BUTTON = true;
+const Button$1 = InternalCompoundedButton;
+Button$1.Group = ButtonGroup;
+Button$1.__ANT_BUTTON = true;
 function isThenable(thing) {
   return !!(thing === null || thing === void 0 ? void 0 : thing.then);
 }
@@ -16530,7 +16745,7 @@ const ActionButton = (props) => {
     }
     handlePromiseOnOk(returnValueOfOnOk);
   };
-  return /* @__PURE__ */ reactExports.createElement(Button, Object.assign({}, convertLegacyProps(type4), {
+  return /* @__PURE__ */ reactExports.createElement(Button$1, Object.assign({}, convertLegacyProps(type4), {
     onClick,
     loading,
     prefixCls
@@ -16592,7 +16807,7 @@ const ConfirmOkBtn = () => {
   }, okTextLocale);
 };
 var OrderContext = /* @__PURE__ */ reactExports.createContext(null);
-var EMPTY_LIST$2 = [];
+var EMPTY_LIST$4 = [];
 function useDom(render2, debug) {
   var _React$useState = reactExports.useState(function() {
     if (!canUseDom()) {
@@ -16603,7 +16818,7 @@ function useDom(render2, debug) {
   }), _React$useState2 = _slicedToArray(_React$useState, 1), ele = _React$useState2[0];
   var appendedRef = reactExports.useRef(false);
   var queueCreate = reactExports.useContext(OrderContext);
-  var _React$useState3 = reactExports.useState(EMPTY_LIST$2), _React$useState4 = _slicedToArray(_React$useState3, 2), queue = _React$useState4[0], setQueue = _React$useState4[1];
+  var _React$useState3 = reactExports.useState(EMPTY_LIST$4), _React$useState4 = _slicedToArray(_React$useState3, 2), queue = _React$useState4[0], setQueue = _React$useState4[1];
   var mergedQueueCreate = queueCreate || (appendedRef.current ? void 0 : function(appendFn) {
     setQueue(function(origin) {
       var newQueue = [appendFn].concat(_toConsumableArray(origin));
@@ -16638,11 +16853,12 @@ function useDom(render2, debug) {
       queue.forEach(function(appendFn) {
         return appendFn();
       });
-      setQueue(EMPTY_LIST$2);
+      setQueue(EMPTY_LIST$4);
     }
   }, [queue]);
   return [ele, mergedQueueCreate];
 }
+var cached;
 function measureScrollbarSize(ele) {
   var randomId = "rc-scrollbar-measure-".concat(Math.random().toString(36).substring(7));
   var measureEle = document.createElement("div");
@@ -16682,6 +16898,15 @@ function measureScrollbarSize(ele) {
     width: scrollWidth,
     height: scrollHeight
   };
+}
+function getScrollBarSize(fresh) {
+  if (typeof document === "undefined") {
+    return 0;
+  }
+  if (cached === void 0) {
+    cached = measureScrollbarSize();
+  }
+  return cached.width;
 }
 function getTargetScrollBarSize(target) {
   if (typeof document === "undefined" || !target || !(target instanceof Element)) {
@@ -16753,9 +16978,9 @@ var Portal = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
     var customizeContainer = getPortalContainer(getContainer2);
     setInnerContainer(customizeContainer !== null && customizeContainer !== void 0 ? customizeContainer : null);
   });
-  var _useDom = useDom(mergedRender && !innerContainer), _useDom2 = _slicedToArray(_useDom, 2), defaultContainer = _useDom2[0], queueCreate = _useDom2[1];
-  var mergedContainer = innerContainer !== null && innerContainer !== void 0 ? innerContainer : defaultContainer;
-  useScrollLocker(autoLock && open && canUseDom() && (mergedContainer === defaultContainer || mergedContainer === document.body));
+  var _useDom = useDom(mergedRender && !innerContainer), _useDom2 = _slicedToArray(_useDom, 2), defaultContainer2 = _useDom2[0], queueCreate = _useDom2[1];
+  var mergedContainer = innerContainer !== null && innerContainer !== void 0 ? innerContainer : defaultContainer2;
+  useScrollLocker(autoLock && open && canUseDom() && (mergedContainer === defaultContainer2 || mergedContainer === document.body));
   var childRef = null;
   if (children && supportRef(children) && ref) {
     var _ref = children;
@@ -16826,7 +17051,7 @@ function getScroll(w2, top) {
   }
   return ret;
 }
-function offset(el2) {
+function offset$1(el2) {
   var rect = el2.getBoundingClientRect();
   var pos = {
     left: rect.left,
@@ -16854,7 +17079,7 @@ var sentinelStyle$1 = {
 var entityStyle = {
   outline: "none"
 };
-var Panel = /* @__PURE__ */ React.forwardRef(function(props, ref) {
+var Panel$1 = /* @__PURE__ */ React.forwardRef(function(props, ref) {
   var prefixCls = props.prefixCls, className = props.className, style2 = props.style, title = props.title, ariaId = props.ariaId, footer = props.footer, closable = props.closable, closeIcon = props.closeIcon, onClose = props.onClose, children = props.children, bodyStyle = props.bodyStyle, bodyProps = props.bodyProps, modalRender = props.modalRender, onMouseDown = props.onMouseDown, onMouseUp = props.onMouseUp, holderRef = props.holderRef, visible = props.visible, forceRender = props.forceRender, width = props.width, height = props.height, modalClassNames = props.classNames, modalStyles = props.styles;
   var _React$useContext = React.useContext(RefContext$1), panelRef = _React$useContext.panel;
   var mergedRef = useComposeRef(holderRef, panelRef);
@@ -16968,7 +17193,7 @@ var Content$2 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
     contentStyle.transformOrigin = transformOrigin;
   }
   function onPrepare() {
-    var elementOffset = offset(dialogRef.current);
+    var elementOffset = offset$1(dialogRef.current);
     setTransformOrigin(mousePosition2 && (mousePosition2.x || mousePosition2.y) ? "".concat(mousePosition2.x - elementOffset.left, "px ").concat(mousePosition2.y - elementOffset.top, "px") : "");
   }
   return /* @__PURE__ */ reactExports.createElement(CSSMotion, {
@@ -16982,7 +17207,7 @@ var Content$2 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
     ref: dialogRef
   }, function(_ref, motionRef) {
     var motionClassName = _ref.className, motionStyle = _ref.style;
-    return /* @__PURE__ */ reactExports.createElement(Panel, _extends({}, props, {
+    return /* @__PURE__ */ reactExports.createElement(Panel$1, _extends({}, props, {
       ref,
       title,
       ariaId,
@@ -17202,7 +17427,7 @@ var Context = /* @__PURE__ */ reactExports.createContext({
   }
 });
 var ListContext = /* @__PURE__ */ reactExports.createContext(null);
-function toArray$3(value) {
+function toArray$4(value) {
   if (value === void 0 || value === null) {
     return [];
   }
@@ -18543,7 +18768,7 @@ function _finishOnFirstFailed() {
   return _finishOnFirstFailed.apply(this, arguments);
 }
 function getNamePath(path2) {
-  return toArray$3(path2);
+  return toArray$4(path2);
 }
 function cloneByNamePathList(store, namePathList) {
   var newStore = {};
@@ -18615,7 +18840,7 @@ function move(array4, moveIndex, toIndex) {
   }
   return array4;
 }
-var _excluded$A = ["name"];
+var _excluded$L = ["name"];
 var EMPTY_ERRORS = [];
 function requireUpdate(shouldUpdate, prev2, next2, prevValue, nextValue, info) {
   if (typeof shouldUpdate === "function") {
@@ -18799,7 +19024,7 @@ var Field = /* @__PURE__ */ function(_React$Component) {
                   if (!validateTrigger) {
                     return true;
                   }
-                  var triggerList = toArray$3(validateTrigger);
+                  var triggerList = toArray$4(validateTrigger);
                   return triggerList.includes(triggerName);
                 });
               }
@@ -18911,7 +19136,7 @@ var Field = /* @__PURE__ */ function(_React$Component) {
           isFunction: true
         });
       }
-      var childList = toArray$4(children);
+      var childList = toArray$5(children);
       if (childList.length !== 1 || !/* @__PURE__ */ reactExports.isValidElement(childList[0])) {
         return {
           child: childList,
@@ -18967,7 +19192,7 @@ var Field = /* @__PURE__ */ function(_React$Component) {
           originTriggerFunc.apply(void 0, args);
         }
       };
-      var validateTriggerList = toArray$3(mergedValidateTrigger || []);
+      var validateTriggerList = toArray$4(mergedValidateTrigger || []);
       validateTriggerList.forEach(function(triggerName) {
         var originTrigger = control[triggerName];
         control[triggerName] = function() {
@@ -19048,7 +19273,7 @@ _defineProperty(Field, "defaultProps", {
   valuePropName: "value"
 });
 function WrapperField(_ref6) {
-  var name = _ref6.name, restProps = _objectWithoutProperties(_ref6, _excluded$A);
+  var name = _ref6.name, restProps = _objectWithoutProperties(_ref6, _excluded$L);
   var fieldContext = reactExports.useContext(Context);
   var listContext = reactExports.useContext(ListContext);
   var namePath = name !== void 0 ? getNamePath(name) : void 0;
@@ -19270,7 +19495,7 @@ var NameMap = /* @__PURE__ */ function() {
   }]);
   return NameMap2;
 }();
-var _excluded$z = ["name"];
+var _excluded$K = ["name"];
 var FormStore = /* @__PURE__ */ _createClass(function FormStore2(forceRootUpdate) {
   var _this = this;
   _classCallCheck(this, FormStore2);
@@ -19664,7 +19889,7 @@ var FormStore = /* @__PURE__ */ _createClass(function FormStore2(forceRootUpdate
     var prevStore = _this.store;
     var namePathList = [];
     fields.forEach(function(fieldData) {
-      var name = fieldData.name, data = _objectWithoutProperties(fieldData, _excluded$z);
+      var name = fieldData.name, data = _objectWithoutProperties(fieldData, _excluded$K);
       var namePath = getNamePath(name);
       namePathList.push(namePath);
       if ("value" in data) {
@@ -20068,9 +20293,9 @@ var FormProvider$1 = function FormProvider(_ref) {
     })
   }, children);
 };
-var _excluded$y = ["name", "initialValues", "fields", "form", "preserve", "children", "component", "validateMessages", "validateTrigger", "onValuesChange", "onFieldsChange", "onFinish", "onFinishFailed", "clearOnDestroy"];
+var _excluded$J = ["name", "initialValues", "fields", "form", "preserve", "children", "component", "validateMessages", "validateTrigger", "onValuesChange", "onFieldsChange", "onFinish", "onFinishFailed", "clearOnDestroy"];
 var Form$2 = function Form(_ref, ref) {
-  var name = _ref.name, initialValues = _ref.initialValues, fields = _ref.fields, form = _ref.form, preserve2 = _ref.preserve, children = _ref.children, _ref$component = _ref.component, Component = _ref$component === void 0 ? "form" : _ref$component, validateMessages = _ref.validateMessages, _ref$validateTrigger = _ref.validateTrigger, validateTrigger = _ref$validateTrigger === void 0 ? "onChange" : _ref$validateTrigger, onValuesChange = _ref.onValuesChange, _onFieldsChange = _ref.onFieldsChange, _onFinish = _ref.onFinish, onFinishFailed2 = _ref.onFinishFailed, clearOnDestroy = _ref.clearOnDestroy, restProps = _objectWithoutProperties(_ref, _excluded$y);
+  var name = _ref.name, initialValues = _ref.initialValues, fields = _ref.fields, form = _ref.form, preserve2 = _ref.preserve, children = _ref.children, _ref$component = _ref.component, Component = _ref$component === void 0 ? "form" : _ref$component, validateMessages = _ref.validateMessages, _ref$validateTrigger = _ref.validateTrigger, validateTrigger = _ref$validateTrigger === void 0 ? "onChange" : _ref$validateTrigger, onValuesChange = _ref.onValuesChange, _onFieldsChange = _ref.onFieldsChange, _onFinish = _ref.onFinish, onFinishFailed2 = _ref.onFinishFailed, clearOnDestroy = _ref.clearOnDestroy, restProps = _objectWithoutProperties(_ref, _excluded$J);
   var nativeElementRef = reactExports.useRef(null);
   var formContext = reactExports.useContext(FormContext$1);
   var _useForm = useForm$1(form), _useForm2 = _slicedToArray(_useForm, 1), formInstance = _useForm2[0];
@@ -20346,7 +20571,7 @@ function useClosable(propCloseCollection, contextCloseCollection) {
   const propCloseConfig = useClosableConfig(propCloseCollection);
   const contextCloseConfig = useClosableConfig(contextCloseCollection);
   const mergedFallbackCloseCollection = React.useMemo(() => Object.assign({
-    closeIcon: /* @__PURE__ */ React.createElement(RefIcon$j, null)
+    closeIcon: /* @__PURE__ */ React.createElement(RefIcon$s, null)
   }, fallbackCloseCollection), [fallbackCloseCollection]);
   const mergedClosableConfig = React.useMemo(() => {
     if (propCloseConfig === false) {
@@ -20385,6 +20610,31 @@ function useClosable(propCloseCollection, contextCloseCollection) {
     }
     return [true, mergedCloseIcon];
   }, [mergedClosableConfig, mergedFallbackCloseCollection]);
+}
+var isStyleNameSupport = function isStyleNameSupport2(styleName) {
+  if (canUseDom() && window.document.documentElement) {
+    var styleNameList = Array.isArray(styleName) ? styleName : [styleName];
+    var documentElement = window.document.documentElement;
+    return styleNameList.some(function(name) {
+      return name in documentElement.style;
+    });
+  }
+  return false;
+};
+var isStyleValueSupport = function isStyleValueSupport2(styleName, value) {
+  if (!isStyleNameSupport(styleName)) {
+    return false;
+  }
+  var ele = document.createElement("div");
+  var origin = ele.style[styleName];
+  ele.style[styleName] = value;
+  return ele.style[styleName] !== origin;
+};
+function isStyleSupport(styleName, styleValue) {
+  if (!Array.isArray(styleName) && styleValue !== void 0) {
+    return isStyleValueSupport(styleName, styleValue);
+  }
+  return isStyleNameSupport(styleName);
 }
 const canUseDocElement = () => canUseDom() && window.document.documentElement;
 const Element$1 = (props) => {
@@ -20563,7 +20813,7 @@ const genSkeletonElementButton = (token2) => {
     [`${skeletonButtonCls}-sm`]: Object.assign({}, genSkeletonElementButtonSize(controlHeightSM, calc))
   }), genSkeletonElementButtonShape(token2, controlHeightSM, `${skeletonButtonCls}-sm`));
 };
-const genBaseStyle$5 = (token2) => {
+const genBaseStyle$6 = (token2) => {
   const {
     componentCls,
     skeletonAvatarCls,
@@ -20680,7 +20930,7 @@ const genBaseStyle$5 = (token2) => {
     }
   };
 };
-const prepareComponentToken$f = (token2) => {
+const prepareComponentToken$j = (token2) => {
   const {
     colorFillContent,
     colorFill
@@ -20698,7 +20948,7 @@ const prepareComponentToken$f = (token2) => {
     paragraphLiHeight: token2.controlHeight / 2
   };
 };
-const useStyle$i = genStyleHooks("Skeleton", (token2) => {
+const useStyle$n = genStyleHooks("Skeleton", (token2) => {
   const {
     componentCls,
     calc
@@ -20716,8 +20966,8 @@ const useStyle$i = genStyleHooks("Skeleton", (token2) => {
     skeletonLoadingBackground: `linear-gradient(90deg, ${token2.gradientFromColor} 25%, ${token2.gradientToColor} 37%, ${token2.gradientFromColor} 63%)`,
     skeletonLoadingMotionDuration: "1.4s"
   });
-  return [genBaseStyle$5(skeletonToken)];
-}, prepareComponentToken$f, {
+  return [genBaseStyle$6(skeletonToken)];
+}, prepareComponentToken$j, {
   deprecatedTokens: [["color", "gradientFromColor"], ["colorGradientEnd", "gradientToColor"]]
 });
 const SkeletonAvatar = (props) => {
@@ -20733,7 +20983,7 @@ const SkeletonAvatar = (props) => {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("skeleton", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$i(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$n(prefixCls);
   const otherProps = omit(props, ["prefixCls", "className"]);
   const cls = classNames(prefixCls, `${prefixCls}-element`, {
     [`${prefixCls}-active`]: active
@@ -20759,7 +21009,7 @@ const SkeletonButton = (props) => {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("skeleton", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$i(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$n(prefixCls);
   const otherProps = omit(props, ["prefixCls"]);
   const cls = classNames(prefixCls, `${prefixCls}-element`, {
     [`${prefixCls}-active`]: active,
@@ -20785,7 +21035,7 @@ const SkeletonImage = (props) => {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("skeleton", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$i(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$n(prefixCls);
   const cls = classNames(prefixCls, `${prefixCls}-element`, {
     [`${prefixCls}-active`]: active
   }, className, rootClassName, hashId, cssVarCls);
@@ -20816,7 +21066,7 @@ const SkeletonInput = (props) => {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("skeleton", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$i(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$n(prefixCls);
   const otherProps = omit(props, ["prefixCls"]);
   const cls = classNames(prefixCls, `${prefixCls}-element`, {
     [`${prefixCls}-active`]: active,
@@ -20836,7 +21086,7 @@ var DotChartOutlined = function DotChartOutlined2(props, ref) {
     icon: DotChartOutlined$1
   }));
 };
-var RefIcon$f = /* @__PURE__ */ reactExports.forwardRef(DotChartOutlined);
+var RefIcon$o = /* @__PURE__ */ reactExports.forwardRef(DotChartOutlined);
 const SkeletonNode = (props) => {
   const {
     prefixCls: customizePrefixCls,
@@ -20850,11 +21100,11 @@ const SkeletonNode = (props) => {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("skeleton", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$i(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$n(prefixCls);
   const cls = classNames(prefixCls, `${prefixCls}-element`, {
     [`${prefixCls}-active`]: active
   }, hashId, className, rootClassName, cssVarCls);
-  const content = children !== null && children !== void 0 ? children : /* @__PURE__ */ reactExports.createElement(RefIcon$f, null);
+  const content = children !== null && children !== void 0 ? children : /* @__PURE__ */ reactExports.createElement(RefIcon$o, null);
   return wrapCSSVar(/* @__PURE__ */ reactExports.createElement("div", {
     className: cls
   }, /* @__PURE__ */ reactExports.createElement("div", {
@@ -20976,7 +21226,7 @@ const Skeleton = (props) => {
     skeleton
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("skeleton", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$i(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$n(prefixCls);
   if (loading || !("loading" in props)) {
     const hasAvatar = !!avatar;
     const hasTitle = !!title;
@@ -21054,7 +21304,7 @@ const NormalCancelBtn = () => {
     cancelTextLocale,
     onCancel
   } = reactExports.useContext(ModalContext);
-  return /* @__PURE__ */ React.createElement(Button, Object.assign({
+  return /* @__PURE__ */ React.createElement(Button$1, Object.assign({
     onClick: onCancel
   }, cancelButtonProps), cancelTextLocale);
 };
@@ -21066,7 +21316,7 @@ const NormalOkBtn = () => {
     okTextLocale,
     onOk
   } = reactExports.useContext(ModalContext);
-  return /* @__PURE__ */ React.createElement(Button, Object.assign({}, convertLegacyProps(okType), {
+  return /* @__PURE__ */ React.createElement(Button$1, Object.assign({}, convertLegacyProps(okType), {
     loading: confirmLoading,
     onClick: onOk
   }, okButtonProps), okTextLocale);
@@ -21074,11 +21324,11 @@ const NormalOkBtn = () => {
 function renderCloseIcon(prefixCls, closeIcon) {
   return /* @__PURE__ */ React.createElement("span", {
     className: `${prefixCls}-close-x`
-  }, closeIcon || /* @__PURE__ */ React.createElement(RefIcon$j, {
+  }, closeIcon || /* @__PURE__ */ React.createElement(RefIcon$s, {
     className: `${prefixCls}-close-icon`
   }));
 }
-const Footer$1 = (props) => {
+const Footer$3 = (props) => {
   const {
     okText,
     okType = "primary",
@@ -21895,7 +22145,7 @@ const genRTLStyle = (token2) => {
     }
   };
 };
-const prepareToken$1 = (token2) => {
+const prepareToken$2 = (token2) => {
   const headerPaddingVertical = token2.padding;
   const headerFontSize = token2.fontSizeHeading5;
   const headerLineHeight = token2.lineHeightHeading5;
@@ -21912,7 +22162,7 @@ const prepareToken$1 = (token2) => {
   });
   return modalToken;
 };
-const prepareComponentToken$e = (token2) => ({
+const prepareComponentToken$i = (token2) => ({
   footerBg: "transparent",
   headerBg: token2.colorBgElevated,
   titleLineHeight: token2.lineHeightHeading5,
@@ -21933,15 +22183,15 @@ const prepareComponentToken$e = (token2) => ({
   confirmIconMarginInlineEnd: token2.wireframe ? token2.margin : token2.marginSM,
   confirmBtnsMarginTop: token2.wireframe ? token2.marginLG : token2.marginSM
 });
-const useStyle$h = genStyleHooks("Modal", (token2) => {
-  const modalToken = prepareToken$1(token2);
+const useStyle$m = genStyleHooks("Modal", (token2) => {
+  const modalToken = prepareToken$2(token2);
   return [genModalStyle(modalToken), genRTLStyle(modalToken), genModalMaskStyle(modalToken), initZoomMotion(modalToken, "zoom")];
-}, prepareComponentToken$e, {
+}, prepareComponentToken$i, {
   unitless: {
     titleLineHeight: true
   }
 });
-var __rest$D = function(s2, e2) {
+var __rest$J = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -22000,22 +22250,22 @@ const Modal$1 = (props) => {
     styles: modalStyles,
     children,
     loading
-  } = props, restProps = __rest$D(props, ["prefixCls", "className", "rootClassName", "open", "wrapClassName", "centered", "getContainer", "focusTriggerAfterClose", "style", "visible", "width", "footer", "classNames", "styles", "children", "loading"]);
+  } = props, restProps = __rest$J(props, ["prefixCls", "className", "rootClassName", "open", "wrapClassName", "centered", "getContainer", "focusTriggerAfterClose", "style", "visible", "width", "footer", "classNames", "styles", "children", "loading"]);
   const prefixCls = getPrefixCls("modal", customizePrefixCls);
   const rootPrefixCls = getPrefixCls();
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$h(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$m(prefixCls, rootCls);
   const wrapClassNameExtended = classNames(wrapClassName, {
     [`${prefixCls}-centered`]: !!centered,
     [`${prefixCls}-wrap-rtl`]: direction === "rtl"
   });
-  const dialogFooter = footer !== null && !loading ? /* @__PURE__ */ reactExports.createElement(Footer$1, Object.assign({}, props, {
+  const dialogFooter = footer !== null && !loading ? /* @__PURE__ */ reactExports.createElement(Footer$3, Object.assign({}, props, {
     onOk: handleOk,
     onCancel: handleCancel
   })) : null;
   const [mergedClosable, mergedCloseIcon] = useClosable(pickClosable(props), pickClosable(modalContext), {
     closable: true,
-    closeIcon: /* @__PURE__ */ reactExports.createElement(RefIcon$j, {
+    closeIcon: /* @__PURE__ */ reactExports.createElement(RefIcon$s, {
       className: `${prefixCls}-close-icon`
     }),
     closeIconRender: (icon) => renderCloseIcon(prefixCls, icon)
@@ -22146,13 +22396,13 @@ const genModalConfirmStyle = (token2) => {
   };
 };
 const Confirm = genSubStyleComponent(["Modal", "confirm"], (token2) => {
-  const modalToken = prepareToken$1(token2);
+  const modalToken = prepareToken$2(token2);
   return [genModalConfirmStyle(modalToken)];
-}, prepareComponentToken$e, {
+}, prepareComponentToken$i, {
   // confirm is weak than modal since no conflict here
   order: -1e3
 });
-var __rest$C = function(s2, e2) {
+var __rest$I = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -22172,21 +22422,21 @@ function ConfirmContent(props) {
     footer,
     // Legacy for static function usage
     locale: staticLocale
-  } = props, resetProps = __rest$C(props, ["prefixCls", "icon", "okText", "cancelText", "confirmPrefixCls", "type", "okCancel", "footer", "locale"]);
+  } = props, resetProps = __rest$I(props, ["prefixCls", "icon", "okText", "cancelText", "confirmPrefixCls", "type", "okCancel", "footer", "locale"]);
   let mergedIcon = icon;
   if (!icon && icon !== null) {
     switch (type4) {
       case "info":
-        mergedIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$h, null);
+        mergedIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$q, null);
         break;
       case "success":
-        mergedIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$l, null);
+        mergedIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$u, null);
         break;
       case "error":
-        mergedIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$k, null);
+        mergedIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$t, null);
         break;
       default:
-        mergedIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$i, null);
+        mergedIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$r, null);
     }
   }
   const mergedOkCancel = okCancel !== null && okCancel !== void 0 ? okCancel : type4 === "confirm";
@@ -22258,7 +22508,7 @@ const ConfirmDialog = (props) => {
   const classString = classNames(confirmPrefixCls, `${confirmPrefixCls}-${props.type}`, {
     [`${confirmPrefixCls}-rtl`]: direction === "rtl"
   }, props.className);
-  const [, token2] = useToken$1();
+  const [, token2] = useToken();
   const mergedZIndex = reactExports.useMemo(() => {
     if (zIndex !== void 0) {
       return zIndex;
@@ -22308,13 +22558,13 @@ const ConfirmDialogWrapper$1 = (props) => {
     rootPrefixCls,
     iconPrefixCls,
     direction,
-    theme: theme2
+    theme
   } = props;
   return /* @__PURE__ */ reactExports.createElement(ConfigProvider$1, {
     prefixCls: rootPrefixCls,
     iconPrefixCls,
     direction,
-    theme: theme2
+    theme
   }, /* @__PURE__ */ reactExports.createElement(ConfirmDialog, Object.assign({}, props)));
 };
 const destroyFns = [];
@@ -22380,12 +22630,12 @@ function confirm(config) {
     timeoutId = setTimeout(() => {
       const rootPrefixCls = global2.getPrefixCls(void 0, getRootPrefixCls());
       const iconPrefixCls = global2.getIconPrefixCls();
-      const theme2 = global2.getTheme();
+      const theme = global2.getTheme();
       const dom = /* @__PURE__ */ React.createElement(ConfirmDialogWrapper, Object.assign({}, props));
       render(/* @__PURE__ */ React.createElement(ConfigProvider$1, {
         prefixCls: rootPrefixCls,
         iconPrefixCls,
-        theme: theme2
+        theme
       }, global2.holderRender ? global2.holderRender(dom) : dom), container);
     });
   }
@@ -22453,7 +22703,7 @@ function modalGlobalConfig(_ref) {
   } = _ref;
   defaultRootPrefixCls = rootPrefixCls;
 }
-var __rest$B = function(s2, e2) {
+var __rest$H = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -22466,7 +22716,7 @@ const HookModal = (_a, ref) => {
   var {
     afterClose: hookAfterClose,
     config
-  } = _a, restProps = __rest$B(_a, ["afterClose", "config"]);
+  } = _a, restProps = __rest$H(_a, ["afterClose", "config"]);
   const [open, setOpen] = reactExports.useState(true);
   const [innerConfig, setInnerConfig] = reactExports.useState(config);
   const {
@@ -22839,10 +23089,10 @@ function isValidateOpenKey(currentKeyCode) {
     KeyCode.F12
   ].includes(currentKeyCode);
 }
-var _excluded$x = ["prefixCls", "invalidate", "item", "renderItem", "responsive", "responsiveDisabled", "registerSize", "itemKey", "className", "style", "children", "display", "order", "component"];
+var _excluded$I = ["prefixCls", "invalidate", "item", "renderItem", "responsive", "responsiveDisabled", "registerSize", "itemKey", "className", "style", "children", "display", "order", "component"];
 var UNDEFINED = void 0;
 function InternalItem(props, ref) {
-  var prefixCls = props.prefixCls, invalidate = props.invalidate, item = props.item, renderItem2 = props.renderItem, responsive = props.responsive, responsiveDisabled = props.responsiveDisabled, registerSize = props.registerSize, itemKey2 = props.itemKey, className = props.className, style2 = props.style, children = props.children, display = props.display, order = props.order, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, restProps = _objectWithoutProperties(props, _excluded$x);
+  var prefixCls = props.prefixCls, invalidate = props.invalidate, item = props.item, renderItem = props.renderItem, responsive = props.responsive, responsiveDisabled = props.responsiveDisabled, registerSize = props.registerSize, itemKey2 = props.itemKey, className = props.className, style2 = props.style, children = props.children, display = props.display, order = props.order, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, restProps = _objectWithoutProperties(props, _excluded$I);
   var mergedHidden = responsive && !display;
   function internalRegisterSize(width) {
     registerSize(itemKey2, width);
@@ -22852,7 +23102,7 @@ function InternalItem(props, ref) {
       internalRegisterSize(null);
     };
   }, []);
-  var childNode = renderItem2 && item !== UNDEFINED ? renderItem2(item) : children;
+  var childNode = renderItem && item !== UNDEFINED ? renderItem(item) : children;
   var overflowStyle;
   if (!invalidate) {
     overflowStyle = {
@@ -22885,8 +23135,8 @@ function InternalItem(props, ref) {
   }
   return itemNode;
 }
-var Item$1 = /* @__PURE__ */ reactExports.forwardRef(InternalItem);
-Item$1.displayName = "Item";
+var Item$2 = /* @__PURE__ */ reactExports.forwardRef(InternalItem);
+Item$2.displayName = "Item";
 function channelUpdate(callback) {
   if (typeof MessageChannel === "undefined") {
     wrapperRaf(callback);
@@ -22926,34 +23176,34 @@ function useEffectState(notifyEffectUpdate, defaultValue) {
   return [stateValue, setEffectVal];
 }
 var OverflowContext = /* @__PURE__ */ React.createContext(null);
-var _excluded$w = ["component"], _excluded2$6 = ["className"], _excluded3$1 = ["className"];
+var _excluded$H = ["component"], _excluded2$7 = ["className"], _excluded3$1 = ["className"];
 var InternalRawItem = function InternalRawItem2(props, ref) {
   var context = reactExports.useContext(OverflowContext);
   if (!context) {
-    var _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, _restProps = _objectWithoutProperties(props, _excluded$w);
+    var _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, _restProps = _objectWithoutProperties(props, _excluded$H);
     return /* @__PURE__ */ reactExports.createElement(Component, _extends({}, _restProps, {
       ref
     }));
   }
-  var contextClassName = context.className, restContext = _objectWithoutProperties(context, _excluded2$6);
+  var contextClassName = context.className, restContext = _objectWithoutProperties(context, _excluded2$7);
   var className = props.className, restProps = _objectWithoutProperties(props, _excluded3$1);
   return /* @__PURE__ */ reactExports.createElement(OverflowContext.Provider, {
     value: null
-  }, /* @__PURE__ */ reactExports.createElement(Item$1, _extends({
+  }, /* @__PURE__ */ reactExports.createElement(Item$2, _extends({
     ref,
     className: classNames(contextClassName, className)
   }, restContext, restProps)));
 };
 var RawItem = /* @__PURE__ */ reactExports.forwardRef(InternalRawItem);
 RawItem.displayName = "RawItem";
-var _excluded$v = ["prefixCls", "data", "renderItem", "renderRawItem", "itemKey", "itemWidth", "ssr", "style", "className", "maxCount", "renderRest", "renderRawRest", "suffix", "component", "itemComponent", "onVisibleChange"];
+var _excluded$G = ["prefixCls", "data", "renderItem", "renderRawItem", "itemKey", "itemWidth", "ssr", "style", "className", "maxCount", "renderRest", "renderRawRest", "suffix", "component", "itemComponent", "onVisibleChange"];
 var RESPONSIVE = "responsive";
 var INVALIDATE = "invalidate";
 function defaultRenderRest(omittedItems) {
   return "+ ".concat(omittedItems.length, " ...");
 }
 function Overflow(props, ref) {
-  var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-overflow" : _props$prefixCls, _props$data = props.data, data = _props$data === void 0 ? [] : _props$data, renderItem2 = props.renderItem, renderRawItem = props.renderRawItem, itemKey2 = props.itemKey, _props$itemWidth = props.itemWidth, itemWidth = _props$itemWidth === void 0 ? 10 : _props$itemWidth, ssr = props.ssr, style2 = props.style, className = props.className, maxCount = props.maxCount, renderRest = props.renderRest, renderRawRest = props.renderRawRest, suffix = props.suffix, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, itemComponent = props.itemComponent, onVisibleChange = props.onVisibleChange, restProps = _objectWithoutProperties(props, _excluded$v);
+  var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-overflow" : _props$prefixCls, _props$data = props.data, data = _props$data === void 0 ? [] : _props$data, renderItem = props.renderItem, renderRawItem = props.renderRawItem, itemKey2 = props.itemKey, _props$itemWidth = props.itemWidth, itemWidth = _props$itemWidth === void 0 ? 10 : _props$itemWidth, ssr = props.ssr, style2 = props.style, className = props.className, maxCount = props.maxCount, renderRest = props.renderRest, renderRawRest = props.renderRawRest, suffix = props.suffix, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, itemComponent = props.itemComponent, onVisibleChange = props.onVisibleChange, restProps = _objectWithoutProperties(props, _excluded$G);
   var fullySSR = ssr === "full";
   var notifyEffectUpdate = useBatcher();
   var _useEffectState = useEffectState(notifyEffectUpdate, null), _useEffectState2 = _slicedToArray(_useEffectState, 2), containerWidth = _useEffectState2[0], setContainerWidth = _useEffectState2[1];
@@ -23003,9 +23253,9 @@ function Overflow(props, ref) {
     }
     return (_ref = itemKey2 && (item === null || item === void 0 ? void 0 : item[itemKey2])) !== null && _ref !== void 0 ? _ref : index2;
   }, [itemKey2]);
-  var mergedRenderItem = reactExports.useCallback(renderItem2 || function(item) {
+  var mergedRenderItem = reactExports.useCallback(renderItem || function(item) {
     return item;
-  }, [renderItem2]);
+  }, [renderItem]);
   function updateDisplayCount(count, suffixFixedStartVal, notReady) {
     if (displayCount === count && (suffixFixedStartVal === void 0 || suffixFixedStartVal === suffixFixedStart)) {
       return;
@@ -23108,7 +23358,7 @@ function Overflow(props, ref) {
     }, renderRawItem(item, index2));
   } : function(item, index2) {
     var key = getKey2(item, index2);
-    return /* @__PURE__ */ reactExports.createElement(Item$1, _extends({}, itemSharedProps, {
+    return /* @__PURE__ */ reactExports.createElement(Item$2, _extends({}, itemSharedProps, {
       order: index2,
       key,
       item,
@@ -23127,7 +23377,7 @@ function Overflow(props, ref) {
   };
   if (!renderRawRest) {
     var mergedRenderRest = renderRest || defaultRenderRest;
-    restNode = /* @__PURE__ */ reactExports.createElement(Item$1, _extends({}, itemSharedProps, restContextProps), typeof mergedRenderRest === "function" ? mergedRenderRest(omittedItems) : mergedRenderRest);
+    restNode = /* @__PURE__ */ reactExports.createElement(Item$2, _extends({}, itemSharedProps, restContextProps), typeof mergedRenderRest === "function" ? mergedRenderRest(omittedItems) : mergedRenderRest);
   } else if (renderRawRest) {
     restNode = /* @__PURE__ */ reactExports.createElement(OverflowContext.Provider, {
       value: _objectSpread2(_objectSpread2({}, itemSharedProps), restContextProps)
@@ -23137,7 +23387,7 @@ function Overflow(props, ref) {
     className: classNames(!invalidate && prefixCls, className),
     style: style2,
     ref
-  }, restProps), mergedData.map(internalRenderItemNode), showRest ? restNode : null, suffix && /* @__PURE__ */ reactExports.createElement(Item$1, _extends({}, itemSharedProps, {
+  }, restProps), mergedData.map(internalRenderItemNode), showRest ? restNode : null, suffix && /* @__PURE__ */ reactExports.createElement(Item$2, _extends({}, itemSharedProps, {
     responsive: isResponsive,
     responsiveDisabled: !shouldResponsive,
     order: mergedDisplayCount,
@@ -23192,7 +23442,7 @@ var Input$3 = function Input2(props, ref) {
     style: _objectSpread2(_objectSpread2({}, style2), {}, {
       opacity: editable ? null : 0
     }),
-    onKeyDown: function onKeyDown(event) {
+    onKeyDown: function onKeyDown2(event) {
       _onKeyDown(event);
       if (onOriginKeyDown) {
         onOriginKeyDown(event);
@@ -23227,7 +23477,7 @@ var Input$3 = function Input2(props, ref) {
   return inputNode;
 };
 var RefInput = /* @__PURE__ */ reactExports.forwardRef(Input$3);
-function toArray$2(value) {
+function toArray$3(value) {
   if (Array.isArray(value)) {
     return value;
   }
@@ -23262,7 +23512,7 @@ function useLayoutEffect(effect, deps) {
     reactExports.useEffect(effect, deps);
   }
 }
-function itemKey(value) {
+function itemKey$1(value) {
   var _value$key;
   return (_value$key = value.key) !== null && _value$key !== void 0 ? _value$key : value.value;
 }
@@ -23312,7 +23562,7 @@ var SelectSelector = function SelectSelector2(props) {
       isMaxTag: !!isMaxTag
     }));
   };
-  var renderItem2 = function renderItem3(valueItem) {
+  var renderItem = function renderItem2(valueItem) {
     var itemDisabled = valueItem.disabled, label = valueItem.label, value = valueItem.value;
     var closable = !disabled && !itemDisabled;
     var displayLabel = label;
@@ -23377,10 +23627,10 @@ var SelectSelector = function SelectSelector2(props) {
   var selectionNode = /* @__PURE__ */ reactExports.createElement(ForwardOverflow, {
     prefixCls: "".concat(selectionPrefixCls, "-overflow"),
     data: values,
-    renderItem: renderItem2,
+    renderItem,
     renderRest,
     suffix: inputNode,
-    itemKey,
+    itemKey: itemKey$1,
     maxCount: maxTagCount
   });
   return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, selectionNode, !values.length && !inputValue && /* @__PURE__ */ reactExports.createElement("span", {
@@ -23748,13 +23998,13 @@ var TriggerWrapper = /* @__PURE__ */ reactExports.forwardRef(function(props, ref
   }) : children;
 });
 var TriggerContext = /* @__PURE__ */ reactExports.createContext(null);
-function toArray$1(val) {
+function toArray$2(val) {
   return val ? Array.isArray(val) ? val : [val] : [];
 }
 function useAction(mobile, action, showAction, hideAction) {
   return reactExports.useMemo(function() {
-    var mergedShowAction = toArray$1(showAction !== null && showAction !== void 0 ? showAction : action);
-    var mergedHideAction = toArray$1(hideAction !== null && hideAction !== void 0 ? hideAction : action);
+    var mergedShowAction = toArray$2(showAction !== null && showAction !== void 0 ? showAction : action);
+    var mergedHideAction = toArray$2(hideAction !== null && hideAction !== void 0 ? hideAction : action);
     var showActionSet = new Set(mergedShowAction);
     var hideActionSet = new Set(mergedHideAction);
     if (mobile) {
@@ -24341,11 +24591,11 @@ function useWinClick(open, clickToHide, targetEle, popupEle, mask, maskClosable,
     }
   }, [clickToHide, targetEle, popupEle, mask, maskClosable]);
 }
-var _excluded$u = ["prefixCls", "children", "action", "showAction", "hideAction", "popupVisible", "defaultPopupVisible", "onPopupVisibleChange", "afterPopupVisibleChange", "mouseEnterDelay", "mouseLeaveDelay", "focusDelay", "blurDelay", "mask", "maskClosable", "getPopupContainer", "forceRender", "autoDestroy", "destroyPopupOnHide", "popup", "popupClassName", "popupStyle", "popupPlacement", "builtinPlacements", "popupAlign", "zIndex", "stretch", "getPopupClassNameFromAlign", "fresh", "alignPoint", "onPopupClick", "onPopupAlign", "arrow", "popupMotion", "maskMotion", "popupTransitionName", "popupAnimation", "maskTransitionName", "maskAnimation", "className", "getTriggerDOMNode"];
+var _excluded$F = ["prefixCls", "children", "action", "showAction", "hideAction", "popupVisible", "defaultPopupVisible", "onPopupVisibleChange", "afterPopupVisibleChange", "mouseEnterDelay", "mouseLeaveDelay", "focusDelay", "blurDelay", "mask", "maskClosable", "getPopupContainer", "forceRender", "autoDestroy", "destroyPopupOnHide", "popup", "popupClassName", "popupStyle", "popupPlacement", "builtinPlacements", "popupAlign", "zIndex", "stretch", "getPopupClassNameFromAlign", "fresh", "alignPoint", "onPopupClick", "onPopupAlign", "arrow", "popupMotion", "maskMotion", "popupTransitionName", "popupAnimation", "maskTransitionName", "maskAnimation", "className", "getTriggerDOMNode"];
 function generateTrigger() {
   var PortalComponent = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : Portal;
   var Trigger2 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
-    var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-trigger-popup" : _props$prefixCls, children = props.children, _props$action = props.action, action = _props$action === void 0 ? "hover" : _props$action, showAction = props.showAction, hideAction = props.hideAction, popupVisible = props.popupVisible, defaultPopupVisible = props.defaultPopupVisible, onPopupVisibleChange = props.onPopupVisibleChange, afterPopupVisibleChange = props.afterPopupVisibleChange, mouseEnterDelay = props.mouseEnterDelay, _props$mouseLeaveDela = props.mouseLeaveDelay, mouseLeaveDelay = _props$mouseLeaveDela === void 0 ? 0.1 : _props$mouseLeaveDela, focusDelay = props.focusDelay, blurDelay = props.blurDelay, mask = props.mask, _props$maskClosable = props.maskClosable, maskClosable = _props$maskClosable === void 0 ? true : _props$maskClosable, getPopupContainer = props.getPopupContainer, forceRender = props.forceRender, autoDestroy = props.autoDestroy, destroyPopupOnHide = props.destroyPopupOnHide, popup = props.popup, popupClassName = props.popupClassName, popupStyle = props.popupStyle, popupPlacement = props.popupPlacement, _props$builtinPlaceme = props.builtinPlacements, builtinPlacements = _props$builtinPlaceme === void 0 ? {} : _props$builtinPlaceme, popupAlign = props.popupAlign, zIndex = props.zIndex, stretch = props.stretch, getPopupClassNameFromAlign = props.getPopupClassNameFromAlign, fresh = props.fresh, alignPoint = props.alignPoint, onPopupClick = props.onPopupClick, onPopupAlign = props.onPopupAlign, arrow = props.arrow, popupMotion = props.popupMotion, maskMotion = props.maskMotion, popupTransitionName = props.popupTransitionName, popupAnimation = props.popupAnimation, maskTransitionName = props.maskTransitionName, maskAnimation = props.maskAnimation, className = props.className, getTriggerDOMNode = props.getTriggerDOMNode, restProps = _objectWithoutProperties(props, _excluded$u);
+    var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-trigger-popup" : _props$prefixCls, children = props.children, _props$action = props.action, action = _props$action === void 0 ? "hover" : _props$action, showAction = props.showAction, hideAction = props.hideAction, popupVisible = props.popupVisible, defaultPopupVisible = props.defaultPopupVisible, onPopupVisibleChange = props.onPopupVisibleChange, afterPopupVisibleChange = props.afterPopupVisibleChange, mouseEnterDelay = props.mouseEnterDelay, _props$mouseLeaveDela = props.mouseLeaveDelay, mouseLeaveDelay = _props$mouseLeaveDela === void 0 ? 0.1 : _props$mouseLeaveDela, focusDelay = props.focusDelay, blurDelay = props.blurDelay, mask = props.mask, _props$maskClosable = props.maskClosable, maskClosable = _props$maskClosable === void 0 ? true : _props$maskClosable, getPopupContainer = props.getPopupContainer, forceRender = props.forceRender, autoDestroy = props.autoDestroy, destroyPopupOnHide = props.destroyPopupOnHide, popup = props.popup, popupClassName = props.popupClassName, popupStyle = props.popupStyle, popupPlacement = props.popupPlacement, _props$builtinPlaceme = props.builtinPlacements, builtinPlacements = _props$builtinPlaceme === void 0 ? {} : _props$builtinPlaceme, popupAlign = props.popupAlign, zIndex = props.zIndex, stretch = props.stretch, getPopupClassNameFromAlign = props.getPopupClassNameFromAlign, fresh = props.fresh, alignPoint = props.alignPoint, onPopupClick = props.onPopupClick, onPopupAlign = props.onPopupAlign, arrow = props.arrow, popupMotion = props.popupMotion, maskMotion = props.maskMotion, popupTransitionName = props.popupTransitionName, popupAnimation = props.popupAnimation, maskTransitionName = props.maskTransitionName, maskAnimation = props.maskAnimation, className = props.className, getTriggerDOMNode = props.getTriggerDOMNode, restProps = _objectWithoutProperties(props, _excluded$F);
     var mergedAutoDestroy = autoDestroy || destroyPopupOnHide || false;
     var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), mobile = _React$useState2[0], setMobile = _React$useState2[1];
     useLayoutEffect$1(function() {
@@ -24661,7 +24911,7 @@ function generateTrigger() {
   return Trigger2;
 }
 const Trigger = generateTrigger(Portal);
-var _excluded$t = ["prefixCls", "disabled", "visible", "children", "popupElement", "animation", "transitionName", "dropdownStyle", "dropdownClassName", "direction", "placement", "builtinPlacements", "dropdownMatchSelectWidth", "dropdownRender", "dropdownAlign", "getPopupContainer", "empty", "getTriggerDOMNode", "onPopupVisibleChange", "onPopupMouseEnter"];
+var _excluded$E = ["prefixCls", "disabled", "visible", "children", "popupElement", "animation", "transitionName", "dropdownStyle", "dropdownClassName", "direction", "placement", "builtinPlacements", "dropdownMatchSelectWidth", "dropdownRender", "dropdownAlign", "getPopupContainer", "empty", "getTriggerDOMNode", "onPopupVisibleChange", "onPopupMouseEnter"];
 var getBuiltInPlacements$1 = function getBuiltInPlacements2(dropdownMatchSelectWidth) {
   var adjustX = dropdownMatchSelectWidth === true ? 0 : 1;
   return {
@@ -24706,7 +24956,7 @@ var getBuiltInPlacements$1 = function getBuiltInPlacements2(dropdownMatchSelectW
 var SelectTrigger = function SelectTrigger2(props, ref) {
   var prefixCls = props.prefixCls;
   props.disabled;
-  var visible = props.visible, children = props.children, popupElement = props.popupElement, animation = props.animation, transitionName = props.transitionName, dropdownStyle = props.dropdownStyle, dropdownClassName = props.dropdownClassName, _props$direction = props.direction, direction = _props$direction === void 0 ? "ltr" : _props$direction, placement = props.placement, builtinPlacements = props.builtinPlacements, dropdownMatchSelectWidth = props.dropdownMatchSelectWidth, dropdownRender = props.dropdownRender, dropdownAlign = props.dropdownAlign, getPopupContainer = props.getPopupContainer, empty = props.empty, getTriggerDOMNode = props.getTriggerDOMNode, onPopupVisibleChange = props.onPopupVisibleChange, onPopupMouseEnter = props.onPopupMouseEnter, restProps = _objectWithoutProperties(props, _excluded$t);
+  var visible = props.visible, children = props.children, popupElement = props.popupElement, animation = props.animation, transitionName = props.transitionName, dropdownStyle = props.dropdownStyle, dropdownClassName = props.dropdownClassName, _props$direction = props.direction, direction = _props$direction === void 0 ? "ltr" : _props$direction, placement = props.placement, builtinPlacements = props.builtinPlacements, dropdownMatchSelectWidth = props.dropdownMatchSelectWidth, dropdownRender = props.dropdownRender, dropdownAlign = props.dropdownAlign, getPopupContainer = props.getPopupContainer, empty = props.empty, getTriggerDOMNode = props.getTriggerDOMNode, onPopupVisibleChange = props.onPopupVisibleChange, onPopupMouseEnter = props.onPopupMouseEnter, restProps = _objectWithoutProperties(props, _excluded$E);
   var dropdownPrefixCls = "".concat(prefixCls, "-dropdown");
   var popupNode = popupElement;
   if (dropdownRender) {
@@ -24760,7 +25010,7 @@ var SelectTrigger = function SelectTrigger2(props, ref) {
   }), children);
 };
 var RefSelectTrigger = /* @__PURE__ */ reactExports.forwardRef(SelectTrigger);
-function getKey(data, index2) {
+function getKey$1(data, index2) {
   var key = data.key;
   var value;
   if ("value" in data) {
@@ -24777,7 +25027,7 @@ function getKey(data, index2) {
 function isValidCount(value) {
   return typeof value !== "undefined" && !Number.isNaN(value);
 }
-function fillFieldNames(fieldNames, childrenAsData) {
+function fillFieldNames$1(fieldNames, childrenAsData) {
   var _ref = fieldNames || {}, label = _ref.label, value = _ref.value, options = _ref.options, groupLabel = _ref.groupLabel;
   var mergedLabel = label || (childrenAsData ? "children" : "label");
   return {
@@ -24790,7 +25040,7 @@ function fillFieldNames(fieldNames, childrenAsData) {
 function flattenOptions(options) {
   var _ref2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, fieldNames = _ref2.fieldNames, childrenAsData = _ref2.childrenAsData;
   var flattenList = [];
-  var _fillFieldNames = fillFieldNames(fieldNames, false), fieldLabel = _fillFieldNames.label, fieldValue = _fillFieldNames.value, fieldOptions = _fillFieldNames.options, groupLabel = _fillFieldNames.groupLabel;
+  var _fillFieldNames = fillFieldNames$1(fieldNames, false), fieldLabel = _fillFieldNames.label, fieldValue = _fillFieldNames.value, fieldOptions = _fillFieldNames.options, groupLabel = _fillFieldNames.groupLabel;
   function dig(list, isGroupOption) {
     if (!Array.isArray(list)) {
       return;
@@ -24799,7 +25049,7 @@ function flattenOptions(options) {
       if (isGroupOption || !(fieldOptions in data)) {
         var value = data[fieldValue];
         flattenList.push({
-          key: getKey(data, flattenList.length),
+          key: getKey$1(data, flattenList.length),
           groupOption: isGroupOption,
           data,
           label: data[fieldLabel],
@@ -24811,7 +25061,7 @@ function flattenOptions(options) {
           grpLabel = data.label;
         }
         flattenList.push({
-          key: getKey(data, flattenList.length),
+          key: getKey$1(data, flattenList.length),
           group: true,
           data,
           label: grpLabel
@@ -24879,14 +25129,14 @@ function Polite(props) {
     return ["number", "string"].includes(_typeof(label)) ? label : value;
   }).join(", ")), values.length > MAX_COUNT ? ", ..." : null);
 }
-var _excluded$s = ["id", "prefixCls", "className", "showSearch", "tagRender", "direction", "omitDomProps", "displayValues", "onDisplayValuesChange", "emptyOptions", "notFoundContent", "onClear", "mode", "disabled", "loading", "getInputElement", "getRawInputElement", "open", "defaultOpen", "onDropdownVisibleChange", "activeValue", "onActiveValueChange", "activeDescendantId", "searchValue", "autoClearSearchValue", "onSearch", "onSearchSplit", "tokenSeparators", "allowClear", "suffixIcon", "clearIcon", "OptionList", "animation", "transitionName", "dropdownStyle", "dropdownClassName", "dropdownMatchSelectWidth", "dropdownRender", "dropdownAlign", "placement", "builtinPlacements", "getPopupContainer", "showAction", "onFocus", "onBlur", "onKeyUp", "onKeyDown", "onMouseDown"];
+var _excluded$D = ["id", "prefixCls", "className", "showSearch", "tagRender", "direction", "omitDomProps", "displayValues", "onDisplayValuesChange", "emptyOptions", "notFoundContent", "onClear", "mode", "disabled", "loading", "getInputElement", "getRawInputElement", "open", "defaultOpen", "onDropdownVisibleChange", "activeValue", "onActiveValueChange", "activeDescendantId", "searchValue", "autoClearSearchValue", "onSearch", "onSearchSplit", "tokenSeparators", "allowClear", "suffixIcon", "clearIcon", "OptionList", "animation", "transitionName", "dropdownStyle", "dropdownClassName", "dropdownMatchSelectWidth", "dropdownRender", "dropdownAlign", "placement", "builtinPlacements", "getPopupContainer", "showAction", "onFocus", "onBlur", "onKeyUp", "onKeyDown", "onMouseDown"];
 var DEFAULT_OMIT_PROPS = ["value", "onChange", "removeIcon", "placeholder", "autoFocus", "maxTagCount", "maxTagTextLength", "maxTagPlaceholder", "choiceTransitionName", "onInputKeyDown", "onPopupScroll", "tabIndex"];
 var isMultiple = function isMultiple2(mode) {
   return mode === "tags" || mode === "multiple";
 };
 var BaseSelect = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
   var _customizeRawInputEle;
-  var id2 = props.id, prefixCls = props.prefixCls, className = props.className, showSearch = props.showSearch, tagRender = props.tagRender, direction = props.direction, omitDomProps = props.omitDomProps, displayValues = props.displayValues, onDisplayValuesChange = props.onDisplayValuesChange, emptyOptions = props.emptyOptions, _props$notFoundConten = props.notFoundContent, notFoundContent = _props$notFoundConten === void 0 ? "Not Found" : _props$notFoundConten, onClear = props.onClear, mode = props.mode, disabled = props.disabled, loading = props.loading, getInputElement = props.getInputElement, getRawInputElement = props.getRawInputElement, open = props.open, defaultOpen = props.defaultOpen, onDropdownVisibleChange = props.onDropdownVisibleChange, activeValue = props.activeValue, onActiveValueChange = props.onActiveValueChange, activeDescendantId = props.activeDescendantId, searchValue = props.searchValue, autoClearSearchValue = props.autoClearSearchValue, onSearch = props.onSearch, onSearchSplit = props.onSearchSplit, tokenSeparators = props.tokenSeparators, allowClear = props.allowClear, suffixIcon = props.suffixIcon, clearIcon = props.clearIcon, OptionList3 = props.OptionList, animation = props.animation, transitionName = props.transitionName, dropdownStyle = props.dropdownStyle, dropdownClassName = props.dropdownClassName, dropdownMatchSelectWidth = props.dropdownMatchSelectWidth, dropdownRender = props.dropdownRender, dropdownAlign = props.dropdownAlign, placement = props.placement, builtinPlacements = props.builtinPlacements, getPopupContainer = props.getPopupContainer, _props$showAction = props.showAction, showAction = _props$showAction === void 0 ? [] : _props$showAction, onFocus = props.onFocus, onBlur = props.onBlur, onKeyUp = props.onKeyUp, onKeyDown = props.onKeyDown, onMouseDown = props.onMouseDown, restProps = _objectWithoutProperties(props, _excluded$s);
+  var id2 = props.id, prefixCls = props.prefixCls, className = props.className, showSearch = props.showSearch, tagRender = props.tagRender, direction = props.direction, omitDomProps = props.omitDomProps, displayValues = props.displayValues, onDisplayValuesChange = props.onDisplayValuesChange, emptyOptions = props.emptyOptions, _props$notFoundConten = props.notFoundContent, notFoundContent = _props$notFoundConten === void 0 ? "Not Found" : _props$notFoundConten, onClear = props.onClear, mode = props.mode, disabled = props.disabled, loading = props.loading, getInputElement = props.getInputElement, getRawInputElement = props.getRawInputElement, open = props.open, defaultOpen = props.defaultOpen, onDropdownVisibleChange = props.onDropdownVisibleChange, activeValue = props.activeValue, onActiveValueChange = props.onActiveValueChange, activeDescendantId = props.activeDescendantId, searchValue = props.searchValue, autoClearSearchValue = props.autoClearSearchValue, onSearch = props.onSearch, onSearchSplit = props.onSearchSplit, tokenSeparators = props.tokenSeparators, allowClear = props.allowClear, suffixIcon = props.suffixIcon, clearIcon = props.clearIcon, OptionList3 = props.OptionList, animation = props.animation, transitionName = props.transitionName, dropdownStyle = props.dropdownStyle, dropdownClassName = props.dropdownClassName, dropdownMatchSelectWidth = props.dropdownMatchSelectWidth, dropdownRender = props.dropdownRender, dropdownAlign = props.dropdownAlign, placement = props.placement, builtinPlacements = props.builtinPlacements, getPopupContainer = props.getPopupContainer, _props$showAction = props.showAction, showAction = _props$showAction === void 0 ? [] : _props$showAction, onFocus = props.onFocus, onBlur = props.onBlur, onKeyUp = props.onKeyUp, onKeyDown2 = props.onKeyDown, onMouseDown = props.onMouseDown, restProps = _objectWithoutProperties(props, _excluded$D);
   var multiple = isMultiple(mode);
   var mergedShowSearch = (showSearch !== void 0 ? showSearch : multiple) || mode === "combobox";
   var domProps = _objectSpread2({}, restProps);
@@ -24912,7 +25162,7 @@ var BaseSelect = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
     return {
       focus: (_selectorRef$current = selectorRef.current) === null || _selectorRef$current === void 0 ? void 0 : _selectorRef$current.focus,
       blur: (_selectorRef$current2 = selectorRef.current) === null || _selectorRef$current2 === void 0 ? void 0 : _selectorRef$current2.blur,
-      scrollTo: function scrollTo(arg) {
+      scrollTo: function scrollTo2(arg) {
         var _listRef$current;
         return (_listRef$current = listRef.current) === null || _listRef$current === void 0 ? void 0 : _listRef$current.scrollTo(arg);
       },
@@ -25045,7 +25295,7 @@ var BaseSelect = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
     if (isEnterKey) {
       keyLockRef.current = true;
     }
-    onKeyDown === null || onKeyDown === void 0 || onKeyDown.apply(void 0, [event].concat(rest));
+    onKeyDown2 === null || onKeyDown2 === void 0 || onKeyDown2.apply(void 0, [event].concat(rest));
   };
   var onInternalKeyUp = function onInternalKeyUp2(event) {
     for (var _len2 = arguments.length, rest = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
@@ -25308,7 +25558,7 @@ var Filler = /* @__PURE__ */ reactExports.forwardRef(function(_ref, ref) {
   }, innerProps), children, extra)));
 });
 Filler.displayName = "Filler";
-function Item(_ref) {
+function Item$1(_ref) {
   var children = _ref.children, setRef = _ref.setRef;
   var refFunc = reactExports.useCallback(function(node2) {
     setRef(node2);
@@ -25328,7 +25578,7 @@ function useChildren$1(list, startIndex, endIndex, scrollWidth, offsetX, setNode
       offsetX
     });
     var key = getKey2(item);
-    return /* @__PURE__ */ reactExports.createElement(Item, {
+    return /* @__PURE__ */ reactExports.createElement(Item$1, {
       key,
       setRef: function setRef(ele) {
         return setNodeRef(item, ele);
@@ -25967,14 +26217,14 @@ function getSpinSize() {
   baseSize = Math.max(baseSize, MIN_SIZE);
   return Math.floor(baseSize);
 }
-var _excluded$r = ["prefixCls", "className", "height", "itemHeight", "fullHeight", "style", "data", "children", "itemKey", "virtual", "direction", "scrollWidth", "component", "onScroll", "onVirtualScroll", "onVisibleChange", "innerProps", "extraRender", "styles"];
-var EMPTY_DATA = [];
+var _excluded$C = ["prefixCls", "className", "height", "itemHeight", "fullHeight", "style", "data", "children", "itemKey", "virtual", "direction", "scrollWidth", "component", "onScroll", "onVirtualScroll", "onVisibleChange", "innerProps", "extraRender", "styles"];
+var EMPTY_DATA$1 = [];
 var ScrollStyle = {
   overflowY: "auto",
   overflowAnchor: "none"
 };
 function RawList(props, ref) {
-  var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-virtual-list" : _props$prefixCls, className = props.className, height = props.height, itemHeight = props.itemHeight, _props$fullHeight = props.fullHeight, fullHeight = _props$fullHeight === void 0 ? true : _props$fullHeight, style2 = props.style, data = props.data, children = props.children, itemKey2 = props.itemKey, virtual = props.virtual, direction = props.direction, scrollWidth = props.scrollWidth, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, onScroll = props.onScroll, onVirtualScroll = props.onVirtualScroll, onVisibleChange = props.onVisibleChange, innerProps = props.innerProps, extraRender = props.extraRender, styles = props.styles, restProps = _objectWithoutProperties(props, _excluded$r);
+  var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-virtual-list" : _props$prefixCls, className = props.className, height = props.height, itemHeight = props.itemHeight, _props$fullHeight = props.fullHeight, fullHeight = _props$fullHeight === void 0 ? true : _props$fullHeight, style2 = props.style, data = props.data, children = props.children, itemKey2 = props.itemKey, virtual = props.virtual, direction = props.direction, scrollWidth = props.scrollWidth, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, onScroll = props.onScroll, onVirtualScroll = props.onVirtualScroll, onVisibleChange = props.onVisibleChange, innerProps = props.innerProps, extraRender = props.extraRender, styles = props.styles, restProps = _objectWithoutProperties(props, _excluded$C);
   var getKey2 = reactExports.useCallback(function(item) {
     if (typeof itemKey2 === "function") {
       return itemKey2(item);
@@ -25991,7 +26241,7 @@ function RawList(props, ref) {
   var inVirtual = useVirtual && data && (Math.max(itemHeight * data.length, containerHeight) > height || !!scrollWidth);
   var isRTL = direction === "rtl";
   var mergedClassName = classNames(prefixCls, _defineProperty({}, "".concat(prefixCls, "-rtl"), isRTL), className);
-  var mergedData = data || EMPTY_DATA;
+  var mergedData = data || EMPTY_DATA$1;
   var componentRef = reactExports.useRef();
   var fillerInnerRef = reactExports.useRef();
   var containerRef = reactExports.useRef();
@@ -26230,7 +26480,7 @@ function RawList(props, ref) {
     return {
       nativeElement: containerRef.current,
       getScrollInfo: getVirtualScrollInfo,
-      scrollTo: function scrollTo(config) {
+      scrollTo: function scrollTo2(config) {
         function isPosScroll(arg) {
           return arg && _typeof(arg) === "object" && ("left" in arg || "top" in arg);
         }
@@ -26338,7 +26588,7 @@ List.displayName = "List";
 function isPlatformMac() {
   return /(mac\sos|macintosh)/i.test(navigator.appVersion);
 }
-var _excluded$q = ["disabled", "title", "children", "style", "className"];
+var _excluded$B = ["disabled", "title", "children", "style", "className"];
 function isTitleType(content) {
   return typeof content === "string" || typeof content === "number";
 }
@@ -26432,7 +26682,7 @@ var OptionList = function OptionList2(_, ref) {
   };
   reactExports.useImperativeHandle(ref, function() {
     return {
-      onKeyDown: function onKeyDown(event) {
+      onKeyDown: function onKeyDown2(event) {
         var which = event.which, ctrlKey = event.ctrlKey;
         switch (which) {
           case KeyCode.N:
@@ -26481,7 +26731,7 @@ var OptionList = function OptionList2(_, ref) {
       },
       onKeyUp: function onKeyUp() {
       },
-      scrollTo: function scrollTo(index2) {
+      scrollTo: function scrollTo2(index2) {
         scrollIntoView(index2);
       }
     };
@@ -26507,7 +26757,7 @@ var OptionList = function OptionList2(_, ref) {
       id: "".concat(id2, "_list_").concat(index2)
     };
   }
-  var renderItem2 = function renderItem22(index2) {
+  var renderItem = function renderItem2(index2) {
     var item = memoFlattenOptions[index2];
     if (!item) {
       return null;
@@ -26535,7 +26785,7 @@ var OptionList = function OptionList2(_, ref) {
       width: 0,
       overflow: "hidden"
     }
-  }), renderItem2(activeIndex - 1), renderItem2(activeIndex), renderItem2(activeIndex + 1)), /* @__PURE__ */ reactExports.createElement(List, {
+  }), renderItem(activeIndex - 1), renderItem(activeIndex), renderItem(activeIndex + 1)), /* @__PURE__ */ reactExports.createElement(List, {
     itemKey: "key",
     ref: listRef,
     data: memoFlattenOptions,
@@ -26560,7 +26810,7 @@ var OptionList = function OptionList2(_, ref) {
     }
     var disabled = data.disabled, title = data.title;
     data.children;
-    var style2 = data.style, className = data.className, otherProps = _objectWithoutProperties(data, _excluded$q);
+    var style2 = data.style, className = data.className, otherProps = _objectWithoutProperties(data, _excluded$B);
     var passedProps = omit(otherProps, omitFieldNameList);
     var selected = isSelected(value);
     var mergedDisabled = disabled || !selected && overMaxCount;
@@ -26637,7 +26887,7 @@ const useCache = function(labeledValues, valueOptions) {
   return [filledLabeledValues, getOption];
 };
 function includes(test, search) {
-  return toArray$2(test).join("").toUpperCase().includes(search);
+  return toArray$3(test).join("").toUpperCase().includes(search);
 }
 const useFilterOptions = function(options, fieldNames, searchValue, filterOption, optionFilterProp) {
   return reactExports.useMemo(function() {
@@ -26703,9 +26953,9 @@ function useId2(id2) {
   }, []);
   return id2 || innerId;
 }
-var _excluded$p = ["children", "value"], _excluded2$5 = ["children"];
+var _excluded$A = ["children", "value"], _excluded2$6 = ["children"];
 function convertNodeToOption(node2) {
-  var _ref = node2, key = _ref.key, _ref$props = _ref.props, children = _ref$props.children, value = _ref$props.value, restProps = _objectWithoutProperties(_ref$props, _excluded$p);
+  var _ref = node2, key = _ref.key, _ref$props = _ref.props, children = _ref$props.children, value = _ref$props.value, restProps = _objectWithoutProperties(_ref$props, _excluded$A);
   return _objectSpread2({
     key,
     value: value !== void 0 ? value : key,
@@ -26714,11 +26964,11 @@ function convertNodeToOption(node2) {
 }
 function convertChildrenToData(nodes) {
   var optionOnly = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
-  return toArray$4(nodes).map(function(node2, index2) {
+  return toArray$5(nodes).map(function(node2, index2) {
     if (!/* @__PURE__ */ reactExports.isValidElement(node2) || !node2.type) {
       return null;
     }
-    var _ref2 = node2, isSelectOptGroup = _ref2.type.isSelectOptGroup, key = _ref2.key, _ref2$props = _ref2.props, children = _ref2$props.children, restProps = _objectWithoutProperties(_ref2$props, _excluded2$5);
+    var _ref2 = node2, isSelectOptGroup = _ref2.type.isSelectOptGroup, key = _ref2.key, _ref2$props = _ref2.props, children = _ref2$props.children, restProps = _objectWithoutProperties(_ref2$props, _excluded2$6);
     if (optionOnly || !isSelectOptGroup) {
       return convertNodeToOption(node2);
     }
@@ -26776,13 +27026,13 @@ function useRefFunc(callback) {
   }, []);
   return cacheFn;
 }
-var _excluded$o = ["id", "mode", "prefixCls", "backfill", "fieldNames", "inputValue", "searchValue", "onSearch", "autoClearSearchValue", "onSelect", "onDeselect", "dropdownMatchSelectWidth", "filterOption", "filterSort", "optionFilterProp", "optionLabelProp", "options", "optionRender", "children", "defaultActiveFirstOption", "menuItemSelectedIcon", "virtual", "direction", "listHeight", "listItemHeight", "labelRender", "value", "defaultValue", "labelInValue", "onChange", "maxCount"];
+var _excluded$z = ["id", "mode", "prefixCls", "backfill", "fieldNames", "inputValue", "searchValue", "onSearch", "autoClearSearchValue", "onSelect", "onDeselect", "dropdownMatchSelectWidth", "filterOption", "filterSort", "optionFilterProp", "optionLabelProp", "options", "optionRender", "children", "defaultActiveFirstOption", "menuItemSelectedIcon", "virtual", "direction", "listHeight", "listItemHeight", "labelRender", "value", "defaultValue", "labelInValue", "onChange", "maxCount"];
 var OMIT_DOM_PROPS = ["inputValue"];
 function isRawValue(value) {
   return !value || _typeof(value) !== "object";
 }
 var Select$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
-  var id2 = props.id, mode = props.mode, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-select" : _props$prefixCls, backfill = props.backfill, fieldNames = props.fieldNames, inputValue = props.inputValue, searchValue = props.searchValue, onSearch = props.onSearch, _props$autoClearSearc = props.autoClearSearchValue, autoClearSearchValue = _props$autoClearSearc === void 0 ? true : _props$autoClearSearc, onSelect = props.onSelect, onDeselect = props.onDeselect, _props$dropdownMatchS = props.dropdownMatchSelectWidth, dropdownMatchSelectWidth = _props$dropdownMatchS === void 0 ? true : _props$dropdownMatchS, filterOption = props.filterOption, filterSort = props.filterSort, optionFilterProp = props.optionFilterProp, optionLabelProp = props.optionLabelProp, options = props.options, optionRender = props.optionRender, children = props.children, defaultActiveFirstOption = props.defaultActiveFirstOption, menuItemSelectedIcon = props.menuItemSelectedIcon, virtual = props.virtual, direction = props.direction, _props$listHeight = props.listHeight, listHeight = _props$listHeight === void 0 ? 200 : _props$listHeight, _props$listItemHeight = props.listItemHeight, listItemHeight = _props$listItemHeight === void 0 ? 20 : _props$listItemHeight, labelRender = props.labelRender, value = props.value, defaultValue = props.defaultValue, labelInValue = props.labelInValue, onChange = props.onChange, maxCount = props.maxCount, restProps = _objectWithoutProperties(props, _excluded$o);
+  var id2 = props.id, mode = props.mode, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-select" : _props$prefixCls, backfill = props.backfill, fieldNames = props.fieldNames, inputValue = props.inputValue, searchValue = props.searchValue, onSearch = props.onSearch, _props$autoClearSearc = props.autoClearSearchValue, autoClearSearchValue = _props$autoClearSearc === void 0 ? true : _props$autoClearSearc, onSelect = props.onSelect, onDeselect = props.onDeselect, _props$dropdownMatchS = props.dropdownMatchSelectWidth, dropdownMatchSelectWidth = _props$dropdownMatchS === void 0 ? true : _props$dropdownMatchS, filterOption = props.filterOption, filterSort = props.filterSort, optionFilterProp = props.optionFilterProp, optionLabelProp = props.optionLabelProp, options = props.options, optionRender = props.optionRender, children = props.children, defaultActiveFirstOption = props.defaultActiveFirstOption, menuItemSelectedIcon = props.menuItemSelectedIcon, virtual = props.virtual, direction = props.direction, _props$listHeight = props.listHeight, listHeight = _props$listHeight === void 0 ? 200 : _props$listHeight, _props$listItemHeight = props.listItemHeight, listItemHeight = _props$listItemHeight === void 0 ? 20 : _props$listItemHeight, labelRender = props.labelRender, value = props.value, defaultValue = props.defaultValue, labelInValue = props.labelInValue, onChange = props.onChange, maxCount = props.maxCount, restProps = _objectWithoutProperties(props, _excluded$z);
   var mergedId = useId2(id2);
   var multiple = isMultiple(mode);
   var childrenAsData = !!(!options && children);
@@ -26794,7 +27044,7 @@ var Select$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
   }, [filterOption, mode]);
   var mergedFieldNames = reactExports.useMemo(
     function() {
-      return fillFieldNames(fieldNames, childrenAsData);
+      return fillFieldNames$1(fieldNames, childrenAsData);
     },
     /* eslint-disable react-hooks/exhaustive-deps */
     [
@@ -26813,7 +27063,7 @@ var Select$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
   var parsedOptions = useOptions(options, children, mergedFieldNames, optionFilterProp, optionLabelProp);
   var valueOptions = parsedOptions.valueOptions, labelOptions = parsedOptions.labelOptions, mergedOptions = parsedOptions.options;
   var convert2LabelValues = reactExports.useCallback(function(draftValues) {
-    var valueList = toArray$2(draftValues);
+    var valueList = toArray$3(draftValues);
     return valueList.map(function(val) {
       var rawValue;
       var rawLabel;
@@ -27106,7 +27356,7 @@ function getStatusClassNames(prefixCls, status, hasFeedback) {
 }
 const getMergedStatus = (contextStatus, customStatus) => customStatus || contextStatus;
 const Empty$1 = () => {
-  const [, token2] = useToken$1();
+  const [, token2] = useToken();
   const bgColor = new TinyColor(token2.colorBgBase);
   const themeStyle = bgColor.toHsl().l < 0.5 ? {
     opacity: 0.65
@@ -27158,7 +27408,7 @@ const Empty$1 = () => {
   }))));
 };
 const Simple = () => {
-  const [, token2] = useToken$1();
+  const [, token2] = useToken();
   const {
     colorFill,
     colorFillTertiary,
@@ -27255,7 +27505,7 @@ const genSharedEmptyStyle = (token2) => {
     }
   };
 };
-const useStyle$g = genStyleHooks("Empty", (token2) => {
+const useStyle$l = genStyleHooks("Empty", (token2) => {
   const {
     componentCls,
     controlHeightLG,
@@ -27269,7 +27519,7 @@ const useStyle$g = genStyleHooks("Empty", (token2) => {
   });
   return [genSharedEmptyStyle(emptyToken)];
 });
-var __rest$A = function(s2, e2) {
+var __rest$G = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -27289,14 +27539,14 @@ const Empty = (_a) => {
     children,
     imageStyle,
     style: style2
-  } = _a, restProps = __rest$A(_a, ["className", "rootClassName", "prefixCls", "image", "description", "children", "imageStyle", "style"]);
+  } = _a, restProps = __rest$G(_a, ["className", "rootClassName", "prefixCls", "image", "description", "children", "imageStyle", "style"]);
   const {
     getPrefixCls,
     direction,
     empty
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("empty", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$g(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$l(prefixCls);
   const [locale2] = useLocale("Empty");
   const des = typeof description !== "undefined" ? description : locale2 === null || locale2 === void 0 ? void 0 : locale2.description;
   const alt = typeof des === "string" ? des : "empty";
@@ -27651,7 +27901,7 @@ const genOverflowStyle = (token2) => {
     }
   };
 };
-const genSelectionStyle = (token2, suffix) => {
+const genSelectionStyle$1 = (token2, suffix) => {
   const {
     componentCls,
     INTERNAL_FIXED_ITEM_MARGIN
@@ -27743,7 +27993,7 @@ const genSelectionStyle = (token2, suffix) => {
     })
   };
 };
-function genSizeStyle$3(token2, suffix) {
+function genSizeStyle$4(token2, suffix) {
   const {
     componentCls
   } = token2;
@@ -27765,7 +28015,7 @@ function genSizeStyle$3(token2, suffix) {
       }
     }
   };
-  return [genSelectionStyle(token2, suffix), rawStyle];
+  return [genSelectionStyle$1(token2, suffix), rawStyle];
 }
 const genMultipleStyle = (token2) => {
   const {
@@ -27785,9 +28035,9 @@ const genMultipleStyle = (token2) => {
     borderRadiusSM: token2.borderRadius
   });
   return [
-    genSizeStyle$3(token2),
+    genSizeStyle$4(token2),
     // ======================== Small ========================
-    genSizeStyle$3(smallToken, "sm"),
+    genSizeStyle$4(smallToken, "sm"),
     // Padding
     {
       [`${componentCls}-multiple${componentCls}-sm`]: {
@@ -27802,10 +28052,10 @@ const genMultipleStyle = (token2) => {
       }
     },
     // ======================== Large ========================
-    genSizeStyle$3(largeToken, "lg")
+    genSizeStyle$4(largeToken, "lg")
   ];
 };
-function genSizeStyle$2(token2, suffix) {
+function genSizeStyle$3(token2, suffix) {
   const {
     componentCls,
     inputPaddingHorizontalBase,
@@ -27914,10 +28164,10 @@ function genSingleStyle(token2) {
   } = token2;
   const inputPaddingHorizontalSM = token2.calc(token2.controlPaddingHorizontalSM).sub(token2.lineWidth).equal();
   return [
-    genSizeStyle$2(token2),
+    genSizeStyle$3(token2),
     // ======================== Small ========================
     // Shared
-    genSizeStyle$2(merge(token2, {
+    genSizeStyle$3(merge(token2, {
       controlHeight: token2.controlHeightSM,
       borderRadius: token2.borderRadiusSM
     }), "sm"),
@@ -27947,14 +28197,14 @@ function genSingleStyle(token2) {
     },
     // ======================== Large ========================
     // Shared
-    genSizeStyle$2(merge(token2, {
+    genSizeStyle$3(merge(token2, {
       controlHeight: token2.singleItemHeightLG,
       fontSize: token2.fontSizeLG,
       borderRadius: token2.borderRadiusLG
     }), "lg")
   ];
 }
-const prepareComponentToken$d = (token2) => {
+const prepareComponentToken$h = (token2) => {
   const {
     fontSize,
     lineHeight,
@@ -28197,7 +28447,7 @@ const getSearchInputWithoutBorderStyle = (token2) => {
     }
   };
 };
-const genBaseStyle$4 = (token2) => {
+const genBaseStyle$5 = (token2) => {
   const {
     antCls,
     componentCls,
@@ -28327,7 +28577,7 @@ const genSelectStyle = (token2) => {
     // ==                       LTR                       ==
     // =====================================================
     // Base
-    genBaseStyle$4(token2),
+    genBaseStyle$5(token2),
     // Single
     genSingleStyle(token2),
     // Multiple
@@ -28362,7 +28612,7 @@ const useSelectStyle = genStyleHooks("Select", (token2, _ref) => {
     selectHeight: token2.controlHeight
   });
   return [genSelectStyle(selectToken), genVariantsStyle(selectToken)];
-}, prepareComponentToken$d, {
+}, prepareComponentToken$h, {
   unitless: {
     optionLineHeight: true,
     optionSelectedFontWeight: true
@@ -28375,7 +28625,7 @@ var CheckOutlined = function CheckOutlined2(props, ref) {
     icon: CheckOutlined$1
   }));
 };
-var RefIcon$e = /* @__PURE__ */ reactExports.forwardRef(CheckOutlined);
+var RefIcon$n = /* @__PURE__ */ reactExports.forwardRef(CheckOutlined);
 var DownOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z" } }] }, "name": "down", "theme": "outlined" };
 var DownOutlined = function DownOutlined2(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
@@ -28383,7 +28633,7 @@ var DownOutlined = function DownOutlined2(props, ref) {
     icon: DownOutlined$1
   }));
 };
-var RefIcon$d = /* @__PURE__ */ reactExports.forwardRef(DownOutlined);
+var RefIcon$m = /* @__PURE__ */ reactExports.forwardRef(DownOutlined);
 var SearchOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z" } }] }, "name": "search", "theme": "outlined" };
 var SearchOutlined = function SearchOutlined2(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
@@ -28391,7 +28641,7 @@ var SearchOutlined = function SearchOutlined2(props, ref) {
     icon: SearchOutlined$1
   }));
 };
-var RefIcon$c = /* @__PURE__ */ reactExports.forwardRef(SearchOutlined);
+var RefIcon$l = /* @__PURE__ */ reactExports.forwardRef(SearchOutlined);
 function useIcons(_ref) {
   let {
     suffixIcon,
@@ -28407,7 +28657,7 @@ function useIcons(_ref) {
     showArrow,
     componentName
   } = _ref;
-  const mergedClearIcon = clearIcon !== null && clearIcon !== void 0 ? clearIcon : /* @__PURE__ */ reactExports.createElement(RefIcon$k, null);
+  const mergedClearIcon = clearIcon !== null && clearIcon !== void 0 ? clearIcon : /* @__PURE__ */ reactExports.createElement(RefIcon$t, null);
   const getSuffixIconNode = (arrowIcon) => {
     if (suffixIcon === null && !hasFeedback && !showArrow) {
       return null;
@@ -28418,7 +28668,7 @@ function useIcons(_ref) {
   if (suffixIcon !== void 0) {
     mergedSuffixIcon = getSuffixIconNode(suffixIcon);
   } else if (loading) {
-    mergedSuffixIcon = getSuffixIconNode(/* @__PURE__ */ reactExports.createElement(RefIcon$g, {
+    mergedSuffixIcon = getSuffixIconNode(/* @__PURE__ */ reactExports.createElement(RefIcon$p, {
       spin: true
     }));
   } else {
@@ -28429,11 +28679,11 @@ function useIcons(_ref) {
         showSearch
       } = _ref2;
       if (open && showSearch) {
-        return getSuffixIconNode(/* @__PURE__ */ reactExports.createElement(RefIcon$c, {
+        return getSuffixIconNode(/* @__PURE__ */ reactExports.createElement(RefIcon$l, {
           className: iconCls
         }));
       }
-      return getSuffixIconNode(/* @__PURE__ */ reactExports.createElement(RefIcon$d, {
+      return getSuffixIconNode(/* @__PURE__ */ reactExports.createElement(RefIcon$m, {
         className: iconCls
       }));
     };
@@ -28442,7 +28692,7 @@ function useIcons(_ref) {
   if (menuItemSelectedIcon !== void 0) {
     mergedItemIcon = menuItemSelectedIcon;
   } else if (multiple) {
-    mergedItemIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$e, null);
+    mergedItemIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$n, null);
   } else {
     mergedItemIcon = null;
   }
@@ -28450,7 +28700,7 @@ function useIcons(_ref) {
   if (removeIcon !== void 0) {
     mergedRemoveIcon = removeIcon;
   } else {
-    mergedRemoveIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$j, null);
+    mergedRemoveIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$s, null);
   }
   return {
     clearIcon: mergedClearIcon,
@@ -28462,7 +28712,7 @@ function useIcons(_ref) {
 function useShowArrow(suffixIcon, showArrow) {
   return showArrow !== void 0 ? showArrow : suffixIcon !== null;
 }
-var __rest$z = function(s2, e2) {
+var __rest$F = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -28499,7 +28749,7 @@ const InternalSelect = (props, ref) => {
     transitionName,
     tagRender,
     maxCount
-  } = props, rest = __rest$z(props, ["prefixCls", "bordered", "className", "rootClassName", "getPopupContainer", "popupClassName", "dropdownClassName", "listHeight", "placement", "listItemHeight", "size", "disabled", "notFoundContent", "status", "builtinPlacements", "dropdownMatchSelectWidth", "popupMatchSelectWidth", "direction", "style", "allowClear", "variant", "dropdownStyle", "transitionName", "tagRender", "maxCount"]);
+  } = props, rest = __rest$F(props, ["prefixCls", "bordered", "className", "rootClassName", "getPopupContainer", "popupClassName", "dropdownClassName", "listHeight", "placement", "listItemHeight", "size", "disabled", "notFoundContent", "status", "builtinPlacements", "dropdownMatchSelectWidth", "popupMatchSelectWidth", "direction", "style", "allowClear", "variant", "dropdownStyle", "transitionName", "tagRender", "maxCount"]);
   const {
     getPopupContainer: getContextPopupContainer,
     getPrefixCls,
@@ -28510,7 +28760,7 @@ const InternalSelect = (props, ref) => {
     popupOverflow,
     select
   } = reactExports.useContext(ConfigContext);
-  const [, token2] = useToken$1();
+  const [, token2] = useToken();
   const listItemHeight = customListItemHeight !== null && customListItemHeight !== void 0 ? customListItemHeight : token2 === null || token2 === void 0 ? void 0 : token2.controlHeight;
   const prefixCls = getPrefixCls("select", customizePrefixCls);
   const rootPrefixCls = getPrefixCls();
@@ -28665,7 +28915,7 @@ const validateBreakpoints = (token2) => {
   return token2;
 };
 function useResponsiveObserver() {
-  const [, token2] = useToken$1();
+  const [, token2] = useToken();
   const responsiveMap = getResponsiveMap(validateBreakpoints(token2));
   return React.useMemo(() => {
     const subscribers = /* @__PURE__ */ new Map();
@@ -28720,6 +28970,26 @@ function useResponsiveObserver() {
       responsiveMap
     };
   }, [token2]);
+}
+function useForceUpdate() {
+  const [, forceUpdate] = reactExports.useReducer((x2) => x2 + 1, 0);
+  return forceUpdate;
+}
+function useBreakpoint() {
+  let refreshOnChange = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : true;
+  const screensRef = reactExports.useRef({});
+  const forceUpdate = useForceUpdate();
+  const responsiveObserver = useResponsiveObserver();
+  useLayoutEffect$1(() => {
+    const token2 = responsiveObserver.subscribe((supportScreens) => {
+      screensRef.current = supportScreens;
+      if (refreshOnChange) {
+        forceUpdate();
+      }
+    });
+    return () => responsiveObserver.unsubscribe(token2);
+  }, []);
+  return screensRef.current;
 }
 const getRenderPropValue = (propValue) => {
   if (!propValue) {
@@ -28822,11 +29092,11 @@ var placements$2 = {
     targetOffset: targetOffset$1
   }
 };
-var _excluded$n = ["overlayClassName", "trigger", "mouseEnterDelay", "mouseLeaveDelay", "overlayStyle", "prefixCls", "children", "onVisibleChange", "afterVisibleChange", "transitionName", "animation", "motion", "placement", "align", "destroyTooltipOnHide", "defaultVisible", "getTooltipContainer", "overlayInnerStyle", "arrowContent", "overlay", "id", "showArrow"];
+var _excluded$y = ["overlayClassName", "trigger", "mouseEnterDelay", "mouseLeaveDelay", "overlayStyle", "prefixCls", "children", "onVisibleChange", "afterVisibleChange", "transitionName", "animation", "motion", "placement", "align", "destroyTooltipOnHide", "defaultVisible", "getTooltipContainer", "overlayInnerStyle", "arrowContent", "overlay", "id", "showArrow"];
 var Tooltip$1 = function Tooltip(props, ref) {
   var overlayClassName = props.overlayClassName, _props$trigger = props.trigger, trigger = _props$trigger === void 0 ? ["hover"] : _props$trigger, _props$mouseEnterDela = props.mouseEnterDelay, mouseEnterDelay = _props$mouseEnterDela === void 0 ? 0 : _props$mouseEnterDela, _props$mouseLeaveDela = props.mouseLeaveDelay, mouseLeaveDelay = _props$mouseLeaveDela === void 0 ? 0.1 : _props$mouseLeaveDela, overlayStyle = props.overlayStyle, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-tooltip" : _props$prefixCls, children = props.children, onVisibleChange = props.onVisibleChange, afterVisibleChange = props.afterVisibleChange, transitionName = props.transitionName, animation = props.animation, motion2 = props.motion, _props$placement = props.placement, placement = _props$placement === void 0 ? "right" : _props$placement, _props$align = props.align, align = _props$align === void 0 ? {} : _props$align, _props$destroyTooltip = props.destroyTooltipOnHide, destroyTooltipOnHide = _props$destroyTooltip === void 0 ? false : _props$destroyTooltip, defaultVisible = props.defaultVisible, getTooltipContainer = props.getTooltipContainer, overlayInnerStyle = props.overlayInnerStyle;
   props.arrowContent;
-  var overlay = props.overlay, id2 = props.id, _props$showArrow = props.showArrow, showArrow = _props$showArrow === void 0 ? true : _props$showArrow, restProps = _objectWithoutProperties(props, _excluded$n);
+  var overlay = props.overlay, id2 = props.id, _props$showArrow = props.showArrow, showArrow = _props$showArrow === void 0 ? true : _props$showArrow, restProps = _objectWithoutProperties(props, _excluded$y);
   var triggerRef = reactExports.useRef(null);
   reactExports.useImperativeHandle(ref, function() {
     return triggerRef.current;
@@ -29337,7 +29607,7 @@ const genTooltipStyle = (token2) => {
     }
   ];
 };
-const prepareComponentToken$c = (token2) => Object.assign(Object.assign({
+const prepareComponentToken$g = (token2) => Object.assign(Object.assign({
   zIndexPopup: token2.zIndexPopupBase + 70
 }, getArrowOffsetToken({
   contentRadius: token2.borderRadius,
@@ -29345,7 +29615,7 @@ const prepareComponentToken$c = (token2) => Object.assign(Object.assign({
 })), getArrowToken(merge(token2, {
   borderRadiusOuter: Math.min(token2.borderRadiusOuter, 4)
 })));
-const useStyle$f = function(prefixCls) {
+const useStyle$k = function(prefixCls) {
   let injectStyle = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : true;
   const useStyle2 = genStyleHooks("Tooltip", (token2) => {
     const {
@@ -29361,7 +29631,7 @@ const useStyle$f = function(prefixCls) {
       tooltipBg: colorBgSpotlight
     });
     return [genTooltipStyle(TooltipToken), initZoomMotion(token2, "zoom-big-fast")];
-  }, prepareComponentToken$c, {
+  }, prepareComponentToken$g, {
     resetStyle: false,
     // Popover use Tooltip as internal component. We do not need to handle this.
     injectStyle
@@ -29406,7 +29676,7 @@ const PurePanel$6 = (props) => {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("tooltip", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$f(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$k(prefixCls);
   const colorInfo = parseColor(prefixCls, color);
   const arrowContentStyle = colorInfo.arrowStyle;
   const formattedOverlayInnerStyle = Object.assign(Object.assign({}, overlayInnerStyle), colorInfo.overlayStyle);
@@ -29422,7 +29692,7 @@ const PurePanel$6 = (props) => {
     overlayInnerStyle: formattedOverlayInnerStyle
   }), title)));
 };
-var __rest$y = function(s2, e2) {
+var __rest$E = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -29451,7 +29721,7 @@ const InternalTooltip = /* @__PURE__ */ reactExports.forwardRef((props, ref) => 
     autoAdjustOverflow: autoAdjustOverflow2 = true
   } = props;
   const mergedShowArrow = !!arrow;
-  const [, token2] = useToken$1();
+  const [, token2] = useToken();
   const {
     getPopupContainer: getContextPopupContainer,
     getPrefixCls,
@@ -29518,7 +29788,7 @@ const InternalTooltip = /* @__PURE__ */ reactExports.forwardRef((props, ref) => 
     mouseLeaveDelay = 0.1,
     overlayStyle,
     rootClassName
-  } = props, otherProps = __rest$y(props, ["getPopupContainer", "placement", "mouseEnterDelay", "mouseLeaveDelay", "overlayStyle", "rootClassName"]);
+  } = props, otherProps = __rest$E(props, ["getPopupContainer", "placement", "mouseEnterDelay", "mouseLeaveDelay", "overlayStyle", "rootClassName"]);
   const prefixCls = getPrefixCls("tooltip", customizePrefixCls);
   const rootPrefixCls = getPrefixCls();
   const injectFromPopover = props["data-popover-inject"];
@@ -29529,7 +29799,7 @@ const InternalTooltip = /* @__PURE__ */ reactExports.forwardRef((props, ref) => 
   const child = /* @__PURE__ */ reactExports.isValidElement(children) && !isFragment(children) ? children : /* @__PURE__ */ reactExports.createElement("span", null, children);
   const childProps = child.props;
   const childCls = !childProps.className || typeof childProps.className === "string" ? classNames(childProps.className, openClassName || `${prefixCls}-open`) : childProps.className;
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$f(prefixCls, !injectFromPopover);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$k(prefixCls, !injectFromPopover);
   const colorInfo = parseColor(prefixCls, color);
   const arrowContentStyle = colorInfo.arrowStyle;
   const formattedOverlayInnerStyle = Object.assign(Object.assign({}, overlayInnerStyle), colorInfo.overlayStyle);
@@ -29571,7 +29841,7 @@ const InternalTooltip = /* @__PURE__ */ reactExports.forwardRef((props, ref) => 
 });
 const Tooltip2 = InternalTooltip;
 Tooltip2._InternalPanelDoNotUseOrYouWillBeFired = PurePanel$6;
-const genBaseStyle$3 = (token2) => {
+const genBaseStyle$4 = (token2) => {
   const {
     componentCls,
     popoverColor,
@@ -29676,7 +29946,7 @@ const genColorStyle = (token2) => {
     })
   };
 };
-const prepareComponentToken$b = (token2) => {
+const prepareComponentToken$f = (token2) => {
   const {
     lineWidth,
     controlHeight,
@@ -29709,7 +29979,7 @@ const prepareComponentToken$b = (token2) => {
     innerContentPadding: wireframe ? `${paddingSM}px ${popoverPaddingHorizontal}px` : 0
   });
 };
-const useStyle$e = genStyleHooks("Popover", (token2) => {
+const useStyle$j = genStyleHooks("Popover", (token2) => {
   const {
     colorBgElevated,
     colorText
@@ -29718,12 +29988,12 @@ const useStyle$e = genStyleHooks("Popover", (token2) => {
     popoverBg: colorBgElevated,
     popoverColor: colorText
   });
-  return [genBaseStyle$3(popoverToken), genColorStyle(popoverToken), initZoomMotion(popoverToken, "zoom-big")];
-}, prepareComponentToken$b, {
+  return [genBaseStyle$4(popoverToken), genColorStyle(popoverToken), initZoomMotion(popoverToken, "zoom-big")];
+}, prepareComponentToken$f, {
   resetStyle: false,
   deprecatedTokens: [["width", "titleMinWidth"], ["minWidth", "titleMinWidth"]]
 });
-var __rest$x = function(s2, e2) {
+var __rest$D = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -29778,19 +30048,19 @@ const PurePanel$5 = (props) => {
   const {
     prefixCls: customizePrefixCls,
     className
-  } = props, restProps = __rest$x(props, ["prefixCls", "className"]);
+  } = props, restProps = __rest$D(props, ["prefixCls", "className"]);
   const {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("popover", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$e(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$j(prefixCls);
   return wrapCSSVar(/* @__PURE__ */ reactExports.createElement(RawPurePanel, Object.assign({}, restProps, {
     prefixCls,
     hashId,
     className: classNames(className, cssVarCls)
   })));
 };
-var __rest$w = function(s2, e2) {
+var __rest$C = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -29812,12 +30082,12 @@ const InternalPopover = /* @__PURE__ */ reactExports.forwardRef((props, ref) => 
     mouseLeaveDelay = 0.1,
     onOpenChange,
     overlayStyle = {}
-  } = props, otherProps = __rest$w(props, ["prefixCls", "title", "content", "overlayClassName", "placement", "trigger", "children", "mouseEnterDelay", "mouseLeaveDelay", "onOpenChange", "overlayStyle"]);
+  } = props, otherProps = __rest$C(props, ["prefixCls", "title", "content", "overlayClassName", "placement", "trigger", "children", "mouseEnterDelay", "mouseLeaveDelay", "onOpenChange", "overlayStyle"]);
   const {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("popover", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$e(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$j(prefixCls);
   const rootPrefixCls = getPrefixCls();
   const overlayCls = classNames(overlayClassName, hashId, cssVarCls);
   const [open, setOpen] = useMergedState(false, {
@@ -29828,7 +30098,7 @@ const InternalPopover = /* @__PURE__ */ reactExports.forwardRef((props, ref) => 
     setOpen(value, true);
     onOpenChange === null || onOpenChange === void 0 ? void 0 : onOpenChange(value, e2);
   };
-  const onKeyDown = (e2) => {
+  const onKeyDown2 = (e2) => {
     if (e2.keyCode === KeyCode.ESC) {
       settingOpen(false, e2);
     }
@@ -29863,7 +30133,7 @@ const InternalPopover = /* @__PURE__ */ reactExports.forwardRef((props, ref) => 
       if (/* @__PURE__ */ reactExports.isValidElement(children)) {
         (_b2 = children === null || children === void 0 ? void 0 : (_a2 = children.props).onKeyDown) === null || _b2 === void 0 ? void 0 : _b2.call(_a2, e2);
       }
-      onKeyDown(e2);
+      onKeyDown2(e2);
     }
   })));
 });
@@ -29876,7 +30146,7 @@ var RightOutlined = function RightOutlined2(props, ref) {
     icon: RightOutlined$1
   }));
 };
-var RefIcon$b = /* @__PURE__ */ reactExports.forwardRef(RightOutlined);
+var RefIcon$k = /* @__PURE__ */ reactExports.forwardRef(RightOutlined);
 var ESC$1 = KeyCode.ESC, TAB = KeyCode.TAB;
 function useAccessibility$1(_ref) {
   var visible = _ref.visible, triggerRef = _ref.triggerRef, onVisibleChange = _ref.onVisibleChange, autoFocus = _ref.autoFocus, overlayRef = _ref.overlayRef;
@@ -29993,10 +30263,10 @@ var placements$1 = {
     targetOffset
   }
 };
-var _excluded$m = ["arrow", "prefixCls", "transitionName", "animation", "align", "placement", "placements", "getPopupContainer", "showAction", "hideAction", "overlayClassName", "overlayStyle", "visible", "trigger", "autoFocus", "overlay", "children", "onVisibleChange"];
-function Dropdown$1(props, ref) {
+var _excluded$x = ["arrow", "prefixCls", "transitionName", "animation", "align", "placement", "placements", "getPopupContainer", "showAction", "hideAction", "overlayClassName", "overlayStyle", "visible", "trigger", "autoFocus", "overlay", "children", "onVisibleChange"];
+function Dropdown$2(props, ref) {
   var _children$props;
-  var _props$arrow = props.arrow, arrow = _props$arrow === void 0 ? false : _props$arrow, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-dropdown" : _props$prefixCls, transitionName = props.transitionName, animation = props.animation, align = props.align, _props$placement = props.placement, placement = _props$placement === void 0 ? "bottomLeft" : _props$placement, _props$placements = props.placements, placements2 = _props$placements === void 0 ? placements$1 : _props$placements, getPopupContainer = props.getPopupContainer, showAction = props.showAction, hideAction = props.hideAction, overlayClassName = props.overlayClassName, overlayStyle = props.overlayStyle, visible = props.visible, _props$trigger = props.trigger, trigger = _props$trigger === void 0 ? ["hover"] : _props$trigger, autoFocus = props.autoFocus, overlay = props.overlay, children = props.children, onVisibleChange = props.onVisibleChange, otherProps = _objectWithoutProperties(props, _excluded$m);
+  var _props$arrow = props.arrow, arrow = _props$arrow === void 0 ? false : _props$arrow, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-dropdown" : _props$prefixCls, transitionName = props.transitionName, animation = props.animation, align = props.align, _props$placement = props.placement, placement = _props$placement === void 0 ? "bottomLeft" : _props$placement, _props$placements = props.placements, placements2 = _props$placements === void 0 ? placements$1 : _props$placements, getPopupContainer = props.getPopupContainer, showAction = props.showAction, hideAction = props.hideAction, overlayClassName = props.overlayClassName, overlayStyle = props.overlayStyle, visible = props.visible, _props$trigger = props.trigger, trigger = _props$trigger === void 0 ? ["hover"] : _props$trigger, autoFocus = props.autoFocus, overlay = props.overlay, children = props.children, onVisibleChange = props.onVisibleChange, otherProps = _objectWithoutProperties(props, _excluded$x);
   var _React$useState = React.useState(), _React$useState2 = _slicedToArray(_React$useState, 2), triggerVisible = _React$useState2[0], setTriggerVisible = _React$useState2[1];
   var mergedVisible = "visible" in props ? visible : triggerVisible;
   var triggerRef = React.useRef(null);
@@ -30081,7 +30351,7 @@ function Dropdown$1(props, ref) {
     getPopupContainer
   }), childrenNode);
 }
-const Dropdown$2 = /* @__PURE__ */ React.forwardRef(Dropdown$1);
+const Dropdown$3 = /* @__PURE__ */ React.forwardRef(Dropdown$2);
 var IdContext = /* @__PURE__ */ reactExports.createContext(null);
 function getMenuId(uuid2, eventKey) {
   if (uuid2 === void 0) {
@@ -30093,7 +30363,7 @@ function useMenuId(eventKey) {
   var id2 = reactExports.useContext(IdContext);
   return getMenuId(id2, eventKey);
 }
-var _excluded$l = ["children", "locked"];
+var _excluded$w = ["children", "locked"];
 var MenuContext$1 = /* @__PURE__ */ reactExports.createContext(null);
 function mergeProps(origin, target) {
   var clone = _objectSpread2({}, origin);
@@ -30106,7 +30376,7 @@ function mergeProps(origin, target) {
   return clone;
 }
 function InheritableContextProvider(_ref) {
-  var children = _ref.children, locked = _ref.locked, restProps = _objectWithoutProperties(_ref, _excluded$l);
+  var children = _ref.children, locked = _ref.locked, restProps = _objectWithoutProperties(_ref, _excluded$w);
   var context = reactExports.useContext(MenuContext$1);
   var inheritableContext = useMemo(function() {
     return mergeProps(context, restProps);
@@ -30168,7 +30438,7 @@ function getFocusNodeList(node2) {
 }
 var LEFT = KeyCode.LEFT, RIGHT = KeyCode.RIGHT, UP = KeyCode.UP, DOWN = KeyCode.DOWN, ENTER = KeyCode.ENTER, ESC = KeyCode.ESC, HOME = KeyCode.HOME, END = KeyCode.END;
 var ArrowKeys = [UP, DOWN, LEFT, RIGHT];
-function getOffset$1(mode, isRootLevel, isRtl, which) {
+function getOffset$2(mode, isRootLevel, isRtl, which) {
   var _inline, _horizontal, _vertical, _offsets;
   var prev2 = "prev";
   var next2 = "next";
@@ -30303,7 +30573,7 @@ function useAccessibility(mode, activeKey, isRtl, id2, containerRef, getKeys, ge
       var activeElement = key2element.get(activeKey);
       var focusMenuElement = getFocusElement(activeElement, elements);
       var focusMenuKey = element2key.get(focusMenuElement);
-      var offsetObj = getOffset$1(mode, getKeyPath(focusMenuKey, true).length === 1, isRtl, which);
+      var offsetObj = getOffset$2(mode, getKeyPath(focusMenuKey, true).length === 1, isRtl, which);
       if (!offsetObj && which !== HOME && which !== END) {
         return;
       }
@@ -30533,9 +30803,9 @@ function Icon(_ref) {
   }
   return iconNode || children || null;
 }
-var _excluded$k = ["item"];
+var _excluded$v = ["item"];
 function warnItemProp(_ref) {
-  var item = _ref.item, restInfo = _objectWithoutProperties(_ref, _excluded$k);
+  var item = _ref.item, restInfo = _objectWithoutProperties(_ref, _excluded$v);
   Object.defineProperty(restInfo, "item", {
     get: function get2() {
       warningOnce(false, "`info.item` is deprecated since we will move to function component that not provides React Node instance in future.");
@@ -30544,7 +30814,7 @@ function warnItemProp(_ref) {
   });
   return restInfo;
 }
-var _excluded$j = ["title", "attribute", "elementRef"], _excluded2$4 = ["style", "className", "eventKey", "warnKey", "disabled", "itemIcon", "children", "role", "onMouseEnter", "onMouseLeave", "onClick", "onKeyDown", "onFocus"], _excluded3 = ["active"];
+var _excluded$u = ["title", "attribute", "elementRef"], _excluded2$5 = ["style", "className", "eventKey", "warnKey", "disabled", "itemIcon", "children", "role", "onMouseEnter", "onMouseLeave", "onClick", "onKeyDown", "onFocus"], _excluded3 = ["active"];
 var LegacyMenuItem = /* @__PURE__ */ function(_React$Component) {
   _inherits(LegacyMenuItem2, _React$Component);
   var _super = _createSuper(LegacyMenuItem2);
@@ -30555,7 +30825,7 @@ var LegacyMenuItem = /* @__PURE__ */ function(_React$Component) {
   _createClass(LegacyMenuItem2, [{
     key: "render",
     value: function render2() {
-      var _this$props = this.props, title = _this$props.title, attribute = _this$props.attribute, elementRef = _this$props.elementRef, restProps = _objectWithoutProperties(_this$props, _excluded$j);
+      var _this$props = this.props, title = _this$props.title, attribute = _this$props.attribute, elementRef = _this$props.elementRef, restProps = _objectWithoutProperties(_this$props, _excluded$u);
       var passedProps = omit(restProps, ["eventKey", "popupClassName", "popupOffset", "onTitleClick"]);
       warningOnce(!attribute, "`attribute` of Menu.Item is deprecated. Please pass attribute directly.");
       return /* @__PURE__ */ reactExports.createElement(ForwardOverflow.Item, _extends({}, attribute, {
@@ -30571,7 +30841,7 @@ var InternalMenuItem = /* @__PURE__ */ reactExports.forwardRef(function(props, r
   var _classNames;
   var style2 = props.style, className = props.className, eventKey = props.eventKey;
   props.warnKey;
-  var disabled = props.disabled, itemIcon = props.itemIcon, children = props.children, role = props.role, onMouseEnter = props.onMouseEnter, onMouseLeave = props.onMouseLeave, onClick = props.onClick, onKeyDown = props.onKeyDown, onFocus = props.onFocus, restProps = _objectWithoutProperties(props, _excluded2$4);
+  var disabled = props.disabled, itemIcon = props.itemIcon, children = props.children, role = props.role, onMouseEnter = props.onMouseEnter, onMouseLeave = props.onMouseLeave, onClick = props.onClick, onKeyDown2 = props.onKeyDown, onFocus = props.onFocus, restProps = _objectWithoutProperties(props, _excluded2$5);
   var domDataId = useMenuId(eventKey);
   var _React$useContext = reactExports.useContext(MenuContext$1), prefixCls = _React$useContext.prefixCls, onItemClick = _React$useContext.onItemClick, contextDisabled = _React$useContext.disabled, overflowDisabled = _React$useContext.overflowDisabled, contextItemIcon = _React$useContext.itemIcon, selectedKeys = _React$useContext.selectedKeys, onActive = _React$useContext.onActive;
   var _React$useContext2 = reactExports.useContext(PrivateContext), _internalRenderMenuItem = _React$useContext2._internalRenderMenuItem;
@@ -30603,7 +30873,7 @@ var InternalMenuItem = /* @__PURE__ */ reactExports.forwardRef(function(props, r
     onItemClick(info);
   };
   var onInternalKeyDown = function onInternalKeyDown2(e2) {
-    onKeyDown === null || onKeyDown === void 0 ? void 0 : onKeyDown(e2);
+    onKeyDown2 === null || onKeyDown2 === void 0 ? void 0 : onKeyDown2(e2);
     if (e2.which === KeyCode.ENTER) {
       var info = getEventInfo(e2);
       onClick === null || onClick === void 0 ? void 0 : onClick(warnItemProp(info));
@@ -30665,9 +30935,9 @@ function MenuItem$1(props, ref) {
   }));
 }
 const MenuItem$2 = /* @__PURE__ */ reactExports.forwardRef(MenuItem$1);
-var _excluded$i = ["className", "children"];
+var _excluded$t = ["className", "children"];
 var InternalSubMenuList = function InternalSubMenuList2(_ref, ref) {
-  var className = _ref.className, children = _ref.children, restProps = _objectWithoutProperties(_ref, _excluded$i);
+  var className = _ref.className, children = _ref.children, restProps = _objectWithoutProperties(_ref, _excluded$t);
   var _React$useContext = reactExports.useContext(MenuContext$1), prefixCls = _React$useContext.prefixCls, mode = _React$useContext.mode, rtl = _React$useContext.rtl;
   return /* @__PURE__ */ reactExports.createElement("ul", _extends({
     className: classNames(prefixCls, rtl && "".concat(prefixCls, "-rtl"), "".concat(prefixCls, "-sub"), "".concat(prefixCls, "-").concat(mode === "inline" ? "inline" : "vertical"), className),
@@ -30680,7 +30950,7 @@ var InternalSubMenuList = function InternalSubMenuList2(_ref, ref) {
 var SubMenuList = /* @__PURE__ */ reactExports.forwardRef(InternalSubMenuList);
 SubMenuList.displayName = "SubMenuList";
 function parseChildren(children, keyPath) {
-  return toArray$4(children).map(function(child, index2) {
+  return toArray$5(children).map(function(child, index2) {
     if (/* @__PURE__ */ reactExports.isValidElement(child)) {
       var _eventKey, _child$props;
       var key = child.key;
@@ -30877,12 +31147,12 @@ function InlineSubMenuList(_ref) {
     }, children);
   }));
 }
-var _excluded$h = ["style", "className", "title", "eventKey", "warnKey", "disabled", "internalPopupClose", "children", "itemIcon", "expandIcon", "popupClassName", "popupOffset", "popupStyle", "onClick", "onMouseEnter", "onMouseLeave", "onTitleClick", "onTitleMouseEnter", "onTitleMouseLeave"], _excluded2$3 = ["active"];
+var _excluded$s = ["style", "className", "title", "eventKey", "warnKey", "disabled", "internalPopupClose", "children", "itemIcon", "expandIcon", "popupClassName", "popupOffset", "popupStyle", "onClick", "onMouseEnter", "onMouseLeave", "onTitleClick", "onTitleMouseEnter", "onTitleMouseLeave"], _excluded2$4 = ["active"];
 var InternalSubMenu = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
   var _classNames;
   var style2 = props.style, className = props.className, title = props.title, eventKey = props.eventKey;
   props.warnKey;
-  var disabled = props.disabled, internalPopupClose = props.internalPopupClose, children = props.children, itemIcon = props.itemIcon, expandIcon = props.expandIcon, popupClassName = props.popupClassName, popupOffset = props.popupOffset, popupStyle = props.popupStyle, onClick = props.onClick, onMouseEnter = props.onMouseEnter, onMouseLeave = props.onMouseLeave, onTitleClick = props.onTitleClick, onTitleMouseEnter = props.onTitleMouseEnter, onTitleMouseLeave = props.onTitleMouseLeave, restProps = _objectWithoutProperties(props, _excluded$h);
+  var disabled = props.disabled, internalPopupClose = props.internalPopupClose, children = props.children, itemIcon = props.itemIcon, expandIcon = props.expandIcon, popupClassName = props.popupClassName, popupOffset = props.popupOffset, popupStyle = props.popupStyle, onClick = props.onClick, onMouseEnter = props.onMouseEnter, onMouseLeave = props.onMouseLeave, onTitleClick = props.onTitleClick, onTitleMouseEnter = props.onTitleMouseEnter, onTitleMouseLeave = props.onTitleMouseLeave, restProps = _objectWithoutProperties(props, _excluded$s);
   var domDataId = useMenuId(eventKey);
   var _React$useContext = reactExports.useContext(MenuContext$1), prefixCls = _React$useContext.prefixCls, mode = _React$useContext.mode, openKeys = _React$useContext.openKeys, contextDisabled = _React$useContext.disabled, overflowDisabled = _React$useContext.overflowDisabled, activeKey = _React$useContext.activeKey, selectedKeys = _React$useContext.selectedKeys, contextItemIcon = _React$useContext.itemIcon, contextExpandIcon = _React$useContext.expandIcon, onItemClick = _React$useContext.onItemClick, onOpenChange = _React$useContext.onOpenChange, onActive = _React$useContext.onActive;
   var _React$useContext2 = reactExports.useContext(PrivateContext), _internalRenderSubMenuItem = _React$useContext2._internalRenderSubMenuItem;
@@ -30897,7 +31167,7 @@ var InternalSubMenu = /* @__PURE__ */ reactExports.forwardRef(function(props, re
   var originOpen = openKeys.includes(eventKey);
   var open = !overflowDisabled && originOpen;
   var childrenSelected = isSubPathKey(selectedKeys, eventKey);
-  var _useActive = useActive(eventKey, mergedDisabled, onTitleMouseEnter, onTitleMouseLeave), active = _useActive.active, activeProps = _objectWithoutProperties(_useActive, _excluded2$3);
+  var _useActive = useActive(eventKey, mergedDisabled, onTitleMouseEnter, onTitleMouseLeave), active = _useActive.active, activeProps = _objectWithoutProperties(_useActive, _excluded2$4);
   var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), childrenActive = _React$useState2[0], setChildrenActive = _React$useState2[1];
   var triggerChildrenActive = function triggerChildrenActive2(newActive) {
     if (!mergedDisabled) {
@@ -31073,11 +31343,11 @@ function Divider$1(_ref) {
     style: style2
   });
 }
-var _excluded$g = ["className", "title", "eventKey", "children"];
+var _excluded$r = ["className", "title", "eventKey", "children"];
 var InternalMenuItemGroup = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
   var className = props.className, title = props.title;
   props.eventKey;
-  var children = props.children, restProps = _objectWithoutProperties(props, _excluded$g);
+  var children = props.children, restProps = _objectWithoutProperties(props, _excluded$r);
   var _React$useContext = reactExports.useContext(MenuContext$1), prefixCls = _React$useContext.prefixCls;
   var groupPrefixCls = "".concat(prefixCls, "-item-group");
   return /* @__PURE__ */ reactExports.createElement("li", _extends({
@@ -31109,12 +31379,12 @@ var MenuItemGroup = /* @__PURE__ */ reactExports.forwardRef(function(props, ref)
     ref
   }, omit(props, ["warnKey"])), childList);
 });
-var _excluded$f = ["label", "children", "key", "type"];
+var _excluded$q = ["label", "children", "key", "type"];
 function convertItemsToNodes$1(list, components) {
   var MergedMenuItem = components.item, MergedMenuItemGroup = components.group, MergedSubMenu = components.submenu, MergedDivider = components.divider;
   return (list || []).map(function(opt, index2) {
     if (opt && _typeof(opt) === "object") {
-      var _ref = opt, label = _ref.label, children = _ref.children, key = _ref.key, type4 = _ref.type, restProps = _objectWithoutProperties(_ref, _excluded$f);
+      var _ref = opt, label = _ref.label, children = _ref.children, key = _ref.key, type4 = _ref.type, restProps = _objectWithoutProperties(_ref, _excluded$q);
       var mergedKey = key !== null && key !== void 0 ? key : "tmp-".concat(index2);
       if (children || type4 === "group") {
         if (type4 === "group") {
@@ -31157,16 +31427,16 @@ function parseItems(children, items, keyPath, components) {
   }
   return parseChildren(childNodes, keyPath);
 }
-var _excluded$e = ["prefixCls", "rootClassName", "style", "className", "tabIndex", "items", "children", "direction", "id", "mode", "inlineCollapsed", "disabled", "disabledOverflow", "subMenuOpenDelay", "subMenuCloseDelay", "forceSubMenuRender", "defaultOpenKeys", "openKeys", "activeKey", "defaultActiveFirst", "selectable", "multiple", "defaultSelectedKeys", "selectedKeys", "onSelect", "onDeselect", "inlineIndent", "motion", "defaultMotions", "triggerSubMenuAction", "builtinPlacements", "itemIcon", "expandIcon", "overflowedIndicator", "overflowedIndicatorPopupClassName", "getPopupContainer", "onClick", "onOpenChange", "onKeyDown", "openAnimation", "openTransitionName", "_internalRenderMenuItem", "_internalRenderSubMenuItem", "_internalComponents"];
-var EMPTY_LIST$1 = [];
+var _excluded$p = ["prefixCls", "rootClassName", "style", "className", "tabIndex", "items", "children", "direction", "id", "mode", "inlineCollapsed", "disabled", "disabledOverflow", "subMenuOpenDelay", "subMenuCloseDelay", "forceSubMenuRender", "defaultOpenKeys", "openKeys", "activeKey", "defaultActiveFirst", "selectable", "multiple", "defaultSelectedKeys", "selectedKeys", "onSelect", "onDeselect", "inlineIndent", "motion", "defaultMotions", "triggerSubMenuAction", "builtinPlacements", "itemIcon", "expandIcon", "overflowedIndicator", "overflowedIndicatorPopupClassName", "getPopupContainer", "onClick", "onOpenChange", "onKeyDown", "openAnimation", "openTransitionName", "_internalRenderMenuItem", "_internalRenderSubMenuItem", "_internalComponents"];
+var EMPTY_LIST$3 = [];
 var Menu$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
   var _childList$, _classNames;
-  var _ref = props, _ref$prefixCls = _ref.prefixCls, prefixCls = _ref$prefixCls === void 0 ? "rc-menu" : _ref$prefixCls, rootClassName = _ref.rootClassName, style2 = _ref.style, className = _ref.className, _ref$tabIndex = _ref.tabIndex, tabIndex = _ref$tabIndex === void 0 ? 0 : _ref$tabIndex, items = _ref.items, children = _ref.children, direction = _ref.direction, id2 = _ref.id, _ref$mode = _ref.mode, mode = _ref$mode === void 0 ? "vertical" : _ref$mode, inlineCollapsed = _ref.inlineCollapsed, disabled = _ref.disabled, disabledOverflow = _ref.disabledOverflow, _ref$subMenuOpenDelay = _ref.subMenuOpenDelay, subMenuOpenDelay = _ref$subMenuOpenDelay === void 0 ? 0.1 : _ref$subMenuOpenDelay, _ref$subMenuCloseDela = _ref.subMenuCloseDelay, subMenuCloseDelay = _ref$subMenuCloseDela === void 0 ? 0.1 : _ref$subMenuCloseDela, forceSubMenuRender = _ref.forceSubMenuRender, defaultOpenKeys = _ref.defaultOpenKeys, openKeys = _ref.openKeys, activeKey = _ref.activeKey, defaultActiveFirst = _ref.defaultActiveFirst, _ref$selectable = _ref.selectable, selectable = _ref$selectable === void 0 ? true : _ref$selectable, _ref$multiple = _ref.multiple, multiple = _ref$multiple === void 0 ? false : _ref$multiple, defaultSelectedKeys = _ref.defaultSelectedKeys, selectedKeys = _ref.selectedKeys, onSelect = _ref.onSelect, onDeselect = _ref.onDeselect, _ref$inlineIndent = _ref.inlineIndent, inlineIndent = _ref$inlineIndent === void 0 ? 24 : _ref$inlineIndent, motion2 = _ref.motion, defaultMotions = _ref.defaultMotions, _ref$triggerSubMenuAc = _ref.triggerSubMenuAction, triggerSubMenuAction = _ref$triggerSubMenuAc === void 0 ? "hover" : _ref$triggerSubMenuAc, builtinPlacements = _ref.builtinPlacements, itemIcon = _ref.itemIcon, expandIcon = _ref.expandIcon, _ref$overflowedIndica = _ref.overflowedIndicator, overflowedIndicator = _ref$overflowedIndica === void 0 ? "..." : _ref$overflowedIndica, overflowedIndicatorPopupClassName = _ref.overflowedIndicatorPopupClassName, getPopupContainer = _ref.getPopupContainer, onClick = _ref.onClick, onOpenChange = _ref.onOpenChange, onKeyDown = _ref.onKeyDown;
+  var _ref = props, _ref$prefixCls = _ref.prefixCls, prefixCls = _ref$prefixCls === void 0 ? "rc-menu" : _ref$prefixCls, rootClassName = _ref.rootClassName, style2 = _ref.style, className = _ref.className, _ref$tabIndex = _ref.tabIndex, tabIndex = _ref$tabIndex === void 0 ? 0 : _ref$tabIndex, items = _ref.items, children = _ref.children, direction = _ref.direction, id2 = _ref.id, _ref$mode = _ref.mode, mode = _ref$mode === void 0 ? "vertical" : _ref$mode, inlineCollapsed = _ref.inlineCollapsed, disabled = _ref.disabled, disabledOverflow = _ref.disabledOverflow, _ref$subMenuOpenDelay = _ref.subMenuOpenDelay, subMenuOpenDelay = _ref$subMenuOpenDelay === void 0 ? 0.1 : _ref$subMenuOpenDelay, _ref$subMenuCloseDela = _ref.subMenuCloseDelay, subMenuCloseDelay = _ref$subMenuCloseDela === void 0 ? 0.1 : _ref$subMenuCloseDela, forceSubMenuRender = _ref.forceSubMenuRender, defaultOpenKeys = _ref.defaultOpenKeys, openKeys = _ref.openKeys, activeKey = _ref.activeKey, defaultActiveFirst = _ref.defaultActiveFirst, _ref$selectable = _ref.selectable, selectable = _ref$selectable === void 0 ? true : _ref$selectable, _ref$multiple = _ref.multiple, multiple = _ref$multiple === void 0 ? false : _ref$multiple, defaultSelectedKeys = _ref.defaultSelectedKeys, selectedKeys = _ref.selectedKeys, onSelect = _ref.onSelect, onDeselect = _ref.onDeselect, _ref$inlineIndent = _ref.inlineIndent, inlineIndent = _ref$inlineIndent === void 0 ? 24 : _ref$inlineIndent, motion2 = _ref.motion, defaultMotions = _ref.defaultMotions, _ref$triggerSubMenuAc = _ref.triggerSubMenuAction, triggerSubMenuAction = _ref$triggerSubMenuAc === void 0 ? "hover" : _ref$triggerSubMenuAc, builtinPlacements = _ref.builtinPlacements, itemIcon = _ref.itemIcon, expandIcon = _ref.expandIcon, _ref$overflowedIndica = _ref.overflowedIndicator, overflowedIndicator = _ref$overflowedIndica === void 0 ? "..." : _ref$overflowedIndica, overflowedIndicatorPopupClassName = _ref.overflowedIndicatorPopupClassName, getPopupContainer = _ref.getPopupContainer, onClick = _ref.onClick, onOpenChange = _ref.onOpenChange, onKeyDown2 = _ref.onKeyDown;
   _ref.openAnimation;
   _ref.openTransitionName;
-  var _internalRenderMenuItem = _ref._internalRenderMenuItem, _internalRenderSubMenuItem = _ref._internalRenderSubMenuItem, _internalComponents = _ref._internalComponents, restProps = _objectWithoutProperties(_ref, _excluded$e);
+  var _internalRenderMenuItem = _ref._internalRenderMenuItem, _internalRenderSubMenuItem = _ref._internalRenderSubMenuItem, _internalComponents = _ref._internalComponents, restProps = _objectWithoutProperties(_ref, _excluded$p);
   var _React$useMemo = reactExports.useMemo(function() {
-    return [parseItems(children, items, EMPTY_LIST$1, _internalComponents), parseItems(children, items, EMPTY_LIST$1, {})];
+    return [parseItems(children, items, EMPTY_LIST$3, _internalComponents), parseItems(children, items, EMPTY_LIST$3, {})];
   }, [children, items, _internalComponents]), _React$useMemo2 = _slicedToArray(_React$useMemo, 2), childList = _React$useMemo2[0], measureChildList = _React$useMemo2[1];
   var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), mounted = _React$useState2[0], setMounted = _React$useState2[1];
   var containerRef = reactExports.useRef();
@@ -31175,7 +31445,7 @@ var Menu$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
   var _useMergedState = useMergedState(defaultOpenKeys, {
     value: openKeys,
     postState: function postState(keys2) {
-      return keys2 || EMPTY_LIST$1;
+      return keys2 || EMPTY_LIST$3;
     }
   }), _useMergedState2 = _slicedToArray(_useMergedState, 2), mergedOpenKeys = _useMergedState2[0], setMergedOpenKeys = _useMergedState2[1];
   var triggerOpenKeys = function triggerOpenKeys2(keys2) {
@@ -31210,7 +31480,7 @@ var Menu$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
     if (isInlineMode) {
       setMergedOpenKeys(inlineCacheOpenKeys);
     } else {
-      triggerOpenKeys(EMPTY_LIST$1);
+      triggerOpenKeys(EMPTY_LIST$3);
     }
   }, [mergedMode, mergedInlineCollapsed]);
   var _React$useState9 = reactExports.useState(0), _React$useState10 = _slicedToArray(_React$useState9, 2), lastVisibleIndex = _React$useState10[0], setLastVisibleIndex = _React$useState10[1];
@@ -31239,7 +31509,7 @@ var Menu$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
     };
   }, [isSubPathKey]);
   reactExports.useEffect(function() {
-    refreshOverflowKeys(allVisible ? EMPTY_LIST$1 : childList.slice(lastVisibleIndex + 1).map(function(child) {
+    refreshOverflowKeys(allVisible ? EMPTY_LIST$3 : childList.slice(lastVisibleIndex + 1).map(function(child) {
       return child.key;
     }));
   }, [lastVisibleIndex, allVisible]);
@@ -31279,7 +31549,7 @@ var Menu$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
         return keys2;
       }
       if (keys2 === null || keys2 === void 0) {
-        return EMPTY_LIST$1;
+        return EMPTY_LIST$3;
       }
       return [keys2];
     }
@@ -31311,7 +31581,7 @@ var Menu$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
       }
     }
     if (!multiple && mergedOpenKeys.length && internalMode !== "inline") {
-      triggerOpenKeys(EMPTY_LIST$1);
+      triggerOpenKeys(EMPTY_LIST$3);
     }
   };
   var onInternalClick = useMemoCallback(function(info) {
@@ -31338,7 +31608,7 @@ var Menu$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
     var nextOpen = open !== null && open !== void 0 ? open : !mergedOpenKeys.includes(key);
     onInternalOpenChange(key, nextOpen);
   };
-  var onInternalKeyDown = useAccessibility(internalMode, mergedActiveKey, isRtl, uuid2, containerRef, getKeys, getKeyPath, setMergedActiveKey, triggerAccessibilityOpen, onKeyDown);
+  var onInternalKeyDown = useAccessibility(internalMode, mergedActiveKey, isRtl, uuid2, containerRef, getKeys, getKeyPath, setMergedActiveKey, triggerAccessibilityOpen, onKeyDown2);
   reactExports.useEffect(function() {
     setMounted(true);
   }, []);
@@ -31445,7 +31715,7 @@ var BarsOutlined = function BarsOutlined2(props, ref) {
     icon: BarsOutlined$1
   }));
 };
-var RefIcon$a = /* @__PURE__ */ reactExports.forwardRef(BarsOutlined);
+var RefIcon$j = /* @__PURE__ */ reactExports.forwardRef(BarsOutlined);
 var LeftOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z" } }] }, "name": "left", "theme": "outlined" };
 var LeftOutlined = function LeftOutlined2(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
@@ -31453,7 +31723,7 @@ var LeftOutlined = function LeftOutlined2(props, ref) {
     icon: LeftOutlined$1
   }));
 };
-var RefIcon$9 = /* @__PURE__ */ reactExports.forwardRef(LeftOutlined);
+var RefIcon$i = /* @__PURE__ */ reactExports.forwardRef(LeftOutlined);
 const isNumeric = (value) => !isNaN(parseFloat(value)) && isFinite(value);
 const LayoutContext = /* @__PURE__ */ reactExports.createContext({
   siderHook: {
@@ -31461,7 +31731,7 @@ const LayoutContext = /* @__PURE__ */ reactExports.createContext({
     removeSider: () => null
   }
 });
-var __rest$v = function(s2, e2) {
+var __rest$B = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -31486,14 +31756,14 @@ const generateId = /* @__PURE__ */ (() => {
     return `${prefix}${i2}`;
   };
 })();
-const Sider$1 = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
+const Sider = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   const {
     prefixCls: customizePrefixCls,
     className,
     trigger,
     children,
     defaultCollapsed = false,
-    theme: theme2 = "dark",
+    theme = "dark",
     style: style2 = {},
     collapsible = false,
     reverseArrow = false,
@@ -31503,7 +31773,7 @@ const Sider$1 = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     breakpoint,
     onCollapse,
     onBreakpoint
-  } = props, otherProps = __rest$v(props, ["prefixCls", "className", "trigger", "children", "defaultCollapsed", "theme", "style", "collapsible", "reverseArrow", "width", "collapsedWidth", "zeroWidthTriggerStyle", "breakpoint", "onCollapse", "onBreakpoint"]);
+  } = props, otherProps = __rest$B(props, ["prefixCls", "className", "trigger", "children", "defaultCollapsed", "theme", "style", "collapsible", "reverseArrow", "width", "collapsedWidth", "zeroWidthTriggerStyle", "breakpoint", "onCollapse", "onBreakpoint"]);
   const {
     siderHook
   } = reactExports.useContext(LayoutContext);
@@ -31575,10 +31845,10 @@ const Sider$1 = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       onClick: toggle,
       className: classNames(`${prefixCls}-zero-width-trigger`, `${prefixCls}-zero-width-trigger-${reverseArrow ? "right" : "left"}`),
       style: zeroWidthTriggerStyle
-    }, trigger || /* @__PURE__ */ reactExports.createElement(RefIcon$a, null)) : null;
+    }, trigger || /* @__PURE__ */ reactExports.createElement(RefIcon$j, null)) : null;
     const iconObj = {
-      expanded: reverseArrow ? /* @__PURE__ */ reactExports.createElement(RefIcon$b, null) : /* @__PURE__ */ reactExports.createElement(RefIcon$9, null),
-      collapsed: reverseArrow ? /* @__PURE__ */ reactExports.createElement(RefIcon$9, null) : /* @__PURE__ */ reactExports.createElement(RefIcon$b, null)
+      expanded: reverseArrow ? /* @__PURE__ */ reactExports.createElement(RefIcon$k, null) : /* @__PURE__ */ reactExports.createElement(RefIcon$i, null),
+      collapsed: reverseArrow ? /* @__PURE__ */ reactExports.createElement(RefIcon$i, null) : /* @__PURE__ */ reactExports.createElement(RefIcon$k, null)
     };
     const status = collapsed ? "collapsed" : "expanded";
     const defaultTrigger = iconObj[status];
@@ -31595,7 +31865,7 @@ const Sider$1 = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       minWidth: siderWidth,
       width: siderWidth
     });
-    const siderCls = classNames(prefixCls, `${prefixCls}-${theme2}`, {
+    const siderCls = classNames(prefixCls, `${prefixCls}-${theme}`, {
       [`${prefixCls}-collapsed`]: !!collapsed,
       [`${prefixCls}-has-trigger`]: collapsible && trigger !== null && !zeroWidthTrigger,
       [`${prefixCls}-below`]: !!below,
@@ -31617,7 +31887,6 @@ const Sider$1 = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     value: contextValue
   }, renderSider());
 });
-const Sider$2 = Sider$1;
 var EllipsisOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M176 511a56 56 0 10112 0 56 56 0 10-112 0zm280 0a56 56 0 10112 0 56 56 0 10-112 0zm280 0a56 56 0 10112 0 56 56 0 10-112 0z" } }] }, "name": "ellipsis", "theme": "outlined" };
 var EllipsisOutlined = function EllipsisOutlined2(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
@@ -31625,13 +31894,13 @@ var EllipsisOutlined = function EllipsisOutlined2(props, ref) {
     icon: EllipsisOutlined$1
   }));
 };
-var RefIcon$8 = /* @__PURE__ */ reactExports.forwardRef(EllipsisOutlined);
+var RefIcon$h = /* @__PURE__ */ reactExports.forwardRef(EllipsisOutlined);
 const MenuContext = /* @__PURE__ */ reactExports.createContext({
   prefixCls: "",
   firstLevel: true,
   inlineCollapsed: false
 });
-var __rest$u = function(s2, e2) {
+var __rest$A = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -31644,7 +31913,7 @@ const MenuDivider = (props) => {
     prefixCls: customizePrefixCls,
     className,
     dashed
-  } = props, restProps = __rest$u(props, ["prefixCls", "className", "dashed"]);
+  } = props, restProps = __rest$A(props, ["prefixCls", "className", "dashed"]);
   const {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
@@ -31701,7 +31970,7 @@ const MenuItem = (props) => {
     tooltipProps.title = null;
     tooltipProps.open = false;
   }
-  const childrenLength = toArray$4(children).length;
+  const childrenLength = toArray$5(children).length;
   let returnNode = /* @__PURE__ */ reactExports.createElement(MenuItem$2, Object.assign({}, omit(props, ["title", "icon", "danger"]), {
     className: classNames({
       [`${prefixCls}-item-danger`]: danger,
@@ -31719,7 +31988,7 @@ const MenuItem = (props) => {
   }
   return returnNode;
 };
-var __rest$t = function(s2, e2) {
+var __rest$z = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -31731,7 +32000,7 @@ const OverrideContext = /* @__PURE__ */ reactExports.createContext(null);
 const OverrideProvider = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   const {
     children
-  } = props, restProps = __rest$t(props, ["children"]);
+  } = props, restProps = __rest$z(props, ["children"]);
   const override = reactExports.useContext(OverrideContext);
   const context = reactExports.useMemo(() => Object.assign(Object.assign({}, override), restProps), [
     override,
@@ -32548,7 +32817,7 @@ const getBaseStyle = (token2) => {
     }
   ];
 };
-const prepareComponentToken$a = (token2) => {
+const prepareComponentToken$e = (token2) => {
   var _a, _b, _c;
   const {
     colorPrimary,
@@ -32665,7 +32934,7 @@ const prepareComponentToken$a = (token2) => {
     itemWidth: activeBarWidth ? `calc(100% + ${activeBarBorderWidth}px)` : `calc(100% - ${itemMarginInline * 2}px)`
   };
 };
-const useStyle$d = function(prefixCls) {
+const useStyle$i = function(prefixCls) {
   let rootCls = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : prefixCls;
   let injectStyle = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : true;
   const useStyle2 = genStyleHooks("Menu", (token2) => {
@@ -32745,7 +33014,7 @@ const useStyle$d = function(prefixCls) {
       initSlideMotion(menuToken, "slide-down"),
       initZoomMotion(menuToken, "zoom-big")
     ];
-  }, prepareComponentToken$a, {
+  }, prepareComponentToken$e, {
     deprecatedTokens: [["colorGroupTitle", "groupTitleColor"], ["radiusItem", "itemBorderRadius"], ["radiusSubMenuItem", "subMenuItemBorderRadius"], ["colorItemText", "itemColor"], ["colorItemTextHover", "itemHoverColor"], ["colorItemTextHoverHorizontal", "horizontalItemHoverColor"], ["colorItemTextSelected", "itemSelectedColor"], ["colorItemTextSelectedHorizontal", "horizontalItemSelectedColor"], ["colorItemTextDisabled", "itemDisabledColor"], ["colorDangerItemText", "dangerItemColor"], ["colorDangerItemTextHover", "dangerItemHoverColor"], ["colorDangerItemTextSelected", "dangerItemSelectedColor"], ["colorDangerItemBgActive", "dangerItemActiveBg"], ["colorDangerItemBgSelected", "dangerItemSelectedBg"], ["colorItemBg", "itemBg"], ["colorItemBgHover", "itemHoverBg"], ["colorSubItemBg", "subMenuItemBg"], ["colorItemBgActive", "itemActiveBg"], ["colorItemBgSelectedHorizontal", "horizontalItemSelectedBg"], ["colorActiveBarWidth", "activeBarWidth"], ["colorActiveBarHeight", "activeBarHeight"], ["colorActiveBarBorderSize", "activeBarBorderWidth"], ["colorItemBgSelected", "itemSelectedBg"]],
     // Dropdown will handle menu style self. We do not need to handle this.
     injectStyle,
@@ -32799,7 +33068,7 @@ const SubMenu = (props) => {
     }
   })));
 };
-var __rest$s = function(s2, e2) {
+var __rest$y = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -32830,7 +33099,7 @@ const InternalMenu = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     prefixCls: customizePrefixCls,
     className,
     style: style2,
-    theme: theme2 = "light",
+    theme = "light",
     expandIcon,
     _internalDisableMenuItemTitleTooltip,
     inlineCollapsed,
@@ -32840,7 +33109,7 @@ const InternalMenu = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     selectable,
     onClick,
     overflowedIndicatorPopupClassName
-  } = props, restProps = __rest$s(props, ["prefixCls", "className", "style", "theme", "expandIcon", "_internalDisableMenuItemTitleTooltip", "inlineCollapsed", "siderCollapsed", "rootClassName", "mode", "selectable", "onClick", "overflowedIndicatorPopupClassName"]);
+  } = props, restProps = __rest$y(props, ["prefixCls", "className", "style", "theme", "expandIcon", "_internalDisableMenuItemTitleTooltip", "inlineCollapsed", "siderCollapsed", "rootClassName", "mode", "selectable", "onClick", "overflowedIndicatorPopupClassName"]);
   const passedProps = omit(restProps, ["collapsedWidth"]);
   (_a = overrideObj.validator) === null || _a === void 0 ? void 0 : _a.call(overrideObj, {
     mode
@@ -32869,8 +33138,8 @@ const InternalMenu = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   };
   const prefixCls = getPrefixCls("menu", customizePrefixCls || overrideObj.prefixCls);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$d(prefixCls, rootCls, !override);
-  const menuClassName = classNames(`${prefixCls}-${theme2}`, menu === null || menu === void 0 ? void 0 : menu.className, className);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$i(prefixCls, rootCls, !override);
+  const menuClassName = classNames(`${prefixCls}-${theme}`, menu === null || menu === void 0 ? void 0 : menu.className, className);
   const mergedExpandIcon = reactExports.useMemo(() => {
     var _a2, _b;
     if (typeof expandIcon === "function" || isEmptyIcon(expandIcon)) {
@@ -32892,18 +33161,18 @@ const InternalMenu = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     inlineCollapsed: mergedInlineCollapsed || false,
     direction,
     firstLevel: true,
-    theme: theme2,
+    theme,
     mode: mergedMode,
     disableMenuItemTitleTooltip: _internalDisableMenuItemTitleTooltip
-  }), [prefixCls, mergedInlineCollapsed, direction, _internalDisableMenuItemTitleTooltip, theme2]);
+  }), [prefixCls, mergedInlineCollapsed, direction, _internalDisableMenuItemTitleTooltip, theme]);
   return wrapCSSVar(/* @__PURE__ */ reactExports.createElement(OverrideContext.Provider, {
     value: null
   }, /* @__PURE__ */ reactExports.createElement(MenuContext.Provider, {
     value: contextValue
   }, /* @__PURE__ */ reactExports.createElement(ExportMenu, Object.assign({
     getPopupContainer,
-    overflowedIndicator: /* @__PURE__ */ reactExports.createElement(RefIcon$8, null),
-    overflowedIndicatorPopupClassName: classNames(prefixCls, `${prefixCls}-${theme2}`, overflowedIndicatorPopupClassName),
+    overflowedIndicator: /* @__PURE__ */ reactExports.createElement(RefIcon$h, null),
+    overflowedIndicatorPopupClassName: classNames(prefixCls, `${prefixCls}-${theme}`, overflowedIndicatorPopupClassName),
     mode: mergedMode,
     selectable: mergedSelectable,
     onClick: onItemClick
@@ -32960,7 +33229,7 @@ const genStatusStyle$1 = (token2) => {
     }
   };
 };
-const genBaseStyle$2 = (token2) => {
+const genBaseStyle$3 = (token2) => {
   const {
     componentCls,
     menuCls,
@@ -33214,14 +33483,14 @@ const genBaseStyle$2 = (token2) => {
     [initSlideMotion(token2, "slide-up"), initSlideMotion(token2, "slide-down"), initMoveMotion(token2, "move-up"), initMoveMotion(token2, "move-down"), initZoomMotion(token2, "zoom-big")]
   ];
 };
-const prepareComponentToken$9 = (token2) => Object.assign(Object.assign({
+const prepareComponentToken$d = (token2) => Object.assign(Object.assign({
   zIndexPopup: token2.zIndexPopupBase + 50,
   paddingBlock: (token2.controlHeight - token2.fontSize * token2.lineHeight) / 2
 }, getArrowOffsetToken({
   contentRadius: token2.borderRadiusLG,
   limitVerticalRadius: true
 })), getArrowToken(token2));
-const useStyle$c = genStyleHooks("Dropdown", (token2) => {
+const useStyle$h = genStyleHooks("Dropdown", (token2) => {
   const {
     marginXXS,
     sizePopupArrow,
@@ -33233,11 +33502,11 @@ const useStyle$c = genStyleHooks("Dropdown", (token2) => {
     dropdownArrowDistance: token2.calc(sizePopupArrow).div(2).add(marginXXS).equal(),
     dropdownEdgeChildPadding: paddingXXS
   });
-  return [genBaseStyle$2(dropdownToken), genStatusStyle$1(dropdownToken)];
-}, prepareComponentToken$9, {
+  return [genBaseStyle$3(dropdownToken), genStatusStyle$1(dropdownToken)];
+}, prepareComponentToken$d, {
   resetStyle: false
 });
-const Dropdown = (props) => {
+const Dropdown$1 = (props) => {
   var _a;
   const {
     menu,
@@ -33291,8 +33560,8 @@ const Dropdown = (props) => {
   }, [placement, direction]);
   const prefixCls = getPrefixCls("dropdown", customizePrefixCls);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$c(prefixCls, rootCls);
-  const [, token2] = useToken$1();
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$h(prefixCls, rootCls);
+  const [, token2] = useToken();
   const child = reactExports.Children.only(children);
   const dropdownTrigger = cloneElement(child, {
     className: classNames(`${prefixCls}-trigger`, {
@@ -33349,7 +33618,7 @@ const Dropdown = (props) => {
       rootClassName: classNames(cssVarCls, rootCls),
       expandIcon: /* @__PURE__ */ reactExports.createElement("span", {
         className: `${prefixCls}-menu-submenu-arrow`
-      }, /* @__PURE__ */ reactExports.createElement(RefIcon$b, {
+      }, /* @__PURE__ */ reactExports.createElement(RefIcon$k, {
         className: `${prefixCls}-menu-submenu-arrow-icon`
       })),
       mode: "vertical",
@@ -33360,7 +33629,7 @@ const Dropdown = (props) => {
     }, overlayNode);
   };
   const [zIndex, contextZIndex] = useZIndex("Dropdown", overlayStyle === null || overlayStyle === void 0 ? void 0 : overlayStyle.zIndex);
-  let renderNode = /* @__PURE__ */ reactExports.createElement(Dropdown$2, Object.assign({
+  let renderNode = /* @__PURE__ */ reactExports.createElement(Dropdown$3, Object.assign({
     alignPoint
   }, omit(props, ["rootClassName"]), {
     mouseEnterDelay,
@@ -33397,405 +33666,718 @@ function postPureProps(props) {
     }
   });
 }
-const PurePanel$4 = genPurePanel(Dropdown, "dropdown", (prefixCls) => prefixCls, postPureProps);
+const PurePanel$4 = genPurePanel(Dropdown$1, "dropdown", (prefixCls) => prefixCls, postPureProps);
 const WrapPurePanel = (props) => /* @__PURE__ */ reactExports.createElement(PurePanel$4, Object.assign({}, props), /* @__PURE__ */ reactExports.createElement("span", null));
-Dropdown._InternalPanelDoNotUseOrYouWillBeFired = WrapPurePanel;
-const BreadcrumbSeparator = (_ref) => {
-  let {
-    children
-  } = _ref;
-  const {
-    getPrefixCls
-  } = reactExports.useContext(ConfigContext);
-  const prefixCls = getPrefixCls("breadcrumb");
-  return /* @__PURE__ */ reactExports.createElement("li", {
-    className: `${prefixCls}-separator`,
-    "aria-hidden": "true"
-  }, children === "" ? children : children || "/");
-};
-BreadcrumbSeparator.__ANT_BREADCRUMB_SEPARATOR = true;
-var __rest$r = function(s2, e2) {
-  var t2 = {};
-  for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
-  if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
-    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i2])) t2[p2[i2]] = s2[p2[i2]];
-  }
-  return t2;
-};
-function getBreadcrumbName(route, params) {
-  if (route.title === void 0 || route.title === null) {
-    return null;
-  }
-  const paramsKeys = Object.keys(params).join("|");
-  return typeof route.title === "object" ? route.title : String(route.title).replace(new RegExp(`:(${paramsKeys})`, "g"), (replacement, key) => params[key] || replacement);
-}
-function renderItem(prefixCls, item, children, href) {
-  if (children === null || children === void 0) {
-    return null;
-  }
-  const {
-    className,
-    onClick
-  } = item, restItem = __rest$r(item, ["className", "onClick"]);
-  const passedProps = Object.assign(Object.assign({}, pickAttrs(restItem, {
-    data: true,
-    aria: true
-  })), {
-    onClick
+Dropdown$1._InternalPanelDoNotUseOrYouWillBeFired = WrapPurePanel;
+const RadioGroupContext = /* @__PURE__ */ reactExports.createContext(null);
+const RadioGroupContextProvider = RadioGroupContext.Provider;
+const RadioOptionTypeContext = /* @__PURE__ */ reactExports.createContext(null);
+const RadioOptionTypeContextProvider = RadioOptionTypeContext.Provider;
+var _excluded$o = ["prefixCls", "className", "style", "checked", "disabled", "defaultChecked", "type", "title", "onChange"];
+var Checkbox$2 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+  var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-checkbox" : _props$prefixCls, className = props.className, style2 = props.style, checked = props.checked, disabled = props.disabled, _props$defaultChecked = props.defaultChecked, defaultChecked = _props$defaultChecked === void 0 ? false : _props$defaultChecked, _props$type = props.type, type4 = _props$type === void 0 ? "checkbox" : _props$type, title = props.title, onChange = props.onChange, inputProps = _objectWithoutProperties(props, _excluded$o);
+  var inputRef = reactExports.useRef(null);
+  var holderRef = reactExports.useRef(null);
+  var _useMergedState = useMergedState(defaultChecked, {
+    value: checked
+  }), _useMergedState2 = _slicedToArray(_useMergedState, 2), rawValue = _useMergedState2[0], setRawValue = _useMergedState2[1];
+  reactExports.useImperativeHandle(ref, function() {
+    return {
+      focus: function focus(options) {
+        var _inputRef$current;
+        (_inputRef$current = inputRef.current) === null || _inputRef$current === void 0 || _inputRef$current.focus(options);
+      },
+      blur: function blur() {
+        var _inputRef$current2;
+        (_inputRef$current2 = inputRef.current) === null || _inputRef$current2 === void 0 || _inputRef$current2.blur();
+      },
+      input: inputRef.current,
+      nativeElement: holderRef.current
+    };
   });
-  if (href !== void 0) {
-    return /* @__PURE__ */ reactExports.createElement("a", Object.assign({}, passedProps, {
-      className: classNames(`${prefixCls}-link`, className),
-      href
-    }), children);
-  }
-  return /* @__PURE__ */ reactExports.createElement("span", Object.assign({}, passedProps, {
-    className: classNames(`${prefixCls}-link`, className)
-  }), children);
-}
-function useItemRender(prefixCls, itemRender) {
-  const mergedItemRender = (item, params, routes, path2, href) => {
-    if (itemRender) {
-      return itemRender(item, params, routes, path2);
+  var classString = classNames(prefixCls, className, _defineProperty(_defineProperty({}, "".concat(prefixCls, "-checked"), rawValue), "".concat(prefixCls, "-disabled"), disabled));
+  var handleChange = function handleChange2(e2) {
+    if (disabled) {
+      return;
     }
-    const name = getBreadcrumbName(item, params);
-    return renderItem(prefixCls, item, name, href);
-  };
-  return mergedItemRender;
-}
-var __rest$q = function(s2, e2) {
-  var t2 = {};
-  for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
-  if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
-    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i2])) t2[p2[i2]] = s2[p2[i2]];
-  }
-  return t2;
-};
-const InternalBreadcrumbItem = (props) => {
-  const {
-    prefixCls,
-    separator = "/",
-    children,
-    menu,
-    overlay,
-    dropdownProps,
-    href
-  } = props;
-  const renderBreadcrumbNode = (breadcrumbItem) => {
-    if (menu || overlay) {
-      const mergeDropDownProps = Object.assign({}, dropdownProps);
-      if (menu) {
-        const _a = menu || {}, {
-          items
-        } = _a, menuProps = __rest$q(_a, ["items"]);
-        mergeDropDownProps.menu = Object.assign(Object.assign({}, menuProps), {
-          items: items === null || items === void 0 ? void 0 : items.map((_a2, index2) => {
-            var {
-              key,
-              title,
-              label,
-              path: path2
-            } = _a2, itemProps = __rest$q(_a2, ["key", "title", "label", "path"]);
-            let mergedLabel = label !== null && label !== void 0 ? label : title;
-            if (path2) {
-              mergedLabel = /* @__PURE__ */ reactExports.createElement("a", {
-                href: `${href}${path2}`
-              }, mergedLabel);
-            }
-            return Object.assign(Object.assign({}, itemProps), {
-              key: key !== null && key !== void 0 ? key : index2,
-              label: mergedLabel
-            });
-          })
-        });
-      } else if (overlay) {
-        mergeDropDownProps.overlay = overlay;
-      }
-      return /* @__PURE__ */ reactExports.createElement(Dropdown, Object.assign({
-        placement: "bottom"
-      }, mergeDropDownProps), /* @__PURE__ */ reactExports.createElement("span", {
-        className: `${prefixCls}-overlay-link`
-      }, breadcrumbItem, /* @__PURE__ */ reactExports.createElement(RefIcon$d, null)));
+    if (!("checked" in props)) {
+      setRawValue(e2.target.checked);
     }
-    return breadcrumbItem;
+    onChange === null || onChange === void 0 || onChange({
+      target: _objectSpread2(_objectSpread2({}, props), {}, {
+        type: type4,
+        checked: e2.target.checked
+      }),
+      stopPropagation: function stopPropagation() {
+        e2.stopPropagation();
+      },
+      preventDefault: function preventDefault() {
+        e2.preventDefault();
+      },
+      nativeEvent: e2.nativeEvent
+    });
   };
-  const link = renderBreadcrumbNode(children);
-  if (link !== void 0 && link !== null) {
-    return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("li", null, link), separator && /* @__PURE__ */ reactExports.createElement(BreadcrumbSeparator, null, separator));
-  }
-  return null;
-};
-const BreadcrumbItem = (props) => {
-  const {
-    prefixCls: customizePrefixCls,
-    children,
-    href
-  } = props, restProps = __rest$q(props, ["prefixCls", "children", "href"]);
-  const {
-    getPrefixCls
-  } = reactExports.useContext(ConfigContext);
-  const prefixCls = getPrefixCls("breadcrumb", customizePrefixCls);
-  return /* @__PURE__ */ reactExports.createElement(InternalBreadcrumbItem, Object.assign({}, restProps, {
-    prefixCls
-  }), renderItem(prefixCls, restProps, children, href));
-};
-BreadcrumbItem.__ANT_BREADCRUMB_ITEM = true;
-const BreadcrumbItem$1 = BreadcrumbItem;
-const genBreadcrumbStyle = (token2) => {
+  return /* @__PURE__ */ reactExports.createElement("span", {
+    className: classString,
+    title,
+    style: style2,
+    ref: holderRef
+  }, /* @__PURE__ */ reactExports.createElement("input", _extends({}, inputProps, {
+    className: "".concat(prefixCls, "-input"),
+    ref: inputRef,
+    onChange: handleChange,
+    disabled,
+    checked: !!rawValue,
+    type: type4
+  })), /* @__PURE__ */ reactExports.createElement("span", {
+    className: "".concat(prefixCls, "-inner")
+  }));
+});
+const getGroupRadioStyle = (token2) => {
   const {
     componentCls,
-    iconCls,
-    calc
+    antCls
   } = token2;
+  const groupPrefixCls = `${componentCls}-group`;
   return {
-    [componentCls]: Object.assign(Object.assign({}, resetComponent(token2)), {
-      color: token2.itemColor,
-      fontSize: token2.fontSize,
-      [iconCls]: {
-        fontSize: token2.iconFontSize
-      },
-      ol: {
-        display: "flex",
-        flexWrap: "wrap",
-        margin: 0,
-        padding: 0,
-        listStyle: "none"
-      },
-      a: Object.assign({
-        color: token2.linkColor,
-        transition: `color ${token2.motionDurationMid}`,
-        padding: `0 ${unit$1(token2.paddingXXS)}`,
-        borderRadius: token2.borderRadiusSM,
-        height: token2.fontHeight,
-        display: "inline-block",
-        marginInline: calc(token2.marginXXS).mul(-1).equal(),
-        "&:hover": {
-          color: token2.linkHoverColor,
-          backgroundColor: token2.colorBgTextHover
-        }
-      }, genFocusStyle(token2)),
-      "li:last-child": {
-        color: token2.lastItemColor
-      },
-      [`${componentCls}-separator`]: {
-        marginInline: token2.separatorMargin,
-        color: token2.separatorColor
-      },
-      [`${componentCls}-link`]: {
-        [`
-          > ${iconCls} + span,
-          > ${iconCls} + a
-        `]: {
-          marginInlineStart: token2.marginXXS
-        }
-      },
-      [`${componentCls}-overlay-link`]: {
-        borderRadius: token2.borderRadiusSM,
-        height: token2.fontHeight,
-        display: "inline-block",
-        padding: `0 ${unit$1(token2.paddingXXS)}`,
-        marginInline: calc(token2.marginXXS).mul(-1).equal(),
-        [`> ${iconCls}`]: {
-          marginInlineStart: token2.marginXXS,
-          fontSize: token2.fontSizeIcon
-        },
-        "&:hover": {
-          color: token2.linkHoverColor,
-          backgroundColor: token2.colorBgTextHover,
-          a: {
-            color: token2.linkHoverColor
-          }
-        },
-        a: {
-          "&:hover": {
-            backgroundColor: "transparent"
-          }
-        }
-      },
-      // rtl style
-      [`&${token2.componentCls}-rtl`]: {
+    [groupPrefixCls]: Object.assign(Object.assign({}, resetComponent(token2)), {
+      display: "inline-block",
+      fontSize: 0,
+      // RTL
+      [`&${groupPrefixCls}-rtl`]: {
         direction: "rtl"
+      },
+      [`${antCls}-badge ${antCls}-badge-count`]: {
+        zIndex: 1
+      },
+      [`> ${antCls}-badge:not(:first-child) > ${antCls}-button-wrapper`]: {
+        borderInlineStart: "none"
       }
     })
   };
 };
-const prepareComponentToken$8 = (token2) => ({
-  itemColor: token2.colorTextDescription,
-  lastItemColor: token2.colorText,
-  iconFontSize: token2.fontSize,
-  linkColor: token2.colorTextDescription,
-  linkHoverColor: token2.colorText,
-  separatorColor: token2.colorTextDescription,
-  separatorMargin: token2.marginXS
-});
-const useStyle$b = genStyleHooks("Breadcrumb", (token2) => {
-  const breadcrumbToken = merge(token2, {});
-  return genBreadcrumbStyle(breadcrumbToken);
-}, prepareComponentToken$8);
-var __rest$p = function(s2, e2) {
-  var t2 = {};
-  for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
-  if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
-    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i2])) t2[p2[i2]] = s2[p2[i2]];
-  }
-  return t2;
-};
-function route2item(route) {
+const getRadioBasicStyle = (token2) => {
   const {
-    breadcrumbName,
-    children
-  } = route, rest = __rest$p(route, ["breadcrumbName", "children"]);
-  const clone = Object.assign({
-    title: breadcrumbName
-  }, rest);
-  if (children) {
-    clone.menu = {
-      items: children.map((_a) => {
-        var {
-          breadcrumbName: itemBreadcrumbName
-        } = _a, itemProps = __rest$p(_a, ["breadcrumbName"]);
-        return Object.assign(Object.assign({}, itemProps), {
-          title: itemBreadcrumbName
-        });
-      })
-    };
-  }
-  return clone;
-}
-function useItems$1(items, routes) {
-  return reactExports.useMemo(() => {
-    if (items) {
-      return items;
-    }
-    if (routes) {
-      return routes.map(route2item);
-    }
-    return null;
-  }, [items, routes]);
-}
-var __rest$o = function(s2, e2) {
-  var t2 = {};
-  for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
-  if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
-    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i2])) t2[p2[i2]] = s2[p2[i2]];
-  }
-  return t2;
-};
-const getPath = (params, path2) => {
-  if (path2 === void 0) {
-    return path2;
-  }
-  let mergedPath = (path2 || "").replace(/^\//, "");
-  Object.keys(params).forEach((key) => {
-    mergedPath = mergedPath.replace(`:${key}`, params[key]);
+    componentCls,
+    wrapperMarginInlineEnd,
+    colorPrimary,
+    radioSize,
+    motionDurationSlow,
+    motionDurationMid,
+    motionEaseInOutCirc,
+    colorBgContainer,
+    colorBorder,
+    lineWidth,
+    colorBgContainerDisabled,
+    colorTextDisabled,
+    paddingXS,
+    dotColorDisabled,
+    lineType,
+    radioColor,
+    radioBgColor,
+    calc
+  } = token2;
+  const radioInnerPrefixCls = `${componentCls}-inner`;
+  const dotPadding = 4;
+  const radioDotDisabledSize = calc(radioSize).sub(calc(dotPadding).mul(2));
+  const radioSizeCalc = calc(1).mul(radioSize).equal({
+    unit: true
   });
-  return mergedPath;
+  return {
+    [`${componentCls}-wrapper`]: Object.assign(Object.assign({}, resetComponent(token2)), {
+      display: "inline-flex",
+      alignItems: "baseline",
+      marginInlineStart: 0,
+      marginInlineEnd: wrapperMarginInlineEnd,
+      cursor: "pointer",
+      // RTL
+      [`&${componentCls}-wrapper-rtl`]: {
+        direction: "rtl"
+      },
+      "&-disabled": {
+        cursor: "not-allowed",
+        color: token2.colorTextDisabled
+      },
+      "&::after": {
+        display: "inline-block",
+        width: 0,
+        overflow: "hidden",
+        content: '"\\a0"'
+      },
+      // hashId 在 wrapper 上，只能铺平
+      [`${componentCls}-checked::after`]: {
+        position: "absolute",
+        insetBlockStart: 0,
+        insetInlineStart: 0,
+        width: "100%",
+        height: "100%",
+        border: `${unit$1(lineWidth)} ${lineType} ${colorPrimary}`,
+        borderRadius: "50%",
+        visibility: "hidden",
+        opacity: 0,
+        content: '""'
+      },
+      [componentCls]: Object.assign(Object.assign({}, resetComponent(token2)), {
+        position: "relative",
+        display: "inline-block",
+        outline: "none",
+        cursor: "pointer",
+        alignSelf: "center",
+        borderRadius: "50%"
+      }),
+      [`${componentCls}-wrapper:hover &,
+        &:hover ${radioInnerPrefixCls}`]: {
+        borderColor: colorPrimary
+      },
+      [`${componentCls}-input:focus-visible + ${radioInnerPrefixCls}`]: Object.assign({}, genFocusOutline(token2)),
+      [`${componentCls}:hover::after, ${componentCls}-wrapper:hover &::after`]: {
+        visibility: "visible"
+      },
+      [`${componentCls}-inner`]: {
+        "&::after": {
+          boxSizing: "border-box",
+          position: "absolute",
+          insetBlockStart: "50%",
+          insetInlineStart: "50%",
+          display: "block",
+          width: radioSizeCalc,
+          height: radioSizeCalc,
+          marginBlockStart: calc(1).mul(radioSize).div(-2).equal({
+            unit: true
+          }),
+          marginInlineStart: calc(1).mul(radioSize).div(-2).equal({
+            unit: true
+          }),
+          backgroundColor: radioColor,
+          borderBlockStart: 0,
+          borderInlineStart: 0,
+          borderRadius: radioSizeCalc,
+          transform: "scale(0)",
+          opacity: 0,
+          transition: `all ${motionDurationSlow} ${motionEaseInOutCirc}`,
+          content: '""'
+        },
+        boxSizing: "border-box",
+        position: "relative",
+        insetBlockStart: 0,
+        insetInlineStart: 0,
+        display: "block",
+        width: radioSizeCalc,
+        height: radioSizeCalc,
+        backgroundColor: colorBgContainer,
+        borderColor: colorBorder,
+        borderStyle: "solid",
+        borderWidth: lineWidth,
+        borderRadius: "50%",
+        transition: `all ${motionDurationMid}`
+      },
+      [`${componentCls}-input`]: {
+        position: "absolute",
+        inset: 0,
+        zIndex: 1,
+        cursor: "pointer",
+        opacity: 0
+      },
+      // 选中状态
+      [`${componentCls}-checked`]: {
+        [radioInnerPrefixCls]: {
+          borderColor: colorPrimary,
+          backgroundColor: radioBgColor,
+          "&::after": {
+            transform: `scale(${token2.calc(token2.dotSize).div(radioSize).equal()})`,
+            opacity: 1,
+            transition: `all ${motionDurationSlow} ${motionEaseInOutCirc}`
+          }
+        }
+      },
+      [`${componentCls}-disabled`]: {
+        cursor: "not-allowed",
+        [radioInnerPrefixCls]: {
+          backgroundColor: colorBgContainerDisabled,
+          borderColor: colorBorder,
+          cursor: "not-allowed",
+          "&::after": {
+            backgroundColor: dotColorDisabled
+          }
+        },
+        [`${componentCls}-input`]: {
+          cursor: "not-allowed"
+        },
+        [`${componentCls}-disabled + span`]: {
+          color: colorTextDisabled,
+          cursor: "not-allowed"
+        },
+        [`&${componentCls}-checked`]: {
+          [radioInnerPrefixCls]: {
+            "&::after": {
+              transform: `scale(${calc(radioDotDisabledSize).div(radioSize).equal()})`
+            }
+          }
+        }
+      },
+      [`span${componentCls} + *`]: {
+        paddingInlineStart: paddingXS,
+        paddingInlineEnd: paddingXS
+      }
+    })
+  };
 };
-const Breadcrumb = (props) => {
+const getRadioButtonStyle = (token2) => {
   const {
-    prefixCls: customizePrefixCls,
-    separator = "/",
-    style: style2,
-    className,
-    rootClassName,
-    routes: legacyRoutes,
-    items,
-    children,
-    itemRender,
-    params = {}
-  } = props, restProps = __rest$o(props, ["prefixCls", "separator", "style", "className", "rootClassName", "routes", "items", "children", "itemRender", "params"]);
+    buttonColor,
+    controlHeight,
+    componentCls,
+    lineWidth,
+    lineType,
+    colorBorder,
+    motionDurationSlow,
+    motionDurationMid,
+    buttonPaddingInline,
+    fontSize,
+    buttonBg,
+    fontSizeLG,
+    controlHeightLG,
+    controlHeightSM,
+    paddingXS,
+    borderRadius,
+    borderRadiusSM,
+    borderRadiusLG,
+    buttonCheckedBg,
+    buttonSolidCheckedColor,
+    colorTextDisabled,
+    colorBgContainerDisabled,
+    buttonCheckedBgDisabled,
+    buttonCheckedColorDisabled,
+    colorPrimary,
+    colorPrimaryHover,
+    colorPrimaryActive,
+    buttonSolidCheckedBg,
+    buttonSolidCheckedHoverBg,
+    buttonSolidCheckedActiveBg,
+    calc
+  } = token2;
+  return {
+    [`${componentCls}-button-wrapper`]: {
+      position: "relative",
+      display: "inline-block",
+      height: controlHeight,
+      margin: 0,
+      paddingInline: buttonPaddingInline,
+      paddingBlock: 0,
+      color: buttonColor,
+      fontSize,
+      lineHeight: unit$1(calc(controlHeight).sub(calc(lineWidth).mul(2)).equal()),
+      background: buttonBg,
+      border: `${unit$1(lineWidth)} ${lineType} ${colorBorder}`,
+      // strange align fix for chrome but works
+      // https://gw.alipayobjects.com/zos/rmsportal/VFTfKXJuogBAXcvfAUWJ.gif
+      borderBlockStartWidth: calc(lineWidth).add(0.02).equal(),
+      borderInlineStartWidth: 0,
+      borderInlineEndWidth: lineWidth,
+      cursor: "pointer",
+      transition: [`color ${motionDurationMid}`, `background ${motionDurationMid}`, `box-shadow ${motionDurationMid}`].join(","),
+      a: {
+        color: buttonColor
+      },
+      [`> ${componentCls}-button`]: {
+        position: "absolute",
+        insetBlockStart: 0,
+        insetInlineStart: 0,
+        zIndex: -1,
+        width: "100%",
+        height: "100%"
+      },
+      "&:not(:first-child)": {
+        "&::before": {
+          position: "absolute",
+          insetBlockStart: calc(lineWidth).mul(-1).equal(),
+          insetInlineStart: calc(lineWidth).mul(-1).equal(),
+          display: "block",
+          boxSizing: "content-box",
+          width: 1,
+          height: "100%",
+          paddingBlock: lineWidth,
+          paddingInline: 0,
+          backgroundColor: colorBorder,
+          transition: `background-color ${motionDurationSlow}`,
+          content: '""'
+        }
+      },
+      "&:first-child": {
+        borderInlineStart: `${unit$1(lineWidth)} ${lineType} ${colorBorder}`,
+        borderStartStartRadius: borderRadius,
+        borderEndStartRadius: borderRadius
+      },
+      "&:last-child": {
+        borderStartEndRadius: borderRadius,
+        borderEndEndRadius: borderRadius
+      },
+      "&:first-child:last-child": {
+        borderRadius
+      },
+      [`${componentCls}-group-large &`]: {
+        height: controlHeightLG,
+        fontSize: fontSizeLG,
+        lineHeight: unit$1(calc(controlHeightLG).sub(calc(lineWidth).mul(2)).equal()),
+        "&:first-child": {
+          borderStartStartRadius: borderRadiusLG,
+          borderEndStartRadius: borderRadiusLG
+        },
+        "&:last-child": {
+          borderStartEndRadius: borderRadiusLG,
+          borderEndEndRadius: borderRadiusLG
+        }
+      },
+      [`${componentCls}-group-small &`]: {
+        height: controlHeightSM,
+        paddingInline: calc(paddingXS).sub(lineWidth).equal(),
+        paddingBlock: 0,
+        lineHeight: unit$1(calc(controlHeightSM).sub(calc(lineWidth).mul(2)).equal()),
+        "&:first-child": {
+          borderStartStartRadius: borderRadiusSM,
+          borderEndStartRadius: borderRadiusSM
+        },
+        "&:last-child": {
+          borderStartEndRadius: borderRadiusSM,
+          borderEndEndRadius: borderRadiusSM
+        }
+      },
+      "&:hover": {
+        position: "relative",
+        color: colorPrimary
+      },
+      "&:has(:focus-visible)": Object.assign({}, genFocusOutline(token2)),
+      [`${componentCls}-inner, input[type='checkbox'], input[type='radio']`]: {
+        width: 0,
+        height: 0,
+        opacity: 0,
+        pointerEvents: "none"
+      },
+      [`&-checked:not(${componentCls}-button-wrapper-disabled)`]: {
+        zIndex: 1,
+        color: colorPrimary,
+        background: buttonCheckedBg,
+        borderColor: colorPrimary,
+        "&::before": {
+          backgroundColor: colorPrimary
+        },
+        "&:first-child": {
+          borderColor: colorPrimary
+        },
+        "&:hover": {
+          color: colorPrimaryHover,
+          borderColor: colorPrimaryHover,
+          "&::before": {
+            backgroundColor: colorPrimaryHover
+          }
+        },
+        "&:active": {
+          color: colorPrimaryActive,
+          borderColor: colorPrimaryActive,
+          "&::before": {
+            backgroundColor: colorPrimaryActive
+          }
+        }
+      },
+      [`${componentCls}-group-solid &-checked:not(${componentCls}-button-wrapper-disabled)`]: {
+        color: buttonSolidCheckedColor,
+        background: buttonSolidCheckedBg,
+        borderColor: buttonSolidCheckedBg,
+        "&:hover": {
+          color: buttonSolidCheckedColor,
+          background: buttonSolidCheckedHoverBg,
+          borderColor: buttonSolidCheckedHoverBg
+        },
+        "&:active": {
+          color: buttonSolidCheckedColor,
+          background: buttonSolidCheckedActiveBg,
+          borderColor: buttonSolidCheckedActiveBg
+        }
+      },
+      "&-disabled": {
+        color: colorTextDisabled,
+        backgroundColor: colorBgContainerDisabled,
+        borderColor: colorBorder,
+        cursor: "not-allowed",
+        "&:first-child, &:hover": {
+          color: colorTextDisabled,
+          backgroundColor: colorBgContainerDisabled,
+          borderColor: colorBorder
+        }
+      },
+      [`&-disabled${componentCls}-button-wrapper-checked`]: {
+        color: buttonCheckedColorDisabled,
+        backgroundColor: buttonCheckedBgDisabled,
+        borderColor: colorBorder,
+        boxShadow: "none"
+      }
+    }
+  };
+};
+const prepareComponentToken$c = (token2) => {
+  const {
+    wireframe,
+    padding,
+    marginXS,
+    lineWidth,
+    fontSizeLG,
+    colorText,
+    colorBgContainer,
+    colorTextDisabled,
+    controlItemBgActiveDisabled,
+    colorTextLightSolid,
+    colorPrimary,
+    colorPrimaryHover,
+    colorPrimaryActive,
+    colorWhite
+  } = token2;
+  const dotPadding = 4;
+  const radioSize = fontSizeLG;
+  const radioDotSize = wireframe ? radioSize - dotPadding * 2 : radioSize - (dotPadding + lineWidth) * 2;
+  return {
+    // Radio
+    radioSize,
+    dotSize: radioDotSize,
+    dotColorDisabled: colorTextDisabled,
+    // Radio buttons
+    buttonSolidCheckedColor: colorTextLightSolid,
+    buttonSolidCheckedBg: colorPrimary,
+    buttonSolidCheckedHoverBg: colorPrimaryHover,
+    buttonSolidCheckedActiveBg: colorPrimaryActive,
+    buttonBg: colorBgContainer,
+    buttonCheckedBg: colorBgContainer,
+    buttonColor: colorText,
+    buttonCheckedBgDisabled: controlItemBgActiveDisabled,
+    buttonCheckedColorDisabled: colorTextDisabled,
+    buttonPaddingInline: padding - lineWidth,
+    wrapperMarginInlineEnd: marginXS,
+    // internal
+    radioColor: wireframe ? colorPrimary : colorWhite,
+    radioBgColor: wireframe ? colorBgContainer : colorPrimary
+  };
+};
+const useStyle$g = genStyleHooks("Radio", (token2) => {
+  const {
+    controlOutline,
+    controlOutlineWidth
+  } = token2;
+  const radioFocusShadow = `0 0 0 ${unit$1(controlOutlineWidth)} ${controlOutline}`;
+  const radioButtonFocusShadow = radioFocusShadow;
+  const radioToken = merge(token2, {
+    radioFocusShadow,
+    radioButtonFocusShadow
+  });
+  return [getGroupRadioStyle(radioToken), getRadioBasicStyle(radioToken), getRadioButtonStyle(radioToken)];
+}, prepareComponentToken$c, {
+  unitless: {
+    radioSize: true,
+    dotSize: true
+  }
+});
+var __rest$x = function(s2, e2) {
+  var t2 = {};
+  for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
+  if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
+    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i2])) t2[p2[i2]] = s2[p2[i2]];
+  }
+  return t2;
+};
+const InternalRadio = (props, ref) => {
+  var _a, _b;
+  const groupContext = reactExports.useContext(RadioGroupContext);
+  const radioOptionTypeContext = reactExports.useContext(RadioOptionTypeContext);
   const {
     getPrefixCls,
     direction,
-    breadcrumb
+    radio
   } = reactExports.useContext(ConfigContext);
-  let crumbs;
-  const prefixCls = getPrefixCls("breadcrumb", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$b(prefixCls);
-  const mergedItems = useItems$1(items, legacyRoutes);
-  const mergedItemRender = useItemRender(prefixCls, itemRender);
-  if (mergedItems && mergedItems.length > 0) {
-    const paths = [];
-    const itemRenderRoutes = items || legacyRoutes;
-    crumbs = mergedItems.map((item, index2) => {
-      const {
-        path: path2,
-        key,
-        type: type4,
-        menu,
-        overlay,
-        onClick,
-        className: itemClassName,
-        separator: itemSeparator,
-        dropdownProps
-      } = item;
-      const mergedPath = getPath(params, path2);
-      if (mergedPath !== void 0) {
-        paths.push(mergedPath);
+  const innerRef = reactExports.useRef(null);
+  const mergedRef = composeRef(ref, innerRef);
+  const {
+    isFormItemInput
+  } = reactExports.useContext(FormItemInputContext);
+  const onChange = (e2) => {
+    var _a2, _b2;
+    (_a2 = props.onChange) === null || _a2 === void 0 ? void 0 : _a2.call(props, e2);
+    (_b2 = groupContext === null || groupContext === void 0 ? void 0 : groupContext.onChange) === null || _b2 === void 0 ? void 0 : _b2.call(groupContext, e2);
+  };
+  const {
+    prefixCls: customizePrefixCls,
+    className,
+    rootClassName,
+    children,
+    style: style2,
+    title
+  } = props, restProps = __rest$x(props, ["prefixCls", "className", "rootClassName", "children", "style", "title"]);
+  const radioPrefixCls = getPrefixCls("radio", customizePrefixCls);
+  const isButtonType = ((groupContext === null || groupContext === void 0 ? void 0 : groupContext.optionType) || radioOptionTypeContext) === "button";
+  const prefixCls = isButtonType ? `${radioPrefixCls}-button` : radioPrefixCls;
+  const rootCls = useCSSVarCls(radioPrefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$g(radioPrefixCls, rootCls);
+  const radioProps = Object.assign({}, restProps);
+  const disabled = reactExports.useContext(DisabledContext);
+  if (groupContext) {
+    radioProps.name = groupContext.name;
+    radioProps.onChange = onChange;
+    radioProps.checked = props.value === groupContext.value;
+    radioProps.disabled = (_a = radioProps.disabled) !== null && _a !== void 0 ? _a : groupContext.disabled;
+  }
+  radioProps.disabled = (_b = radioProps.disabled) !== null && _b !== void 0 ? _b : disabled;
+  const wrapperClassString = classNames(`${prefixCls}-wrapper`, {
+    [`${prefixCls}-wrapper-checked`]: radioProps.checked,
+    [`${prefixCls}-wrapper-disabled`]: radioProps.disabled,
+    [`${prefixCls}-wrapper-rtl`]: direction === "rtl",
+    [`${prefixCls}-wrapper-in-form-item`]: isFormItemInput
+  }, radio === null || radio === void 0 ? void 0 : radio.className, className, rootClassName, hashId, cssVarCls, rootCls);
+  return wrapCSSVar(/* @__PURE__ */ reactExports.createElement(Wave, {
+    component: "Radio",
+    disabled: radioProps.disabled
+  }, /* @__PURE__ */ reactExports.createElement("label", {
+    className: wrapperClassString,
+    style: Object.assign(Object.assign({}, radio === null || radio === void 0 ? void 0 : radio.style), style2),
+    onMouseEnter: props.onMouseEnter,
+    onMouseLeave: props.onMouseLeave,
+    title
+  }, /* @__PURE__ */ reactExports.createElement(Checkbox$2, Object.assign({}, radioProps, {
+    className: classNames(radioProps.className, {
+      [TARGET_CLS]: !isButtonType
+    }),
+    type: "radio",
+    prefixCls,
+    ref: mergedRef
+  })), children !== void 0 ? /* @__PURE__ */ reactExports.createElement("span", null, children) : null)));
+};
+const Radio$1 = /* @__PURE__ */ reactExports.forwardRef(InternalRadio);
+const RadioGroup = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
+  const {
+    getPrefixCls,
+    direction
+  } = reactExports.useContext(ConfigContext);
+  const [value, setValue] = useMergedState(props.defaultValue, {
+    value: props.value
+  });
+  const onRadioChange = (ev) => {
+    const lastValue = value;
+    const val = ev.target.value;
+    if (!("value" in props)) {
+      setValue(val);
+    }
+    const {
+      onChange
+    } = props;
+    if (onChange && val !== lastValue) {
+      onChange(ev);
+    }
+  };
+  const {
+    prefixCls: customizePrefixCls,
+    className,
+    rootClassName,
+    options,
+    buttonStyle = "outline",
+    disabled,
+    children,
+    size: customizeSize,
+    style: style2,
+    id: id2,
+    onMouseEnter,
+    onMouseLeave,
+    onFocus,
+    onBlur
+  } = props;
+  const prefixCls = getPrefixCls("radio", customizePrefixCls);
+  const groupPrefixCls = `${prefixCls}-group`;
+  const rootCls = useCSSVarCls(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$g(prefixCls, rootCls);
+  let childrenToRender = children;
+  if (options && options.length > 0) {
+    childrenToRender = options.map((option) => {
+      if (typeof option === "string" || typeof option === "number") {
+        return /* @__PURE__ */ reactExports.createElement(Radio$1, {
+          key: option.toString(),
+          prefixCls,
+          disabled,
+          value: option,
+          checked: value === option
+        }, option);
       }
-      const mergedKey = key !== null && key !== void 0 ? key : index2;
-      if (type4 === "separator") {
-        return /* @__PURE__ */ reactExports.createElement(BreadcrumbSeparator, {
-          key: mergedKey
-        }, itemSeparator);
-      }
-      const itemProps = {};
-      const isLastItem = index2 === mergedItems.length - 1;
-      if (menu) {
-        itemProps.menu = menu;
-      } else if (overlay) {
-        itemProps.overlay = overlay;
-      }
-      let {
-        href
-      } = item;
-      if (paths.length && mergedPath !== void 0) {
-        href = `#/${paths.join("/")}`;
-      }
-      return /* @__PURE__ */ reactExports.createElement(InternalBreadcrumbItem, Object.assign({
-        key: mergedKey
-      }, itemProps, pickAttrs(item, {
-        data: true,
-        aria: true
-      }), {
-        className: itemClassName,
-        dropdownProps,
-        href,
-        separator: isLastItem ? "" : separator,
-        onClick,
-        prefixCls
-      }), mergedItemRender(item, params, itemRenderRoutes, paths, href));
-    });
-  } else if (children) {
-    const childrenLength = toArray$4(children).length;
-    crumbs = toArray$4(children).map((element, index2) => {
-      if (!element) {
-        return element;
-      }
-      const isLastItem = index2 === childrenLength - 1;
-      return cloneElement(element, {
-        separator: isLastItem ? "" : separator,
-        key: index2
-      });
+      return /* @__PURE__ */ reactExports.createElement(Radio$1, {
+        key: `radio-group-value-options-${option.value}`,
+        prefixCls,
+        disabled: option.disabled || disabled,
+        value: option.value,
+        checked: value === option.value,
+        title: option.title,
+        style: option.style,
+        id: option.id,
+        required: option.required
+      }, option.label);
     });
   }
-  const breadcrumbClassName = classNames(prefixCls, breadcrumb === null || breadcrumb === void 0 ? void 0 : breadcrumb.className, {
-    [`${prefixCls}-rtl`]: direction === "rtl"
-  }, className, rootClassName, hashId, cssVarCls);
-  const mergedStyle = Object.assign(Object.assign({}, breadcrumb === null || breadcrumb === void 0 ? void 0 : breadcrumb.style), style2);
-  return wrapCSSVar(/* @__PURE__ */ reactExports.createElement("nav", Object.assign({
-    className: breadcrumbClassName,
-    style: mergedStyle
-  }, restProps), /* @__PURE__ */ reactExports.createElement("ol", null, crumbs)));
+  const mergedSize = useSize(customizeSize);
+  const classString = classNames(groupPrefixCls, `${groupPrefixCls}-${buttonStyle}`, {
+    [`${groupPrefixCls}-${mergedSize}`]: mergedSize,
+    [`${groupPrefixCls}-rtl`]: direction === "rtl"
+  }, className, rootClassName, hashId, cssVarCls, rootCls);
+  return wrapCSSVar(/* @__PURE__ */ reactExports.createElement("div", Object.assign({}, pickAttrs(props, {
+    aria: true,
+    data: true
+  }), {
+    className: classString,
+    style: style2,
+    onMouseEnter,
+    onMouseLeave,
+    onFocus,
+    onBlur,
+    id: id2,
+    ref
+  }), /* @__PURE__ */ reactExports.createElement(RadioGroupContextProvider, {
+    value: {
+      onChange: onRadioChange,
+      value,
+      disabled: props.disabled,
+      name: props.name,
+      optionType: props.optionType
+    }
+  }, childrenToRender)));
+});
+const Group$1 = /* @__PURE__ */ reactExports.memo(RadioGroup);
+var __rest$w = function(s2, e2) {
+  var t2 = {};
+  for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
+  if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
+    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i2])) t2[p2[i2]] = s2[p2[i2]];
+  }
+  return t2;
 };
-Breadcrumb.Item = BreadcrumbItem$1;
-Breadcrumb.Separator = BreadcrumbSeparator;
+const RadioButton = (props, ref) => {
+  const {
+    getPrefixCls
+  } = reactExports.useContext(ConfigContext);
+  const {
+    prefixCls: customizePrefixCls
+  } = props, radioProps = __rest$w(props, ["prefixCls"]);
+  const prefixCls = getPrefixCls("radio", customizePrefixCls);
+  return /* @__PURE__ */ reactExports.createElement(RadioOptionTypeContextProvider, {
+    value: "button"
+  }, /* @__PURE__ */ reactExports.createElement(Radio$1, Object.assign({
+    prefixCls
+  }, radioProps, {
+    type: "radio",
+    ref
+  })));
+};
+const Button = /* @__PURE__ */ reactExports.forwardRef(RadioButton);
+const Radio = Radio$1;
+Radio.Button = Button;
+Radio.Group = Group$1;
+Radio.__ANT_RADIO = true;
 function initInputToken(token2) {
   return merge(token2, {
     inputAffixPadding: token2.paddingXXS
   });
 }
-const initComponentToken = (token2) => {
+const initComponentToken$1 = (token2) => {
   const {
     controlHeight,
     fontSize,
@@ -34767,7 +35349,7 @@ const genRangeStyle = (token2) => {
     }
   };
 };
-const useStyle$a = genStyleHooks("Input", (token2) => {
+const useStyle$f = genStyleHooks("Input", (token2) => {
   const inputToken = merge(token2, initInputToken(token2));
   return [
     genInputStyle$1(inputToken),
@@ -34781,7 +35363,7 @@ const useStyle$a = genStyleHooks("Input", (token2) => {
     // =====================================================
     genCompactItemStyle(inputToken)
   ];
-}, initComponentToken, {
+}, initComponentToken$1, {
   resetFont: false
 });
 var PlusOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z" } }, { "tag": "path", "attrs": { "d": "M192 474h672q8 0 8 8v60q0 8-8 8H160q-8 0-8-8v-60q0-8 8-8z" } }] }, "name": "plus", "theme": "outlined" };
@@ -34791,7 +35373,7 @@ var PlusOutlined = function PlusOutlined2(props, ref) {
     icon: PlusOutlined$1
   }));
 };
-var RefIcon$7 = /* @__PURE__ */ reactExports.forwardRef(PlusOutlined);
+var RefIcon$g = /* @__PURE__ */ reactExports.forwardRef(PlusOutlined);
 const TabContext = /* @__PURE__ */ reactExports.createContext(null);
 var useIndicator = function useIndicator2(options) {
   var activeTabOffset = options.activeTabOffset, horizontal = options.horizontal, rtl = options.rtl, _options$indicator = options.indicator, indicator = _options$indicator === void 0 ? {} : _options$indicator;
@@ -34880,7 +35462,7 @@ function useOffsets(tabs, tabSizes, holderScrollWidth) {
     return tab.key;
   }).join("_"), tabSizes, holderScrollWidth]);
 }
-function useSyncState(defaultState, onChange) {
+function useSyncState$1(defaultState, onChange) {
   var stateRef = reactExports.useRef(defaultState);
   var _React$useState = reactExports.useState({}), _React$useState2 = _slicedToArray(_React$useState, 2), forceUpdate = _React$useState2[1];
   function setState(updater) {
@@ -35229,7 +35811,7 @@ var OperationNode = /* @__PURE__ */ reactExports.forwardRef(function(props, ref)
       }
     }
   }
-  function onKeyDown(e2) {
+  function onKeyDown2(e2) {
     var which = e2.which;
     if (!open) {
       if ([KeyCode.DOWN, KeyCode.SPACE, KeyCode.ENTER].includes(which)) {
@@ -35275,7 +35857,7 @@ var OperationNode = /* @__PURE__ */ reactExports.forwardRef(function(props, ref)
     moreStyle.order = 1;
   }
   var overlayClassName = classNames(_defineProperty({}, "".concat(dropdownPrefix, "-rtl"), rtl));
-  var moreNode = mobile ? null : /* @__PURE__ */ reactExports.createElement(Dropdown$2, _extends({
+  var moreNode = mobile ? null : /* @__PURE__ */ reactExports.createElement(Dropdown$3, _extends({
     prefixCls: dropdownPrefix,
     overlay: menu,
     visible: tabs.length ? open : false,
@@ -35294,7 +35876,7 @@ var OperationNode = /* @__PURE__ */ reactExports.forwardRef(function(props, ref)
     "aria-controls": popupId,
     id: "".concat(id2, "-more"),
     "aria-expanded": open,
-    onKeyDown
+    onKeyDown: onKeyDown2
   }, moreIcon));
   return /* @__PURE__ */ reactExports.createElement("div", {
     className: classNames("".concat(prefixCls, "-nav-operations"), className),
@@ -35352,7 +35934,7 @@ var TabNode = function TabNode2(props) {
       e2.stopPropagation();
       onInternalClick(e2);
     },
-    onKeyDown: function onKeyDown(e2) {
+    onKeyDown: function onKeyDown2(e2) {
       if ([KeyCode.SPACE, KeyCode.ENTER].includes(e2.which)) {
         e2.preventDefault();
         onInternalClick(e2);
@@ -35405,14 +35987,14 @@ var TabNavList = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
   var operationsRef = reactExports.useRef(null);
   var innerAddButtonRef = reactExports.useRef(null);
   var tabPositionTopOrBottom = tabPosition === "top" || tabPosition === "bottom";
-  var _useSyncState = useSyncState(0, function(next2, prev2) {
+  var _useSyncState = useSyncState$1(0, function(next2, prev2) {
     if (tabPositionTopOrBottom && onTabScroll) {
       onTabScroll({
         direction: next2 > prev2 ? "left" : "right"
       });
     }
   }), _useSyncState2 = _slicedToArray(_useSyncState, 2), transformLeft = _useSyncState2[0], setTransformLeft = _useSyncState2[1];
-  var _useSyncState3 = useSyncState(0, function(next2, prev2) {
+  var _useSyncState3 = useSyncState$1(0, function(next2, prev2) {
     if (!tabPositionTopOrBottom && onTabScroll) {
       onTabScroll({
         direction: next2 > prev2 ? "top" : "bottom"
@@ -35658,7 +36240,7 @@ var TabNavList = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
     role: "tablist",
     className: classNames("".concat(prefixCls, "-nav"), className),
     style: style2,
-    onKeyDown: function onKeyDown() {
+    onKeyDown: function onKeyDown2() {
       doLockAnimation();
     }
   }, /* @__PURE__ */ reactExports.createElement(ExtraContent, {
@@ -35718,15 +36300,15 @@ var TabPane$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
     ref
   }, children);
 });
-var _excluded$d = ["renderTabBar"], _excluded2$2 = ["label", "key"];
+var _excluded$n = ["renderTabBar"], _excluded2$3 = ["label", "key"];
 var TabNavListWrapper = function TabNavListWrapper2(_ref) {
-  var renderTabBar = _ref.renderTabBar, restProps = _objectWithoutProperties(_ref, _excluded$d);
+  var renderTabBar = _ref.renderTabBar, restProps = _objectWithoutProperties(_ref, _excluded$n);
   var _React$useContext = reactExports.useContext(TabContext), tabs = _React$useContext.tabs;
   if (renderTabBar) {
     var tabNavBarProps = _objectSpread2(_objectSpread2({}, restProps), {}, {
       // Legacy support. We do not use this actually
       panes: tabs.map(function(_ref2) {
-        var label = _ref2.label, key = _ref2.key, restTabProps = _objectWithoutProperties(_ref2, _excluded2$2);
+        var label = _ref2.label, key = _ref2.key, restTabProps = _objectWithoutProperties(_ref2, _excluded2$3);
         return /* @__PURE__ */ reactExports.createElement(TabPane$1, _extends({
           tab: label,
           key,
@@ -35738,7 +36320,7 @@ var TabNavListWrapper = function TabNavListWrapper2(_ref) {
   }
   return /* @__PURE__ */ reactExports.createElement(TabNavList, restProps);
 };
-var _excluded$c = ["key", "forceRender", "style", "className", "destroyInactiveTabPane"];
+var _excluded$m = ["key", "forceRender", "style", "className", "destroyInactiveTabPane"];
 var TabPanelList = function TabPanelList2(props) {
   var id2 = props.id, activeKey = props.activeKey, animated = props.animated, tabPosition = props.tabPosition, destroyInactiveTabPane = props.destroyInactiveTabPane;
   var _React$useContext = reactExports.useContext(TabContext), prefixCls = _React$useContext.prefixCls, tabs = _React$useContext.tabs;
@@ -35749,7 +36331,7 @@ var TabPanelList = function TabPanelList2(props) {
   }, /* @__PURE__ */ reactExports.createElement("div", {
     className: classNames("".concat(prefixCls, "-content"), "".concat(prefixCls, "-content-").concat(tabPosition), _defineProperty({}, "".concat(prefixCls, "-content-animated"), tabPaneAnimated))
   }, tabs.map(function(item) {
-    var key = item.key, forceRender = item.forceRender, paneStyle = item.style, paneClassName = item.className, itemDestroyInactiveTabPane = item.destroyInactiveTabPane, restTabProps = _objectWithoutProperties(item, _excluded$c);
+    var key = item.key, forceRender = item.forceRender, paneStyle = item.style, paneClassName = item.className, itemDestroyInactiveTabPane = item.destroyInactiveTabPane, restTabProps = _objectWithoutProperties(item, _excluded$m);
     var active = key === activeKey;
     return /* @__PURE__ */ reactExports.createElement(CSSMotion, _extends({
       key,
@@ -35801,10 +36383,10 @@ function useAnimateConfig$1() {
   }
   return mergedAnimated;
 }
-var _excluded$b = ["id", "prefixCls", "className", "items", "direction", "activeKey", "defaultActiveKey", "editable", "animated", "tabPosition", "tabBarGutter", "tabBarStyle", "tabBarExtraContent", "locale", "more", "destroyInactiveTabPane", "renderTabBar", "onChange", "onTabClick", "onTabScroll", "getPopupContainer", "popupClassName", "indicator"];
+var _excluded$l = ["id", "prefixCls", "className", "items", "direction", "activeKey", "defaultActiveKey", "editable", "animated", "tabPosition", "tabBarGutter", "tabBarStyle", "tabBarExtraContent", "locale", "more", "destroyInactiveTabPane", "renderTabBar", "onChange", "onTabClick", "onTabScroll", "getPopupContainer", "popupClassName", "indicator"];
 var uuid = 0;
 var Tabs$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
-  var id2 = props.id, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-tabs" : _props$prefixCls, className = props.className, items = props.items, direction = props.direction, activeKey = props.activeKey, defaultActiveKey = props.defaultActiveKey, editable = props.editable, animated = props.animated, _props$tabPosition = props.tabPosition, tabPosition = _props$tabPosition === void 0 ? "top" : _props$tabPosition, tabBarGutter = props.tabBarGutter, tabBarStyle = props.tabBarStyle, tabBarExtraContent = props.tabBarExtraContent, locale2 = props.locale, more = props.more, destroyInactiveTabPane = props.destroyInactiveTabPane, renderTabBar = props.renderTabBar, onChange = props.onChange, onTabClick = props.onTabClick, onTabScroll = props.onTabScroll, getPopupContainer = props.getPopupContainer, popupClassName = props.popupClassName, indicator = props.indicator, restProps = _objectWithoutProperties(props, _excluded$b);
+  var id2 = props.id, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-tabs" : _props$prefixCls, className = props.className, items = props.items, direction = props.direction, activeKey = props.activeKey, defaultActiveKey = props.defaultActiveKey, editable = props.editable, animated = props.animated, _props$tabPosition = props.tabPosition, tabPosition = _props$tabPosition === void 0 ? "top" : _props$tabPosition, tabBarGutter = props.tabBarGutter, tabBarStyle = props.tabBarStyle, tabBarExtraContent = props.tabBarExtraContent, locale2 = props.locale, more = props.more, destroyInactiveTabPane = props.destroyInactiveTabPane, renderTabBar = props.renderTabBar, onChange = props.onChange, onTabClick = props.onTabClick, onTabScroll = props.onTabScroll, getPopupContainer = props.getPopupContainer, popupClassName = props.popupClassName, indicator = props.indicator, restProps = _objectWithoutProperties(props, _excluded$l);
   var tabs = reactExports.useMemo(function() {
     return (items || []).filter(function(item) {
       return item && _typeof(item) === "object" && "key" in item;
@@ -35930,7 +36512,7 @@ function useAnimateConfig(prefixCls) {
   }
   return mergedAnimated;
 }
-var __rest$n = function(s2, e2) {
+var __rest$v = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -35945,7 +36527,7 @@ function useLegacyItems(items, children) {
   if (items) {
     return items;
   }
-  const childrenItems = toArray$4(children).map((node2) => {
+  const childrenItems = toArray$5(children).map((node2) => {
     if (/* @__PURE__ */ reactExports.isValidElement(node2)) {
       const {
         key,
@@ -35953,7 +36535,7 @@ function useLegacyItems(items, children) {
       } = node2;
       const _a = props || {}, {
         tab
-      } = _a, restProps = __rest$n(_a, ["tab"]);
+      } = _a, restProps = __rest$v(_a, ["tab"]);
       const item = Object.assign(Object.assign({
         key: String(key)
       }, restProps), {
@@ -36389,7 +36971,7 @@ const genPositionStyle = (token2) => {
     }
   };
 };
-const genSizeStyle$1 = (token2) => {
+const genSizeStyle$2 = (token2) => {
   const {
     componentCls,
     cardPaddingSM,
@@ -36783,7 +37365,7 @@ const genTabsStyle = (token2) => {
     }
   };
 };
-const prepareComponentToken$7 = (token2) => {
+const prepareComponentToken$b = (token2) => {
   const cardHeight = token2.controlHeightLG;
   return {
     zIndexPopup: token2.zIndexPopupBase + 50,
@@ -36815,7 +37397,7 @@ const prepareComponentToken$7 = (token2) => {
     cardGutter: token2.marginXXS / 2
   };
 };
-const useStyle$9 = genStyleHooks("Tabs", (token2) => {
+const useStyle$e = genStyleHooks("Tabs", (token2) => {
   const tabsToken = merge(token2, {
     // `cardPadding` is empty by default, so we could calculate with dynamic `cardHeight`
     tabsCardPadding: token2.cardPadding,
@@ -36826,10 +37408,10 @@ const useStyle$9 = genStyleHooks("Tabs", (token2) => {
     tabsHorizontalItemMargin: `0 0 0 ${unit$1(token2.horizontalItemGutter)}`,
     tabsHorizontalItemMarginRTL: `0 0 0 ${unit$1(token2.horizontalItemGutter)}`
   });
-  return [genSizeStyle$1(tabsToken), genRtlStyle$1(tabsToken), genPositionStyle(tabsToken), genDropdownStyle(tabsToken), genCardStyle(tabsToken), genTabsStyle(tabsToken), genMotionStyle$1(tabsToken)];
-}, prepareComponentToken$7);
+  return [genSizeStyle$2(tabsToken), genRtlStyle$1(tabsToken), genPositionStyle(tabsToken), genDropdownStyle(tabsToken), genCardStyle(tabsToken), genTabsStyle(tabsToken), genMotionStyle$1(tabsToken)];
+}, prepareComponentToken$b);
 const TabPane = () => null;
-var __rest$m = function(s2, e2) {
+var __rest$u = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -36858,7 +37440,7 @@ const Tabs = (props) => {
     style: style2,
     indicatorSize,
     indicator
-  } = props, otherProps = __rest$m(props, ["type", "className", "rootClassName", "size", "onEdit", "hideAdd", "centered", "addIcon", "removeIcon", "moreIcon", "more", "popupClassName", "children", "items", "animated", "style", "indicatorSize", "indicator"]);
+  } = props, otherProps = __rest$u(props, ["type", "className", "rootClassName", "size", "onEdit", "hideAdd", "centered", "addIcon", "removeIcon", "moreIcon", "more", "popupClassName", "children", "items", "animated", "style", "indicatorSize", "indicator"]);
   const {
     prefixCls: customizePrefixCls
   } = otherProps;
@@ -36870,7 +37452,7 @@ const Tabs = (props) => {
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("tabs", customizePrefixCls);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$9(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$e(prefixCls, rootCls);
   let editable;
   if (type4 === "editable-card") {
     editable = {
@@ -36881,8 +37463,8 @@ const Tabs = (props) => {
         } = _ref;
         onEdit === null || onEdit === void 0 ? void 0 : onEdit(editType === "add" ? event : key, editType);
       },
-      removeIcon: (_a = removeIcon !== null && removeIcon !== void 0 ? removeIcon : tabs === null || tabs === void 0 ? void 0 : tabs.removeIcon) !== null && _a !== void 0 ? _a : /* @__PURE__ */ reactExports.createElement(RefIcon$j, null),
-      addIcon: (addIcon !== null && addIcon !== void 0 ? addIcon : tabs === null || tabs === void 0 ? void 0 : tabs.addIcon) || /* @__PURE__ */ reactExports.createElement(RefIcon$7, null),
+      removeIcon: (_a = removeIcon !== null && removeIcon !== void 0 ? removeIcon : tabs === null || tabs === void 0 ? void 0 : tabs.removeIcon) !== null && _a !== void 0 ? _a : /* @__PURE__ */ reactExports.createElement(RefIcon$s, null),
+      addIcon: (addIcon !== null && addIcon !== void 0 ? addIcon : tabs === null || tabs === void 0 ? void 0 : tabs.addIcon) || /* @__PURE__ */ reactExports.createElement(RefIcon$g, null),
       showAdd: hideAdd !== true
     };
   }
@@ -36910,7 +37492,7 @@ const Tabs = (props) => {
     style: mergedStyle,
     editable,
     more: Object.assign({
-      icon: (_l = (_k = (_j = (_h = tabs === null || tabs === void 0 ? void 0 : tabs.more) === null || _h === void 0 ? void 0 : _h.icon) !== null && _j !== void 0 ? _j : tabs === null || tabs === void 0 ? void 0 : tabs.moreIcon) !== null && _k !== void 0 ? _k : moreIcon) !== null && _l !== void 0 ? _l : /* @__PURE__ */ reactExports.createElement(RefIcon$8, null),
+      icon: (_l = (_k = (_j = (_h = tabs === null || tabs === void 0 ? void 0 : tabs.more) === null || _h === void 0 ? void 0 : _h.icon) !== null && _j !== void 0 ? _j : tabs === null || tabs === void 0 ? void 0 : tabs.moreIcon) !== null && _k !== void 0 ? _k : moreIcon) !== null && _l !== void 0 ? _l : /* @__PURE__ */ reactExports.createElement(RefIcon$h, null),
       transitionName: `${rootPrefixCls}-slide-up`
     }, more),
     prefixCls,
@@ -36919,6 +37501,890 @@ const Tabs = (props) => {
   })));
 };
 Tabs.TabPane = TabPane;
+function throttle(delay, callback, options) {
+  var _ref = options || {}, _ref$noTrailing = _ref.noTrailing, noTrailing = _ref$noTrailing === void 0 ? false : _ref$noTrailing, _ref$noLeading = _ref.noLeading, noLeading = _ref$noLeading === void 0 ? false : _ref$noLeading, _ref$debounceMode = _ref.debounceMode, debounceMode = _ref$debounceMode === void 0 ? void 0 : _ref$debounceMode;
+  var timeoutID;
+  var cancelled = false;
+  var lastExec = 0;
+  function clearExistingTimeout() {
+    if (timeoutID) {
+      clearTimeout(timeoutID);
+    }
+  }
+  function cancel(options2) {
+    var _ref2 = options2 || {}, _ref2$upcomingOnly = _ref2.upcomingOnly, upcomingOnly = _ref2$upcomingOnly === void 0 ? false : _ref2$upcomingOnly;
+    clearExistingTimeout();
+    cancelled = !upcomingOnly;
+  }
+  function wrapper() {
+    for (var _len = arguments.length, arguments_ = new Array(_len), _key = 0; _key < _len; _key++) {
+      arguments_[_key] = arguments[_key];
+    }
+    var self2 = this;
+    var elapsed = Date.now() - lastExec;
+    if (cancelled) {
+      return;
+    }
+    function exec() {
+      lastExec = Date.now();
+      callback.apply(self2, arguments_);
+    }
+    function clear() {
+      timeoutID = void 0;
+    }
+    if (!noLeading && debounceMode && !timeoutID) {
+      exec();
+    }
+    clearExistingTimeout();
+    if (debounceMode === void 0 && elapsed > delay) {
+      if (noLeading) {
+        lastExec = Date.now();
+        if (!noTrailing) {
+          timeoutID = setTimeout(debounceMode ? clear : exec, delay);
+        }
+      } else {
+        exec();
+      }
+    } else if (noTrailing !== true) {
+      timeoutID = setTimeout(debounceMode ? clear : exec, debounceMode === void 0 ? delay - elapsed : delay);
+    }
+  }
+  wrapper.cancel = cancel;
+  return wrapper;
+}
+function debounce(delay, callback, options) {
+  var _ref = {}, _ref$atBegin = _ref.atBegin, atBegin = _ref$atBegin === void 0 ? false : _ref$atBegin;
+  return throttle(delay, callback, {
+    debounceMode: atBegin !== false
+  });
+}
+function getEntity(keyEntities, key) {
+  return keyEntities[key];
+}
+var _excluded$k = ["children"];
+function getPosition$2(level, index2) {
+  return "".concat(level, "-").concat(index2);
+}
+function isTreeNode(node2) {
+  return node2 && node2.type && node2.type.isTreeNode;
+}
+function getKey(key, pos) {
+  if (key !== null && key !== void 0) {
+    return key;
+  }
+  return pos;
+}
+function fillFieldNames(fieldNames) {
+  var _ref = fieldNames || {}, title = _ref.title, _title = _ref._title, key = _ref.key, children = _ref.children;
+  var mergedTitle = title || "title";
+  return {
+    title: mergedTitle,
+    _title: _title || [mergedTitle],
+    key: key || "key",
+    children: children || "children"
+  };
+}
+function convertTreeToData(rootNodes) {
+  function dig(node2) {
+    var treeNodes = toArray$5(node2);
+    return treeNodes.map(function(treeNode) {
+      if (!isTreeNode(treeNode)) {
+        warningOnce(!treeNode, "Tree/TreeNode can only accept TreeNode as children.");
+        return null;
+      }
+      var key = treeNode.key;
+      var _treeNode$props = treeNode.props, children = _treeNode$props.children, rest = _objectWithoutProperties(_treeNode$props, _excluded$k);
+      var dataNode = _objectSpread2({
+        key
+      }, rest);
+      var parsedChildren = dig(children);
+      if (parsedChildren.length) {
+        dataNode.children = parsedChildren;
+      }
+      return dataNode;
+    }).filter(function(dataNode) {
+      return dataNode;
+    });
+  }
+  return dig(rootNodes);
+}
+function flattenTreeData(treeNodeList, expandedKeys, fieldNames) {
+  var _fillFieldNames = fillFieldNames(fieldNames), fieldTitles = _fillFieldNames._title, fieldKey = _fillFieldNames.key, fieldChildren = _fillFieldNames.children;
+  var expandedKeySet = new Set(expandedKeys === true ? [] : expandedKeys);
+  var flattenList = [];
+  function dig(list) {
+    var parent = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : null;
+    return list.map(function(treeNode, index2) {
+      var pos = getPosition$2(parent ? parent.pos : "0", index2);
+      var mergedKey = getKey(treeNode[fieldKey], pos);
+      var mergedTitle;
+      for (var i2 = 0; i2 < fieldTitles.length; i2 += 1) {
+        var fieldTitle = fieldTitles[i2];
+        if (treeNode[fieldTitle] !== void 0) {
+          mergedTitle = treeNode[fieldTitle];
+          break;
+        }
+      }
+      var flattenNode = Object.assign(omit(treeNode, [].concat(_toConsumableArray(fieldTitles), [fieldKey, fieldChildren])), {
+        title: mergedTitle,
+        key: mergedKey,
+        parent,
+        pos,
+        children: null,
+        data: treeNode,
+        isStart: [].concat(_toConsumableArray(parent ? parent.isStart : []), [index2 === 0]),
+        isEnd: [].concat(_toConsumableArray(parent ? parent.isEnd : []), [index2 === list.length - 1])
+      });
+      flattenList.push(flattenNode);
+      if (expandedKeys === true || expandedKeySet.has(mergedKey)) {
+        flattenNode.children = dig(treeNode[fieldChildren] || [], flattenNode);
+      } else {
+        flattenNode.children = [];
+      }
+      return flattenNode;
+    });
+  }
+  dig(treeNodeList);
+  return flattenList;
+}
+function traverseDataNodes(dataNodes, callback, config) {
+  var mergedConfig = {};
+  if (_typeof(config) === "object") {
+    mergedConfig = config;
+  } else {
+    mergedConfig = {
+      externalGetKey: config
+    };
+  }
+  mergedConfig = mergedConfig || {};
+  var _mergedConfig = mergedConfig, childrenPropName = _mergedConfig.childrenPropName, externalGetKey = _mergedConfig.externalGetKey, fieldNames = _mergedConfig.fieldNames;
+  var _fillFieldNames2 = fillFieldNames(fieldNames), fieldKey = _fillFieldNames2.key, fieldChildren = _fillFieldNames2.children;
+  var mergeChildrenPropName = childrenPropName || fieldChildren;
+  var syntheticGetKey;
+  if (externalGetKey) {
+    if (typeof externalGetKey === "string") {
+      syntheticGetKey = function syntheticGetKey2(node2) {
+        return node2[externalGetKey];
+      };
+    } else if (typeof externalGetKey === "function") {
+      syntheticGetKey = function syntheticGetKey2(node2) {
+        return externalGetKey(node2);
+      };
+    }
+  } else {
+    syntheticGetKey = function syntheticGetKey2(node2, pos) {
+      return getKey(node2[fieldKey], pos);
+    };
+  }
+  function processNode(node2, index2, parent, pathNodes) {
+    var children = node2 ? node2[mergeChildrenPropName] : dataNodes;
+    var pos = node2 ? getPosition$2(parent.pos, index2) : "0";
+    var connectNodes = node2 ? [].concat(_toConsumableArray(pathNodes), [node2]) : [];
+    if (node2) {
+      var key = syntheticGetKey(node2, pos);
+      var _data = {
+        node: node2,
+        index: index2,
+        pos,
+        key,
+        parentPos: parent.node ? parent.pos : null,
+        level: parent.level + 1,
+        nodes: connectNodes
+      };
+      callback(_data);
+    }
+    if (children) {
+      children.forEach(function(subNode, subIndex) {
+        processNode(subNode, subIndex, {
+          node: node2,
+          pos,
+          level: parent ? parent.level + 1 : -1
+        }, connectNodes);
+      });
+    }
+  }
+  processNode(null);
+}
+function convertDataToEntities(dataNodes) {
+  var _ref2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {}, initWrapper = _ref2.initWrapper, processEntity = _ref2.processEntity, onProcessFinished = _ref2.onProcessFinished, externalGetKey = _ref2.externalGetKey, childrenPropName = _ref2.childrenPropName, fieldNames = _ref2.fieldNames;
+  var legacyExternalGetKey = arguments.length > 2 ? arguments[2] : void 0;
+  var mergedExternalGetKey = externalGetKey || legacyExternalGetKey;
+  var posEntities = {};
+  var keyEntities = {};
+  var wrapper = {
+    posEntities,
+    keyEntities
+  };
+  if (initWrapper) {
+    wrapper = initWrapper(wrapper) || wrapper;
+  }
+  traverseDataNodes(dataNodes, function(item) {
+    var node2 = item.node, index2 = item.index, pos = item.pos, key = item.key, parentPos = item.parentPos, level = item.level, nodes = item.nodes;
+    var entity = {
+      node: node2,
+      nodes,
+      index: index2,
+      key,
+      pos,
+      level
+    };
+    var mergedKey = getKey(key, pos);
+    posEntities[pos] = entity;
+    keyEntities[mergedKey] = entity;
+    entity.parent = posEntities[parentPos];
+    if (entity.parent) {
+      entity.parent.children = entity.parent.children || [];
+      entity.parent.children.push(entity);
+    }
+    if (processEntity) {
+      processEntity(entity, wrapper);
+    }
+  }, {
+    externalGetKey: mergedExternalGetKey,
+    childrenPropName,
+    fieldNames
+  });
+  if (onProcessFinished) {
+    onProcessFinished(wrapper);
+  }
+  return wrapper;
+}
+function getTreeNodeProps(key, _ref3) {
+  var expandedKeys = _ref3.expandedKeys, selectedKeys = _ref3.selectedKeys, loadedKeys = _ref3.loadedKeys, loadingKeys = _ref3.loadingKeys, checkedKeys = _ref3.checkedKeys, halfCheckedKeys = _ref3.halfCheckedKeys, dragOverNodeKey = _ref3.dragOverNodeKey, dropPosition = _ref3.dropPosition, keyEntities = _ref3.keyEntities;
+  var entity = getEntity(keyEntities, key);
+  var treeNodeProps = {
+    eventKey: key,
+    expanded: expandedKeys.indexOf(key) !== -1,
+    selected: selectedKeys.indexOf(key) !== -1,
+    loaded: loadedKeys.indexOf(key) !== -1,
+    loading: loadingKeys.indexOf(key) !== -1,
+    checked: checkedKeys.indexOf(key) !== -1,
+    halfChecked: halfCheckedKeys.indexOf(key) !== -1,
+    pos: String(entity ? entity.pos : ""),
+    // [Legacy] Drag props
+    // Since the interaction of drag is changed, the semantic of the props are
+    // not accuracy, I think it should be finally removed
+    dragOver: dragOverNodeKey === key && dropPosition === 0,
+    dragOverGapTop: dragOverNodeKey === key && dropPosition === -1,
+    dragOverGapBottom: dragOverNodeKey === key && dropPosition === 1
+  };
+  return treeNodeProps;
+}
+function convertNodePropsToEventData(props) {
+  var data = props.data, expanded = props.expanded, selected = props.selected, checked = props.checked, loaded = props.loaded, loading = props.loading, halfChecked = props.halfChecked, dragOver = props.dragOver, dragOverGapTop = props.dragOverGapTop, dragOverGapBottom = props.dragOverGapBottom, pos = props.pos, active = props.active, eventKey = props.eventKey;
+  var eventData = _objectSpread2(_objectSpread2({}, data), {}, {
+    expanded,
+    selected,
+    checked,
+    loaded,
+    loading,
+    halfChecked,
+    dragOver,
+    dragOverGapTop,
+    dragOverGapBottom,
+    pos,
+    active,
+    key: eventKey
+  });
+  if (!("props" in eventData)) {
+    Object.defineProperty(eventData, "props", {
+      get: function get2() {
+        warningOnce(false, "Second param return from event is node data instead of TreeNode instance. Please read value directly instead of reading from `props`.");
+        return props;
+      }
+    });
+  }
+  return eventData;
+}
+function removeFromCheckedKeys(halfCheckedKeys, checkedKeys) {
+  var filteredKeys = /* @__PURE__ */ new Set();
+  halfCheckedKeys.forEach(function(key) {
+    if (!checkedKeys.has(key)) {
+      filteredKeys.add(key);
+    }
+  });
+  return filteredKeys;
+}
+function isCheckDisabled(node2) {
+  var _ref = node2 || {}, disabled = _ref.disabled, disableCheckbox = _ref.disableCheckbox, checkable = _ref.checkable;
+  return !!(disabled || disableCheckbox) || checkable === false;
+}
+function fillConductCheck(keys2, levelEntities, maxLevel, syntheticGetCheckDisabled) {
+  var checkedKeys = new Set(keys2);
+  var halfCheckedKeys = /* @__PURE__ */ new Set();
+  for (var level = 0; level <= maxLevel; level += 1) {
+    var entities = levelEntities.get(level) || /* @__PURE__ */ new Set();
+    entities.forEach(function(entity) {
+      var key = entity.key, node2 = entity.node, _entity$children = entity.children, children = _entity$children === void 0 ? [] : _entity$children;
+      if (checkedKeys.has(key) && !syntheticGetCheckDisabled(node2)) {
+        children.filter(function(childEntity) {
+          return !syntheticGetCheckDisabled(childEntity.node);
+        }).forEach(function(childEntity) {
+          checkedKeys.add(childEntity.key);
+        });
+      }
+    });
+  }
+  var visitedKeys = /* @__PURE__ */ new Set();
+  for (var _level = maxLevel; _level >= 0; _level -= 1) {
+    var _entities = levelEntities.get(_level) || /* @__PURE__ */ new Set();
+    _entities.forEach(function(entity) {
+      var parent = entity.parent, node2 = entity.node;
+      if (syntheticGetCheckDisabled(node2) || !entity.parent || visitedKeys.has(entity.parent.key)) {
+        return;
+      }
+      if (syntheticGetCheckDisabled(entity.parent.node)) {
+        visitedKeys.add(parent.key);
+        return;
+      }
+      var allChecked = true;
+      var partialChecked = false;
+      (parent.children || []).filter(function(childEntity) {
+        return !syntheticGetCheckDisabled(childEntity.node);
+      }).forEach(function(_ref2) {
+        var key = _ref2.key;
+        var checked = checkedKeys.has(key);
+        if (allChecked && !checked) {
+          allChecked = false;
+        }
+        if (!partialChecked && (checked || halfCheckedKeys.has(key))) {
+          partialChecked = true;
+        }
+      });
+      if (allChecked) {
+        checkedKeys.add(parent.key);
+      }
+      if (partialChecked) {
+        halfCheckedKeys.add(parent.key);
+      }
+      visitedKeys.add(parent.key);
+    });
+  }
+  return {
+    checkedKeys: Array.from(checkedKeys),
+    halfCheckedKeys: Array.from(removeFromCheckedKeys(halfCheckedKeys, checkedKeys))
+  };
+}
+function cleanConductCheck(keys2, halfKeys, levelEntities, maxLevel, syntheticGetCheckDisabled) {
+  var checkedKeys = new Set(keys2);
+  var halfCheckedKeys = new Set(halfKeys);
+  for (var level = 0; level <= maxLevel; level += 1) {
+    var entities = levelEntities.get(level) || /* @__PURE__ */ new Set();
+    entities.forEach(function(entity) {
+      var key = entity.key, node2 = entity.node, _entity$children2 = entity.children, children = _entity$children2 === void 0 ? [] : _entity$children2;
+      if (!checkedKeys.has(key) && !halfCheckedKeys.has(key) && !syntheticGetCheckDisabled(node2)) {
+        children.filter(function(childEntity) {
+          return !syntheticGetCheckDisabled(childEntity.node);
+        }).forEach(function(childEntity) {
+          checkedKeys.delete(childEntity.key);
+        });
+      }
+    });
+  }
+  halfCheckedKeys = /* @__PURE__ */ new Set();
+  var visitedKeys = /* @__PURE__ */ new Set();
+  for (var _level2 = maxLevel; _level2 >= 0; _level2 -= 1) {
+    var _entities2 = levelEntities.get(_level2) || /* @__PURE__ */ new Set();
+    _entities2.forEach(function(entity) {
+      var parent = entity.parent, node2 = entity.node;
+      if (syntheticGetCheckDisabled(node2) || !entity.parent || visitedKeys.has(entity.parent.key)) {
+        return;
+      }
+      if (syntheticGetCheckDisabled(entity.parent.node)) {
+        visitedKeys.add(parent.key);
+        return;
+      }
+      var allChecked = true;
+      var partialChecked = false;
+      (parent.children || []).filter(function(childEntity) {
+        return !syntheticGetCheckDisabled(childEntity.node);
+      }).forEach(function(_ref3) {
+        var key = _ref3.key;
+        var checked = checkedKeys.has(key);
+        if (allChecked && !checked) {
+          allChecked = false;
+        }
+        if (!partialChecked && (checked || halfCheckedKeys.has(key))) {
+          partialChecked = true;
+        }
+      });
+      if (!allChecked) {
+        checkedKeys.delete(parent.key);
+      }
+      if (partialChecked) {
+        halfCheckedKeys.add(parent.key);
+      }
+      visitedKeys.add(parent.key);
+    });
+  }
+  return {
+    checkedKeys: Array.from(checkedKeys),
+    halfCheckedKeys: Array.from(removeFromCheckedKeys(halfCheckedKeys, checkedKeys))
+  };
+}
+function conductCheck(keyList, checked, keyEntities, getCheckDisabled) {
+  var warningMissKeys = [];
+  var syntheticGetCheckDisabled;
+  if (getCheckDisabled) {
+    syntheticGetCheckDisabled = getCheckDisabled;
+  } else {
+    syntheticGetCheckDisabled = isCheckDisabled;
+  }
+  var keys2 = new Set(keyList.filter(function(key) {
+    var hasEntity = !!getEntity(keyEntities, key);
+    if (!hasEntity) {
+      warningMissKeys.push(key);
+    }
+    return hasEntity;
+  }));
+  var levelEntities = /* @__PURE__ */ new Map();
+  var maxLevel = 0;
+  Object.keys(keyEntities).forEach(function(key) {
+    var entity = keyEntities[key];
+    var level = entity.level;
+    var levelSet = levelEntities.get(level);
+    if (!levelSet) {
+      levelSet = /* @__PURE__ */ new Set();
+      levelEntities.set(level, levelSet);
+    }
+    levelSet.add(entity);
+    maxLevel = Math.max(maxLevel, level);
+  });
+  warningOnce(!warningMissKeys.length, "Tree missing follow keys: ".concat(warningMissKeys.slice(0, 100).map(function(key) {
+    return "'".concat(key, "'");
+  }).join(", ")));
+  var result;
+  if (checked === true) {
+    result = fillConductCheck(keys2, levelEntities, maxLevel, syntheticGetCheckDisabled);
+  } else {
+    result = cleanConductCheck(keys2, checked.halfCheckedKeys, levelEntities, maxLevel, syntheticGetCheckDisabled);
+  }
+  return result;
+}
+const genCheckboxStyle = (token2) => {
+  const {
+    checkboxCls
+  } = token2;
+  const wrapperCls = `${checkboxCls}-wrapper`;
+  return [
+    // ===================== Basic =====================
+    {
+      // Group
+      [`${checkboxCls}-group`]: Object.assign(Object.assign({}, resetComponent(token2)), {
+        display: "inline-flex",
+        flexWrap: "wrap",
+        columnGap: token2.marginXS,
+        // Group > Grid
+        [`> ${token2.antCls}-row`]: {
+          flex: 1
+        }
+      }),
+      // Wrapper
+      [wrapperCls]: Object.assign(Object.assign({}, resetComponent(token2)), {
+        display: "inline-flex",
+        alignItems: "baseline",
+        cursor: "pointer",
+        // Fix checkbox & radio in flex align #30260
+        "&:after": {
+          display: "inline-block",
+          width: 0,
+          overflow: "hidden",
+          content: "'\\a0'"
+        },
+        // Checkbox near checkbox
+        [`& + ${wrapperCls}`]: {
+          marginInlineStart: 0
+        },
+        [`&${wrapperCls}-in-form-item`]: {
+          'input[type="checkbox"]': {
+            width: 14,
+            // FIXME: magic
+            height: 14
+            // FIXME: magic
+          }
+        }
+      }),
+      // Wrapper > Checkbox
+      [checkboxCls]: Object.assign(Object.assign({}, resetComponent(token2)), {
+        position: "relative",
+        whiteSpace: "nowrap",
+        lineHeight: 1,
+        cursor: "pointer",
+        borderRadius: token2.borderRadiusSM,
+        // To make alignment right when `controlHeight` is changed
+        // Ref: https://github.com/ant-design/ant-design/issues/41564
+        alignSelf: "center",
+        // Wrapper > Checkbox > input
+        [`${checkboxCls}-input`]: {
+          position: "absolute",
+          // Since baseline align will get additional space offset,
+          // we need to move input to top to make it align with text.
+          // Ref: https://github.com/ant-design/ant-design/issues/38926#issuecomment-1486137799
+          inset: 0,
+          zIndex: 1,
+          cursor: "pointer",
+          opacity: 0,
+          margin: 0,
+          [`&:focus-visible + ${checkboxCls}-inner`]: Object.assign({}, genFocusOutline(token2))
+        },
+        // Wrapper > Checkbox > inner
+        [`${checkboxCls}-inner`]: {
+          boxSizing: "border-box",
+          display: "block",
+          width: token2.checkboxSize,
+          height: token2.checkboxSize,
+          direction: "ltr",
+          backgroundColor: token2.colorBgContainer,
+          border: `${unit$1(token2.lineWidth)} ${token2.lineType} ${token2.colorBorder}`,
+          borderRadius: token2.borderRadiusSM,
+          borderCollapse: "separate",
+          transition: `all ${token2.motionDurationSlow}`,
+          "&:after": {
+            boxSizing: "border-box",
+            position: "absolute",
+            top: "50%",
+            insetInlineStart: "25%",
+            display: "table",
+            width: token2.calc(token2.checkboxSize).div(14).mul(5).equal(),
+            height: token2.calc(token2.checkboxSize).div(14).mul(8).equal(),
+            border: `${unit$1(token2.lineWidthBold)} solid ${token2.colorWhite}`,
+            borderTop: 0,
+            borderInlineStart: 0,
+            transform: "rotate(45deg) scale(0) translate(-50%,-50%)",
+            opacity: 0,
+            content: '""',
+            transition: `all ${token2.motionDurationFast} ${token2.motionEaseInBack}, opacity ${token2.motionDurationFast}`
+          }
+        },
+        // Wrapper > Checkbox + Text
+        "& + span": {
+          paddingInlineStart: token2.paddingXS,
+          paddingInlineEnd: token2.paddingXS
+        }
+      })
+    },
+    // ===================== Hover =====================
+    {
+      // Wrapper & Wrapper > Checkbox
+      [`
+        ${wrapperCls}:not(${wrapperCls}-disabled),
+        ${checkboxCls}:not(${checkboxCls}-disabled)
+      `]: {
+        [`&:hover ${checkboxCls}-inner`]: {
+          borderColor: token2.colorPrimary
+        }
+      },
+      [`${wrapperCls}:not(${wrapperCls}-disabled)`]: {
+        [`&:hover ${checkboxCls}-checked:not(${checkboxCls}-disabled) ${checkboxCls}-inner`]: {
+          backgroundColor: token2.colorPrimaryHover,
+          borderColor: "transparent"
+        },
+        [`&:hover ${checkboxCls}-checked:not(${checkboxCls}-disabled):after`]: {
+          borderColor: token2.colorPrimaryHover
+        }
+      }
+    },
+    // ==================== Checked ====================
+    {
+      // Wrapper > Checkbox
+      [`${checkboxCls}-checked`]: {
+        [`${checkboxCls}-inner`]: {
+          backgroundColor: token2.colorPrimary,
+          borderColor: token2.colorPrimary,
+          "&:after": {
+            opacity: 1,
+            transform: "rotate(45deg) scale(1) translate(-50%,-50%)",
+            transition: `all ${token2.motionDurationMid} ${token2.motionEaseOutBack} ${token2.motionDurationFast}`
+          }
+        }
+      },
+      [`
+        ${wrapperCls}-checked:not(${wrapperCls}-disabled),
+        ${checkboxCls}-checked:not(${checkboxCls}-disabled)
+      `]: {
+        [`&:hover ${checkboxCls}-inner`]: {
+          backgroundColor: token2.colorPrimaryHover,
+          borderColor: "transparent"
+        }
+      }
+    },
+    // ================= Indeterminate =================
+    {
+      [checkboxCls]: {
+        "&-indeterminate": {
+          // Wrapper > Checkbox > inner
+          [`${checkboxCls}-inner`]: {
+            backgroundColor: `${token2.colorBgContainer} !important`,
+            borderColor: `${token2.colorBorder} !important`,
+            "&:after": {
+              top: "50%",
+              insetInlineStart: "50%",
+              width: token2.calc(token2.fontSizeLG).div(2).equal(),
+              height: token2.calc(token2.fontSizeLG).div(2).equal(),
+              backgroundColor: token2.colorPrimary,
+              border: 0,
+              transform: "translate(-50%, -50%) scale(1)",
+              opacity: 1,
+              content: '""'
+            }
+          },
+          // https://github.com/ant-design/ant-design/issues/50074
+          [`&:hover ${checkboxCls}-inner`]: {
+            backgroundColor: `${token2.colorBgContainer} !important`,
+            borderColor: `${token2.colorPrimary} !important`
+          }
+        }
+      }
+    },
+    // ==================== Disable ====================
+    {
+      // Wrapper
+      [`${wrapperCls}-disabled`]: {
+        cursor: "not-allowed"
+      },
+      // Wrapper > Checkbox
+      [`${checkboxCls}-disabled`]: {
+        // Wrapper > Checkbox > input
+        [`&, ${checkboxCls}-input`]: {
+          cursor: "not-allowed",
+          // Disabled for native input to enable Tooltip event handler
+          // ref: https://github.com/ant-design/ant-design/issues/39822#issuecomment-1365075901
+          pointerEvents: "none"
+        },
+        // Wrapper > Checkbox > inner
+        [`${checkboxCls}-inner`]: {
+          background: token2.colorBgContainerDisabled,
+          borderColor: token2.colorBorder,
+          "&:after": {
+            borderColor: token2.colorTextDisabled
+          }
+        },
+        "&:after": {
+          display: "none"
+        },
+        "& + span": {
+          color: token2.colorTextDisabled
+        },
+        [`&${checkboxCls}-indeterminate ${checkboxCls}-inner::after`]: {
+          background: token2.colorTextDisabled
+        }
+      }
+    }
+  ];
+};
+function getStyle(prefixCls, token2) {
+  const checkboxToken = merge(token2, {
+    checkboxCls: `.${prefixCls}`,
+    checkboxSize: token2.controlInteractiveSize
+  });
+  return [genCheckboxStyle(checkboxToken)];
+}
+const useStyle$d = genStyleHooks("Checkbox", (token2, _ref) => {
+  let {
+    prefixCls
+  } = _ref;
+  return [getStyle(prefixCls, token2)];
+});
+const GroupContext = /* @__PURE__ */ React.createContext(null);
+var __rest$t = function(s2, e2) {
+  var t2 = {};
+  for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
+  if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
+    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i2])) t2[p2[i2]] = s2[p2[i2]];
+  }
+  return t2;
+};
+const InternalCheckbox = (props, ref) => {
+  var _a;
+  const {
+    prefixCls: customizePrefixCls,
+    className,
+    rootClassName,
+    children,
+    indeterminate = false,
+    style: style2,
+    onMouseEnter,
+    onMouseLeave,
+    skipGroup = false,
+    disabled
+  } = props, restProps = __rest$t(props, ["prefixCls", "className", "rootClassName", "children", "indeterminate", "style", "onMouseEnter", "onMouseLeave", "skipGroup", "disabled"]);
+  const {
+    getPrefixCls,
+    direction,
+    checkbox
+  } = reactExports.useContext(ConfigContext);
+  const checkboxGroup = reactExports.useContext(GroupContext);
+  const {
+    isFormItemInput
+  } = reactExports.useContext(FormItemInputContext);
+  const contextDisabled = reactExports.useContext(DisabledContext);
+  const mergedDisabled = (_a = (checkboxGroup === null || checkboxGroup === void 0 ? void 0 : checkboxGroup.disabled) || disabled) !== null && _a !== void 0 ? _a : contextDisabled;
+  const prevValue = reactExports.useRef(restProps.value);
+  reactExports.useEffect(() => {
+    checkboxGroup === null || checkboxGroup === void 0 ? void 0 : checkboxGroup.registerValue(restProps.value);
+  }, []);
+  reactExports.useEffect(() => {
+    if (skipGroup) {
+      return;
+    }
+    if (restProps.value !== prevValue.current) {
+      checkboxGroup === null || checkboxGroup === void 0 ? void 0 : checkboxGroup.cancelValue(prevValue.current);
+      checkboxGroup === null || checkboxGroup === void 0 ? void 0 : checkboxGroup.registerValue(restProps.value);
+      prevValue.current = restProps.value;
+    }
+    return () => checkboxGroup === null || checkboxGroup === void 0 ? void 0 : checkboxGroup.cancelValue(restProps.value);
+  }, [restProps.value]);
+  const prefixCls = getPrefixCls("checkbox", customizePrefixCls);
+  const rootCls = useCSSVarCls(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$d(prefixCls, rootCls);
+  const checkboxProps = Object.assign({}, restProps);
+  if (checkboxGroup && !skipGroup) {
+    checkboxProps.onChange = function() {
+      if (restProps.onChange) {
+        restProps.onChange.apply(restProps, arguments);
+      }
+      if (checkboxGroup.toggleOption) {
+        checkboxGroup.toggleOption({
+          label: children,
+          value: restProps.value
+        });
+      }
+    };
+    checkboxProps.name = checkboxGroup.name;
+    checkboxProps.checked = checkboxGroup.value.includes(restProps.value);
+  }
+  const classString = classNames(`${prefixCls}-wrapper`, {
+    [`${prefixCls}-rtl`]: direction === "rtl",
+    [`${prefixCls}-wrapper-checked`]: checkboxProps.checked,
+    [`${prefixCls}-wrapper-disabled`]: mergedDisabled,
+    [`${prefixCls}-wrapper-in-form-item`]: isFormItemInput
+  }, checkbox === null || checkbox === void 0 ? void 0 : checkbox.className, className, rootClassName, cssVarCls, rootCls, hashId);
+  const checkboxClass = classNames({
+    [`${prefixCls}-indeterminate`]: indeterminate
+  }, TARGET_CLS, hashId);
+  const ariaChecked = indeterminate ? "mixed" : void 0;
+  return wrapCSSVar(/* @__PURE__ */ reactExports.createElement(Wave, {
+    component: "Checkbox",
+    disabled: mergedDisabled
+  }, /* @__PURE__ */ reactExports.createElement("label", {
+    className: classString,
+    style: Object.assign(Object.assign({}, checkbox === null || checkbox === void 0 ? void 0 : checkbox.style), style2),
+    onMouseEnter,
+    onMouseLeave
+  }, /* @__PURE__ */ reactExports.createElement(Checkbox$2, Object.assign({
+    "aria-checked": ariaChecked
+  }, checkboxProps, {
+    prefixCls,
+    className: checkboxClass,
+    disabled: mergedDisabled,
+    ref
+  })), children !== void 0 && /* @__PURE__ */ reactExports.createElement("span", null, children))));
+};
+const Checkbox$1 = /* @__PURE__ */ reactExports.forwardRef(InternalCheckbox);
+var __rest$s = function(s2, e2) {
+  var t2 = {};
+  for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
+  if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
+    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i2])) t2[p2[i2]] = s2[p2[i2]];
+  }
+  return t2;
+};
+const CheckboxGroup = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
+  const {
+    defaultValue,
+    children,
+    options = [],
+    prefixCls: customizePrefixCls,
+    className,
+    rootClassName,
+    style: style2,
+    onChange
+  } = props, restProps = __rest$s(props, ["defaultValue", "children", "options", "prefixCls", "className", "rootClassName", "style", "onChange"]);
+  const {
+    getPrefixCls,
+    direction
+  } = reactExports.useContext(ConfigContext);
+  const [value, setValue] = reactExports.useState(restProps.value || defaultValue || []);
+  const [registeredValues, setRegisteredValues] = reactExports.useState([]);
+  reactExports.useEffect(() => {
+    if ("value" in restProps) {
+      setValue(restProps.value || []);
+    }
+  }, [restProps.value]);
+  const memoOptions = reactExports.useMemo(() => options.map((option) => {
+    if (typeof option === "string" || typeof option === "number") {
+      return {
+        label: option,
+        value: option
+      };
+    }
+    return option;
+  }), [options]);
+  const cancelValue = (val) => {
+    setRegisteredValues((prevValues) => prevValues.filter((v2) => v2 !== val));
+  };
+  const registerValue = (val) => {
+    setRegisteredValues((prevValues) => [].concat(_toConsumableArray(prevValues), [val]));
+  };
+  const toggleOption = (option) => {
+    const optionIndex = value.indexOf(option.value);
+    const newValue = _toConsumableArray(value);
+    if (optionIndex === -1) {
+      newValue.push(option.value);
+    } else {
+      newValue.splice(optionIndex, 1);
+    }
+    if (!("value" in restProps)) {
+      setValue(newValue);
+    }
+    onChange === null || onChange === void 0 ? void 0 : onChange(newValue.filter((val) => registeredValues.includes(val)).sort((a, b2) => {
+      const indexA = memoOptions.findIndex((opt) => opt.value === a);
+      const indexB = memoOptions.findIndex((opt) => opt.value === b2);
+      return indexA - indexB;
+    }));
+  };
+  const prefixCls = getPrefixCls("checkbox", customizePrefixCls);
+  const groupPrefixCls = `${prefixCls}-group`;
+  const rootCls = useCSSVarCls(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$d(prefixCls, rootCls);
+  const domProps = omit(restProps, ["value", "disabled"]);
+  const childrenNode = options.length ? memoOptions.map((option) => /* @__PURE__ */ reactExports.createElement(Checkbox$1, {
+    prefixCls,
+    key: option.value.toString(),
+    disabled: "disabled" in option ? option.disabled : restProps.disabled,
+    value: option.value,
+    checked: value.includes(option.value),
+    onChange: option.onChange,
+    className: `${groupPrefixCls}-item`,
+    style: option.style,
+    title: option.title,
+    id: option.id,
+    required: option.required
+  }, option.label)) : children;
+  const context = {
+    toggleOption,
+    value,
+    disabled: restProps.disabled,
+    name: restProps.name,
+    // https://github.com/ant-design/ant-design/issues/16376
+    registerValue,
+    cancelValue
+  };
+  const classString = classNames(groupPrefixCls, {
+    [`${groupPrefixCls}-rtl`]: direction === "rtl"
+  }, className, rootClassName, cssVarCls, rootCls, hashId);
+  return wrapCSSVar(/* @__PURE__ */ reactExports.createElement("div", Object.assign({
+    className: classString,
+    style: style2
+  }, domProps, {
+    ref
+  }), /* @__PURE__ */ reactExports.createElement(GroupContext.Provider, {
+    value: context
+  }, childrenNode)));
+});
+const Checkbox = Checkbox$1;
+Checkbox.Group = CheckboxGroup;
+Checkbox.__ANT_CHECKBOX = true;
 const RowContext = /* @__PURE__ */ reactExports.createContext({});
 const genGridRowStyle = (token2) => {
   const {
@@ -37071,7 +38537,7 @@ const useColStyle = genStyleHooks("Grid", (token2) => {
   };
   return [genGridColStyle(gridToken), genGridStyle(gridToken, ""), genGridStyle(gridToken, "-xs"), Object.keys(gridMediaSizesMap).map((key) => genGridMediaStyle(gridToken, gridMediaSizesMap[key], key)).reduce((pre, cur) => Object.assign(Object.assign({}, pre), cur), {})];
 }, prepareColComponentToken);
-var __rest$l = function(s2, e2) {
+var __rest$r = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -37109,7 +38575,7 @@ const Col = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     children,
     flex,
     style: style2
-  } = props, others = __rest$l(props, ["prefixCls", "span", "order", "offset", "push", "pull", "className", "children", "flex", "style"]);
+  } = props, others = __rest$r(props, ["prefixCls", "span", "order", "offset", "push", "pull", "className", "children", "flex", "style"]);
   const prefixCls = getPrefixCls("col", customizePrefixCls);
   const [wrapCSSVar, hashId, cssVarCls] = useColStyle(prefixCls);
   const sizeStyle = {};
@@ -37161,7 +38627,7 @@ const Col = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     ref
   }), children));
 });
-var __rest$k = function(s2, e2) {
+var __rest$q = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -37205,7 +38671,7 @@ const Row = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     children,
     gutter = 0,
     wrap
-  } = props, others = __rest$k(props, ["prefixCls", "justify", "align", "className", "style", "children", "gutter", "wrap"]);
+  } = props, others = __rest$q(props, ["prefixCls", "justify", "align", "className", "style", "children", "gutter", "wrap"]);
   const {
     getPrefixCls,
     direction
@@ -37308,9 +38774,9 @@ var PanelContent = /* @__PURE__ */ React.forwardRef(function(props, ref) {
   }, children));
 });
 PanelContent.displayName = "PanelContent";
-var _excluded$a = ["showArrow", "headerClass", "isActive", "onItemClick", "forceRender", "className", "prefixCls", "collapsible", "accordion", "panelKey", "extra", "header", "expandIcon", "openMotion", "destroyInactivePanel", "children"];
+var _excluded$j = ["showArrow", "headerClass", "isActive", "onItemClick", "forceRender", "className", "prefixCls", "collapsible", "accordion", "panelKey", "extra", "header", "expandIcon", "openMotion", "destroyInactivePanel", "children"];
 var CollapsePanel$1 = /* @__PURE__ */ React.forwardRef(function(props, ref) {
-  var _props$showArrow = props.showArrow, showArrow = _props$showArrow === void 0 ? true : _props$showArrow, headerClass = props.headerClass, isActive2 = props.isActive, onItemClick = props.onItemClick, forceRender = props.forceRender, className = props.className, prefixCls = props.prefixCls, collapsible = props.collapsible, accordion = props.accordion, panelKey = props.panelKey, extra = props.extra, header = props.header, expandIcon = props.expandIcon, openMotion = props.openMotion, destroyInactivePanel = props.destroyInactivePanel, children = props.children, resetProps = _objectWithoutProperties(props, _excluded$a);
+  var _props$showArrow = props.showArrow, showArrow = _props$showArrow === void 0 ? true : _props$showArrow, headerClass = props.headerClass, isActive2 = props.isActive, onItemClick = props.onItemClick, forceRender = props.forceRender, className = props.className, prefixCls = props.prefixCls, collapsible = props.collapsible, accordion = props.accordion, panelKey = props.panelKey, extra = props.extra, header = props.header, expandIcon = props.expandIcon, openMotion = props.openMotion, destroyInactivePanel = props.destroyInactivePanel, children = props.children, resetProps = _objectWithoutProperties(props, _excluded$j);
   var disabled = collapsible === "disabled";
   var collapsibleHeader = collapsible === "header";
   var collapsibleIcon = collapsible === "icon";
@@ -37372,11 +38838,11 @@ var CollapsePanel$1 = /* @__PURE__ */ React.forwardRef(function(props, ref) {
     }, children);
   }));
 });
-var _excluded$9 = ["children", "label", "key", "collapsible", "onItemClick", "destroyInactivePanel"];
+var _excluded$i = ["children", "label", "key", "collapsible", "onItemClick", "destroyInactivePanel"];
 var convertItemsToNodes = function convertItemsToNodes2(items, props) {
   var prefixCls = props.prefixCls, accordion = props.accordion, collapsible = props.collapsible, destroyInactivePanel = props.destroyInactivePanel, onItemClick = props.onItemClick, activeKey = props.activeKey, openMotion = props.openMotion, expandIcon = props.expandIcon;
   return items.map(function(item, index2) {
-    var children = item.children, label = item.label, rawKey = item.key, rawCollapsible = item.collapsible, rawOnItemClick = item.onItemClick, rawDestroyInactivePanel = item.destroyInactivePanel, restProps = _objectWithoutProperties(item, _excluded$9);
+    var children = item.children, label = item.label, rawKey = item.key, rawCollapsible = item.collapsible, rawOnItemClick = item.onItemClick, rawDestroyInactivePanel = item.destroyInactivePanel, restProps = _objectWithoutProperties(item, _excluded$i);
     var key = String(rawKey !== null && rawKey !== void 0 ? rawKey : index2);
     var mergeCollapsible = rawCollapsible !== null && rawCollapsible !== void 0 ? rawCollapsible : collapsible;
     var mergeDestroyInactivePanel = rawDestroyInactivePanel !== null && rawDestroyInactivePanel !== void 0 ? rawDestroyInactivePanel : destroyInactivePanel;
@@ -37452,7 +38918,7 @@ function useItems(items, rawChildren, props) {
   if (Array.isArray(items)) {
     return convertItemsToNodes(items, props);
   }
-  return toArray$4(rawChildren).map(function(child, index2) {
+  return toArray$5(rawChildren).map(function(child, index2) {
     return getNewChild(child, index2, props);
   });
 }
@@ -37540,7 +39006,7 @@ const CollapsePanel = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     className: collapsePanelClassName
   }));
 });
-const genBaseStyle$1 = (token2) => {
+const genBaseStyle$2 = (token2) => {
   const {
     componentCls,
     contentBg,
@@ -37774,21 +39240,21 @@ const genGhostStyle = (token2) => {
     }
   };
 };
-const prepareComponentToken$6 = (token2) => ({
+const prepareComponentToken$a = (token2) => ({
   headerPadding: `${token2.paddingSM}px ${token2.padding}px`,
   headerBg: token2.colorFillAlter,
   contentPadding: `${token2.padding}px 16px`,
   // Fixed Value
   contentBg: token2.colorBgContainer
 });
-const useStyle$8 = genStyleHooks("Collapse", (token2) => {
+const useStyle$c = genStyleHooks("Collapse", (token2) => {
   const collapseToken = merge(token2, {
     collapseHeaderPaddingSM: `${unit$1(token2.paddingXS)} ${unit$1(token2.paddingSM)}`,
     collapseHeaderPaddingLG: `${unit$1(token2.padding)} ${unit$1(token2.paddingLG)}`,
     collapsePanelBorderRadius: token2.borderRadiusLG
   });
-  return [genBaseStyle$1(collapseToken), genBorderlessStyle(collapseToken), genGhostStyle(collapseToken), genArrowStyle(collapseToken), genCollapseMotion(collapseToken)];
-}, prepareComponentToken$6);
+  return [genBaseStyle$2(collapseToken), genBorderlessStyle(collapseToken), genGhostStyle(collapseToken), genArrowStyle(collapseToken), genCollapseMotion(collapseToken)];
+}, prepareComponentToken$a);
 const Collapse = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   const {
     getPrefixCls,
@@ -37813,7 +39279,7 @@ const Collapse = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   });
   const prefixCls = getPrefixCls("collapse", customizePrefixCls);
   const rootPrefixCls = getPrefixCls();
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$8(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$c(prefixCls);
   const mergedExpandIconPosition = reactExports.useMemo(() => {
     if (expandIconPosition === "left") {
       return "start";
@@ -37821,9 +39287,9 @@ const Collapse = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     return expandIconPosition === "right" ? "end" : expandIconPosition;
   }, [expandIconPosition]);
   const mergedExpandIcon = expandIcon !== null && expandIcon !== void 0 ? expandIcon : collapse === null || collapse === void 0 ? void 0 : collapse.expandIcon;
-  const renderExpandIcon = reactExports.useCallback(function() {
+  const renderExpandIcon2 = reactExports.useCallback(function() {
     let panelProps = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
-    const icon = typeof mergedExpandIcon === "function" ? mergedExpandIcon(panelProps) : /* @__PURE__ */ reactExports.createElement(RefIcon$b, {
+    const icon = typeof mergedExpandIcon === "function" ? mergedExpandIcon(panelProps) : /* @__PURE__ */ reactExports.createElement(RefIcon$k, {
       rotate: panelProps.isActive ? 90 : void 0,
       "aria-label": panelProps.isActive ? "expanded" : "collapsed"
     });
@@ -37844,7 +39310,7 @@ const Collapse = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     motionAppear: false,
     leavedClassName: `${prefixCls}-content-hidden`
   });
-  const items = reactExports.useMemo(() => children ? toArray$4(children).map((child, index2) => {
+  const items = reactExports.useMemo(() => children ? toArray$5(children).map((child, index2) => {
     var _a, _b;
     if ((_a = child.props) === null || _a === void 0 ? void 0 : _a.disabled) {
       const key = (_b = child.key) !== null && _b !== void 0 ? _b : String(index2);
@@ -37866,7 +39332,7 @@ const Collapse = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       ref,
       openMotion
     }, omit(props, ["rootClassName"]), {
-      expandIcon: renderExpandIcon,
+      expandIcon: renderExpandIcon2,
       prefixCls,
       className: collapseClassName,
       style: Object.assign(Object.assign({}, collapse === null || collapse === void 0 ? void 0 : collapse.style), style2)
@@ -37998,24 +39464,24 @@ const genSharedDividerStyle = (token2) => {
     })
   };
 };
-const prepareComponentToken$5 = (token2) => ({
+const prepareComponentToken$9 = (token2) => ({
   textPaddingInline: "1em",
   orientationMargin: 0.05,
   verticalMarginInline: token2.marginXS
 });
-const useStyle$7 = genStyleHooks("Divider", (token2) => {
+const useStyle$b = genStyleHooks("Divider", (token2) => {
   const dividerToken = merge(token2, {
     dividerHorizontalWithTextGutterMargin: token2.margin,
     dividerHorizontalGutterMargin: token2.marginLG,
     sizePaddingEdgeHorizontal: 0
   });
   return [genSharedDividerStyle(dividerToken)];
-}, prepareComponentToken$5, {
+}, prepareComponentToken$9, {
   unitless: {
     orientationMargin: true
   }
 });
-var __rest$j = function(s2, e2) {
+var __rest$p = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -38040,9 +39506,9 @@ const Divider = (props) => {
     dashed,
     plain,
     style: style2
-  } = props, restProps = __rest$j(props, ["prefixCls", "type", "orientation", "orientationMargin", "className", "rootClassName", "children", "dashed", "plain", "style"]);
+  } = props, restProps = __rest$p(props, ["prefixCls", "type", "orientation", "orientationMargin", "className", "rootClassName", "children", "dashed", "plain", "style"]);
   const prefixCls = getPrefixCls("divider", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$7(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$b(prefixCls);
   const hasChildren = !!children;
   const hasCustomMarginLeft = orientation === "left" && orientationMargin != null;
   const hasCustomMarginRight = orientation === "right" && orientationMargin != null;
@@ -38080,13 +39546,13 @@ const Divider = (props) => {
     style: innerStyle
   }, children)));
 };
-var _excluded$8 = ["b"], _excluded2$1 = ["v"];
+var _excluded$h = ["b"], _excluded2$2 = ["v"];
 var getRoundNumber$1 = function getRoundNumber(value) {
   return Math.round(Number(value || 0));
 };
 var convertHsb2Hsv = function convertHsb2Hsv2(color) {
   if (color && _typeof(color) === "object" && "h" in color && "b" in color) {
-    var _ref = color, b2 = _ref.b, resets = _objectWithoutProperties(_ref, _excluded$8);
+    var _ref = color, b2 = _ref.b, resets = _objectWithoutProperties(_ref, _excluded$h);
     return _objectSpread2(_objectSpread2({}, resets), {}, {
       v: b2
     });
@@ -38126,7 +39592,7 @@ var Color = /* @__PURE__ */ function(_TinyColor) {
       }
       var _hsv = hsv;
       _hsv.v;
-      var resets = _objectWithoutProperties(_hsv, _excluded2$1);
+      var resets = _objectWithoutProperties(_hsv, _excluded2$2);
       return _objectSpread2(_objectSpread2({}, resets), {}, {
         b: hsv.v,
         a: this.a
@@ -38591,7 +40057,7 @@ const generateColor2 = (color) => {
   return new ColorFactory(color);
 };
 const getRoundNumber2 = (value) => Math.round(Number(value || 0));
-const getAlphaColor$1 = (color) => getRoundNumber2(color.toHsb().a * 100);
+const getAlphaColor = (color) => getRoundNumber2(color.toHsb().a * 100);
 const genAlphaColor = (color, alpha) => {
   const hsba = color.toHsb();
   hsba.a = 1;
@@ -38630,7 +40096,7 @@ var UpOutlined = function UpOutlined2(props, ref) {
     icon: UpOutlined$1
   }));
 };
-var RefIcon$6 = /* @__PURE__ */ reactExports.forwardRef(UpOutlined);
+var RefIcon$f = /* @__PURE__ */ reactExports.forwardRef(UpOutlined);
 function supportBigInt() {
   return typeof BigInt === "function";
 }
@@ -39142,7 +40608,7 @@ var BaseInput = /* @__PURE__ */ React.forwardRef(function(props, ref) {
     hidden
   });
 });
-var _excluded$7 = ["show"];
+var _excluded$g = ["show"];
 function useCount(count, showCount) {
   return reactExports.useMemo(function() {
     var mergedConfig = {};
@@ -39150,7 +40616,7 @@ function useCount(count, showCount) {
       mergedConfig.show = _typeof(showCount) === "object" && showCount.formatter ? showCount.formatter : !!showCount;
     }
     mergedConfig = _objectSpread2(_objectSpread2({}, mergedConfig), count);
-    var _ref = mergedConfig, show = _ref.show, rest = _objectWithoutProperties(_ref, _excluded$7);
+    var _ref = mergedConfig, show = _ref.show, rest = _objectWithoutProperties(_ref, _excluded$g);
     return _objectSpread2(_objectSpread2({}, rest), {}, {
       show: !!show,
       showFormatter: typeof show === "function" ? show : void 0,
@@ -39160,9 +40626,9 @@ function useCount(count, showCount) {
     });
   }, [count, showCount]);
 }
-var _excluded$6 = ["autoComplete", "onChange", "onFocus", "onBlur", "onPressEnter", "onKeyDown", "prefixCls", "disabled", "htmlSize", "className", "maxLength", "suffix", "showCount", "count", "type", "classes", "classNames", "styles", "onCompositionStart", "onCompositionEnd"];
+var _excluded$f = ["autoComplete", "onChange", "onFocus", "onBlur", "onPressEnter", "onKeyDown", "prefixCls", "disabled", "htmlSize", "className", "maxLength", "suffix", "showCount", "count", "type", "classes", "classNames", "styles", "onCompositionStart", "onCompositionEnd"];
 var Input$2 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
-  var autoComplete = props.autoComplete, onChange = props.onChange, onFocus = props.onFocus, onBlur = props.onBlur, onPressEnter = props.onPressEnter, onKeyDown = props.onKeyDown, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-input" : _props$prefixCls, disabled = props.disabled, htmlSize = props.htmlSize, className = props.className, maxLength = props.maxLength, suffix = props.suffix, showCount = props.showCount, count = props.count, _props$type = props.type, type4 = _props$type === void 0 ? "text" : _props$type, classes = props.classes, classNames$1 = props.classNames, styles = props.styles, _onCompositionStart = props.onCompositionStart, onCompositionEnd = props.onCompositionEnd, rest = _objectWithoutProperties(props, _excluded$6);
+  var autoComplete = props.autoComplete, onChange = props.onChange, onFocus = props.onFocus, onBlur = props.onBlur, onPressEnter = props.onPressEnter, onKeyDown2 = props.onKeyDown, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-input" : _props$prefixCls, disabled = props.disabled, htmlSize = props.htmlSize, className = props.className, maxLength = props.maxLength, suffix = props.suffix, showCount = props.showCount, count = props.count, _props$type = props.type, type4 = _props$type === void 0 ? "text" : _props$type, classes = props.classes, classNames$1 = props.classNames, styles = props.styles, _onCompositionStart = props.onCompositionStart, onCompositionEnd = props.onCompositionEnd, rest = _objectWithoutProperties(props, _excluded$f);
   var _useState = reactExports.useState(false), _useState2 = _slicedToArray(_useState, 2), focused = _useState2[0], setFocused = _useState2[1];
   var compositionRef = reactExports.useRef(false);
   var inputRef = reactExports.useRef(null);
@@ -39246,7 +40712,7 @@ var Input$2 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
     if (onPressEnter && e2.key === "Enter") {
       onPressEnter(e2);
     }
-    onKeyDown === null || onKeyDown === void 0 || onKeyDown(e2);
+    onKeyDown2 === null || onKeyDown2 === void 0 || onKeyDown2(e2);
   };
   var handleFocus = function handleFocus2(e2) {
     setFocused(true);
@@ -39486,7 +40952,7 @@ const useFrame = function() {
     });
   };
 };
-var _excluded$5 = ["prefixCls", "className", "style", "min", "max", "step", "defaultValue", "value", "disabled", "readOnly", "upHandler", "downHandler", "keyboard", "changeOnWheel", "controls", "classNames", "stringMode", "parser", "formatter", "precision", "decimalSeparator", "onChange", "onInput", "onPressEnter", "onStep", "changeOnBlur", "domRef"], _excluded2 = ["disabled", "style", "prefixCls", "value", "prefix", "suffix", "addonBefore", "addonAfter", "className", "classNames"];
+var _excluded$e = ["prefixCls", "className", "style", "min", "max", "step", "defaultValue", "value", "disabled", "readOnly", "upHandler", "downHandler", "keyboard", "changeOnWheel", "controls", "classNames", "stringMode", "parser", "formatter", "precision", "decimalSeparator", "onChange", "onInput", "onPressEnter", "onStep", "changeOnBlur", "domRef"], _excluded2$1 = ["disabled", "style", "prefixCls", "value", "prefix", "suffix", "addonBefore", "addonAfter", "className", "classNames"];
 var getDecimalValue = function getDecimalValue2(stringMode, decimalValue) {
   if (stringMode || decimalValue.isEmpty()) {
     return decimalValue.toString();
@@ -39500,7 +40966,7 @@ var getDecimalIfValidate = function getDecimalIfValidate2(value) {
 var InternalInputNumber = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
   var prefixCls = props.prefixCls, className = props.className, style2 = props.style, min = props.min, max = props.max, _props$step = props.step, step = _props$step === void 0 ? 1 : _props$step, defaultValue = props.defaultValue, value = props.value, disabled = props.disabled, readOnly = props.readOnly, upHandler = props.upHandler, downHandler = props.downHandler, keyboard = props.keyboard, _props$changeOnWheel = props.changeOnWheel, changeOnWheel = _props$changeOnWheel === void 0 ? false : _props$changeOnWheel, _props$controls = props.controls, controls = _props$controls === void 0 ? true : _props$controls;
   props.classNames;
-  var stringMode = props.stringMode, parser = props.parser, formatter = props.formatter, precision = props.precision, decimalSeparator = props.decimalSeparator, onChange = props.onChange, onInput = props.onInput, onPressEnter = props.onPressEnter, onStep = props.onStep, _props$changeOnBlur = props.changeOnBlur, changeOnBlur = _props$changeOnBlur === void 0 ? true : _props$changeOnBlur, domRef = props.domRef, inputProps = _objectWithoutProperties(props, _excluded$5);
+  var stringMode = props.stringMode, parser = props.parser, formatter = props.formatter, precision = props.precision, decimalSeparator = props.decimalSeparator, onChange = props.onChange, onInput = props.onInput, onPressEnter = props.onPressEnter, onStep = props.onStep, _props$changeOnBlur = props.changeOnBlur, changeOnBlur = _props$changeOnBlur === void 0 ? true : _props$changeOnBlur, domRef = props.domRef, inputProps = _objectWithoutProperties(props, _excluded$e);
   var inputClassName = "".concat(prefixCls, "-input");
   var inputRef = reactExports.useRef(null);
   var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), focus = _React$useState2[0], setFocus = _React$useState2[1];
@@ -39696,7 +41162,7 @@ var InternalInputNumber = /* @__PURE__ */ reactExports.forwardRef(function(props
   var onBeforeInput = function onBeforeInput2() {
     userTypingRef.current = true;
   };
-  var onKeyDown = function onKeyDown2(event) {
+  var onKeyDown2 = function onKeyDown22(event) {
     var key = event.key, shiftKey = event.shiftKey;
     userTypingRef.current = true;
     shiftKeyRef.current = shiftKey;
@@ -39769,7 +41235,7 @@ var InternalInputNumber = /* @__PURE__ */ reactExports.forwardRef(function(props
       setFocus(true);
     },
     onBlur,
-    onKeyDown,
+    onKeyDown: onKeyDown2,
     onKeyUp,
     onCompositionStart,
     onCompositionEnd,
@@ -39800,7 +41266,7 @@ var InternalInputNumber = /* @__PURE__ */ reactExports.forwardRef(function(props
   }))));
 });
 var InputNumber$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
-  var disabled = props.disabled, style2 = props.style, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-input-number" : _props$prefixCls, value = props.value, prefix = props.prefix, suffix = props.suffix, addonBefore = props.addonBefore, addonAfter = props.addonAfter, className = props.className, classNames2 = props.classNames, rest = _objectWithoutProperties(props, _excluded2);
+  var disabled = props.disabled, style2 = props.style, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-input-number" : _props$prefixCls, value = props.value, prefix = props.prefix, suffix = props.suffix, addonBefore = props.addonBefore, addonAfter = props.addonAfter, className = props.className, classNames2 = props.classNames, rest = _objectWithoutProperties(props, _excluded2$1);
   var holderRef = reactExports.useRef(null);
   var inputNumberDomRef = reactExports.useRef(null);
   var inputFocusRef = reactExports.useRef(null);
@@ -39841,10 +41307,10 @@ var InputNumber$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref)
     className: classNames2 === null || classNames2 === void 0 ? void 0 : classNames2.input
   }, rest)));
 });
-const prepareComponentToken$4 = (token2) => {
+const prepareComponentToken$8 = (token2) => {
   var _a;
   const handleVisible = (_a = token2.handleVisible) !== null && _a !== void 0 ? _a : "auto";
-  return Object.assign(Object.assign({}, initComponentToken(token2)), {
+  return Object.assign(Object.assign({}, initComponentToken$1(token2)), {
     controlWidth: 90,
     handleWidth: token2.controlHeightSM - token2.lineWidth * 2,
     handleFontSize: token2.fontSize / 2,
@@ -39857,7 +41323,7 @@ const prepareComponentToken$4 = (token2) => {
     handleOpacity: handleVisible === true ? 1 : 0
   });
 };
-const genRadiusStyle = (_ref, size) => {
+const genRadiusStyle$1 = (_ref, size) => {
   let {
     componentCls,
     borderRadiusSM,
@@ -40114,7 +41580,7 @@ const genInputNumberStyles = (token2) => {
         [`${componentCls}-handler-down`]: {
           borderEndEndRadius: borderRadius
         }
-      }, genRadiusStyle(token2, "lg")), genRadiusStyle(token2, "sm")), {
+      }, genRadiusStyle$1(token2, "lg")), genRadiusStyle$1(token2, "sm")), {
         // Disabled
         "&-disabled, &-readonly": {
           [`${componentCls}-handler-wrap`]: {
@@ -40230,7 +41696,7 @@ const genAffixWrapperStyles = (token2) => {
     })
   };
 };
-const useStyle$6 = genStyleHooks("InputNumber", (token2) => {
+const useStyle$a = genStyleHooks("InputNumber", (token2) => {
   const inputNumberToken = merge(token2, initInputToken(token2));
   return [
     genInputNumberStyles(inputNumberToken),
@@ -40240,12 +41706,12 @@ const useStyle$6 = genStyleHooks("InputNumber", (token2) => {
     // =====================================================
     genCompactItemStyle(inputNumberToken)
   ];
-}, prepareComponentToken$4, {
+}, prepareComponentToken$8, {
   unitless: {
     handleOpacity: true
   }
 });
-var __rest$i = function(s2, e2) {
+var __rest$o = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -40274,18 +41740,18 @@ const InputNumber = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     status: customStatus,
     controls,
     variant: customVariant
-  } = props, others = __rest$i(props, ["className", "rootClassName", "size", "disabled", "prefixCls", "addonBefore", "addonAfter", "prefix", "bordered", "readOnly", "status", "controls", "variant"]);
+  } = props, others = __rest$o(props, ["className", "rootClassName", "size", "disabled", "prefixCls", "addonBefore", "addonAfter", "prefix", "bordered", "readOnly", "status", "controls", "variant"]);
   const prefixCls = getPrefixCls("input-number", customizePrefixCls);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$6(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$a(prefixCls, rootCls);
   const {
     compactSize,
     compactItemClassnames
   } = useCompactItemContext(prefixCls, direction);
-  let upIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$6, {
+  let upIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$f, {
     className: `${prefixCls}-handler-up-inner`
   });
-  let downIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$d, {
+  let downIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$m, {
     className: `${prefixCls}-handler-down-inner`
   });
   const controlsTemp = typeof controls === "boolean" ? controls : void 0;
@@ -40427,7 +41893,7 @@ const ColorAlphaInput = (_ref) => {
     onChange === null || onChange === void 0 ? void 0 : onChange(genColor);
   };
   return /* @__PURE__ */ React.createElement(ColorSteppers, {
-    value: getAlphaColor$1(alphaValue),
+    value: getAlphaColor(alphaValue),
     prefixCls,
     formatter: (step) => `${step}%`,
     className: colorAlphaInputPrefixCls,
@@ -40445,7 +41911,7 @@ const Group = (props) => {
   } = props;
   const prefixCls = getPrefixCls("input-group", customizePrefixCls);
   const inputPrefixCls = getPrefixCls("input");
-  const [wrapCSSVar, hashId] = useStyle$a(inputPrefixCls);
+  const [wrapCSSVar, hashId] = useStyle$f(inputPrefixCls);
   const cls = classNames(prefixCls, {
     [`${prefixCls}-lg`]: props.size === "large",
     [`${prefixCls}-sm`]: props.size === "small",
@@ -40473,7 +41939,7 @@ const getAllowClear = (allowClear) => {
     mergedAllowClear = allowClear;
   } else if (allowClear) {
     mergedAllowClear = {
-      clearIcon: /* @__PURE__ */ React.createElement(RefIcon$k, null)
+      clearIcon: /* @__PURE__ */ React.createElement(RefIcon$t, null)
     };
   }
   return mergedAllowClear;
@@ -40503,7 +41969,7 @@ function useRemovePasswordTimeout(inputRef, triggerOnMount) {
 function hasPrefixSuffix(props) {
   return !!(props.prefix || props.suffix || props.allowClear || props.showCount);
 }
-var __rest$h = function(s2, e2) {
+var __rest$n = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -40554,7 +42020,7 @@ const Input$1 = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     onChange,
     classNames: classes,
     variant: customVariant
-  } = props, rest = __rest$h(props, ["prefixCls", "bordered", "status", "size", "disabled", "onBlur", "onFocus", "suffix", "allowClear", "addonAfter", "addonBefore", "className", "style", "styles", "rootClassName", "onChange", "classNames", "variant"]);
+  } = props, rest = __rest$n(props, ["prefixCls", "bordered", "status", "size", "disabled", "onBlur", "onFocus", "suffix", "allowClear", "addonAfter", "addonBefore", "className", "style", "styles", "rootClassName", "onChange", "classNames", "variant"]);
   const {
     getPrefixCls,
     direction,
@@ -40563,7 +42029,7 @@ const Input$1 = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   const prefixCls = getPrefixCls("input", customizePrefixCls);
   const inputRef = reactExports.useRef(null);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$a(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$f(prefixCls, rootCls);
   const {
     compactSize,
     compactItemClassnames
@@ -40674,11 +42140,11 @@ const genOTPStyle = (token2) => {
     }
   };
 };
-const useStyle$5 = genStyleHooks(["Input", "OTP"], (token2) => {
+const useStyle$9 = genStyleHooks(["Input", "OTP"], (token2) => {
   const inputToken = merge(token2, initInputToken(token2));
   return [genOTPStyle(inputToken)];
-}, initComponentToken);
-var __rest$g = function(s2, e2) {
+}, initComponentToken$1);
+var __rest$m = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -40693,7 +42159,7 @@ const OTPInput = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     onActiveChange,
     index: index2,
     mask
-  } = props, restProps = __rest$g(props, ["value", "onChange", "onActiveChange", "index", "mask"]);
+  } = props, restProps = __rest$m(props, ["value", "onChange", "onActiveChange", "index", "mask"]);
   const internalValue = value && typeof mask === "string" ? mask : value;
   const onInternalChange = (e2) => {
     onChange(index2, e2.target.value);
@@ -40738,7 +42204,7 @@ const OTPInput = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     type: mask === true ? "password" : "text"
   }));
 });
-var __rest$f = function(s2, e2) {
+var __rest$l = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -40763,7 +42229,7 @@ const OTP = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     status: customStatus,
     autoFocus,
     mask
-  } = props, restProps = __rest$f(props, ["prefixCls", "length", "size", "defaultValue", "value", "onChange", "formatter", "variant", "disabled", "status", "autoFocus", "mask"]);
+  } = props, restProps = __rest$l(props, ["prefixCls", "length", "size", "defaultValue", "value", "onChange", "formatter", "variant", "disabled", "status", "autoFocus", "mask"]);
   const {
     getPrefixCls,
     direction
@@ -40775,7 +42241,7 @@ const OTP = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     attr: true
   });
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$5(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$9(prefixCls, rootCls);
   const mergedSize = useSize((ctx) => customSize !== null && customSize !== void 0 ? customSize : ctx);
   const formContext = reactExports.useContext(FormItemInputContext);
   const mergedStatus = getMergedStatus(formContext.status, customStatus);
@@ -40896,7 +42362,7 @@ var EyeInvisibleOutlined = function EyeInvisibleOutlined2(props, ref) {
     icon: EyeInvisibleOutlined$1
   }));
 };
-var RefIcon$5 = /* @__PURE__ */ reactExports.forwardRef(EyeInvisibleOutlined);
+var RefIcon$e = /* @__PURE__ */ reactExports.forwardRef(EyeInvisibleOutlined);
 var EyeOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z" } }] }, "name": "eye", "theme": "outlined" };
 var EyeOutlined = function EyeOutlined2(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
@@ -40904,8 +42370,8 @@ var EyeOutlined = function EyeOutlined2(props, ref) {
     icon: EyeOutlined$1
   }));
 };
-var RefIcon$4 = /* @__PURE__ */ reactExports.forwardRef(EyeOutlined);
-var __rest$e = function(s2, e2) {
+var RefIcon$d = /* @__PURE__ */ reactExports.forwardRef(EyeOutlined);
+var __rest$k = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -40913,7 +42379,7 @@ var __rest$e = function(s2, e2) {
   }
   return t2;
 };
-const defaultIconRender = (visible) => visible ? /* @__PURE__ */ reactExports.createElement(RefIcon$4, null) : /* @__PURE__ */ reactExports.createElement(RefIcon$5, null);
+const defaultIconRender = (visible) => visible ? /* @__PURE__ */ reactExports.createElement(RefIcon$d, null) : /* @__PURE__ */ reactExports.createElement(RefIcon$e, null);
 const actionMap = {
   click: "onClick",
   hover: "onMouseOver"
@@ -40950,7 +42416,7 @@ const Password = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       return newState;
     });
   };
-  const getIcon = (prefixCls2) => {
+  const getIcon2 = (prefixCls2) => {
     const iconTrigger = actionMap[action] || "";
     const icon = iconRender(visible);
     const iconProps = {
@@ -40971,13 +42437,13 @@ const Password = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     prefixCls: customizePrefixCls,
     inputPrefixCls: customizeInputPrefixCls,
     size
-  } = props, restProps = __rest$e(props, ["className", "prefixCls", "inputPrefixCls", "size"]);
+  } = props, restProps = __rest$k(props, ["className", "prefixCls", "inputPrefixCls", "size"]);
   const {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const inputPrefixCls = getPrefixCls("input", customizeInputPrefixCls);
   const prefixCls = getPrefixCls("input-password", customizePrefixCls);
-  const suffixIcon = visibilityToggle && getIcon(prefixCls);
+  const suffixIcon = visibilityToggle && getIcon2(prefixCls);
   const inputClassName = classNames(prefixCls, className, {
     [`${prefixCls}-${size}`]: !!size
   });
@@ -40994,7 +42460,7 @@ const Password = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     ref: composeRef(ref, inputRef)
   }, omittedProps));
 });
-var __rest$d = function(s2, e2) {
+var __rest$j = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -41017,7 +42483,7 @@ const Search = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     onChange: customOnChange,
     onCompositionStart,
     onCompositionEnd
-  } = props, restProps = __rest$d(props, ["prefixCls", "inputPrefixCls", "className", "size", "suffix", "enterButton", "addonAfter", "loading", "disabled", "onSearch", "onChange", "onCompositionStart", "onCompositionEnd"]);
+  } = props, restProps = __rest$j(props, ["prefixCls", "inputPrefixCls", "className", "size", "suffix", "enterButton", "addonAfter", "loading", "disabled", "onSearch", "onChange", "onCompositionStart", "onCompositionEnd"]);
   const {
     getPrefixCls,
     direction
@@ -41061,7 +42527,7 @@ const Search = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     }
     onSearch(e2);
   };
-  const searchIcon = typeof enterButton === "boolean" ? /* @__PURE__ */ reactExports.createElement(RefIcon$c, null) : null;
+  const searchIcon = typeof enterButton === "boolean" ? /* @__PURE__ */ reactExports.createElement(RefIcon$l, null) : null;
   const btnClassName = `${prefixCls}-button`;
   let button;
   const enterButtonAsElement = enterButton || {};
@@ -41080,7 +42546,7 @@ const Search = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       size
     } : {}));
   } else {
-    button = /* @__PURE__ */ reactExports.createElement(Button, {
+    button = /* @__PURE__ */ reactExports.createElement(Button$1, {
       className: btnClassName,
       type: enterButton ? "primary" : void 0,
       size,
@@ -41212,7 +42678,7 @@ function calculateAutoSizeStyle(uiTextNode) {
   }
   return style2;
 }
-var _excluded$4 = ["prefixCls", "onPressEnter", "defaultValue", "value", "autoSize", "onResize", "className", "style", "disabled", "onChange", "onInternalAutoSize"];
+var _excluded$d = ["prefixCls", "onPressEnter", "defaultValue", "value", "autoSize", "onResize", "className", "style", "disabled", "onChange", "onInternalAutoSize"];
 var RESIZE_START = 0;
 var RESIZE_MEASURING = 1;
 var RESIZE_STABLE = 2;
@@ -41221,7 +42687,7 @@ var ResizableTextArea = /* @__PURE__ */ reactExports.forwardRef(function(props, 
   _ref.onPressEnter;
   var defaultValue = _ref.defaultValue, value = _ref.value, autoSize = _ref.autoSize, onResize2 = _ref.onResize, className = _ref.className, style2 = _ref.style, disabled = _ref.disabled, onChange = _ref.onChange;
   _ref.onInternalAutoSize;
-  var restProps = _objectWithoutProperties(_ref, _excluded$4);
+  var restProps = _objectWithoutProperties(_ref, _excluded$d);
   var _useMergedState = useMergedState(defaultValue, {
     value,
     postState: function postState(val) {
@@ -41312,10 +42778,10 @@ var ResizableTextArea = /* @__PURE__ */ reactExports.forwardRef(function(props, 
     onChange: onInternalChange
   })));
 });
-var _excluded$3 = ["defaultValue", "value", "onFocus", "onBlur", "onChange", "allowClear", "maxLength", "onCompositionStart", "onCompositionEnd", "suffix", "prefixCls", "showCount", "count", "className", "style", "disabled", "hidden", "classNames", "styles", "onResize", "readOnly"];
+var _excluded$c = ["defaultValue", "value", "onFocus", "onBlur", "onChange", "allowClear", "maxLength", "onCompositionStart", "onCompositionEnd", "suffix", "prefixCls", "showCount", "count", "className", "style", "disabled", "hidden", "classNames", "styles", "onResize", "readOnly"];
 var TextArea$1 = /* @__PURE__ */ React.forwardRef(function(_ref, ref) {
   var _countConfig$max;
-  var defaultValue = _ref.defaultValue, customValue = _ref.value, onFocus = _ref.onFocus, onBlur = _ref.onBlur, onChange = _ref.onChange, allowClear = _ref.allowClear, maxLength = _ref.maxLength, onCompositionStart = _ref.onCompositionStart, onCompositionEnd = _ref.onCompositionEnd, suffix = _ref.suffix, _ref$prefixCls = _ref.prefixCls, prefixCls = _ref$prefixCls === void 0 ? "rc-textarea" : _ref$prefixCls, showCount = _ref.showCount, count = _ref.count, className = _ref.className, style2 = _ref.style, disabled = _ref.disabled, hidden = _ref.hidden, classNames$1 = _ref.classNames, styles = _ref.styles, onResize2 = _ref.onResize, readOnly = _ref.readOnly, rest = _objectWithoutProperties(_ref, _excluded$3);
+  var defaultValue = _ref.defaultValue, customValue = _ref.value, onFocus = _ref.onFocus, onBlur = _ref.onBlur, onChange = _ref.onChange, allowClear = _ref.allowClear, maxLength = _ref.maxLength, onCompositionStart = _ref.onCompositionStart, onCompositionEnd = _ref.onCompositionEnd, suffix = _ref.suffix, _ref$prefixCls = _ref.prefixCls, prefixCls = _ref$prefixCls === void 0 ? "rc-textarea" : _ref$prefixCls, showCount = _ref.showCount, count = _ref.count, className = _ref.className, style2 = _ref.style, disabled = _ref.disabled, hidden = _ref.hidden, classNames$1 = _ref.classNames, styles = _ref.styles, onResize2 = _ref.onResize, readOnly = _ref.readOnly, rest = _objectWithoutProperties(_ref, _excluded$c);
   var _useMergedState = useMergedState(defaultValue, {
     value: customValue,
     defaultValue
@@ -41387,11 +42853,11 @@ var TextArea$1 = /* @__PURE__ */ React.forwardRef(function(_ref, ref) {
     triggerChange(e2, e2.target.value);
   };
   var handleKeyDown = function handleKeyDown2(e2) {
-    var onPressEnter = rest.onPressEnter, onKeyDown = rest.onKeyDown;
+    var onPressEnter = rest.onPressEnter, onKeyDown2 = rest.onKeyDown;
     if (e2.key === "Enter" && onPressEnter) {
       onPressEnter(e2);
     }
-    onKeyDown === null || onKeyDown === void 0 || onKeyDown(e2);
+    onKeyDown2 === null || onKeyDown2 === void 0 || onKeyDown2(e2);
   };
   var handleFocus = function handleFocus2(e2) {
     setFocused(true);
@@ -41473,7 +42939,7 @@ var TextArea$1 = /* @__PURE__ */ React.forwardRef(function(_ref, ref) {
     readOnly
   })));
 });
-var __rest$c = function(s2, e2) {
+var __rest$i = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -41496,7 +42962,7 @@ const TextArea = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     style: style2,
     styles,
     variant: customVariant
-  } = props, rest = __rest$c(props, ["prefixCls", "bordered", "size", "disabled", "status", "allowClear", "classNames", "rootClassName", "className", "style", "styles", "variant"]);
+  } = props, rest = __rest$i(props, ["prefixCls", "bordered", "size", "disabled", "status", "allowClear", "classNames", "rootClassName", "className", "style", "styles", "variant"]);
   const {
     getPrefixCls,
     direction,
@@ -41528,7 +42994,7 @@ const TextArea = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   });
   const prefixCls = getPrefixCls("input", customizePrefixCls);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$a(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$f(prefixCls, rootCls);
   const [variant, enableVariantCls] = useVariant("textArea", customVariant, bordered);
   const mergedAllowClear = getAllowClear(allowClear !== null && allowClear !== void 0 ? allowClear : textArea === null || textArea === void 0 ? void 0 : textArea.allowClear);
   return wrapCSSVar(/* @__PURE__ */ reactExports.createElement(TextArea$1, Object.assign({
@@ -41751,7 +43217,7 @@ const ColorInput = (props) => {
     onChange
   }));
 };
-var __rest$b = function(s2, e2) {
+var __rest$h = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -41768,7 +43234,7 @@ const PanelPicker = () => {
     onChange,
     onClear,
     onChangeComplete
-  } = _a, injectProps = __rest$b(_a, ["prefixCls", "allowClear", "value", "disabledAlpha", "onChange", "onClear", "onChangeComplete"]);
+  } = _a, injectProps = __rest$h(_a, ["prefixCls", "allowClear", "value", "disabledAlpha", "onChange", "onClear", "onChangeComplete"]);
   return /* @__PURE__ */ React.createElement(React.Fragment, null, allowClear && /* @__PURE__ */ React.createElement(ColorClear, Object.assign({
     prefixCls,
     value,
@@ -41824,7 +43290,7 @@ const ColorPresets = (_ref2) => {
     onChange
   } = _ref2;
   const [locale2] = useLocale("ColorPicker");
-  const [, token2] = useToken$1();
+  const [, token2] = useToken();
   const [presetsValue] = useMergedState(genPresetColor(presets), {
     value: genPresetColor(presets),
     postState: genPresetColor
@@ -41889,7 +43355,7 @@ const PanelPresets = () => {
     onChange
   }) : null;
 };
-var __rest$a = function(s2, e2) {
+var __rest$g = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -41905,7 +43371,7 @@ const ColorPickerPanel = (props) => {
     color,
     onChange,
     onClear
-  } = props, injectProps = __rest$a(props, ["prefixCls", "presets", "panelRender", "color", "onChange", "onClear"]);
+  } = props, injectProps = __rest$g(props, ["prefixCls", "presets", "panelRender", "color", "onChange", "onClear"]);
   const colorPickerPanelPrefixCls = `${prefixCls}-inner`;
   const panelPickerProps = Object.assign({
     prefixCls,
@@ -41935,7 +43401,7 @@ const ColorPickerPanel = (props) => {
     }
   }) : innerPanel)));
 };
-var __rest$9 = function(s2, e2) {
+var __rest$f = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -41952,7 +43418,7 @@ const ColorTrigger = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     format: format2,
     className,
     showText
-  } = props, rest = __rest$9(props, ["color", "prefixCls", "open", "disabled", "format", "className", "showText"]);
+  } = props, rest = __rest$f(props, ["color", "prefixCls", "open", "disabled", "format", "className", "showText"]);
   const colorTriggerPrefixCls = `${prefixCls}-trigger`;
   const containerNode = reactExports.useMemo(() => color.cleared ? /* @__PURE__ */ React.createElement(ColorClear, {
     prefixCls
@@ -41962,7 +43428,7 @@ const ColorTrigger = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   }), [color, prefixCls]);
   const genColorString = () => {
     const hexString = color.toHexString().toUpperCase();
-    const alpha = getAlphaColor$1(color);
+    const alpha = getAlphaColor(color);
     switch (format2) {
       case "rgb":
         return color.toRgbString();
@@ -42420,7 +43886,7 @@ const genStatusStyle = (token2) => {
     }
   };
 };
-const genSizeStyle = (token2) => {
+const genSizeStyle$1 = (token2) => {
   const {
     componentCls,
     controlHeightLG,
@@ -42534,11 +44000,11 @@ const genColorPickerStyle = (token2) => {
             color: colorTextDisabled
           }
         }
-      }, genClearStyle(token2, controlHeightSM)), genColorBlockStyle(token2, controlHeightSM)), genStatusStyle(token2)), genSizeStyle(token2))
+      }, genClearStyle(token2, controlHeightSM)), genColorBlockStyle(token2, controlHeightSM)), genStatusStyle(token2)), genSizeStyle$1(token2))
     }, genRtlStyle(token2))
   }];
 };
-const useStyle$4 = genStyleHooks("ColorPicker", (token2) => {
+const useStyle$8 = genStyleHooks("ColorPicker", (token2) => {
   const {
     colorTextQuaternary,
     marginSM
@@ -42557,7 +44023,7 @@ const useStyle$4 = genStyleHooks("ColorPicker", (token2) => {
   });
   return [genColorPickerStyle(colorPickerToken)];
 });
-var __rest$8 = function(s2, e2) {
+var __rest$e = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -42596,7 +44062,7 @@ const ColorPicker = (props) => {
     getPopupContainer,
     autoAdjustOverflow: autoAdjustOverflow2 = true,
     destroyTooltipOnHide
-  } = props, rest = __rest$8(props, ["value", "defaultValue", "format", "defaultFormat", "allowClear", "presets", "children", "trigger", "open", "disabled", "placement", "arrow", "panelRender", "showText", "style", "className", "size", "rootClassName", "prefixCls", "styles", "disabledAlpha", "onFormatChange", "onChange", "onClear", "onOpenChange", "onChangeComplete", "getPopupContainer", "autoAdjustOverflow", "destroyTooltipOnHide"]);
+  } = props, rest = __rest$e(props, ["value", "defaultValue", "format", "defaultFormat", "allowClear", "presets", "children", "trigger", "open", "disabled", "placement", "arrow", "panelRender", "showText", "style", "className", "size", "rootClassName", "prefixCls", "styles", "disabledAlpha", "onFormatChange", "onChange", "onClear", "onOpenChange", "onChangeComplete", "getPopupContainer", "autoAdjustOverflow", "destroyTooltipOnHide"]);
   const {
     getPrefixCls,
     direction,
@@ -42619,13 +44085,13 @@ const ColorPicker = (props) => {
     onChange: onFormatChange
   });
   const prefixCls = getPrefixCls("color-picker", customizePrefixCls);
-  const isAlphaColor = reactExports.useMemo(() => getAlphaColor$1(colorValue) < 100, [colorValue]);
+  const isAlphaColor = reactExports.useMemo(() => getAlphaColor(colorValue) < 100, [colorValue]);
   const {
     status: contextStatus
   } = React.useContext(FormItemInputContext);
   const mergedSize = useSize(customizeSize);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$4(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$8(prefixCls, rootCls);
   const rtlCls = {
     [`${prefixCls}-rtl`]: direction
   };
@@ -42641,7 +44107,7 @@ const ColorPicker = (props) => {
     let color = generateColor2(data);
     const isNull = value === null || !value && defaultValue === null;
     if (((_a = prevValue.current) === null || _a === void 0 ? void 0 : _a.cleared) || isNull) {
-      if (getAlphaColor$1(colorValue) === 0 && type4 !== "alpha") {
+      if (getAlphaColor(colorValue) === 0 && type4 !== "alpha") {
         color = genAlphaColor(color);
       }
     }
@@ -42731,9 +44197,9 @@ const PurePanel$3 = genPurePanel(
 ColorPicker._InternalPanelDoNotUseOrYouWillBeFired = PurePanel$3;
 var DrawerContext = /* @__PURE__ */ reactExports.createContext(null);
 var RefContext = /* @__PURE__ */ reactExports.createContext({});
-var _excluded$2 = ["prefixCls", "className", "containerRef"];
+var _excluded$b = ["prefixCls", "className", "containerRef"];
 var DrawerPanel$1 = function DrawerPanel2(props) {
-  var prefixCls = props.prefixCls, className = props.className, containerRef = props.containerRef, restProps = _objectWithoutProperties(props, _excluded$2);
+  var prefixCls = props.prefixCls, className = props.className, containerRef = props.containerRef, restProps = _objectWithoutProperties(props, _excluded$b);
   var _React$useContext = reactExports.useContext(RefContext), panelRef = _React$useContext.panel;
   var mergedRef = useComposeRef(panelRef, containerRef);
   return /* @__PURE__ */ reactExports.createElement("div", _extends({
@@ -42762,7 +44228,7 @@ var sentinelStyle = {
 };
 function DrawerPopup(props, ref) {
   var _ref, _pushConfig$distance, _pushConfig;
-  var prefixCls = props.prefixCls, open = props.open, placement = props.placement, inline2 = props.inline, push = props.push, forceRender = props.forceRender, autoFocus = props.autoFocus, keyboard = props.keyboard, drawerClassNames = props.classNames, rootClassName = props.rootClassName, rootStyle = props.rootStyle, zIndex = props.zIndex, className = props.className, id2 = props.id, style2 = props.style, motion2 = props.motion, width = props.width, height = props.height, children = props.children, mask = props.mask, maskClosable = props.maskClosable, maskMotion = props.maskMotion, maskClassName = props.maskClassName, maskStyle = props.maskStyle, afterOpenChange = props.afterOpenChange, onClose = props.onClose, onMouseEnter = props.onMouseEnter, onMouseOver = props.onMouseOver, onMouseLeave = props.onMouseLeave, onClick = props.onClick, onKeyDown = props.onKeyDown, onKeyUp = props.onKeyUp, styles = props.styles, drawerRender = props.drawerRender;
+  var prefixCls = props.prefixCls, open = props.open, placement = props.placement, inline2 = props.inline, push = props.push, forceRender = props.forceRender, autoFocus = props.autoFocus, keyboard = props.keyboard, drawerClassNames = props.classNames, rootClassName = props.rootClassName, rootStyle = props.rootStyle, zIndex = props.zIndex, className = props.className, id2 = props.id, style2 = props.style, motion2 = props.motion, width = props.width, height = props.height, children = props.children, mask = props.mask, maskClosable = props.maskClosable, maskMotion = props.maskMotion, maskClassName = props.maskClassName, maskStyle = props.maskStyle, afterOpenChange = props.afterOpenChange, onClose = props.onClose, onMouseEnter = props.onMouseEnter, onMouseOver = props.onMouseOver, onMouseLeave = props.onMouseLeave, onClick = props.onClick, onKeyDown2 = props.onKeyDown, onKeyUp = props.onKeyUp, styles = props.styles, drawerRender = props.drawerRender;
   var panelRef = reactExports.useRef();
   var sentinelStartRef = reactExports.useRef();
   var sentinelEndRef = reactExports.useRef();
@@ -42883,7 +44349,7 @@ function DrawerPopup(props, ref) {
     onMouseOver,
     onMouseLeave,
     onClick,
-    onKeyDown,
+    onKeyDown: onKeyDown2,
     onKeyUp
   };
   var panelNode = /* @__PURE__ */ reactExports.createElement(CSSMotion, _extends({
@@ -42942,7 +44408,7 @@ function DrawerPopup(props, ref) {
 }
 var RefDrawerPopup = /* @__PURE__ */ reactExports.forwardRef(DrawerPopup);
 var Drawer$1 = function Drawer2(props) {
-  var _props$open = props.open, open = _props$open === void 0 ? false : _props$open, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-drawer" : _props$prefixCls, _props$placement = props.placement, placement = _props$placement === void 0 ? "right" : _props$placement, _props$autoFocus = props.autoFocus, autoFocus = _props$autoFocus === void 0 ? true : _props$autoFocus, _props$keyboard = props.keyboard, keyboard = _props$keyboard === void 0 ? true : _props$keyboard, _props$width = props.width, width = _props$width === void 0 ? 378 : _props$width, _props$mask = props.mask, mask = _props$mask === void 0 ? true : _props$mask, _props$maskClosable = props.maskClosable, maskClosable = _props$maskClosable === void 0 ? true : _props$maskClosable, getContainer2 = props.getContainer, forceRender = props.forceRender, afterOpenChange = props.afterOpenChange, destroyOnClose = props.destroyOnClose, onMouseEnter = props.onMouseEnter, onMouseOver = props.onMouseOver, onMouseLeave = props.onMouseLeave, onClick = props.onClick, onKeyDown = props.onKeyDown, onKeyUp = props.onKeyUp, panelRef = props.panelRef;
+  var _props$open = props.open, open = _props$open === void 0 ? false : _props$open, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-drawer" : _props$prefixCls, _props$placement = props.placement, placement = _props$placement === void 0 ? "right" : _props$placement, _props$autoFocus = props.autoFocus, autoFocus = _props$autoFocus === void 0 ? true : _props$autoFocus, _props$keyboard = props.keyboard, keyboard = _props$keyboard === void 0 ? true : _props$keyboard, _props$width = props.width, width = _props$width === void 0 ? 378 : _props$width, _props$mask = props.mask, mask = _props$mask === void 0 ? true : _props$mask, _props$maskClosable = props.maskClosable, maskClosable = _props$maskClosable === void 0 ? true : _props$maskClosable, getContainer2 = props.getContainer, forceRender = props.forceRender, afterOpenChange = props.afterOpenChange, destroyOnClose = props.destroyOnClose, onMouseEnter = props.onMouseEnter, onMouseOver = props.onMouseOver, onMouseLeave = props.onMouseLeave, onClick = props.onClick, onKeyDown2 = props.onKeyDown, onKeyUp = props.onKeyUp, panelRef = props.panelRef;
   var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), animatedVisible = _React$useState2[0], setAnimatedVisible = _React$useState2[1];
   var _React$useState3 = reactExports.useState(false), _React$useState4 = _slicedToArray(_React$useState3, 2), mounted = _React$useState4[0], setMounted = _React$useState4[1];
   useLayoutEffect$1(function() {
@@ -42980,7 +44446,7 @@ var Drawer$1 = function Drawer2(props) {
     onMouseOver,
     onMouseLeave,
     onClick,
-    onKeyDown,
+    onKeyDown: onKeyDown2,
     onKeyUp
   };
   var drawerPopupProps = _objectSpread2(_objectSpread2({}, props), {}, {
@@ -43324,16 +44790,16 @@ const genDrawerStyle = (token2) => {
     }
   };
 };
-const prepareComponentToken$3 = (token2) => ({
+const prepareComponentToken$7 = (token2) => ({
   zIndexPopup: token2.zIndexPopupBase,
   footerPaddingBlock: token2.paddingXS,
   footerPaddingInline: token2.padding
 });
-const useStyle$3 = genStyleHooks("Drawer", (token2) => {
+const useStyle$7 = genStyleHooks("Drawer", (token2) => {
   const drawerToken = merge(token2, {});
   return [genDrawerStyle(drawerToken), genMotionStyle(drawerToken)];
-}, prepareComponentToken$3);
-var __rest$7 = function(s2, e2) {
+}, prepareComponentToken$7);
+var __rest$d = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -43365,7 +44831,7 @@ const Drawer = (props) => {
     maskStyle,
     drawerStyle,
     contentWrapperStyle
-  } = props, rest = __rest$7(props, ["rootClassName", "width", "height", "size", "mask", "push", "open", "afterOpenChange", "onClose", "prefixCls", "getContainer", "style", "className", "visible", "afterVisibleChange", "maskStyle", "drawerStyle", "contentWrapperStyle"]);
+  } = props, rest = __rest$d(props, ["rootClassName", "width", "height", "size", "mask", "push", "open", "afterOpenChange", "onClose", "prefixCls", "getContainer", "style", "className", "visible", "afterVisibleChange", "maskStyle", "drawerStyle", "contentWrapperStyle"]);
   const {
     getPopupContainer,
     getPrefixCls,
@@ -43373,7 +44839,7 @@ const Drawer = (props) => {
     drawer
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("drawer", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$3(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$7(prefixCls);
   const getContainer2 = (
     // 有可能为 false，所以不能直接判断
     customizeGetContainer === void 0 && getPopupContainer ? () => getPopupContainer(document.body) : customizeGetContainer
@@ -43453,12 +44919,12 @@ const PurePanel$2 = (props) => {
     style: style2,
     className,
     placement = "right"
-  } = props, restProps = __rest$7(props, ["prefixCls", "style", "className", "placement"]);
+  } = props, restProps = __rest$d(props, ["prefixCls", "style", "className", "placement"]);
   const {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("drawer", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$3(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$7(prefixCls);
   const cls = classNames(prefixCls, `${prefixCls}-pure`, `${prefixCls}-${placement}`, hashId, cssVarCls, className);
   return wrapCSSVar(/* @__PURE__ */ reactExports.createElement("div", {
     className: cls,
@@ -43468,6 +44934,232 @@ const PurePanel$2 = (props) => {
   }, restProps))));
 };
 Drawer._InternalPanelDoNotUseOrYouWillBeFired = PurePanel$2;
+function isPresetSize(size) {
+  return ["small", "middle", "large"].includes(size);
+}
+function isValidGapNumber(size) {
+  if (!size) {
+    return false;
+  }
+  return typeof size === "number" && !Number.isNaN(size);
+}
+const SpaceContext = /* @__PURE__ */ React.createContext({
+  latestIndex: 0
+});
+const SpaceContextProvider = SpaceContext.Provider;
+const Item = (_ref) => {
+  let {
+    className,
+    index: index2,
+    children,
+    split,
+    style: style2
+  } = _ref;
+  const {
+    latestIndex
+  } = reactExports.useContext(SpaceContext);
+  if (children === null || children === void 0) {
+    return null;
+  }
+  return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("div", {
+    className,
+    style: style2
+  }, children), index2 < latestIndex && split && /* @__PURE__ */ reactExports.createElement("span", {
+    className: `${className}-split`
+  }, split));
+};
+var __rest$c = function(s2, e2) {
+  var t2 = {};
+  for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
+  if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
+    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i2])) t2[p2[i2]] = s2[p2[i2]];
+  }
+  return t2;
+};
+const InternalSpace = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
+  var _a, _b, _c;
+  const {
+    getPrefixCls,
+    space,
+    direction: directionConfig
+  } = reactExports.useContext(ConfigContext);
+  const {
+    size = (_a = space === null || space === void 0 ? void 0 : space.size) !== null && _a !== void 0 ? _a : "small",
+    align,
+    className,
+    rootClassName,
+    children,
+    direction = "horizontal",
+    prefixCls: customizePrefixCls,
+    split,
+    style: style2,
+    wrap = false,
+    classNames: customClassNames,
+    styles
+  } = props, otherProps = __rest$c(props, ["size", "align", "className", "rootClassName", "children", "direction", "prefixCls", "split", "style", "wrap", "classNames", "styles"]);
+  const [horizontalSize, verticalSize] = Array.isArray(size) ? size : [size, size];
+  const isPresetVerticalSize = isPresetSize(verticalSize);
+  const isPresetHorizontalSize = isPresetSize(horizontalSize);
+  const isValidVerticalSize = isValidGapNumber(verticalSize);
+  const isValidHorizontalSize = isValidGapNumber(horizontalSize);
+  const childNodes = toArray$5(children, {
+    keepEmpty: true
+  });
+  const mergedAlign = align === void 0 && direction === "horizontal" ? "center" : align;
+  const prefixCls = getPrefixCls("space", customizePrefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$p(prefixCls);
+  const cls = classNames(prefixCls, space === null || space === void 0 ? void 0 : space.className, hashId, `${prefixCls}-${direction}`, {
+    [`${prefixCls}-rtl`]: directionConfig === "rtl",
+    [`${prefixCls}-align-${mergedAlign}`]: mergedAlign,
+    [`${prefixCls}-gap-row-${verticalSize}`]: isPresetVerticalSize,
+    [`${prefixCls}-gap-col-${horizontalSize}`]: isPresetHorizontalSize
+  }, className, rootClassName, cssVarCls);
+  const itemClassName = classNames(`${prefixCls}-item`, (_b = customClassNames === null || customClassNames === void 0 ? void 0 : customClassNames.item) !== null && _b !== void 0 ? _b : (_c = space === null || space === void 0 ? void 0 : space.classNames) === null || _c === void 0 ? void 0 : _c.item);
+  let latestIndex = 0;
+  const nodes = childNodes.map((child, i2) => {
+    var _a2, _b2;
+    if (child !== null && child !== void 0) {
+      latestIndex = i2;
+    }
+    const key = (child === null || child === void 0 ? void 0 : child.key) || `${itemClassName}-${i2}`;
+    return /* @__PURE__ */ reactExports.createElement(Item, {
+      className: itemClassName,
+      key,
+      index: i2,
+      split,
+      style: (_a2 = styles === null || styles === void 0 ? void 0 : styles.item) !== null && _a2 !== void 0 ? _a2 : (_b2 = space === null || space === void 0 ? void 0 : space.styles) === null || _b2 === void 0 ? void 0 : _b2.item
+    }, child);
+  });
+  const spaceContext = reactExports.useMemo(() => ({
+    latestIndex
+  }), [latestIndex]);
+  if (childNodes.length === 0) {
+    return null;
+  }
+  const gapStyle = {};
+  if (wrap) {
+    gapStyle.flexWrap = "wrap";
+  }
+  if (!isPresetHorizontalSize && isValidHorizontalSize) {
+    gapStyle.columnGap = horizontalSize;
+  }
+  if (!isPresetVerticalSize && isValidVerticalSize) {
+    gapStyle.rowGap = verticalSize;
+  }
+  return wrapCSSVar(/* @__PURE__ */ reactExports.createElement("div", Object.assign({
+    ref,
+    className: cls,
+    style: Object.assign(Object.assign(Object.assign({}, gapStyle), space === null || space === void 0 ? void 0 : space.style), style2)
+  }, otherProps), /* @__PURE__ */ reactExports.createElement(SpaceContextProvider, {
+    value: spaceContext
+  }, nodes)));
+});
+const Space = InternalSpace;
+Space.Compact = Compact;
+var __rest$b = function(s2, e2) {
+  var t2 = {};
+  for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
+  if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
+    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i2])) t2[p2[i2]] = s2[p2[i2]];
+  }
+  return t2;
+};
+const DropdownButton = (props) => {
+  const {
+    getPopupContainer: getContextPopupContainer,
+    getPrefixCls,
+    direction
+  } = reactExports.useContext(ConfigContext);
+  const {
+    prefixCls: customizePrefixCls,
+    type: type4 = "default",
+    danger,
+    disabled,
+    loading,
+    onClick,
+    htmlType,
+    children,
+    className,
+    menu,
+    arrow,
+    autoFocus,
+    overlay,
+    trigger,
+    align,
+    open,
+    onOpenChange,
+    placement,
+    getPopupContainer,
+    href,
+    icon = /* @__PURE__ */ reactExports.createElement(RefIcon$h, null),
+    title,
+    buttonsRender = (buttons) => buttons,
+    mouseEnterDelay,
+    mouseLeaveDelay,
+    overlayClassName,
+    overlayStyle,
+    destroyPopupOnHide,
+    dropdownRender
+  } = props, restProps = __rest$b(props, ["prefixCls", "type", "danger", "disabled", "loading", "onClick", "htmlType", "children", "className", "menu", "arrow", "autoFocus", "overlay", "trigger", "align", "open", "onOpenChange", "placement", "getPopupContainer", "href", "icon", "title", "buttonsRender", "mouseEnterDelay", "mouseLeaveDelay", "overlayClassName", "overlayStyle", "destroyPopupOnHide", "dropdownRender"]);
+  const prefixCls = getPrefixCls("dropdown", customizePrefixCls);
+  const buttonPrefixCls = `${prefixCls}-button`;
+  const dropdownProps = {
+    menu,
+    arrow,
+    autoFocus,
+    align,
+    disabled,
+    trigger: disabled ? [] : trigger,
+    onOpenChange,
+    getPopupContainer: getPopupContainer || getContextPopupContainer,
+    mouseEnterDelay,
+    mouseLeaveDelay,
+    overlayClassName,
+    overlayStyle,
+    destroyPopupOnHide,
+    dropdownRender
+  };
+  const {
+    compactSize,
+    compactItemClassnames
+  } = useCompactItemContext(prefixCls, direction);
+  const classes = classNames(buttonPrefixCls, compactItemClassnames, className);
+  if ("overlay" in props) {
+    dropdownProps.overlay = overlay;
+  }
+  if ("open" in props) {
+    dropdownProps.open = open;
+  }
+  if ("placement" in props) {
+    dropdownProps.placement = placement;
+  } else {
+    dropdownProps.placement = direction === "rtl" ? "bottomLeft" : "bottomRight";
+  }
+  const leftButton = /* @__PURE__ */ reactExports.createElement(Button$1, {
+    type: type4,
+    danger,
+    disabled,
+    loading,
+    onClick,
+    htmlType,
+    href,
+    title
+  }, children);
+  const rightButton = /* @__PURE__ */ reactExports.createElement(Button$1, {
+    type: type4,
+    danger,
+    icon
+  });
+  const [leftButtonToRender, rightButtonToRender] = buttonsRender([leftButton, rightButton]);
+  return /* @__PURE__ */ reactExports.createElement(Space.Compact, Object.assign({
+    className: classes,
+    size: compactSize,
+    block: true
+  }, restProps), leftButtonToRender, /* @__PURE__ */ reactExports.createElement(Dropdown$1, Object.assign({}, dropdownProps), rightButtonToRender));
+};
+DropdownButton.__ANT_BUTTON = true;
+const Dropdown = Dropdown$1;
+Dropdown.Button = DropdownButton;
 function useDebounce(value) {
   const [cacheValue, setCacheValue] = reactExports.useState(value);
   reactExports.useEffect(() => {
@@ -43984,7 +45676,7 @@ const genItemVerticalStyle = (token2) => {
     }
   };
 };
-const prepareComponentToken$2 = (token2) => ({
+const prepareComponentToken$6 = (token2) => ({
   labelRequiredMarkColor: token2.colorError,
   labelColor: token2.colorTextHeading,
   labelFontSize: token2.fontSize,
@@ -43996,25 +45688,25 @@ const prepareComponentToken$2 = (token2) => ({
   verticalLabelMargin: 0,
   inlineItemMarginBottom: 0
 });
-const prepareToken = (token2, rootPrefixCls) => {
+const prepareToken$1 = (token2, rootPrefixCls) => {
   const formToken = merge(token2, {
     formItemCls: `${token2.componentCls}-item`,
     rootPrefixCls
   });
   return formToken;
 };
-const useStyle$2 = genStyleHooks("Form", (token2, _ref) => {
+const useStyle$6 = genStyleHooks("Form", (token2, _ref) => {
   let {
     rootPrefixCls
   } = _ref;
-  const formToken = prepareToken(token2, rootPrefixCls);
+  const formToken = prepareToken$1(token2, rootPrefixCls);
   return [genFormStyle(formToken), genFormItemStyle(formToken), genFormValidateMotionStyle(formToken), genHorizontalStyle$1(formToken, formToken.componentCls), genHorizontalStyle$1(formToken, formToken.formItemCls), genInlineStyle(formToken), genVerticalStyle$1(formToken), genItemVerticalStyle(formToken), genCollapseMotion(formToken), zoomIn];
-}, prepareComponentToken$2, {
+}, prepareComponentToken$6, {
   // Let From style before the Grid
   // ref https://github.com/ant-design/ant-design/issues/44386
   order: -1e3
 });
-const EMPTY_LIST = [];
+const EMPTY_LIST$2 = [];
 function toErrorEntity(error, prefix, errorStatus) {
   let index2 = arguments.length > 3 && arguments[3] !== void 0 ? arguments[3] : 0;
   return {
@@ -44027,8 +45719,8 @@ const ErrorList = (_ref) => {
   let {
     help,
     helpStatus,
-    errors = EMPTY_LIST,
-    warnings = EMPTY_LIST,
+    errors = EMPTY_LIST$2,
+    warnings = EMPTY_LIST$2,
     className: rootClassName,
     fieldId,
     onVisibleChanged
@@ -44038,7 +45730,7 @@ const ErrorList = (_ref) => {
   } = reactExports.useContext(FormItemPrefixContext);
   const baseClassName = `${prefixCls}-item-explain`;
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$2(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$6(prefixCls, rootCls);
   const collapseMotion = reactExports.useMemo(() => initCollapseMotion(prefixCls), [prefixCls]);
   const debounceErrors = useDebounce(errors);
   const debounceWarnings = useDebounce(warnings);
@@ -44091,7 +45783,7 @@ const ErrorList = (_ref) => {
 };
 const formItemNameBlackList = ["parentNode"];
 const defaultItemNamePrefixCls = "form_item";
-function toArray(candidate) {
+function toArray$1(candidate) {
   if (candidate === void 0 || candidate === false) return [];
   return Array.isArray(candidate) ? candidate : [candidate];
 }
@@ -44122,7 +45814,7 @@ function getStatus(errors, warnings, meta, defaultValidateStatus, hasFeedback, v
   return status;
 }
 function toNamePathStr(name) {
-  const namePath = toArray(name);
+  const namePath = toArray$1(name);
   return namePath.join("_");
 }
 function getFieldDOMNode(name, wrapForm) {
@@ -44131,7 +45823,7 @@ function getFieldDOMNode(name, wrapForm) {
   if (fieldDom) {
     return fieldDom;
   }
-  const fieldId = getFieldId(toArray(name), wrapForm.__INTERNAL__.name);
+  const fieldId = getFieldId(toArray$1(name), wrapForm.__INTERNAL__.name);
   if (fieldId) {
     return document.getElementById(fieldId);
   }
@@ -44167,7 +45859,7 @@ function useForm(form) {
   }), [form, rcForm]);
   return [wrapForm];
 }
-var __rest$6 = function(s2, e2) {
+var __rest$a = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -44203,7 +45895,7 @@ const InternalForm = (props, ref) => {
     style: style2,
     feedbackIcons,
     variant
-  } = props, restFormProps = __rest$6(props, ["prefixCls", "className", "rootClassName", "size", "disabled", "form", "colon", "labelAlign", "labelWrap", "labelCol", "wrapperCol", "hideRequiredMark", "layout", "scrollToFirstError", "requiredMark", "onFinishFailed", "name", "style", "feedbackIcons", "variant"]);
+  } = props, restFormProps = __rest$a(props, ["prefixCls", "className", "rootClassName", "size", "disabled", "form", "colon", "labelAlign", "labelWrap", "labelCol", "wrapperCol", "hideRequiredMark", "layout", "scrollToFirstError", "requiredMark", "onFinishFailed", "name", "style", "feedbackIcons", "variant"]);
   const mergedSize = useSize(size);
   const contextValidateMessages = reactExports.useContext(ValidateMessagesContext);
   const mergedRequiredMark = reactExports.useMemo(() => {
@@ -44221,7 +45913,7 @@ const InternalForm = (props, ref) => {
   const mergedColon = colon !== null && colon !== void 0 ? colon : contextForm === null || contextForm === void 0 ? void 0 : contextForm.colon;
   const prefixCls = getPrefixCls("form", customizePrefixCls);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$2(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$6(prefixCls, rootCls);
   const formClassName = classNames(prefixCls, `${prefixCls}-${layout}`, {
     [`${prefixCls}-hide-required-mark`]: mergedRequiredMark === false,
     [`${prefixCls}-rtl`]: direction === "rtl",
@@ -44303,7 +45995,7 @@ function useChildren(children) {
   if (typeof children === "function") {
     return children;
   }
-  const childList = toArray$4(children);
+  const childList = toArray$5(children);
   return childList.length <= 1 ? childList[0] : childList;
 }
 const useFormItemStatus = () => {
@@ -44387,7 +46079,7 @@ const FallbackCmp = genSubStyleComponent(["Form", "item-item"], (token2, _ref) =
   let {
     rootPrefixCls
   } = _ref;
-  const formToken = prepareToken(token2, rootPrefixCls);
+  const formToken = prepareToken$1(token2, rootPrefixCls);
   return [genFallbackStyle(formToken)];
 });
 const FormItemInput = (props) => {
@@ -44469,8 +46161,8 @@ var QuestionCircleOutlined = function QuestionCircleOutlined2(props, ref) {
     icon: QuestionCircleOutlined$1
   }));
 };
-var RefIcon$3 = /* @__PURE__ */ reactExports.forwardRef(QuestionCircleOutlined);
-var __rest$5 = function(s2, e2) {
+var RefIcon$c = /* @__PURE__ */ reactExports.forwardRef(QuestionCircleOutlined);
+var __rest$9 = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -44528,8 +46220,8 @@ const FormItemLabel = (_ref) => {
   const tooltipProps = toTooltipProps(tooltip);
   if (tooltipProps) {
     const {
-      icon = /* @__PURE__ */ reactExports.createElement(RefIcon$3, null)
-    } = tooltipProps, restTooltipProps = __rest$5(tooltipProps, ["icon"]);
+      icon = /* @__PURE__ */ reactExports.createElement(RefIcon$c, null)
+    } = tooltipProps, restTooltipProps = __rest$9(tooltipProps, ["icon"]);
     const tooltipNode = /* @__PURE__ */ reactExports.createElement(Tooltip2, Object.assign({}, restTooltipProps), /* @__PURE__ */ reactExports.cloneElement(icon, {
       className: `${prefixCls}-item-tooltip`,
       title: "",
@@ -44566,10 +46258,10 @@ const FormItemLabel = (_ref) => {
   }, labelChildren));
 };
 const iconMap = {
-  success: RefIcon$l,
-  warning: RefIcon$i,
-  error: RefIcon$k,
-  validating: RefIcon$g
+  success: RefIcon$u,
+  warning: RefIcon$r,
+  error: RefIcon$t,
+  validating: RefIcon$p
 };
 function StatusProvider(_ref) {
   let {
@@ -44628,7 +46320,7 @@ function StatusProvider(_ref) {
     value: formItemStatusContext
   }, children);
 }
-var __rest$4 = function(s2, e2) {
+var __rest$8 = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -44655,7 +46347,7 @@ function ItemHolder(props) {
     isRequired,
     onSubItemMetaChange,
     layout
-  } = props, restProps = __rest$4(props, ["prefixCls", "className", "rootClassName", "style", "help", "errors", "warnings", "validateStatus", "meta", "hasFeedback", "hidden", "children", "fieldId", "required", "isRequired", "onSubItemMetaChange", "layout"]);
+  } = props, restProps = __rest$8(props, ["prefixCls", "className", "rootClassName", "style", "help", "errors", "warnings", "validateStatus", "meta", "hasFeedback", "hidden", "children", "fieldId", "required", "isRequired", "onSubItemMetaChange", "layout"]);
   const itemPrefixCls = `${prefixCls}-item`;
   const {
     requiredMark,
@@ -44830,7 +46522,7 @@ function InternalFormItem(props) {
   const hasName = !(name === void 0 || name === null);
   const prefixCls = getPrefixCls("form", customizePrefixCls);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$2(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$6(prefixCls, rootCls);
   devUseWarning();
   const listContext = reactExports.useContext(ListContext);
   const fieldKeyPathRef = reactExports.useRef();
@@ -44920,7 +46612,7 @@ function InternalFormItem(props) {
     validateTrigger: mergedValidateTrigger,
     onMetaChange
   }), (control, renderMeta, context) => {
-    const mergedName = toArray(name).length && renderMeta ? renderMeta.name : [];
+    const mergedName = toArray$1(name).length && renderMeta ? renderMeta.name : [];
     const fieldId = getFieldId(mergedName, formName);
     const isRequired = required4 !== void 0 ? required4 : !!(rules2 === null || rules2 === void 0 ? void 0 : rules2.some((rule) => {
       if (rule && typeof rule === "object" && rule.required && !rule.warningOnly) {
@@ -44962,7 +46654,7 @@ function InternalFormItem(props) {
       if (supportRef(mergedChildren)) {
         childProps.ref = getItemRef(mergedName, mergedChildren);
       }
-      const triggers = new Set([].concat(_toConsumableArray(toArray(trigger)), _toConsumableArray(toArray(mergedValidateTrigger))));
+      const triggers = new Set([].concat(_toConsumableArray(toArray$1(trigger)), _toConsumableArray(toArray$1(mergedValidateTrigger))));
       triggers.forEach((eventName) => {
         childProps[eventName] = function() {
           var _a2, _c2;
@@ -44990,7 +46682,7 @@ function InternalFormItem(props) {
 }
 const FormItem = InternalFormItem;
 FormItem.useStatus = useFormItemStatus;
-var __rest$3 = function(s2, e2) {
+var __rest$7 = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -45002,7 +46694,7 @@ const FormList = (_a) => {
   var {
     prefixCls: customizePrefixCls,
     children
-  } = _a, props = __rest$3(_a, ["prefixCls", "children"]);
+  } = _a, props = __rest$7(_a, ["prefixCls", "children"]);
   const {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
@@ -45036,6 +46728,29 @@ Form2.useWatch = useWatch$1;
 Form2.Provider = FormProvider2;
 Form2.create = () => {
 };
+function getOffset$1(node2) {
+  var box2 = node2.getBoundingClientRect();
+  var docElem = document.documentElement;
+  return {
+    left: box2.left + (window.pageXOffset || docElem.scrollLeft) - (docElem.clientLeft || document.body.clientLeft || 0),
+    top: box2.top + (window.pageYOffset || docElem.scrollTop) - (docElem.clientTop || document.body.clientTop || 0)
+  };
+}
+function addEventListenerWrap(target, eventType, cb2, option) {
+  var callback = ReactDOM.unstable_batchedUpdates ? function run(e2) {
+    ReactDOM.unstable_batchedUpdates(cb2, e2);
+  } : cb2;
+  if (target !== null && target !== void 0 && target.addEventListener) {
+    target.addEventListener(eventType, callback, option);
+  }
+  return {
+    remove: function remove() {
+      if (target !== null && target !== void 0 && target.removeEventListener) {
+        target.removeEventListener(eventType, callback, option);
+      }
+    }
+  };
+}
 function useHasSider(siders, children, hasSider) {
   if (typeof hasSider === "boolean") {
     return hasSider;
@@ -45043,8 +46758,8 @@ function useHasSider(siders, children, hasSider) {
   if (siders.length) {
     return true;
   }
-  const childNodes = toArray$4(children);
-  return childNodes.some((node2) => node2.type === Sider$2);
+  const childNodes = toArray$5(children);
+  return childNodes.some((node2) => node2.type === Sider);
 }
 const genLayoutLightStyle = (token2) => {
   const {
@@ -45230,7 +46945,7 @@ const genLayoutStyle = (token2) => {
     }
   };
 };
-const prepareComponentToken$1 = (token2) => {
+const prepareComponentToken$5 = (token2) => {
   const {
     colorBgLayout,
     controlHeight,
@@ -45265,10 +46980,10 @@ const prepareComponentToken$1 = (token2) => {
     lightTriggerColor: colorText
   };
 };
-const useStyle$1 = genStyleHooks("Layout", (token2) => [genLayoutStyle(token2)], prepareComponentToken$1, {
+const useStyle$5 = genStyleHooks("Layout", (token2) => [genLayoutStyle(token2)], prepareComponentToken$5, {
   deprecatedTokens: [["colorBgBody", "bodyBg"], ["colorBgHeader", "headerBg"], ["colorBgTrigger", "triggerBg"]]
 });
-var __rest$2 = function(s2, e2) {
+var __rest$6 = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -45297,12 +47012,12 @@ const Basic = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     suffixCls,
     className,
     tagName: TagName
-  } = props, others = __rest$2(props, ["prefixCls", "suffixCls", "className", "tagName"]);
+  } = props, others = __rest$6(props, ["prefixCls", "suffixCls", "className", "tagName"]);
   const {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("layout", customizePrefixCls);
-  const [wrapSSR, hashId, cssVarCls] = useStyle$1(prefixCls);
+  const [wrapSSR, hashId, cssVarCls] = useStyle$5(prefixCls);
   const prefixWithSuffixCls = suffixCls ? `${prefixCls}-${suffixCls}` : prefixCls;
   return wrapSSR(/* @__PURE__ */ reactExports.createElement(TagName, Object.assign({
     className: classNames(customizePrefixCls || prefixWithSuffixCls, className, hashId, cssVarCls),
@@ -45322,7 +47037,7 @@ const BasicLayout = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     hasSider,
     tagName: Tag,
     style: style2
-  } = props, others = __rest$2(props, ["prefixCls", "className", "rootClassName", "children", "hasSider", "tagName", "style"]);
+  } = props, others = __rest$6(props, ["prefixCls", "className", "rootClassName", "children", "hasSider", "tagName", "style"]);
   const passedProps = omit(others, ["suffixCls"]);
   const {
     getPrefixCls,
@@ -45330,7 +47045,7 @@ const BasicLayout = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("layout", customizePrefixCls);
   const mergedHasSider = useHasSider(siders, children, hasSider);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$1(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$5(prefixCls);
   const classString = classNames(prefixCls, {
     [`${prefixCls}-has-sider`]: mergedHasSider,
     [`${prefixCls}-rtl`]: direction === "rtl"
@@ -45357,12 +47072,12 @@ const Layout$1 = generator({
   tagName: "div",
   displayName: "Layout"
 })(BasicLayout);
-const Header$1 = generator({
+const Header$2 = generator({
   suffixCls: "header",
   tagName: "header",
   displayName: "Header"
 })(Basic);
-const Footer = generator({
+const Footer$2 = generator({
   suffixCls: "footer",
   tagName: "footer",
   displayName: "Footer"
@@ -45373,12 +47088,1757 @@ const Content$1 = generator({
   displayName: "Content"
 })(Basic);
 const Layout = Layout$1;
-Layout.Header = Header$1;
-Layout.Footer = Footer;
+Layout.Header = Header$2;
+Layout.Footer = Footer$2;
 Layout.Content = Content$1;
-Layout.Sider = Sider$2;
+Layout.Sider = Sider;
 Layout._InternalSiderContext = SiderContext;
-var __rest$1 = function(s2, e2) {
+const extendsObject = function() {
+  const result = Object.assign({}, arguments.length <= 0 ? void 0 : arguments[0]);
+  for (let i2 = 1; i2 < arguments.length; i2++) {
+    const obj = i2 < 0 || arguments.length <= i2 ? void 0 : arguments[i2];
+    if (obj) {
+      Object.keys(obj).forEach((key) => {
+        const val = obj[key];
+        if (val !== void 0) {
+          result[key] = val;
+        }
+      });
+    }
+  }
+  return result;
+};
+var DoubleLeftOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M272.9 512l265.4-339.1c4.1-5.2.4-12.9-6.3-12.9h-77.3c-4.9 0-9.6 2.3-12.6 6.1L186.8 492.3a31.99 31.99 0 000 39.5l255.3 326.1c3 3.9 7.7 6.1 12.6 6.1H532c6.7 0 10.4-7.7 6.3-12.9L272.9 512zm304 0l265.4-339.1c4.1-5.2.4-12.9-6.3-12.9h-77.3c-4.9 0-9.6 2.3-12.6 6.1L490.8 492.3a31.99 31.99 0 000 39.5l255.3 326.1c3 3.9 7.7 6.1 12.6 6.1H836c6.7 0 10.4-7.7 6.3-12.9L576.9 512z" } }] }, "name": "double-left", "theme": "outlined" };
+var DoubleLeftOutlined = function DoubleLeftOutlined2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: DoubleLeftOutlined$1
+  }));
+};
+var RefIcon$b = /* @__PURE__ */ reactExports.forwardRef(DoubleLeftOutlined);
+var DoubleRightOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M533.2 492.3L277.9 166.1c-3-3.9-7.7-6.1-12.6-6.1H188c-6.7 0-10.4 7.7-6.3 12.9L447.1 512 181.7 851.1A7.98 7.98 0 00188 864h77.3c4.9 0 9.6-2.3 12.6-6.1l255.3-326.1c9.1-11.7 9.1-27.9 0-39.5zm304 0L581.9 166.1c-3-3.9-7.7-6.1-12.6-6.1H492c-6.7 0-10.4 7.7-6.3 12.9L751.1 512 485.7 851.1A7.98 7.98 0 00492 864h77.3c4.9 0 9.6-2.3 12.6-6.1l255.3-326.1c9.1-11.7 9.1-27.9 0-39.5z" } }] }, "name": "double-right", "theme": "outlined" };
+var DoubleRightOutlined = function DoubleRightOutlined2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: DoubleRightOutlined$1
+  }));
+};
+var RefIcon$a = /* @__PURE__ */ reactExports.forwardRef(DoubleRightOutlined);
+var locale = {
+  // Options
+  items_per_page: "条/页",
+  jump_to: "跳至",
+  jump_to_confirm: "确定",
+  page: "页",
+  // Pagination
+  prev_page: "上一页",
+  next_page: "下一页",
+  prev_5: "向前 5 页",
+  next_5: "向后 5 页",
+  prev_3: "向前 3 页",
+  next_3: "向后 3 页",
+  page_size: "页码"
+};
+var defaultPageSizeOptions = ["10", "20", "50", "100"];
+var Options = function Options2(props) {
+  var _props$pageSizeOption = props.pageSizeOptions, pageSizeOptions = _props$pageSizeOption === void 0 ? defaultPageSizeOptions : _props$pageSizeOption, locale2 = props.locale, changeSize = props.changeSize, pageSize = props.pageSize, goButton = props.goButton, quickGo = props.quickGo, rootPrefixCls = props.rootPrefixCls, Select2 = props.selectComponentClass, selectPrefixCls = props.selectPrefixCls, disabled = props.disabled, buildOptionText = props.buildOptionText;
+  var _React$useState = React.useState(""), _React$useState2 = _slicedToArray(_React$useState, 2), goInputText = _React$useState2[0], setGoInputText = _React$useState2[1];
+  var getValidValue = function getValidValue2() {
+    return !goInputText || Number.isNaN(goInputText) ? void 0 : Number(goInputText);
+  };
+  var mergeBuildOptionText = typeof buildOptionText === "function" ? buildOptionText : function(value) {
+    return "".concat(value, " ").concat(locale2.items_per_page);
+  };
+  var changeSizeHandle = function changeSizeHandle2(value) {
+    changeSize === null || changeSize === void 0 || changeSize(Number(value));
+  };
+  var handleChange = function handleChange2(e2) {
+    setGoInputText(e2.target.value);
+  };
+  var handleBlur = function handleBlur2(e2) {
+    if (goButton || goInputText === "") {
+      return;
+    }
+    setGoInputText("");
+    if (e2.relatedTarget && (e2.relatedTarget.className.indexOf("".concat(rootPrefixCls, "-item-link")) >= 0 || e2.relatedTarget.className.indexOf("".concat(rootPrefixCls, "-item")) >= 0)) {
+      return;
+    }
+    quickGo === null || quickGo === void 0 || quickGo(getValidValue());
+  };
+  var go = function go2(e2) {
+    if (goInputText === "") {
+      return;
+    }
+    if (e2.keyCode === KeyCode.ENTER || e2.type === "click") {
+      setGoInputText("");
+      quickGo === null || quickGo === void 0 || quickGo(getValidValue());
+    }
+  };
+  var getPageSizeOptions = function getPageSizeOptions2() {
+    if (pageSizeOptions.some(function(option) {
+      return option.toString() === pageSize.toString();
+    })) {
+      return pageSizeOptions;
+    }
+    return pageSizeOptions.concat([pageSize.toString()]).sort(function(a, b2) {
+      var numberA = Number.isNaN(Number(a)) ? 0 : Number(a);
+      var numberB = Number.isNaN(Number(b2)) ? 0 : Number(b2);
+      return numberA - numberB;
+    });
+  };
+  var prefixCls = "".concat(rootPrefixCls, "-options");
+  if (!changeSize && !quickGo) {
+    return null;
+  }
+  var changeSelect = null;
+  var goInput = null;
+  var gotoButton = null;
+  if (changeSize && Select2) {
+    var options = getPageSizeOptions().map(function(opt, i2) {
+      return /* @__PURE__ */ React.createElement(Select2.Option, {
+        key: i2,
+        value: opt.toString()
+      }, mergeBuildOptionText(opt));
+    });
+    changeSelect = /* @__PURE__ */ React.createElement(Select2, {
+      disabled,
+      prefixCls: selectPrefixCls,
+      showSearch: false,
+      className: "".concat(prefixCls, "-size-changer"),
+      optionLabelProp: "children",
+      popupMatchSelectWidth: false,
+      value: (pageSize || pageSizeOptions[0]).toString(),
+      onChange: changeSizeHandle,
+      getPopupContainer: function getPopupContainer(triggerNode) {
+        return triggerNode.parentNode;
+      },
+      "aria-label": locale2.page_size,
+      defaultOpen: false
+    }, options);
+  }
+  if (quickGo) {
+    if (goButton) {
+      gotoButton = typeof goButton === "boolean" ? /* @__PURE__ */ React.createElement("button", {
+        type: "button",
+        onClick: go,
+        onKeyUp: go,
+        disabled,
+        className: "".concat(prefixCls, "-quick-jumper-button")
+      }, locale2.jump_to_confirm) : /* @__PURE__ */ React.createElement("span", {
+        onClick: go,
+        onKeyUp: go
+      }, goButton);
+    }
+    goInput = /* @__PURE__ */ React.createElement("div", {
+      className: "".concat(prefixCls, "-quick-jumper")
+    }, locale2.jump_to, /* @__PURE__ */ React.createElement("input", {
+      disabled,
+      type: "text",
+      value: goInputText,
+      onChange: handleChange,
+      onKeyUp: go,
+      onBlur: handleBlur,
+      "aria-label": locale2.page
+    }), locale2.page, gotoButton);
+  }
+  return /* @__PURE__ */ React.createElement("li", {
+    className: prefixCls
+  }, changeSelect, goInput);
+};
+var Pager = function Pager2(props) {
+  var _classNames;
+  var rootPrefixCls = props.rootPrefixCls, page = props.page, active = props.active, className = props.className, showTitle = props.showTitle, onClick = props.onClick, onKeyPress = props.onKeyPress, itemRender = props.itemRender;
+  var prefixCls = "".concat(rootPrefixCls, "-item");
+  var cls = classNames(prefixCls, "".concat(prefixCls, "-").concat(page), (_classNames = {}, _defineProperty(_classNames, "".concat(prefixCls, "-active"), active), _defineProperty(_classNames, "".concat(prefixCls, "-disabled"), !page), _classNames), className);
+  var handleClick = function handleClick2() {
+    onClick(page);
+  };
+  var handleKeyPress = function handleKeyPress2(e2) {
+    onKeyPress(e2, onClick, page);
+  };
+  var pager = itemRender(page, "page", /* @__PURE__ */ React.createElement("a", {
+    rel: "nofollow"
+  }, page));
+  return pager ? /* @__PURE__ */ React.createElement("li", {
+    title: showTitle ? String(page) : null,
+    className: cls,
+    onClick: handleClick,
+    onKeyDown: handleKeyPress,
+    tabIndex: 0
+  }, pager) : null;
+};
+var defaultItemRender = function defaultItemRender2(page, type4, element) {
+  return element;
+};
+function noop$1() {
+}
+function isInteger(v2) {
+  var value = Number(v2);
+  return typeof value === "number" && !Number.isNaN(value) && isFinite(value) && Math.floor(value) === value;
+}
+function calculatePage(p2, pageSize, total) {
+  var _pageSize = typeof p2 === "undefined" ? pageSize : p2;
+  return Math.floor((total - 1) / _pageSize) + 1;
+}
+var Pagination$1 = function Pagination2(props) {
+  var _classNames5;
+  var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-pagination" : _props$prefixCls, _props$selectPrefixCl = props.selectPrefixCls, selectPrefixCls = _props$selectPrefixCl === void 0 ? "rc-select" : _props$selectPrefixCl, className = props.className, selectComponentClass = props.selectComponentClass, currentProp = props.current, _props$defaultCurrent = props.defaultCurrent, defaultCurrent = _props$defaultCurrent === void 0 ? 1 : _props$defaultCurrent, _props$total = props.total, total = _props$total === void 0 ? 0 : _props$total, pageSizeProp = props.pageSize, _props$defaultPageSiz = props.defaultPageSize, defaultPageSize = _props$defaultPageSiz === void 0 ? 10 : _props$defaultPageSiz, _props$onChange = props.onChange, onChange = _props$onChange === void 0 ? noop$1 : _props$onChange, hideOnSinglePage = props.hideOnSinglePage, align = props.align, _props$showPrevNextJu = props.showPrevNextJumpers, showPrevNextJumpers = _props$showPrevNextJu === void 0 ? true : _props$showPrevNextJu, showQuickJumper = props.showQuickJumper, showLessItems = props.showLessItems, _props$showTitle = props.showTitle, showTitle = _props$showTitle === void 0 ? true : _props$showTitle, _props$onShowSizeChan = props.onShowSizeChange, onShowSizeChange = _props$onShowSizeChan === void 0 ? noop$1 : _props$onShowSizeChan, _props$locale = props.locale, locale$12 = _props$locale === void 0 ? locale : _props$locale, style2 = props.style, _props$totalBoundaryS = props.totalBoundaryShowSizeChanger, totalBoundaryShowSizeChanger = _props$totalBoundaryS === void 0 ? 50 : _props$totalBoundaryS, disabled = props.disabled, simple = props.simple, showTotal = props.showTotal, showSizeChangerProp = props.showSizeChanger, pageSizeOptions = props.pageSizeOptions, _props$itemRender = props.itemRender, itemRender = _props$itemRender === void 0 ? defaultItemRender : _props$itemRender, jumpPrevIcon = props.jumpPrevIcon, jumpNextIcon = props.jumpNextIcon, prevIcon = props.prevIcon, nextIcon = props.nextIcon;
+  var paginationRef = React.useRef(null);
+  var _useMergedState = useMergedState(10, {
+    value: pageSizeProp,
+    defaultValue: defaultPageSize
+  }), _useMergedState2 = _slicedToArray(_useMergedState, 2), pageSize = _useMergedState2[0], setPageSize = _useMergedState2[1];
+  var _useMergedState3 = useMergedState(1, {
+    value: currentProp,
+    defaultValue: defaultCurrent,
+    postState: function postState(c2) {
+      return Math.max(1, Math.min(c2, calculatePage(void 0, pageSize, total)));
+    }
+  }), _useMergedState4 = _slicedToArray(_useMergedState3, 2), current = _useMergedState4[0], setCurrent = _useMergedState4[1];
+  var _React$useState = React.useState(current), _React$useState2 = _slicedToArray(_React$useState, 2), internalInputVal = _React$useState2[0], setInternalInputVal = _React$useState2[1];
+  reactExports.useEffect(function() {
+    setInternalInputVal(current);
+  }, [current]);
+  var jumpPrevPage = Math.max(1, current - (showLessItems ? 3 : 5));
+  var jumpNextPage = Math.min(calculatePage(void 0, pageSize, total), current + (showLessItems ? 3 : 5));
+  function getItemIcon(icon, label) {
+    var iconNode = icon || /* @__PURE__ */ React.createElement("button", {
+      type: "button",
+      "aria-label": label,
+      className: "".concat(prefixCls, "-item-link")
+    });
+    if (typeof icon === "function") {
+      iconNode = /* @__PURE__ */ React.createElement(icon, _objectSpread2({}, props));
+    }
+    return iconNode;
+  }
+  function getValidValue(e2) {
+    var inputValue = e2.target.value;
+    var allPages2 = calculatePage(void 0, pageSize, total);
+    var value;
+    if (inputValue === "") {
+      value = inputValue;
+    } else if (Number.isNaN(Number(inputValue))) {
+      value = internalInputVal;
+    } else if (inputValue >= allPages2) {
+      value = allPages2;
+    } else {
+      value = Number(inputValue);
+    }
+    return value;
+  }
+  function isValid(page) {
+    return isInteger(page) && page !== current && isInteger(total) && total > 0;
+  }
+  var shouldDisplayQuickJumper = total > pageSize ? showQuickJumper : false;
+  function handleKeyDown(event) {
+    if (event.keyCode === KeyCode.UP || event.keyCode === KeyCode.DOWN) {
+      event.preventDefault();
+    }
+  }
+  function handleKeyUp(event) {
+    var value = getValidValue(event);
+    if (value !== internalInputVal) {
+      setInternalInputVal(value);
+    }
+    switch (event.keyCode) {
+      case KeyCode.ENTER:
+        handleChange(value);
+        break;
+      case KeyCode.UP:
+        handleChange(value - 1);
+        break;
+      case KeyCode.DOWN:
+        handleChange(value + 1);
+        break;
+    }
+  }
+  function handleBlur(event) {
+    handleChange(getValidValue(event));
+  }
+  function changePageSize(size) {
+    var newCurrent = calculatePage(size, pageSize, total);
+    var nextCurrent = current > newCurrent && newCurrent !== 0 ? newCurrent : current;
+    setPageSize(size);
+    setInternalInputVal(nextCurrent);
+    onShowSizeChange === null || onShowSizeChange === void 0 || onShowSizeChange(current, size);
+    setCurrent(nextCurrent);
+    onChange === null || onChange === void 0 || onChange(nextCurrent, size);
+  }
+  function handleChange(page) {
+    if (isValid(page) && !disabled) {
+      var currentPage = calculatePage(void 0, pageSize, total);
+      var newPage = page;
+      if (page > currentPage) {
+        newPage = currentPage;
+      } else if (page < 1) {
+        newPage = 1;
+      }
+      if (newPage !== internalInputVal) {
+        setInternalInputVal(newPage);
+      }
+      setCurrent(newPage);
+      onChange === null || onChange === void 0 || onChange(newPage, pageSize);
+      return newPage;
+    }
+    return current;
+  }
+  var hasPrev = current > 1;
+  var hasNext = current < calculatePage(void 0, pageSize, total);
+  var showSizeChanger = showSizeChangerProp !== null && showSizeChangerProp !== void 0 ? showSizeChangerProp : total > totalBoundaryShowSizeChanger;
+  function prevHandle() {
+    if (hasPrev) handleChange(current - 1);
+  }
+  function nextHandle() {
+    if (hasNext) handleChange(current + 1);
+  }
+  function jumpPrevHandle() {
+    handleChange(jumpPrevPage);
+  }
+  function jumpNextHandle() {
+    handleChange(jumpNextPage);
+  }
+  function runIfEnter(event, callback) {
+    if (event.key === "Enter" || event.charCode === KeyCode.ENTER || event.keyCode === KeyCode.ENTER) {
+      for (var _len = arguments.length, restParams = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        restParams[_key - 2] = arguments[_key];
+      }
+      callback.apply(void 0, restParams);
+    }
+  }
+  function runIfEnterPrev(event) {
+    runIfEnter(event, prevHandle);
+  }
+  function runIfEnterNext(event) {
+    runIfEnter(event, nextHandle);
+  }
+  function runIfEnterJumpPrev(event) {
+    runIfEnter(event, jumpPrevHandle);
+  }
+  function runIfEnterJumpNext(event) {
+    runIfEnter(event, jumpNextHandle);
+  }
+  function renderPrev(prevPage2) {
+    var prevButton = itemRender(prevPage2, "prev", getItemIcon(prevIcon, "prev page"));
+    return /* @__PURE__ */ React.isValidElement(prevButton) ? /* @__PURE__ */ React.cloneElement(prevButton, {
+      disabled: !hasPrev
+    }) : prevButton;
+  }
+  function renderNext(nextPage2) {
+    var nextButton = itemRender(nextPage2, "next", getItemIcon(nextIcon, "next page"));
+    return /* @__PURE__ */ React.isValidElement(nextButton) ? /* @__PURE__ */ React.cloneElement(nextButton, {
+      disabled: !hasNext
+    }) : nextButton;
+  }
+  function handleGoTO(event) {
+    if (event.type === "click" || event.keyCode === KeyCode.ENTER) {
+      handleChange(internalInputVal);
+    }
+  }
+  var jumpPrev = null;
+  var dataOrAriaAttributeProps = pickAttrs(props, {
+    aria: true,
+    data: true
+  });
+  var totalText = showTotal && /* @__PURE__ */ React.createElement("li", {
+    className: "".concat(prefixCls, "-total-text")
+  }, showTotal(total, [total === 0 ? 0 : (current - 1) * pageSize + 1, current * pageSize > total ? total : current * pageSize]));
+  var jumpNext = null;
+  var allPages = calculatePage(void 0, pageSize, total);
+  if (hideOnSinglePage && total <= pageSize) {
+    return null;
+  }
+  var pagerList = [];
+  var pagerProps = {
+    rootPrefixCls: prefixCls,
+    onClick: handleChange,
+    onKeyPress: runIfEnter,
+    showTitle,
+    itemRender,
+    page: -1
+  };
+  var prevPage = current - 1 > 0 ? current - 1 : 0;
+  var nextPage = current + 1 < allPages ? current + 1 : allPages;
+  var goButton = showQuickJumper && showQuickJumper.goButton;
+  var isReadOnly = _typeof(simple) === "object" ? simple.readOnly : !simple;
+  var gotoButton = goButton;
+  var simplePager = null;
+  if (simple) {
+    if (goButton) {
+      if (typeof goButton === "boolean") {
+        gotoButton = /* @__PURE__ */ React.createElement("button", {
+          type: "button",
+          onClick: handleGoTO,
+          onKeyUp: handleGoTO
+        }, locale$12.jump_to_confirm);
+      } else {
+        gotoButton = /* @__PURE__ */ React.createElement("span", {
+          onClick: handleGoTO,
+          onKeyUp: handleGoTO
+        }, goButton);
+      }
+      gotoButton = /* @__PURE__ */ React.createElement("li", {
+        title: showTitle ? "".concat(locale$12.jump_to).concat(current, "/").concat(allPages) : null,
+        className: "".concat(prefixCls, "-simple-pager")
+      }, gotoButton);
+    }
+    simplePager = /* @__PURE__ */ React.createElement("li", {
+      title: showTitle ? "".concat(current, "/").concat(allPages) : null,
+      className: "".concat(prefixCls, "-simple-pager")
+    }, isReadOnly ? internalInputVal : /* @__PURE__ */ React.createElement("input", {
+      type: "text",
+      value: internalInputVal,
+      disabled,
+      onKeyDown: handleKeyDown,
+      onKeyUp: handleKeyUp,
+      onChange: handleKeyUp,
+      onBlur: handleBlur,
+      size: 3
+    }), /* @__PURE__ */ React.createElement("span", {
+      className: "".concat(prefixCls, "-slash")
+    }, "/"), allPages);
+  }
+  var pageBufferSize = showLessItems ? 1 : 2;
+  if (allPages <= 3 + pageBufferSize * 2) {
+    if (!allPages) {
+      pagerList.push(/* @__PURE__ */ React.createElement(Pager, _extends({}, pagerProps, {
+        key: "noPager",
+        page: 1,
+        className: "".concat(prefixCls, "-item-disabled")
+      })));
+    }
+    for (var i2 = 1; i2 <= allPages; i2 += 1) {
+      pagerList.push(/* @__PURE__ */ React.createElement(Pager, _extends({}, pagerProps, {
+        key: i2,
+        page: i2,
+        active: current === i2
+      })));
+    }
+  } else {
+    var prevItemTitle = showLessItems ? locale$12.prev_3 : locale$12.prev_5;
+    var nextItemTitle = showLessItems ? locale$12.next_3 : locale$12.next_5;
+    var jumpPrevContent = itemRender(jumpPrevPage, "jump-prev", getItemIcon(jumpPrevIcon, "prev page"));
+    var jumpNextContent = itemRender(jumpNextPage, "jump-next", getItemIcon(jumpNextIcon, "next page"));
+    if (showPrevNextJumpers) {
+      jumpPrev = jumpPrevContent ? /* @__PURE__ */ React.createElement("li", {
+        title: showTitle ? prevItemTitle : null,
+        key: "prev",
+        onClick: jumpPrevHandle,
+        tabIndex: 0,
+        onKeyDown: runIfEnterJumpPrev,
+        className: classNames("".concat(prefixCls, "-jump-prev"), _defineProperty({}, "".concat(prefixCls, "-jump-prev-custom-icon"), !!jumpPrevIcon))
+      }, jumpPrevContent) : null;
+      jumpNext = jumpNextContent ? /* @__PURE__ */ React.createElement("li", {
+        title: showTitle ? nextItemTitle : null,
+        key: "next",
+        onClick: jumpNextHandle,
+        tabIndex: 0,
+        onKeyDown: runIfEnterJumpNext,
+        className: classNames("".concat(prefixCls, "-jump-next"), _defineProperty({}, "".concat(prefixCls, "-jump-next-custom-icon"), !!jumpNextIcon))
+      }, jumpNextContent) : null;
+    }
+    var left = Math.max(1, current - pageBufferSize);
+    var right = Math.min(current + pageBufferSize, allPages);
+    if (current - 1 <= pageBufferSize) {
+      right = 1 + pageBufferSize * 2;
+    }
+    if (allPages - current <= pageBufferSize) {
+      left = allPages - pageBufferSize * 2;
+    }
+    for (var _i = left; _i <= right; _i += 1) {
+      pagerList.push(/* @__PURE__ */ React.createElement(Pager, _extends({}, pagerProps, {
+        key: _i,
+        page: _i,
+        active: current === _i
+      })));
+    }
+    if (current - 1 >= pageBufferSize * 2 && current !== 1 + 2) {
+      pagerList[0] = /* @__PURE__ */ React.cloneElement(pagerList[0], {
+        className: classNames("".concat(prefixCls, "-item-after-jump-prev"), pagerList[0].props.className)
+      });
+      pagerList.unshift(jumpPrev);
+    }
+    if (allPages - current >= pageBufferSize * 2 && current !== allPages - 2) {
+      var lastOne = pagerList[pagerList.length - 1];
+      pagerList[pagerList.length - 1] = /* @__PURE__ */ React.cloneElement(lastOne, {
+        className: classNames("".concat(prefixCls, "-item-before-jump-next"), lastOne.props.className)
+      });
+      pagerList.push(jumpNext);
+    }
+    if (left !== 1) {
+      pagerList.unshift(/* @__PURE__ */ React.createElement(Pager, _extends({}, pagerProps, {
+        key: 1,
+        page: 1
+      })));
+    }
+    if (right !== allPages) {
+      pagerList.push(/* @__PURE__ */ React.createElement(Pager, _extends({}, pagerProps, {
+        key: allPages,
+        page: allPages
+      })));
+    }
+  }
+  var prev2 = renderPrev(prevPage);
+  if (prev2) {
+    var prevDisabled = !hasPrev || !allPages;
+    prev2 = /* @__PURE__ */ React.createElement("li", {
+      title: showTitle ? locale$12.prev_page : null,
+      onClick: prevHandle,
+      tabIndex: prevDisabled ? null : 0,
+      onKeyDown: runIfEnterPrev,
+      className: classNames("".concat(prefixCls, "-prev"), _defineProperty({}, "".concat(prefixCls, "-disabled"), prevDisabled)),
+      "aria-disabled": prevDisabled
+    }, prev2);
+  }
+  var next2 = renderNext(nextPage);
+  if (next2) {
+    var nextDisabled, nextTabIndex;
+    if (simple) {
+      nextDisabled = !hasNext;
+      nextTabIndex = hasPrev ? 0 : null;
+    } else {
+      nextDisabled = !hasNext || !allPages;
+      nextTabIndex = nextDisabled ? null : 0;
+    }
+    next2 = /* @__PURE__ */ React.createElement("li", {
+      title: showTitle ? locale$12.next_page : null,
+      onClick: nextHandle,
+      tabIndex: nextTabIndex,
+      onKeyDown: runIfEnterNext,
+      className: classNames("".concat(prefixCls, "-next"), _defineProperty({}, "".concat(prefixCls, "-disabled"), nextDisabled)),
+      "aria-disabled": nextDisabled
+    }, next2);
+  }
+  var cls = classNames(prefixCls, className, (_classNames5 = {}, _defineProperty(_classNames5, "".concat(prefixCls, "-start"), align === "start"), _defineProperty(_classNames5, "".concat(prefixCls, "-center"), align === "center"), _defineProperty(_classNames5, "".concat(prefixCls, "-end"), align === "end"), _defineProperty(_classNames5, "".concat(prefixCls, "-simple"), simple), _defineProperty(_classNames5, "".concat(prefixCls, "-disabled"), disabled), _classNames5));
+  return /* @__PURE__ */ React.createElement("ul", _extends({
+    className: cls,
+    style: style2,
+    ref: paginationRef
+  }, dataOrAriaAttributeProps), totalText, prev2, simple ? simplePager : pagerList, next2, /* @__PURE__ */ React.createElement(Options, {
+    locale: locale$12,
+    rootPrefixCls: prefixCls,
+    disabled,
+    selectComponentClass,
+    selectPrefixCls,
+    changeSize: showSizeChanger ? changePageSize : null,
+    pageSize,
+    pageSizeOptions,
+    quickGo: shouldDisplayQuickJumper ? handleChange : null,
+    goButton: gotoButton
+  }));
+};
+const MiniSelect = (props) => /* @__PURE__ */ reactExports.createElement(Select, Object.assign({}, props, {
+  showSearch: true,
+  size: "small"
+}));
+const MiddleSelect = (props) => /* @__PURE__ */ reactExports.createElement(Select, Object.assign({}, props, {
+  showSearch: true,
+  size: "middle"
+}));
+MiniSelect.Option = Select.Option;
+MiddleSelect.Option = Select.Option;
+const genPaginationDisabledStyle = (token2) => {
+  const {
+    componentCls
+  } = token2;
+  return {
+    [`${componentCls}-disabled`]: {
+      "&, &:hover": {
+        cursor: "not-allowed",
+        [`${componentCls}-item-link`]: {
+          color: token2.colorTextDisabled,
+          cursor: "not-allowed"
+        }
+      },
+      "&:focus-visible": {
+        cursor: "not-allowed",
+        [`${componentCls}-item-link`]: {
+          color: token2.colorTextDisabled,
+          cursor: "not-allowed"
+        }
+      }
+    },
+    [`&${componentCls}-disabled`]: {
+      cursor: "not-allowed",
+      [`${componentCls}-item`]: {
+        cursor: "not-allowed",
+        "&:hover, &:active": {
+          backgroundColor: "transparent"
+        },
+        a: {
+          color: token2.colorTextDisabled,
+          backgroundColor: "transparent",
+          border: "none",
+          cursor: "not-allowed"
+        },
+        "&-active": {
+          borderColor: token2.colorBorder,
+          backgroundColor: token2.itemActiveBgDisabled,
+          "&:hover, &:active": {
+            backgroundColor: token2.itemActiveBgDisabled
+          },
+          a: {
+            color: token2.itemActiveColorDisabled
+          }
+        }
+      },
+      [`${componentCls}-item-link`]: {
+        color: token2.colorTextDisabled,
+        cursor: "not-allowed",
+        "&:hover, &:active": {
+          backgroundColor: "transparent"
+        },
+        [`${componentCls}-simple&`]: {
+          backgroundColor: "transparent",
+          "&:hover, &:active": {
+            backgroundColor: "transparent"
+          }
+        }
+      },
+      [`${componentCls}-simple-pager`]: {
+        color: token2.colorTextDisabled
+      },
+      [`${componentCls}-jump-prev, ${componentCls}-jump-next`]: {
+        [`${componentCls}-item-link-icon`]: {
+          opacity: 0
+        },
+        [`${componentCls}-item-ellipsis`]: {
+          opacity: 1
+        }
+      }
+    },
+    [`&${componentCls}-simple`]: {
+      [`${componentCls}-prev, ${componentCls}-next`]: {
+        [`&${componentCls}-disabled ${componentCls}-item-link`]: {
+          "&:hover, &:active": {
+            backgroundColor: "transparent"
+          }
+        }
+      }
+    }
+  };
+};
+const genPaginationMiniStyle = (token2) => {
+  const {
+    componentCls
+  } = token2;
+  return {
+    [`&${componentCls}-mini ${componentCls}-total-text, &${componentCls}-mini ${componentCls}-simple-pager`]: {
+      height: token2.itemSizeSM,
+      lineHeight: unit$1(token2.itemSizeSM)
+    },
+    [`&${componentCls}-mini ${componentCls}-item`]: {
+      minWidth: token2.itemSizeSM,
+      height: token2.itemSizeSM,
+      margin: 0,
+      lineHeight: unit$1(token2.calc(token2.itemSizeSM).sub(2).equal())
+    },
+    [`&${componentCls}-mini:not(${componentCls}-disabled) ${componentCls}-item:not(${componentCls}-item-active)`]: {
+      backgroundColor: "transparent",
+      borderColor: "transparent",
+      "&:hover": {
+        backgroundColor: token2.colorBgTextHover
+      },
+      "&:active": {
+        backgroundColor: token2.colorBgTextActive
+      }
+    },
+    [`&${componentCls}-mini ${componentCls}-prev, &${componentCls}-mini ${componentCls}-next`]: {
+      minWidth: token2.itemSizeSM,
+      height: token2.itemSizeSM,
+      margin: 0,
+      lineHeight: unit$1(token2.itemSizeSM)
+    },
+    [`&${componentCls}-mini:not(${componentCls}-disabled)`]: {
+      [`${componentCls}-prev, ${componentCls}-next`]: {
+        [`&:hover ${componentCls}-item-link`]: {
+          backgroundColor: token2.colorBgTextHover
+        },
+        [`&:active ${componentCls}-item-link`]: {
+          backgroundColor: token2.colorBgTextActive
+        },
+        [`&${componentCls}-disabled:hover ${componentCls}-item-link`]: {
+          backgroundColor: "transparent"
+        }
+      }
+    },
+    [`
+    &${componentCls}-mini ${componentCls}-prev ${componentCls}-item-link,
+    &${componentCls}-mini ${componentCls}-next ${componentCls}-item-link
+    `]: {
+      backgroundColor: "transparent",
+      borderColor: "transparent",
+      "&::after": {
+        height: token2.itemSizeSM,
+        lineHeight: unit$1(token2.itemSizeSM)
+      }
+    },
+    [`&${componentCls}-mini ${componentCls}-jump-prev, &${componentCls}-mini ${componentCls}-jump-next`]: {
+      height: token2.itemSizeSM,
+      marginInlineEnd: 0,
+      lineHeight: unit$1(token2.itemSizeSM)
+    },
+    [`&${componentCls}-mini ${componentCls}-options`]: {
+      marginInlineStart: token2.paginationMiniOptionsMarginInlineStart,
+      "&-size-changer": {
+        top: token2.miniOptionsSizeChangerTop
+      },
+      "&-quick-jumper": {
+        height: token2.itemSizeSM,
+        lineHeight: unit$1(token2.itemSizeSM),
+        input: Object.assign(Object.assign({}, genInputSmallStyle(token2)), {
+          width: token2.paginationMiniQuickJumperInputWidth,
+          height: token2.controlHeightSM
+        })
+      }
+    }
+  };
+};
+const genPaginationSimpleStyle = (token2) => {
+  const {
+    componentCls
+  } = token2;
+  return {
+    [`
+    &${componentCls}-simple ${componentCls}-prev,
+    &${componentCls}-simple ${componentCls}-next
+    `]: {
+      height: token2.itemSizeSM,
+      lineHeight: unit$1(token2.itemSizeSM),
+      verticalAlign: "top",
+      [`${componentCls}-item-link`]: {
+        height: token2.itemSizeSM,
+        backgroundColor: "transparent",
+        border: 0,
+        "&:hover": {
+          backgroundColor: token2.colorBgTextHover
+        },
+        "&:active": {
+          backgroundColor: token2.colorBgTextActive
+        },
+        "&::after": {
+          height: token2.itemSizeSM,
+          lineHeight: unit$1(token2.itemSizeSM)
+        }
+      }
+    },
+    [`&${componentCls}-simple ${componentCls}-simple-pager`]: {
+      display: "inline-block",
+      height: token2.itemSizeSM,
+      marginInlineEnd: token2.marginXS,
+      input: {
+        boxSizing: "border-box",
+        height: "100%",
+        padding: `0 ${unit$1(token2.paginationItemPaddingInline)}`,
+        textAlign: "center",
+        backgroundColor: token2.itemInputBg,
+        border: `${unit$1(token2.lineWidth)} ${token2.lineType} ${token2.colorBorder}`,
+        borderRadius: token2.borderRadius,
+        outline: "none",
+        transition: `border-color ${token2.motionDurationMid}`,
+        color: "inherit",
+        "&:hover": {
+          borderColor: token2.colorPrimary
+        },
+        "&:focus": {
+          borderColor: token2.colorPrimaryHover,
+          boxShadow: `${unit$1(token2.inputOutlineOffset)} 0 ${unit$1(token2.controlOutlineWidth)} ${token2.controlOutline}`
+        },
+        "&[disabled]": {
+          color: token2.colorTextDisabled,
+          backgroundColor: token2.colorBgContainerDisabled,
+          borderColor: token2.colorBorder,
+          cursor: "not-allowed"
+        }
+      }
+    }
+  };
+};
+const genPaginationJumpStyle = (token2) => {
+  const {
+    componentCls,
+    antCls
+  } = token2;
+  return {
+    [`${componentCls}-jump-prev, ${componentCls}-jump-next`]: {
+      outline: 0,
+      [`${componentCls}-item-container`]: {
+        position: "relative",
+        [`${componentCls}-item-link-icon`]: {
+          color: token2.colorPrimary,
+          fontSize: token2.fontSizeSM,
+          opacity: 0,
+          transition: `all ${token2.motionDurationMid}`,
+          "&-svg": {
+            top: 0,
+            insetInlineEnd: 0,
+            bottom: 0,
+            insetInlineStart: 0,
+            margin: "auto"
+          }
+        },
+        [`${componentCls}-item-ellipsis`]: {
+          position: "absolute",
+          top: 0,
+          insetInlineEnd: 0,
+          bottom: 0,
+          insetInlineStart: 0,
+          display: "block",
+          margin: "auto",
+          color: token2.colorTextDisabled,
+          fontFamily: "Arial, Helvetica, sans-serif",
+          letterSpacing: token2.paginationEllipsisLetterSpacing,
+          textAlign: "center",
+          textIndent: token2.paginationEllipsisTextIndent,
+          opacity: 1,
+          transition: `all ${token2.motionDurationMid}`
+        }
+      },
+      "&:hover": {
+        [`${componentCls}-item-link-icon`]: {
+          opacity: 1
+        },
+        [`${componentCls}-item-ellipsis`]: {
+          opacity: 0
+        }
+      }
+    },
+    [`
+    ${componentCls}-prev,
+    ${componentCls}-jump-prev,
+    ${componentCls}-jump-next
+    `]: {
+      marginInlineEnd: token2.marginXS
+    },
+    [`
+    ${componentCls}-prev,
+    ${componentCls}-next,
+    ${componentCls}-jump-prev,
+    ${componentCls}-jump-next
+    `]: {
+      display: "inline-block",
+      minWidth: token2.itemSize,
+      height: token2.itemSize,
+      color: token2.colorText,
+      fontFamily: token2.fontFamily,
+      lineHeight: `${unit$1(token2.itemSize)}`,
+      textAlign: "center",
+      verticalAlign: "middle",
+      listStyle: "none",
+      borderRadius: token2.borderRadius,
+      cursor: "pointer",
+      transition: `all ${token2.motionDurationMid}`
+    },
+    [`${componentCls}-prev, ${componentCls}-next`]: {
+      fontFamily: "Arial, Helvetica, sans-serif",
+      outline: 0,
+      button: {
+        color: token2.colorText,
+        cursor: "pointer",
+        userSelect: "none"
+      },
+      [`${componentCls}-item-link`]: {
+        display: "block",
+        width: "100%",
+        height: "100%",
+        padding: 0,
+        fontSize: token2.fontSizeSM,
+        textAlign: "center",
+        backgroundColor: "transparent",
+        border: `${unit$1(token2.lineWidth)} ${token2.lineType} transparent`,
+        borderRadius: token2.borderRadius,
+        outline: "none",
+        transition: `all ${token2.motionDurationMid}`
+      },
+      [`&:hover ${componentCls}-item-link`]: {
+        backgroundColor: token2.colorBgTextHover
+      },
+      [`&:active ${componentCls}-item-link`]: {
+        backgroundColor: token2.colorBgTextActive
+      },
+      [`&${componentCls}-disabled:hover`]: {
+        [`${componentCls}-item-link`]: {
+          backgroundColor: "transparent"
+        }
+      }
+    },
+    [`${componentCls}-slash`]: {
+      marginInlineEnd: token2.paginationSlashMarginInlineEnd,
+      marginInlineStart: token2.paginationSlashMarginInlineStart
+    },
+    [`${componentCls}-options`]: {
+      display: "inline-block",
+      marginInlineStart: token2.margin,
+      verticalAlign: "middle",
+      "&-size-changer": {
+        display: "inline-block",
+        width: "auto",
+        // https://github.com/ant-design/ant-design/issues/49258
+        [`${antCls}-select-arrow:not(:last-child)`]: {
+          opacity: 1
+        }
+      },
+      "&-quick-jumper": {
+        display: "inline-block",
+        height: token2.controlHeight,
+        marginInlineStart: token2.marginXS,
+        lineHeight: unit$1(token2.controlHeight),
+        verticalAlign: "top",
+        input: Object.assign(Object.assign(Object.assign({}, genBasicInputStyle(token2)), genBaseOutlinedStyle(token2, {
+          borderColor: token2.colorBorder,
+          hoverBorderColor: token2.colorPrimaryHover,
+          activeBorderColor: token2.colorPrimary,
+          activeShadow: token2.activeShadow
+        })), {
+          "&[disabled]": Object.assign({}, genDisabledStyle(token2)),
+          width: token2.calc(token2.controlHeightLG).mul(1.25).equal(),
+          height: token2.controlHeight,
+          boxSizing: "border-box",
+          margin: 0,
+          marginInlineStart: token2.marginXS,
+          marginInlineEnd: token2.marginXS
+        })
+      }
+    }
+  };
+};
+const genPaginationItemStyle = (token2) => {
+  const {
+    componentCls
+  } = token2;
+  return {
+    [`${componentCls}-item`]: {
+      display: "inline-block",
+      minWidth: token2.itemSize,
+      height: token2.itemSize,
+      marginInlineEnd: token2.marginXS,
+      fontFamily: token2.fontFamily,
+      lineHeight: unit$1(token2.calc(token2.itemSize).sub(2).equal()),
+      textAlign: "center",
+      verticalAlign: "middle",
+      listStyle: "none",
+      backgroundColor: token2.itemBg,
+      border: `${unit$1(token2.lineWidth)} ${token2.lineType} transparent`,
+      borderRadius: token2.borderRadius,
+      outline: 0,
+      cursor: "pointer",
+      userSelect: "none",
+      a: {
+        display: "block",
+        padding: `0 ${unit$1(token2.paginationItemPaddingInline)}`,
+        color: token2.colorText,
+        "&:hover": {
+          textDecoration: "none"
+        }
+      },
+      [`&:not(${componentCls}-item-active)`]: {
+        "&:hover": {
+          transition: `all ${token2.motionDurationMid}`,
+          backgroundColor: token2.colorBgTextHover
+        },
+        "&:active": {
+          backgroundColor: token2.colorBgTextActive
+        }
+      },
+      "&-active": {
+        fontWeight: token2.fontWeightStrong,
+        backgroundColor: token2.itemActiveBg,
+        borderColor: token2.colorPrimary,
+        a: {
+          color: token2.colorPrimary
+        },
+        "&:hover": {
+          borderColor: token2.colorPrimaryHover
+        },
+        "&:hover a": {
+          color: token2.colorPrimaryHover
+        }
+      }
+    }
+  };
+};
+const genPaginationStyle$1 = (token2) => {
+  const {
+    componentCls
+  } = token2;
+  return {
+    [componentCls]: Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, resetComponent(token2)), {
+      display: "flex",
+      "&-start": {
+        justifyContent: "start"
+      },
+      "&-center": {
+        justifyContent: "center"
+      },
+      "&-end": {
+        justifyContent: "end"
+      },
+      "ul, ol": {
+        margin: 0,
+        padding: 0,
+        listStyle: "none"
+      },
+      "&::after": {
+        display: "block",
+        clear: "both",
+        height: 0,
+        overflow: "hidden",
+        visibility: "hidden",
+        content: '""'
+      },
+      [`${componentCls}-total-text`]: {
+        display: "inline-block",
+        height: token2.itemSize,
+        marginInlineEnd: token2.marginXS,
+        lineHeight: unit$1(token2.calc(token2.itemSize).sub(2).equal()),
+        verticalAlign: "middle"
+      }
+    }), genPaginationItemStyle(token2)), genPaginationJumpStyle(token2)), genPaginationSimpleStyle(token2)), genPaginationMiniStyle(token2)), genPaginationDisabledStyle(token2)), {
+      // media query style
+      [`@media only screen and (max-width: ${token2.screenLG}px)`]: {
+        [`${componentCls}-item`]: {
+          "&-after-jump-prev, &-before-jump-next": {
+            display: "none"
+          }
+        }
+      },
+      [`@media only screen and (max-width: ${token2.screenSM}px)`]: {
+        [`${componentCls}-options`]: {
+          display: "none"
+        }
+      }
+    }),
+    // rtl style
+    [`&${token2.componentCls}-rtl`]: {
+      direction: "rtl"
+    }
+  };
+};
+const genPaginationFocusStyle = (token2) => {
+  const {
+    componentCls
+  } = token2;
+  return {
+    [`${componentCls}:not(${componentCls}-disabled)`]: {
+      [`${componentCls}-item`]: Object.assign({}, genFocusStyle(token2)),
+      [`${componentCls}-jump-prev, ${componentCls}-jump-next`]: {
+        "&:focus-visible": Object.assign({
+          [`${componentCls}-item-link-icon`]: {
+            opacity: 1
+          },
+          [`${componentCls}-item-ellipsis`]: {
+            opacity: 0
+          }
+        }, genFocusOutline(token2))
+      },
+      [`${componentCls}-prev, ${componentCls}-next`]: {
+        [`&:focus-visible ${componentCls}-item-link`]: Object.assign({}, genFocusOutline(token2))
+      }
+    }
+  };
+};
+const prepareComponentToken$4 = (token2) => Object.assign({
+  itemBg: token2.colorBgContainer,
+  itemSize: token2.controlHeight,
+  itemSizeSM: token2.controlHeightSM,
+  itemActiveBg: token2.colorBgContainer,
+  itemLinkBg: token2.colorBgContainer,
+  itemActiveColorDisabled: token2.colorTextDisabled,
+  itemActiveBgDisabled: token2.controlItemBgActiveDisabled,
+  itemInputBg: token2.colorBgContainer,
+  miniOptionsSizeChangerTop: 0
+}, initComponentToken$1(token2));
+const prepareToken = (token2) => merge(token2, {
+  inputOutlineOffset: 0,
+  paginationMiniOptionsMarginInlineStart: token2.calc(token2.marginXXS).div(2).equal(),
+  paginationMiniQuickJumperInputWidth: token2.calc(token2.controlHeightLG).mul(1.1).equal(),
+  paginationItemPaddingInline: token2.calc(token2.marginXXS).mul(1.5).equal(),
+  paginationEllipsisLetterSpacing: token2.calc(token2.marginXXS).div(2).equal(),
+  paginationSlashMarginInlineStart: token2.marginSM,
+  paginationSlashMarginInlineEnd: token2.marginSM,
+  paginationEllipsisTextIndent: "0.13em"
+  // magic for ui experience
+}, initInputToken(token2));
+const useStyle$4 = genStyleHooks("Pagination", (token2) => {
+  const paginationToken = prepareToken(token2);
+  return [genPaginationStyle$1(paginationToken), genPaginationFocusStyle(paginationToken)];
+}, prepareComponentToken$4);
+const genBorderedStyle$1 = (token2) => {
+  const {
+    componentCls
+  } = token2;
+  return {
+    [`${componentCls}${componentCls}-bordered${componentCls}-disabled:not(${componentCls}-mini)`]: {
+      "&, &:hover": {
+        [`${componentCls}-item-link`]: {
+          borderColor: token2.colorBorder
+        }
+      },
+      "&:focus-visible": {
+        [`${componentCls}-item-link`]: {
+          borderColor: token2.colorBorder
+        }
+      },
+      [`${componentCls}-item, ${componentCls}-item-link`]: {
+        backgroundColor: token2.colorBgContainerDisabled,
+        borderColor: token2.colorBorder,
+        [`&:hover:not(${componentCls}-item-active)`]: {
+          backgroundColor: token2.colorBgContainerDisabled,
+          borderColor: token2.colorBorder,
+          a: {
+            color: token2.colorTextDisabled
+          }
+        },
+        [`&${componentCls}-item-active`]: {
+          backgroundColor: token2.itemActiveBgDisabled
+        }
+      },
+      [`${componentCls}-prev, ${componentCls}-next`]: {
+        "&:hover button": {
+          backgroundColor: token2.colorBgContainerDisabled,
+          borderColor: token2.colorBorder,
+          color: token2.colorTextDisabled
+        },
+        [`${componentCls}-item-link`]: {
+          backgroundColor: token2.colorBgContainerDisabled,
+          borderColor: token2.colorBorder
+        }
+      }
+    },
+    [`${componentCls}${componentCls}-bordered:not(${componentCls}-mini)`]: {
+      [`${componentCls}-prev, ${componentCls}-next`]: {
+        "&:hover button": {
+          borderColor: token2.colorPrimaryHover,
+          backgroundColor: token2.itemBg
+        },
+        [`${componentCls}-item-link`]: {
+          backgroundColor: token2.itemLinkBg,
+          borderColor: token2.colorBorder
+        },
+        [`&:hover ${componentCls}-item-link`]: {
+          borderColor: token2.colorPrimary,
+          backgroundColor: token2.itemBg,
+          color: token2.colorPrimary
+        },
+        [`&${componentCls}-disabled`]: {
+          [`${componentCls}-item-link`]: {
+            borderColor: token2.colorBorder,
+            color: token2.colorTextDisabled
+          }
+        }
+      },
+      [`${componentCls}-item`]: {
+        backgroundColor: token2.itemBg,
+        border: `${unit$1(token2.lineWidth)} ${token2.lineType} ${token2.colorBorder}`,
+        [`&:hover:not(${componentCls}-item-active)`]: {
+          borderColor: token2.colorPrimary,
+          backgroundColor: token2.itemBg,
+          a: {
+            color: token2.colorPrimary
+          }
+        },
+        "&-active": {
+          borderColor: token2.colorPrimary
+        }
+      }
+    }
+  };
+};
+const BorderedStyle = genSubStyleComponent(["Pagination", "bordered"], (token2) => {
+  const paginationToken = prepareToken(token2);
+  return [genBorderedStyle$1(paginationToken)];
+}, prepareComponentToken$4);
+var __rest$5 = function(s2, e2) {
+  var t2 = {};
+  for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
+  if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
+    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i2])) t2[p2[i2]] = s2[p2[i2]];
+  }
+  return t2;
+};
+const Pagination = (props) => {
+  const {
+    align,
+    prefixCls: customizePrefixCls,
+    selectPrefixCls: customizeSelectPrefixCls,
+    className,
+    rootClassName,
+    style: style2,
+    size: customizeSize,
+    locale: customLocale,
+    selectComponentClass,
+    responsive,
+    showSizeChanger
+  } = props, restProps = __rest$5(props, ["align", "prefixCls", "selectPrefixCls", "className", "rootClassName", "style", "size", "locale", "selectComponentClass", "responsive", "showSizeChanger"]);
+  const {
+    xs
+  } = useBreakpoint(responsive);
+  const [, token2] = useToken();
+  const {
+    getPrefixCls,
+    direction,
+    pagination = {}
+  } = reactExports.useContext(ConfigContext);
+  const prefixCls = getPrefixCls("pagination", customizePrefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$4(prefixCls);
+  const mergedShowSizeChanger = showSizeChanger !== null && showSizeChanger !== void 0 ? showSizeChanger : pagination.showSizeChanger;
+  const iconsProps = reactExports.useMemo(() => {
+    const ellipsis = /* @__PURE__ */ reactExports.createElement("span", {
+      className: `${prefixCls}-item-ellipsis`
+    }, "•••");
+    const prevIcon = /* @__PURE__ */ reactExports.createElement("button", {
+      className: `${prefixCls}-item-link`,
+      type: "button",
+      tabIndex: -1
+    }, direction === "rtl" ? /* @__PURE__ */ reactExports.createElement(RefIcon$k, null) : /* @__PURE__ */ reactExports.createElement(RefIcon$i, null));
+    const nextIcon = /* @__PURE__ */ reactExports.createElement("button", {
+      className: `${prefixCls}-item-link`,
+      type: "button",
+      tabIndex: -1
+    }, direction === "rtl" ? /* @__PURE__ */ reactExports.createElement(RefIcon$i, null) : /* @__PURE__ */ reactExports.createElement(RefIcon$k, null));
+    const jumpPrevIcon = (
+      // biome-ignore lint/a11y/useValidAnchor: it is hard to refactor
+      /* @__PURE__ */ reactExports.createElement("a", {
+        className: `${prefixCls}-item-link`
+      }, /* @__PURE__ */ reactExports.createElement("div", {
+        className: `${prefixCls}-item-container`
+      }, direction === "rtl" ? /* @__PURE__ */ reactExports.createElement(RefIcon$a, {
+        className: `${prefixCls}-item-link-icon`
+      }) : /* @__PURE__ */ reactExports.createElement(RefIcon$b, {
+        className: `${prefixCls}-item-link-icon`
+      }), ellipsis))
+    );
+    const jumpNextIcon = (
+      // biome-ignore lint/a11y/useValidAnchor: it is hard to refactor
+      /* @__PURE__ */ reactExports.createElement("a", {
+        className: `${prefixCls}-item-link`
+      }, /* @__PURE__ */ reactExports.createElement("div", {
+        className: `${prefixCls}-item-container`
+      }, direction === "rtl" ? /* @__PURE__ */ reactExports.createElement(RefIcon$b, {
+        className: `${prefixCls}-item-link-icon`
+      }) : /* @__PURE__ */ reactExports.createElement(RefIcon$a, {
+        className: `${prefixCls}-item-link-icon`
+      }), ellipsis))
+    );
+    return {
+      prevIcon,
+      nextIcon,
+      jumpPrevIcon,
+      jumpNextIcon
+    };
+  }, [direction, prefixCls]);
+  const [contextLocale] = useLocale("Pagination", locale$4);
+  const locale2 = Object.assign(Object.assign({}, contextLocale), customLocale);
+  const mergedSize = useSize(customizeSize);
+  const isSmall = mergedSize === "small" || !!(xs && !mergedSize && responsive);
+  const selectPrefixCls = getPrefixCls("select", customizeSelectPrefixCls);
+  const extendedClassName = classNames({
+    [`${prefixCls}-${align}`]: !!align,
+    [`${prefixCls}-mini`]: isSmall,
+    [`${prefixCls}-rtl`]: direction === "rtl",
+    [`${prefixCls}-bordered`]: token2.wireframe
+  }, pagination === null || pagination === void 0 ? void 0 : pagination.className, className, rootClassName, hashId, cssVarCls);
+  const mergedStyle = Object.assign(Object.assign({}, pagination === null || pagination === void 0 ? void 0 : pagination.style), style2);
+  return wrapCSSVar(/* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, token2.wireframe && /* @__PURE__ */ reactExports.createElement(BorderedStyle, {
+    prefixCls
+  }), /* @__PURE__ */ reactExports.createElement(Pagination$1, Object.assign({}, iconsProps, restProps, {
+    style: mergedStyle,
+    prefixCls,
+    selectPrefixCls,
+    className: extendedClassName,
+    selectComponentClass: selectComponentClass || (isSmall ? MiniSelect : MiddleSelect),
+    locale: locale2,
+    showSizeChanger: mergedShowSizeChanger
+  }))));
+};
+function Progress(_ref) {
+  let {
+    percent,
+    prefixCls
+  } = _ref;
+  const dotClassName = `${prefixCls}-dot`;
+  const holderClassName = `${dotClassName}-holder`;
+  const hideClassName = `${holderClassName}-hidden`;
+  const [render2, setRender] = reactExports.useState(false);
+  useLayoutEffect$1(() => {
+    if (percent !== 0) {
+      setRender(true);
+    }
+  }, [percent !== 0]);
+  const safePtg = Math.max(Math.min(percent, 100), 0);
+  const viewSize = 100;
+  const borderWidth = viewSize / 5;
+  const radius = viewSize / 2 - borderWidth / 2;
+  const circumference = radius * 2 * Math.PI;
+  const renderCircle = (circleClassName, style2) => /* @__PURE__ */ reactExports.createElement("circle", {
+    className: classNames(circleClassName, `${dotClassName}-circle`),
+    r: radius,
+    cx: "50",
+    cy: "50",
+    strokeWidth: borderWidth,
+    style: style2
+  });
+  if (!render2) {
+    return null;
+  }
+  return /* @__PURE__ */ reactExports.createElement("span", {
+    className: classNames(holderClassName, `${dotClassName}-progress`, safePtg <= 0 && hideClassName)
+  }, /* @__PURE__ */ reactExports.createElement("svg", {
+    viewBox: `0 0 ${viewSize} ${viewSize}`,
+    // biome-ignore lint/a11y/noNoninteractiveElementToInteractiveRole: progressbar could be readonly
+    role: "progressbar",
+    "aria-valuemin": 0,
+    "aria-valuemax": 100,
+    "aria-valuenow": safePtg
+  }, renderCircle(`${dotClassName}-circle-bg`), renderCircle("", {
+    strokeDasharray: `${circumference * safePtg / 100} ${circumference * (100 - safePtg) / 100}`,
+    strokeDashoffset: `${circumference / 4}`
+  })));
+}
+function Looper(props) {
+  const {
+    prefixCls,
+    percent = 0
+  } = props;
+  const dotClassName = `${prefixCls}-dot`;
+  const holderClassName = `${dotClassName}-holder`;
+  const hideClassName = `${holderClassName}-hidden`;
+  return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("span", {
+    className: classNames(holderClassName, percent > 0 && hideClassName)
+  }, /* @__PURE__ */ reactExports.createElement("span", {
+    className: classNames(dotClassName, `${prefixCls}-dot-spin`)
+  }, [1, 2, 3, 4].map((i2) => /* @__PURE__ */ reactExports.createElement("i", {
+    className: `${prefixCls}-dot-item`,
+    key: i2
+  })))), /* @__PURE__ */ reactExports.createElement(Progress, {
+    prefixCls,
+    percent
+  }));
+}
+function Indicator(props) {
+  const {
+    prefixCls,
+    indicator,
+    percent
+  } = props;
+  const dotClassName = `${prefixCls}-dot`;
+  if (indicator && /* @__PURE__ */ reactExports.isValidElement(indicator)) {
+    return cloneElement(indicator, {
+      className: classNames(indicator.props.className, dotClassName),
+      percent
+    });
+  }
+  return /* @__PURE__ */ reactExports.createElement(Looper, {
+    prefixCls,
+    percent
+  });
+}
+const antSpinMove = new Keyframe("antSpinMove", {
+  to: {
+    opacity: 1
+  }
+});
+const antRotate = new Keyframe("antRotate", {
+  to: {
+    transform: "rotate(405deg)"
+  }
+});
+const genSpinStyle = (token2) => {
+  const {
+    componentCls,
+    calc
+  } = token2;
+  return {
+    [`${componentCls}`]: Object.assign(Object.assign({}, resetComponent(token2)), {
+      position: "absolute",
+      display: "none",
+      color: token2.colorPrimary,
+      fontSize: 0,
+      textAlign: "center",
+      verticalAlign: "middle",
+      opacity: 0,
+      transition: `transform ${token2.motionDurationSlow} ${token2.motionEaseInOutCirc}`,
+      "&-spinning": {
+        position: "relative",
+        display: "inline-block",
+        opacity: 1
+      },
+      [`${componentCls}-text`]: {
+        fontSize: token2.fontSize,
+        paddingTop: calc(calc(token2.dotSize).sub(token2.fontSize)).div(2).add(2).equal()
+      },
+      "&-fullscreen": {
+        position: "fixed",
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: token2.colorBgMask,
+        zIndex: token2.zIndexPopupBase,
+        inset: 0,
+        display: "flex",
+        alignItems: "center",
+        flexDirection: "column",
+        justifyContent: "center",
+        opacity: 0,
+        visibility: "hidden",
+        transition: `all ${token2.motionDurationMid}`,
+        "&-show": {
+          opacity: 1,
+          visibility: "visible"
+        },
+        [componentCls]: {
+          [`${componentCls}-dot-holder`]: {
+            color: token2.colorWhite
+          },
+          [`${componentCls}-text`]: {
+            color: token2.colorTextLightSolid
+          }
+        }
+      },
+      "&-nested-loading": {
+        position: "relative",
+        [`> div > ${componentCls}`]: {
+          position: "absolute",
+          top: 0,
+          insetInlineStart: 0,
+          zIndex: 4,
+          display: "block",
+          width: "100%",
+          height: "100%",
+          maxHeight: token2.contentHeight,
+          [`${componentCls}-dot`]: {
+            position: "absolute",
+            top: "50%",
+            insetInlineStart: "50%",
+            margin: calc(token2.dotSize).mul(-1).div(2).equal()
+          },
+          [`${componentCls}-text`]: {
+            position: "absolute",
+            top: "50%",
+            width: "100%",
+            textShadow: `0 1px 2px ${token2.colorBgContainer}`
+            // FIXME: shadow
+          },
+          [`&${componentCls}-show-text ${componentCls}-dot`]: {
+            marginTop: calc(token2.dotSize).div(2).mul(-1).sub(10).equal()
+          },
+          "&-sm": {
+            [`${componentCls}-dot`]: {
+              margin: calc(token2.dotSizeSM).mul(-1).div(2).equal()
+            },
+            [`${componentCls}-text`]: {
+              paddingTop: calc(calc(token2.dotSizeSM).sub(token2.fontSize)).div(2).add(2).equal()
+            },
+            [`&${componentCls}-show-text ${componentCls}-dot`]: {
+              marginTop: calc(token2.dotSizeSM).div(2).mul(-1).sub(10).equal()
+            }
+          },
+          "&-lg": {
+            [`${componentCls}-dot`]: {
+              margin: calc(token2.dotSizeLG).mul(-1).div(2).equal()
+            },
+            [`${componentCls}-text`]: {
+              paddingTop: calc(calc(token2.dotSizeLG).sub(token2.fontSize)).div(2).add(2).equal()
+            },
+            [`&${componentCls}-show-text ${componentCls}-dot`]: {
+              marginTop: calc(token2.dotSizeLG).div(2).mul(-1).sub(10).equal()
+            }
+          }
+        },
+        [`${componentCls}-container`]: {
+          position: "relative",
+          transition: `opacity ${token2.motionDurationSlow}`,
+          "&::after": {
+            position: "absolute",
+            top: 0,
+            insetInlineEnd: 0,
+            bottom: 0,
+            insetInlineStart: 0,
+            zIndex: 10,
+            width: "100%",
+            height: "100%",
+            background: token2.colorBgContainer,
+            opacity: 0,
+            transition: `all ${token2.motionDurationSlow}`,
+            content: '""',
+            pointerEvents: "none"
+          }
+        },
+        [`${componentCls}-blur`]: {
+          clear: "both",
+          opacity: 0.5,
+          userSelect: "none",
+          pointerEvents: "none",
+          "&::after": {
+            opacity: 0.4,
+            pointerEvents: "auto"
+          }
+        }
+      },
+      // tip
+      // ------------------------------
+      "&-tip": {
+        color: token2.spinDotDefault
+      },
+      // holder
+      // ------------------------------
+      [`${componentCls}-dot-holder`]: {
+        width: "1em",
+        height: "1em",
+        fontSize: token2.dotSize,
+        display: "inline-block",
+        transition: `transform ${token2.motionDurationSlow} ease, opacity ${token2.motionDurationSlow} ease`,
+        transformOrigin: "50% 50%",
+        lineHeight: 1,
+        color: token2.colorPrimary,
+        "&-hidden": {
+          transform: "scale(0.3)",
+          opacity: 0
+        }
+      },
+      // progress
+      // ------------------------------
+      [`${componentCls}-dot-progress`]: {
+        position: "absolute",
+        top: "50%",
+        transform: "translateY(-50%)",
+        insetInlineStart: 0
+      },
+      // dots
+      // ------------------------------
+      [`${componentCls}-dot`]: {
+        position: "relative",
+        display: "inline-block",
+        fontSize: token2.dotSize,
+        width: "1em",
+        height: "1em",
+        "&-item": {
+          position: "absolute",
+          display: "block",
+          width: calc(token2.dotSize).sub(calc(token2.marginXXS).div(2)).div(2).equal(),
+          height: calc(token2.dotSize).sub(calc(token2.marginXXS).div(2)).div(2).equal(),
+          background: "currentColor",
+          borderRadius: "100%",
+          transform: "scale(0.75)",
+          transformOrigin: "50% 50%",
+          opacity: 0.3,
+          animationName: antSpinMove,
+          animationDuration: "1s",
+          animationIterationCount: "infinite",
+          animationTimingFunction: "linear",
+          animationDirection: "alternate",
+          "&:nth-child(1)": {
+            top: 0,
+            insetInlineStart: 0,
+            animationDelay: "0s"
+          },
+          "&:nth-child(2)": {
+            top: 0,
+            insetInlineEnd: 0,
+            animationDelay: "0.4s"
+          },
+          "&:nth-child(3)": {
+            insetInlineEnd: 0,
+            bottom: 0,
+            animationDelay: "0.8s"
+          },
+          "&:nth-child(4)": {
+            bottom: 0,
+            insetInlineStart: 0,
+            animationDelay: "1.2s"
+          }
+        },
+        "&-spin": {
+          transform: "rotate(45deg)",
+          animationName: antRotate,
+          animationDuration: "1.2s",
+          animationIterationCount: "infinite",
+          animationTimingFunction: "linear"
+        },
+        "&-circle": {
+          strokeLinecap: "round",
+          transition: ["stroke-dashoffset", "stroke-dasharray", "stroke", "stroke-width", "opacity"].map((item) => `${item} ${token2.motionDurationSlow} ease`).join(","),
+          fillOpacity: 0,
+          stroke: "currentcolor"
+        },
+        "&-circle-bg": {
+          stroke: token2.colorFillSecondary
+        }
+      },
+      // small
+      [`&-sm ${componentCls}-dot`]: {
+        "&, &-holder": {
+          fontSize: token2.dotSizeSM
+        }
+      },
+      [`&-sm ${componentCls}-dot-holder`]: {
+        i: {
+          width: calc(calc(token2.dotSizeSM).sub(calc(token2.marginXXS).div(2))).div(2).equal(),
+          height: calc(calc(token2.dotSizeSM).sub(calc(token2.marginXXS).div(2))).div(2).equal()
+        }
+      },
+      // large
+      [`&-lg ${componentCls}-dot`]: {
+        "&, &-holder": {
+          fontSize: token2.dotSizeLG
+        }
+      },
+      [`&-lg ${componentCls}-dot-holder`]: {
+        i: {
+          width: calc(calc(token2.dotSizeLG).sub(token2.marginXXS)).div(2).equal(),
+          height: calc(calc(token2.dotSizeLG).sub(token2.marginXXS)).div(2).equal()
+        }
+      },
+      [`&${componentCls}-show-text ${componentCls}-text`]: {
+        display: "block"
+      }
+    })
+  };
+};
+const prepareComponentToken$3 = (token2) => {
+  const {
+    controlHeightLG,
+    controlHeight
+  } = token2;
+  return {
+    contentHeight: 400,
+    dotSize: controlHeightLG / 2,
+    dotSizeSM: controlHeightLG * 0.35,
+    dotSizeLG: controlHeight
+  };
+};
+const useStyle$3 = genStyleHooks("Spin", (token2) => {
+  const spinToken = merge(token2, {
+    spinDotDefault: token2.colorTextDescription
+  });
+  return [genSpinStyle(spinToken)];
+}, prepareComponentToken$3);
+const AUTO_INTERVAL = 200;
+const STEP_BUCKETS = [[30, 0.05], [70, 0.03], [96, 0.01]];
+function usePercent(spinning, percent) {
+  const [mockPercent, setMockPercent] = reactExports.useState(0);
+  const mockIntervalRef = reactExports.useRef();
+  const isAuto = percent === "auto";
+  reactExports.useEffect(() => {
+    if (isAuto && spinning) {
+      setMockPercent(0);
+      mockIntervalRef.current = setInterval(() => {
+        setMockPercent((prev2) => {
+          const restPTG = 100 - prev2;
+          for (let i2 = 0; i2 < STEP_BUCKETS.length; i2 += 1) {
+            const [limit, stepPtg] = STEP_BUCKETS[i2];
+            if (prev2 <= limit) {
+              return prev2 + restPTG * stepPtg;
+            }
+          }
+          return prev2;
+        });
+      }, AUTO_INTERVAL);
+    }
+    return () => {
+      clearInterval(mockIntervalRef.current);
+    };
+  }, [isAuto, spinning]);
+  return isAuto ? mockPercent : percent;
+}
+var __rest$4 = function(s2, e2) {
+  var t2 = {};
+  for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
+  if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
+    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i2])) t2[p2[i2]] = s2[p2[i2]];
+  }
+  return t2;
+};
+let defaultIndicator;
+function shouldDelay(spinning, delay) {
+  return !!spinning && !!delay && !isNaN(Number(delay));
+}
+const Spin = (props) => {
+  const {
+    prefixCls: customizePrefixCls,
+    spinning: customSpinning = true,
+    delay = 0,
+    className,
+    rootClassName,
+    size = "default",
+    tip,
+    wrapperClassName,
+    style: style2,
+    children,
+    fullscreen = false,
+    indicator,
+    percent
+  } = props, restProps = __rest$4(props, ["prefixCls", "spinning", "delay", "className", "rootClassName", "size", "tip", "wrapperClassName", "style", "children", "fullscreen", "indicator", "percent"]);
+  const {
+    getPrefixCls
+  } = reactExports.useContext(ConfigContext);
+  const prefixCls = getPrefixCls("spin", customizePrefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$3(prefixCls);
+  const [spinning, setSpinning] = reactExports.useState(() => customSpinning && !shouldDelay(customSpinning, delay));
+  const mergedPercent = usePercent(spinning, percent);
+  reactExports.useEffect(() => {
+    if (customSpinning) {
+      const showSpinning = debounce(delay, () => {
+        setSpinning(true);
+      });
+      showSpinning();
+      return () => {
+        var _a;
+        (_a = showSpinning === null || showSpinning === void 0 ? void 0 : showSpinning.cancel) === null || _a === void 0 ? void 0 : _a.call(showSpinning);
+      };
+    }
+    setSpinning(false);
+  }, [delay, customSpinning]);
+  const isNestedPattern = reactExports.useMemo(() => typeof children !== "undefined" && !fullscreen, [children, fullscreen]);
+  const {
+    direction,
+    spin
+  } = reactExports.useContext(ConfigContext);
+  const spinClassName = classNames(prefixCls, spin === null || spin === void 0 ? void 0 : spin.className, {
+    [`${prefixCls}-sm`]: size === "small",
+    [`${prefixCls}-lg`]: size === "large",
+    [`${prefixCls}-spinning`]: spinning,
+    [`${prefixCls}-show-text`]: !!tip,
+    [`${prefixCls}-rtl`]: direction === "rtl"
+  }, className, !fullscreen && rootClassName, hashId, cssVarCls);
+  const containerClassName = classNames(`${prefixCls}-container`, {
+    [`${prefixCls}-blur`]: spinning
+  });
+  const mergedStyle = Object.assign(Object.assign({}, spin === null || spin === void 0 ? void 0 : spin.style), style2);
+  const spinElement = /* @__PURE__ */ reactExports.createElement("div", Object.assign({}, restProps, {
+    style: mergedStyle,
+    className: spinClassName,
+    "aria-live": "polite",
+    "aria-busy": spinning
+  }), /* @__PURE__ */ reactExports.createElement(Indicator, {
+    prefixCls,
+    indicator: indicator !== null && indicator !== void 0 ? indicator : defaultIndicator,
+    percent: mergedPercent
+  }), tip && (isNestedPattern || fullscreen) ? /* @__PURE__ */ reactExports.createElement("div", {
+    className: `${prefixCls}-text`
+  }, tip) : null);
+  if (isNestedPattern) {
+    return wrapCSSVar(/* @__PURE__ */ reactExports.createElement("div", Object.assign({}, restProps, {
+      className: classNames(`${prefixCls}-nested-loading`, wrapperClassName, hashId, cssVarCls)
+    }), spinning && /* @__PURE__ */ reactExports.createElement("div", {
+      key: "loading"
+    }, spinElement), /* @__PURE__ */ reactExports.createElement("div", {
+      className: containerClassName,
+      key: "container"
+    }, children)));
+  }
+  if (fullscreen) {
+    return wrapCSSVar(/* @__PURE__ */ reactExports.createElement("div", {
+      className: classNames(`${prefixCls}-fullscreen`, {
+        [`${prefixCls}-fullscreen-show`]: spinning
+      }, rootClassName, hashId, cssVarCls)
+    }, spinElement));
+  }
+  return wrapCSSVar(spinElement);
+};
+Spin.setDefaultIndicator = (indicator) => {
+  defaultIndicator = indicator;
+};
+var __rest$3 = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -45396,14 +48856,14 @@ const PurePanel = (props) => {
     title,
     children,
     footer
-  } = props, restProps = __rest$1(props, ["prefixCls", "className", "closeIcon", "closable", "type", "title", "children", "footer"]);
+  } = props, restProps = __rest$3(props, ["prefixCls", "className", "closeIcon", "closable", "type", "title", "children", "footer"]);
   const {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const rootPrefixCls = getPrefixCls();
   const prefixCls = customizePrefixCls || getPrefixCls("modal");
   const rootCls = useCSSVarCls(rootPrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$h(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$m(prefixCls, rootCls);
   const confirmPrefixCls = `${prefixCls}-confirm`;
   let additionalProps = {};
   if (type4) {
@@ -45422,11 +48882,11 @@ const PurePanel = (props) => {
     additionalProps = {
       closable: closable !== null && closable !== void 0 ? closable : true,
       title,
-      footer: footer !== null && /* @__PURE__ */ reactExports.createElement(Footer$1, Object.assign({}, props)),
+      footer: footer !== null && /* @__PURE__ */ reactExports.createElement(Footer$3, Object.assign({}, props)),
       children
     };
   }
-  return wrapCSSVar(/* @__PURE__ */ reactExports.createElement(Panel, Object.assign({
+  return wrapCSSVar(/* @__PURE__ */ reactExports.createElement(Panel$1, Object.assign({
     prefixCls,
     className: classNames(hashId, `${prefixCls}-pure-panel`, type4 && confirmPrefixCls, type4 && `${confirmPrefixCls}-${type4}`, className, cssVarCls, rootCls)
   }, restProps, {
@@ -45505,9 +48965,9 @@ var SliderContext = /* @__PURE__ */ reactExports.createContext({
   styles: {},
   classNames: {}
 });
-var _excluded$1 = ["prefixCls", "value", "valueIndex", "onStartMove", "style", "render", "dragging", "onOffsetChange", "onChangeComplete", "onFocus", "onMouseEnter"];
+var _excluded$a = ["prefixCls", "value", "valueIndex", "onStartMove", "style", "render", "dragging", "onOffsetChange", "onChangeComplete", "onFocus", "onMouseEnter"];
 var Handle = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
-  var prefixCls = props.prefixCls, value = props.value, valueIndex = props.valueIndex, onStartMove = props.onStartMove, style2 = props.style, render2 = props.render, dragging = props.dragging, onOffsetChange = props.onOffsetChange, onChangeComplete = props.onChangeComplete, onFocus = props.onFocus, onMouseEnter = props.onMouseEnter, restProps = _objectWithoutProperties(props, _excluded$1);
+  var prefixCls = props.prefixCls, value = props.value, valueIndex = props.valueIndex, onStartMove = props.onStartMove, style2 = props.style, render2 = props.render, dragging = props.dragging, onOffsetChange = props.onOffsetChange, onChangeComplete = props.onChangeComplete, onFocus = props.onFocus, onMouseEnter = props.onMouseEnter, restProps = _objectWithoutProperties(props, _excluded$a);
   var _React$useContext = reactExports.useContext(SliderContext), min = _React$useContext.min, max = _React$useContext.max, direction = _React$useContext.direction, disabled = _React$useContext.disabled, keyboard = _React$useContext.keyboard, range3 = _React$useContext.range, tabIndex = _React$useContext.tabIndex, ariaLabelForHandle = _React$useContext.ariaLabelForHandle, ariaLabelledByForHandle = _React$useContext.ariaLabelledByForHandle, ariaValueTextFormatterForHandle = _React$useContext.ariaValueTextFormatterForHandle, styles = _React$useContext.styles, classNames$1 = _React$useContext.classNames;
   var handlePrefixCls = "".concat(prefixCls, "-handle");
   var onInternalStartMove = function onInternalStartMove2(e2) {
@@ -45521,7 +48981,7 @@ var Handle = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
   var onInternalMouseEnter = function onInternalMouseEnter2(e2) {
     onMouseEnter(e2, valueIndex);
   };
-  var onKeyDown = function onKeyDown2(e2) {
+  var onKeyDown2 = function onKeyDown22(e2) {
     if (!disabled && keyboard) {
       var offset2 = null;
       switch (e2.which || e2.keyCode) {
@@ -45589,7 +49049,7 @@ var Handle = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
       onTouchStart: onInternalStartMove,
       onFocus: onInternalFocus,
       onMouseEnter: onInternalMouseEnter,
-      onKeyDown,
+      onKeyDown: onKeyDown2,
       onKeyUp: handleKeyUp
     };
   }
@@ -45608,9 +49068,9 @@ var Handle = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
   }
   return handleNode;
 });
-var _excluded = ["prefixCls", "style", "onStartMove", "onOffsetChange", "values", "handleRender", "activeHandleRender", "draggingIndex", "onFocus"];
+var _excluded$9 = ["prefixCls", "style", "onStartMove", "onOffsetChange", "values", "handleRender", "activeHandleRender", "draggingIndex", "onFocus"];
 var Handles = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
-  var prefixCls = props.prefixCls, style2 = props.style, onStartMove = props.onStartMove, onOffsetChange = props.onOffsetChange, values = props.values, handleRender = props.handleRender, activeHandleRender = props.activeHandleRender, draggingIndex = props.draggingIndex, onFocus = props.onFocus, restProps = _objectWithoutProperties(props, _excluded);
+  var prefixCls = props.prefixCls, style2 = props.style, onStartMove = props.onStartMove, onOffsetChange = props.onOffsetChange, values = props.values, handleRender = props.handleRender, activeHandleRender = props.activeHandleRender, draggingIndex = props.draggingIndex, onFocus = props.onFocus, restProps = _objectWithoutProperties(props, _excluded$9);
   var handlesRef = reactExports.useRef({});
   reactExports.useImperativeHandle(ref, function() {
     return {
@@ -46404,7 +49864,7 @@ const SliderTooltip = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     ref: composeRef(innerRef, ref)
   }, props));
 });
-const genBaseStyle = (token2) => {
+const genBaseStyle$1 = (token2) => {
   const {
     componentCls,
     antCls,
@@ -46683,7 +50143,7 @@ const genVerticalStyle = (token2) => {
     })
   };
 };
-const prepareComponentToken = (token2) => {
+const prepareComponentToken$2 = (token2) => {
   const increaseHandleWidth = 1;
   const controlSize = token2.controlHeightLG / 4;
   const controlSizeHover = token2.controlHeightSM / 2;
@@ -46712,14 +50172,14 @@ const prepareComponentToken = (token2) => {
     trackBgDisabled: token2.colorBgContainerDisabled
   };
 };
-const useStyle = genStyleHooks("Slider", (token2) => {
+const useStyle$2 = genStyleHooks("Slider", (token2) => {
   const sliderToken = merge(token2, {
     marginPart: token2.calc(token2.controlHeight).sub(token2.controlSize).div(2).equal(),
     marginFull: token2.calc(token2.controlSize).div(2).equal(),
     marginPartWithMark: token2.calc(token2.controlHeightLG).sub(token2.controlSize).equal()
   });
-  return [genBaseStyle(sliderToken), genHorizontalStyle(sliderToken), genVerticalStyle(sliderToken)];
-}, prepareComponentToken);
+  return [genBaseStyle$1(sliderToken), genHorizontalStyle(sliderToken), genVerticalStyle(sliderToken)];
+}, prepareComponentToken$2);
 function useRafLock() {
   const [state, setState] = reactExports.useState(false);
   const rafRef = reactExports.useRef();
@@ -46739,7 +50199,7 @@ function useRafLock() {
   reactExports.useEffect(() => cleanup2, []);
   return [state, setDelayState];
 }
-var __rest = function(s2, e2) {
+var __rest$2 = function(s2, e2) {
   var t2 = {};
   for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
   if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
@@ -46772,7 +50232,7 @@ const Slider2 = /* @__PURE__ */ React.forwardRef((props, ref) => {
     tooltipPlacement: legacyTooltipPlacement,
     tooltip = {},
     onChangeComplete
-  } = props, restProps = __rest(props, ["prefixCls", "range", "className", "rootClassName", "style", "disabled", "tooltipPrefixCls", "tipFormatter", "tooltipVisible", "getTooltipPopupContainer", "tooltipPlacement", "tooltip", "onChangeComplete"]);
+  } = props, restProps = __rest$2(props, ["prefixCls", "range", "className", "rootClassName", "style", "disabled", "tooltipPrefixCls", "tipFormatter", "tooltipVisible", "getTooltipPopupContainer", "tooltipPlacement", "tooltip", "onChangeComplete"]);
   const {
     vertical
   } = props;
@@ -46812,7 +50272,7 @@ const Slider2 = /* @__PURE__ */ React.forwardRef((props, ref) => {
     return direction === "rtl" ? "left" : "right";
   };
   const prefixCls = getPrefixCls("slider", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$2(prefixCls);
   const cls = classNames(className, slider === null || slider === void 0 ? void 0 : slider.className, rootClassName, {
     [`${prefixCls}-rtl`]: direction === "rtl",
     [`${prefixCls}-lock`]: dragging
@@ -46922,187 +50382,8556 @@ const Slider2 = /* @__PURE__ */ React.forwardRef((props, ref) => {
     }))
   );
 });
-const getDesignToken = (config) => {
-  const theme2 = (config === null || config === void 0 ? void 0 : config.algorithm) ? createTheme(config.algorithm) : createTheme(derivative$2);
-  const mergedToken = Object.assign(Object.assign({}, seedToken), config === null || config === void 0 ? void 0 : config.token);
-  return getComputedToken$1(mergedToken, {
-    override: config === null || config === void 0 ? void 0 : config.token
-  }, theme2, formatToken);
-};
-function genSizeMapToken(token2) {
-  const {
-    sizeUnit,
-    sizeStep
-  } = token2;
-  const compactSizeStep = sizeStep - 2;
+var EXPAND_COLUMN = {};
+var INTERNAL_HOOKS = "rc-table-internal-hook";
+function createContext(defaultValue) {
+  var Context2 = /* @__PURE__ */ reactExports.createContext(void 0);
+  var Provider = function Provider2(_ref) {
+    var value = _ref.value, children = _ref.children;
+    var valueRef = reactExports.useRef(value);
+    valueRef.current = value;
+    var _React$useState = reactExports.useState(function() {
+      return {
+        getValue: function getValue2() {
+          return valueRef.current;
+        },
+        listeners: /* @__PURE__ */ new Set()
+      };
+    }), _React$useState2 = _slicedToArray(_React$useState, 1), context = _React$useState2[0];
+    useLayoutEffect$1(function() {
+      reactDomExports.unstable_batchedUpdates(function() {
+        context.listeners.forEach(function(listener) {
+          listener(value);
+        });
+      });
+    }, [value]);
+    return /* @__PURE__ */ reactExports.createElement(Context2.Provider, {
+      value: context
+    }, children);
+  };
   return {
-    sizeXXL: sizeUnit * (compactSizeStep + 10),
-    sizeXL: sizeUnit * (compactSizeStep + 6),
-    sizeLG: sizeUnit * (compactSizeStep + 2),
-    sizeMD: sizeUnit * (compactSizeStep + 2),
-    sizeMS: sizeUnit * (compactSizeStep + 1),
-    size: sizeUnit * compactSizeStep,
-    sizeSM: sizeUnit * compactSizeStep,
-    sizeXS: sizeUnit * (compactSizeStep - 1),
-    sizeXXS: sizeUnit * (compactSizeStep - 1)
+    Context: Context2,
+    Provider,
+    defaultValue
   };
 }
-const derivative$1 = (token2, mapToken) => {
-  const mergedMapToken = mapToken !== null && mapToken !== void 0 ? mapToken : derivative$2(token2);
-  const fontSize = mergedMapToken.fontSizeSM;
-  const controlHeight = mergedMapToken.controlHeight - 4;
-  return Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, mergedMapToken), genSizeMapToken(mapToken !== null && mapToken !== void 0 ? mapToken : token2)), genFontMapToken(fontSize)), {
-    // controlHeight
-    controlHeight
-  }), genControlHeight(Object.assign(Object.assign({}, mergedMapToken), {
-    controlHeight
-  })));
-};
-const getAlphaColor = (baseColor, alpha) => new TinyColor(baseColor).setAlpha(alpha).toRgbString();
-const getSolidColor = (baseColor, brightness) => {
-  const instance = new TinyColor(baseColor);
-  return instance.lighten(brightness).toHexString();
-};
-const generateColorPalettes = (baseColor) => {
-  const colors = generate$1(baseColor, {
-    theme: "dark"
-  });
-  return {
-    1: colors[0],
-    2: colors[1],
-    3: colors[2],
-    4: colors[3],
-    5: colors[6],
-    6: colors[5],
-    7: colors[4],
-    8: colors[6],
-    9: colors[5],
-    10: colors[4]
-    // 8: colors[9],
-    // 9: colors[8],
-    // 10: colors[7],
-  };
-};
-const generateNeutralColorPalettes = (bgBaseColor, textBaseColor) => {
-  const colorBgBase = bgBaseColor || "#000";
-  const colorTextBase = textBaseColor || "#fff";
-  return {
-    colorBgBase,
-    colorTextBase,
-    colorText: getAlphaColor(colorTextBase, 0.85),
-    colorTextSecondary: getAlphaColor(colorTextBase, 0.65),
-    colorTextTertiary: getAlphaColor(colorTextBase, 0.45),
-    colorTextQuaternary: getAlphaColor(colorTextBase, 0.25),
-    colorFill: getAlphaColor(colorTextBase, 0.18),
-    colorFillSecondary: getAlphaColor(colorTextBase, 0.12),
-    colorFillTertiary: getAlphaColor(colorTextBase, 0.08),
-    colorFillQuaternary: getAlphaColor(colorTextBase, 0.04),
-    colorBgElevated: getSolidColor(colorBgBase, 12),
-    colorBgContainer: getSolidColor(colorBgBase, 8),
-    colorBgLayout: getSolidColor(colorBgBase, 0),
-    colorBgSpotlight: getSolidColor(colorBgBase, 26),
-    colorBgBlur: getAlphaColor(colorTextBase, 0.04),
-    colorBorder: getSolidColor(colorBgBase, 26),
-    colorBorderSecondary: getSolidColor(colorBgBase, 19)
-  };
-};
-const derivative = (token2, mapToken) => {
-  const colorPalettes = Object.keys(defaultPresetColors).map((colorKey) => {
-    const colors = generate$1(token2[colorKey], {
-      theme: "dark"
+function useContext(holder, selector) {
+  var eventSelector = useEvent(typeof selector === "function" ? selector : function(ctx) {
+    if (selector === void 0) {
+      return ctx;
+    }
+    if (!Array.isArray(selector)) {
+      return ctx[selector];
+    }
+    var obj = {};
+    selector.forEach(function(key) {
+      obj[key] = ctx[key];
     });
-    return new Array(10).fill(1).reduce((prev2, _, i2) => {
-      prev2[`${colorKey}-${i2 + 1}`] = colors[i2];
-      prev2[`${colorKey}${i2 + 1}`] = colors[i2];
-      return prev2;
-    }, {});
-  }).reduce((prev2, cur) => {
-    prev2 = Object.assign(Object.assign({}, prev2), cur);
-    return prev2;
-  }, {});
-  const mergedMapToken = mapToken !== null && mapToken !== void 0 ? mapToken : derivative$2(token2);
-  return Object.assign(Object.assign(Object.assign({}, mergedMapToken), colorPalettes), genColorMapToken(token2, {
-    generateColorPalettes,
-    generateNeutralColorPalettes
-  }));
-};
-function useToken() {
-  const [theme2, token2, hashId] = useToken$1();
-  return {
-    theme: theme2,
-    token: token2,
-    hashId
-  };
-}
-const theme = {
-  /** @private Test Usage. Do not use in production. */
-  defaultConfig,
-  /** Default seedToken */
-  defaultSeed: defaultConfig.token,
-  useToken,
-  defaultAlgorithm: derivative$2,
-  darkAlgorithm: derivative,
-  compactAlgorithm: derivative$1,
-  getDesignToken
-};
-const onFinishFailed = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
-const ajax_url = tsteam_settings.ajax_url;
-const admin_url = tsteam_settings.admin_url;
-const createShowcase = (data) => {
-  jQuery.post(
-    ajax_url,
-    {
-      _ajax_nonce: tsteam_settings.nonce,
-      action: "tsteam_showcase/create_showcase",
-      title: data.title
-    },
-    function(response) {
-      if (response.success) {
-        window.location.href = `${admin_url}edit.php?post_type=tsteam-showcase&path=admin`;
-      } else {
-        console.log("Error:", response);
+    return obj;
+  });
+  var context = reactExports.useContext(holder === null || holder === void 0 ? void 0 : holder.Context);
+  var _ref2 = context || {}, listeners = _ref2.listeners, getValue2 = _ref2.getValue;
+  var valueRef = reactExports.useRef();
+  valueRef.current = eventSelector(context ? getValue2() : holder === null || holder === void 0 ? void 0 : holder.defaultValue);
+  var _React$useState3 = reactExports.useState({}), _React$useState4 = _slicedToArray(_React$useState3, 2), forceUpdate = _React$useState4[1];
+  useLayoutEffect$1(function() {
+    if (!context) {
+      return;
+    }
+    function trigger(nextValue) {
+      var nextSelectorValue = eventSelector(nextValue);
+      if (!isEqual(valueRef.current, nextSelectorValue, true)) {
+        forceUpdate({});
       }
     }
-  );
-};
-function AddNew() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    Form2,
-    {
-      initialValues: {
-        remember: true
-      },
-      onFinish: createShowcase,
-      onFinishFailed,
-      autoComplete: "off",
-      layout: "vertical",
-      children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Form2.Item,
-          {
-            label: "Showcase Name",
-            name: "title",
-            rules: [
-              {
-                required: true,
-                message: "Please input your username!"
-              }
-            ],
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Input, {})
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Form2.Item,
-          {
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { type: "primary", htmlType: "submit", children: "Create Showcase" })
-          }
-        )
-      ]
-    }
-  ) });
+    listeners.add(trigger);
+    return function() {
+      listeners.delete(trigger);
+    };
+  }, [context]);
+  return valueRef.current;
 }
+function createImmutable() {
+  var ImmutableContext = /* @__PURE__ */ reactExports.createContext(null);
+  function useImmutableMark2() {
+    return reactExports.useContext(ImmutableContext);
+  }
+  function makeImmutable2(Component, shouldTriggerRender) {
+    var refAble = supportRef(Component);
+    var ImmutableComponent = function ImmutableComponent2(props, ref) {
+      var refProps = refAble ? {
+        ref
+      } : {};
+      var renderTimesRef = reactExports.useRef(0);
+      var prevProps = reactExports.useRef(props);
+      var mark = useImmutableMark2();
+      if (mark !== null) {
+        return /* @__PURE__ */ reactExports.createElement(Component, _extends({}, props, refProps));
+      }
+      if (
+        // Always trigger re-render if not provide `notTriggerRender`
+        !shouldTriggerRender || shouldTriggerRender(prevProps.current, props)
+      ) {
+        renderTimesRef.current += 1;
+      }
+      prevProps.current = props;
+      return /* @__PURE__ */ reactExports.createElement(ImmutableContext.Provider, {
+        value: renderTimesRef.current
+      }, /* @__PURE__ */ reactExports.createElement(Component, _extends({}, props, refProps)));
+    };
+    return refAble ? /* @__PURE__ */ reactExports.forwardRef(ImmutableComponent) : ImmutableComponent;
+  }
+  function responseImmutable2(Component, propsAreEqual) {
+    var refAble = supportRef(Component);
+    var ImmutableComponent = function ImmutableComponent2(props, ref) {
+      var refProps = refAble ? {
+        ref
+      } : {};
+      useImmutableMark2();
+      return /* @__PURE__ */ reactExports.createElement(Component, _extends({}, props, refProps));
+    };
+    return refAble ? /* @__PURE__ */ reactExports.memo(/* @__PURE__ */ reactExports.forwardRef(ImmutableComponent), propsAreEqual) : /* @__PURE__ */ reactExports.memo(ImmutableComponent, propsAreEqual);
+  }
+  return {
+    makeImmutable: makeImmutable2,
+    responseImmutable: responseImmutable2,
+    useImmutableMark: useImmutableMark2
+  };
+}
+var _createImmutable = createImmutable(), makeImmutable = _createImmutable.makeImmutable, responseImmutable = _createImmutable.responseImmutable, useImmutableMark = _createImmutable.useImmutableMark;
+var TableContext = createContext();
+var PerfContext = /* @__PURE__ */ reactExports.createContext({
+  renderWithProps: false
+});
+var INTERNAL_KEY_PREFIX = "RC_TABLE_KEY";
+function toArray(arr) {
+  if (arr === void 0 || arr === null) {
+    return [];
+  }
+  return Array.isArray(arr) ? arr : [arr];
+}
+function getColumnsKey(columns2) {
+  var columnKeys = [];
+  var keys2 = {};
+  columns2.forEach(function(column2) {
+    var _ref = column2 || {}, key = _ref.key, dataIndex = _ref.dataIndex;
+    var mergedKey = key || toArray(dataIndex).join("-") || INTERNAL_KEY_PREFIX;
+    while (keys2[mergedKey]) {
+      mergedKey = "".concat(mergedKey, "_next");
+    }
+    keys2[mergedKey] = true;
+    columnKeys.push(mergedKey);
+  });
+  return columnKeys;
+}
+function validateValue(val) {
+  return val !== null && val !== void 0;
+}
+function isRenderCell(data) {
+  return data && _typeof(data) === "object" && !Array.isArray(data) && !/* @__PURE__ */ reactExports.isValidElement(data);
+}
+function useCellRender(record, dataIndex, renderIndex, children, render2, shouldCellUpdate) {
+  var perfRecord = reactExports.useContext(PerfContext);
+  var mark = useImmutableMark();
+  var retData = useMemo(function() {
+    if (validateValue(children)) {
+      return [children];
+    }
+    var path2 = dataIndex === null || dataIndex === void 0 || dataIndex === "" ? [] : Array.isArray(dataIndex) ? dataIndex : [dataIndex];
+    var value = get(record, path2);
+    var returnChildNode = value;
+    var returnCellProps = void 0;
+    if (render2) {
+      var renderData = render2(value, record, renderIndex);
+      if (isRenderCell(renderData)) {
+        returnChildNode = renderData.children;
+        returnCellProps = renderData.props;
+        perfRecord.renderWithProps = true;
+      } else {
+        returnChildNode = renderData;
+      }
+    }
+    return [returnChildNode, returnCellProps];
+  }, [
+    // Force update deps
+    mark,
+    // Normal deps
+    record,
+    children,
+    dataIndex,
+    render2,
+    renderIndex
+  ], function(prev2, next2) {
+    if (shouldCellUpdate) {
+      var _prev = _slicedToArray(prev2, 2), prevRecord = _prev[1];
+      var _next = _slicedToArray(next2, 2), nextRecord = _next[1];
+      return shouldCellUpdate(nextRecord, prevRecord);
+    }
+    if (perfRecord.renderWithProps) {
+      return true;
+    }
+    return !isEqual(prev2, next2, true);
+  });
+  return retData;
+}
+function inHoverRange(cellStartRow, cellRowSpan, startRow, endRow) {
+  var cellEndRow = cellStartRow + cellRowSpan - 1;
+  return cellStartRow <= endRow && cellEndRow >= startRow;
+}
+function useHoverState(rowIndex, rowSpan) {
+  return useContext(TableContext, function(ctx) {
+    var hovering = inHoverRange(rowIndex, rowSpan || 1, ctx.hoverStartRow, ctx.hoverEndRow);
+    return [hovering, ctx.onHover];
+  });
+}
+var getTitleFromCellRenderChildren = function getTitleFromCellRenderChildren2(_ref) {
+  var ellipsis = _ref.ellipsis, rowType = _ref.rowType, children = _ref.children;
+  var title;
+  var ellipsisConfig = ellipsis === true ? {
+    showTitle: true
+  } : ellipsis;
+  if (ellipsisConfig && (ellipsisConfig.showTitle || rowType === "header")) {
+    if (typeof children === "string" || typeof children === "number") {
+      title = children.toString();
+    } else if (/* @__PURE__ */ reactExports.isValidElement(children) && typeof children.props.children === "string") {
+      title = children.props.children;
+    }
+  }
+  return title;
+};
+function Cell(props) {
+  var _ref2, _ref3, _legacyCellProps$colS, _ref4, _ref5, _legacyCellProps$rowS, _additionalProps$titl, _classNames;
+  var Component = props.component, children = props.children, ellipsis = props.ellipsis, scope = props.scope, prefixCls = props.prefixCls, className = props.className, align = props.align, record = props.record, render2 = props.render, dataIndex = props.dataIndex, renderIndex = props.renderIndex, shouldCellUpdate = props.shouldCellUpdate, index2 = props.index, rowType = props.rowType, colSpan = props.colSpan, rowSpan = props.rowSpan, fixLeft = props.fixLeft, fixRight = props.fixRight, firstFixLeft = props.firstFixLeft, lastFixLeft = props.lastFixLeft, firstFixRight = props.firstFixRight, lastFixRight = props.lastFixRight, appendNode = props.appendNode, _props$additionalProp = props.additionalProps, additionalProps = _props$additionalProp === void 0 ? {} : _props$additionalProp, isSticky = props.isSticky;
+  var cellPrefixCls = "".concat(prefixCls, "-cell");
+  var _useContext = useContext(TableContext, ["supportSticky", "allColumnsFixedLeft", "rowHoverable"]), supportSticky = _useContext.supportSticky, allColumnsFixedLeft = _useContext.allColumnsFixedLeft, rowHoverable = _useContext.rowHoverable;
+  var _useCellRender = useCellRender(record, dataIndex, renderIndex, children, render2, shouldCellUpdate), _useCellRender2 = _slicedToArray(_useCellRender, 2), childNode = _useCellRender2[0], legacyCellProps = _useCellRender2[1];
+  var fixedStyle = {};
+  var isFixLeft = typeof fixLeft === "number" && supportSticky;
+  var isFixRight = typeof fixRight === "number" && supportSticky;
+  if (isFixLeft) {
+    fixedStyle.position = "sticky";
+    fixedStyle.left = fixLeft;
+  }
+  if (isFixRight) {
+    fixedStyle.position = "sticky";
+    fixedStyle.right = fixRight;
+  }
+  var mergedColSpan = (_ref2 = (_ref3 = (_legacyCellProps$colS = legacyCellProps === null || legacyCellProps === void 0 ? void 0 : legacyCellProps.colSpan) !== null && _legacyCellProps$colS !== void 0 ? _legacyCellProps$colS : additionalProps.colSpan) !== null && _ref3 !== void 0 ? _ref3 : colSpan) !== null && _ref2 !== void 0 ? _ref2 : 1;
+  var mergedRowSpan = (_ref4 = (_ref5 = (_legacyCellProps$rowS = legacyCellProps === null || legacyCellProps === void 0 ? void 0 : legacyCellProps.rowSpan) !== null && _legacyCellProps$rowS !== void 0 ? _legacyCellProps$rowS : additionalProps.rowSpan) !== null && _ref5 !== void 0 ? _ref5 : rowSpan) !== null && _ref4 !== void 0 ? _ref4 : 1;
+  var _useHoverState = useHoverState(index2, mergedRowSpan), _useHoverState2 = _slicedToArray(_useHoverState, 2), hovering = _useHoverState2[0], onHover = _useHoverState2[1];
+  var onMouseEnter = useEvent(function(event) {
+    var _additionalProps$onMo;
+    if (record) {
+      onHover(index2, index2 + mergedRowSpan - 1);
+    }
+    additionalProps === null || additionalProps === void 0 || (_additionalProps$onMo = additionalProps.onMouseEnter) === null || _additionalProps$onMo === void 0 || _additionalProps$onMo.call(additionalProps, event);
+  });
+  var onMouseLeave = useEvent(function(event) {
+    var _additionalProps$onMo2;
+    if (record) {
+      onHover(-1, -1);
+    }
+    additionalProps === null || additionalProps === void 0 || (_additionalProps$onMo2 = additionalProps.onMouseLeave) === null || _additionalProps$onMo2 === void 0 || _additionalProps$onMo2.call(additionalProps, event);
+  });
+  if (mergedColSpan === 0 || mergedRowSpan === 0) {
+    return null;
+  }
+  var title = (_additionalProps$titl = additionalProps.title) !== null && _additionalProps$titl !== void 0 ? _additionalProps$titl : getTitleFromCellRenderChildren({
+    rowType,
+    ellipsis,
+    children: childNode
+  });
+  var mergedClassName = classNames(cellPrefixCls, className, (_classNames = {}, _defineProperty(_classNames, "".concat(cellPrefixCls, "-fix-left"), isFixLeft && supportSticky), _defineProperty(_classNames, "".concat(cellPrefixCls, "-fix-left-first"), firstFixLeft && supportSticky), _defineProperty(_classNames, "".concat(cellPrefixCls, "-fix-left-last"), lastFixLeft && supportSticky), _defineProperty(_classNames, "".concat(cellPrefixCls, "-fix-left-all"), lastFixLeft && allColumnsFixedLeft && supportSticky), _defineProperty(_classNames, "".concat(cellPrefixCls, "-fix-right"), isFixRight && supportSticky), _defineProperty(_classNames, "".concat(cellPrefixCls, "-fix-right-first"), firstFixRight && supportSticky), _defineProperty(_classNames, "".concat(cellPrefixCls, "-fix-right-last"), lastFixRight && supportSticky), _defineProperty(_classNames, "".concat(cellPrefixCls, "-ellipsis"), ellipsis), _defineProperty(_classNames, "".concat(cellPrefixCls, "-with-append"), appendNode), _defineProperty(_classNames, "".concat(cellPrefixCls, "-fix-sticky"), (isFixLeft || isFixRight) && isSticky && supportSticky), _defineProperty(_classNames, "".concat(cellPrefixCls, "-row-hover"), !legacyCellProps && hovering), _classNames), additionalProps.className, legacyCellProps === null || legacyCellProps === void 0 ? void 0 : legacyCellProps.className);
+  var alignStyle = {};
+  if (align) {
+    alignStyle.textAlign = align;
+  }
+  var mergedStyle = _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, fixedStyle), additionalProps.style), alignStyle), legacyCellProps === null || legacyCellProps === void 0 ? void 0 : legacyCellProps.style);
+  var mergedChildNode = childNode;
+  if (_typeof(mergedChildNode) === "object" && !Array.isArray(mergedChildNode) && !/* @__PURE__ */ reactExports.isValidElement(mergedChildNode)) {
+    mergedChildNode = null;
+  }
+  if (ellipsis && (lastFixLeft || firstFixRight)) {
+    mergedChildNode = /* @__PURE__ */ reactExports.createElement("span", {
+      className: "".concat(cellPrefixCls, "-content")
+    }, mergedChildNode);
+  }
+  return /* @__PURE__ */ reactExports.createElement(Component, _extends({}, legacyCellProps, additionalProps, {
+    className: mergedClassName,
+    style: mergedStyle,
+    title,
+    scope,
+    onMouseEnter: rowHoverable ? onMouseEnter : void 0,
+    onMouseLeave: rowHoverable ? onMouseLeave : void 0,
+    colSpan: mergedColSpan !== 1 ? mergedColSpan : null,
+    rowSpan: mergedRowSpan !== 1 ? mergedRowSpan : null
+  }), appendNode, mergedChildNode);
+}
+const Cell$1 = /* @__PURE__ */ reactExports.memo(Cell);
+function getCellFixedInfo(colStart, colEnd, columns2, stickyOffsets, direction) {
+  var startColumn = columns2[colStart] || {};
+  var endColumn = columns2[colEnd] || {};
+  var fixLeft;
+  var fixRight;
+  if (startColumn.fixed === "left") {
+    fixLeft = stickyOffsets.left[direction === "rtl" ? colEnd : colStart];
+  } else if (endColumn.fixed === "right") {
+    fixRight = stickyOffsets.right[direction === "rtl" ? colStart : colEnd];
+  }
+  var lastFixLeft = false;
+  var firstFixRight = false;
+  var lastFixRight = false;
+  var firstFixLeft = false;
+  var nextColumn = columns2[colEnd + 1];
+  var prevColumn = columns2[colStart - 1];
+  var canLastFix = nextColumn && !nextColumn.fixed || prevColumn && !prevColumn.fixed || columns2.every(function(col) {
+    return col.fixed === "left";
+  });
+  if (direction === "rtl") {
+    if (fixLeft !== void 0) {
+      var prevFixLeft = prevColumn && prevColumn.fixed === "left";
+      firstFixLeft = !prevFixLeft && canLastFix;
+    } else if (fixRight !== void 0) {
+      var nextFixRight = nextColumn && nextColumn.fixed === "right";
+      lastFixRight = !nextFixRight && canLastFix;
+    }
+  } else if (fixLeft !== void 0) {
+    var nextFixLeft = nextColumn && nextColumn.fixed === "left";
+    lastFixLeft = !nextFixLeft && canLastFix;
+  } else if (fixRight !== void 0) {
+    var prevFixRight = prevColumn && prevColumn.fixed === "right";
+    firstFixRight = !prevFixRight && canLastFix;
+  }
+  return {
+    fixLeft,
+    fixRight,
+    lastFixLeft,
+    firstFixRight,
+    lastFixRight,
+    firstFixLeft,
+    isSticky: stickyOffsets.isSticky
+  };
+}
+var SummaryContext = /* @__PURE__ */ reactExports.createContext({});
+function SummaryCell(_ref) {
+  var className = _ref.className, index2 = _ref.index, children = _ref.children, _ref$colSpan = _ref.colSpan, colSpan = _ref$colSpan === void 0 ? 1 : _ref$colSpan, rowSpan = _ref.rowSpan, align = _ref.align;
+  var _useContext = useContext(TableContext, ["prefixCls", "direction"]), prefixCls = _useContext.prefixCls, direction = _useContext.direction;
+  var _React$useContext = reactExports.useContext(SummaryContext), scrollColumnIndex = _React$useContext.scrollColumnIndex, stickyOffsets = _React$useContext.stickyOffsets, flattenColumns = _React$useContext.flattenColumns;
+  var lastIndex = index2 + colSpan - 1;
+  var mergedColSpan = lastIndex + 1 === scrollColumnIndex ? colSpan + 1 : colSpan;
+  var fixedInfo = getCellFixedInfo(index2, index2 + mergedColSpan - 1, flattenColumns, stickyOffsets, direction);
+  return /* @__PURE__ */ reactExports.createElement(Cell$1, _extends({
+    className,
+    index: index2,
+    component: "td",
+    prefixCls,
+    record: null,
+    dataIndex: null,
+    align,
+    colSpan: mergedColSpan,
+    rowSpan,
+    render: function render2() {
+      return children;
+    }
+  }, fixedInfo));
+}
+var _excluded$8 = ["children"];
+function FooterRow(_ref) {
+  var children = _ref.children, props = _objectWithoutProperties(_ref, _excluded$8);
+  return /* @__PURE__ */ reactExports.createElement("tr", props, children);
+}
+function Summary(_ref) {
+  var children = _ref.children;
+  return children;
+}
+Summary.Row = FooterRow;
+Summary.Cell = SummaryCell;
+function Footer(props) {
+  var children = props.children, stickyOffsets = props.stickyOffsets, flattenColumns = props.flattenColumns;
+  var prefixCls = useContext(TableContext, "prefixCls");
+  var lastColumnIndex = flattenColumns.length - 1;
+  var scrollColumn = flattenColumns[lastColumnIndex];
+  var summaryContext = reactExports.useMemo(function() {
+    return {
+      stickyOffsets,
+      flattenColumns,
+      scrollColumnIndex: scrollColumn !== null && scrollColumn !== void 0 && scrollColumn.scrollbar ? lastColumnIndex : null
+    };
+  }, [scrollColumn, flattenColumns, lastColumnIndex, stickyOffsets]);
+  return /* @__PURE__ */ reactExports.createElement(SummaryContext.Provider, {
+    value: summaryContext
+  }, /* @__PURE__ */ reactExports.createElement("tfoot", {
+    className: "".concat(prefixCls, "-summary")
+  }, children));
+}
+const Footer$1 = responseImmutable(Footer);
+var FooterComponents = Summary;
+function Column$1(_) {
+  return null;
+}
+function ColumnGroup$1(_) {
+  return null;
+}
+function fillRecords(list, record, indent, childrenColumnName, expandedKeys, getRowKey, index2) {
+  list.push({
+    record,
+    indent,
+    index: index2
+  });
+  var key = getRowKey(record);
+  var expanded = expandedKeys === null || expandedKeys === void 0 ? void 0 : expandedKeys.has(key);
+  if (record && Array.isArray(record[childrenColumnName]) && expanded) {
+    for (var i2 = 0; i2 < record[childrenColumnName].length; i2 += 1) {
+      fillRecords(list, record[childrenColumnName][i2], indent + 1, childrenColumnName, expandedKeys, getRowKey, i2);
+    }
+  }
+}
+function useFlattenRecords(data, childrenColumnName, expandedKeys, getRowKey) {
+  var arr = reactExports.useMemo(function() {
+    if (expandedKeys !== null && expandedKeys !== void 0 && expandedKeys.size) {
+      var list = [];
+      for (var i2 = 0; i2 < (data === null || data === void 0 ? void 0 : data.length); i2 += 1) {
+        var record = data[i2];
+        fillRecords(list, record, 0, childrenColumnName, expandedKeys, getRowKey, i2);
+      }
+      return list;
+    }
+    return data === null || data === void 0 ? void 0 : data.map(function(item, index2) {
+      return {
+        record: item,
+        indent: 0,
+        index: index2
+      };
+    });
+  }, [data, childrenColumnName, expandedKeys, getRowKey]);
+  return arr;
+}
+function useRowInfo(record, rowKey, recordIndex, indent) {
+  var context = useContext(TableContext, ["prefixCls", "fixedInfoList", "flattenColumns", "expandableType", "expandRowByClick", "onTriggerExpand", "rowClassName", "expandedRowClassName", "indentSize", "expandIcon", "expandedRowRender", "expandIconColumnIndex", "expandedKeys", "childrenColumnName", "rowExpandable", "onRow"]);
+  var flattenColumns = context.flattenColumns, expandableType = context.expandableType, expandedKeys = context.expandedKeys, childrenColumnName = context.childrenColumnName, onTriggerExpand = context.onTriggerExpand, rowExpandable = context.rowExpandable, onRow = context.onRow, expandRowByClick = context.expandRowByClick, rowClassName = context.rowClassName;
+  var nestExpandable = expandableType === "nest";
+  var rowSupportExpand = expandableType === "row" && (!rowExpandable || rowExpandable(record));
+  var mergedExpandable = rowSupportExpand || nestExpandable;
+  var expanded = expandedKeys && expandedKeys.has(rowKey);
+  var hasNestChildren = childrenColumnName && record && record[childrenColumnName];
+  var onInternalTriggerExpand = useEvent(onTriggerExpand);
+  var rowProps = onRow === null || onRow === void 0 ? void 0 : onRow(record, recordIndex);
+  var onRowClick = rowProps === null || rowProps === void 0 ? void 0 : rowProps.onClick;
+  var onClick = function onClick2(event) {
+    if (expandRowByClick && mergedExpandable) {
+      onTriggerExpand(record, event);
+    }
+    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+    onRowClick === null || onRowClick === void 0 || onRowClick.apply(void 0, [event].concat(args));
+  };
+  var computeRowClassName;
+  if (typeof rowClassName === "string") {
+    computeRowClassName = rowClassName;
+  } else if (typeof rowClassName === "function") {
+    computeRowClassName = rowClassName(record, recordIndex, indent);
+  }
+  var columnsKey = getColumnsKey(flattenColumns);
+  return _objectSpread2(_objectSpread2({}, context), {}, {
+    columnsKey,
+    nestExpandable,
+    expanded,
+    hasNestChildren,
+    record,
+    onTriggerExpand: onInternalTriggerExpand,
+    rowSupportExpand,
+    expandable: mergedExpandable,
+    rowProps: _objectSpread2(_objectSpread2({}, rowProps), {}, {
+      className: classNames(computeRowClassName, rowProps === null || rowProps === void 0 ? void 0 : rowProps.className),
+      onClick
+    })
+  });
+}
+function ExpandedRow(props) {
+  var prefixCls = props.prefixCls, children = props.children, Component = props.component, cellComponent = props.cellComponent, className = props.className, expanded = props.expanded, colSpan = props.colSpan, isEmpty2 = props.isEmpty;
+  var _useContext = useContext(TableContext, ["scrollbarSize", "fixHeader", "fixColumn", "componentWidth", "horizonScroll"]), scrollbarSize = _useContext.scrollbarSize, fixHeader = _useContext.fixHeader, fixColumn = _useContext.fixColumn, componentWidth = _useContext.componentWidth, horizonScroll = _useContext.horizonScroll;
+  var contentNode = children;
+  if (isEmpty2 ? horizonScroll && componentWidth : fixColumn) {
+    contentNode = /* @__PURE__ */ reactExports.createElement("div", {
+      style: {
+        width: componentWidth - (fixHeader ? scrollbarSize : 0),
+        position: "sticky",
+        left: 0,
+        overflow: "hidden"
+      },
+      className: "".concat(prefixCls, "-expanded-row-fixed")
+    }, contentNode);
+  }
+  return /* @__PURE__ */ reactExports.createElement(Component, {
+    className,
+    style: {
+      display: expanded ? null : "none"
+    }
+  }, /* @__PURE__ */ reactExports.createElement(Cell$1, {
+    component: cellComponent,
+    prefixCls,
+    colSpan
+  }, contentNode));
+}
+function getCellProps(rowInfo, column2, colIndex, indent, index2) {
+  var record = rowInfo.record, prefixCls = rowInfo.prefixCls, columnsKey = rowInfo.columnsKey, fixedInfoList = rowInfo.fixedInfoList, expandIconColumnIndex = rowInfo.expandIconColumnIndex, nestExpandable = rowInfo.nestExpandable, indentSize = rowInfo.indentSize, expandIcon = rowInfo.expandIcon, expanded = rowInfo.expanded, hasNestChildren = rowInfo.hasNestChildren, onTriggerExpand = rowInfo.onTriggerExpand;
+  var key = columnsKey[colIndex];
+  var fixedInfo = fixedInfoList[colIndex];
+  var appendCellNode;
+  if (colIndex === (expandIconColumnIndex || 0) && nestExpandable) {
+    appendCellNode = /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("span", {
+      style: {
+        paddingLeft: "".concat(indentSize * indent, "px")
+      },
+      className: "".concat(prefixCls, "-row-indent indent-level-").concat(indent)
+    }), expandIcon({
+      prefixCls,
+      expanded,
+      expandable: hasNestChildren,
+      record,
+      onExpand: onTriggerExpand
+    }));
+  }
+  var additionalCellProps;
+  if (column2.onCell) {
+    additionalCellProps = column2.onCell(record, index2);
+  }
+  return {
+    key,
+    fixedInfo,
+    appendCellNode,
+    additionalCellProps: additionalCellProps || {}
+  };
+}
+function BodyRow(props) {
+  var className = props.className, style2 = props.style, record = props.record, index2 = props.index, renderIndex = props.renderIndex, rowKey = props.rowKey, _props$indent = props.indent, indent = _props$indent === void 0 ? 0 : _props$indent, RowComponent = props.rowComponent, cellComponent = props.cellComponent, scopeCellComponent = props.scopeCellComponent;
+  var rowInfo = useRowInfo(record, rowKey, index2, indent);
+  var prefixCls = rowInfo.prefixCls, flattenColumns = rowInfo.flattenColumns, expandedRowClassName = rowInfo.expandedRowClassName, expandedRowRender = rowInfo.expandedRowRender, rowProps = rowInfo.rowProps, expanded = rowInfo.expanded, rowSupportExpand = rowInfo.rowSupportExpand;
+  var expandedRef = reactExports.useRef(false);
+  expandedRef.current || (expandedRef.current = expanded);
+  var computedExpandedRowClassName = expandedRowClassName && expandedRowClassName(record, index2, indent);
+  var baseRowNode = /* @__PURE__ */ reactExports.createElement(RowComponent, _extends({}, rowProps, {
+    "data-row-key": rowKey,
+    className: classNames(className, "".concat(prefixCls, "-row"), "".concat(prefixCls, "-row-level-").concat(indent), rowProps === null || rowProps === void 0 ? void 0 : rowProps.className, indent >= 1 ? computedExpandedRowClassName : ""),
+    style: _objectSpread2(_objectSpread2({}, style2), rowProps === null || rowProps === void 0 ? void 0 : rowProps.style)
+  }), flattenColumns.map(function(column2, colIndex) {
+    var render2 = column2.render, dataIndex = column2.dataIndex, columnClassName = column2.className;
+    var _getCellProps = getCellProps(rowInfo, column2, colIndex, indent, index2), key = _getCellProps.key, fixedInfo = _getCellProps.fixedInfo, appendCellNode = _getCellProps.appendCellNode, additionalCellProps = _getCellProps.additionalCellProps;
+    return /* @__PURE__ */ reactExports.createElement(Cell$1, _extends({
+      className: columnClassName,
+      ellipsis: column2.ellipsis,
+      align: column2.align,
+      scope: column2.rowScope,
+      component: column2.rowScope ? scopeCellComponent : cellComponent,
+      prefixCls,
+      key,
+      record,
+      index: index2,
+      renderIndex,
+      dataIndex,
+      render: render2,
+      shouldCellUpdate: column2.shouldCellUpdate
+    }, fixedInfo, {
+      appendNode: appendCellNode,
+      additionalProps: additionalCellProps
+    }));
+  }));
+  var expandRowNode;
+  if (rowSupportExpand && (expandedRef.current || expanded)) {
+    var expandContent = expandedRowRender(record, index2, indent + 1, expanded);
+    expandRowNode = /* @__PURE__ */ reactExports.createElement(ExpandedRow, {
+      expanded,
+      className: classNames("".concat(prefixCls, "-expanded-row"), "".concat(prefixCls, "-expanded-row-level-").concat(indent + 1), computedExpandedRowClassName),
+      prefixCls,
+      component: RowComponent,
+      cellComponent,
+      colSpan: flattenColumns.length,
+      isEmpty: false
+    }, expandContent);
+  }
+  return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, baseRowNode, expandRowNode);
+}
+const BodyRow$1 = responseImmutable(BodyRow);
+function MeasureCell(_ref) {
+  var columnKey = _ref.columnKey, onColumnResize = _ref.onColumnResize;
+  var cellRef = reactExports.useRef();
+  reactExports.useEffect(function() {
+    if (cellRef.current) {
+      onColumnResize(columnKey, cellRef.current.offsetWidth);
+    }
+  }, []);
+  return /* @__PURE__ */ reactExports.createElement(RefResizeObserver, {
+    data: columnKey
+  }, /* @__PURE__ */ reactExports.createElement("td", {
+    ref: cellRef,
+    style: {
+      padding: 0,
+      border: 0,
+      height: 0
+    }
+  }, /* @__PURE__ */ reactExports.createElement("div", {
+    style: {
+      height: 0,
+      overflow: "hidden"
+    }
+  }, " ")));
+}
+function MeasureRow(_ref) {
+  var prefixCls = _ref.prefixCls, columnsKey = _ref.columnsKey, onColumnResize = _ref.onColumnResize;
+  return /* @__PURE__ */ reactExports.createElement("tr", {
+    "aria-hidden": "true",
+    className: "".concat(prefixCls, "-measure-row"),
+    style: {
+      height: 0,
+      fontSize: 0
+    }
+  }, /* @__PURE__ */ reactExports.createElement(RefResizeObserver.Collection, {
+    onBatchResize: function onBatchResize(infoList) {
+      infoList.forEach(function(_ref2) {
+        var columnKey = _ref2.data, size = _ref2.size;
+        onColumnResize(columnKey, size.offsetWidth);
+      });
+    }
+  }, columnsKey.map(function(columnKey) {
+    return /* @__PURE__ */ reactExports.createElement(MeasureCell, {
+      key: columnKey,
+      columnKey,
+      onColumnResize
+    });
+  })));
+}
+function Body(props) {
+  var data = props.data, measureColumnWidth = props.measureColumnWidth;
+  var _useContext = useContext(TableContext, ["prefixCls", "getComponent", "onColumnResize", "flattenColumns", "getRowKey", "expandedKeys", "childrenColumnName", "emptyNode"]), prefixCls = _useContext.prefixCls, getComponent = _useContext.getComponent, onColumnResize = _useContext.onColumnResize, flattenColumns = _useContext.flattenColumns, getRowKey = _useContext.getRowKey, expandedKeys = _useContext.expandedKeys, childrenColumnName = _useContext.childrenColumnName, emptyNode = _useContext.emptyNode;
+  var flattenData2 = useFlattenRecords(data, childrenColumnName, expandedKeys, getRowKey);
+  var perfRef = reactExports.useRef({
+    renderWithProps: false
+  });
+  var WrapperComponent = getComponent(["body", "wrapper"], "tbody");
+  var trComponent = getComponent(["body", "row"], "tr");
+  var tdComponent = getComponent(["body", "cell"], "td");
+  var thComponent = getComponent(["body", "cell"], "th");
+  var rows;
+  if (data.length) {
+    rows = flattenData2.map(function(item, idx) {
+      var record = item.record, indent = item.indent, renderIndex = item.index;
+      var key = getRowKey(record, idx);
+      return /* @__PURE__ */ reactExports.createElement(BodyRow$1, {
+        key,
+        rowKey: key,
+        record,
+        index: idx,
+        renderIndex,
+        rowComponent: trComponent,
+        cellComponent: tdComponent,
+        scopeCellComponent: thComponent,
+        getRowKey,
+        indent
+      });
+    });
+  } else {
+    rows = /* @__PURE__ */ reactExports.createElement(ExpandedRow, {
+      expanded: true,
+      className: "".concat(prefixCls, "-placeholder"),
+      prefixCls,
+      component: trComponent,
+      cellComponent: tdComponent,
+      colSpan: flattenColumns.length,
+      isEmpty: true
+    }, emptyNode);
+  }
+  var columnsKey = getColumnsKey(flattenColumns);
+  return /* @__PURE__ */ reactExports.createElement(PerfContext.Provider, {
+    value: perfRef.current
+  }, /* @__PURE__ */ reactExports.createElement(WrapperComponent, {
+    className: "".concat(prefixCls, "-tbody")
+  }, measureColumnWidth && /* @__PURE__ */ reactExports.createElement(MeasureRow, {
+    prefixCls,
+    columnsKey,
+    onColumnResize
+  }), rows));
+}
+const Body$1 = responseImmutable(Body);
+var _excluded$7 = ["expandable"];
+var INTERNAL_COL_DEFINE = "RC_TABLE_INTERNAL_COL_DEFINE";
+function getExpandableProps(props) {
+  var expandable = props.expandable, legacyExpandableConfig = _objectWithoutProperties(props, _excluded$7);
+  var config;
+  if ("expandable" in props) {
+    config = _objectSpread2(_objectSpread2({}, legacyExpandableConfig), expandable);
+  } else {
+    config = legacyExpandableConfig;
+  }
+  if (config.showExpandColumn === false) {
+    config.expandIconColumnIndex = -1;
+  }
+  return config;
+}
+var _excluded$6 = ["columnType"];
+function ColGroup(_ref) {
+  var colWidths = _ref.colWidths, columns2 = _ref.columns, columCount = _ref.columCount;
+  var cols = [];
+  var len = columCount || columns2.length;
+  var mustInsert = false;
+  for (var i2 = len - 1; i2 >= 0; i2 -= 1) {
+    var width = colWidths[i2];
+    var column2 = columns2 && columns2[i2];
+    var additionalProps = column2 && column2[INTERNAL_COL_DEFINE];
+    if (width || additionalProps || mustInsert) {
+      var _ref2 = additionalProps || {};
+      _ref2.columnType;
+      var restAdditionalProps = _objectWithoutProperties(_ref2, _excluded$6);
+      cols.unshift(/* @__PURE__ */ reactExports.createElement("col", _extends({
+        key: i2,
+        style: {
+          width
+        }
+      }, restAdditionalProps)));
+      mustInsert = true;
+    }
+  }
+  return /* @__PURE__ */ reactExports.createElement("colgroup", null, cols);
+}
+var _excluded$5 = ["className", "noData", "columns", "flattenColumns", "colWidths", "columCount", "stickyOffsets", "direction", "fixHeader", "stickyTopOffset", "stickyBottomOffset", "stickyClassName", "onScroll", "maxContentScroll", "children"];
+function useColumnWidth(colWidths, columCount) {
+  return reactExports.useMemo(function() {
+    var cloneColumns = [];
+    for (var i2 = 0; i2 < columCount; i2 += 1) {
+      var val = colWidths[i2];
+      if (val !== void 0) {
+        cloneColumns[i2] = val;
+      } else {
+        return null;
+      }
+    }
+    return cloneColumns;
+  }, [colWidths.join("_"), columCount]);
+}
+var FixedHolder = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+  var className = props.className, noData = props.noData, columns2 = props.columns, flattenColumns = props.flattenColumns, colWidths = props.colWidths, columCount = props.columCount, stickyOffsets = props.stickyOffsets, direction = props.direction, fixHeader = props.fixHeader, stickyTopOffset = props.stickyTopOffset, stickyBottomOffset = props.stickyBottomOffset, stickyClassName = props.stickyClassName, onScroll = props.onScroll, maxContentScroll = props.maxContentScroll, children = props.children, restProps = _objectWithoutProperties(props, _excluded$5);
+  var _useContext = useContext(TableContext, ["prefixCls", "scrollbarSize", "isSticky", "getComponent"]), prefixCls = _useContext.prefixCls, scrollbarSize = _useContext.scrollbarSize, isSticky = _useContext.isSticky, getComponent = _useContext.getComponent;
+  var TableComponent = getComponent(["header", "table"], "table");
+  var combinationScrollBarSize = isSticky && !fixHeader ? 0 : scrollbarSize;
+  var scrollRef = reactExports.useRef(null);
+  var setScrollRef = reactExports.useCallback(function(element) {
+    fillRef(ref, element);
+    fillRef(scrollRef, element);
+  }, []);
+  reactExports.useEffect(function() {
+    var _scrollRef$current;
+    function onWheel(e2) {
+      var _ref = e2, currentTarget = _ref.currentTarget, deltaX = _ref.deltaX;
+      if (deltaX) {
+        onScroll({
+          currentTarget,
+          scrollLeft: currentTarget.scrollLeft + deltaX
+        });
+        e2.preventDefault();
+      }
+    }
+    (_scrollRef$current = scrollRef.current) === null || _scrollRef$current === void 0 || _scrollRef$current.addEventListener("wheel", onWheel, {
+      passive: false
+    });
+    return function() {
+      var _scrollRef$current2;
+      (_scrollRef$current2 = scrollRef.current) === null || _scrollRef$current2 === void 0 || _scrollRef$current2.removeEventListener("wheel", onWheel);
+    };
+  }, []);
+  var allFlattenColumnsWithWidth = reactExports.useMemo(function() {
+    return flattenColumns.every(function(column2) {
+      return column2.width;
+    });
+  }, [flattenColumns]);
+  var lastColumn = flattenColumns[flattenColumns.length - 1];
+  var ScrollBarColumn = {
+    fixed: lastColumn ? lastColumn.fixed : null,
+    scrollbar: true,
+    onHeaderCell: function onHeaderCell() {
+      return {
+        className: "".concat(prefixCls, "-cell-scrollbar")
+      };
+    }
+  };
+  var columnsWithScrollbar = reactExports.useMemo(function() {
+    return combinationScrollBarSize ? [].concat(_toConsumableArray(columns2), [ScrollBarColumn]) : columns2;
+  }, [combinationScrollBarSize, columns2]);
+  var flattenColumnsWithScrollbar = reactExports.useMemo(function() {
+    return combinationScrollBarSize ? [].concat(_toConsumableArray(flattenColumns), [ScrollBarColumn]) : flattenColumns;
+  }, [combinationScrollBarSize, flattenColumns]);
+  var headerStickyOffsets = reactExports.useMemo(function() {
+    var right = stickyOffsets.right, left = stickyOffsets.left;
+    return _objectSpread2(_objectSpread2({}, stickyOffsets), {}, {
+      left: direction === "rtl" ? [].concat(_toConsumableArray(left.map(function(width) {
+        return width + combinationScrollBarSize;
+      })), [0]) : left,
+      right: direction === "rtl" ? right : [].concat(_toConsumableArray(right.map(function(width) {
+        return width + combinationScrollBarSize;
+      })), [0]),
+      isSticky
+    });
+  }, [combinationScrollBarSize, stickyOffsets, isSticky]);
+  var mergedColumnWidth = useColumnWidth(colWidths, columCount);
+  return /* @__PURE__ */ reactExports.createElement("div", {
+    style: _objectSpread2({
+      overflow: "hidden"
+    }, isSticky ? {
+      top: stickyTopOffset,
+      bottom: stickyBottomOffset
+    } : {}),
+    ref: setScrollRef,
+    className: classNames(className, _defineProperty({}, stickyClassName, !!stickyClassName))
+  }, /* @__PURE__ */ reactExports.createElement(TableComponent, {
+    style: {
+      tableLayout: "fixed",
+      visibility: noData || mergedColumnWidth ? null : "hidden"
+    }
+  }, (!noData || !maxContentScroll || allFlattenColumnsWithWidth) && /* @__PURE__ */ reactExports.createElement(ColGroup, {
+    colWidths: mergedColumnWidth ? [].concat(_toConsumableArray(mergedColumnWidth), [combinationScrollBarSize]) : [],
+    columCount: columCount + 1,
+    columns: flattenColumnsWithScrollbar
+  }), children(_objectSpread2(_objectSpread2({}, restProps), {}, {
+    stickyOffsets: headerStickyOffsets,
+    columns: columnsWithScrollbar,
+    flattenColumns: flattenColumnsWithScrollbar
+  }))));
+});
+const FixedHolder$1 = /* @__PURE__ */ reactExports.memo(FixedHolder);
+var HeaderRow = function HeaderRow2(props) {
+  var cells = props.cells, stickyOffsets = props.stickyOffsets, flattenColumns = props.flattenColumns, RowComponent = props.rowComponent, CellComponent = props.cellComponent, onHeaderRow = props.onHeaderRow, index2 = props.index;
+  var _useContext = useContext(TableContext, ["prefixCls", "direction"]), prefixCls = _useContext.prefixCls, direction = _useContext.direction;
+  var rowProps;
+  if (onHeaderRow) {
+    rowProps = onHeaderRow(cells.map(function(cell) {
+      return cell.column;
+    }), index2);
+  }
+  var columnsKey = getColumnsKey(cells.map(function(cell) {
+    return cell.column;
+  }));
+  return /* @__PURE__ */ reactExports.createElement(RowComponent, rowProps, cells.map(function(cell, cellIndex) {
+    var column2 = cell.column;
+    var fixedInfo = getCellFixedInfo(cell.colStart, cell.colEnd, flattenColumns, stickyOffsets, direction);
+    var additionalProps;
+    if (column2 && column2.onHeaderCell) {
+      additionalProps = cell.column.onHeaderCell(column2);
+    }
+    return /* @__PURE__ */ reactExports.createElement(Cell$1, _extends({}, cell, {
+      scope: column2.title ? cell.colSpan > 1 ? "colgroup" : "col" : null,
+      ellipsis: column2.ellipsis,
+      align: column2.align,
+      component: CellComponent,
+      prefixCls,
+      key: columnsKey[cellIndex]
+    }, fixedInfo, {
+      additionalProps,
+      rowType: "header"
+    }));
+  }));
+};
+function parseHeaderRows(rootColumns) {
+  var rows = [];
+  function fillRowCells(columns2, colIndex) {
+    var rowIndex2 = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : 0;
+    rows[rowIndex2] = rows[rowIndex2] || [];
+    var currentColIndex = colIndex;
+    var colSpans = columns2.filter(Boolean).map(function(column2) {
+      var cell = {
+        key: column2.key,
+        className: column2.className || "",
+        children: column2.title,
+        column: column2,
+        colStart: currentColIndex
+      };
+      var colSpan = 1;
+      var subColumns = column2.children;
+      if (subColumns && subColumns.length > 0) {
+        colSpan = fillRowCells(subColumns, currentColIndex, rowIndex2 + 1).reduce(function(total, count) {
+          return total + count;
+        }, 0);
+        cell.hasSubColumns = true;
+      }
+      if ("colSpan" in column2) {
+        colSpan = column2.colSpan;
+      }
+      if ("rowSpan" in column2) {
+        cell.rowSpan = column2.rowSpan;
+      }
+      cell.colSpan = colSpan;
+      cell.colEnd = cell.colStart + colSpan - 1;
+      rows[rowIndex2].push(cell);
+      currentColIndex += colSpan;
+      return colSpan;
+    });
+    return colSpans;
+  }
+  fillRowCells(rootColumns, 0);
+  var rowCount = rows.length;
+  var _loop = function _loop2(rowIndex2) {
+    rows[rowIndex2].forEach(function(cell) {
+      if (!("rowSpan" in cell) && !cell.hasSubColumns) {
+        cell.rowSpan = rowCount - rowIndex2;
+      }
+    });
+  };
+  for (var rowIndex = 0; rowIndex < rowCount; rowIndex += 1) {
+    _loop(rowIndex);
+  }
+  return rows;
+}
+var Header = function Header2(props) {
+  var stickyOffsets = props.stickyOffsets, columns2 = props.columns, flattenColumns = props.flattenColumns, onHeaderRow = props.onHeaderRow;
+  var _useContext = useContext(TableContext, ["prefixCls", "getComponent"]), prefixCls = _useContext.prefixCls, getComponent = _useContext.getComponent;
+  var rows = reactExports.useMemo(function() {
+    return parseHeaderRows(columns2);
+  }, [columns2]);
+  var WrapperComponent = getComponent(["header", "wrapper"], "thead");
+  var trComponent = getComponent(["header", "row"], "tr");
+  var thComponent = getComponent(["header", "cell"], "th");
+  return /* @__PURE__ */ reactExports.createElement(WrapperComponent, {
+    className: "".concat(prefixCls, "-thead")
+  }, rows.map(function(row, rowIndex) {
+    var rowNode = /* @__PURE__ */ reactExports.createElement(HeaderRow, {
+      key: rowIndex,
+      flattenColumns,
+      cells: row,
+      stickyOffsets,
+      rowComponent: trComponent,
+      cellComponent: thComponent,
+      onHeaderRow,
+      index: rowIndex
+    });
+    return rowNode;
+  }));
+};
+const Header$1 = responseImmutable(Header);
+function parseColWidth(totalWidth) {
+  var width = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "";
+  if (typeof width === "number") {
+    return width;
+  }
+  if (width.endsWith("%")) {
+    return totalWidth * parseFloat(width) / 100;
+  }
+  return null;
+}
+function useWidthColumns(flattenColumns, scrollWidth, clientWidth) {
+  return reactExports.useMemo(function() {
+    if (scrollWidth && scrollWidth > 0) {
+      var totalWidth = 0;
+      var missWidthCount = 0;
+      flattenColumns.forEach(function(col) {
+        var colWidth = parseColWidth(scrollWidth, col.width);
+        if (colWidth) {
+          totalWidth += colWidth;
+        } else {
+          missWidthCount += 1;
+        }
+      });
+      var maxFitWidth = Math.max(scrollWidth, clientWidth);
+      var restWidth = Math.max(maxFitWidth - totalWidth, missWidthCount);
+      var restCount = missWidthCount;
+      var avgWidth = restWidth / missWidthCount;
+      var realTotal = 0;
+      var filledColumns = flattenColumns.map(function(col) {
+        var clone = _objectSpread2({}, col);
+        var colWidth = parseColWidth(scrollWidth, clone.width);
+        if (colWidth) {
+          clone.width = colWidth;
+        } else {
+          var colAvgWidth = Math.floor(avgWidth);
+          clone.width = restCount === 1 ? restWidth : colAvgWidth;
+          restWidth -= colAvgWidth;
+          restCount -= 1;
+        }
+        realTotal += clone.width;
+        return clone;
+      });
+      if (realTotal < maxFitWidth) {
+        var scale = maxFitWidth / realTotal;
+        restWidth = maxFitWidth;
+        filledColumns.forEach(function(col, index2) {
+          var colWidth = Math.floor(col.width * scale);
+          col.width = index2 === filledColumns.length - 1 ? restWidth : colWidth;
+          restWidth -= colWidth;
+        });
+      }
+      return [filledColumns, Math.max(realTotal, maxFitWidth)];
+    }
+    return [flattenColumns, scrollWidth];
+  }, [flattenColumns, scrollWidth, clientWidth]);
+}
+var _excluded$4 = ["children"], _excluded2 = ["fixed"];
+function convertChildrenToColumns(children) {
+  return toArray$5(children).filter(function(node2) {
+    return /* @__PURE__ */ reactExports.isValidElement(node2);
+  }).map(function(_ref) {
+    var key = _ref.key, props = _ref.props;
+    var nodeChildren = props.children, restProps = _objectWithoutProperties(props, _excluded$4);
+    var column2 = _objectSpread2({
+      key
+    }, restProps);
+    if (nodeChildren) {
+      column2.children = convertChildrenToColumns(nodeChildren);
+    }
+    return column2;
+  });
+}
+function filterHiddenColumns(columns2) {
+  return columns2.filter(function(column2) {
+    return column2 && _typeof(column2) === "object" && !column2.hidden;
+  }).map(function(column2) {
+    var subColumns = column2.children;
+    if (subColumns && subColumns.length > 0) {
+      return _objectSpread2(_objectSpread2({}, column2), {}, {
+        children: filterHiddenColumns(subColumns)
+      });
+    }
+    return column2;
+  });
+}
+function flatColumns(columns2) {
+  var parentKey = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "key";
+  return columns2.filter(function(column2) {
+    return column2 && _typeof(column2) === "object";
+  }).reduce(function(list, column2, index2) {
+    var fixed = column2.fixed;
+    var parsedFixed = fixed === true ? "left" : fixed;
+    var mergedKey = "".concat(parentKey, "-").concat(index2);
+    var subColumns = column2.children;
+    if (subColumns && subColumns.length > 0) {
+      return [].concat(_toConsumableArray(list), _toConsumableArray(flatColumns(subColumns, mergedKey).map(function(subColum) {
+        return _objectSpread2({
+          fixed: parsedFixed
+        }, subColum);
+      })));
+    }
+    return [].concat(_toConsumableArray(list), [_objectSpread2(_objectSpread2({
+      key: mergedKey
+    }, column2), {}, {
+      fixed: parsedFixed
+    })]);
+  }, []);
+}
+function revertForRtl(columns2) {
+  return columns2.map(function(column2) {
+    var fixed = column2.fixed, restProps = _objectWithoutProperties(column2, _excluded2);
+    var parsedFixed = fixed;
+    if (fixed === "left") {
+      parsedFixed = "right";
+    } else if (fixed === "right") {
+      parsedFixed = "left";
+    }
+    return _objectSpread2({
+      fixed: parsedFixed
+    }, restProps);
+  });
+}
+function useColumns(_ref2, transformColumns) {
+  var prefixCls = _ref2.prefixCls, columns2 = _ref2.columns, children = _ref2.children, expandable = _ref2.expandable, expandedKeys = _ref2.expandedKeys, columnTitle = _ref2.columnTitle, getRowKey = _ref2.getRowKey, onTriggerExpand = _ref2.onTriggerExpand, expandIcon = _ref2.expandIcon, rowExpandable = _ref2.rowExpandable, expandIconColumnIndex = _ref2.expandIconColumnIndex, direction = _ref2.direction, expandRowByClick = _ref2.expandRowByClick, columnWidth = _ref2.columnWidth, fixed = _ref2.fixed, scrollWidth = _ref2.scrollWidth, clientWidth = _ref2.clientWidth;
+  var baseColumns = reactExports.useMemo(function() {
+    var newColumns = columns2 || convertChildrenToColumns(children) || [];
+    return filterHiddenColumns(newColumns.slice());
+  }, [columns2, children]);
+  var withExpandColumns = reactExports.useMemo(function() {
+    if (expandable) {
+      var _expandColumn;
+      var cloneColumns = baseColumns.slice();
+      if (!cloneColumns.includes(EXPAND_COLUMN)) {
+        var expandColIndex = expandIconColumnIndex || 0;
+        if (expandColIndex >= 0) {
+          cloneColumns.splice(expandColIndex, 0, EXPAND_COLUMN);
+        }
+      }
+      var expandColumnIndex = cloneColumns.indexOf(EXPAND_COLUMN);
+      cloneColumns = cloneColumns.filter(function(column2, index2) {
+        return column2 !== EXPAND_COLUMN || index2 === expandColumnIndex;
+      });
+      var prevColumn = baseColumns[expandColumnIndex];
+      var fixedColumn;
+      if ((fixed === "left" || fixed) && !expandIconColumnIndex) {
+        fixedColumn = "left";
+      } else if ((fixed === "right" || fixed) && expandIconColumnIndex === baseColumns.length) {
+        fixedColumn = "right";
+      } else {
+        fixedColumn = prevColumn ? prevColumn.fixed : null;
+      }
+      var expandColumn = (_expandColumn = {}, _defineProperty(_expandColumn, INTERNAL_COL_DEFINE, {
+        className: "".concat(prefixCls, "-expand-icon-col"),
+        columnType: "EXPAND_COLUMN"
+      }), _defineProperty(_expandColumn, "title", columnTitle), _defineProperty(_expandColumn, "fixed", fixedColumn), _defineProperty(_expandColumn, "className", "".concat(prefixCls, "-row-expand-icon-cell")), _defineProperty(_expandColumn, "width", columnWidth), _defineProperty(_expandColumn, "render", function render2(_, record, index2) {
+        var rowKey = getRowKey(record, index2);
+        var expanded = expandedKeys.has(rowKey);
+        var recordExpandable = rowExpandable ? rowExpandable(record) : true;
+        var icon = expandIcon({
+          prefixCls,
+          expanded,
+          expandable: recordExpandable,
+          record,
+          onExpand: onTriggerExpand
+        });
+        if (expandRowByClick) {
+          return /* @__PURE__ */ reactExports.createElement("span", {
+            onClick: function onClick(e2) {
+              return e2.stopPropagation();
+            }
+          }, icon);
+        }
+        return icon;
+      }), _expandColumn);
+      return cloneColumns.map(function(col) {
+        return col === EXPAND_COLUMN ? expandColumn : col;
+      });
+    }
+    return baseColumns.filter(function(col) {
+      return col !== EXPAND_COLUMN;
+    });
+  }, [expandable, baseColumns, getRowKey, expandedKeys, expandIcon, direction]);
+  var mergedColumns = reactExports.useMemo(function() {
+    var finalColumns = withExpandColumns;
+    if (transformColumns) {
+      finalColumns = transformColumns(finalColumns);
+    }
+    if (!finalColumns.length) {
+      finalColumns = [{
+        render: function render2() {
+          return null;
+        }
+      }];
+    }
+    return finalColumns;
+  }, [transformColumns, withExpandColumns, direction]);
+  var flattenColumns = reactExports.useMemo(function() {
+    if (direction === "rtl") {
+      return revertForRtl(flatColumns(mergedColumns));
+    }
+    return flatColumns(mergedColumns);
+  }, [mergedColumns, direction, scrollWidth]);
+  var hasGapFixed = reactExports.useMemo(function() {
+    var lastLeftIndex = -1;
+    for (var i2 = flattenColumns.length - 1; i2 >= 0; i2 -= 1) {
+      var colFixed = flattenColumns[i2].fixed;
+      if (colFixed === "left" || colFixed === true) {
+        lastLeftIndex = i2;
+        break;
+      }
+    }
+    if (lastLeftIndex >= 0) {
+      for (var _i = 0; _i <= lastLeftIndex; _i += 1) {
+        var _colFixed = flattenColumns[_i].fixed;
+        if (_colFixed !== "left" && _colFixed !== true) {
+          return true;
+        }
+      }
+    }
+    var firstRightIndex = flattenColumns.findIndex(function(_ref3) {
+      var colFixed2 = _ref3.fixed;
+      return colFixed2 === "right";
+    });
+    if (firstRightIndex >= 0) {
+      for (var _i2 = firstRightIndex; _i2 < flattenColumns.length; _i2 += 1) {
+        var _colFixed2 = flattenColumns[_i2].fixed;
+        if (_colFixed2 !== "right") {
+          return true;
+        }
+      }
+    }
+    return false;
+  }, [flattenColumns]);
+  var _useWidthColumns = useWidthColumns(flattenColumns, scrollWidth, clientWidth), _useWidthColumns2 = _slicedToArray(_useWidthColumns, 2), filledColumns = _useWidthColumns2[0], realScrollWidth = _useWidthColumns2[1];
+  return [mergedColumns, filledColumns, realScrollWidth, hasGapFixed];
+}
+function renderExpandIcon$1(_ref) {
+  var _classNames;
+  var prefixCls = _ref.prefixCls, record = _ref.record, onExpand = _ref.onExpand, expanded = _ref.expanded, expandable = _ref.expandable;
+  var expandClassName = "".concat(prefixCls, "-row-expand-icon");
+  if (!expandable) {
+    return /* @__PURE__ */ reactExports.createElement("span", {
+      className: classNames(expandClassName, "".concat(prefixCls, "-row-spaced"))
+    });
+  }
+  var onClick = function onClick2(event) {
+    onExpand(record, event);
+    event.stopPropagation();
+  };
+  return /* @__PURE__ */ reactExports.createElement("span", {
+    className: classNames(expandClassName, (_classNames = {}, _defineProperty(_classNames, "".concat(prefixCls, "-row-expanded"), expanded), _defineProperty(_classNames, "".concat(prefixCls, "-row-collapsed"), !expanded), _classNames)),
+    onClick
+  });
+}
+function findAllChildrenKeys(data, getRowKey, childrenColumnName) {
+  var keys2 = [];
+  function dig(list) {
+    (list || []).forEach(function(item, index2) {
+      keys2.push(getRowKey(item, index2));
+      dig(item[childrenColumnName]);
+    });
+  }
+  dig(data);
+  return keys2;
+}
+function useExpand(props, mergedData, getRowKey) {
+  var expandableConfig = getExpandableProps(props);
+  var expandIcon = expandableConfig.expandIcon, expandedRowKeys = expandableConfig.expandedRowKeys, defaultExpandedRowKeys = expandableConfig.defaultExpandedRowKeys, defaultExpandAllRows = expandableConfig.defaultExpandAllRows, expandedRowRender = expandableConfig.expandedRowRender, onExpand = expandableConfig.onExpand, onExpandedRowsChange = expandableConfig.onExpandedRowsChange, childrenColumnName = expandableConfig.childrenColumnName;
+  var mergedExpandIcon = expandIcon || renderExpandIcon$1;
+  var mergedChildrenColumnName = childrenColumnName || "children";
+  var expandableType = reactExports.useMemo(function() {
+    if (expandedRowRender) {
+      return "row";
+    }
+    if (props.expandable && props.internalHooks === INTERNAL_HOOKS && props.expandable.__PARENT_RENDER_ICON__ || mergedData.some(function(record) {
+      return record && _typeof(record) === "object" && record[mergedChildrenColumnName];
+    })) {
+      return "nest";
+    }
+    return false;
+  }, [!!expandedRowRender, mergedData]);
+  var _React$useState = reactExports.useState(function() {
+    if (defaultExpandedRowKeys) {
+      return defaultExpandedRowKeys;
+    }
+    if (defaultExpandAllRows) {
+      return findAllChildrenKeys(mergedData, getRowKey, mergedChildrenColumnName);
+    }
+    return [];
+  }), _React$useState2 = _slicedToArray(_React$useState, 2), innerExpandedKeys = _React$useState2[0], setInnerExpandedKeys = _React$useState2[1];
+  var mergedExpandedKeys = reactExports.useMemo(function() {
+    return new Set(expandedRowKeys || innerExpandedKeys || []);
+  }, [expandedRowKeys, innerExpandedKeys]);
+  var onTriggerExpand = reactExports.useCallback(function(record) {
+    var key = getRowKey(record, mergedData.indexOf(record));
+    var newExpandedKeys;
+    var hasKey = mergedExpandedKeys.has(key);
+    if (hasKey) {
+      mergedExpandedKeys.delete(key);
+      newExpandedKeys = _toConsumableArray(mergedExpandedKeys);
+    } else {
+      newExpandedKeys = [].concat(_toConsumableArray(mergedExpandedKeys), [key]);
+    }
+    setInnerExpandedKeys(newExpandedKeys);
+    if (onExpand) {
+      onExpand(!hasKey, record);
+    }
+    if (onExpandedRowsChange) {
+      onExpandedRowsChange(newExpandedKeys);
+    }
+  }, [getRowKey, mergedExpandedKeys, mergedData, onExpand, onExpandedRowsChange]);
+  return [expandableConfig, expandableType, mergedExpandedKeys, mergedExpandIcon, mergedChildrenColumnName, onTriggerExpand];
+}
+function useFixedInfo(flattenColumns, stickyOffsets, direction) {
+  var fixedInfoList = flattenColumns.map(function(_, colIndex) {
+    return getCellFixedInfo(colIndex, colIndex, flattenColumns, stickyOffsets, direction);
+  });
+  return useMemo(function() {
+    return fixedInfoList;
+  }, [fixedInfoList], function(prev2, next2) {
+    return !isEqual(prev2, next2);
+  });
+}
+function useLayoutState(defaultState) {
+  var stateRef = reactExports.useRef(defaultState);
+  var _useState = reactExports.useState({}), _useState2 = _slicedToArray(_useState, 2), forceUpdate = _useState2[1];
+  var lastPromiseRef = reactExports.useRef(null);
+  var updateBatchRef = reactExports.useRef([]);
+  function setFrameState(updater) {
+    updateBatchRef.current.push(updater);
+    var promise = Promise.resolve();
+    lastPromiseRef.current = promise;
+    promise.then(function() {
+      if (lastPromiseRef.current === promise) {
+        var prevBatch = updateBatchRef.current;
+        var prevState = stateRef.current;
+        updateBatchRef.current = [];
+        prevBatch.forEach(function(batchUpdater) {
+          stateRef.current = batchUpdater(stateRef.current);
+        });
+        lastPromiseRef.current = null;
+        if (prevState !== stateRef.current) {
+          forceUpdate({});
+        }
+      }
+    });
+  }
+  reactExports.useEffect(function() {
+    return function() {
+      lastPromiseRef.current = null;
+    };
+  }, []);
+  return [stateRef.current, setFrameState];
+}
+function useTimeoutLock(defaultState) {
+  var frameRef = reactExports.useRef(null);
+  var timeoutRef = reactExports.useRef();
+  function cleanUp() {
+    window.clearTimeout(timeoutRef.current);
+  }
+  function setState(newState) {
+    frameRef.current = newState;
+    cleanUp();
+    timeoutRef.current = window.setTimeout(function() {
+      frameRef.current = null;
+      timeoutRef.current = void 0;
+    }, 100);
+  }
+  function getState() {
+    return frameRef.current;
+  }
+  reactExports.useEffect(function() {
+    return cleanUp;
+  }, []);
+  return [setState, getState];
+}
+function useHover() {
+  var _React$useState = reactExports.useState(-1), _React$useState2 = _slicedToArray(_React$useState, 2), startRow = _React$useState2[0], setStartRow = _React$useState2[1];
+  var _React$useState3 = reactExports.useState(-1), _React$useState4 = _slicedToArray(_React$useState3, 2), endRow = _React$useState4[0], setEndRow = _React$useState4[1];
+  var onHover = reactExports.useCallback(function(start, end) {
+    setStartRow(start);
+    setEndRow(end);
+  }, []);
+  return [startRow, endRow, onHover];
+}
+var defaultContainer = canUseDom() ? window : null;
+function useSticky(sticky, prefixCls) {
+  var _ref = _typeof(sticky) === "object" ? sticky : {}, _ref$offsetHeader = _ref.offsetHeader, offsetHeader = _ref$offsetHeader === void 0 ? 0 : _ref$offsetHeader, _ref$offsetSummary = _ref.offsetSummary, offsetSummary = _ref$offsetSummary === void 0 ? 0 : _ref$offsetSummary, _ref$offsetScroll = _ref.offsetScroll, offsetScroll = _ref$offsetScroll === void 0 ? 0 : _ref$offsetScroll, _ref$getContainer = _ref.getContainer, getContainer2 = _ref$getContainer === void 0 ? function() {
+    return defaultContainer;
+  } : _ref$getContainer;
+  var container = getContainer2() || defaultContainer;
+  return reactExports.useMemo(function() {
+    var isSticky = !!sticky;
+    return {
+      isSticky,
+      stickyClassName: isSticky ? "".concat(prefixCls, "-sticky-holder") : "",
+      offsetHeader,
+      offsetSummary,
+      offsetScroll,
+      container
+    };
+  }, [offsetScroll, offsetHeader, offsetSummary, prefixCls, container]);
+}
+function useStickyOffsets(colWidths, flattenColumns, direction) {
+  var stickyOffsets = reactExports.useMemo(function() {
+    var columnCount = flattenColumns.length;
+    var getOffsets = function getOffsets2(startIndex, endIndex, offset2) {
+      var offsets = [];
+      var total = 0;
+      for (var i2 = startIndex; i2 !== endIndex; i2 += offset2) {
+        offsets.push(total);
+        if (flattenColumns[i2].fixed) {
+          total += colWidths[i2] || 0;
+        }
+      }
+      return offsets;
+    };
+    var startOffsets = getOffsets(0, columnCount, 1);
+    var endOffsets = getOffsets(columnCount - 1, -1, -1).reverse();
+    return direction === "rtl" ? {
+      left: endOffsets,
+      right: startOffsets
+    } : {
+      left: startOffsets,
+      right: endOffsets
+    };
+  }, [colWidths, flattenColumns, direction]);
+  return stickyOffsets;
+}
+function Panel(_ref) {
+  var className = _ref.className, children = _ref.children;
+  return /* @__PURE__ */ reactExports.createElement("div", {
+    className
+  }, children);
+}
+var StickyScrollBar = function StickyScrollBar2(_ref, ref) {
+  var _scrollBodyRef$curren, _scrollBodyRef$curren2;
+  var scrollBodyRef = _ref.scrollBodyRef, onScroll = _ref.onScroll, offsetScroll = _ref.offsetScroll, container = _ref.container;
+  var prefixCls = useContext(TableContext, "prefixCls");
+  var bodyScrollWidth = ((_scrollBodyRef$curren = scrollBodyRef.current) === null || _scrollBodyRef$curren === void 0 ? void 0 : _scrollBodyRef$curren.scrollWidth) || 0;
+  var bodyWidth = ((_scrollBodyRef$curren2 = scrollBodyRef.current) === null || _scrollBodyRef$curren2 === void 0 ? void 0 : _scrollBodyRef$curren2.clientWidth) || 0;
+  var scrollBarWidth = bodyScrollWidth && bodyWidth * (bodyWidth / bodyScrollWidth);
+  var scrollBarRef = reactExports.useRef();
+  var _useLayoutState = useLayoutState({
+    scrollLeft: 0,
+    isHiddenScrollBar: false
+  }), _useLayoutState2 = _slicedToArray(_useLayoutState, 2), scrollState = _useLayoutState2[0], setScrollState = _useLayoutState2[1];
+  var refState = reactExports.useRef({
+    delta: 0,
+    x: 0
+  });
+  var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), isActive2 = _React$useState2[0], setActive = _React$useState2[1];
+  var rafRef = reactExports.useRef(null);
+  reactExports.useEffect(function() {
+    return function() {
+      wrapperRaf.cancel(rafRef.current);
+    };
+  }, []);
+  var onMouseUp = function onMouseUp2() {
+    setActive(false);
+  };
+  var onMouseDown = function onMouseDown2(event) {
+    event.persist();
+    refState.current.delta = event.pageX - scrollState.scrollLeft;
+    refState.current.x = 0;
+    setActive(true);
+    event.preventDefault();
+  };
+  var onMouseMove = function onMouseMove2(event) {
+    var _window;
+    var _ref2 = event || ((_window = window) === null || _window === void 0 ? void 0 : _window.event), buttons = _ref2.buttons;
+    if (!isActive2 || buttons === 0) {
+      if (isActive2) {
+        setActive(false);
+      }
+      return;
+    }
+    var left = refState.current.x + event.pageX - refState.current.x - refState.current.delta;
+    if (left <= 0) {
+      left = 0;
+    }
+    if (left + scrollBarWidth >= bodyWidth) {
+      left = bodyWidth - scrollBarWidth;
+    }
+    onScroll({
+      scrollLeft: left / bodyWidth * (bodyScrollWidth + 2)
+    });
+    refState.current.x = event.pageX;
+  };
+  var checkScrollBarVisible = function checkScrollBarVisible2() {
+    rafRef.current = wrapperRaf(function() {
+      if (!scrollBodyRef.current) {
+        return;
+      }
+      var tableOffsetTop = getOffset$1(scrollBodyRef.current).top;
+      var tableBottomOffset = tableOffsetTop + scrollBodyRef.current.offsetHeight;
+      var currentClientOffset = container === window ? document.documentElement.scrollTop + window.innerHeight : getOffset$1(container).top + container.clientHeight;
+      if (tableBottomOffset - getScrollBarSize() <= currentClientOffset || tableOffsetTop >= currentClientOffset - offsetScroll) {
+        setScrollState(function(state) {
+          return _objectSpread2(_objectSpread2({}, state), {}, {
+            isHiddenScrollBar: true
+          });
+        });
+      } else {
+        setScrollState(function(state) {
+          return _objectSpread2(_objectSpread2({}, state), {}, {
+            isHiddenScrollBar: false
+          });
+        });
+      }
+    });
+  };
+  var setScrollLeft = function setScrollLeft2(left) {
+    setScrollState(function(state) {
+      return _objectSpread2(_objectSpread2({}, state), {}, {
+        scrollLeft: left / bodyScrollWidth * bodyWidth || 0
+      });
+    });
+  };
+  reactExports.useImperativeHandle(ref, function() {
+    return {
+      setScrollLeft,
+      checkScrollBarVisible
+    };
+  });
+  reactExports.useEffect(function() {
+    var onMouseUpListener = addEventListenerWrap(document.body, "mouseup", onMouseUp, false);
+    var onMouseMoveListener = addEventListenerWrap(document.body, "mousemove", onMouseMove, false);
+    checkScrollBarVisible();
+    return function() {
+      onMouseUpListener.remove();
+      onMouseMoveListener.remove();
+    };
+  }, [scrollBarWidth, isActive2]);
+  reactExports.useEffect(function() {
+    var onScrollListener = addEventListenerWrap(container, "scroll", checkScrollBarVisible, false);
+    var onResizeListener = addEventListenerWrap(window, "resize", checkScrollBarVisible, false);
+    return function() {
+      onScrollListener.remove();
+      onResizeListener.remove();
+    };
+  }, [container]);
+  reactExports.useEffect(function() {
+    if (!scrollState.isHiddenScrollBar) {
+      setScrollState(function(state) {
+        var bodyNode = scrollBodyRef.current;
+        if (!bodyNode) {
+          return state;
+        }
+        return _objectSpread2(_objectSpread2({}, state), {}, {
+          scrollLeft: bodyNode.scrollLeft / bodyNode.scrollWidth * bodyNode.clientWidth
+        });
+      });
+    }
+  }, [scrollState.isHiddenScrollBar]);
+  if (bodyScrollWidth <= bodyWidth || !scrollBarWidth || scrollState.isHiddenScrollBar) {
+    return null;
+  }
+  return /* @__PURE__ */ reactExports.createElement("div", {
+    style: {
+      height: getScrollBarSize(),
+      width: bodyWidth,
+      bottom: offsetScroll
+    },
+    className: "".concat(prefixCls, "-sticky-scroll")
+  }, /* @__PURE__ */ reactExports.createElement("div", {
+    onMouseDown,
+    ref: scrollBarRef,
+    className: classNames("".concat(prefixCls, "-sticky-scroll-bar"), _defineProperty({}, "".concat(prefixCls, "-sticky-scroll-bar-active"), isActive2)),
+    style: {
+      width: "".concat(scrollBarWidth, "px"),
+      transform: "translate3d(".concat(scrollState.scrollLeft, "px, 0, 0)")
+    }
+  }));
+};
+const StickyScrollBar$1 = /* @__PURE__ */ reactExports.forwardRef(StickyScrollBar);
+var DEFAULT_PREFIX = "rc-table";
+var EMPTY_DATA = [];
+var EMPTY_SCROLL_TARGET = {};
+function defaultEmpty() {
+  return "No Data";
+}
+function Table$1(tableProps, ref) {
+  var _classNames;
+  var props = _objectSpread2({
+    rowKey: "key",
+    prefixCls: DEFAULT_PREFIX,
+    emptyText: defaultEmpty
+  }, tableProps);
+  var prefixCls = props.prefixCls, className = props.className, rowClassName = props.rowClassName, style2 = props.style, data = props.data, rowKey = props.rowKey, scroll = props.scroll, tableLayout = props.tableLayout, direction = props.direction, title = props.title, footer = props.footer, summary = props.summary, caption = props.caption, id2 = props.id, showHeader = props.showHeader, components = props.components, emptyText = props.emptyText, onRow = props.onRow, onHeaderRow = props.onHeaderRow, onScroll = props.onScroll, internalHooks = props.internalHooks, transformColumns = props.transformColumns, internalRefs = props.internalRefs, tailor = props.tailor, getContainerWidth = props.getContainerWidth, sticky = props.sticky, _props$rowHoverable = props.rowHoverable, rowHoverable = _props$rowHoverable === void 0 ? true : _props$rowHoverable;
+  var mergedData = data || EMPTY_DATA;
+  var hasData = !!mergedData.length;
+  var useInternalHooks = internalHooks === INTERNAL_HOOKS;
+  var getComponent = reactExports.useCallback(function(path2, defaultComponent) {
+    return get(components, path2) || defaultComponent;
+  }, [components]);
+  var getRowKey = reactExports.useMemo(function() {
+    if (typeof rowKey === "function") {
+      return rowKey;
+    }
+    return function(record) {
+      var key = record && record[rowKey];
+      return key;
+    };
+  }, [rowKey]);
+  var customizeScrollBody = getComponent(["body"]);
+  var _useHover = useHover(), _useHover2 = _slicedToArray(_useHover, 3), startRow = _useHover2[0], endRow = _useHover2[1], onHover = _useHover2[2];
+  var _useExpand = useExpand(props, mergedData, getRowKey), _useExpand2 = _slicedToArray(_useExpand, 6), expandableConfig = _useExpand2[0], expandableType = _useExpand2[1], mergedExpandedKeys = _useExpand2[2], mergedExpandIcon = _useExpand2[3], mergedChildrenColumnName = _useExpand2[4], onTriggerExpand = _useExpand2[5];
+  var scrollX = scroll === null || scroll === void 0 ? void 0 : scroll.x;
+  var _React$useState = reactExports.useState(0), _React$useState2 = _slicedToArray(_React$useState, 2), componentWidth = _React$useState2[0], setComponentWidth = _React$useState2[1];
+  var _useColumns = useColumns(_objectSpread2(_objectSpread2(_objectSpread2({}, props), expandableConfig), {}, {
+    expandable: !!expandableConfig.expandedRowRender,
+    columnTitle: expandableConfig.columnTitle,
+    expandedKeys: mergedExpandedKeys,
+    getRowKey,
+    // https://github.com/ant-design/ant-design/issues/23894
+    onTriggerExpand,
+    expandIcon: mergedExpandIcon,
+    expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
+    direction,
+    scrollWidth: useInternalHooks && tailor && typeof scrollX === "number" ? scrollX : null,
+    clientWidth: componentWidth
+  }), useInternalHooks ? transformColumns : null), _useColumns2 = _slicedToArray(_useColumns, 4), columns2 = _useColumns2[0], flattenColumns = _useColumns2[1], flattenScrollX = _useColumns2[2], hasGapFixed = _useColumns2[3];
+  var mergedScrollX = flattenScrollX !== null && flattenScrollX !== void 0 ? flattenScrollX : scrollX;
+  var columnContext = reactExports.useMemo(function() {
+    return {
+      columns: columns2,
+      flattenColumns
+    };
+  }, [columns2, flattenColumns]);
+  var fullTableRef = reactExports.useRef();
+  var scrollHeaderRef = reactExports.useRef();
+  var scrollBodyRef = reactExports.useRef();
+  var scrollBodyContainerRef = reactExports.useRef();
+  reactExports.useImperativeHandle(ref, function() {
+    return {
+      nativeElement: fullTableRef.current,
+      scrollTo: function scrollTo2(config) {
+        var _scrollBodyRef$curren3;
+        if (scrollBodyRef.current instanceof HTMLElement) {
+          var index2 = config.index, top = config.top, key = config.key;
+          if (top) {
+            var _scrollBodyRef$curren;
+            (_scrollBodyRef$curren = scrollBodyRef.current) === null || _scrollBodyRef$curren === void 0 || _scrollBodyRef$curren.scrollTo({
+              top
+            });
+          } else {
+            var _scrollBodyRef$curren2;
+            var mergedKey = key !== null && key !== void 0 ? key : getRowKey(mergedData[index2]);
+            (_scrollBodyRef$curren2 = scrollBodyRef.current.querySelector('[data-row-key="'.concat(mergedKey, '"]'))) === null || _scrollBodyRef$curren2 === void 0 || _scrollBodyRef$curren2.scrollIntoView();
+          }
+        } else if ((_scrollBodyRef$curren3 = scrollBodyRef.current) !== null && _scrollBodyRef$curren3 !== void 0 && _scrollBodyRef$curren3.scrollTo) {
+          scrollBodyRef.current.scrollTo(config);
+        }
+      }
+    };
+  });
+  var scrollSummaryRef = reactExports.useRef();
+  var _React$useState3 = reactExports.useState(false), _React$useState4 = _slicedToArray(_React$useState3, 2), pingedLeft = _React$useState4[0], setPingedLeft = _React$useState4[1];
+  var _React$useState5 = reactExports.useState(false), _React$useState6 = _slicedToArray(_React$useState5, 2), pingedRight = _React$useState6[0], setPingedRight = _React$useState6[1];
+  var _useLayoutState = useLayoutState(/* @__PURE__ */ new Map()), _useLayoutState2 = _slicedToArray(_useLayoutState, 2), colsWidths = _useLayoutState2[0], updateColsWidths = _useLayoutState2[1];
+  var colsKeys = getColumnsKey(flattenColumns);
+  var pureColWidths = colsKeys.map(function(columnKey) {
+    return colsWidths.get(columnKey);
+  });
+  var colWidths = reactExports.useMemo(function() {
+    return pureColWidths;
+  }, [pureColWidths.join("_")]);
+  var stickyOffsets = useStickyOffsets(colWidths, flattenColumns, direction);
+  var fixHeader = scroll && validateValue(scroll.y);
+  var horizonScroll = scroll && validateValue(mergedScrollX) || Boolean(expandableConfig.fixed);
+  var fixColumn = horizonScroll && flattenColumns.some(function(_ref) {
+    var fixed = _ref.fixed;
+    return fixed;
+  });
+  var stickyRef = reactExports.useRef();
+  var _useSticky = useSticky(sticky, prefixCls), isSticky = _useSticky.isSticky, offsetHeader = _useSticky.offsetHeader, offsetSummary = _useSticky.offsetSummary, offsetScroll = _useSticky.offsetScroll, stickyClassName = _useSticky.stickyClassName, container = _useSticky.container;
+  var summaryNode = reactExports.useMemo(function() {
+    return summary === null || summary === void 0 ? void 0 : summary(mergedData);
+  }, [summary, mergedData]);
+  var fixFooter = (fixHeader || isSticky) && /* @__PURE__ */ reactExports.isValidElement(summaryNode) && summaryNode.type === Summary && summaryNode.props.fixed;
+  var scrollXStyle;
+  var scrollYStyle;
+  var scrollTableStyle;
+  if (fixHeader) {
+    scrollYStyle = {
+      overflowY: "scroll",
+      maxHeight: scroll.y
+    };
+  }
+  if (horizonScroll) {
+    scrollXStyle = {
+      overflowX: "auto"
+    };
+    if (!fixHeader) {
+      scrollYStyle = {
+        overflowY: "hidden"
+      };
+    }
+    scrollTableStyle = {
+      width: mergedScrollX === true ? "auto" : mergedScrollX,
+      minWidth: "100%"
+    };
+  }
+  var onColumnResize = reactExports.useCallback(function(columnKey, width) {
+    if (isVisible(fullTableRef.current)) {
+      updateColsWidths(function(widths) {
+        if (widths.get(columnKey) !== width) {
+          var newWidths = new Map(widths);
+          newWidths.set(columnKey, width);
+          return newWidths;
+        }
+        return widths;
+      });
+    }
+  }, []);
+  var _useTimeoutLock = useTimeoutLock(), _useTimeoutLock2 = _slicedToArray(_useTimeoutLock, 2), setScrollTarget = _useTimeoutLock2[0], getScrollTarget = _useTimeoutLock2[1];
+  function forceScroll(scrollLeft, target) {
+    if (!target) {
+      return;
+    }
+    if (typeof target === "function") {
+      target(scrollLeft);
+    } else if (target.scrollLeft !== scrollLeft) {
+      target.scrollLeft = scrollLeft;
+      if (target.scrollLeft !== scrollLeft) {
+        setTimeout(function() {
+          target.scrollLeft = scrollLeft;
+        }, 0);
+      }
+    }
+  }
+  var onInternalScroll = useEvent(function(_ref2) {
+    var currentTarget = _ref2.currentTarget, scrollLeft = _ref2.scrollLeft;
+    var isRTL = direction === "rtl";
+    var mergedScrollLeft = typeof scrollLeft === "number" ? scrollLeft : currentTarget.scrollLeft;
+    var compareTarget = currentTarget || EMPTY_SCROLL_TARGET;
+    if (!getScrollTarget() || getScrollTarget() === compareTarget) {
+      var _stickyRef$current;
+      setScrollTarget(compareTarget);
+      forceScroll(mergedScrollLeft, scrollHeaderRef.current);
+      forceScroll(mergedScrollLeft, scrollBodyRef.current);
+      forceScroll(mergedScrollLeft, scrollSummaryRef.current);
+      forceScroll(mergedScrollLeft, (_stickyRef$current = stickyRef.current) === null || _stickyRef$current === void 0 ? void 0 : _stickyRef$current.setScrollLeft);
+    }
+    var measureTarget = currentTarget || scrollHeaderRef.current;
+    if (measureTarget) {
+      var scrollWidth = measureTarget.scrollWidth, clientWidth = measureTarget.clientWidth;
+      if (scrollWidth === clientWidth) {
+        setPingedLeft(false);
+        setPingedRight(false);
+        return;
+      }
+      if (isRTL) {
+        setPingedLeft(-mergedScrollLeft < scrollWidth - clientWidth);
+        setPingedRight(-mergedScrollLeft > 0);
+      } else {
+        setPingedLeft(mergedScrollLeft > 0);
+        setPingedRight(mergedScrollLeft < scrollWidth - clientWidth);
+      }
+    }
+  });
+  var onBodyScroll = useEvent(function(e2) {
+    onInternalScroll(e2);
+    onScroll === null || onScroll === void 0 || onScroll(e2);
+  });
+  var triggerOnScroll = function triggerOnScroll2() {
+    if (horizonScroll && scrollBodyRef.current) {
+      onInternalScroll({
+        currentTarget: scrollBodyRef.current
+      });
+    } else {
+      setPingedLeft(false);
+      setPingedRight(false);
+    }
+  };
+  var onFullTableResize = function onFullTableResize2(_ref3) {
+    var _stickyRef$current2;
+    var width = _ref3.width;
+    (_stickyRef$current2 = stickyRef.current) === null || _stickyRef$current2 === void 0 || _stickyRef$current2.checkScrollBarVisible();
+    var mergedWidth = fullTableRef.current ? fullTableRef.current.offsetWidth : width;
+    if (useInternalHooks && getContainerWidth && fullTableRef.current) {
+      mergedWidth = getContainerWidth(fullTableRef.current, mergedWidth) || mergedWidth;
+    }
+    if (mergedWidth !== componentWidth) {
+      triggerOnScroll();
+      setComponentWidth(mergedWidth);
+    }
+  };
+  var mounted = reactExports.useRef(false);
+  reactExports.useEffect(function() {
+    if (mounted.current) {
+      triggerOnScroll();
+    }
+  }, [horizonScroll, data, columns2.length]);
+  reactExports.useEffect(function() {
+    mounted.current = true;
+  }, []);
+  var _React$useState7 = reactExports.useState(0), _React$useState8 = _slicedToArray(_React$useState7, 2), scrollbarSize = _React$useState8[0], setScrollbarSize = _React$useState8[1];
+  var _React$useState9 = reactExports.useState(true), _React$useState10 = _slicedToArray(_React$useState9, 2), supportSticky = _React$useState10[0], setSupportSticky = _React$useState10[1];
+  reactExports.useEffect(function() {
+    if (!tailor || !useInternalHooks) {
+      if (scrollBodyRef.current instanceof Element) {
+        setScrollbarSize(getTargetScrollBarSize(scrollBodyRef.current).width);
+      } else {
+        setScrollbarSize(getTargetScrollBarSize(scrollBodyContainerRef.current).width);
+      }
+    }
+    setSupportSticky(isStyleSupport("position", "sticky"));
+  }, []);
+  reactExports.useEffect(function() {
+    if (useInternalHooks && internalRefs) {
+      internalRefs.body.current = scrollBodyRef.current;
+    }
+  });
+  var renderFixedHeaderTable = reactExports.useCallback(function(fixedHolderPassProps) {
+    return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement(Header$1, fixedHolderPassProps), fixFooter === "top" && /* @__PURE__ */ reactExports.createElement(Footer$1, fixedHolderPassProps, summaryNode));
+  }, [fixFooter, summaryNode]);
+  var renderFixedFooterTable = reactExports.useCallback(function(fixedHolderPassProps) {
+    return /* @__PURE__ */ reactExports.createElement(Footer$1, fixedHolderPassProps, summaryNode);
+  }, [summaryNode]);
+  var TableComponent = getComponent(["table"], "table");
+  var mergedTableLayout = reactExports.useMemo(function() {
+    if (tableLayout) {
+      return tableLayout;
+    }
+    if (fixColumn) {
+      return mergedScrollX === "max-content" ? "auto" : "fixed";
+    }
+    if (fixHeader || isSticky || flattenColumns.some(function(_ref4) {
+      var ellipsis = _ref4.ellipsis;
+      return ellipsis;
+    })) {
+      return "fixed";
+    }
+    return "auto";
+  }, [fixHeader, fixColumn, flattenColumns, tableLayout, isSticky]);
+  var groupTableNode;
+  var headerProps = {
+    colWidths,
+    columCount: flattenColumns.length,
+    stickyOffsets,
+    onHeaderRow,
+    fixHeader,
+    scroll
+  };
+  var emptyNode = reactExports.useMemo(function() {
+    if (hasData) {
+      return null;
+    }
+    if (typeof emptyText === "function") {
+      return emptyText();
+    }
+    return emptyText;
+  }, [hasData, emptyText]);
+  var bodyTable = /* @__PURE__ */ reactExports.createElement(Body$1, {
+    data: mergedData,
+    measureColumnWidth: fixHeader || horizonScroll || isSticky
+  });
+  var bodyColGroup = /* @__PURE__ */ reactExports.createElement(ColGroup, {
+    colWidths: flattenColumns.map(function(_ref5) {
+      var width = _ref5.width;
+      return width;
+    }),
+    columns: flattenColumns
+  });
+  var captionElement = caption !== null && caption !== void 0 ? /* @__PURE__ */ reactExports.createElement("caption", {
+    className: "".concat(prefixCls, "-caption")
+  }, caption) : void 0;
+  var dataProps = pickAttrs(props, {
+    data: true
+  });
+  var ariaProps = pickAttrs(props, {
+    aria: true
+  });
+  if (fixHeader || isSticky) {
+    var bodyContent;
+    if (typeof customizeScrollBody === "function") {
+      bodyContent = customizeScrollBody(mergedData, {
+        scrollbarSize,
+        ref: scrollBodyRef,
+        onScroll: onInternalScroll
+      });
+      headerProps.colWidths = flattenColumns.map(function(_ref6, index2) {
+        var width = _ref6.width;
+        var colWidth = index2 === flattenColumns.length - 1 ? width - scrollbarSize : width;
+        if (typeof colWidth === "number" && !Number.isNaN(colWidth)) {
+          return colWidth;
+        }
+        return 0;
+      });
+    } else {
+      bodyContent = /* @__PURE__ */ reactExports.createElement("div", {
+        style: _objectSpread2(_objectSpread2({}, scrollXStyle), scrollYStyle),
+        onScroll: onBodyScroll,
+        ref: scrollBodyRef,
+        className: classNames("".concat(prefixCls, "-body"))
+      }, /* @__PURE__ */ reactExports.createElement(TableComponent, _extends({
+        style: _objectSpread2(_objectSpread2({}, scrollTableStyle), {}, {
+          tableLayout: mergedTableLayout
+        })
+      }, ariaProps), captionElement, bodyColGroup, bodyTable, !fixFooter && summaryNode && /* @__PURE__ */ reactExports.createElement(Footer$1, {
+        stickyOffsets,
+        flattenColumns
+      }, summaryNode)));
+    }
+    var fixedHolderProps = _objectSpread2(_objectSpread2(_objectSpread2({
+      noData: !mergedData.length,
+      maxContentScroll: horizonScroll && mergedScrollX === "max-content"
+    }, headerProps), columnContext), {}, {
+      direction,
+      stickyClassName,
+      onScroll: onInternalScroll
+    });
+    groupTableNode = /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, showHeader !== false && /* @__PURE__ */ reactExports.createElement(FixedHolder$1, _extends({}, fixedHolderProps, {
+      stickyTopOffset: offsetHeader,
+      className: "".concat(prefixCls, "-header"),
+      ref: scrollHeaderRef
+    }), renderFixedHeaderTable), bodyContent, fixFooter && fixFooter !== "top" && /* @__PURE__ */ reactExports.createElement(FixedHolder$1, _extends({}, fixedHolderProps, {
+      stickyBottomOffset: offsetSummary,
+      className: "".concat(prefixCls, "-summary"),
+      ref: scrollSummaryRef
+    }), renderFixedFooterTable), isSticky && scrollBodyRef.current && scrollBodyRef.current instanceof Element && /* @__PURE__ */ reactExports.createElement(StickyScrollBar$1, {
+      ref: stickyRef,
+      offsetScroll,
+      scrollBodyRef,
+      onScroll: onInternalScroll,
+      container
+    }));
+  } else {
+    groupTableNode = /* @__PURE__ */ reactExports.createElement("div", {
+      style: _objectSpread2(_objectSpread2({}, scrollXStyle), scrollYStyle),
+      className: classNames("".concat(prefixCls, "-content")),
+      onScroll: onInternalScroll,
+      ref: scrollBodyRef
+    }, /* @__PURE__ */ reactExports.createElement(TableComponent, _extends({
+      style: _objectSpread2(_objectSpread2({}, scrollTableStyle), {}, {
+        tableLayout: mergedTableLayout
+      })
+    }, ariaProps), captionElement, bodyColGroup, showHeader !== false && /* @__PURE__ */ reactExports.createElement(Header$1, _extends({}, headerProps, columnContext)), bodyTable, summaryNode && /* @__PURE__ */ reactExports.createElement(Footer$1, {
+      stickyOffsets,
+      flattenColumns
+    }, summaryNode)));
+  }
+  var fullTable = /* @__PURE__ */ reactExports.createElement("div", _extends({
+    className: classNames(prefixCls, className, (_classNames = {}, _defineProperty(_classNames, "".concat(prefixCls, "-rtl"), direction === "rtl"), _defineProperty(_classNames, "".concat(prefixCls, "-ping-left"), pingedLeft), _defineProperty(_classNames, "".concat(prefixCls, "-ping-right"), pingedRight), _defineProperty(_classNames, "".concat(prefixCls, "-layout-fixed"), tableLayout === "fixed"), _defineProperty(_classNames, "".concat(prefixCls, "-fixed-header"), fixHeader), _defineProperty(_classNames, "".concat(prefixCls, "-fixed-column"), fixColumn), _defineProperty(_classNames, "".concat(prefixCls, "-fixed-column-gapped"), fixColumn && hasGapFixed), _defineProperty(_classNames, "".concat(prefixCls, "-scroll-horizontal"), horizonScroll), _defineProperty(_classNames, "".concat(prefixCls, "-has-fix-left"), flattenColumns[0] && flattenColumns[0].fixed), _defineProperty(_classNames, "".concat(prefixCls, "-has-fix-right"), flattenColumns[flattenColumns.length - 1] && flattenColumns[flattenColumns.length - 1].fixed === "right"), _classNames)),
+    style: style2,
+    id: id2,
+    ref: fullTableRef
+  }, dataProps), title && /* @__PURE__ */ reactExports.createElement(Panel, {
+    className: "".concat(prefixCls, "-title")
+  }, title(mergedData)), /* @__PURE__ */ reactExports.createElement("div", {
+    ref: scrollBodyContainerRef,
+    className: "".concat(prefixCls, "-container")
+  }, groupTableNode), footer && /* @__PURE__ */ reactExports.createElement(Panel, {
+    className: "".concat(prefixCls, "-footer")
+  }, footer(mergedData)));
+  if (horizonScroll) {
+    fullTable = /* @__PURE__ */ reactExports.createElement(RefResizeObserver, {
+      onResize: onFullTableResize
+    }, fullTable);
+  }
+  var fixedInfoList = useFixedInfo(flattenColumns, stickyOffsets, direction);
+  var TableContextValue = reactExports.useMemo(function() {
+    return {
+      // Scroll
+      scrollX: mergedScrollX,
+      // Table
+      prefixCls,
+      getComponent,
+      scrollbarSize,
+      direction,
+      fixedInfoList,
+      isSticky,
+      supportSticky,
+      componentWidth,
+      fixHeader,
+      fixColumn,
+      horizonScroll,
+      // Body
+      tableLayout: mergedTableLayout,
+      rowClassName,
+      expandedRowClassName: expandableConfig.expandedRowClassName,
+      expandIcon: mergedExpandIcon,
+      expandableType,
+      expandRowByClick: expandableConfig.expandRowByClick,
+      expandedRowRender: expandableConfig.expandedRowRender,
+      onTriggerExpand,
+      expandIconColumnIndex: expandableConfig.expandIconColumnIndex,
+      indentSize: expandableConfig.indentSize,
+      allColumnsFixedLeft: flattenColumns.every(function(col) {
+        return col.fixed === "left";
+      }),
+      emptyNode,
+      // Column
+      columns: columns2,
+      flattenColumns,
+      onColumnResize,
+      // Row
+      hoverStartRow: startRow,
+      hoverEndRow: endRow,
+      onHover,
+      rowExpandable: expandableConfig.rowExpandable,
+      onRow,
+      getRowKey,
+      expandedKeys: mergedExpandedKeys,
+      childrenColumnName: mergedChildrenColumnName,
+      rowHoverable
+    };
+  }, [
+    // Scroll
+    mergedScrollX,
+    // Table
+    prefixCls,
+    getComponent,
+    scrollbarSize,
+    direction,
+    fixedInfoList,
+    isSticky,
+    supportSticky,
+    componentWidth,
+    fixHeader,
+    fixColumn,
+    horizonScroll,
+    // Body
+    mergedTableLayout,
+    rowClassName,
+    expandableConfig.expandedRowClassName,
+    mergedExpandIcon,
+    expandableType,
+    expandableConfig.expandRowByClick,
+    expandableConfig.expandedRowRender,
+    onTriggerExpand,
+    expandableConfig.expandIconColumnIndex,
+    expandableConfig.indentSize,
+    emptyNode,
+    // Column
+    columns2,
+    flattenColumns,
+    onColumnResize,
+    // Row
+    startRow,
+    endRow,
+    onHover,
+    expandableConfig.rowExpandable,
+    onRow,
+    getRowKey,
+    mergedExpandedKeys,
+    mergedChildrenColumnName,
+    rowHoverable
+  ]);
+  return /* @__PURE__ */ reactExports.createElement(TableContext.Provider, {
+    value: TableContextValue
+  }, fullTable);
+}
+var RefTable = /* @__PURE__ */ reactExports.forwardRef(Table$1);
+function genTable(shouldTriggerRender) {
+  return makeImmutable(RefTable, shouldTriggerRender);
+}
+var ImmutableTable = genTable();
+ImmutableTable.EXPAND_COLUMN = EXPAND_COLUMN;
+ImmutableTable.INTERNAL_HOOKS = INTERNAL_HOOKS;
+ImmutableTable.Column = Column$1;
+ImmutableTable.ColumnGroup = ColumnGroup$1;
+ImmutableTable.Summary = FooterComponents;
+var StaticContext = createContext(null);
+var GridContext = createContext(null);
+function getColumnWidth(colIndex, colSpan, columnsOffset) {
+  var mergedColSpan = colSpan || 1;
+  return columnsOffset[colIndex + mergedColSpan] - (columnsOffset[colIndex] || 0);
+}
+function VirtualCell(props) {
+  var rowInfo = props.rowInfo, column2 = props.column, colIndex = props.colIndex, indent = props.indent, index2 = props.index, component = props.component, renderIndex = props.renderIndex, record = props.record, style2 = props.style, className = props.className, inverse = props.inverse, getHeight = props.getHeight;
+  var render2 = column2.render, dataIndex = column2.dataIndex, columnClassName = column2.className, colWidth = column2.width;
+  var _useContext = useContext(GridContext, ["columnsOffset"]), columnsOffset = _useContext.columnsOffset;
+  var _getCellProps = getCellProps(rowInfo, column2, colIndex, indent, index2), key = _getCellProps.key, fixedInfo = _getCellProps.fixedInfo, appendCellNode = _getCellProps.appendCellNode, additionalCellProps = _getCellProps.additionalCellProps;
+  var cellStyle = additionalCellProps.style, _additionalCellProps$ = additionalCellProps.colSpan, colSpan = _additionalCellProps$ === void 0 ? 1 : _additionalCellProps$, _additionalCellProps$2 = additionalCellProps.rowSpan, rowSpan = _additionalCellProps$2 === void 0 ? 1 : _additionalCellProps$2;
+  var startColIndex = colIndex - 1;
+  var concatColWidth = getColumnWidth(startColIndex, colSpan, columnsOffset);
+  var marginOffset = colSpan > 1 ? colWidth - concatColWidth : 0;
+  var mergedStyle = _objectSpread2(_objectSpread2(_objectSpread2({}, cellStyle), style2), {}, {
+    flex: "0 0 ".concat(concatColWidth, "px"),
+    width: "".concat(concatColWidth, "px"),
+    marginRight: marginOffset,
+    pointerEvents: "auto"
+  });
+  var needHide = reactExports.useMemo(function() {
+    if (inverse) {
+      return rowSpan <= 1;
+    } else {
+      return colSpan === 0 || rowSpan === 0 || rowSpan > 1;
+    }
+  }, [rowSpan, colSpan, inverse]);
+  if (needHide) {
+    mergedStyle.visibility = "hidden";
+  } else if (inverse) {
+    mergedStyle.height = getHeight === null || getHeight === void 0 ? void 0 : getHeight(rowSpan);
+  }
+  var mergedRender = needHide ? function() {
+    return null;
+  } : render2;
+  var cellSpan = {};
+  if (rowSpan === 0 || colSpan === 0) {
+    cellSpan.rowSpan = 1;
+    cellSpan.colSpan = 1;
+  }
+  return /* @__PURE__ */ reactExports.createElement(Cell$1, _extends({
+    className: classNames(columnClassName, className),
+    ellipsis: column2.ellipsis,
+    align: column2.align,
+    scope: column2.rowScope,
+    component,
+    prefixCls: rowInfo.prefixCls,
+    key,
+    record,
+    index: index2,
+    renderIndex,
+    dataIndex,
+    render: mergedRender,
+    shouldCellUpdate: column2.shouldCellUpdate
+  }, fixedInfo, {
+    appendNode: appendCellNode,
+    additionalProps: _objectSpread2(_objectSpread2({}, additionalCellProps), {}, {
+      style: mergedStyle
+    }, cellSpan)
+  }));
+}
+var _excluded$3 = ["data", "index", "className", "rowKey", "style", "extra", "getHeight"];
+var BodyLine = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+  var data = props.data, index2 = props.index, className = props.className, rowKey = props.rowKey, style2 = props.style, extra = props.extra, getHeight = props.getHeight, restProps = _objectWithoutProperties(props, _excluded$3);
+  var record = data.record, indent = data.indent, renderIndex = data.index;
+  var _useContext = useContext(TableContext, ["prefixCls", "flattenColumns", "fixColumn", "componentWidth", "scrollX"]), scrollX = _useContext.scrollX, flattenColumns = _useContext.flattenColumns, prefixCls = _useContext.prefixCls, fixColumn = _useContext.fixColumn, componentWidth = _useContext.componentWidth;
+  var _useContext2 = useContext(StaticContext, ["getComponent"]), getComponent = _useContext2.getComponent;
+  var rowInfo = useRowInfo(record, rowKey, index2, indent);
+  var RowComponent = getComponent(["body", "row"], "div");
+  var cellComponent = getComponent(["body", "cell"], "div");
+  var rowSupportExpand = rowInfo.rowSupportExpand, expanded = rowInfo.expanded, rowProps = rowInfo.rowProps, expandedRowRender = rowInfo.expandedRowRender, expandedRowClassName = rowInfo.expandedRowClassName;
+  var expandRowNode;
+  if (rowSupportExpand && expanded) {
+    var expandContent = expandedRowRender(record, index2, indent + 1, expanded);
+    var computedExpandedRowClassName = expandedRowClassName === null || expandedRowClassName === void 0 ? void 0 : expandedRowClassName(record, index2, indent);
+    var additionalProps = {};
+    if (fixColumn) {
+      additionalProps = {
+        style: _defineProperty({}, "--virtual-width", "".concat(componentWidth, "px"))
+      };
+    }
+    var rowCellCls = "".concat(prefixCls, "-expanded-row-cell");
+    expandRowNode = /* @__PURE__ */ reactExports.createElement(RowComponent, {
+      className: classNames("".concat(prefixCls, "-expanded-row"), "".concat(prefixCls, "-expanded-row-level-").concat(indent + 1), computedExpandedRowClassName)
+    }, /* @__PURE__ */ reactExports.createElement(Cell$1, {
+      component: cellComponent,
+      prefixCls,
+      className: classNames(rowCellCls, _defineProperty({}, "".concat(rowCellCls, "-fixed"), fixColumn)),
+      additionalProps
+    }, expandContent));
+  }
+  var rowStyle = _objectSpread2(_objectSpread2({}, style2), {}, {
+    width: scrollX
+  });
+  if (extra) {
+    rowStyle.position = "absolute";
+    rowStyle.pointerEvents = "none";
+  }
+  var rowNode = /* @__PURE__ */ reactExports.createElement(RowComponent, _extends({}, rowProps, restProps, {
+    "data-row-key": rowKey,
+    ref: rowSupportExpand ? null : ref,
+    className: classNames(className, "".concat(prefixCls, "-row"), rowProps === null || rowProps === void 0 ? void 0 : rowProps.className, _defineProperty({}, "".concat(prefixCls, "-row-extra"), extra)),
+    style: _objectSpread2(_objectSpread2({}, rowStyle), rowProps === null || rowProps === void 0 ? void 0 : rowProps.style)
+  }), flattenColumns.map(function(column2, colIndex) {
+    return /* @__PURE__ */ reactExports.createElement(VirtualCell, {
+      key: colIndex,
+      component: cellComponent,
+      rowInfo,
+      column: column2,
+      colIndex,
+      indent,
+      index: index2,
+      renderIndex,
+      record,
+      inverse: extra,
+      getHeight
+    });
+  }));
+  if (rowSupportExpand) {
+    return /* @__PURE__ */ reactExports.createElement("div", {
+      ref
+    }, rowNode, expandRowNode);
+  }
+  return rowNode;
+});
+var ResponseBodyLine = responseImmutable(BodyLine);
+var Grid = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+  var data = props.data, onScroll = props.onScroll;
+  var _useContext = useContext(TableContext, ["flattenColumns", "onColumnResize", "getRowKey", "prefixCls", "expandedKeys", "childrenColumnName", "emptyNode", "scrollX"]), flattenColumns = _useContext.flattenColumns, onColumnResize = _useContext.onColumnResize, getRowKey = _useContext.getRowKey, expandedKeys = _useContext.expandedKeys, prefixCls = _useContext.prefixCls, childrenColumnName = _useContext.childrenColumnName, emptyNode = _useContext.emptyNode, scrollX = _useContext.scrollX;
+  var _useContext2 = useContext(StaticContext), sticky = _useContext2.sticky, scrollY = _useContext2.scrollY, listItemHeight = _useContext2.listItemHeight, getComponent = _useContext2.getComponent, onTablePropScroll = _useContext2.onScroll;
+  var listRef = reactExports.useRef();
+  var flattenData2 = useFlattenRecords(data, childrenColumnName, expandedKeys, getRowKey);
+  var columnsWidth = reactExports.useMemo(function() {
+    var total = 0;
+    return flattenColumns.map(function(_ref) {
+      var width = _ref.width, key = _ref.key;
+      total += width;
+      return [key, width, total];
+    });
+  }, [flattenColumns]);
+  var columnsOffset = reactExports.useMemo(function() {
+    return columnsWidth.map(function(colWidth) {
+      return colWidth[2];
+    });
+  }, [columnsWidth]);
+  reactExports.useEffect(function() {
+    columnsWidth.forEach(function(_ref2) {
+      var _ref3 = _slicedToArray(_ref2, 2), key = _ref3[0], width = _ref3[1];
+      onColumnResize(key, width);
+    });
+  }, [columnsWidth]);
+  reactExports.useImperativeHandle(ref, function() {
+    var obj = {
+      scrollTo: function scrollTo2(config) {
+        var _listRef$current;
+        (_listRef$current = listRef.current) === null || _listRef$current === void 0 || _listRef$current.scrollTo(config);
+      }
+    };
+    Object.defineProperty(obj, "scrollLeft", {
+      get: function get2() {
+        var _listRef$current2;
+        return ((_listRef$current2 = listRef.current) === null || _listRef$current2 === void 0 ? void 0 : _listRef$current2.getScrollInfo().x) || 0;
+      },
+      set: function set2(value) {
+        var _listRef$current3;
+        (_listRef$current3 = listRef.current) === null || _listRef$current3 === void 0 || _listRef$current3.scrollTo({
+          left: value
+        });
+      }
+    });
+    return obj;
+  });
+  var getRowSpan = function getRowSpan2(column2, index2) {
+    var _flattenData$index;
+    var record = (_flattenData$index = flattenData2[index2]) === null || _flattenData$index === void 0 ? void 0 : _flattenData$index.record;
+    var onCell = column2.onCell;
+    if (onCell) {
+      var _cellProps$rowSpan;
+      var cellProps = onCell(record, index2);
+      return (_cellProps$rowSpan = cellProps === null || cellProps === void 0 ? void 0 : cellProps.rowSpan) !== null && _cellProps$rowSpan !== void 0 ? _cellProps$rowSpan : 1;
+    }
+    return 1;
+  };
+  var extraRender = function extraRender2(info) {
+    var start = info.start, end = info.end, getSize3 = info.getSize, offsetY = info.offsetY;
+    if (end < 0) {
+      return null;
+    }
+    var firstRowSpanColumns = flattenColumns.filter(
+      // rowSpan is 0
+      function(column2) {
+        return getRowSpan(column2, start) === 0;
+      }
+    );
+    var startIndex = start;
+    var _loop = function _loop4(i22) {
+      firstRowSpanColumns = firstRowSpanColumns.filter(function(column2) {
+        return getRowSpan(column2, i22) === 0;
+      });
+      if (!firstRowSpanColumns.length) {
+        startIndex = i22;
+        return 1;
+      }
+    };
+    for (var i2 = start; i2 >= 0; i2 -= 1) {
+      if (_loop(i2)) break;
+    }
+    var lastRowSpanColumns = flattenColumns.filter(
+      // rowSpan is not 1
+      function(column2) {
+        return getRowSpan(column2, end) !== 1;
+      }
+    );
+    var endIndex = end;
+    var _loop2 = function _loop22(_i3) {
+      lastRowSpanColumns = lastRowSpanColumns.filter(function(column2) {
+        return getRowSpan(column2, _i3) !== 1;
+      });
+      if (!lastRowSpanColumns.length) {
+        endIndex = Math.max(_i3 - 1, end);
+        return 1;
+      }
+    };
+    for (var _i = end; _i < flattenData2.length; _i += 1) {
+      if (_loop2(_i)) break;
+    }
+    var spanLines = [];
+    var _loop3 = function _loop32(_i22) {
+      var item = flattenData2[_i22];
+      if (!item) {
+        return 1;
+      }
+      if (flattenColumns.some(function(column2) {
+        return getRowSpan(column2, _i22) > 1;
+      })) {
+        spanLines.push(_i22);
+      }
+    };
+    for (var _i2 = startIndex; _i2 <= endIndex; _i2 += 1) {
+      if (_loop3(_i2)) continue;
+    }
+    var nodes = spanLines.map(function(index2) {
+      var item = flattenData2[index2];
+      var rowKey = getRowKey(item.record, index2);
+      var getHeight = function getHeight2(rowSpan) {
+        var endItemIndex = index2 + rowSpan - 1;
+        var endItemKey = getRowKey(flattenData2[endItemIndex].record, endItemIndex);
+        var sizeInfo2 = getSize3(rowKey, endItemKey);
+        return sizeInfo2.bottom - sizeInfo2.top;
+      };
+      var sizeInfo = getSize3(rowKey);
+      return /* @__PURE__ */ reactExports.createElement(ResponseBodyLine, {
+        key: index2,
+        data: item,
+        rowKey,
+        index: index2,
+        style: {
+          top: -offsetY + sizeInfo.top
+        },
+        extra: true,
+        getHeight
+      });
+    });
+    return nodes;
+  };
+  var gridContext = reactExports.useMemo(function() {
+    return {
+      columnsOffset
+    };
+  }, [columnsOffset]);
+  var tblPrefixCls = "".concat(prefixCls, "-tbody");
+  var wrapperComponent = getComponent(["body", "wrapper"]);
+  var RowComponent = getComponent(["body", "row"], "div");
+  var cellComponent = getComponent(["body", "cell"], "div");
+  var bodyContent;
+  if (flattenData2.length) {
+    var horizontalScrollBarStyle = {};
+    if (sticky) {
+      horizontalScrollBarStyle.position = "sticky";
+      horizontalScrollBarStyle.bottom = 0;
+      if (_typeof(sticky) === "object" && sticky.offsetScroll) {
+        horizontalScrollBarStyle.bottom = sticky.offsetScroll;
+      }
+    }
+    bodyContent = /* @__PURE__ */ reactExports.createElement(List, {
+      fullHeight: false,
+      ref: listRef,
+      prefixCls: "".concat(tblPrefixCls, "-virtual"),
+      styles: {
+        horizontalScrollBar: horizontalScrollBarStyle
+      },
+      className: tblPrefixCls,
+      height: scrollY,
+      itemHeight: listItemHeight || 24,
+      data: flattenData2,
+      itemKey: function itemKey2(item) {
+        return getRowKey(item.record);
+      },
+      component: wrapperComponent,
+      scrollWidth: scrollX,
+      onVirtualScroll: function onVirtualScroll(_ref4) {
+        var x2 = _ref4.x;
+        onScroll({
+          scrollLeft: x2
+        });
+      },
+      onScroll: onTablePropScroll,
+      extraRender
+    }, function(item, index2, itemProps) {
+      var rowKey = getRowKey(item.record, index2);
+      return /* @__PURE__ */ reactExports.createElement(ResponseBodyLine, {
+        data: item,
+        rowKey,
+        index: index2,
+        style: itemProps.style
+      });
+    });
+  } else {
+    bodyContent = /* @__PURE__ */ reactExports.createElement(RowComponent, {
+      className: classNames("".concat(prefixCls, "-placeholder"))
+    }, /* @__PURE__ */ reactExports.createElement(Cell$1, {
+      component: cellComponent,
+      prefixCls
+    }, emptyNode));
+  }
+  return /* @__PURE__ */ reactExports.createElement(GridContext.Provider, {
+    value: gridContext
+  }, bodyContent);
+});
+var ResponseGrid = responseImmutable(Grid);
+var renderBody = function renderBody2(rawData, props) {
+  var ref = props.ref, onScroll = props.onScroll;
+  return /* @__PURE__ */ reactExports.createElement(ResponseGrid, {
+    ref,
+    data: rawData,
+    onScroll
+  });
+};
+function VirtualTable(props, ref) {
+  var columns2 = props.columns, scroll = props.scroll, sticky = props.sticky, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? DEFAULT_PREFIX : _props$prefixCls, className = props.className, listItemHeight = props.listItemHeight, components = props.components, onScroll = props.onScroll;
+  var _ref = scroll || {}, scrollX = _ref.x, scrollY = _ref.y;
+  if (typeof scrollX !== "number") {
+    scrollX = 1;
+  }
+  if (typeof scrollY !== "number") {
+    scrollY = 500;
+  }
+  var getComponent = useEvent(function(path2, defaultComponent) {
+    return get(components, path2) || defaultComponent;
+  });
+  var onInternalScroll = useEvent(onScroll);
+  var context = reactExports.useMemo(function() {
+    return {
+      sticky,
+      scrollY,
+      listItemHeight,
+      getComponent,
+      onScroll: onInternalScroll
+    };
+  }, [sticky, scrollY, listItemHeight, getComponent, onInternalScroll]);
+  return /* @__PURE__ */ reactExports.createElement(StaticContext.Provider, {
+    value: context
+  }, /* @__PURE__ */ reactExports.createElement(ImmutableTable, _extends({}, props, {
+    className: classNames(className, "".concat(prefixCls, "-virtual")),
+    scroll: _objectSpread2(_objectSpread2({}, scroll), {}, {
+      x: scrollX
+    }),
+    components: _objectSpread2(_objectSpread2({}, components), {}, {
+      body: renderBody
+    }),
+    columns: columns2,
+    internalHooks: INTERNAL_HOOKS,
+    tailor: true,
+    ref
+  })));
+}
+var RefVirtualTable = /* @__PURE__ */ reactExports.forwardRef(VirtualTable);
+function genVirtualTable(shouldTriggerRender) {
+  return makeImmutable(RefVirtualTable, shouldTriggerRender);
+}
+genVirtualTable();
+function Column(_) {
+  return null;
+}
+function ColumnGroup(_) {
+  return null;
+}
+var TreeContext = /* @__PURE__ */ reactExports.createContext(null);
+var Indent = function Indent2(_ref) {
+  var prefixCls = _ref.prefixCls, level = _ref.level, isStart = _ref.isStart, isEnd = _ref.isEnd;
+  var baseClassName = "".concat(prefixCls, "-indent-unit");
+  var list = [];
+  for (var i2 = 0; i2 < level; i2 += 1) {
+    list.push(/* @__PURE__ */ reactExports.createElement("span", {
+      key: i2,
+      className: classNames(baseClassName, _defineProperty(_defineProperty({}, "".concat(baseClassName, "-start"), isStart[i2]), "".concat(baseClassName, "-end"), isEnd[i2]))
+    }));
+  }
+  return /* @__PURE__ */ reactExports.createElement("span", {
+    "aria-hidden": "true",
+    className: "".concat(prefixCls, "-indent")
+  }, list);
+};
+const Indent$1 = /* @__PURE__ */ reactExports.memo(Indent);
+var _excluded$2 = ["eventKey", "className", "style", "dragOver", "dragOverGapTop", "dragOverGapBottom", "isLeaf", "isStart", "isEnd", "expanded", "selected", "checked", "halfChecked", "loading", "domRef", "active", "data", "onMouseMove", "selectable"];
+var ICON_OPEN = "open";
+var ICON_CLOSE = "close";
+var defaultTitle = "---";
+var InternalTreeNode = /* @__PURE__ */ function(_React$Component) {
+  _inherits(InternalTreeNode2, _React$Component);
+  var _super = _createSuper(InternalTreeNode2);
+  function InternalTreeNode2() {
+    var _this;
+    _classCallCheck(this, InternalTreeNode2);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      dragNodeHighlight: false
+    });
+    _defineProperty(_assertThisInitialized(_this), "selectHandle", void 0);
+    _defineProperty(_assertThisInitialized(_this), "cacheIndent", void 0);
+    _defineProperty(_assertThisInitialized(_this), "onSelectorClick", function(e2) {
+      var onNodeClick = _this.props.context.onNodeClick;
+      onNodeClick(e2, convertNodePropsToEventData(_this.props));
+      if (_this.isSelectable()) {
+        _this.onSelect(e2);
+      } else {
+        _this.onCheck(e2);
+      }
+    });
+    _defineProperty(_assertThisInitialized(_this), "onSelectorDoubleClick", function(e2) {
+      var onNodeDoubleClick = _this.props.context.onNodeDoubleClick;
+      onNodeDoubleClick(e2, convertNodePropsToEventData(_this.props));
+    });
+    _defineProperty(_assertThisInitialized(_this), "onSelect", function(e2) {
+      if (_this.isDisabled()) return;
+      var onNodeSelect = _this.props.context.onNodeSelect;
+      onNodeSelect(e2, convertNodePropsToEventData(_this.props));
+    });
+    _defineProperty(_assertThisInitialized(_this), "onCheck", function(e2) {
+      if (_this.isDisabled()) return;
+      var _this$props = _this.props, disableCheckbox = _this$props.disableCheckbox, checked = _this$props.checked;
+      var onNodeCheck = _this.props.context.onNodeCheck;
+      if (!_this.isCheckable() || disableCheckbox) return;
+      var targetChecked = !checked;
+      onNodeCheck(e2, convertNodePropsToEventData(_this.props), targetChecked);
+    });
+    _defineProperty(_assertThisInitialized(_this), "onMouseEnter", function(e2) {
+      var onNodeMouseEnter = _this.props.context.onNodeMouseEnter;
+      onNodeMouseEnter(e2, convertNodePropsToEventData(_this.props));
+    });
+    _defineProperty(_assertThisInitialized(_this), "onMouseLeave", function(e2) {
+      var onNodeMouseLeave = _this.props.context.onNodeMouseLeave;
+      onNodeMouseLeave(e2, convertNodePropsToEventData(_this.props));
+    });
+    _defineProperty(_assertThisInitialized(_this), "onContextMenu", function(e2) {
+      var onNodeContextMenu = _this.props.context.onNodeContextMenu;
+      onNodeContextMenu(e2, convertNodePropsToEventData(_this.props));
+    });
+    _defineProperty(_assertThisInitialized(_this), "onDragStart", function(e2) {
+      var onNodeDragStart = _this.props.context.onNodeDragStart;
+      e2.stopPropagation();
+      _this.setState({
+        dragNodeHighlight: true
+      });
+      onNodeDragStart(e2, _assertThisInitialized(_this));
+      try {
+        e2.dataTransfer.setData("text/plain", "");
+      } catch (error) {
+      }
+    });
+    _defineProperty(_assertThisInitialized(_this), "onDragEnter", function(e2) {
+      var onNodeDragEnter = _this.props.context.onNodeDragEnter;
+      e2.preventDefault();
+      e2.stopPropagation();
+      onNodeDragEnter(e2, _assertThisInitialized(_this));
+    });
+    _defineProperty(_assertThisInitialized(_this), "onDragOver", function(e2) {
+      var onNodeDragOver = _this.props.context.onNodeDragOver;
+      e2.preventDefault();
+      e2.stopPropagation();
+      onNodeDragOver(e2, _assertThisInitialized(_this));
+    });
+    _defineProperty(_assertThisInitialized(_this), "onDragLeave", function(e2) {
+      var onNodeDragLeave = _this.props.context.onNodeDragLeave;
+      e2.stopPropagation();
+      onNodeDragLeave(e2, _assertThisInitialized(_this));
+    });
+    _defineProperty(_assertThisInitialized(_this), "onDragEnd", function(e2) {
+      var onNodeDragEnd = _this.props.context.onNodeDragEnd;
+      e2.stopPropagation();
+      _this.setState({
+        dragNodeHighlight: false
+      });
+      onNodeDragEnd(e2, _assertThisInitialized(_this));
+    });
+    _defineProperty(_assertThisInitialized(_this), "onDrop", function(e2) {
+      var onNodeDrop = _this.props.context.onNodeDrop;
+      e2.preventDefault();
+      e2.stopPropagation();
+      _this.setState({
+        dragNodeHighlight: false
+      });
+      onNodeDrop(e2, _assertThisInitialized(_this));
+    });
+    _defineProperty(_assertThisInitialized(_this), "onExpand", function(e2) {
+      var _this$props2 = _this.props, loading = _this$props2.loading, onNodeExpand = _this$props2.context.onNodeExpand;
+      if (loading) return;
+      onNodeExpand(e2, convertNodePropsToEventData(_this.props));
+    });
+    _defineProperty(_assertThisInitialized(_this), "setSelectHandle", function(node2) {
+      _this.selectHandle = node2;
+    });
+    _defineProperty(_assertThisInitialized(_this), "getNodeState", function() {
+      var expanded = _this.props.expanded;
+      if (_this.isLeaf()) {
+        return null;
+      }
+      return expanded ? ICON_OPEN : ICON_CLOSE;
+    });
+    _defineProperty(_assertThisInitialized(_this), "hasChildren", function() {
+      var eventKey = _this.props.eventKey;
+      var keyEntities = _this.props.context.keyEntities;
+      var _ref = getEntity(keyEntities, eventKey) || {}, children = _ref.children;
+      return !!(children || []).length;
+    });
+    _defineProperty(_assertThisInitialized(_this), "isLeaf", function() {
+      var _this$props3 = _this.props, isLeaf = _this$props3.isLeaf, loaded = _this$props3.loaded;
+      var loadData = _this.props.context.loadData;
+      var hasChildren = _this.hasChildren();
+      if (isLeaf === false) {
+        return false;
+      }
+      return isLeaf || !loadData && !hasChildren || loadData && loaded && !hasChildren;
+    });
+    _defineProperty(_assertThisInitialized(_this), "isDisabled", function() {
+      var disabled = _this.props.disabled;
+      var treeDisabled = _this.props.context.disabled;
+      return !!(treeDisabled || disabled);
+    });
+    _defineProperty(_assertThisInitialized(_this), "isCheckable", function() {
+      var checkable = _this.props.checkable;
+      var treeCheckable = _this.props.context.checkable;
+      if (!treeCheckable || checkable === false) return false;
+      return treeCheckable;
+    });
+    _defineProperty(_assertThisInitialized(_this), "syncLoadData", function(props) {
+      var expanded = props.expanded, loading = props.loading, loaded = props.loaded;
+      var _this$props$context = _this.props.context, loadData = _this$props$context.loadData, onNodeLoad = _this$props$context.onNodeLoad;
+      if (loading) {
+        return;
+      }
+      if (loadData && expanded && !_this.isLeaf() && !loaded) {
+        onNodeLoad(convertNodePropsToEventData(_this.props));
+      }
+    });
+    _defineProperty(_assertThisInitialized(_this), "isDraggable", function() {
+      var _this$props4 = _this.props, data = _this$props4.data, draggable = _this$props4.context.draggable;
+      return !!(draggable && (!draggable.nodeDraggable || draggable.nodeDraggable(data)));
+    });
+    _defineProperty(_assertThisInitialized(_this), "renderDragHandler", function() {
+      var _this$props$context2 = _this.props.context, draggable = _this$props$context2.draggable, prefixCls = _this$props$context2.prefixCls;
+      return draggable !== null && draggable !== void 0 && draggable.icon ? /* @__PURE__ */ reactExports.createElement("span", {
+        className: "".concat(prefixCls, "-draggable-icon")
+      }, draggable.icon) : null;
+    });
+    _defineProperty(_assertThisInitialized(_this), "renderSwitcherIconDom", function(isLeaf) {
+      var switcherIconFromProps = _this.props.switcherIcon;
+      var switcherIconFromCtx = _this.props.context.switcherIcon;
+      var switcherIcon = switcherIconFromProps || switcherIconFromCtx;
+      if (typeof switcherIcon === "function") {
+        return switcherIcon(_objectSpread2(_objectSpread2({}, _this.props), {}, {
+          isLeaf
+        }));
+      }
+      return switcherIcon;
+    });
+    _defineProperty(_assertThisInitialized(_this), "renderSwitcher", function() {
+      var expanded = _this.props.expanded;
+      var prefixCls = _this.props.context.prefixCls;
+      if (_this.isLeaf()) {
+        var _switcherIconDom = _this.renderSwitcherIconDom(true);
+        return _switcherIconDom !== false ? /* @__PURE__ */ reactExports.createElement("span", {
+          className: classNames("".concat(prefixCls, "-switcher"), "".concat(prefixCls, "-switcher-noop"))
+        }, _switcherIconDom) : null;
+      }
+      var switcherCls = classNames("".concat(prefixCls, "-switcher"), "".concat(prefixCls, "-switcher_").concat(expanded ? ICON_OPEN : ICON_CLOSE));
+      var switcherIconDom = _this.renderSwitcherIconDom(false);
+      return switcherIconDom !== false ? /* @__PURE__ */ reactExports.createElement("span", {
+        onClick: _this.onExpand,
+        className: switcherCls
+      }, switcherIconDom) : null;
+    });
+    _defineProperty(_assertThisInitialized(_this), "renderCheckbox", function() {
+      var _this$props5 = _this.props, checked = _this$props5.checked, halfChecked = _this$props5.halfChecked, disableCheckbox = _this$props5.disableCheckbox;
+      var prefixCls = _this.props.context.prefixCls;
+      var disabled = _this.isDisabled();
+      var checkable = _this.isCheckable();
+      if (!checkable) return null;
+      var $custom = typeof checkable !== "boolean" ? checkable : null;
+      return /* @__PURE__ */ reactExports.createElement("span", {
+        className: classNames("".concat(prefixCls, "-checkbox"), checked && "".concat(prefixCls, "-checkbox-checked"), !checked && halfChecked && "".concat(prefixCls, "-checkbox-indeterminate"), (disabled || disableCheckbox) && "".concat(prefixCls, "-checkbox-disabled")),
+        onClick: _this.onCheck
+      }, $custom);
+    });
+    _defineProperty(_assertThisInitialized(_this), "renderIcon", function() {
+      var loading = _this.props.loading;
+      var prefixCls = _this.props.context.prefixCls;
+      return /* @__PURE__ */ reactExports.createElement("span", {
+        className: classNames("".concat(prefixCls, "-iconEle"), "".concat(prefixCls, "-icon__").concat(_this.getNodeState() || "docu"), loading && "".concat(prefixCls, "-icon_loading"))
+      });
+    });
+    _defineProperty(_assertThisInitialized(_this), "renderSelector", function() {
+      var dragNodeHighlight = _this.state.dragNodeHighlight;
+      var _this$props6 = _this.props, _this$props6$title = _this$props6.title, title = _this$props6$title === void 0 ? defaultTitle : _this$props6$title, selected = _this$props6.selected, icon = _this$props6.icon, loading = _this$props6.loading, data = _this$props6.data;
+      var _this$props$context3 = _this.props.context, prefixCls = _this$props$context3.prefixCls, showIcon = _this$props$context3.showIcon, treeIcon = _this$props$context3.icon, loadData = _this$props$context3.loadData, titleRender = _this$props$context3.titleRender;
+      var disabled = _this.isDisabled();
+      var wrapClass = "".concat(prefixCls, "-node-content-wrapper");
+      var $icon;
+      if (showIcon) {
+        var currentIcon = icon || treeIcon;
+        $icon = currentIcon ? /* @__PURE__ */ reactExports.createElement("span", {
+          className: classNames("".concat(prefixCls, "-iconEle"), "".concat(prefixCls, "-icon__customize"))
+        }, typeof currentIcon === "function" ? currentIcon(_this.props) : currentIcon) : _this.renderIcon();
+      } else if (loadData && loading) {
+        $icon = _this.renderIcon();
+      }
+      var titleNode;
+      if (typeof title === "function") {
+        titleNode = title(data);
+      } else if (titleRender) {
+        titleNode = titleRender(data);
+      } else {
+        titleNode = title;
+      }
+      var $title = /* @__PURE__ */ reactExports.createElement("span", {
+        className: "".concat(prefixCls, "-title")
+      }, titleNode);
+      return /* @__PURE__ */ reactExports.createElement("span", {
+        ref: _this.setSelectHandle,
+        title: typeof title === "string" ? title : "",
+        className: classNames("".concat(wrapClass), "".concat(wrapClass, "-").concat(_this.getNodeState() || "normal"), !disabled && (selected || dragNodeHighlight) && "".concat(prefixCls, "-node-selected")),
+        onMouseEnter: _this.onMouseEnter,
+        onMouseLeave: _this.onMouseLeave,
+        onContextMenu: _this.onContextMenu,
+        onClick: _this.onSelectorClick,
+        onDoubleClick: _this.onSelectorDoubleClick
+      }, $icon, $title, _this.renderDropIndicator());
+    });
+    _defineProperty(_assertThisInitialized(_this), "renderDropIndicator", function() {
+      var _this$props7 = _this.props, disabled = _this$props7.disabled, eventKey = _this$props7.eventKey;
+      var _this$props$context4 = _this.props.context, draggable = _this$props$context4.draggable, dropLevelOffset = _this$props$context4.dropLevelOffset, dropPosition = _this$props$context4.dropPosition, prefixCls = _this$props$context4.prefixCls, indent = _this$props$context4.indent, dropIndicatorRender2 = _this$props$context4.dropIndicatorRender, dragOverNodeKey = _this$props$context4.dragOverNodeKey, direction = _this$props$context4.direction;
+      var rootDraggable = !!draggable;
+      var showIndicator = !disabled && rootDraggable && dragOverNodeKey === eventKey;
+      var mergedIndent = indent !== null && indent !== void 0 ? indent : _this.cacheIndent;
+      _this.cacheIndent = indent;
+      return showIndicator ? dropIndicatorRender2({
+        dropPosition,
+        dropLevelOffset,
+        indent: mergedIndent,
+        prefixCls,
+        direction
+      }) : null;
+    });
+    return _this;
+  }
+  _createClass(InternalTreeNode2, [{
+    key: "componentDidMount",
+    value: (
+      // Isomorphic needn't load data in server side
+      function componentDidMount() {
+        this.syncLoadData(this.props);
+      }
+    )
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      this.syncLoadData(this.props);
+    }
+  }, {
+    key: "isSelectable",
+    value: function isSelectable() {
+      var selectable = this.props.selectable;
+      var treeSelectable = this.props.context.selectable;
+      if (typeof selectable === "boolean") {
+        return selectable;
+      }
+      return treeSelectable;
+    }
+  }, {
+    key: "render",
+    value: (
+      // =========================== Render ===========================
+      function render2() {
+        var _classNames;
+        var _this$props8 = this.props, eventKey = _this$props8.eventKey, className = _this$props8.className, style2 = _this$props8.style, dragOver = _this$props8.dragOver, dragOverGapTop = _this$props8.dragOverGapTop, dragOverGapBottom = _this$props8.dragOverGapBottom, isLeaf = _this$props8.isLeaf, isStart = _this$props8.isStart, isEnd = _this$props8.isEnd, expanded = _this$props8.expanded, selected = _this$props8.selected, checked = _this$props8.checked, halfChecked = _this$props8.halfChecked, loading = _this$props8.loading, domRef = _this$props8.domRef, active = _this$props8.active;
+        _this$props8.data;
+        var onMouseMove = _this$props8.onMouseMove, selectable = _this$props8.selectable, otherProps = _objectWithoutProperties(_this$props8, _excluded$2);
+        var _this$props$context5 = this.props.context, prefixCls = _this$props$context5.prefixCls, filterTreeNode = _this$props$context5.filterTreeNode, keyEntities = _this$props$context5.keyEntities, dropContainerKey = _this$props$context5.dropContainerKey, dropTargetKey = _this$props$context5.dropTargetKey, draggingNodeKey = _this$props$context5.draggingNodeKey;
+        var disabled = this.isDisabled();
+        var dataOrAriaAttributeProps = pickAttrs(otherProps, {
+          aria: true,
+          data: true
+        });
+        var _ref2 = getEntity(keyEntities, eventKey) || {}, level = _ref2.level;
+        var isEndNode = isEnd[isEnd.length - 1];
+        var mergedDraggable = this.isDraggable();
+        var draggableWithoutDisabled = !disabled && mergedDraggable;
+        var dragging = draggingNodeKey === eventKey;
+        var ariaSelected = selectable !== void 0 ? {
+          "aria-selected": !!selectable
+        } : void 0;
+        return /* @__PURE__ */ reactExports.createElement("div", _extends({
+          ref: domRef,
+          className: classNames(className, "".concat(prefixCls, "-treenode"), (_classNames = {}, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_classNames, "".concat(prefixCls, "-treenode-disabled"), disabled), "".concat(prefixCls, "-treenode-switcher-").concat(expanded ? "open" : "close"), !isLeaf), "".concat(prefixCls, "-treenode-checkbox-checked"), checked), "".concat(prefixCls, "-treenode-checkbox-indeterminate"), halfChecked), "".concat(prefixCls, "-treenode-selected"), selected), "".concat(prefixCls, "-treenode-loading"), loading), "".concat(prefixCls, "-treenode-active"), active), "".concat(prefixCls, "-treenode-leaf-last"), isEndNode), "".concat(prefixCls, "-treenode-draggable"), mergedDraggable), "dragging", dragging), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_classNames, "drop-target", dropTargetKey === eventKey), "drop-container", dropContainerKey === eventKey), "drag-over", !disabled && dragOver), "drag-over-gap-top", !disabled && dragOverGapTop), "drag-over-gap-bottom", !disabled && dragOverGapBottom), "filter-node", filterTreeNode && filterTreeNode(convertNodePropsToEventData(this.props))))),
+          style: style2,
+          draggable: draggableWithoutDisabled,
+          "aria-grabbed": dragging,
+          onDragStart: draggableWithoutDisabled ? this.onDragStart : void 0,
+          onDragEnter: mergedDraggable ? this.onDragEnter : void 0,
+          onDragOver: mergedDraggable ? this.onDragOver : void 0,
+          onDragLeave: mergedDraggable ? this.onDragLeave : void 0,
+          onDrop: mergedDraggable ? this.onDrop : void 0,
+          onDragEnd: mergedDraggable ? this.onDragEnd : void 0,
+          onMouseMove
+        }, ariaSelected, dataOrAriaAttributeProps), /* @__PURE__ */ reactExports.createElement(Indent$1, {
+          prefixCls,
+          level,
+          isStart,
+          isEnd
+        }), this.renderDragHandler(), this.renderSwitcher(), this.renderCheckbox(), this.renderSelector());
+      }
+    )
+  }]);
+  return InternalTreeNode2;
+}(reactExports.Component);
+var ContextTreeNode = function ContextTreeNode2(props) {
+  return /* @__PURE__ */ reactExports.createElement(TreeContext.Consumer, null, function(context) {
+    return /* @__PURE__ */ reactExports.createElement(InternalTreeNode, _extends({}, props, {
+      context
+    }));
+  });
+};
+ContextTreeNode.displayName = "TreeNode";
+ContextTreeNode.isTreeNode = 1;
+function arrDel(list, value) {
+  if (!list) return [];
+  var clone = list.slice();
+  var index2 = clone.indexOf(value);
+  if (index2 >= 0) {
+    clone.splice(index2, 1);
+  }
+  return clone;
+}
+function arrAdd(list, value) {
+  var clone = (list || []).slice();
+  if (clone.indexOf(value) === -1) {
+    clone.push(value);
+  }
+  return clone;
+}
+function posToArr(pos) {
+  return pos.split("-");
+}
+function getDragChildrenKeys(dragNodeKey, keyEntities) {
+  var dragChildrenKeys = [];
+  var entity = getEntity(keyEntities, dragNodeKey);
+  function dig() {
+    var list = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : [];
+    list.forEach(function(_ref) {
+      var key = _ref.key, children = _ref.children;
+      dragChildrenKeys.push(key);
+      dig(children);
+    });
+  }
+  dig(entity.children);
+  return dragChildrenKeys;
+}
+function isLastChild(treeNodeEntity) {
+  if (treeNodeEntity.parent) {
+    var posArr = posToArr(treeNodeEntity.pos);
+    return Number(posArr[posArr.length - 1]) === treeNodeEntity.parent.children.length - 1;
+  }
+  return false;
+}
+function isFirstChild(treeNodeEntity) {
+  var posArr = posToArr(treeNodeEntity.pos);
+  return Number(posArr[posArr.length - 1]) === 0;
+}
+function calcDropPosition(event, dragNode, targetNode, indent, startMousePosition, allowDrop2, flattenedNodes, keyEntities, expandKeys, direction) {
+  var _abstractDropNodeEnti;
+  var clientX = event.clientX, clientY = event.clientY;
+  var _getBoundingClientRec = event.target.getBoundingClientRect(), top = _getBoundingClientRec.top, height = _getBoundingClientRec.height;
+  var horizontalMouseOffset = (direction === "rtl" ? -1 : 1) * (((startMousePosition === null || startMousePosition === void 0 ? void 0 : startMousePosition.x) || 0) - clientX);
+  var rawDropLevelOffset = (horizontalMouseOffset - 12) / indent;
+  var filteredExpandKeys = expandKeys.filter(function(key) {
+    var _keyEntities$key;
+    return (_keyEntities$key = keyEntities[key]) === null || _keyEntities$key === void 0 || (_keyEntities$key = _keyEntities$key.children) === null || _keyEntities$key === void 0 ? void 0 : _keyEntities$key.length;
+  });
+  var abstractDropNodeEntity = getEntity(keyEntities, targetNode.props.eventKey);
+  if (clientY < top + height / 2) {
+    var nodeIndex = flattenedNodes.findIndex(function(flattenedNode) {
+      return flattenedNode.key === abstractDropNodeEntity.key;
+    });
+    var prevNodeIndex = nodeIndex <= 0 ? 0 : nodeIndex - 1;
+    var prevNodeKey = flattenedNodes[prevNodeIndex].key;
+    abstractDropNodeEntity = getEntity(keyEntities, prevNodeKey);
+  }
+  var initialAbstractDropNodeKey = abstractDropNodeEntity.key;
+  var abstractDragOverEntity = abstractDropNodeEntity;
+  var dragOverNodeKey = abstractDropNodeEntity.key;
+  var dropPosition = 0;
+  var dropLevelOffset = 0;
+  if (!filteredExpandKeys.includes(initialAbstractDropNodeKey)) {
+    for (var i2 = 0; i2 < rawDropLevelOffset; i2 += 1) {
+      if (isLastChild(abstractDropNodeEntity)) {
+        abstractDropNodeEntity = abstractDropNodeEntity.parent;
+        dropLevelOffset += 1;
+      } else {
+        break;
+      }
+    }
+  }
+  var abstractDragDataNode = dragNode.props.data;
+  var abstractDropDataNode = abstractDropNodeEntity.node;
+  var dropAllowed = true;
+  if (isFirstChild(abstractDropNodeEntity) && abstractDropNodeEntity.level === 0 && clientY < top + height / 2 && allowDrop2({
+    dragNode: abstractDragDataNode,
+    dropNode: abstractDropDataNode,
+    dropPosition: -1
+  }) && abstractDropNodeEntity.key === targetNode.props.eventKey) {
+    dropPosition = -1;
+  } else if ((abstractDragOverEntity.children || []).length && filteredExpandKeys.includes(dragOverNodeKey)) {
+    if (allowDrop2({
+      dragNode: abstractDragDataNode,
+      dropNode: abstractDropDataNode,
+      dropPosition: 0
+    })) {
+      dropPosition = 0;
+    } else {
+      dropAllowed = false;
+    }
+  } else if (dropLevelOffset === 0) {
+    if (rawDropLevelOffset > -1.5) {
+      if (allowDrop2({
+        dragNode: abstractDragDataNode,
+        dropNode: abstractDropDataNode,
+        dropPosition: 1
+      })) {
+        dropPosition = 1;
+      } else {
+        dropAllowed = false;
+      }
+    } else {
+      if (allowDrop2({
+        dragNode: abstractDragDataNode,
+        dropNode: abstractDropDataNode,
+        dropPosition: 0
+      })) {
+        dropPosition = 0;
+      } else if (allowDrop2({
+        dragNode: abstractDragDataNode,
+        dropNode: abstractDropDataNode,
+        dropPosition: 1
+      })) {
+        dropPosition = 1;
+      } else {
+        dropAllowed = false;
+      }
+    }
+  } else {
+    if (allowDrop2({
+      dragNode: abstractDragDataNode,
+      dropNode: abstractDropDataNode,
+      dropPosition: 1
+    })) {
+      dropPosition = 1;
+    } else {
+      dropAllowed = false;
+    }
+  }
+  return {
+    dropPosition,
+    dropLevelOffset,
+    dropTargetKey: abstractDropNodeEntity.key,
+    dropTargetPos: abstractDropNodeEntity.pos,
+    dragOverNodeKey,
+    dropContainerKey: dropPosition === 0 ? null : ((_abstractDropNodeEnti = abstractDropNodeEntity.parent) === null || _abstractDropNodeEnti === void 0 ? void 0 : _abstractDropNodeEnti.key) || null,
+    dropAllowed
+  };
+}
+function calcSelectedKeys(selectedKeys, props) {
+  if (!selectedKeys) return void 0;
+  var multiple = props.multiple;
+  if (multiple) {
+    return selectedKeys.slice();
+  }
+  if (selectedKeys.length) {
+    return [selectedKeys[0]];
+  }
+  return selectedKeys;
+}
+function parseCheckedKeys(keys2) {
+  if (!keys2) {
+    return null;
+  }
+  var keyProps;
+  if (Array.isArray(keys2)) {
+    keyProps = {
+      checkedKeys: keys2,
+      halfCheckedKeys: void 0
+    };
+  } else if (_typeof(keys2) === "object") {
+    keyProps = {
+      checkedKeys: keys2.checked || void 0,
+      halfCheckedKeys: keys2.halfChecked || void 0
+    };
+  } else {
+    warningOnce(false, "`checkedKeys` is not an array or an object");
+    return null;
+  }
+  return keyProps;
+}
+function conductExpandParent(keyList, keyEntities) {
+  var expandedKeys = /* @__PURE__ */ new Set();
+  function conductUp(key) {
+    if (expandedKeys.has(key)) return;
+    var entity = getEntity(keyEntities, key);
+    if (!entity) return;
+    expandedKeys.add(key);
+    var parent = entity.parent, node2 = entity.node;
+    if (node2.disabled) return;
+    if (parent) {
+      conductUp(parent.key);
+    }
+  }
+  (keyList || []).forEach(function(key) {
+    conductUp(key);
+  });
+  return _toConsumableArray(expandedKeys);
+}
+function useMultipleSelect(getKey2) {
+  const [prevSelectedIndex, setPrevSelectedIndex] = reactExports.useState(null);
+  const multipleSelect = reactExports.useCallback((currentSelectedIndex, data, selectedKeys) => {
+    const configPrevSelectedIndex = prevSelectedIndex !== null && prevSelectedIndex !== void 0 ? prevSelectedIndex : currentSelectedIndex;
+    const startIndex = Math.min(configPrevSelectedIndex || 0, currentSelectedIndex);
+    const endIndex = Math.max(configPrevSelectedIndex || 0, currentSelectedIndex);
+    const rangeKeys = data.slice(startIndex, endIndex + 1).map((item) => getKey2(item));
+    const shouldSelected = rangeKeys.some((rangeKey) => !selectedKeys.has(rangeKey));
+    const changedKeys = [];
+    rangeKeys.forEach((item) => {
+      if (shouldSelected) {
+        if (!selectedKeys.has(item)) {
+          changedKeys.push(item);
+        }
+        selectedKeys.add(item);
+      } else {
+        selectedKeys.delete(item);
+        changedKeys.push(item);
+      }
+    });
+    setPrevSelectedIndex(shouldSelected ? endIndex : null);
+    return changedKeys;
+  }, [prevSelectedIndex]);
+  const updatePrevSelectedIndex = (val) => {
+    setPrevSelectedIndex(val);
+  };
+  return [multipleSelect, updatePrevSelectedIndex];
+}
+const SELECTION_COLUMN = {};
+const SELECTION_ALL = "SELECT_ALL";
+const SELECTION_INVERT = "SELECT_INVERT";
+const SELECTION_NONE = "SELECT_NONE";
+const EMPTY_LIST$1 = [];
+const flattenData = (childrenColumnName, data) => {
+  let list = [];
+  (data || []).forEach((record) => {
+    list.push(record);
+    if (record && typeof record === "object" && childrenColumnName in record) {
+      list = [].concat(_toConsumableArray(list), _toConsumableArray(flattenData(childrenColumnName, record[childrenColumnName])));
+    }
+  });
+  return list;
+};
+const useSelection = (config, rowSelection) => {
+  const {
+    preserveSelectedRowKeys,
+    selectedRowKeys,
+    defaultSelectedRowKeys,
+    getCheckboxProps,
+    onChange: onSelectionChange,
+    onSelect,
+    onSelectAll,
+    onSelectInvert,
+    onSelectNone,
+    onSelectMultiple,
+    columnWidth: selectionColWidth,
+    type: selectionType,
+    selections,
+    fixed,
+    renderCell: customizeRenderCell,
+    hideSelectAll,
+    checkStrictly = true
+  } = rowSelection || {};
+  const {
+    prefixCls,
+    data,
+    pageData,
+    getRecordByKey,
+    getRowKey,
+    expandType,
+    childrenColumnName,
+    locale: tableLocale,
+    getPopupContainer
+  } = config;
+  const warning3 = devUseWarning();
+  const [multipleSelect, updatePrevSelectedIndex] = useMultipleSelect((item) => item);
+  const [mergedSelectedKeys, setMergedSelectedKeys] = useMergedState(selectedRowKeys || defaultSelectedRowKeys || EMPTY_LIST$1, {
+    value: selectedRowKeys
+  });
+  const preserveRecordsRef = reactExports.useRef(/* @__PURE__ */ new Map());
+  const updatePreserveRecordsCache = reactExports.useCallback((keys2) => {
+    if (preserveSelectedRowKeys) {
+      const newCache = /* @__PURE__ */ new Map();
+      keys2.forEach((key) => {
+        let record = getRecordByKey(key);
+        if (!record && preserveRecordsRef.current.has(key)) {
+          record = preserveRecordsRef.current.get(key);
+        }
+        newCache.set(key, record);
+      });
+      preserveRecordsRef.current = newCache;
+    }
+  }, [getRecordByKey, preserveSelectedRowKeys]);
+  reactExports.useEffect(() => {
+    updatePreserveRecordsCache(mergedSelectedKeys);
+  }, [mergedSelectedKeys]);
+  const {
+    keyEntities
+  } = reactExports.useMemo(() => {
+    if (checkStrictly) {
+      return {
+        keyEntities: null
+      };
+    }
+    let convertData = data;
+    if (preserveSelectedRowKeys) {
+      const keysSet = new Set(data.map((record, index2) => getRowKey(record, index2)));
+      const preserveRecords = Array.from(preserveRecordsRef.current).reduce((total, _ref) => {
+        let [key, value] = _ref;
+        return keysSet.has(key) ? total : total.concat(value);
+      }, []);
+      convertData = [].concat(_toConsumableArray(convertData), _toConsumableArray(preserveRecords));
+    }
+    return convertDataToEntities(convertData, {
+      externalGetKey: getRowKey,
+      childrenPropName: childrenColumnName
+    });
+  }, [data, getRowKey, checkStrictly, childrenColumnName, preserveSelectedRowKeys]);
+  const flattedData = reactExports.useMemo(() => flattenData(childrenColumnName, pageData), [childrenColumnName, pageData]);
+  const checkboxPropsMap = reactExports.useMemo(() => {
+    const map = /* @__PURE__ */ new Map();
+    flattedData.forEach((record, index2) => {
+      const key = getRowKey(record, index2);
+      const checkboxProps = (getCheckboxProps ? getCheckboxProps(record) : null) || {};
+      map.set(key, checkboxProps);
+    });
+    return map;
+  }, [flattedData, getRowKey, getCheckboxProps]);
+  const isCheckboxDisabled = reactExports.useCallback((r2) => {
+    var _a;
+    return !!((_a = checkboxPropsMap.get(getRowKey(r2))) === null || _a === void 0 ? void 0 : _a.disabled);
+  }, [checkboxPropsMap, getRowKey]);
+  const [derivedSelectedKeys, derivedHalfSelectedKeys] = reactExports.useMemo(() => {
+    if (checkStrictly) {
+      return [mergedSelectedKeys || [], []];
+    }
+    const {
+      checkedKeys,
+      halfCheckedKeys
+    } = conductCheck(mergedSelectedKeys, true, keyEntities, isCheckboxDisabled);
+    return [checkedKeys || [], halfCheckedKeys];
+  }, [mergedSelectedKeys, checkStrictly, keyEntities, isCheckboxDisabled]);
+  const derivedSelectedKeySet = reactExports.useMemo(() => {
+    const keys2 = selectionType === "radio" ? derivedSelectedKeys.slice(0, 1) : derivedSelectedKeys;
+    return new Set(keys2);
+  }, [derivedSelectedKeys, selectionType]);
+  const derivedHalfSelectedKeySet = reactExports.useMemo(() => selectionType === "radio" ? /* @__PURE__ */ new Set() : new Set(derivedHalfSelectedKeys), [derivedHalfSelectedKeys, selectionType]);
+  reactExports.useEffect(() => {
+    if (!rowSelection) {
+      setMergedSelectedKeys(EMPTY_LIST$1);
+    }
+  }, [!!rowSelection]);
+  const setSelectedKeys = reactExports.useCallback((keys2, method4) => {
+    let availableKeys;
+    let records;
+    updatePreserveRecordsCache(keys2);
+    if (preserveSelectedRowKeys) {
+      availableKeys = keys2;
+      records = keys2.map((key) => preserveRecordsRef.current.get(key));
+    } else {
+      availableKeys = [];
+      records = [];
+      keys2.forEach((key) => {
+        const record = getRecordByKey(key);
+        if (record !== void 0) {
+          availableKeys.push(key);
+          records.push(record);
+        }
+      });
+    }
+    setMergedSelectedKeys(availableKeys);
+    onSelectionChange === null || onSelectionChange === void 0 ? void 0 : onSelectionChange(availableKeys, records, {
+      type: method4
+    });
+  }, [setMergedSelectedKeys, getRecordByKey, onSelectionChange, preserveSelectedRowKeys]);
+  const triggerSingleSelection = reactExports.useCallback((key, selected, keys2, event) => {
+    if (onSelect) {
+      const rows = keys2.map((k2) => getRecordByKey(k2));
+      onSelect(getRecordByKey(key), selected, rows, event);
+    }
+    setSelectedKeys(keys2, "single");
+  }, [onSelect, getRecordByKey, setSelectedKeys]);
+  const mergedSelections = reactExports.useMemo(() => {
+    if (!selections || hideSelectAll) {
+      return null;
+    }
+    const selectionList = selections === true ? [SELECTION_ALL, SELECTION_INVERT, SELECTION_NONE] : selections;
+    return selectionList.map((selection) => {
+      if (selection === SELECTION_ALL) {
+        return {
+          key: "all",
+          text: tableLocale.selectionAll,
+          onSelect() {
+            setSelectedKeys(data.map((record, index2) => getRowKey(record, index2)).filter((key) => {
+              const checkProps = checkboxPropsMap.get(key);
+              return !(checkProps === null || checkProps === void 0 ? void 0 : checkProps.disabled) || derivedSelectedKeySet.has(key);
+            }), "all");
+          }
+        };
+      }
+      if (selection === SELECTION_INVERT) {
+        return {
+          key: "invert",
+          text: tableLocale.selectInvert,
+          onSelect() {
+            const keySet = new Set(derivedSelectedKeySet);
+            pageData.forEach((record, index2) => {
+              const key = getRowKey(record, index2);
+              const checkProps = checkboxPropsMap.get(key);
+              if (!(checkProps === null || checkProps === void 0 ? void 0 : checkProps.disabled)) {
+                if (keySet.has(key)) {
+                  keySet.delete(key);
+                } else {
+                  keySet.add(key);
+                }
+              }
+            });
+            const keys2 = Array.from(keySet);
+            if (onSelectInvert) {
+              warning3.deprecated(false, "onSelectInvert", "onChange");
+              onSelectInvert(keys2);
+            }
+            setSelectedKeys(keys2, "invert");
+          }
+        };
+      }
+      if (selection === SELECTION_NONE) {
+        return {
+          key: "none",
+          text: tableLocale.selectNone,
+          onSelect() {
+            onSelectNone === null || onSelectNone === void 0 ? void 0 : onSelectNone();
+            setSelectedKeys(Array.from(derivedSelectedKeySet).filter((key) => {
+              const checkProps = checkboxPropsMap.get(key);
+              return checkProps === null || checkProps === void 0 ? void 0 : checkProps.disabled;
+            }), "none");
+          }
+        };
+      }
+      return selection;
+    }).map((selection) => Object.assign(Object.assign({}, selection), {
+      onSelect: function() {
+        var _a2;
+        var _a;
+        for (var _len = arguments.length, rest = new Array(_len), _key = 0; _key < _len; _key++) {
+          rest[_key] = arguments[_key];
+        }
+        (_a = selection.onSelect) === null || _a === void 0 ? void 0 : (_a2 = _a).call.apply(_a2, [selection].concat(rest));
+        updatePrevSelectedIndex(null);
+      }
+    }));
+  }, [selections, derivedSelectedKeySet, pageData, getRowKey, onSelectInvert, setSelectedKeys]);
+  const transformColumns = reactExports.useCallback((columns2) => {
+    var _a;
+    if (!rowSelection) {
+      return columns2.filter((col) => col !== SELECTION_COLUMN);
+    }
+    let cloneColumns = _toConsumableArray(columns2);
+    const keySet = new Set(derivedSelectedKeySet);
+    const recordKeys = flattedData.map(getRowKey).filter((key) => !checkboxPropsMap.get(key).disabled);
+    const checkedCurrentAll = recordKeys.every((key) => keySet.has(key));
+    const checkedCurrentSome = recordKeys.some((key) => keySet.has(key));
+    const onSelectAllChange = () => {
+      const changeKeys = [];
+      if (checkedCurrentAll) {
+        recordKeys.forEach((key) => {
+          keySet.delete(key);
+          changeKeys.push(key);
+        });
+      } else {
+        recordKeys.forEach((key) => {
+          if (!keySet.has(key)) {
+            keySet.add(key);
+            changeKeys.push(key);
+          }
+        });
+      }
+      const keys2 = Array.from(keySet);
+      onSelectAll === null || onSelectAll === void 0 ? void 0 : onSelectAll(!checkedCurrentAll, keys2.map((k2) => getRecordByKey(k2)), changeKeys.map((k2) => getRecordByKey(k2)));
+      setSelectedKeys(keys2, "all");
+      updatePrevSelectedIndex(null);
+    };
+    let title;
+    let columnTitleCheckbox;
+    if (selectionType !== "radio") {
+      let customizeSelections;
+      if (mergedSelections) {
+        const menu = {
+          getPopupContainer,
+          items: mergedSelections.map((selection, index2) => {
+            const {
+              key,
+              text,
+              onSelect: onSelectionClick
+            } = selection;
+            return {
+              key: key !== null && key !== void 0 ? key : index2,
+              onClick: () => {
+                onSelectionClick === null || onSelectionClick === void 0 ? void 0 : onSelectionClick(recordKeys);
+              },
+              label: text
+            };
+          })
+        };
+        customizeSelections = /* @__PURE__ */ reactExports.createElement("div", {
+          className: `${prefixCls}-selection-extra`
+        }, /* @__PURE__ */ reactExports.createElement(Dropdown, {
+          menu,
+          getPopupContainer
+        }, /* @__PURE__ */ reactExports.createElement("span", null, /* @__PURE__ */ reactExports.createElement(RefIcon$m, null))));
+      }
+      const allDisabledData = flattedData.map((record, index2) => {
+        const key = getRowKey(record, index2);
+        const checkboxProps = checkboxPropsMap.get(key) || {};
+        return Object.assign({
+          checked: keySet.has(key)
+        }, checkboxProps);
+      }).filter((_ref2) => {
+        let {
+          disabled
+        } = _ref2;
+        return disabled;
+      });
+      const allDisabled = !!allDisabledData.length && allDisabledData.length === flattedData.length;
+      const allDisabledAndChecked = allDisabled && allDisabledData.every((_ref3) => {
+        let {
+          checked
+        } = _ref3;
+        return checked;
+      });
+      const allDisabledSomeChecked = allDisabled && allDisabledData.some((_ref4) => {
+        let {
+          checked
+        } = _ref4;
+        return checked;
+      });
+      columnTitleCheckbox = /* @__PURE__ */ reactExports.createElement(Checkbox, {
+        checked: !allDisabled ? !!flattedData.length && checkedCurrentAll : allDisabledAndChecked,
+        indeterminate: !allDisabled ? !checkedCurrentAll && checkedCurrentSome : !allDisabledAndChecked && allDisabledSomeChecked,
+        onChange: onSelectAllChange,
+        disabled: flattedData.length === 0 || allDisabled,
+        "aria-label": customizeSelections ? "Custom selection" : "Select all",
+        skipGroup: true
+      });
+      title = !hideSelectAll && /* @__PURE__ */ reactExports.createElement("div", {
+        className: `${prefixCls}-selection`
+      }, columnTitleCheckbox, customizeSelections);
+    }
+    let renderCell;
+    if (selectionType === "radio") {
+      renderCell = (_, record, index2) => {
+        const key = getRowKey(record, index2);
+        const checked = keySet.has(key);
+        return {
+          node: /* @__PURE__ */ reactExports.createElement(Radio, Object.assign({}, checkboxPropsMap.get(key), {
+            checked,
+            onClick: (e2) => e2.stopPropagation(),
+            onChange: (event) => {
+              if (!keySet.has(key)) {
+                triggerSingleSelection(key, true, [key], event.nativeEvent);
+              }
+            }
+          })),
+          checked
+        };
+      };
+    } else {
+      renderCell = (_, record, index2) => {
+        var _a2;
+        const key = getRowKey(record, index2);
+        const checked = keySet.has(key);
+        const indeterminate = derivedHalfSelectedKeySet.has(key);
+        const checkboxProps = checkboxPropsMap.get(key);
+        let mergedIndeterminate;
+        if (expandType === "nest") {
+          mergedIndeterminate = indeterminate;
+        } else {
+          mergedIndeterminate = (_a2 = checkboxProps === null || checkboxProps === void 0 ? void 0 : checkboxProps.indeterminate) !== null && _a2 !== void 0 ? _a2 : indeterminate;
+        }
+        return {
+          node: /* @__PURE__ */ reactExports.createElement(Checkbox, Object.assign({}, checkboxProps, {
+            indeterminate: mergedIndeterminate,
+            checked,
+            skipGroup: true,
+            onClick: (e2) => e2.stopPropagation(),
+            onChange: (_ref5) => {
+              let {
+                nativeEvent
+              } = _ref5;
+              const {
+                shiftKey
+              } = nativeEvent;
+              const currentSelectedIndex = recordKeys.findIndex((item) => item === key);
+              const isMultiple3 = derivedSelectedKeys.some((item) => recordKeys.includes(item));
+              if (shiftKey && checkStrictly && isMultiple3) {
+                const changedKeys = multipleSelect(currentSelectedIndex, recordKeys, keySet);
+                const keys2 = Array.from(keySet);
+                onSelectMultiple === null || onSelectMultiple === void 0 ? void 0 : onSelectMultiple(!checked, keys2.map((recordKey) => getRecordByKey(recordKey)), changedKeys.map((recordKey) => getRecordByKey(recordKey)));
+                setSelectedKeys(keys2, "multiple");
+              } else {
+                const originCheckedKeys = derivedSelectedKeys;
+                if (checkStrictly) {
+                  const checkedKeys = checked ? arrDel(originCheckedKeys, key) : arrAdd(originCheckedKeys, key);
+                  triggerSingleSelection(key, !checked, checkedKeys, nativeEvent);
+                } else {
+                  const result = conductCheck([].concat(_toConsumableArray(originCheckedKeys), [key]), true, keyEntities, isCheckboxDisabled);
+                  const {
+                    checkedKeys,
+                    halfCheckedKeys
+                  } = result;
+                  let nextCheckedKeys = checkedKeys;
+                  if (checked) {
+                    const tempKeySet = new Set(checkedKeys);
+                    tempKeySet.delete(key);
+                    nextCheckedKeys = conductCheck(Array.from(tempKeySet), {
+                      checked: false,
+                      halfCheckedKeys
+                    }, keyEntities, isCheckboxDisabled).checkedKeys;
+                  }
+                  triggerSingleSelection(key, !checked, nextCheckedKeys, nativeEvent);
+                }
+              }
+              if (checked) {
+                updatePrevSelectedIndex(null);
+              } else {
+                updatePrevSelectedIndex(currentSelectedIndex);
+              }
+            }
+          })),
+          checked
+        };
+      };
+    }
+    const renderSelectionCell = (_, record, index2) => {
+      const {
+        node: node2,
+        checked
+      } = renderCell(_, record, index2);
+      if (customizeRenderCell) {
+        return customizeRenderCell(checked, record, index2, node2);
+      }
+      return node2;
+    };
+    if (!cloneColumns.includes(SELECTION_COLUMN)) {
+      if (cloneColumns.findIndex((col) => {
+        var _a2;
+        return ((_a2 = col[INTERNAL_COL_DEFINE]) === null || _a2 === void 0 ? void 0 : _a2.columnType) === "EXPAND_COLUMN";
+      }) === 0) {
+        const [expandColumn, ...restColumns] = cloneColumns;
+        cloneColumns = [expandColumn, SELECTION_COLUMN].concat(_toConsumableArray(restColumns));
+      } else {
+        cloneColumns = [SELECTION_COLUMN].concat(_toConsumableArray(cloneColumns));
+      }
+    }
+    const selectionColumnIndex = cloneColumns.indexOf(SELECTION_COLUMN);
+    cloneColumns = cloneColumns.filter((column2, index2) => column2 !== SELECTION_COLUMN || index2 === selectionColumnIndex);
+    const prevCol = cloneColumns[selectionColumnIndex - 1];
+    const nextCol = cloneColumns[selectionColumnIndex + 1];
+    let mergedFixed = fixed;
+    if (mergedFixed === void 0) {
+      if ((nextCol === null || nextCol === void 0 ? void 0 : nextCol.fixed) !== void 0) {
+        mergedFixed = nextCol.fixed;
+      } else if ((prevCol === null || prevCol === void 0 ? void 0 : prevCol.fixed) !== void 0) {
+        mergedFixed = prevCol.fixed;
+      }
+    }
+    if (mergedFixed && prevCol && ((_a = prevCol[INTERNAL_COL_DEFINE]) === null || _a === void 0 ? void 0 : _a.columnType) === "EXPAND_COLUMN" && prevCol.fixed === void 0) {
+      prevCol.fixed = mergedFixed;
+    }
+    const columnCls = classNames(`${prefixCls}-selection-col`, {
+      [`${prefixCls}-selection-col-with-dropdown`]: selections && selectionType === "checkbox"
+    });
+    const renderColumnTitle2 = () => {
+      if (!(rowSelection === null || rowSelection === void 0 ? void 0 : rowSelection.columnTitle)) {
+        return title;
+      }
+      if (typeof rowSelection.columnTitle === "function") {
+        return rowSelection.columnTitle(columnTitleCheckbox);
+      }
+      return rowSelection.columnTitle;
+    };
+    const selectionColumn = {
+      fixed: mergedFixed,
+      width: selectionColWidth,
+      className: `${prefixCls}-selection-column`,
+      title: renderColumnTitle2(),
+      render: renderSelectionCell,
+      onCell: rowSelection.onCell,
+      [INTERNAL_COL_DEFINE]: {
+        className: columnCls
+      }
+    };
+    return cloneColumns.map((col) => col === SELECTION_COLUMN ? selectionColumn : col);
+  }, [getRowKey, flattedData, rowSelection, derivedSelectedKeys, derivedSelectedKeySet, derivedHalfSelectedKeySet, selectionColWidth, mergedSelections, expandType, checkboxPropsMap, onSelectMultiple, triggerSingleSelection, isCheckboxDisabled]);
+  return [transformColumns, derivedSelectedKeySet];
+};
+function fillProxy(element, handler) {
+  element._antProxy = element._antProxy || {};
+  Object.keys(handler).forEach((key) => {
+    if (!(key in element._antProxy)) {
+      const ori = element[key];
+      element._antProxy[key] = ori;
+      element[key] = handler[key];
+    }
+  });
+  return element;
+}
+function useProxyImperativeHandle(ref, init) {
+  return reactExports.useImperativeHandle(ref, () => {
+    const refObj = init();
+    const {
+      nativeElement
+    } = refObj;
+    if (typeof Proxy !== "undefined") {
+      return new Proxy(nativeElement, {
+        get(obj, prop) {
+          if (refObj[prop]) {
+            return refObj[prop];
+          }
+          return Reflect.get(obj, prop);
+        }
+      });
+    }
+    return fillProxy(nativeElement, refObj);
+  });
+}
+function renderExpandIcon(locale2) {
+  return function expandIcon(_ref) {
+    let {
+      prefixCls,
+      onExpand,
+      record,
+      expanded,
+      expandable
+    } = _ref;
+    const iconPrefix = `${prefixCls}-row-expand-icon`;
+    return /* @__PURE__ */ reactExports.createElement("button", {
+      type: "button",
+      onClick: (e2) => {
+        onExpand(record, e2);
+        e2.stopPropagation();
+      },
+      className: classNames(iconPrefix, {
+        [`${iconPrefix}-spaced`]: !expandable,
+        [`${iconPrefix}-expanded`]: expandable && expanded,
+        [`${iconPrefix}-collapsed`]: expandable && !expanded
+      }),
+      "aria-label": expanded ? locale2.collapse : locale2.expand,
+      "aria-expanded": expanded
+    });
+  };
+}
+function useContainerWidth(prefixCls) {
+  const getContainerWidth = (ele, width) => {
+    const container = ele.querySelector(`.${prefixCls}-container`);
+    let returnWidth = width;
+    if (container) {
+      const style2 = getComputedStyle(container);
+      const borderLeft = parseInt(style2.borderLeftWidth, 10);
+      const borderRight = parseInt(style2.borderRightWidth, 10);
+      returnWidth = width - borderLeft - borderRight;
+    }
+    return returnWidth;
+  };
+  return getContainerWidth;
+}
+function getColumnKey(column2, defaultKey) {
+  if ("key" in column2 && column2.key !== void 0 && column2.key !== null) {
+    return column2.key;
+  }
+  if (column2.dataIndex) {
+    return Array.isArray(column2.dataIndex) ? column2.dataIndex.join(".") : column2.dataIndex;
+  }
+  return defaultKey;
+}
+function getColumnPos(index2, pos) {
+  return pos ? `${pos}-${index2}` : `${index2}`;
+}
+function renderColumnTitle(title, props) {
+  if (typeof title === "function") {
+    return title(props);
+  }
+  return title;
+}
+function safeColumnTitle(title, props) {
+  const res = renderColumnTitle(title, props);
+  if (Object.prototype.toString.call(res) === "[object Object]") return "";
+  return res;
+}
+var FilterFilled$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M349 838c0 17.7 14.2 32 31.8 32h262.4c17.6 0 31.8-14.3 31.8-32V642H349v196zm531.1-684H143.9c-24.5 0-39.8 26.7-27.5 48l221.3 376h348.8l221.3-376c12.1-21.3-3.2-48-27.7-48z" } }] }, "name": "filter", "theme": "filled" };
+var FilterFilled = function FilterFilled2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: FilterFilled$1
+  }));
+};
+var RefIcon$9 = /* @__PURE__ */ reactExports.forwardRef(FilterFilled);
+function useSyncState(initialValue) {
+  const ref = reactExports.useRef(initialValue);
+  const forceUpdate = useForceUpdate();
+  return [() => ref.current, (newValue) => {
+    ref.current = newValue;
+    forceUpdate();
+  }];
+}
+function DropIndicator(_ref) {
+  var dropPosition = _ref.dropPosition, dropLevelOffset = _ref.dropLevelOffset, indent = _ref.indent;
+  var style2 = {
+    pointerEvents: "none",
+    position: "absolute",
+    right: 0,
+    backgroundColor: "red",
+    height: 2
+  };
+  switch (dropPosition) {
+    case -1:
+      style2.top = 0;
+      style2.left = -dropLevelOffset * indent;
+      break;
+    case 1:
+      style2.bottom = 0;
+      style2.left = -dropLevelOffset * indent;
+      break;
+    case 0:
+      style2.bottom = 0;
+      style2.left = indent;
+      break;
+  }
+  return /* @__PURE__ */ reactExports.createElement("div", {
+    style: style2
+  });
+}
+function _objectDestructuringEmpty(t2) {
+  if (null == t2) throw new TypeError("Cannot destructure " + t2);
+}
+function useUnmount(triggerStart, triggerEnd) {
+  var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), firstMount = _React$useState2[0], setFirstMount = _React$useState2[1];
+  useLayoutEffect$1(function() {
+    if (firstMount) {
+      triggerStart();
+      return function() {
+        triggerEnd();
+      };
+    }
+  }, [firstMount]);
+  useLayoutEffect$1(function() {
+    setFirstMount(true);
+    return function() {
+      setFirstMount(false);
+    };
+  }, []);
+}
+var _excluded$1 = ["className", "style", "motion", "motionNodes", "motionType", "onMotionStart", "onMotionEnd", "active", "treeNodeRequiredProps"];
+var MotionTreeNode = function MotionTreeNode2(_ref, ref) {
+  var className = _ref.className, style2 = _ref.style, motion2 = _ref.motion, motionNodes = _ref.motionNodes, motionType = _ref.motionType, onOriginMotionStart = _ref.onMotionStart, onOriginMotionEnd = _ref.onMotionEnd, active = _ref.active, treeNodeRequiredProps = _ref.treeNodeRequiredProps, props = _objectWithoutProperties(_ref, _excluded$1);
+  var _React$useState = reactExports.useState(true), _React$useState2 = _slicedToArray(_React$useState, 2), visible = _React$useState2[0], setVisible = _React$useState2[1];
+  var _React$useContext = reactExports.useContext(TreeContext), prefixCls = _React$useContext.prefixCls;
+  var targetVisible = motionNodes && motionType !== "hide";
+  useLayoutEffect$1(function() {
+    if (motionNodes) {
+      if (targetVisible !== visible) {
+        setVisible(targetVisible);
+      }
+    }
+  }, [motionNodes]);
+  var triggerMotionStart = function triggerMotionStart2() {
+    if (motionNodes) {
+      onOriginMotionStart();
+    }
+  };
+  var triggerMotionEndRef = reactExports.useRef(false);
+  var triggerMotionEnd = function triggerMotionEnd2() {
+    if (motionNodes && !triggerMotionEndRef.current) {
+      triggerMotionEndRef.current = true;
+      onOriginMotionEnd();
+    }
+  };
+  useUnmount(triggerMotionStart, triggerMotionEnd);
+  var onVisibleChanged = function onVisibleChanged2(nextVisible) {
+    if (targetVisible === nextVisible) {
+      triggerMotionEnd();
+    }
+  };
+  if (motionNodes) {
+    return /* @__PURE__ */ reactExports.createElement(CSSMotion, _extends({
+      ref,
+      visible
+    }, motion2, {
+      motionAppear: motionType === "show",
+      onVisibleChanged
+    }), function(_ref2, motionRef) {
+      var motionClassName = _ref2.className, motionStyle = _ref2.style;
+      return /* @__PURE__ */ reactExports.createElement("div", {
+        ref: motionRef,
+        className: classNames("".concat(prefixCls, "-treenode-motion"), motionClassName),
+        style: motionStyle
+      }, motionNodes.map(function(treeNode) {
+        var restProps = Object.assign({}, (_objectDestructuringEmpty(treeNode.data), treeNode.data)), title = treeNode.title, key = treeNode.key, isStart = treeNode.isStart, isEnd = treeNode.isEnd;
+        delete restProps.children;
+        var treeNodeProps = getTreeNodeProps(key, treeNodeRequiredProps);
+        return /* @__PURE__ */ reactExports.createElement(ContextTreeNode, _extends({}, restProps, treeNodeProps, {
+          title,
+          active,
+          data: treeNode.data,
+          key,
+          isStart,
+          isEnd
+        }));
+      }));
+    });
+  }
+  return /* @__PURE__ */ reactExports.createElement(ContextTreeNode, _extends({
+    domRef: ref,
+    className,
+    style: style2
+  }, props, {
+    active
+  }));
+};
+MotionTreeNode.displayName = "MotionTreeNode";
+var RefMotionTreeNode = /* @__PURE__ */ reactExports.forwardRef(MotionTreeNode);
+function findExpandedKeys() {
+  var prev2 = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : [];
+  var next2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : [];
+  var prevLen = prev2.length;
+  var nextLen = next2.length;
+  if (Math.abs(prevLen - nextLen) !== 1) {
+    return {
+      add: false,
+      key: null
+    };
+  }
+  function find(shorter, longer) {
+    var cache = /* @__PURE__ */ new Map();
+    shorter.forEach(function(key) {
+      cache.set(key, true);
+    });
+    var keys2 = longer.filter(function(key) {
+      return !cache.has(key);
+    });
+    return keys2.length === 1 ? keys2[0] : null;
+  }
+  if (prevLen < nextLen) {
+    return {
+      add: true,
+      key: find(prev2, next2)
+    };
+  }
+  return {
+    add: false,
+    key: find(next2, prev2)
+  };
+}
+function getExpandRange(shorter, longer, key) {
+  var shorterStartIndex = shorter.findIndex(function(data) {
+    return data.key === key;
+  });
+  var shorterEndNode = shorter[shorterStartIndex + 1];
+  var longerStartIndex = longer.findIndex(function(data) {
+    return data.key === key;
+  });
+  if (shorterEndNode) {
+    var longerEndIndex = longer.findIndex(function(data) {
+      return data.key === shorterEndNode.key;
+    });
+    return longer.slice(longerStartIndex + 1, longerEndIndex);
+  }
+  return longer.slice(longerStartIndex + 1);
+}
+var _excluded = ["prefixCls", "data", "selectable", "checkable", "expandedKeys", "selectedKeys", "checkedKeys", "loadedKeys", "loadingKeys", "halfCheckedKeys", "keyEntities", "disabled", "dragging", "dragOverNodeKey", "dropPosition", "motion", "height", "itemHeight", "virtual", "focusable", "activeItem", "focused", "tabIndex", "onKeyDown", "onFocus", "onBlur", "onActiveChange", "onListChangeStart", "onListChangeEnd"];
+var HIDDEN_STYLE = {
+  width: 0,
+  height: 0,
+  display: "flex",
+  overflow: "hidden",
+  opacity: 0,
+  border: 0,
+  padding: 0,
+  margin: 0
+};
+var noop = function noop2() {
+};
+var MOTION_KEY = "RC_TREE_MOTION_".concat(Math.random());
+var MotionNode = {
+  key: MOTION_KEY
+};
+var MotionEntity = {
+  key: MOTION_KEY,
+  level: 0,
+  index: 0,
+  pos: "0",
+  node: MotionNode,
+  nodes: [MotionNode]
+};
+var MotionFlattenData = {
+  parent: null,
+  children: [],
+  pos: MotionEntity.pos,
+  data: MotionNode,
+  title: null,
+  key: MOTION_KEY,
+  /** Hold empty list here since we do not use it */
+  isStart: [],
+  isEnd: []
+};
+function getMinimumRangeTransitionRange(list, virtual, height, itemHeight) {
+  if (virtual === false || !height) {
+    return list;
+  }
+  return list.slice(0, Math.ceil(height / itemHeight) + 1);
+}
+function itemKey(item) {
+  var key = item.key, pos = item.pos;
+  return getKey(key, pos);
+}
+function getAccessibilityPath(item) {
+  var path2 = String(item.data.key);
+  var current = item;
+  while (current.parent) {
+    current = current.parent;
+    path2 = "".concat(current.data.key, " > ").concat(path2);
+  }
+  return path2;
+}
+var NodeList = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+  var prefixCls = props.prefixCls, data = props.data;
+  props.selectable;
+  props.checkable;
+  var expandedKeys = props.expandedKeys, selectedKeys = props.selectedKeys, checkedKeys = props.checkedKeys, loadedKeys = props.loadedKeys, loadingKeys = props.loadingKeys, halfCheckedKeys = props.halfCheckedKeys, keyEntities = props.keyEntities, disabled = props.disabled, dragging = props.dragging, dragOverNodeKey = props.dragOverNodeKey, dropPosition = props.dropPosition, motion2 = props.motion, height = props.height, itemHeight = props.itemHeight, virtual = props.virtual, focusable2 = props.focusable, activeItem = props.activeItem, focused = props.focused, tabIndex = props.tabIndex, onKeyDown2 = props.onKeyDown, onFocus = props.onFocus, onBlur = props.onBlur, onActiveChange = props.onActiveChange, onListChangeStart = props.onListChangeStart, onListChangeEnd = props.onListChangeEnd, domProps = _objectWithoutProperties(props, _excluded);
+  var listRef = reactExports.useRef(null);
+  var indentMeasurerRef = reactExports.useRef(null);
+  reactExports.useImperativeHandle(ref, function() {
+    return {
+      scrollTo: function scrollTo2(scroll) {
+        listRef.current.scrollTo(scroll);
+      },
+      getIndentWidth: function getIndentWidth() {
+        return indentMeasurerRef.current.offsetWidth;
+      }
+    };
+  });
+  var _React$useState = reactExports.useState(expandedKeys), _React$useState2 = _slicedToArray(_React$useState, 2), prevExpandedKeys = _React$useState2[0], setPrevExpandedKeys = _React$useState2[1];
+  var _React$useState3 = reactExports.useState(data), _React$useState4 = _slicedToArray(_React$useState3, 2), prevData = _React$useState4[0], setPrevData = _React$useState4[1];
+  var _React$useState5 = reactExports.useState(data), _React$useState6 = _slicedToArray(_React$useState5, 2), transitionData = _React$useState6[0], setTransitionData = _React$useState6[1];
+  var _React$useState7 = reactExports.useState([]), _React$useState8 = _slicedToArray(_React$useState7, 2), transitionRange = _React$useState8[0], setTransitionRange = _React$useState8[1];
+  var _React$useState9 = reactExports.useState(null), _React$useState10 = _slicedToArray(_React$useState9, 2), motionType = _React$useState10[0], setMotionType = _React$useState10[1];
+  var dataRef = reactExports.useRef(data);
+  dataRef.current = data;
+  function onMotionEnd() {
+    var latestData = dataRef.current;
+    setPrevData(latestData);
+    setTransitionData(latestData);
+    setTransitionRange([]);
+    setMotionType(null);
+    onListChangeEnd();
+  }
+  useLayoutEffect$1(function() {
+    setPrevExpandedKeys(expandedKeys);
+    var diffExpanded = findExpandedKeys(prevExpandedKeys, expandedKeys);
+    if (diffExpanded.key !== null) {
+      if (diffExpanded.add) {
+        var keyIndex = prevData.findIndex(function(_ref) {
+          var key = _ref.key;
+          return key === diffExpanded.key;
+        });
+        var rangeNodes = getMinimumRangeTransitionRange(getExpandRange(prevData, data, diffExpanded.key), virtual, height, itemHeight);
+        var newTransitionData = prevData.slice();
+        newTransitionData.splice(keyIndex + 1, 0, MotionFlattenData);
+        setTransitionData(newTransitionData);
+        setTransitionRange(rangeNodes);
+        setMotionType("show");
+      } else {
+        var _keyIndex = data.findIndex(function(_ref2) {
+          var key = _ref2.key;
+          return key === diffExpanded.key;
+        });
+        var _rangeNodes = getMinimumRangeTransitionRange(getExpandRange(data, prevData, diffExpanded.key), virtual, height, itemHeight);
+        var _newTransitionData = data.slice();
+        _newTransitionData.splice(_keyIndex + 1, 0, MotionFlattenData);
+        setTransitionData(_newTransitionData);
+        setTransitionRange(_rangeNodes);
+        setMotionType("hide");
+      }
+    } else if (prevData !== data) {
+      setPrevData(data);
+      setTransitionData(data);
+    }
+  }, [expandedKeys, data]);
+  reactExports.useEffect(function() {
+    if (!dragging) {
+      onMotionEnd();
+    }
+  }, [dragging]);
+  var mergedData = motion2 ? transitionData : data;
+  var treeNodeRequiredProps = {
+    expandedKeys,
+    selectedKeys,
+    loadedKeys,
+    loadingKeys,
+    checkedKeys,
+    halfCheckedKeys,
+    dragOverNodeKey,
+    dropPosition,
+    keyEntities
+  };
+  return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, focused && activeItem && /* @__PURE__ */ reactExports.createElement("span", {
+    style: HIDDEN_STYLE,
+    "aria-live": "assertive"
+  }, getAccessibilityPath(activeItem)), /* @__PURE__ */ reactExports.createElement("div", null, /* @__PURE__ */ reactExports.createElement("input", {
+    style: HIDDEN_STYLE,
+    disabled: focusable2 === false || disabled,
+    tabIndex: focusable2 !== false ? tabIndex : null,
+    onKeyDown: onKeyDown2,
+    onFocus,
+    onBlur,
+    value: "",
+    onChange: noop,
+    "aria-label": "for screen reader"
+  })), /* @__PURE__ */ reactExports.createElement("div", {
+    className: "".concat(prefixCls, "-treenode"),
+    "aria-hidden": true,
+    style: {
+      position: "absolute",
+      pointerEvents: "none",
+      visibility: "hidden",
+      height: 0,
+      overflow: "hidden",
+      border: 0,
+      padding: 0
+    }
+  }, /* @__PURE__ */ reactExports.createElement("div", {
+    className: "".concat(prefixCls, "-indent")
+  }, /* @__PURE__ */ reactExports.createElement("div", {
+    ref: indentMeasurerRef,
+    className: "".concat(prefixCls, "-indent-unit")
+  }))), /* @__PURE__ */ reactExports.createElement(List, _extends({}, domProps, {
+    data: mergedData,
+    itemKey,
+    height,
+    fullHeight: false,
+    virtual,
+    itemHeight,
+    prefixCls: "".concat(prefixCls, "-list"),
+    ref: listRef,
+    onVisibleChange: function onVisibleChange(originList, fullList) {
+      var originSet = new Set(originList);
+      var restList = fullList.filter(function(item) {
+        return !originSet.has(item);
+      });
+      if (restList.some(function(item) {
+        return itemKey(item) === MOTION_KEY;
+      })) {
+        onMotionEnd();
+      }
+    }
+  }), function(treeNode) {
+    var pos = treeNode.pos, restProps = Object.assign({}, (_objectDestructuringEmpty(treeNode.data), treeNode.data)), title = treeNode.title, key = treeNode.key, isStart = treeNode.isStart, isEnd = treeNode.isEnd;
+    var mergedKey = getKey(key, pos);
+    delete restProps.key;
+    delete restProps.children;
+    var treeNodeProps = getTreeNodeProps(mergedKey, treeNodeRequiredProps);
+    return /* @__PURE__ */ reactExports.createElement(RefMotionTreeNode, _extends({}, restProps, treeNodeProps, {
+      title,
+      active: !!activeItem && key === activeItem.key,
+      pos,
+      data: treeNode.data,
+      isStart,
+      isEnd,
+      motion: motion2,
+      motionNodes: key === MOTION_KEY ? transitionRange : null,
+      motionType,
+      onMotionStart: onListChangeStart,
+      onMotionEnd,
+      treeNodeRequiredProps,
+      onMouseMove: function onMouseMove() {
+        onActiveChange(null);
+      }
+    }));
+  }));
+});
+NodeList.displayName = "NodeList";
+var MAX_RETRY_TIMES = 10;
+var Tree$2 = /* @__PURE__ */ function(_React$Component) {
+  _inherits(Tree2, _React$Component);
+  var _super = _createSuper(Tree2);
+  function Tree2() {
+    var _this;
+    _classCallCheck(this, Tree2);
+    for (var _len = arguments.length, _args = new Array(_len), _key = 0; _key < _len; _key++) {
+      _args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(_args));
+    _defineProperty(_assertThisInitialized(_this), "destroyed", false);
+    _defineProperty(_assertThisInitialized(_this), "delayedDragEnterLogic", void 0);
+    _defineProperty(_assertThisInitialized(_this), "loadingRetryTimes", {});
+    _defineProperty(_assertThisInitialized(_this), "state", {
+      keyEntities: {},
+      indent: null,
+      selectedKeys: [],
+      checkedKeys: [],
+      halfCheckedKeys: [],
+      loadedKeys: [],
+      loadingKeys: [],
+      expandedKeys: [],
+      draggingNodeKey: null,
+      dragChildrenKeys: [],
+      // dropTargetKey is the key of abstract-drop-node
+      // the abstract-drop-node is the real drop node when drag and drop
+      // not the DOM drag over node
+      dropTargetKey: null,
+      dropPosition: null,
+      // the drop position of abstract-drop-node, inside 0, top -1, bottom 1
+      dropContainerKey: null,
+      // the container key of abstract-drop-node if dropPosition is -1 or 1
+      dropLevelOffset: null,
+      // the drop level offset of abstract-drag-over-node
+      dropTargetPos: null,
+      // the pos of abstract-drop-node
+      dropAllowed: true,
+      // if drop to abstract-drop-node is allowed
+      // the abstract-drag-over-node
+      // if mouse is on the bottom of top dom node or no the top of the bottom dom node
+      // abstract-drag-over-node is the top node
+      dragOverNodeKey: null,
+      treeData: [],
+      flattenNodes: [],
+      focused: false,
+      activeKey: null,
+      listChanging: false,
+      prevProps: null,
+      fieldNames: fillFieldNames()
+    });
+    _defineProperty(_assertThisInitialized(_this), "dragStartMousePosition", null);
+    _defineProperty(_assertThisInitialized(_this), "dragNode", void 0);
+    _defineProperty(_assertThisInitialized(_this), "currentMouseOverDroppableNodeKey", null);
+    _defineProperty(_assertThisInitialized(_this), "listRef", /* @__PURE__ */ reactExports.createRef());
+    _defineProperty(_assertThisInitialized(_this), "onNodeDragStart", function(event, node2) {
+      var _this$state = _this.state, expandedKeys = _this$state.expandedKeys, keyEntities = _this$state.keyEntities;
+      var onDragStart = _this.props.onDragStart;
+      var eventKey = node2.props.eventKey;
+      _this.dragNode = node2;
+      _this.dragStartMousePosition = {
+        x: event.clientX,
+        y: event.clientY
+      };
+      var newExpandedKeys = arrDel(expandedKeys, eventKey);
+      _this.setState({
+        draggingNodeKey: eventKey,
+        dragChildrenKeys: getDragChildrenKeys(eventKey, keyEntities),
+        indent: _this.listRef.current.getIndentWidth()
+      });
+      _this.setExpandedKeys(newExpandedKeys);
+      window.addEventListener("dragend", _this.onWindowDragEnd);
+      onDragStart === null || onDragStart === void 0 || onDragStart({
+        event,
+        node: convertNodePropsToEventData(node2.props)
+      });
+    });
+    _defineProperty(_assertThisInitialized(_this), "onNodeDragEnter", function(event, node2) {
+      var _this$state2 = _this.state, expandedKeys = _this$state2.expandedKeys, keyEntities = _this$state2.keyEntities, dragChildrenKeys = _this$state2.dragChildrenKeys, flattenNodes = _this$state2.flattenNodes, indent = _this$state2.indent;
+      var _this$props = _this.props, onDragEnter = _this$props.onDragEnter, onExpand = _this$props.onExpand, allowDrop2 = _this$props.allowDrop, direction = _this$props.direction;
+      var _node$props = node2.props, pos = _node$props.pos, eventKey = _node$props.eventKey;
+      var _assertThisInitialize = _assertThisInitialized(_this), dragNode = _assertThisInitialize.dragNode;
+      if (_this.currentMouseOverDroppableNodeKey !== eventKey) {
+        _this.currentMouseOverDroppableNodeKey = eventKey;
+      }
+      if (!dragNode) {
+        _this.resetDragState();
+        return;
+      }
+      var _calcDropPosition = calcDropPosition(event, dragNode, node2, indent, _this.dragStartMousePosition, allowDrop2, flattenNodes, keyEntities, expandedKeys, direction), dropPosition = _calcDropPosition.dropPosition, dropLevelOffset = _calcDropPosition.dropLevelOffset, dropTargetKey = _calcDropPosition.dropTargetKey, dropContainerKey = _calcDropPosition.dropContainerKey, dropTargetPos = _calcDropPosition.dropTargetPos, dropAllowed = _calcDropPosition.dropAllowed, dragOverNodeKey = _calcDropPosition.dragOverNodeKey;
+      if (
+        // don't allow drop inside its children
+        dragChildrenKeys.indexOf(dropTargetKey) !== -1 || // don't allow drop when drop is not allowed caculated by calcDropPosition
+        !dropAllowed
+      ) {
+        _this.resetDragState();
+        return;
+      }
+      if (!_this.delayedDragEnterLogic) {
+        _this.delayedDragEnterLogic = {};
+      }
+      Object.keys(_this.delayedDragEnterLogic).forEach(function(key) {
+        clearTimeout(_this.delayedDragEnterLogic[key]);
+      });
+      if (dragNode.props.eventKey !== node2.props.eventKey) {
+        event.persist();
+        _this.delayedDragEnterLogic[pos] = window.setTimeout(function() {
+          if (_this.state.draggingNodeKey === null) return;
+          var newExpandedKeys = _toConsumableArray(expandedKeys);
+          var entity = getEntity(keyEntities, node2.props.eventKey);
+          if (entity && (entity.children || []).length) {
+            newExpandedKeys = arrAdd(expandedKeys, node2.props.eventKey);
+          }
+          if (!("expandedKeys" in _this.props)) {
+            _this.setExpandedKeys(newExpandedKeys);
+          }
+          onExpand === null || onExpand === void 0 || onExpand(newExpandedKeys, {
+            node: convertNodePropsToEventData(node2.props),
+            expanded: true,
+            nativeEvent: event.nativeEvent
+          });
+        }, 800);
+      }
+      if (dragNode.props.eventKey === dropTargetKey && dropLevelOffset === 0) {
+        _this.resetDragState();
+        return;
+      }
+      _this.setState({
+        dragOverNodeKey,
+        dropPosition,
+        dropLevelOffset,
+        dropTargetKey,
+        dropContainerKey,
+        dropTargetPos,
+        dropAllowed
+      });
+      onDragEnter === null || onDragEnter === void 0 || onDragEnter({
+        event,
+        node: convertNodePropsToEventData(node2.props),
+        expandedKeys
+      });
+    });
+    _defineProperty(_assertThisInitialized(_this), "onNodeDragOver", function(event, node2) {
+      var _this$state3 = _this.state, dragChildrenKeys = _this$state3.dragChildrenKeys, flattenNodes = _this$state3.flattenNodes, keyEntities = _this$state3.keyEntities, expandedKeys = _this$state3.expandedKeys, indent = _this$state3.indent;
+      var _this$props2 = _this.props, onDragOver = _this$props2.onDragOver, allowDrop2 = _this$props2.allowDrop, direction = _this$props2.direction;
+      var _assertThisInitialize2 = _assertThisInitialized(_this), dragNode = _assertThisInitialize2.dragNode;
+      if (!dragNode) {
+        return;
+      }
+      var _calcDropPosition2 = calcDropPosition(event, dragNode, node2, indent, _this.dragStartMousePosition, allowDrop2, flattenNodes, keyEntities, expandedKeys, direction), dropPosition = _calcDropPosition2.dropPosition, dropLevelOffset = _calcDropPosition2.dropLevelOffset, dropTargetKey = _calcDropPosition2.dropTargetKey, dropContainerKey = _calcDropPosition2.dropContainerKey, dropAllowed = _calcDropPosition2.dropAllowed, dropTargetPos = _calcDropPosition2.dropTargetPos, dragOverNodeKey = _calcDropPosition2.dragOverNodeKey;
+      if (dragChildrenKeys.indexOf(dropTargetKey) !== -1 || !dropAllowed) {
+        return;
+      }
+      if (dragNode.props.eventKey === dropTargetKey && dropLevelOffset === 0) {
+        if (!(_this.state.dropPosition === null && _this.state.dropLevelOffset === null && _this.state.dropTargetKey === null && _this.state.dropContainerKey === null && _this.state.dropTargetPos === null && _this.state.dropAllowed === false && _this.state.dragOverNodeKey === null)) {
+          _this.resetDragState();
+        }
+      } else if (!(dropPosition === _this.state.dropPosition && dropLevelOffset === _this.state.dropLevelOffset && dropTargetKey === _this.state.dropTargetKey && dropContainerKey === _this.state.dropContainerKey && dropTargetPos === _this.state.dropTargetPos && dropAllowed === _this.state.dropAllowed && dragOverNodeKey === _this.state.dragOverNodeKey)) {
+        _this.setState({
+          dropPosition,
+          dropLevelOffset,
+          dropTargetKey,
+          dropContainerKey,
+          dropTargetPos,
+          dropAllowed,
+          dragOverNodeKey
+        });
+      }
+      onDragOver === null || onDragOver === void 0 || onDragOver({
+        event,
+        node: convertNodePropsToEventData(node2.props)
+      });
+    });
+    _defineProperty(_assertThisInitialized(_this), "onNodeDragLeave", function(event, node2) {
+      if (_this.currentMouseOverDroppableNodeKey === node2.props.eventKey && !event.currentTarget.contains(event.relatedTarget)) {
+        _this.resetDragState();
+        _this.currentMouseOverDroppableNodeKey = null;
+      }
+      var onDragLeave = _this.props.onDragLeave;
+      onDragLeave === null || onDragLeave === void 0 || onDragLeave({
+        event,
+        node: convertNodePropsToEventData(node2.props)
+      });
+    });
+    _defineProperty(_assertThisInitialized(_this), "onWindowDragEnd", function(event) {
+      _this.onNodeDragEnd(event, null, true);
+      window.removeEventListener("dragend", _this.onWindowDragEnd);
+    });
+    _defineProperty(_assertThisInitialized(_this), "onNodeDragEnd", function(event, node2) {
+      var onDragEnd = _this.props.onDragEnd;
+      _this.setState({
+        dragOverNodeKey: null
+      });
+      _this.cleanDragState();
+      onDragEnd === null || onDragEnd === void 0 || onDragEnd({
+        event,
+        node: convertNodePropsToEventData(node2.props)
+      });
+      _this.dragNode = null;
+      window.removeEventListener("dragend", _this.onWindowDragEnd);
+    });
+    _defineProperty(_assertThisInitialized(_this), "onNodeDrop", function(event, node2) {
+      var _this$getActiveItem;
+      var outsideTree = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : false;
+      var _this$state4 = _this.state, dragChildrenKeys = _this$state4.dragChildrenKeys, dropPosition = _this$state4.dropPosition, dropTargetKey = _this$state4.dropTargetKey, dropTargetPos = _this$state4.dropTargetPos, dropAllowed = _this$state4.dropAllowed;
+      if (!dropAllowed) return;
+      var onDrop = _this.props.onDrop;
+      _this.setState({
+        dragOverNodeKey: null
+      });
+      _this.cleanDragState();
+      if (dropTargetKey === null) return;
+      var abstractDropNodeProps = _objectSpread2(_objectSpread2({}, getTreeNodeProps(dropTargetKey, _this.getTreeNodeRequiredProps())), {}, {
+        active: ((_this$getActiveItem = _this.getActiveItem()) === null || _this$getActiveItem === void 0 ? void 0 : _this$getActiveItem.key) === dropTargetKey,
+        data: getEntity(_this.state.keyEntities, dropTargetKey).node
+      });
+      var dropToChild = dragChildrenKeys.indexOf(dropTargetKey) !== -1;
+      warningOnce(!dropToChild, "Can not drop to dragNode's children node. This is a bug of rc-tree. Please report an issue.");
+      var posArr = posToArr(dropTargetPos);
+      var dropResult = {
+        event,
+        node: convertNodePropsToEventData(abstractDropNodeProps),
+        dragNode: _this.dragNode ? convertNodePropsToEventData(_this.dragNode.props) : null,
+        dragNodesKeys: [_this.dragNode.props.eventKey].concat(dragChildrenKeys),
+        dropToGap: dropPosition !== 0,
+        dropPosition: dropPosition + Number(posArr[posArr.length - 1])
+      };
+      if (!outsideTree) {
+        onDrop === null || onDrop === void 0 || onDrop(dropResult);
+      }
+      _this.dragNode = null;
+    });
+    _defineProperty(_assertThisInitialized(_this), "cleanDragState", function() {
+      var draggingNodeKey = _this.state.draggingNodeKey;
+      if (draggingNodeKey !== null) {
+        _this.setState({
+          draggingNodeKey: null,
+          dropPosition: null,
+          dropContainerKey: null,
+          dropTargetKey: null,
+          dropLevelOffset: null,
+          dropAllowed: true,
+          dragOverNodeKey: null
+        });
+      }
+      _this.dragStartMousePosition = null;
+      _this.currentMouseOverDroppableNodeKey = null;
+    });
+    _defineProperty(_assertThisInitialized(_this), "triggerExpandActionExpand", function(e2, treeNode) {
+      var _this$state5 = _this.state, expandedKeys = _this$state5.expandedKeys, flattenNodes = _this$state5.flattenNodes;
+      var expanded = treeNode.expanded, key = treeNode.key, isLeaf = treeNode.isLeaf;
+      if (isLeaf || e2.shiftKey || e2.metaKey || e2.ctrlKey) {
+        return;
+      }
+      var node2 = flattenNodes.filter(function(nodeItem) {
+        return nodeItem.key === key;
+      })[0];
+      var eventNode = convertNodePropsToEventData(_objectSpread2(_objectSpread2({}, getTreeNodeProps(key, _this.getTreeNodeRequiredProps())), {}, {
+        data: node2.data
+      }));
+      _this.setExpandedKeys(expanded ? arrDel(expandedKeys, key) : arrAdd(expandedKeys, key));
+      _this.onNodeExpand(e2, eventNode);
+    });
+    _defineProperty(_assertThisInitialized(_this), "onNodeClick", function(e2, treeNode) {
+      var _this$props3 = _this.props, onClick = _this$props3.onClick, expandAction = _this$props3.expandAction;
+      if (expandAction === "click") {
+        _this.triggerExpandActionExpand(e2, treeNode);
+      }
+      onClick === null || onClick === void 0 || onClick(e2, treeNode);
+    });
+    _defineProperty(_assertThisInitialized(_this), "onNodeDoubleClick", function(e2, treeNode) {
+      var _this$props4 = _this.props, onDoubleClick = _this$props4.onDoubleClick, expandAction = _this$props4.expandAction;
+      if (expandAction === "doubleClick") {
+        _this.triggerExpandActionExpand(e2, treeNode);
+      }
+      onDoubleClick === null || onDoubleClick === void 0 || onDoubleClick(e2, treeNode);
+    });
+    _defineProperty(_assertThisInitialized(_this), "onNodeSelect", function(e2, treeNode) {
+      var selectedKeys = _this.state.selectedKeys;
+      var _this$state6 = _this.state, keyEntities = _this$state6.keyEntities, fieldNames = _this$state6.fieldNames;
+      var _this$props5 = _this.props, onSelect = _this$props5.onSelect, multiple = _this$props5.multiple;
+      var selected = treeNode.selected;
+      var key = treeNode[fieldNames.key];
+      var targetSelected = !selected;
+      if (!targetSelected) {
+        selectedKeys = arrDel(selectedKeys, key);
+      } else if (!multiple) {
+        selectedKeys = [key];
+      } else {
+        selectedKeys = arrAdd(selectedKeys, key);
+      }
+      var selectedNodes = selectedKeys.map(function(selectedKey) {
+        var entity = getEntity(keyEntities, selectedKey);
+        if (!entity) return null;
+        return entity.node;
+      }).filter(function(node2) {
+        return node2;
+      });
+      _this.setUncontrolledState({
+        selectedKeys
+      });
+      onSelect === null || onSelect === void 0 || onSelect(selectedKeys, {
+        event: "select",
+        selected: targetSelected,
+        node: treeNode,
+        selectedNodes,
+        nativeEvent: e2.nativeEvent
+      });
+    });
+    _defineProperty(_assertThisInitialized(_this), "onNodeCheck", function(e2, treeNode, checked) {
+      var _this$state7 = _this.state, keyEntities = _this$state7.keyEntities, oriCheckedKeys = _this$state7.checkedKeys, oriHalfCheckedKeys = _this$state7.halfCheckedKeys;
+      var _this$props6 = _this.props, checkStrictly = _this$props6.checkStrictly, onCheck = _this$props6.onCheck;
+      var key = treeNode.key;
+      var checkedObj;
+      var eventObj = {
+        event: "check",
+        node: treeNode,
+        checked,
+        nativeEvent: e2.nativeEvent
+      };
+      if (checkStrictly) {
+        var checkedKeys = checked ? arrAdd(oriCheckedKeys, key) : arrDel(oriCheckedKeys, key);
+        var halfCheckedKeys = arrDel(oriHalfCheckedKeys, key);
+        checkedObj = {
+          checked: checkedKeys,
+          halfChecked: halfCheckedKeys
+        };
+        eventObj.checkedNodes = checkedKeys.map(function(checkedKey) {
+          return getEntity(keyEntities, checkedKey);
+        }).filter(function(entity) {
+          return entity;
+        }).map(function(entity) {
+          return entity.node;
+        });
+        _this.setUncontrolledState({
+          checkedKeys
+        });
+      } else {
+        var _conductCheck = conductCheck([].concat(_toConsumableArray(oriCheckedKeys), [key]), true, keyEntities), _checkedKeys = _conductCheck.checkedKeys, _halfCheckedKeys = _conductCheck.halfCheckedKeys;
+        if (!checked) {
+          var keySet = new Set(_checkedKeys);
+          keySet.delete(key);
+          var _conductCheck2 = conductCheck(Array.from(keySet), {
+            checked: false,
+            halfCheckedKeys: _halfCheckedKeys
+          }, keyEntities);
+          _checkedKeys = _conductCheck2.checkedKeys;
+          _halfCheckedKeys = _conductCheck2.halfCheckedKeys;
+        }
+        checkedObj = _checkedKeys;
+        eventObj.checkedNodes = [];
+        eventObj.checkedNodesPositions = [];
+        eventObj.halfCheckedKeys = _halfCheckedKeys;
+        _checkedKeys.forEach(function(checkedKey) {
+          var entity = getEntity(keyEntities, checkedKey);
+          if (!entity) return;
+          var node2 = entity.node, pos = entity.pos;
+          eventObj.checkedNodes.push(node2);
+          eventObj.checkedNodesPositions.push({
+            node: node2,
+            pos
+          });
+        });
+        _this.setUncontrolledState({
+          checkedKeys: _checkedKeys
+        }, false, {
+          halfCheckedKeys: _halfCheckedKeys
+        });
+      }
+      onCheck === null || onCheck === void 0 || onCheck(checkedObj, eventObj);
+    });
+    _defineProperty(_assertThisInitialized(_this), "onNodeLoad", function(treeNode) {
+      var _entity$children;
+      var key = treeNode.key;
+      var keyEntities = _this.state.keyEntities;
+      var entity = getEntity(keyEntities, key);
+      if (entity !== null && entity !== void 0 && (_entity$children = entity.children) !== null && _entity$children !== void 0 && _entity$children.length) {
+        return;
+      }
+      var loadPromise = new Promise(function(resolve, reject) {
+        _this.setState(function(_ref) {
+          var _ref$loadedKeys = _ref.loadedKeys, loadedKeys = _ref$loadedKeys === void 0 ? [] : _ref$loadedKeys, _ref$loadingKeys = _ref.loadingKeys, loadingKeys = _ref$loadingKeys === void 0 ? [] : _ref$loadingKeys;
+          var _this$props7 = _this.props, loadData = _this$props7.loadData, onLoad = _this$props7.onLoad;
+          if (!loadData || loadedKeys.indexOf(key) !== -1 || loadingKeys.indexOf(key) !== -1) {
+            return null;
+          }
+          var promise = loadData(treeNode);
+          promise.then(function() {
+            var currentLoadedKeys = _this.state.loadedKeys;
+            var newLoadedKeys = arrAdd(currentLoadedKeys, key);
+            onLoad === null || onLoad === void 0 || onLoad(newLoadedKeys, {
+              event: "load",
+              node: treeNode
+            });
+            _this.setUncontrolledState({
+              loadedKeys: newLoadedKeys
+            });
+            _this.setState(function(prevState) {
+              return {
+                loadingKeys: arrDel(prevState.loadingKeys, key)
+              };
+            });
+            resolve();
+          }).catch(function(e2) {
+            _this.setState(function(prevState) {
+              return {
+                loadingKeys: arrDel(prevState.loadingKeys, key)
+              };
+            });
+            _this.loadingRetryTimes[key] = (_this.loadingRetryTimes[key] || 0) + 1;
+            if (_this.loadingRetryTimes[key] >= MAX_RETRY_TIMES) {
+              var currentLoadedKeys = _this.state.loadedKeys;
+              warningOnce(false, "Retry for `loadData` many times but still failed. No more retry.");
+              _this.setUncontrolledState({
+                loadedKeys: arrAdd(currentLoadedKeys, key)
+              });
+              resolve();
+            }
+            reject(e2);
+          });
+          return {
+            loadingKeys: arrAdd(loadingKeys, key)
+          };
+        });
+      });
+      loadPromise.catch(function() {
+      });
+      return loadPromise;
+    });
+    _defineProperty(_assertThisInitialized(_this), "onNodeMouseEnter", function(event, node2) {
+      var onMouseEnter = _this.props.onMouseEnter;
+      onMouseEnter === null || onMouseEnter === void 0 || onMouseEnter({
+        event,
+        node: node2
+      });
+    });
+    _defineProperty(_assertThisInitialized(_this), "onNodeMouseLeave", function(event, node2) {
+      var onMouseLeave = _this.props.onMouseLeave;
+      onMouseLeave === null || onMouseLeave === void 0 || onMouseLeave({
+        event,
+        node: node2
+      });
+    });
+    _defineProperty(_assertThisInitialized(_this), "onNodeContextMenu", function(event, node2) {
+      var onRightClick = _this.props.onRightClick;
+      if (onRightClick) {
+        event.preventDefault();
+        onRightClick({
+          event,
+          node: node2
+        });
+      }
+    });
+    _defineProperty(_assertThisInitialized(_this), "onFocus", function() {
+      var onFocus = _this.props.onFocus;
+      _this.setState({
+        focused: true
+      });
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+      onFocus === null || onFocus === void 0 || onFocus.apply(void 0, args);
+    });
+    _defineProperty(_assertThisInitialized(_this), "onBlur", function() {
+      var onBlur = _this.props.onBlur;
+      _this.setState({
+        focused: false
+      });
+      _this.onActiveChange(null);
+      for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+        args[_key3] = arguments[_key3];
+      }
+      onBlur === null || onBlur === void 0 || onBlur.apply(void 0, args);
+    });
+    _defineProperty(_assertThisInitialized(_this), "getTreeNodeRequiredProps", function() {
+      var _this$state8 = _this.state, expandedKeys = _this$state8.expandedKeys, selectedKeys = _this$state8.selectedKeys, loadedKeys = _this$state8.loadedKeys, loadingKeys = _this$state8.loadingKeys, checkedKeys = _this$state8.checkedKeys, halfCheckedKeys = _this$state8.halfCheckedKeys, dragOverNodeKey = _this$state8.dragOverNodeKey, dropPosition = _this$state8.dropPosition, keyEntities = _this$state8.keyEntities;
+      return {
+        expandedKeys: expandedKeys || [],
+        selectedKeys: selectedKeys || [],
+        loadedKeys: loadedKeys || [],
+        loadingKeys: loadingKeys || [],
+        checkedKeys: checkedKeys || [],
+        halfCheckedKeys: halfCheckedKeys || [],
+        dragOverNodeKey,
+        dropPosition,
+        keyEntities
+      };
+    });
+    _defineProperty(_assertThisInitialized(_this), "setExpandedKeys", function(expandedKeys) {
+      var _this$state9 = _this.state, treeData = _this$state9.treeData, fieldNames = _this$state9.fieldNames;
+      var flattenNodes = flattenTreeData(treeData, expandedKeys, fieldNames);
+      _this.setUncontrolledState({
+        expandedKeys,
+        flattenNodes
+      }, true);
+    });
+    _defineProperty(_assertThisInitialized(_this), "onNodeExpand", function(e2, treeNode) {
+      var expandedKeys = _this.state.expandedKeys;
+      var _this$state10 = _this.state, listChanging = _this$state10.listChanging, fieldNames = _this$state10.fieldNames;
+      var _this$props8 = _this.props, onExpand = _this$props8.onExpand, loadData = _this$props8.loadData;
+      var expanded = treeNode.expanded;
+      var key = treeNode[fieldNames.key];
+      if (listChanging) {
+        return;
+      }
+      var index2 = expandedKeys.indexOf(key);
+      var targetExpanded = !expanded;
+      warningOnce(expanded && index2 !== -1 || !expanded && index2 === -1, "Expand state not sync with index check");
+      if (targetExpanded) {
+        expandedKeys = arrAdd(expandedKeys, key);
+      } else {
+        expandedKeys = arrDel(expandedKeys, key);
+      }
+      _this.setExpandedKeys(expandedKeys);
+      onExpand === null || onExpand === void 0 || onExpand(expandedKeys, {
+        node: treeNode,
+        expanded: targetExpanded,
+        nativeEvent: e2.nativeEvent
+      });
+      if (targetExpanded && loadData) {
+        var loadPromise = _this.onNodeLoad(treeNode);
+        if (loadPromise) {
+          loadPromise.then(function() {
+            var newFlattenTreeData = flattenTreeData(_this.state.treeData, expandedKeys, fieldNames);
+            _this.setUncontrolledState({
+              flattenNodes: newFlattenTreeData
+            });
+          }).catch(function() {
+            var currentExpandedKeys = _this.state.expandedKeys;
+            var expandedKeysToRestore = arrDel(currentExpandedKeys, key);
+            _this.setExpandedKeys(expandedKeysToRestore);
+          });
+        }
+      }
+    });
+    _defineProperty(_assertThisInitialized(_this), "onListChangeStart", function() {
+      _this.setUncontrolledState({
+        listChanging: true
+      });
+    });
+    _defineProperty(_assertThisInitialized(_this), "onListChangeEnd", function() {
+      setTimeout(function() {
+        _this.setUncontrolledState({
+          listChanging: false
+        });
+      });
+    });
+    _defineProperty(_assertThisInitialized(_this), "onActiveChange", function(newActiveKey) {
+      var activeKey = _this.state.activeKey;
+      var _this$props9 = _this.props, onActiveChange = _this$props9.onActiveChange, _this$props9$itemScro = _this$props9.itemScrollOffset, itemScrollOffset = _this$props9$itemScro === void 0 ? 0 : _this$props9$itemScro;
+      if (activeKey === newActiveKey) {
+        return;
+      }
+      _this.setState({
+        activeKey: newActiveKey
+      });
+      if (newActiveKey !== null) {
+        _this.scrollTo({
+          key: newActiveKey,
+          offset: itemScrollOffset
+        });
+      }
+      onActiveChange === null || onActiveChange === void 0 || onActiveChange(newActiveKey);
+    });
+    _defineProperty(_assertThisInitialized(_this), "getActiveItem", function() {
+      var _this$state11 = _this.state, activeKey = _this$state11.activeKey, flattenNodes = _this$state11.flattenNodes;
+      if (activeKey === null) {
+        return null;
+      }
+      return flattenNodes.find(function(_ref2) {
+        var key = _ref2.key;
+        return key === activeKey;
+      }) || null;
+    });
+    _defineProperty(_assertThisInitialized(_this), "offsetActiveKey", function(offset2) {
+      var _this$state12 = _this.state, flattenNodes = _this$state12.flattenNodes, activeKey = _this$state12.activeKey;
+      var index2 = flattenNodes.findIndex(function(_ref3) {
+        var key = _ref3.key;
+        return key === activeKey;
+      });
+      if (index2 === -1 && offset2 < 0) {
+        index2 = flattenNodes.length;
+      }
+      index2 = (index2 + offset2 + flattenNodes.length) % flattenNodes.length;
+      var item = flattenNodes[index2];
+      if (item) {
+        var _key4 = item.key;
+        _this.onActiveChange(_key4);
+      } else {
+        _this.onActiveChange(null);
+      }
+    });
+    _defineProperty(_assertThisInitialized(_this), "onKeyDown", function(event) {
+      var _this$state13 = _this.state, activeKey = _this$state13.activeKey, expandedKeys = _this$state13.expandedKeys, checkedKeys = _this$state13.checkedKeys, fieldNames = _this$state13.fieldNames;
+      var _this$props10 = _this.props, onKeyDown2 = _this$props10.onKeyDown, checkable = _this$props10.checkable, selectable = _this$props10.selectable;
+      switch (event.which) {
+        case KeyCode.UP: {
+          _this.offsetActiveKey(-1);
+          event.preventDefault();
+          break;
+        }
+        case KeyCode.DOWN: {
+          _this.offsetActiveKey(1);
+          event.preventDefault();
+          break;
+        }
+      }
+      var activeItem = _this.getActiveItem();
+      if (activeItem && activeItem.data) {
+        var treeNodeRequiredProps = _this.getTreeNodeRequiredProps();
+        var expandable = activeItem.data.isLeaf === false || !!(activeItem.data[fieldNames.children] || []).length;
+        var eventNode = convertNodePropsToEventData(_objectSpread2(_objectSpread2({}, getTreeNodeProps(activeKey, treeNodeRequiredProps)), {}, {
+          data: activeItem.data,
+          active: true
+        }));
+        switch (event.which) {
+          case KeyCode.LEFT: {
+            if (expandable && expandedKeys.includes(activeKey)) {
+              _this.onNodeExpand({}, eventNode);
+            } else if (activeItem.parent) {
+              _this.onActiveChange(activeItem.parent.key);
+            }
+            event.preventDefault();
+            break;
+          }
+          case KeyCode.RIGHT: {
+            if (expandable && !expandedKeys.includes(activeKey)) {
+              _this.onNodeExpand({}, eventNode);
+            } else if (activeItem.children && activeItem.children.length) {
+              _this.onActiveChange(activeItem.children[0].key);
+            }
+            event.preventDefault();
+            break;
+          }
+          case KeyCode.ENTER:
+          case KeyCode.SPACE: {
+            if (checkable && !eventNode.disabled && eventNode.checkable !== false && !eventNode.disableCheckbox) {
+              _this.onNodeCheck({}, eventNode, !checkedKeys.includes(activeKey));
+            } else if (!checkable && selectable && !eventNode.disabled && eventNode.selectable !== false) {
+              _this.onNodeSelect({}, eventNode);
+            }
+            break;
+          }
+        }
+      }
+      onKeyDown2 === null || onKeyDown2 === void 0 || onKeyDown2(event);
+    });
+    _defineProperty(_assertThisInitialized(_this), "setUncontrolledState", function(state) {
+      var atomic = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
+      var forceState = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : null;
+      if (!_this.destroyed) {
+        var needSync = false;
+        var allPassed = true;
+        var newState = {};
+        Object.keys(state).forEach(function(name) {
+          if (name in _this.props) {
+            allPassed = false;
+            return;
+          }
+          needSync = true;
+          newState[name] = state[name];
+        });
+        if (needSync && (!atomic || allPassed)) {
+          _this.setState(_objectSpread2(_objectSpread2({}, newState), forceState));
+        }
+      }
+    });
+    _defineProperty(_assertThisInitialized(_this), "scrollTo", function(scroll) {
+      _this.listRef.current.scrollTo(scroll);
+    });
+    return _this;
+  }
+  _createClass(Tree2, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.destroyed = false;
+      this.onUpdated();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      this.onUpdated();
+    }
+  }, {
+    key: "onUpdated",
+    value: function onUpdated() {
+      var _this$props11 = this.props, activeKey = _this$props11.activeKey, _this$props11$itemScr = _this$props11.itemScrollOffset, itemScrollOffset = _this$props11$itemScr === void 0 ? 0 : _this$props11$itemScr;
+      if (activeKey !== void 0 && activeKey !== this.state.activeKey) {
+        this.setState({
+          activeKey
+        });
+        if (activeKey !== null) {
+          this.scrollTo({
+            key: activeKey,
+            offset: itemScrollOffset
+          });
+        }
+      }
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      window.removeEventListener("dragend", this.onWindowDragEnd);
+      this.destroyed = true;
+    }
+  }, {
+    key: "resetDragState",
+    value: function resetDragState() {
+      this.setState({
+        dragOverNodeKey: null,
+        dropPosition: null,
+        dropLevelOffset: null,
+        dropTargetKey: null,
+        dropContainerKey: null,
+        dropTargetPos: null,
+        dropAllowed: false
+      });
+    }
+  }, {
+    key: "render",
+    value: function render2() {
+      var _this$state14 = this.state, focused = _this$state14.focused, flattenNodes = _this$state14.flattenNodes, keyEntities = _this$state14.keyEntities, draggingNodeKey = _this$state14.draggingNodeKey, activeKey = _this$state14.activeKey, dropLevelOffset = _this$state14.dropLevelOffset, dropContainerKey = _this$state14.dropContainerKey, dropTargetKey = _this$state14.dropTargetKey, dropPosition = _this$state14.dropPosition, dragOverNodeKey = _this$state14.dragOverNodeKey, indent = _this$state14.indent;
+      var _this$props12 = this.props, prefixCls = _this$props12.prefixCls, className = _this$props12.className, style2 = _this$props12.style, showLine = _this$props12.showLine, focusable2 = _this$props12.focusable, _this$props12$tabInde = _this$props12.tabIndex, tabIndex = _this$props12$tabInde === void 0 ? 0 : _this$props12$tabInde, selectable = _this$props12.selectable, showIcon = _this$props12.showIcon, icon = _this$props12.icon, switcherIcon = _this$props12.switcherIcon, draggable = _this$props12.draggable, checkable = _this$props12.checkable, checkStrictly = _this$props12.checkStrictly, disabled = _this$props12.disabled, motion2 = _this$props12.motion, loadData = _this$props12.loadData, filterTreeNode = _this$props12.filterTreeNode, height = _this$props12.height, itemHeight = _this$props12.itemHeight, virtual = _this$props12.virtual, titleRender = _this$props12.titleRender, dropIndicatorRender2 = _this$props12.dropIndicatorRender, onContextMenu = _this$props12.onContextMenu, onScroll = _this$props12.onScroll, direction = _this$props12.direction, rootClassName = _this$props12.rootClassName, rootStyle = _this$props12.rootStyle;
+      var domProps = pickAttrs(this.props, {
+        aria: true,
+        data: true
+      });
+      var draggableConfig;
+      if (draggable) {
+        if (_typeof(draggable) === "object") {
+          draggableConfig = draggable;
+        } else if (typeof draggable === "function") {
+          draggableConfig = {
+            nodeDraggable: draggable
+          };
+        } else {
+          draggableConfig = {};
+        }
+      }
+      return /* @__PURE__ */ reactExports.createElement(TreeContext.Provider, {
+        value: {
+          prefixCls,
+          selectable,
+          showIcon,
+          icon,
+          switcherIcon,
+          draggable: draggableConfig,
+          draggingNodeKey,
+          checkable,
+          checkStrictly,
+          disabled,
+          keyEntities,
+          dropLevelOffset,
+          dropContainerKey,
+          dropTargetKey,
+          dropPosition,
+          dragOverNodeKey,
+          indent,
+          direction,
+          dropIndicatorRender: dropIndicatorRender2,
+          loadData,
+          filterTreeNode,
+          titleRender,
+          onNodeClick: this.onNodeClick,
+          onNodeDoubleClick: this.onNodeDoubleClick,
+          onNodeExpand: this.onNodeExpand,
+          onNodeSelect: this.onNodeSelect,
+          onNodeCheck: this.onNodeCheck,
+          onNodeLoad: this.onNodeLoad,
+          onNodeMouseEnter: this.onNodeMouseEnter,
+          onNodeMouseLeave: this.onNodeMouseLeave,
+          onNodeContextMenu: this.onNodeContextMenu,
+          onNodeDragStart: this.onNodeDragStart,
+          onNodeDragEnter: this.onNodeDragEnter,
+          onNodeDragOver: this.onNodeDragOver,
+          onNodeDragLeave: this.onNodeDragLeave,
+          onNodeDragEnd: this.onNodeDragEnd,
+          onNodeDrop: this.onNodeDrop
+        }
+      }, /* @__PURE__ */ reactExports.createElement("div", {
+        role: "tree",
+        className: classNames(prefixCls, className, rootClassName, _defineProperty(_defineProperty(_defineProperty({}, "".concat(prefixCls, "-show-line"), showLine), "".concat(prefixCls, "-focused"), focused), "".concat(prefixCls, "-active-focused"), activeKey !== null)),
+        style: rootStyle
+      }, /* @__PURE__ */ reactExports.createElement(NodeList, _extends({
+        ref: this.listRef,
+        prefixCls,
+        style: style2,
+        data: flattenNodes,
+        disabled,
+        selectable,
+        checkable: !!checkable,
+        motion: motion2,
+        dragging: draggingNodeKey !== null,
+        height,
+        itemHeight,
+        virtual,
+        focusable: focusable2,
+        focused,
+        tabIndex,
+        activeItem: this.getActiveItem(),
+        onFocus: this.onFocus,
+        onBlur: this.onBlur,
+        onKeyDown: this.onKeyDown,
+        onActiveChange: this.onActiveChange,
+        onListChangeStart: this.onListChangeStart,
+        onListChangeEnd: this.onListChangeEnd,
+        onContextMenu,
+        onScroll
+      }, this.getTreeNodeRequiredProps(), domProps))));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(props, prevState) {
+      var prevProps = prevState.prevProps;
+      var newState = {
+        prevProps: props
+      };
+      function needSync(name) {
+        return !prevProps && name in props || prevProps && prevProps[name] !== props[name];
+      }
+      var treeData;
+      var fieldNames = prevState.fieldNames;
+      if (needSync("fieldNames")) {
+        fieldNames = fillFieldNames(props.fieldNames);
+        newState.fieldNames = fieldNames;
+      }
+      if (needSync("treeData")) {
+        treeData = props.treeData;
+      } else if (needSync("children")) {
+        warningOnce(false, "`children` of Tree is deprecated. Please use `treeData` instead.");
+        treeData = convertTreeToData(props.children);
+      }
+      if (treeData) {
+        newState.treeData = treeData;
+        var entitiesMap = convertDataToEntities(treeData, {
+          fieldNames
+        });
+        newState.keyEntities = _objectSpread2(_defineProperty({}, MOTION_KEY, MotionEntity), entitiesMap.keyEntities);
+      }
+      var keyEntities = newState.keyEntities || prevState.keyEntities;
+      if (needSync("expandedKeys") || prevProps && needSync("autoExpandParent")) {
+        newState.expandedKeys = props.autoExpandParent || !prevProps && props.defaultExpandParent ? conductExpandParent(props.expandedKeys, keyEntities) : props.expandedKeys;
+      } else if (!prevProps && props.defaultExpandAll) {
+        var cloneKeyEntities = _objectSpread2({}, keyEntities);
+        delete cloneKeyEntities[MOTION_KEY];
+        newState.expandedKeys = Object.keys(cloneKeyEntities).map(function(key) {
+          return cloneKeyEntities[key].key;
+        });
+      } else if (!prevProps && props.defaultExpandedKeys) {
+        newState.expandedKeys = props.autoExpandParent || props.defaultExpandParent ? conductExpandParent(props.defaultExpandedKeys, keyEntities) : props.defaultExpandedKeys;
+      }
+      if (!newState.expandedKeys) {
+        delete newState.expandedKeys;
+      }
+      if (treeData || newState.expandedKeys) {
+        var flattenNodes = flattenTreeData(treeData || prevState.treeData, newState.expandedKeys || prevState.expandedKeys, fieldNames);
+        newState.flattenNodes = flattenNodes;
+      }
+      if (props.selectable) {
+        if (needSync("selectedKeys")) {
+          newState.selectedKeys = calcSelectedKeys(props.selectedKeys, props);
+        } else if (!prevProps && props.defaultSelectedKeys) {
+          newState.selectedKeys = calcSelectedKeys(props.defaultSelectedKeys, props);
+        }
+      }
+      if (props.checkable) {
+        var checkedKeyEntity;
+        if (needSync("checkedKeys")) {
+          checkedKeyEntity = parseCheckedKeys(props.checkedKeys) || {};
+        } else if (!prevProps && props.defaultCheckedKeys) {
+          checkedKeyEntity = parseCheckedKeys(props.defaultCheckedKeys) || {};
+        } else if (treeData) {
+          checkedKeyEntity = parseCheckedKeys(props.checkedKeys) || {
+            checkedKeys: prevState.checkedKeys,
+            halfCheckedKeys: prevState.halfCheckedKeys
+          };
+        }
+        if (checkedKeyEntity) {
+          var _checkedKeyEntity = checkedKeyEntity, _checkedKeyEntity$che = _checkedKeyEntity.checkedKeys, checkedKeys = _checkedKeyEntity$che === void 0 ? [] : _checkedKeyEntity$che, _checkedKeyEntity$hal = _checkedKeyEntity.halfCheckedKeys, halfCheckedKeys = _checkedKeyEntity$hal === void 0 ? [] : _checkedKeyEntity$hal;
+          if (!props.checkStrictly) {
+            var conductKeys = conductCheck(checkedKeys, true, keyEntities);
+            checkedKeys = conductKeys.checkedKeys;
+            halfCheckedKeys = conductKeys.halfCheckedKeys;
+          }
+          newState.checkedKeys = checkedKeys;
+          newState.halfCheckedKeys = halfCheckedKeys;
+        }
+      }
+      if (needSync("loadedKeys")) {
+        newState.loadedKeys = props.loadedKeys;
+      }
+      return newState;
+    }
+  }]);
+  return Tree2;
+}(reactExports.Component);
+_defineProperty(Tree$2, "defaultProps", {
+  prefixCls: "rc-tree",
+  showLine: false,
+  showIcon: true,
+  selectable: true,
+  multiple: false,
+  checkable: false,
+  disabled: false,
+  checkStrictly: false,
+  draggable: false,
+  defaultExpandParent: true,
+  autoExpandParent: false,
+  defaultExpandAll: false,
+  defaultExpandedKeys: [],
+  defaultCheckedKeys: [],
+  defaultSelectedKeys: [],
+  dropIndicatorRender: DropIndicator,
+  allowDrop: function allowDrop() {
+    return true;
+  },
+  expandAction: false
+});
+_defineProperty(Tree$2, "TreeNode", ContextTreeNode);
+var FileOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M854.6 288.6L639.4 73.4c-6-6-14.1-9.4-22.6-9.4H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V311.3c0-8.5-3.4-16.7-9.4-22.7zM790.2 326H602V137.8L790.2 326zm1.8 562H232V136h302v216a42 42 0 0042 42h216v494z" } }] }, "name": "file", "theme": "outlined" };
+var FileOutlined = function FileOutlined2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: FileOutlined$1
+  }));
+};
+var RefIcon$8 = /* @__PURE__ */ reactExports.forwardRef(FileOutlined);
+var FolderOpenOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M928 444H820V330.4c0-17.7-14.3-32-32-32H473L355.7 186.2a8.15 8.15 0 00-5.5-2.2H96c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h698c13 0 24.8-7.9 29.7-20l134-332c1.5-3.8 2.3-7.9 2.3-12 0-17.7-14.3-32-32-32zM136 256h188.5l119.6 114.4H748V444H238c-13 0-24.8 7.9-29.7 20L136 643.2V256zm635.3 512H159l103.3-256h612.4L771.3 768z" } }] }, "name": "folder-open", "theme": "outlined" };
+var FolderOpenOutlined = function FolderOpenOutlined2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: FolderOpenOutlined$1
+  }));
+};
+var RefIcon$7 = /* @__PURE__ */ reactExports.forwardRef(FolderOpenOutlined);
+var FolderOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M880 298.4H521L403.7 186.2a8.15 8.15 0 00-5.5-2.2H144c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V330.4c0-17.7-14.3-32-32-32zM840 768H184V256h188.5l119.6 114.4H840V768z" } }] }, "name": "folder", "theme": "outlined" };
+var FolderOutlined = function FolderOutlined2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: FolderOutlined$1
+  }));
+};
+var RefIcon$6 = /* @__PURE__ */ reactExports.forwardRef(FolderOutlined);
+var HolderOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M300 276.5a56 56 0 1056-97 56 56 0 00-56 97zm0 284a56 56 0 1056-97 56 56 0 00-56 97zM640 228a56 56 0 10112 0 56 56 0 00-112 0zm0 284a56 56 0 10112 0 56 56 0 00-112 0zM300 844.5a56 56 0 1056-97 56 56 0 00-56 97zM640 796a56 56 0 10112 0 56 56 0 00-112 0z" } }] }, "name": "holder", "theme": "outlined" };
+var HolderOutlined = function HolderOutlined2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: HolderOutlined$1
+  }));
+};
+var RefIcon$5 = /* @__PURE__ */ reactExports.forwardRef(HolderOutlined);
+const treeNodeFX = new Keyframe("ant-tree-node-fx-do-not-use", {
+  "0%": {
+    opacity: 0
+  },
+  "100%": {
+    opacity: 1
+  }
+});
+const getSwitchStyle = (prefixCls, token2) => ({
+  [`.${prefixCls}-switcher-icon`]: {
+    display: "inline-block",
+    fontSize: 10,
+    verticalAlign: "baseline",
+    svg: {
+      transition: `transform ${token2.motionDurationSlow}`
+    }
+  }
+});
+const getDropIndicatorStyle = (prefixCls, token2) => ({
+  [`.${prefixCls}-drop-indicator`]: {
+    position: "absolute",
+    // it should displayed over the following node
+    zIndex: 1,
+    height: 2,
+    backgroundColor: token2.colorPrimary,
+    borderRadius: 1,
+    pointerEvents: "none",
+    "&:after": {
+      position: "absolute",
+      top: -3,
+      insetInlineStart: -6,
+      width: 8,
+      height: 8,
+      backgroundColor: "transparent",
+      border: `${unit$1(token2.lineWidthBold)} solid ${token2.colorPrimary}`,
+      borderRadius: "50%",
+      content: '""'
+    }
+  }
+});
+const genBaseStyle = (prefixCls, token2) => {
+  const {
+    treeCls,
+    treeNodeCls,
+    treeNodePadding,
+    titleHeight,
+    nodeSelectedBg,
+    nodeHoverBg
+  } = token2;
+  const treeCheckBoxMarginHorizontal = token2.paddingXS;
+  return {
+    [treeCls]: Object.assign(Object.assign({}, resetComponent(token2)), {
+      background: token2.colorBgContainer,
+      borderRadius: token2.borderRadius,
+      transition: `background-color ${token2.motionDurationSlow}`,
+      [`&${treeCls}-rtl`]: {
+        // >>> Switcher
+        [`${treeCls}-switcher`]: {
+          "&_close": {
+            [`${treeCls}-switcher-icon`]: {
+              svg: {
+                transform: "rotate(90deg)"
+              }
+            }
+          }
+        }
+      },
+      [`&-focused:not(:hover):not(${treeCls}-active-focused)`]: Object.assign({}, genFocusOutline(token2)),
+      // =================== Virtual List ===================
+      [`${treeCls}-list-holder-inner`]: {
+        alignItems: "flex-start"
+      },
+      [`&${treeCls}-block-node`]: {
+        [`${treeCls}-list-holder-inner`]: {
+          alignItems: "stretch",
+          // >>> Title
+          [`${treeCls}-node-content-wrapper`]: {
+            flex: "auto"
+          },
+          // >>> Drag
+          [`${treeNodeCls}.dragging`]: {
+            position: "relative",
+            "&:after": {
+              position: "absolute",
+              top: 0,
+              insetInlineEnd: 0,
+              bottom: treeNodePadding,
+              insetInlineStart: 0,
+              border: `1px solid ${token2.colorPrimary}`,
+              opacity: 0,
+              animationName: treeNodeFX,
+              animationDuration: token2.motionDurationSlow,
+              animationPlayState: "running",
+              animationFillMode: "forwards",
+              content: '""',
+              pointerEvents: "none"
+            }
+          }
+        }
+      },
+      // ===================== TreeNode =====================
+      [`${treeNodeCls}`]: {
+        display: "flex",
+        alignItems: "flex-start",
+        padding: `0 0 ${unit$1(treeNodePadding)} 0`,
+        outline: "none",
+        "&-rtl": {
+          direction: "rtl"
+        },
+        // Disabled
+        "&-disabled": {
+          // >>> Title
+          [`${treeCls}-node-content-wrapper`]: {
+            color: token2.colorTextDisabled,
+            cursor: "not-allowed",
+            "&:hover": {
+              background: "transparent"
+            }
+          }
+        },
+        [`&-active ${treeCls}-node-content-wrapper`]: {
+          background: token2.controlItemBgHover
+        },
+        [`&:not(${treeNodeCls}-disabled).filter-node ${treeCls}-title`]: {
+          color: "inherit",
+          fontWeight: 500
+        },
+        "&-draggable": {
+          cursor: "grab",
+          [`${treeCls}-draggable-icon`]: {
+            // https://github.com/ant-design/ant-design/issues/41915
+            flexShrink: 0,
+            width: titleHeight,
+            lineHeight: `${unit$1(titleHeight)}`,
+            textAlign: "center",
+            visibility: "visible",
+            opacity: 0.2,
+            transition: `opacity ${token2.motionDurationSlow}`,
+            [`${treeNodeCls}:hover &`]: {
+              opacity: 0.45
+            }
+          },
+          [`&${treeNodeCls}-disabled`]: {
+            [`${treeCls}-draggable-icon`]: {
+              visibility: "hidden"
+            }
+          }
+        }
+      },
+      // >>> Indent
+      [`${treeCls}-indent`]: {
+        alignSelf: "stretch",
+        whiteSpace: "nowrap",
+        userSelect: "none",
+        "&-unit": {
+          display: "inline-block",
+          width: titleHeight
+        }
+      },
+      // >>> Drag Handler
+      [`${treeCls}-draggable-icon`]: {
+        visibility: "hidden"
+      },
+      // >>> Switcher
+      [`${treeCls}-switcher`]: Object.assign(Object.assign({}, getSwitchStyle(prefixCls, token2)), {
+        position: "relative",
+        flex: "none",
+        alignSelf: "stretch",
+        width: titleHeight,
+        margin: 0,
+        lineHeight: `${unit$1(titleHeight)}`,
+        textAlign: "center",
+        cursor: "pointer",
+        userSelect: "none",
+        transition: `all ${token2.motionDurationSlow}`,
+        borderRadius: token2.borderRadius,
+        "&-noop": {
+          cursor: "unset"
+        },
+        [`&:not(${treeCls}-switcher-noop):hover`]: {
+          backgroundColor: token2.colorBgTextHover
+        },
+        "&_close": {
+          [`${treeCls}-switcher-icon`]: {
+            svg: {
+              transform: "rotate(-90deg)"
+            }
+          }
+        },
+        "&-loading-icon": {
+          color: token2.colorPrimary
+        },
+        "&-leaf-line": {
+          position: "relative",
+          zIndex: 1,
+          display: "inline-block",
+          width: "100%",
+          height: "100%",
+          // https://github.com/ant-design/ant-design/issues/31884
+          "&:before": {
+            position: "absolute",
+            top: 0,
+            insetInlineEnd: token2.calc(titleHeight).div(2).equal(),
+            bottom: token2.calc(treeNodePadding).mul(-1).equal(),
+            marginInlineStart: -1,
+            borderInlineEnd: `1px solid ${token2.colorBorder}`,
+            content: '""'
+          },
+          "&:after": {
+            position: "absolute",
+            width: token2.calc(token2.calc(titleHeight).div(2).equal()).mul(0.8).equal(),
+            height: token2.calc(titleHeight).div(2).equal(),
+            borderBottom: `1px solid ${token2.colorBorder}`,
+            content: '""'
+          }
+        }
+      }),
+      // >>> Checkbox
+      [`${treeCls}-checkbox`]: {
+        top: "initial",
+        marginInlineEnd: treeCheckBoxMarginHorizontal,
+        alignSelf: "flex-start",
+        marginTop: token2.marginXXS
+      },
+      // >>> Title
+      // add `${treeCls}-checkbox + span` to cover checkbox `${checkboxCls} + span`
+      [`${treeCls}-node-content-wrapper, ${treeCls}-checkbox + span`]: {
+        position: "relative",
+        zIndex: "auto",
+        minHeight: titleHeight,
+        margin: 0,
+        padding: `0 ${unit$1(token2.calc(token2.paddingXS).div(2).equal())}`,
+        color: "inherit",
+        lineHeight: `${unit$1(titleHeight)}`,
+        background: "transparent",
+        borderRadius: token2.borderRadius,
+        cursor: "pointer",
+        transition: `all ${token2.motionDurationMid}, border 0s, line-height 0s, box-shadow 0s`,
+        "&:hover": {
+          backgroundColor: nodeHoverBg
+        },
+        [`&${treeCls}-node-selected`]: {
+          backgroundColor: nodeSelectedBg
+        },
+        // Icon
+        [`${treeCls}-iconEle`]: {
+          display: "inline-block",
+          width: titleHeight,
+          height: titleHeight,
+          lineHeight: `${unit$1(titleHeight)}`,
+          textAlign: "center",
+          verticalAlign: "top",
+          "&:empty": {
+            display: "none"
+          }
+        }
+      },
+      // https://github.com/ant-design/ant-design/issues/28217
+      [`${treeCls}-unselectable ${treeCls}-node-content-wrapper:hover`]: {
+        backgroundColor: "transparent"
+      },
+      // ==================== Draggable =====================
+      [`${treeCls}-node-content-wrapper`]: Object.assign({
+        lineHeight: `${unit$1(titleHeight)}`,
+        userSelect: "none"
+      }, getDropIndicatorStyle(prefixCls, token2)),
+      [`${treeNodeCls}.drop-container`]: {
+        "> [draggable]": {
+          boxShadow: `0 0 0 2px ${token2.colorPrimary}`
+        }
+      },
+      // ==================== Show Line =====================
+      "&-show-line": {
+        // ================ Indent lines ================
+        [`${treeCls}-indent`]: {
+          "&-unit": {
+            position: "relative",
+            height: "100%",
+            "&:before": {
+              position: "absolute",
+              top: 0,
+              insetInlineEnd: token2.calc(titleHeight).div(2).equal(),
+              bottom: token2.calc(treeNodePadding).mul(-1).equal(),
+              borderInlineEnd: `1px solid ${token2.colorBorder}`,
+              content: '""'
+            },
+            "&-end": {
+              "&:before": {
+                display: "none"
+              }
+            }
+          }
+        },
+        // ============== Cover Background ==============
+        [`${treeCls}-switcher`]: {
+          background: "transparent",
+          "&-line-icon": {
+            // https://github.com/ant-design/ant-design/issues/32813
+            verticalAlign: "-0.15em"
+          }
+        }
+      },
+      [`${treeNodeCls}-leaf-last`]: {
+        [`${treeCls}-switcher`]: {
+          "&-leaf-line": {
+            "&:before": {
+              top: "auto !important",
+              bottom: "auto !important",
+              height: `${unit$1(token2.calc(titleHeight).div(2).equal())} !important`
+            }
+          }
+        }
+      }
+    })
+  };
+};
+const genDirectoryStyle = (token2) => {
+  const {
+    treeCls,
+    treeNodeCls,
+    treeNodePadding,
+    directoryNodeSelectedBg,
+    directoryNodeSelectedColor
+  } = token2;
+  return {
+    [`${treeCls}${treeCls}-directory`]: {
+      // ================== TreeNode ==================
+      [treeNodeCls]: {
+        position: "relative",
+        // Hover color
+        "&:before": {
+          position: "absolute",
+          top: 0,
+          insetInlineEnd: 0,
+          bottom: treeNodePadding,
+          insetInlineStart: 0,
+          transition: `background-color ${token2.motionDurationMid}`,
+          content: '""',
+          pointerEvents: "none"
+        },
+        "&:hover": {
+          "&:before": {
+            background: token2.controlItemBgHover
+          }
+        },
+        // Elements
+        "> *": {
+          zIndex: 1
+        },
+        // >>> Switcher
+        [`${treeCls}-switcher`]: {
+          transition: `color ${token2.motionDurationMid}`
+        },
+        // >>> Title
+        [`${treeCls}-node-content-wrapper`]: {
+          borderRadius: 0,
+          userSelect: "none",
+          "&:hover": {
+            background: "transparent"
+          },
+          [`&${treeCls}-node-selected`]: {
+            color: directoryNodeSelectedColor,
+            background: "transparent"
+          }
+        },
+        // ============= Selected =============
+        "&-selected": {
+          [`
+            &:hover::before,
+            &::before
+          `]: {
+            background: directoryNodeSelectedBg
+          },
+          // >>> Switcher
+          [`${treeCls}-switcher`]: {
+            color: directoryNodeSelectedColor
+          },
+          // >>> Title
+          [`${treeCls}-node-content-wrapper`]: {
+            color: directoryNodeSelectedColor,
+            background: "transparent"
+          }
+        }
+      }
+    }
+  };
+};
+const genTreeStyle = (prefixCls, token2) => {
+  const treeCls = `.${prefixCls}`;
+  const treeNodeCls = `${treeCls}-treenode`;
+  const treeNodePadding = token2.calc(token2.paddingXS).div(2).equal();
+  const treeToken = merge(token2, {
+    treeCls,
+    treeNodeCls,
+    treeNodePadding
+  });
+  return [
+    // Basic
+    genBaseStyle(prefixCls, treeToken),
+    // Directory
+    genDirectoryStyle(treeToken)
+  ];
+};
+const initComponentToken = (token2) => {
+  const {
+    controlHeightSM
+  } = token2;
+  return {
+    titleHeight: controlHeightSM,
+    nodeHoverBg: token2.controlItemBgHover,
+    nodeSelectedBg: token2.controlItemBgActive
+  };
+};
+const prepareComponentToken$1 = (token2) => {
+  const {
+    colorTextLightSolid,
+    colorPrimary
+  } = token2;
+  return Object.assign(Object.assign({}, initComponentToken(token2)), {
+    directoryNodeSelectedColor: colorTextLightSolid,
+    directoryNodeSelectedBg: colorPrimary
+  });
+};
+const useStyle$1 = genStyleHooks("Tree", (token2, _ref) => {
+  let {
+    prefixCls
+  } = _ref;
+  return [{
+    [token2.componentCls]: getStyle(`${prefixCls}-checkbox`, token2)
+  }, genTreeStyle(prefixCls, token2), genCollapseMotion(token2)];
+}, prepareComponentToken$1);
+const offset = 4;
+function dropIndicatorRender(props) {
+  const {
+    dropPosition,
+    dropLevelOffset,
+    prefixCls,
+    indent,
+    direction = "ltr"
+  } = props;
+  const startPosition = direction === "ltr" ? "left" : "right";
+  const endPosition = direction === "ltr" ? "right" : "left";
+  const style2 = {
+    [startPosition]: -dropLevelOffset * indent + offset,
+    [endPosition]: 0
+  };
+  switch (dropPosition) {
+    case -1:
+      style2.top = -3;
+      break;
+    case 1:
+      style2.bottom = -3;
+      break;
+    default:
+      style2.bottom = -3;
+      style2[startPosition] = indent + offset;
+      break;
+  }
+  return /* @__PURE__ */ React.createElement("div", {
+    style: style2,
+    className: `${prefixCls}-drop-indicator`
+  });
+}
+var CaretDownFilled$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "0 0 1024 1024", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z" } }] }, "name": "caret-down", "theme": "filled" };
+var CaretDownFilled = function CaretDownFilled2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: CaretDownFilled$1
+  }));
+};
+var RefIcon$4 = /* @__PURE__ */ reactExports.forwardRef(CaretDownFilled);
+var MinusSquareOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M328 544h368c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H328c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8z" } }, { "tag": "path", "attrs": { "d": "M880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zm-40 728H184V184h656v656z" } }] }, "name": "minus-square", "theme": "outlined" };
+var MinusSquareOutlined = function MinusSquareOutlined2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: MinusSquareOutlined$1
+  }));
+};
+var RefIcon$3 = /* @__PURE__ */ reactExports.forwardRef(MinusSquareOutlined);
+var PlusSquareOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M328 544h152v152c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V544h152c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H544V328c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v152H328c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8z" } }, { "tag": "path", "attrs": { "d": "M880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zm-40 728H184V184h656v656z" } }] }, "name": "plus-square", "theme": "outlined" };
+var PlusSquareOutlined = function PlusSquareOutlined2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: PlusSquareOutlined$1
+  }));
+};
+var RefIcon$2 = /* @__PURE__ */ reactExports.forwardRef(PlusSquareOutlined);
+const SwitcherIconCom = (props) => {
+  const {
+    prefixCls,
+    switcherIcon,
+    treeNodeProps,
+    showLine
+  } = props;
+  const {
+    isLeaf,
+    expanded,
+    loading
+  } = treeNodeProps;
+  if (loading) {
+    return /* @__PURE__ */ reactExports.createElement(RefIcon$p, {
+      className: `${prefixCls}-switcher-loading-icon`
+    });
+  }
+  let showLeafIcon;
+  if (showLine && typeof showLine === "object") {
+    showLeafIcon = showLine.showLeafIcon;
+  }
+  if (isLeaf) {
+    if (!showLine) {
+      return null;
+    }
+    if (typeof showLeafIcon !== "boolean" && !!showLeafIcon) {
+      const leafIcon = typeof showLeafIcon === "function" ? showLeafIcon(treeNodeProps) : showLeafIcon;
+      const leafCls = `${prefixCls}-switcher-line-custom-icon`;
+      if (/* @__PURE__ */ reactExports.isValidElement(leafIcon)) {
+        return cloneElement(leafIcon, {
+          className: classNames(leafIcon.props.className || "", leafCls)
+        });
+      }
+      return leafIcon;
+    }
+    return showLeafIcon ? /* @__PURE__ */ reactExports.createElement(RefIcon$8, {
+      className: `${prefixCls}-switcher-line-icon`
+    }) : /* @__PURE__ */ reactExports.createElement("span", {
+      className: `${prefixCls}-switcher-leaf-line`
+    });
+  }
+  const switcherCls = `${prefixCls}-switcher-icon`;
+  const switcher = typeof switcherIcon === "function" ? switcherIcon(treeNodeProps) : switcherIcon;
+  if (/* @__PURE__ */ reactExports.isValidElement(switcher)) {
+    return cloneElement(switcher, {
+      className: classNames(switcher.props.className || "", switcherCls)
+    });
+  }
+  if (switcher !== void 0) {
+    return switcher;
+  }
+  if (showLine) {
+    return expanded ? /* @__PURE__ */ reactExports.createElement(RefIcon$3, {
+      className: `${prefixCls}-switcher-line-icon`
+    }) : /* @__PURE__ */ reactExports.createElement(RefIcon$2, {
+      className: `${prefixCls}-switcher-line-icon`
+    });
+  }
+  return /* @__PURE__ */ reactExports.createElement(RefIcon$4, {
+    className: switcherCls
+  });
+};
+const Tree$1 = /* @__PURE__ */ React.forwardRef((props, ref) => {
+  var _a;
+  const {
+    getPrefixCls,
+    direction,
+    virtual,
+    tree
+  } = React.useContext(ConfigContext);
+  const {
+    prefixCls: customizePrefixCls,
+    className,
+    showIcon = false,
+    showLine,
+    switcherIcon,
+    blockNode = false,
+    children,
+    checkable = false,
+    selectable = true,
+    draggable,
+    motion: customMotion,
+    style: style2
+  } = props;
+  const prefixCls = getPrefixCls("tree", customizePrefixCls);
+  const rootPrefixCls = getPrefixCls();
+  const motion2 = customMotion !== null && customMotion !== void 0 ? customMotion : Object.assign(Object.assign({}, initCollapseMotion(rootPrefixCls)), {
+    motionAppear: false
+  });
+  const newProps = Object.assign(Object.assign({}, props), {
+    checkable,
+    selectable,
+    showIcon,
+    motion: motion2,
+    blockNode,
+    showLine: Boolean(showLine),
+    dropIndicatorRender
+  });
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$1(prefixCls);
+  const [, token2] = useToken();
+  const itemHeight = token2.paddingXS / 2 + (((_a = token2.Tree) === null || _a === void 0 ? void 0 : _a.titleHeight) || token2.controlHeightSM);
+  const draggableConfig = React.useMemo(() => {
+    if (!draggable) {
+      return false;
+    }
+    let mergedDraggable = {};
+    switch (typeof draggable) {
+      case "function":
+        mergedDraggable.nodeDraggable = draggable;
+        break;
+      case "object":
+        mergedDraggable = Object.assign({}, draggable);
+        break;
+    }
+    if (mergedDraggable.icon !== false) {
+      mergedDraggable.icon = mergedDraggable.icon || /* @__PURE__ */ React.createElement(RefIcon$5, null);
+    }
+    return mergedDraggable;
+  }, [draggable]);
+  const renderSwitcherIcon = (nodeProps) => /* @__PURE__ */ React.createElement(SwitcherIconCom, {
+    prefixCls,
+    switcherIcon,
+    treeNodeProps: nodeProps,
+    showLine
+  });
+  return wrapCSSVar(
+    // @ts-ignore
+    /* @__PURE__ */ React.createElement(Tree$2, Object.assign({
+      itemHeight,
+      ref,
+      virtual
+    }, newProps, {
+      // newProps may contain style so declare style below it
+      style: Object.assign(Object.assign({}, tree === null || tree === void 0 ? void 0 : tree.style), style2),
+      prefixCls,
+      className: classNames({
+        [`${prefixCls}-icon-hide`]: !showIcon,
+        [`${prefixCls}-block-node`]: blockNode,
+        [`${prefixCls}-unselectable`]: !selectable,
+        [`${prefixCls}-rtl`]: direction === "rtl"
+      }, tree === null || tree === void 0 ? void 0 : tree.className, className, hashId, cssVarCls),
+      direction,
+      checkable: checkable ? /* @__PURE__ */ React.createElement("span", {
+        className: `${prefixCls}-checkbox-inner`
+      }) : checkable,
+      selectable,
+      switcherIcon: renderSwitcherIcon,
+      draggable: draggableConfig
+    }), children)
+  );
+});
+const RECORD_NONE = 0;
+const RECORD_START = 1;
+const RECORD_END = 2;
+function traverseNodesKey(treeData, callback, fieldNames) {
+  const {
+    key: fieldKey,
+    children: fieldChildren
+  } = fieldNames;
+  function processNode(dataNode) {
+    const key = dataNode[fieldKey];
+    const children = dataNode[fieldChildren];
+    if (callback(key, dataNode) !== false) {
+      traverseNodesKey(children || [], callback, fieldNames);
+    }
+  }
+  treeData.forEach(processNode);
+}
+function calcRangeKeys(_ref) {
+  let {
+    treeData,
+    expandedKeys,
+    startKey,
+    endKey,
+    fieldNames
+  } = _ref;
+  const keys2 = [];
+  let record = RECORD_NONE;
+  if (startKey && startKey === endKey) {
+    return [startKey];
+  }
+  if (!startKey || !endKey) {
+    return [];
+  }
+  function matchKey(key) {
+    return key === startKey || key === endKey;
+  }
+  traverseNodesKey(treeData, (key) => {
+    if (record === RECORD_END) {
+      return false;
+    }
+    if (matchKey(key)) {
+      keys2.push(key);
+      if (record === RECORD_NONE) {
+        record = RECORD_START;
+      } else if (record === RECORD_START) {
+        record = RECORD_END;
+        return false;
+      }
+    } else if (record === RECORD_START) {
+      keys2.push(key);
+    }
+    return expandedKeys.includes(key);
+  }, fillFieldNames(fieldNames));
+  return keys2;
+}
+function convertDirectoryKeysToNodes(treeData, keys2, fieldNames) {
+  const restKeys = _toConsumableArray(keys2);
+  const nodes = [];
+  traverseNodesKey(treeData, (key, node2) => {
+    const index2 = restKeys.indexOf(key);
+    if (index2 !== -1) {
+      nodes.push(node2);
+      restKeys.splice(index2, 1);
+    }
+    return !!restKeys.length;
+  }, fillFieldNames(fieldNames));
+  return nodes;
+}
+var __rest$1 = function(s2, e2) {
+  var t2 = {};
+  for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
+  if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
+    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i2])) t2[p2[i2]] = s2[p2[i2]];
+  }
+  return t2;
+};
+function getIcon(props) {
+  const {
+    isLeaf,
+    expanded
+  } = props;
+  if (isLeaf) {
+    return /* @__PURE__ */ reactExports.createElement(RefIcon$8, null);
+  }
+  return expanded ? /* @__PURE__ */ reactExports.createElement(RefIcon$7, null) : /* @__PURE__ */ reactExports.createElement(RefIcon$6, null);
+}
+function getTreeData(_ref) {
+  let {
+    treeData,
+    children
+  } = _ref;
+  return treeData || convertTreeToData(children);
+}
+const DirectoryTree = (_a, ref) => {
+  var {
+    defaultExpandAll,
+    defaultExpandParent,
+    defaultExpandedKeys
+  } = _a, props = __rest$1(_a, ["defaultExpandAll", "defaultExpandParent", "defaultExpandedKeys"]);
+  const lastSelectedKey = reactExports.useRef();
+  const cachedSelectedKeys = reactExports.useRef();
+  const getInitExpandedKeys = () => {
+    const {
+      keyEntities
+    } = convertDataToEntities(getTreeData(props));
+    let initExpandedKeys;
+    if (defaultExpandAll) {
+      initExpandedKeys = Object.keys(keyEntities);
+    } else if (defaultExpandParent) {
+      initExpandedKeys = conductExpandParent(props.expandedKeys || defaultExpandedKeys || [], keyEntities);
+    } else {
+      initExpandedKeys = props.expandedKeys || defaultExpandedKeys || [];
+    }
+    return initExpandedKeys;
+  };
+  const [selectedKeys, setSelectedKeys] = reactExports.useState(props.selectedKeys || props.defaultSelectedKeys || []);
+  const [expandedKeys, setExpandedKeys] = reactExports.useState(() => getInitExpandedKeys());
+  reactExports.useEffect(() => {
+    if ("selectedKeys" in props) {
+      setSelectedKeys(props.selectedKeys);
+    }
+  }, [props.selectedKeys]);
+  reactExports.useEffect(() => {
+    if ("expandedKeys" in props) {
+      setExpandedKeys(props.expandedKeys);
+    }
+  }, [props.expandedKeys]);
+  const onExpand = (keys2, info) => {
+    var _a2;
+    if (!("expandedKeys" in props)) {
+      setExpandedKeys(keys2);
+    }
+    return (_a2 = props.onExpand) === null || _a2 === void 0 ? void 0 : _a2.call(props, keys2, info);
+  };
+  const onSelect = (keys2, event) => {
+    var _a2;
+    const {
+      multiple,
+      fieldNames
+    } = props;
+    const {
+      node: node2,
+      nativeEvent
+    } = event;
+    const {
+      key = ""
+    } = node2;
+    const treeData = getTreeData(props);
+    const newEvent = Object.assign(Object.assign({}, event), {
+      selected: true
+    });
+    const ctrlPick = (nativeEvent === null || nativeEvent === void 0 ? void 0 : nativeEvent.ctrlKey) || (nativeEvent === null || nativeEvent === void 0 ? void 0 : nativeEvent.metaKey);
+    const shiftPick = nativeEvent === null || nativeEvent === void 0 ? void 0 : nativeEvent.shiftKey;
+    let newSelectedKeys;
+    if (multiple && ctrlPick) {
+      newSelectedKeys = keys2;
+      lastSelectedKey.current = key;
+      cachedSelectedKeys.current = newSelectedKeys;
+      newEvent.selectedNodes = convertDirectoryKeysToNodes(treeData, newSelectedKeys, fieldNames);
+    } else if (multiple && shiftPick) {
+      newSelectedKeys = Array.from(new Set([].concat(_toConsumableArray(cachedSelectedKeys.current || []), _toConsumableArray(calcRangeKeys({
+        treeData,
+        expandedKeys,
+        startKey: key,
+        endKey: lastSelectedKey.current,
+        fieldNames
+      })))));
+      newEvent.selectedNodes = convertDirectoryKeysToNodes(treeData, newSelectedKeys, fieldNames);
+    } else {
+      newSelectedKeys = [key];
+      lastSelectedKey.current = key;
+      cachedSelectedKeys.current = newSelectedKeys;
+      newEvent.selectedNodes = convertDirectoryKeysToNodes(treeData, newSelectedKeys, fieldNames);
+    }
+    (_a2 = props.onSelect) === null || _a2 === void 0 ? void 0 : _a2.call(props, newSelectedKeys, newEvent);
+    if (!("selectedKeys" in props)) {
+      setSelectedKeys(newSelectedKeys);
+    }
+  };
+  const {
+    getPrefixCls,
+    direction
+  } = reactExports.useContext(ConfigContext);
+  const {
+    prefixCls: customizePrefixCls,
+    className,
+    showIcon = true,
+    expandAction = "click"
+  } = props, otherProps = __rest$1(props, ["prefixCls", "className", "showIcon", "expandAction"]);
+  const prefixCls = getPrefixCls("tree", customizePrefixCls);
+  const connectClassName = classNames(`${prefixCls}-directory`, {
+    [`${prefixCls}-directory-rtl`]: direction === "rtl"
+  }, className);
+  return /* @__PURE__ */ reactExports.createElement(Tree$1, Object.assign({
+    icon: getIcon,
+    ref,
+    blockNode: true
+  }, otherProps, {
+    showIcon,
+    expandAction,
+    prefixCls,
+    className: connectClassName,
+    expandedKeys,
+    selectedKeys,
+    onSelect,
+    onExpand
+  }));
+};
+const ForwardDirectoryTree = /* @__PURE__ */ reactExports.forwardRef(DirectoryTree);
+const Tree = Tree$1;
+Tree.DirectoryTree = ForwardDirectoryTree;
+Tree.TreeNode = ContextTreeNode;
+function FilterSearch(_ref) {
+  let {
+    value,
+    onChange,
+    filterSearch,
+    tablePrefixCls,
+    locale: locale2
+  } = _ref;
+  if (!filterSearch) {
+    return null;
+  }
+  return /* @__PURE__ */ reactExports.createElement("div", {
+    className: `${tablePrefixCls}-filter-dropdown-search`
+  }, /* @__PURE__ */ reactExports.createElement(Input, {
+    prefix: /* @__PURE__ */ reactExports.createElement(RefIcon$l, null),
+    placeholder: locale2.filterSearchPlaceholder,
+    onChange,
+    value,
+    // for skip min-width of input
+    htmlSize: 1,
+    className: `${tablePrefixCls}-filter-dropdown-search-input`
+  }));
+}
+const onKeyDown = (event) => {
+  const {
+    keyCode
+  } = event;
+  if (keyCode === KeyCode.ENTER) {
+    event.stopPropagation();
+  }
+};
+const FilterDropdownMenuWrapper = /* @__PURE__ */ reactExports.forwardRef((props, ref) => /* @__PURE__ */ reactExports.createElement("div", {
+  className: props.className,
+  onClick: (e2) => e2.stopPropagation(),
+  onKeyDown,
+  ref
+}, props.children));
+function flattenKeys(filters) {
+  let keys2 = [];
+  (filters || []).forEach((_ref) => {
+    let {
+      value,
+      children
+    } = _ref;
+    keys2.push(value);
+    if (children) {
+      keys2 = [].concat(_toConsumableArray(keys2), _toConsumableArray(flattenKeys(children)));
+    }
+  });
+  return keys2;
+}
+function hasSubMenu(filters) {
+  return filters.some((_ref2) => {
+    let {
+      children
+    } = _ref2;
+    return children;
+  });
+}
+function searchValueMatched(searchValue, text) {
+  if (typeof text === "string" || typeof text === "number") {
+    return text === null || text === void 0 ? void 0 : text.toString().toLowerCase().includes(searchValue.trim().toLowerCase());
+  }
+  return false;
+}
+function renderFilterItems(_ref3) {
+  let {
+    filters,
+    prefixCls,
+    filteredKeys,
+    filterMultiple,
+    searchValue,
+    filterSearch
+  } = _ref3;
+  return filters.map((filter2, index2) => {
+    const key = String(filter2.value);
+    if (filter2.children) {
+      return {
+        key: key || index2,
+        label: filter2.text,
+        popupClassName: `${prefixCls}-dropdown-submenu`,
+        children: renderFilterItems({
+          filters: filter2.children,
+          prefixCls,
+          filteredKeys,
+          filterMultiple,
+          searchValue,
+          filterSearch
+        })
+      };
+    }
+    const Component = filterMultiple ? Checkbox : Radio;
+    const item = {
+      key: filter2.value !== void 0 ? key : index2,
+      label: /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement(Component, {
+        checked: filteredKeys.includes(key)
+      }), /* @__PURE__ */ reactExports.createElement("span", null, filter2.text))
+    };
+    if (searchValue.trim()) {
+      if (typeof filterSearch === "function") {
+        return filterSearch(searchValue, filter2) ? item : null;
+      }
+      return searchValueMatched(searchValue, filter2.text) ? item : null;
+    }
+    return item;
+  });
+}
+function wrapStringListType(keys2) {
+  return keys2 || [];
+}
+function FilterDropdown(props) {
+  var _a, _b;
+  const {
+    tablePrefixCls,
+    prefixCls,
+    column: column2,
+    dropdownPrefixCls,
+    columnKey,
+    filterOnClose,
+    filterMultiple,
+    filterMode = "menu",
+    filterSearch = false,
+    filterState,
+    triggerFilter,
+    locale: locale2,
+    children,
+    getPopupContainer,
+    rootClassName
+  } = props;
+  const {
+    filterDropdownOpen,
+    onFilterDropdownOpenChange,
+    filterResetToDefaultFilteredValue,
+    defaultFilteredValue,
+    // Deprecated
+    filterDropdownVisible,
+    onFilterDropdownVisibleChange
+  } = column2;
+  const [visible, setVisible] = reactExports.useState(false);
+  const filtered = !!(filterState && (((_a = filterState.filteredKeys) === null || _a === void 0 ? void 0 : _a.length) || filterState.forceFiltered));
+  const triggerVisible = (newVisible) => {
+    setVisible(newVisible);
+    onFilterDropdownOpenChange === null || onFilterDropdownOpenChange === void 0 ? void 0 : onFilterDropdownOpenChange(newVisible);
+    onFilterDropdownVisibleChange === null || onFilterDropdownVisibleChange === void 0 ? void 0 : onFilterDropdownVisibleChange(newVisible);
+  };
+  const mergedVisible = (_b = filterDropdownOpen !== null && filterDropdownOpen !== void 0 ? filterDropdownOpen : filterDropdownVisible) !== null && _b !== void 0 ? _b : visible;
+  const propFilteredKeys = filterState === null || filterState === void 0 ? void 0 : filterState.filteredKeys;
+  const [getFilteredKeysSync, setFilteredKeysSync] = useSyncState(wrapStringListType(propFilteredKeys));
+  const onSelectKeys = (_ref5) => {
+    let {
+      selectedKeys
+    } = _ref5;
+    setFilteredKeysSync(selectedKeys);
+  };
+  const onCheck = (keys2, _ref6) => {
+    let {
+      node: node2,
+      checked
+    } = _ref6;
+    if (!filterMultiple) {
+      onSelectKeys({
+        selectedKeys: checked && node2.key ? [node2.key] : []
+      });
+    } else {
+      onSelectKeys({
+        selectedKeys: keys2
+      });
+    }
+  };
+  reactExports.useEffect(() => {
+    if (!visible) {
+      return;
+    }
+    onSelectKeys({
+      selectedKeys: wrapStringListType(propFilteredKeys)
+    });
+  }, [propFilteredKeys]);
+  const [openKeys, setOpenKeys] = reactExports.useState([]);
+  const onOpenChange = (keys2) => {
+    setOpenKeys(keys2);
+  };
+  const [searchValue, setSearchValue] = reactExports.useState("");
+  const onSearch = (e2) => {
+    const {
+      value
+    } = e2.target;
+    setSearchValue(value);
+  };
+  reactExports.useEffect(() => {
+    if (!visible) {
+      setSearchValue("");
+    }
+  }, [visible]);
+  const internalTriggerFilter = (keys2) => {
+    const mergedKeys = (keys2 === null || keys2 === void 0 ? void 0 : keys2.length) ? keys2 : null;
+    if (mergedKeys === null && (!filterState || !filterState.filteredKeys)) {
+      return null;
+    }
+    if (isEqual(mergedKeys, filterState === null || filterState === void 0 ? void 0 : filterState.filteredKeys, true)) {
+      return null;
+    }
+    triggerFilter({
+      column: column2,
+      key: columnKey,
+      filteredKeys: mergedKeys
+    });
+  };
+  const onConfirm = () => {
+    triggerVisible(false);
+    internalTriggerFilter(getFilteredKeysSync());
+  };
+  const onReset = function() {
+    let {
+      confirm: confirm2,
+      closeDropdown
+    } = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {
+      confirm: false,
+      closeDropdown: false
+    };
+    if (confirm2) {
+      internalTriggerFilter([]);
+    }
+    if (closeDropdown) {
+      triggerVisible(false);
+    }
+    setSearchValue("");
+    if (filterResetToDefaultFilteredValue) {
+      setFilteredKeysSync((defaultFilteredValue || []).map((key) => String(key)));
+    } else {
+      setFilteredKeysSync([]);
+    }
+  };
+  const doFilter = function() {
+    let {
+      closeDropdown
+    } = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {
+      closeDropdown: true
+    };
+    if (closeDropdown) {
+      triggerVisible(false);
+    }
+    internalTriggerFilter(getFilteredKeysSync());
+  };
+  const onVisibleChange = (newVisible, info) => {
+    if (info.source === "trigger") {
+      if (newVisible && propFilteredKeys !== void 0) {
+        setFilteredKeysSync(wrapStringListType(propFilteredKeys));
+      }
+      triggerVisible(newVisible);
+      if (!newVisible && !column2.filterDropdown && filterOnClose) {
+        onConfirm();
+      }
+    }
+  };
+  const dropdownMenuClass = classNames({
+    [`${dropdownPrefixCls}-menu-without-submenu`]: !hasSubMenu(column2.filters || [])
+  });
+  const onCheckAll = (e2) => {
+    if (e2.target.checked) {
+      const allFilterKeys = flattenKeys(column2 === null || column2 === void 0 ? void 0 : column2.filters).map((key) => String(key));
+      setFilteredKeysSync(allFilterKeys);
+    } else {
+      setFilteredKeysSync([]);
+    }
+  };
+  const getTreeData2 = (_ref7) => {
+    let {
+      filters
+    } = _ref7;
+    return (filters || []).map((filter2, index2) => {
+      const key = String(filter2.value);
+      const item = {
+        title: filter2.text,
+        key: filter2.value !== void 0 ? key : String(index2)
+      };
+      if (filter2.children) {
+        item.children = getTreeData2({
+          filters: filter2.children
+        });
+      }
+      return item;
+    });
+  };
+  const getFilterData2 = (node2) => {
+    var _a2;
+    return Object.assign(Object.assign({}, node2), {
+      text: node2.title,
+      value: node2.key,
+      children: ((_a2 = node2.children) === null || _a2 === void 0 ? void 0 : _a2.map((item) => getFilterData2(item))) || []
+    });
+  };
+  let dropdownContent;
+  if (typeof column2.filterDropdown === "function") {
+    dropdownContent = column2.filterDropdown({
+      prefixCls: `${dropdownPrefixCls}-custom`,
+      setSelectedKeys: (selectedKeys) => onSelectKeys({
+        selectedKeys
+      }),
+      selectedKeys: getFilteredKeysSync(),
+      confirm: doFilter,
+      clearFilters: onReset,
+      filters: column2.filters,
+      visible: mergedVisible,
+      close: () => {
+        triggerVisible(false);
+      }
+    });
+  } else if (column2.filterDropdown) {
+    dropdownContent = column2.filterDropdown;
+  } else {
+    const selectedKeys = getFilteredKeysSync() || [];
+    const getFilterComponent = () => {
+      const empty = /* @__PURE__ */ reactExports.createElement(Empty, {
+        image: Empty.PRESENTED_IMAGE_SIMPLE,
+        description: locale2.filterEmptyText,
+        imageStyle: {
+          height: 24
+        },
+        style: {
+          margin: 0,
+          padding: "16px 0"
+        }
+      });
+      if ((column2.filters || []).length === 0) {
+        return empty;
+      }
+      if (filterMode === "tree") {
+        return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement(FilterSearch, {
+          filterSearch,
+          value: searchValue,
+          onChange: onSearch,
+          tablePrefixCls,
+          locale: locale2
+        }), /* @__PURE__ */ reactExports.createElement("div", {
+          className: `${tablePrefixCls}-filter-dropdown-tree`
+        }, filterMultiple ? /* @__PURE__ */ reactExports.createElement(Checkbox, {
+          checked: selectedKeys.length === flattenKeys(column2.filters).length,
+          indeterminate: selectedKeys.length > 0 && selectedKeys.length < flattenKeys(column2.filters).length,
+          className: `${tablePrefixCls}-filter-dropdown-checkall`,
+          onChange: onCheckAll
+        }, locale2.filterCheckall) : null, /* @__PURE__ */ reactExports.createElement(Tree, {
+          checkable: true,
+          selectable: false,
+          blockNode: true,
+          multiple: filterMultiple,
+          checkStrictly: !filterMultiple,
+          className: `${dropdownPrefixCls}-menu`,
+          onCheck,
+          checkedKeys: selectedKeys,
+          selectedKeys,
+          showIcon: false,
+          treeData: getTreeData2({
+            filters: column2.filters
+          }),
+          autoExpandParent: true,
+          defaultExpandAll: true,
+          filterTreeNode: searchValue.trim() ? (node2) => {
+            if (typeof filterSearch === "function") {
+              return filterSearch(searchValue, getFilterData2(node2));
+            }
+            return searchValueMatched(searchValue, node2.title);
+          } : void 0
+        })));
+      }
+      const items = renderFilterItems({
+        filters: column2.filters || [],
+        filterSearch,
+        prefixCls,
+        filteredKeys: getFilteredKeysSync(),
+        filterMultiple,
+        searchValue
+      });
+      const isEmpty2 = items.every((item) => item === null);
+      return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement(FilterSearch, {
+        filterSearch,
+        value: searchValue,
+        onChange: onSearch,
+        tablePrefixCls,
+        locale: locale2
+      }), isEmpty2 ? empty : /* @__PURE__ */ reactExports.createElement(Menu, {
+        selectable: true,
+        multiple: filterMultiple,
+        prefixCls: `${dropdownPrefixCls}-menu`,
+        className: dropdownMenuClass,
+        onSelect: onSelectKeys,
+        onDeselect: onSelectKeys,
+        selectedKeys,
+        getPopupContainer,
+        openKeys,
+        onOpenChange,
+        items
+      }));
+    };
+    const getResetDisabled = () => {
+      if (filterResetToDefaultFilteredValue) {
+        return isEqual((defaultFilteredValue || []).map((key) => String(key)), selectedKeys, true);
+      }
+      return selectedKeys.length === 0;
+    };
+    dropdownContent = /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, getFilterComponent(), /* @__PURE__ */ reactExports.createElement("div", {
+      className: `${prefixCls}-dropdown-btns`
+    }, /* @__PURE__ */ reactExports.createElement(Button$1, {
+      type: "link",
+      size: "small",
+      disabled: getResetDisabled(),
+      onClick: () => onReset()
+    }, locale2.filterReset), /* @__PURE__ */ reactExports.createElement(Button$1, {
+      type: "primary",
+      size: "small",
+      onClick: onConfirm
+    }, locale2.filterConfirm)));
+  }
+  if (column2.filterDropdown) {
+    dropdownContent = /* @__PURE__ */ reactExports.createElement(OverrideProvider, {
+      selectable: void 0
+    }, dropdownContent);
+  }
+  const menu = () => /* @__PURE__ */ reactExports.createElement(FilterDropdownMenuWrapper, {
+    className: `${prefixCls}-dropdown`
+  }, dropdownContent);
+  let filterIcon;
+  if (typeof column2.filterIcon === "function") {
+    filterIcon = column2.filterIcon(filtered);
+  } else if (column2.filterIcon) {
+    filterIcon = column2.filterIcon;
+  } else {
+    filterIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$9, null);
+  }
+  const {
+    direction
+  } = reactExports.useContext(ConfigContext);
+  return /* @__PURE__ */ reactExports.createElement("div", {
+    className: `${prefixCls}-column`
+  }, /* @__PURE__ */ reactExports.createElement("span", {
+    className: `${tablePrefixCls}-column-title`
+  }, children), /* @__PURE__ */ reactExports.createElement(Dropdown, {
+    dropdownRender: menu,
+    trigger: ["click"],
+    open: mergedVisible,
+    onOpenChange: onVisibleChange,
+    getPopupContainer,
+    placement: direction === "rtl" ? "bottomLeft" : "bottomRight",
+    rootClassName
+  }, /* @__PURE__ */ reactExports.createElement("span", {
+    role: "button",
+    tabIndex: -1,
+    className: classNames(`${prefixCls}-trigger`, {
+      active: filtered
+    }),
+    onClick: (e2) => {
+      e2.stopPropagation();
+    }
+  }, filterIcon)));
+}
+function collectFilterStates(columns2, init, pos) {
+  let filterStates = [];
+  (columns2 || []).forEach((column2, index2) => {
+    var _a;
+    const columnPos = getColumnPos(index2, pos);
+    if (column2.filters || "filterDropdown" in column2 || "onFilter" in column2) {
+      if ("filteredValue" in column2) {
+        let filteredValues = column2.filteredValue;
+        if (!("filterDropdown" in column2)) {
+          filteredValues = (_a = filteredValues === null || filteredValues === void 0 ? void 0 : filteredValues.map(String)) !== null && _a !== void 0 ? _a : filteredValues;
+        }
+        filterStates.push({
+          column: column2,
+          key: getColumnKey(column2, columnPos),
+          filteredKeys: filteredValues,
+          forceFiltered: column2.filtered
+        });
+      } else {
+        filterStates.push({
+          column: column2,
+          key: getColumnKey(column2, columnPos),
+          filteredKeys: init && column2.defaultFilteredValue ? column2.defaultFilteredValue : void 0,
+          forceFiltered: column2.filtered
+        });
+      }
+    }
+    if ("children" in column2) {
+      filterStates = [].concat(_toConsumableArray(filterStates), _toConsumableArray(collectFilterStates(column2.children, init, columnPos)));
+    }
+  });
+  return filterStates;
+}
+function injectFilter(prefixCls, dropdownPrefixCls, columns2, filterStates, locale2, triggerFilter, getPopupContainer, pos, rootClassName) {
+  return columns2.map((column2, index2) => {
+    const columnPos = getColumnPos(index2, pos);
+    const {
+      filterOnClose = true,
+      filterMultiple = true,
+      filterMode,
+      filterSearch
+    } = column2;
+    let newColumn = column2;
+    if (newColumn.filters || newColumn.filterDropdown) {
+      const columnKey = getColumnKey(newColumn, columnPos);
+      const filterState = filterStates.find((_ref) => {
+        let {
+          key
+        } = _ref;
+        return columnKey === key;
+      });
+      newColumn = Object.assign(Object.assign({}, newColumn), {
+        title: (renderProps) => /* @__PURE__ */ reactExports.createElement(FilterDropdown, {
+          tablePrefixCls: prefixCls,
+          prefixCls: `${prefixCls}-filter`,
+          dropdownPrefixCls,
+          column: newColumn,
+          columnKey,
+          filterState,
+          filterOnClose,
+          filterMultiple,
+          filterMode,
+          filterSearch,
+          triggerFilter,
+          locale: locale2,
+          getPopupContainer,
+          rootClassName
+        }, renderColumnTitle(column2.title, renderProps))
+      });
+    }
+    if ("children" in newColumn) {
+      newColumn = Object.assign(Object.assign({}, newColumn), {
+        children: injectFilter(prefixCls, dropdownPrefixCls, newColumn.children, filterStates, locale2, triggerFilter, getPopupContainer, columnPos, rootClassName)
+      });
+    }
+    return newColumn;
+  });
+}
+function generateFilterInfo(filterStates) {
+  const currentFilters = {};
+  filterStates.forEach((_ref2) => {
+    let {
+      key,
+      filteredKeys,
+      column: column2
+    } = _ref2;
+    const keyAsString = key;
+    const {
+      filters,
+      filterDropdown
+    } = column2;
+    if (filterDropdown) {
+      currentFilters[keyAsString] = filteredKeys || null;
+    } else if (Array.isArray(filteredKeys)) {
+      const keys2 = flattenKeys(filters);
+      currentFilters[keyAsString] = keys2.filter((originKey) => filteredKeys.includes(String(originKey)));
+    } else {
+      currentFilters[keyAsString] = null;
+    }
+  });
+  return currentFilters;
+}
+function getFilterData(data, filterStates, childrenColumnName) {
+  return filterStates.reduce((currentData, filterState) => {
+    const {
+      column: {
+        onFilter,
+        filters
+      },
+      filteredKeys
+    } = filterState;
+    if (onFilter && filteredKeys && filteredKeys.length) {
+      return currentData.map((record) => Object.assign({}, record)).filter((record) => filteredKeys.some((key) => {
+        const keys2 = flattenKeys(filters);
+        const keyIndex = keys2.findIndex((k2) => String(k2) === String(key));
+        const realKey = keyIndex !== -1 ? keys2[keyIndex] : key;
+        if (record[childrenColumnName]) {
+          record[childrenColumnName] = getFilterData(record[childrenColumnName], filterStates, childrenColumnName);
+        }
+        return onFilter(realKey, record);
+      }));
+    }
+    return currentData;
+  }, data);
+}
+const getMergedColumns = (rawMergedColumns) => rawMergedColumns.flatMap((column2) => {
+  if ("children" in column2) {
+    return [column2].concat(_toConsumableArray(getMergedColumns(column2.children || [])));
+  }
+  return [column2];
+});
+function useFilter(_ref3) {
+  let {
+    prefixCls,
+    dropdownPrefixCls,
+    mergedColumns: rawMergedColumns,
+    onFilterChange,
+    getPopupContainer,
+    locale: tableLocale,
+    rootClassName
+  } = _ref3;
+  devUseWarning();
+  const mergedColumns = reactExports.useMemo(() => getMergedColumns(rawMergedColumns || []), [rawMergedColumns]);
+  const [filterStates, setFilterStates] = reactExports.useState(() => collectFilterStates(mergedColumns, true));
+  const mergedFilterStates = reactExports.useMemo(() => {
+    const collectedStates = collectFilterStates(mergedColumns, false);
+    if (collectedStates.length === 0) {
+      return collectedStates;
+    }
+    let filteredKeysIsAllNotControlled = true;
+    collectedStates.forEach((_ref4) => {
+      let {
+        filteredKeys
+      } = _ref4;
+      if (filteredKeys !== void 0) {
+        filteredKeysIsAllNotControlled = false;
+      }
+    });
+    if (filteredKeysIsAllNotControlled) {
+      const keyList = (mergedColumns || []).map((column2, index2) => getColumnKey(column2, getColumnPos(index2)));
+      return filterStates.filter((_ref5) => {
+        let {
+          key
+        } = _ref5;
+        return keyList.includes(key);
+      }).map((item) => {
+        const col = mergedColumns[keyList.findIndex((key) => key === item.key)];
+        return Object.assign(Object.assign({}, item), {
+          column: Object.assign(Object.assign({}, item.column), col),
+          forceFiltered: col.filtered
+        });
+      });
+    }
+    return collectedStates;
+  }, [mergedColumns, filterStates]);
+  const filters = reactExports.useMemo(() => generateFilterInfo(mergedFilterStates), [mergedFilterStates]);
+  const triggerFilter = (filterState) => {
+    const newFilterStates = mergedFilterStates.filter((_ref6) => {
+      let {
+        key
+      } = _ref6;
+      return key !== filterState.key;
+    });
+    newFilterStates.push(filterState);
+    setFilterStates(newFilterStates);
+    onFilterChange(generateFilterInfo(newFilterStates), newFilterStates);
+  };
+  const transformColumns = (innerColumns) => injectFilter(prefixCls, dropdownPrefixCls, innerColumns, mergedFilterStates, tableLocale, triggerFilter, getPopupContainer, void 0, rootClassName);
+  return [transformColumns, mergedFilterStates, filters];
+}
+function useLazyKVMap(data, childrenColumnName, getRowKey) {
+  const mapCacheRef = reactExports.useRef({});
+  function getRecordByKey(key) {
+    if (!mapCacheRef.current || mapCacheRef.current.data !== data || mapCacheRef.current.childrenColumnName !== childrenColumnName || mapCacheRef.current.getRowKey !== getRowKey) {
+      let dig2 = function(records) {
+        records.forEach((record, index2) => {
+          const rowKey = getRowKey(record, index2);
+          kvMap.set(rowKey, record);
+          if (record && typeof record === "object" && childrenColumnName in record) {
+            dig2(record[childrenColumnName] || []);
+          }
+        });
+      };
+      var dig = dig2;
+      const kvMap = /* @__PURE__ */ new Map();
+      dig2(data);
+      mapCacheRef.current = {
+        data,
+        childrenColumnName,
+        kvMap,
+        getRowKey
+      };
+    }
+    return mapCacheRef.current.kvMap.get(key);
+  }
+  return [getRecordByKey];
+}
+var __rest = function(s2, e2) {
+  var t2 = {};
+  for (var p2 in s2) if (Object.prototype.hasOwnProperty.call(s2, p2) && e2.indexOf(p2) < 0) t2[p2] = s2[p2];
+  if (s2 != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s2); i2 < p2.length; i2++) {
+    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s2, p2[i2])) t2[p2[i2]] = s2[p2[i2]];
+  }
+  return t2;
+};
+const DEFAULT_PAGE_SIZE = 10;
+function getPaginationParam(mergedPagination, pagination) {
+  const param = {
+    current: mergedPagination.current,
+    pageSize: mergedPagination.pageSize
+  };
+  const paginationObj = pagination && typeof pagination === "object" ? pagination : {};
+  Object.keys(paginationObj).forEach((pageProp) => {
+    const value = mergedPagination[pageProp];
+    if (typeof value !== "function") {
+      param[pageProp] = value;
+    }
+  });
+  return param;
+}
+function usePagination(total, onChange, pagination) {
+  const _a = pagination && typeof pagination === "object" ? pagination : {}, {
+    total: paginationTotal = 0
+  } = _a, paginationObj = __rest(_a, ["total"]);
+  const [innerPagination, setInnerPagination] = reactExports.useState(() => ({
+    current: "defaultCurrent" in paginationObj ? paginationObj.defaultCurrent : 1,
+    pageSize: "defaultPageSize" in paginationObj ? paginationObj.defaultPageSize : DEFAULT_PAGE_SIZE
+  }));
+  const mergedPagination = extendsObject(innerPagination, paginationObj, {
+    total: paginationTotal > 0 ? paginationTotal : total
+  });
+  const maxPage = Math.ceil((paginationTotal || total) / mergedPagination.pageSize);
+  if (mergedPagination.current > maxPage) {
+    mergedPagination.current = maxPage || 1;
+  }
+  const refreshPagination = (current, pageSize) => {
+    setInnerPagination({
+      current: current !== null && current !== void 0 ? current : 1,
+      pageSize: pageSize || mergedPagination.pageSize
+    });
+  };
+  const onInternalChange = (current, pageSize) => {
+    var _a2;
+    if (pagination) {
+      (_a2 = pagination.onChange) === null || _a2 === void 0 ? void 0 : _a2.call(pagination, current, pageSize);
+    }
+    refreshPagination(current, pageSize);
+    onChange(current, pageSize || (mergedPagination === null || mergedPagination === void 0 ? void 0 : mergedPagination.pageSize));
+  };
+  if (pagination === false) {
+    return [{}, () => {
+    }];
+  }
+  return [Object.assign(Object.assign({}, mergedPagination), {
+    onChange: onInternalChange
+  }), refreshPagination];
+}
+var CaretDownOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "0 0 1024 1024", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z" } }] }, "name": "caret-down", "theme": "outlined" };
+var CaretDownOutlined = function CaretDownOutlined2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: CaretDownOutlined$1
+  }));
+};
+var RefIcon$1 = /* @__PURE__ */ reactExports.forwardRef(CaretDownOutlined);
+var CaretUpOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "0 0 1024 1024", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z" } }] }, "name": "caret-up", "theme": "outlined" };
+var CaretUpOutlined = function CaretUpOutlined2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: CaretUpOutlined$1
+  }));
+};
+var RefIcon = /* @__PURE__ */ reactExports.forwardRef(CaretUpOutlined);
+const ASCEND = "ascend";
+const DESCEND = "descend";
+function getMultiplePriority(column2) {
+  if (typeof column2.sorter === "object" && typeof column2.sorter.multiple === "number") {
+    return column2.sorter.multiple;
+  }
+  return false;
+}
+function getSortFunction(sorter) {
+  if (typeof sorter === "function") {
+    return sorter;
+  }
+  if (sorter && typeof sorter === "object" && sorter.compare) {
+    return sorter.compare;
+  }
+  return false;
+}
+function nextSortDirection(sortDirections, current) {
+  if (!current) {
+    return sortDirections[0];
+  }
+  return sortDirections[sortDirections.indexOf(current) + 1];
+}
+function collectSortStates(columns2, init, pos) {
+  let sortStates = [];
+  function pushState(column2, columnPos) {
+    sortStates.push({
+      column: column2,
+      key: getColumnKey(column2, columnPos),
+      multiplePriority: getMultiplePriority(column2),
+      sortOrder: column2.sortOrder
+    });
+  }
+  (columns2 || []).forEach((column2, index2) => {
+    const columnPos = getColumnPos(index2, pos);
+    if (column2.children) {
+      if ("sortOrder" in column2) {
+        pushState(column2, columnPos);
+      }
+      sortStates = [].concat(_toConsumableArray(sortStates), _toConsumableArray(collectSortStates(column2.children, init, columnPos)));
+    } else if (column2.sorter) {
+      if ("sortOrder" in column2) {
+        pushState(column2, columnPos);
+      } else if (init && column2.defaultSortOrder) {
+        sortStates.push({
+          column: column2,
+          key: getColumnKey(column2, columnPos),
+          multiplePriority: getMultiplePriority(column2),
+          sortOrder: column2.defaultSortOrder
+        });
+      }
+    }
+  });
+  return sortStates;
+}
+function injectSorter(prefixCls, columns2, sorterStates, triggerSorter, defaultSortDirections, tableLocale, tableShowSorterTooltip, pos) {
+  return (columns2 || []).map((column2, index2) => {
+    const columnPos = getColumnPos(index2, pos);
+    let newColumn = column2;
+    if (newColumn.sorter) {
+      const sortDirections = newColumn.sortDirections || defaultSortDirections;
+      const showSorterTooltip = newColumn.showSorterTooltip === void 0 ? tableShowSorterTooltip : newColumn.showSorterTooltip;
+      const columnKey = getColumnKey(newColumn, columnPos);
+      const sorterState = sorterStates.find((_ref) => {
+        let {
+          key
+        } = _ref;
+        return key === columnKey;
+      });
+      const sortOrder = sorterState ? sorterState.sortOrder : null;
+      const nextSortOrder = nextSortDirection(sortDirections, sortOrder);
+      let sorter;
+      if (column2.sortIcon) {
+        sorter = column2.sortIcon({
+          sortOrder
+        });
+      } else {
+        const upNode = sortDirections.includes(ASCEND) && /* @__PURE__ */ reactExports.createElement(RefIcon, {
+          className: classNames(`${prefixCls}-column-sorter-up`, {
+            active: sortOrder === ASCEND
+          })
+        });
+        const downNode = sortDirections.includes(DESCEND) && /* @__PURE__ */ reactExports.createElement(RefIcon$1, {
+          className: classNames(`${prefixCls}-column-sorter-down`, {
+            active: sortOrder === DESCEND
+          })
+        });
+        sorter = /* @__PURE__ */ reactExports.createElement("span", {
+          className: classNames(`${prefixCls}-column-sorter`, {
+            [`${prefixCls}-column-sorter-full`]: !!(upNode && downNode)
+          })
+        }, /* @__PURE__ */ reactExports.createElement("span", {
+          className: `${prefixCls}-column-sorter-inner`,
+          "aria-hidden": "true"
+        }, upNode, downNode));
+      }
+      const {
+        cancelSort,
+        triggerAsc,
+        triggerDesc
+      } = tableLocale || {};
+      let sortTip = cancelSort;
+      if (nextSortOrder === DESCEND) {
+        sortTip = triggerDesc;
+      } else if (nextSortOrder === ASCEND) {
+        sortTip = triggerAsc;
+      }
+      const tooltipProps = typeof showSorterTooltip === "object" ? Object.assign({
+        title: sortTip
+      }, showSorterTooltip) : {
+        title: sortTip
+      };
+      newColumn = Object.assign(Object.assign({}, newColumn), {
+        className: classNames(newColumn.className, {
+          [`${prefixCls}-column-sort`]: sortOrder
+        }),
+        title: (renderProps) => {
+          const columnSortersClass = `${prefixCls}-column-sorters`;
+          const renderColumnTitleWrapper = /* @__PURE__ */ reactExports.createElement("span", {
+            className: `${prefixCls}-column-title`
+          }, renderColumnTitle(column2.title, renderProps));
+          const renderSortTitle = /* @__PURE__ */ reactExports.createElement("div", {
+            className: columnSortersClass
+          }, renderColumnTitleWrapper, sorter);
+          if (showSorterTooltip) {
+            if (typeof showSorterTooltip !== "boolean" && (showSorterTooltip === null || showSorterTooltip === void 0 ? void 0 : showSorterTooltip.target) === "sorter-icon") {
+              return /* @__PURE__ */ reactExports.createElement("div", {
+                className: `${columnSortersClass} ${prefixCls}-column-sorters-tooltip-target-sorter`
+              }, renderColumnTitleWrapper, /* @__PURE__ */ reactExports.createElement(Tooltip2, Object.assign({}, tooltipProps), sorter));
+            }
+            return /* @__PURE__ */ reactExports.createElement(Tooltip2, Object.assign({}, tooltipProps), renderSortTitle);
+          }
+          return renderSortTitle;
+        },
+        onHeaderCell: (col) => {
+          var _a;
+          const cell = ((_a = column2.onHeaderCell) === null || _a === void 0 ? void 0 : _a.call(column2, col)) || {};
+          const originOnClick = cell.onClick;
+          const originOKeyDown = cell.onKeyDown;
+          cell.onClick = (event) => {
+            triggerSorter({
+              column: column2,
+              key: columnKey,
+              sortOrder: nextSortOrder,
+              multiplePriority: getMultiplePriority(column2)
+            });
+            originOnClick === null || originOnClick === void 0 ? void 0 : originOnClick(event);
+          };
+          cell.onKeyDown = (event) => {
+            if (event.keyCode === KeyCode.ENTER) {
+              triggerSorter({
+                column: column2,
+                key: columnKey,
+                sortOrder: nextSortOrder,
+                multiplePriority: getMultiplePriority(column2)
+              });
+              originOKeyDown === null || originOKeyDown === void 0 ? void 0 : originOKeyDown(event);
+            }
+          };
+          const renderTitle = safeColumnTitle(column2.title, {});
+          const displayTitle = renderTitle === null || renderTitle === void 0 ? void 0 : renderTitle.toString();
+          if (sortOrder) {
+            cell["aria-sort"] = sortOrder === "ascend" ? "ascending" : "descending";
+          } else {
+            cell["aria-label"] = displayTitle || "";
+          }
+          cell.className = classNames(cell.className, `${prefixCls}-column-has-sorters`);
+          cell.tabIndex = 0;
+          if (column2.ellipsis) {
+            cell.title = (renderTitle !== null && renderTitle !== void 0 ? renderTitle : "").toString();
+          }
+          return cell;
+        }
+      });
+    }
+    if ("children" in newColumn) {
+      newColumn = Object.assign(Object.assign({}, newColumn), {
+        children: injectSorter(prefixCls, newColumn.children, sorterStates, triggerSorter, defaultSortDirections, tableLocale, tableShowSorterTooltip, columnPos)
+      });
+    }
+    return newColumn;
+  });
+}
+const stateToInfo = (sorterStates) => {
+  const {
+    column: column2,
+    sortOrder
+  } = sorterStates;
+  return {
+    column: column2,
+    order: sortOrder,
+    field: column2.dataIndex,
+    columnKey: column2.key
+  };
+};
+const generateSorterInfo = (sorterStates) => {
+  const list = sorterStates.filter((_ref2) => {
+    let {
+      sortOrder
+    } = _ref2;
+    return sortOrder;
+  }).map(stateToInfo);
+  if (list.length === 0 && sorterStates.length) {
+    const lastIndex = sorterStates.length - 1;
+    return Object.assign(Object.assign({}, stateToInfo(sorterStates[lastIndex])), {
+      column: void 0
+    });
+  }
+  if (list.length <= 1) {
+    return list[0] || {};
+  }
+  return list;
+};
+function getSortData(data, sortStates, childrenColumnName) {
+  const innerSorterStates = sortStates.slice().sort((a, b2) => b2.multiplePriority - a.multiplePriority);
+  const cloneData = data.slice();
+  const runningSorters = innerSorterStates.filter((_ref3) => {
+    let {
+      column: {
+        sorter
+      },
+      sortOrder
+    } = _ref3;
+    return getSortFunction(sorter) && sortOrder;
+  });
+  if (!runningSorters.length) {
+    return cloneData;
+  }
+  return cloneData.sort((record1, record2) => {
+    for (let i2 = 0; i2 < runningSorters.length; i2 += 1) {
+      const sorterState = runningSorters[i2];
+      const {
+        column: {
+          sorter
+        },
+        sortOrder
+      } = sorterState;
+      const compareFn = getSortFunction(sorter);
+      if (compareFn && sortOrder) {
+        const compareResult = compareFn(record1, record2, sortOrder);
+        if (compareResult !== 0) {
+          return sortOrder === ASCEND ? compareResult : -compareResult;
+        }
+      }
+    }
+    return 0;
+  }).map((record) => {
+    const subRecords = record[childrenColumnName];
+    if (subRecords) {
+      return Object.assign(Object.assign({}, record), {
+        [childrenColumnName]: getSortData(subRecords, sortStates, childrenColumnName)
+      });
+    }
+    return record;
+  });
+}
+function useFilterSorter(_ref4) {
+  let {
+    prefixCls,
+    mergedColumns,
+    onSorterChange,
+    sortDirections,
+    tableLocale,
+    showSorterTooltip
+  } = _ref4;
+  const [sortStates, setSortStates] = reactExports.useState(collectSortStates(mergedColumns, true));
+  const mergedSorterStates = reactExports.useMemo(() => {
+    let validate = true;
+    const collectedStates = collectSortStates(mergedColumns, false);
+    if (!collectedStates.length) {
+      const mergedColumnsKeys = mergedColumns.map((item, index2) => getColumnKey(item, getColumnPos(index2)));
+      return sortStates.filter((_ref5) => {
+        let {
+          key
+        } = _ref5;
+        return mergedColumnsKeys.includes(key);
+      });
+    }
+    const validateStates = [];
+    function patchStates(state) {
+      if (validate) {
+        validateStates.push(state);
+      } else {
+        validateStates.push(Object.assign(Object.assign({}, state), {
+          sortOrder: null
+        }));
+      }
+    }
+    let multipleMode = null;
+    collectedStates.forEach((state) => {
+      if (multipleMode === null) {
+        patchStates(state);
+        if (state.sortOrder) {
+          if (state.multiplePriority === false) {
+            validate = false;
+          } else {
+            multipleMode = true;
+          }
+        }
+      } else if (multipleMode && state.multiplePriority !== false) {
+        patchStates(state);
+      } else {
+        validate = false;
+        patchStates(state);
+      }
+    });
+    return validateStates;
+  }, [mergedColumns, sortStates]);
+  const columnTitleSorterProps = reactExports.useMemo(() => {
+    var _a, _b;
+    const sortColumns = mergedSorterStates.map((_ref6) => {
+      let {
+        column: column2,
+        sortOrder
+      } = _ref6;
+      return {
+        column: column2,
+        order: sortOrder
+      };
+    });
+    return {
+      sortColumns,
+      // Legacy
+      sortColumn: (_a = sortColumns[0]) === null || _a === void 0 ? void 0 : _a.column,
+      sortOrder: (_b = sortColumns[0]) === null || _b === void 0 ? void 0 : _b.order
+    };
+  }, [mergedSorterStates]);
+  const triggerSorter = (sortState) => {
+    let newSorterStates;
+    if (sortState.multiplePriority === false || !mergedSorterStates.length || mergedSorterStates[0].multiplePriority === false) {
+      newSorterStates = [sortState];
+    } else {
+      newSorterStates = [].concat(_toConsumableArray(mergedSorterStates.filter((_ref7) => {
+        let {
+          key
+        } = _ref7;
+        return key !== sortState.key;
+      })), [sortState]);
+    }
+    setSortStates(newSorterStates);
+    onSorterChange(generateSorterInfo(newSorterStates), newSorterStates);
+  };
+  const transformColumns = (innerColumns) => injectSorter(prefixCls, innerColumns, mergedSorterStates, triggerSorter, sortDirections, tableLocale, showSorterTooltip);
+  const getSorters = () => generateSorterInfo(mergedSorterStates);
+  return [transformColumns, mergedSorterStates, columnTitleSorterProps, getSorters];
+}
+function fillTitle(columns2, columnTitleProps) {
+  return columns2.map((column2) => {
+    const cloneColumn = Object.assign({}, column2);
+    cloneColumn.title = renderColumnTitle(column2.title, columnTitleProps);
+    if ("children" in cloneColumn) {
+      cloneColumn.children = fillTitle(cloneColumn.children, columnTitleProps);
+    }
+    return cloneColumn;
+  });
+}
+function useTitleColumns(columnTitleProps) {
+  const filledColumns = reactExports.useCallback((columns2) => fillTitle(columns2, columnTitleProps), [columnTitleProps]);
+  return [filledColumns];
+}
+const RcTable = genTable((prev2, next2) => {
+  const {
+    _renderTimes: prevRenderTimes
+  } = prev2;
+  const {
+    _renderTimes: nextRenderTimes
+  } = next2;
+  return prevRenderTimes !== nextRenderTimes;
+});
+const RcVirtualTable = genVirtualTable((prev2, next2) => {
+  const {
+    _renderTimes: prevRenderTimes
+  } = prev2;
+  const {
+    _renderTimes: nextRenderTimes
+  } = next2;
+  return prevRenderTimes !== nextRenderTimes;
+});
+const genBorderedStyle = (token2) => {
+  const {
+    componentCls,
+    lineWidth,
+    lineType,
+    tableBorderColor,
+    tableHeaderBg,
+    tablePaddingVertical,
+    tablePaddingHorizontal,
+    calc
+  } = token2;
+  const tableBorder = `${unit$1(lineWidth)} ${lineType} ${tableBorderColor}`;
+  const getSizeBorderStyle = (size, paddingVertical, paddingHorizontal) => ({
+    [`&${componentCls}-${size}`]: {
+      [`> ${componentCls}-container`]: {
+        [`> ${componentCls}-content, > ${componentCls}-body`]: {
+          [`
+            > table > tbody > tr > th,
+            > table > tbody > tr > td
+          `]: {
+            [`> ${componentCls}-expanded-row-fixed`]: {
+              margin: `${unit$1(calc(paddingVertical).mul(-1).equal())}
+              ${unit$1(calc(calc(paddingHorizontal).add(lineWidth)).mul(-1).equal())}`
+            }
+          }
+        }
+      }
+    }
+  });
+  return {
+    [`${componentCls}-wrapper`]: {
+      [`${componentCls}${componentCls}-bordered`]: Object.assign(Object.assign(Object.assign({
+        // ============================ Title =============================
+        [`> ${componentCls}-title`]: {
+          border: tableBorder,
+          borderBottom: 0
+        },
+        // ============================ Content ============================
+        [`> ${componentCls}-container`]: {
+          borderInlineStart: tableBorder,
+          borderTop: tableBorder,
+          [`
+            > ${componentCls}-content,
+            > ${componentCls}-header,
+            > ${componentCls}-body,
+            > ${componentCls}-summary
+          `]: {
+            "> table": {
+              // ============================= Cell =============================
+              [`
+                > thead > tr > th,
+                > thead > tr > td,
+                > tbody > tr > th,
+                > tbody > tr > td,
+                > tfoot > tr > th,
+                > tfoot > tr > td
+              `]: {
+                borderInlineEnd: tableBorder
+              },
+              // ============================ Header ============================
+              "> thead": {
+                "> tr:not(:last-child) > th": {
+                  borderBottom: tableBorder
+                },
+                "> tr > th::before": {
+                  backgroundColor: "transparent !important"
+                }
+              },
+              // Fixed right should provides additional border
+              [`
+                > thead > tr,
+                > tbody > tr,
+                > tfoot > tr
+              `]: {
+                [`> ${componentCls}-cell-fix-right-first::after`]: {
+                  borderInlineEnd: tableBorder
+                }
+              },
+              // ========================== Expandable ==========================
+              [`
+                > tbody > tr > th,
+                > tbody > tr > td
+              `]: {
+                [`> ${componentCls}-expanded-row-fixed`]: {
+                  margin: `${unit$1(calc(tablePaddingVertical).mul(-1).equal())} ${unit$1(calc(calc(tablePaddingHorizontal).add(lineWidth)).mul(-1).equal())}`,
+                  "&::after": {
+                    position: "absolute",
+                    top: 0,
+                    insetInlineEnd: lineWidth,
+                    bottom: 0,
+                    borderInlineEnd: tableBorder,
+                    content: '""'
+                  }
+                }
+              }
+            }
+          }
+        },
+        // ============================ Scroll ============================
+        [`&${componentCls}-scroll-horizontal`]: {
+          [`> ${componentCls}-container > ${componentCls}-body`]: {
+            "> table > tbody": {
+              [`
+                > tr${componentCls}-expanded-row,
+                > tr${componentCls}-placeholder
+              `]: {
+                "> th, > td": {
+                  borderInlineEnd: 0
+                }
+              }
+            }
+          }
+        }
+      }, getSizeBorderStyle("middle", token2.tablePaddingVerticalMiddle, token2.tablePaddingHorizontalMiddle)), getSizeBorderStyle("small", token2.tablePaddingVerticalSmall, token2.tablePaddingHorizontalSmall)), {
+        // ============================ Footer ============================
+        [`> ${componentCls}-footer`]: {
+          border: tableBorder,
+          borderTop: 0
+        }
+      }),
+      // ============================ Nested ============================
+      [`${componentCls}-cell`]: {
+        [`${componentCls}-container:first-child`]: {
+          // :first-child to avoid the case when bordered and title is set
+          borderTop: 0
+        },
+        // https://github.com/ant-design/ant-design/issues/35577
+        "&-scrollbar:not([rowspan])": {
+          boxShadow: `0 ${unit$1(lineWidth)} 0 ${unit$1(lineWidth)} ${tableHeaderBg}`
+        }
+      },
+      [`${componentCls}-bordered ${componentCls}-cell-scrollbar`]: {
+        borderInlineEnd: tableBorder
+      }
+    }
+  };
+};
+const genEllipsisStyle = (token2) => {
+  const {
+    componentCls
+  } = token2;
+  return {
+    [`${componentCls}-wrapper`]: {
+      [`${componentCls}-cell-ellipsis`]: Object.assign(Object.assign({}, textEllipsis), {
+        wordBreak: "keep-all",
+        // Fixed first or last should special process
+        [`
+          &${componentCls}-cell-fix-left-last,
+          &${componentCls}-cell-fix-right-first
+        `]: {
+          overflow: "visible",
+          [`${componentCls}-cell-content`]: {
+            display: "block",
+            overflow: "hidden",
+            textOverflow: "ellipsis"
+          }
+        },
+        [`${componentCls}-column-title`]: {
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          wordBreak: "keep-all"
+        }
+      })
+    }
+  };
+};
+const genEmptyStyle = (token2) => {
+  const {
+    componentCls
+  } = token2;
+  return {
+    [`${componentCls}-wrapper`]: {
+      [`${componentCls}-tbody > tr${componentCls}-placeholder`]: {
+        textAlign: "center",
+        color: token2.colorTextDisabled,
+        [`
+          &:hover > th,
+          &:hover > td,
+        `]: {
+          background: token2.colorBgContainer
+        }
+      }
+    }
+  };
+};
+const genExpandStyle = (token2) => {
+  const {
+    componentCls,
+    antCls,
+    motionDurationSlow,
+    lineWidth,
+    paddingXS,
+    lineType,
+    tableBorderColor,
+    tableExpandIconBg,
+    tableExpandColumnWidth,
+    borderRadius,
+    tablePaddingVertical,
+    tablePaddingHorizontal,
+    tableExpandedRowBg,
+    paddingXXS,
+    expandIconMarginTop,
+    expandIconSize,
+    expandIconHalfInner,
+    expandIconScale,
+    calc
+  } = token2;
+  const tableBorder = `${unit$1(lineWidth)} ${lineType} ${tableBorderColor}`;
+  const expandIconLineOffset = calc(paddingXXS).sub(lineWidth).equal();
+  return {
+    [`${componentCls}-wrapper`]: {
+      [`${componentCls}-expand-icon-col`]: {
+        width: tableExpandColumnWidth
+      },
+      [`${componentCls}-row-expand-icon-cell`]: {
+        textAlign: "center",
+        [`${componentCls}-row-expand-icon`]: {
+          display: "inline-flex",
+          float: "none",
+          verticalAlign: "sub"
+        }
+      },
+      [`${componentCls}-row-indent`]: {
+        height: 1,
+        float: "left"
+      },
+      [`${componentCls}-row-expand-icon`]: Object.assign(Object.assign({}, operationUnit(token2)), {
+        position: "relative",
+        float: "left",
+        boxSizing: "border-box",
+        width: expandIconSize,
+        height: expandIconSize,
+        padding: 0,
+        color: "inherit",
+        lineHeight: unit$1(expandIconSize),
+        background: tableExpandIconBg,
+        border: tableBorder,
+        borderRadius,
+        transform: `scale(${expandIconScale})`,
+        transition: `all ${motionDurationSlow}`,
+        userSelect: "none",
+        "&:focus, &:hover, &:active": {
+          borderColor: "currentcolor"
+        },
+        "&::before, &::after": {
+          position: "absolute",
+          background: "currentcolor",
+          transition: `transform ${motionDurationSlow} ease-out`,
+          content: '""'
+        },
+        "&::before": {
+          top: expandIconHalfInner,
+          insetInlineEnd: expandIconLineOffset,
+          insetInlineStart: expandIconLineOffset,
+          height: lineWidth
+        },
+        "&::after": {
+          top: expandIconLineOffset,
+          bottom: expandIconLineOffset,
+          insetInlineStart: expandIconHalfInner,
+          width: lineWidth,
+          transform: "rotate(90deg)"
+        },
+        // Motion effect
+        "&-collapsed::before": {
+          transform: "rotate(-180deg)"
+        },
+        "&-collapsed::after": {
+          transform: "rotate(0deg)"
+        },
+        "&-spaced": {
+          "&::before, &::after": {
+            display: "none",
+            content: "none"
+          },
+          background: "transparent",
+          border: 0,
+          visibility: "hidden"
+        }
+      }),
+      [`${componentCls}-row-indent + ${componentCls}-row-expand-icon`]: {
+        marginTop: expandIconMarginTop,
+        marginInlineEnd: paddingXS
+      },
+      [`tr${componentCls}-expanded-row`]: {
+        "&, &:hover": {
+          "> th, > td": {
+            background: tableExpandedRowBg
+          }
+        },
+        // https://github.com/ant-design/ant-design/issues/25573
+        [`${antCls}-descriptions-view`]: {
+          display: "flex",
+          table: {
+            flex: "auto",
+            width: "100%"
+          }
+        }
+      },
+      // With fixed
+      [`${componentCls}-expanded-row-fixed`]: {
+        position: "relative",
+        margin: `${unit$1(calc(tablePaddingVertical).mul(-1).equal())} ${unit$1(calc(tablePaddingHorizontal).mul(-1).equal())}`,
+        padding: `${unit$1(tablePaddingVertical)} ${unit$1(tablePaddingHorizontal)}`
+      }
+    }
+  };
+};
+const genFilterStyle = (token2) => {
+  const {
+    componentCls,
+    antCls,
+    iconCls,
+    tableFilterDropdownWidth,
+    tableFilterDropdownSearchWidth,
+    paddingXXS,
+    paddingXS,
+    colorText,
+    lineWidth,
+    lineType,
+    tableBorderColor,
+    headerIconColor,
+    fontSizeSM,
+    tablePaddingHorizontal,
+    borderRadius,
+    motionDurationSlow,
+    colorTextDescription,
+    colorPrimary,
+    tableHeaderFilterActiveBg,
+    colorTextDisabled,
+    tableFilterDropdownBg,
+    tableFilterDropdownHeight,
+    controlItemBgHover,
+    controlItemBgActive,
+    boxShadowSecondary,
+    filterDropdownMenuBg,
+    calc
+  } = token2;
+  const dropdownPrefixCls = `${antCls}-dropdown`;
+  const tableFilterDropdownPrefixCls = `${componentCls}-filter-dropdown`;
+  const treePrefixCls = `${antCls}-tree`;
+  const tableBorder = `${unit$1(lineWidth)} ${lineType} ${tableBorderColor}`;
+  return [
+    {
+      [`${componentCls}-wrapper`]: {
+        [`${componentCls}-filter-column`]: {
+          display: "flex",
+          justifyContent: "space-between"
+        },
+        [`${componentCls}-filter-trigger`]: {
+          position: "relative",
+          display: "flex",
+          alignItems: "center",
+          marginBlock: calc(paddingXXS).mul(-1).equal(),
+          marginInline: `${unit$1(paddingXXS)} ${unit$1(calc(tablePaddingHorizontal).div(2).mul(-1).equal())}`,
+          padding: `0 ${unit$1(paddingXXS)}`,
+          color: headerIconColor,
+          fontSize: fontSizeSM,
+          borderRadius,
+          cursor: "pointer",
+          transition: `all ${motionDurationSlow}`,
+          "&:hover": {
+            color: colorTextDescription,
+            background: tableHeaderFilterActiveBg
+          },
+          "&.active": {
+            color: colorPrimary
+          }
+        }
+      }
+    },
+    {
+      // Dropdown
+      [`${antCls}-dropdown`]: {
+        [tableFilterDropdownPrefixCls]: Object.assign(Object.assign({}, resetComponent(token2)), {
+          minWidth: tableFilterDropdownWidth,
+          backgroundColor: tableFilterDropdownBg,
+          borderRadius,
+          boxShadow: boxShadowSecondary,
+          overflow: "hidden",
+          // Reset menu
+          [`${dropdownPrefixCls}-menu`]: {
+            // https://github.com/ant-design/ant-design/issues/4916
+            // https://github.com/ant-design/ant-design/issues/19542
+            maxHeight: tableFilterDropdownHeight,
+            overflowX: "hidden",
+            border: 0,
+            boxShadow: "none",
+            borderRadius: "unset",
+            backgroundColor: filterDropdownMenuBg,
+            "&:empty::after": {
+              display: "block",
+              padding: `${unit$1(paddingXS)} 0`,
+              color: colorTextDisabled,
+              fontSize: fontSizeSM,
+              textAlign: "center",
+              content: '"Not Found"'
+            }
+          },
+          [`${tableFilterDropdownPrefixCls}-tree`]: {
+            paddingBlock: `${unit$1(paddingXS)} 0`,
+            paddingInline: paddingXS,
+            [treePrefixCls]: {
+              padding: 0
+            },
+            [`${treePrefixCls}-treenode ${treePrefixCls}-node-content-wrapper:hover`]: {
+              backgroundColor: controlItemBgHover
+            },
+            [`${treePrefixCls}-treenode-checkbox-checked ${treePrefixCls}-node-content-wrapper`]: {
+              "&, &:hover": {
+                backgroundColor: controlItemBgActive
+              }
+            }
+          },
+          [`${tableFilterDropdownPrefixCls}-search`]: {
+            padding: paddingXS,
+            borderBottom: tableBorder,
+            "&-input": {
+              input: {
+                minWidth: tableFilterDropdownSearchWidth
+              },
+              [iconCls]: {
+                color: colorTextDisabled
+              }
+            }
+          },
+          [`${tableFilterDropdownPrefixCls}-checkall`]: {
+            width: "100%",
+            marginBottom: paddingXXS,
+            marginInlineStart: paddingXXS
+          },
+          // Operation
+          [`${tableFilterDropdownPrefixCls}-btns`]: {
+            display: "flex",
+            justifyContent: "space-between",
+            padding: `${unit$1(calc(paddingXS).sub(lineWidth).equal())} ${unit$1(paddingXS)}`,
+            overflow: "hidden",
+            borderTop: tableBorder
+          }
+        })
+      }
+    },
+    // Dropdown Menu & SubMenu
+    {
+      // submenu of table filter dropdown
+      [`${antCls}-dropdown ${tableFilterDropdownPrefixCls}, ${tableFilterDropdownPrefixCls}-submenu`]: {
+        // Checkbox
+        [`${antCls}-checkbox-wrapper + span`]: {
+          paddingInlineStart: paddingXS,
+          color: colorText
+        },
+        "> ul": {
+          maxHeight: "calc(100vh - 130px)",
+          overflowX: "hidden",
+          overflowY: "auto"
+        }
+      }
+    }
+  ];
+};
+const genFixedStyle = (token2) => {
+  const {
+    componentCls,
+    lineWidth,
+    colorSplit,
+    motionDurationSlow,
+    zIndexTableFixed,
+    tableBg,
+    zIndexTableSticky,
+    calc
+  } = token2;
+  const shadowColor = colorSplit;
+  return {
+    [`${componentCls}-wrapper`]: {
+      [`
+        ${componentCls}-cell-fix-left,
+        ${componentCls}-cell-fix-right
+      `]: {
+        position: "sticky !important",
+        zIndex: zIndexTableFixed,
+        background: tableBg
+      },
+      [`
+        ${componentCls}-cell-fix-left-first::after,
+        ${componentCls}-cell-fix-left-last::after
+      `]: {
+        position: "absolute",
+        top: 0,
+        right: {
+          _skip_check_: true,
+          value: 0
+        },
+        bottom: calc(lineWidth).mul(-1).equal(),
+        width: 30,
+        transform: "translateX(100%)",
+        transition: `box-shadow ${motionDurationSlow}`,
+        content: '""',
+        pointerEvents: "none"
+      },
+      [`${componentCls}-cell-fix-left-all::after`]: {
+        display: "none"
+      },
+      [`
+        ${componentCls}-cell-fix-right-first::after,
+        ${componentCls}-cell-fix-right-last::after
+      `]: {
+        position: "absolute",
+        top: 0,
+        bottom: calc(lineWidth).mul(-1).equal(),
+        left: {
+          _skip_check_: true,
+          value: 0
+        },
+        width: 30,
+        transform: "translateX(-100%)",
+        transition: `box-shadow ${motionDurationSlow}`,
+        content: '""',
+        pointerEvents: "none"
+      },
+      [`${componentCls}-container`]: {
+        position: "relative",
+        "&::before, &::after": {
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          zIndex: calc(zIndexTableSticky).add(1).equal({
+            unit: false
+          }),
+          width: 30,
+          transition: `box-shadow ${motionDurationSlow}`,
+          content: '""',
+          pointerEvents: "none"
+        },
+        "&::before": {
+          insetInlineStart: 0
+        },
+        "&::after": {
+          insetInlineEnd: 0
+        }
+      },
+      [`${componentCls}-ping-left`]: {
+        [`&:not(${componentCls}-has-fix-left) ${componentCls}-container::before`]: {
+          boxShadow: `inset 10px 0 8px -8px ${shadowColor}`
+        },
+        [`
+          ${componentCls}-cell-fix-left-first::after,
+          ${componentCls}-cell-fix-left-last::after
+        `]: {
+          boxShadow: `inset 10px 0 8px -8px ${shadowColor}`
+        },
+        [`${componentCls}-cell-fix-left-last::before`]: {
+          backgroundColor: "transparent !important"
+        }
+      },
+      [`${componentCls}-ping-right`]: {
+        [`&:not(${componentCls}-has-fix-right) ${componentCls}-container::after`]: {
+          boxShadow: `inset -10px 0 8px -8px ${shadowColor}`
+        },
+        [`
+          ${componentCls}-cell-fix-right-first::after,
+          ${componentCls}-cell-fix-right-last::after
+        `]: {
+          boxShadow: `inset -10px 0 8px -8px ${shadowColor}`
+        }
+      },
+      // Gapped fixed Columns do not show the shadow
+      [`${componentCls}-fixed-column-gapped`]: {
+        [`
+        ${componentCls}-cell-fix-left-first::after,
+        ${componentCls}-cell-fix-left-last::after,
+        ${componentCls}-cell-fix-right-first::after,
+        ${componentCls}-cell-fix-right-last::after
+      `]: {
+          boxShadow: "none"
+        }
+      }
+    }
+  };
+};
+const genPaginationStyle = (token2) => {
+  const {
+    componentCls,
+    antCls,
+    margin
+  } = token2;
+  return {
+    [`${componentCls}-wrapper`]: {
+      // ========================== Pagination ==========================
+      [`${componentCls}-pagination${antCls}-pagination`]: {
+        margin: `${unit$1(margin)} 0`
+      },
+      [`${componentCls}-pagination`]: {
+        display: "flex",
+        flexWrap: "wrap",
+        rowGap: token2.paddingXS,
+        "> *": {
+          flex: "none"
+        },
+        "&-left": {
+          justifyContent: "flex-start"
+        },
+        "&-center": {
+          justifyContent: "center"
+        },
+        "&-right": {
+          justifyContent: "flex-end"
+        }
+      }
+    }
+  };
+};
+const genRadiusStyle = (token2) => {
+  const {
+    componentCls,
+    tableRadius
+  } = token2;
+  return {
+    [`${componentCls}-wrapper`]: {
+      [componentCls]: {
+        // https://github.com/ant-design/ant-design/issues/39115#issuecomment-1362314574
+        [`${componentCls}-title, ${componentCls}-header`]: {
+          borderRadius: `${unit$1(tableRadius)} ${unit$1(tableRadius)} 0 0`
+        },
+        [`${componentCls}-title + ${componentCls}-container`]: {
+          borderStartStartRadius: 0,
+          borderStartEndRadius: 0,
+          // https://github.com/ant-design/ant-design/issues/41975
+          [`${componentCls}-header, table`]: {
+            borderRadius: 0
+          },
+          "table > thead > tr:first-child": {
+            "th:first-child, th:last-child, td:first-child, td:last-child": {
+              borderRadius: 0
+            }
+          }
+        },
+        "&-container": {
+          borderStartStartRadius: tableRadius,
+          borderStartEndRadius: tableRadius,
+          "table > thead > tr:first-child": {
+            "> *:first-child": {
+              borderStartStartRadius: tableRadius
+            },
+            "> *:last-child": {
+              borderStartEndRadius: tableRadius
+            }
+          }
+        },
+        "&-footer": {
+          borderRadius: `0 0 ${unit$1(tableRadius)} ${unit$1(tableRadius)}`
+        }
+      }
+    }
+  };
+};
+const genStyle = (token2) => {
+  const {
+    componentCls
+  } = token2;
+  return {
+    [`${componentCls}-wrapper-rtl`]: {
+      direction: "rtl",
+      table: {
+        direction: "rtl"
+      },
+      [`${componentCls}-pagination-left`]: {
+        justifyContent: "flex-end"
+      },
+      [`${componentCls}-pagination-right`]: {
+        justifyContent: "flex-start"
+      },
+      [`${componentCls}-row-expand-icon`]: {
+        float: "right",
+        "&::after": {
+          transform: "rotate(-90deg)"
+        },
+        "&-collapsed::before": {
+          transform: "rotate(180deg)"
+        },
+        "&-collapsed::after": {
+          transform: "rotate(0deg)"
+        }
+      },
+      [`${componentCls}-container`]: {
+        "&::before": {
+          insetInlineStart: "unset",
+          insetInlineEnd: 0
+        },
+        "&::after": {
+          insetInlineStart: 0,
+          insetInlineEnd: "unset"
+        },
+        [`${componentCls}-row-indent`]: {
+          float: "right"
+        }
+      }
+    }
+  };
+};
+const genSelectionStyle = (token2) => {
+  const {
+    componentCls,
+    antCls,
+    iconCls,
+    fontSizeIcon,
+    padding,
+    paddingXS,
+    headerIconColor,
+    headerIconHoverColor,
+    tableSelectionColumnWidth,
+    tableSelectedRowBg,
+    tableSelectedRowHoverBg,
+    tableRowHoverBg,
+    tablePaddingHorizontal,
+    calc
+  } = token2;
+  return {
+    [`${componentCls}-wrapper`]: {
+      // ========================== Selections ==========================
+      [`${componentCls}-selection-col`]: {
+        width: tableSelectionColumnWidth,
+        [`&${componentCls}-selection-col-with-dropdown`]: {
+          width: calc(tableSelectionColumnWidth).add(fontSizeIcon).add(calc(padding).div(4)).equal()
+        }
+      },
+      [`${componentCls}-bordered ${componentCls}-selection-col`]: {
+        width: calc(tableSelectionColumnWidth).add(calc(paddingXS).mul(2)).equal(),
+        [`&${componentCls}-selection-col-with-dropdown`]: {
+          width: calc(tableSelectionColumnWidth).add(fontSizeIcon).add(calc(padding).div(4)).add(calc(paddingXS).mul(2)).equal()
+        }
+      },
+      [`
+        table tr th${componentCls}-selection-column,
+        table tr td${componentCls}-selection-column,
+        ${componentCls}-selection-column
+      `]: {
+        paddingInlineEnd: token2.paddingXS,
+        paddingInlineStart: token2.paddingXS,
+        textAlign: "center",
+        [`${antCls}-radio-wrapper`]: {
+          marginInlineEnd: 0
+        }
+      },
+      [`table tr th${componentCls}-selection-column${componentCls}-cell-fix-left`]: {
+        zIndex: token2.zIndexTableFixed + 1
+      },
+      [`table tr th${componentCls}-selection-column::after`]: {
+        backgroundColor: "transparent !important"
+      },
+      [`${componentCls}-selection`]: {
+        position: "relative",
+        display: "inline-flex",
+        flexDirection: "column"
+      },
+      [`${componentCls}-selection-extra`]: {
+        position: "absolute",
+        top: 0,
+        zIndex: 1,
+        cursor: "pointer",
+        transition: `all ${token2.motionDurationSlow}`,
+        marginInlineStart: "100%",
+        paddingInlineStart: unit$1(calc(tablePaddingHorizontal).div(4).equal()),
+        [iconCls]: {
+          color: headerIconColor,
+          fontSize: fontSizeIcon,
+          verticalAlign: "baseline",
+          "&:hover": {
+            color: headerIconHoverColor
+          }
+        }
+      },
+      // ============================= Rows =============================
+      [`${componentCls}-tbody`]: {
+        [`${componentCls}-row`]: {
+          [`&${componentCls}-row-selected`]: {
+            [`> ${componentCls}-cell`]: {
+              background: tableSelectedRowBg,
+              "&-row-hover": {
+                background: tableSelectedRowHoverBg
+              }
+            }
+          },
+          [`> ${componentCls}-cell-row-hover`]: {
+            background: tableRowHoverBg
+          }
+        }
+      }
+    }
+  };
+};
+const genSizeStyle = (token2) => {
+  const {
+    componentCls,
+    tableExpandColumnWidth,
+    calc
+  } = token2;
+  const getSizeStyle = (size, paddingVertical, paddingHorizontal, fontSize) => ({
+    [`${componentCls}${componentCls}-${size}`]: {
+      fontSize,
+      [`
+        ${componentCls}-title,
+        ${componentCls}-footer,
+        ${componentCls}-cell,
+        ${componentCls}-thead > tr > th,
+        ${componentCls}-tbody > tr > th,
+        ${componentCls}-tbody > tr > td,
+        tfoot > tr > th,
+        tfoot > tr > td
+      `]: {
+        padding: `${unit$1(paddingVertical)} ${unit$1(paddingHorizontal)}`
+      },
+      [`${componentCls}-filter-trigger`]: {
+        marginInlineEnd: unit$1(calc(paddingHorizontal).div(2).mul(-1).equal())
+      },
+      [`${componentCls}-expanded-row-fixed`]: {
+        margin: `${unit$1(calc(paddingVertical).mul(-1).equal())} ${unit$1(calc(paddingHorizontal).mul(-1).equal())}`
+      },
+      [`${componentCls}-tbody`]: {
+        // ========================= Nest Table ===========================
+        [`${componentCls}-wrapper:only-child ${componentCls}`]: {
+          marginBlock: unit$1(calc(paddingVertical).mul(-1).equal()),
+          marginInline: `${unit$1(calc(tableExpandColumnWidth).sub(paddingHorizontal).equal())} ${unit$1(calc(paddingHorizontal).mul(-1).equal())}`
+        }
+      },
+      // https://github.com/ant-design/ant-design/issues/35167
+      [`${componentCls}-selection-extra`]: {
+        paddingInlineStart: unit$1(calc(paddingHorizontal).div(4).equal())
+      }
+    }
+  });
+  return {
+    [`${componentCls}-wrapper`]: Object.assign(Object.assign({}, getSizeStyle("middle", token2.tablePaddingVerticalMiddle, token2.tablePaddingHorizontalMiddle, token2.tableFontSizeMiddle)), getSizeStyle("small", token2.tablePaddingVerticalSmall, token2.tablePaddingHorizontalSmall, token2.tableFontSizeSmall))
+  };
+};
+const genSorterStyle = (token2) => {
+  const {
+    componentCls,
+    marginXXS,
+    fontSizeIcon,
+    headerIconColor,
+    headerIconHoverColor
+  } = token2;
+  return {
+    [`${componentCls}-wrapper`]: {
+      [`${componentCls}-thead th${componentCls}-column-has-sorters`]: {
+        outline: "none",
+        cursor: "pointer",
+        transition: `all ${token2.motionDurationSlow}`,
+        "&:hover": {
+          background: token2.tableHeaderSortHoverBg,
+          "&::before": {
+            backgroundColor: "transparent !important"
+          }
+        },
+        "&:focus-visible": {
+          color: token2.colorPrimary
+        },
+        // https://github.com/ant-design/ant-design/issues/30969
+        [`
+          &${componentCls}-cell-fix-left:hover,
+          &${componentCls}-cell-fix-right:hover
+        `]: {
+          background: token2.tableFixedHeaderSortActiveBg
+        }
+      },
+      [`${componentCls}-thead th${componentCls}-column-sort`]: {
+        background: token2.tableHeaderSortBg,
+        "&::before": {
+          backgroundColor: "transparent !important"
+        }
+      },
+      [`td${componentCls}-column-sort`]: {
+        background: token2.tableBodySortBg
+      },
+      [`${componentCls}-column-title`]: {
+        position: "relative",
+        zIndex: 1,
+        flex: 1
+      },
+      [`${componentCls}-column-sorters`]: {
+        display: "flex",
+        flex: "auto",
+        alignItems: "center",
+        justifyContent: "space-between",
+        "&::after": {
+          position: "absolute",
+          inset: 0,
+          width: "100%",
+          height: "100%",
+          content: '""'
+        }
+      },
+      [`${componentCls}-column-sorters-tooltip-target-sorter`]: {
+        "&::after": {
+          content: "none"
+        }
+      },
+      [`${componentCls}-column-sorter`]: {
+        marginInlineStart: marginXXS,
+        color: headerIconColor,
+        fontSize: 0,
+        transition: `color ${token2.motionDurationSlow}`,
+        "&-inner": {
+          display: "inline-flex",
+          flexDirection: "column",
+          alignItems: "center"
+        },
+        "&-up, &-down": {
+          fontSize: fontSizeIcon,
+          "&.active": {
+            color: token2.colorPrimary
+          }
+        },
+        [`${componentCls}-column-sorter-up + ${componentCls}-column-sorter-down`]: {
+          marginTop: "-0.3em"
+        }
+      },
+      [`${componentCls}-column-sorters:hover ${componentCls}-column-sorter`]: {
+        color: headerIconHoverColor
+      }
+    }
+  };
+};
+const genStickyStyle = (token2) => {
+  const {
+    componentCls,
+    opacityLoading,
+    tableScrollThumbBg,
+    tableScrollThumbBgHover,
+    tableScrollThumbSize,
+    tableScrollBg,
+    zIndexTableSticky,
+    stickyScrollBarBorderRadius,
+    lineWidth,
+    lineType,
+    tableBorderColor
+  } = token2;
+  const tableBorder = `${unit$1(lineWidth)} ${lineType} ${tableBorderColor}`;
+  return {
+    [`${componentCls}-wrapper`]: {
+      [`${componentCls}-sticky`]: {
+        "&-holder": {
+          position: "sticky",
+          zIndex: zIndexTableSticky,
+          background: token2.colorBgContainer
+        },
+        "&-scroll": {
+          position: "sticky",
+          bottom: 0,
+          height: `${unit$1(tableScrollThumbSize)} !important`,
+          zIndex: zIndexTableSticky,
+          display: "flex",
+          alignItems: "center",
+          background: tableScrollBg,
+          borderTop: tableBorder,
+          opacity: opacityLoading,
+          "&:hover": {
+            transformOrigin: "center bottom"
+          },
+          // fake scrollbar style of sticky
+          "&-bar": {
+            height: tableScrollThumbSize,
+            backgroundColor: tableScrollThumbBg,
+            borderRadius: stickyScrollBarBorderRadius,
+            transition: `all ${token2.motionDurationSlow}, transform none`,
+            position: "absolute",
+            bottom: 0,
+            "&:hover, &-active": {
+              backgroundColor: tableScrollThumbBgHover
+            }
+          }
+        }
+      }
+    }
+  };
+};
+const genSummaryStyle = (token2) => {
+  const {
+    componentCls,
+    lineWidth,
+    tableBorderColor,
+    calc
+  } = token2;
+  const tableBorder = `${unit$1(lineWidth)} ${token2.lineType} ${tableBorderColor}`;
+  return {
+    [`${componentCls}-wrapper`]: {
+      [`${componentCls}-summary`]: {
+        position: "relative",
+        zIndex: token2.zIndexTableFixed,
+        background: token2.tableBg,
+        "> tr": {
+          "> th, > td": {
+            borderBottom: tableBorder
+          }
+        }
+      },
+      [`div${componentCls}-summary`]: {
+        boxShadow: `0 ${unit$1(calc(lineWidth).mul(-1).equal())} 0 ${tableBorderColor}`
+      }
+    }
+  };
+};
+const genVirtualStyle = (token2) => {
+  const {
+    componentCls,
+    motionDurationMid,
+    lineWidth,
+    lineType,
+    tableBorderColor,
+    calc
+  } = token2;
+  const tableBorder = `${unit$1(lineWidth)} ${lineType} ${tableBorderColor}`;
+  const rowCellCls = `${componentCls}-expanded-row-cell`;
+  return {
+    [`${componentCls}-wrapper`]: {
+      // ========================== Row ==========================
+      [`${componentCls}-tbody-virtual`]: {
+        [`${componentCls}-row:not(tr)`]: {
+          display: "flex",
+          boxSizing: "border-box",
+          width: "100%"
+        },
+        [`${componentCls}-cell`]: {
+          borderBottom: tableBorder,
+          transition: `background ${motionDurationMid}`
+        },
+        [`${componentCls}-expanded-row`]: {
+          [`${rowCellCls}${rowCellCls}-fixed`]: {
+            position: "sticky",
+            insetInlineStart: 0,
+            overflow: "hidden",
+            width: `calc(var(--virtual-width) - ${unit$1(lineWidth)})`,
+            borderInlineEnd: "none"
+          }
+        }
+      },
+      // ======================== Border =========================
+      [`${componentCls}-bordered`]: {
+        [`${componentCls}-tbody-virtual`]: {
+          "&:after": {
+            content: '""',
+            insetInline: 0,
+            bottom: 0,
+            borderBottom: tableBorder,
+            position: "absolute"
+          },
+          [`${componentCls}-cell`]: {
+            borderInlineEnd: tableBorder,
+            [`&${componentCls}-cell-fix-right-first:before`]: {
+              content: '""',
+              position: "absolute",
+              insetBlock: 0,
+              insetInlineStart: calc(lineWidth).mul(-1).equal(),
+              borderInlineStart: tableBorder
+            }
+          }
+        },
+        // Empty placeholder
+        [`&${componentCls}-virtual`]: {
+          [`${componentCls}-placeholder ${componentCls}-cell`]: {
+            borderInlineEnd: tableBorder,
+            borderBottom: tableBorder
+          }
+        }
+      }
+    }
+  };
+};
+const genTableStyle = (token2) => {
+  const {
+    componentCls,
+    fontWeightStrong,
+    tablePaddingVertical,
+    tablePaddingHorizontal,
+    tableExpandColumnWidth,
+    lineWidth,
+    lineType,
+    tableBorderColor,
+    tableFontSize,
+    tableBg,
+    tableRadius,
+    tableHeaderTextColor,
+    motionDurationMid,
+    tableHeaderBg,
+    tableHeaderCellSplitColor,
+    tableFooterTextColor,
+    tableFooterBg,
+    calc
+  } = token2;
+  const tableBorder = `${unit$1(lineWidth)} ${lineType} ${tableBorderColor}`;
+  return {
+    [`${componentCls}-wrapper`]: Object.assign(Object.assign({
+      clear: "both",
+      maxWidth: "100%"
+    }, clearFix()), {
+      [componentCls]: Object.assign(Object.assign({}, resetComponent(token2)), {
+        fontSize: tableFontSize,
+        background: tableBg,
+        borderRadius: `${unit$1(tableRadius)} ${unit$1(tableRadius)} 0 0`,
+        // https://github.com/ant-design/ant-design/issues/47486
+        scrollbarColor: `${token2.tableScrollThumbBg} ${token2.tableScrollBg}`
+      }),
+      // https://github.com/ant-design/ant-design/issues/17611
+      table: {
+        width: "100%",
+        textAlign: "start",
+        borderRadius: `${unit$1(tableRadius)} ${unit$1(tableRadius)} 0 0`,
+        borderCollapse: "separate",
+        borderSpacing: 0
+      },
+      // ============================= Cell ==============================
+      [`
+          ${componentCls}-cell,
+          ${componentCls}-thead > tr > th,
+          ${componentCls}-tbody > tr > th,
+          ${componentCls}-tbody > tr > td,
+          tfoot > tr > th,
+          tfoot > tr > td
+        `]: {
+        position: "relative",
+        padding: `${unit$1(tablePaddingVertical)} ${unit$1(tablePaddingHorizontal)}`,
+        overflowWrap: "break-word"
+      },
+      // ============================ Title =============================
+      [`${componentCls}-title`]: {
+        padding: `${unit$1(tablePaddingVertical)} ${unit$1(tablePaddingHorizontal)}`
+      },
+      // ============================ Header ============================
+      [`${componentCls}-thead`]: {
+        [`
+          > tr > th,
+          > tr > td
+        `]: {
+          position: "relative",
+          color: tableHeaderTextColor,
+          fontWeight: fontWeightStrong,
+          textAlign: "start",
+          background: tableHeaderBg,
+          borderBottom: tableBorder,
+          transition: `background ${motionDurationMid} ease`,
+          "&[colspan]:not([colspan='1'])": {
+            textAlign: "center"
+          },
+          [`&:not(:last-child):not(${componentCls}-selection-column):not(${componentCls}-row-expand-icon-cell):not([colspan])::before`]: {
+            position: "absolute",
+            top: "50%",
+            insetInlineEnd: 0,
+            width: 1,
+            height: "1.6em",
+            backgroundColor: tableHeaderCellSplitColor,
+            transform: "translateY(-50%)",
+            transition: `background-color ${motionDurationMid}`,
+            content: '""'
+          }
+        },
+        "> tr:not(:last-child) > th[colspan]": {
+          borderBottom: 0
+        }
+      },
+      // ============================ Body ============================
+      [`${componentCls}-tbody`]: {
+        "> tr": {
+          "> th, > td": {
+            transition: `background ${motionDurationMid}, border-color ${motionDurationMid}`,
+            borderBottom: tableBorder,
+            // ========================= Nest Table ===========================
+            [`
+              > ${componentCls}-wrapper:only-child,
+              > ${componentCls}-expanded-row-fixed > ${componentCls}-wrapper:only-child
+            `]: {
+              [componentCls]: {
+                marginBlock: unit$1(calc(tablePaddingVertical).mul(-1).equal()),
+                marginInline: `${unit$1(calc(tableExpandColumnWidth).sub(tablePaddingHorizontal).equal())}
+                ${unit$1(calc(tablePaddingHorizontal).mul(-1).equal())}`,
+                [`${componentCls}-tbody > tr:last-child > td`]: {
+                  borderBottom: 0,
+                  "&:first-child, &:last-child": {
+                    borderRadius: 0
+                  }
+                }
+              }
+            }
+          },
+          "> th": {
+            position: "relative",
+            color: tableHeaderTextColor,
+            fontWeight: fontWeightStrong,
+            textAlign: "start",
+            background: tableHeaderBg,
+            borderBottom: tableBorder,
+            transition: `background ${motionDurationMid} ease`
+          }
+        }
+      },
+      // ============================ Footer ============================
+      [`${componentCls}-footer`]: {
+        padding: `${unit$1(tablePaddingVertical)} ${unit$1(tablePaddingHorizontal)}`,
+        color: tableFooterTextColor,
+        background: tableFooterBg
+      }
+    })
+  };
+};
+const prepareComponentToken = (token2) => {
+  const {
+    colorFillAlter,
+    colorBgContainer,
+    colorTextHeading,
+    colorFillSecondary,
+    colorFillContent,
+    controlItemBgActive,
+    controlItemBgActiveHover,
+    padding,
+    paddingSM,
+    paddingXS,
+    colorBorderSecondary,
+    borderRadiusLG,
+    controlHeight,
+    colorTextPlaceholder,
+    fontSize,
+    fontSizeSM,
+    lineHeight,
+    lineWidth,
+    colorIcon,
+    colorIconHover,
+    opacityLoading,
+    controlInteractiveSize
+  } = token2;
+  const colorFillSecondarySolid = new TinyColor(colorFillSecondary).onBackground(colorBgContainer).toHexShortString();
+  const colorFillContentSolid = new TinyColor(colorFillContent).onBackground(colorBgContainer).toHexShortString();
+  const colorFillAlterSolid = new TinyColor(colorFillAlter).onBackground(colorBgContainer).toHexShortString();
+  const baseColorAction = new TinyColor(colorIcon);
+  const baseColorActionHover = new TinyColor(colorIconHover);
+  const expandIconHalfInner = controlInteractiveSize / 2 - lineWidth;
+  const expandIconSize = expandIconHalfInner * 2 + lineWidth * 3;
+  return {
+    headerBg: colorFillAlterSolid,
+    headerColor: colorTextHeading,
+    headerSortActiveBg: colorFillSecondarySolid,
+    headerSortHoverBg: colorFillContentSolid,
+    bodySortBg: colorFillAlterSolid,
+    rowHoverBg: colorFillAlterSolid,
+    rowSelectedBg: controlItemBgActive,
+    rowSelectedHoverBg: controlItemBgActiveHover,
+    rowExpandedBg: colorFillAlter,
+    cellPaddingBlock: padding,
+    cellPaddingInline: padding,
+    cellPaddingBlockMD: paddingSM,
+    cellPaddingInlineMD: paddingXS,
+    cellPaddingBlockSM: paddingXS,
+    cellPaddingInlineSM: paddingXS,
+    borderColor: colorBorderSecondary,
+    headerBorderRadius: borderRadiusLG,
+    footerBg: colorFillAlterSolid,
+    footerColor: colorTextHeading,
+    cellFontSize: fontSize,
+    cellFontSizeMD: fontSize,
+    cellFontSizeSM: fontSize,
+    headerSplitColor: colorBorderSecondary,
+    fixedHeaderSortActiveBg: colorFillSecondarySolid,
+    headerFilterHoverBg: colorFillContent,
+    filterDropdownMenuBg: colorBgContainer,
+    filterDropdownBg: colorBgContainer,
+    expandIconBg: colorBgContainer,
+    selectionColumnWidth: controlHeight,
+    stickyScrollBarBg: colorTextPlaceholder,
+    stickyScrollBarBorderRadius: 100,
+    expandIconMarginTop: (fontSize * lineHeight - lineWidth * 3) / 2 - Math.ceil((fontSizeSM * 1.4 - lineWidth * 3) / 2),
+    headerIconColor: baseColorAction.clone().setAlpha(baseColorAction.getAlpha() * opacityLoading).toRgbString(),
+    headerIconHoverColor: baseColorActionHover.clone().setAlpha(baseColorActionHover.getAlpha() * opacityLoading).toRgbString(),
+    expandIconHalfInner,
+    expandIconSize,
+    expandIconScale: controlInteractiveSize / expandIconSize
+  };
+};
+const useStyle = genStyleHooks("Table", (token2) => {
+  const {
+    colorTextHeading,
+    colorSplit,
+    colorBgContainer,
+    controlInteractiveSize: checkboxSize,
+    headerBg,
+    headerColor,
+    headerSortActiveBg,
+    headerSortHoverBg,
+    bodySortBg,
+    rowHoverBg,
+    rowSelectedBg,
+    rowSelectedHoverBg,
+    rowExpandedBg,
+    cellPaddingBlock,
+    cellPaddingInline,
+    cellPaddingBlockMD,
+    cellPaddingInlineMD,
+    cellPaddingBlockSM,
+    cellPaddingInlineSM,
+    borderColor,
+    footerBg,
+    footerColor,
+    headerBorderRadius,
+    cellFontSize,
+    cellFontSizeMD,
+    cellFontSizeSM,
+    headerSplitColor,
+    fixedHeaderSortActiveBg,
+    headerFilterHoverBg,
+    filterDropdownBg,
+    expandIconBg,
+    selectionColumnWidth,
+    stickyScrollBarBg,
+    calc
+  } = token2;
+  const zIndexTableFixed = 2;
+  const tableToken = merge(token2, {
+    tableFontSize: cellFontSize,
+    tableBg: colorBgContainer,
+    tableRadius: headerBorderRadius,
+    tablePaddingVertical: cellPaddingBlock,
+    tablePaddingHorizontal: cellPaddingInline,
+    tablePaddingVerticalMiddle: cellPaddingBlockMD,
+    tablePaddingHorizontalMiddle: cellPaddingInlineMD,
+    tablePaddingVerticalSmall: cellPaddingBlockSM,
+    tablePaddingHorizontalSmall: cellPaddingInlineSM,
+    tableBorderColor: borderColor,
+    tableHeaderTextColor: headerColor,
+    tableHeaderBg: headerBg,
+    tableFooterTextColor: footerColor,
+    tableFooterBg: footerBg,
+    tableHeaderCellSplitColor: headerSplitColor,
+    tableHeaderSortBg: headerSortActiveBg,
+    tableHeaderSortHoverBg: headerSortHoverBg,
+    tableBodySortBg: bodySortBg,
+    tableFixedHeaderSortActiveBg: fixedHeaderSortActiveBg,
+    tableHeaderFilterActiveBg: headerFilterHoverBg,
+    tableFilterDropdownBg: filterDropdownBg,
+    tableRowHoverBg: rowHoverBg,
+    tableSelectedRowBg: rowSelectedBg,
+    tableSelectedRowHoverBg: rowSelectedHoverBg,
+    zIndexTableFixed,
+    zIndexTableSticky: zIndexTableFixed + 1,
+    tableFontSizeMiddle: cellFontSizeMD,
+    tableFontSizeSmall: cellFontSizeSM,
+    tableSelectionColumnWidth: selectionColumnWidth,
+    tableExpandIconBg: expandIconBg,
+    tableExpandColumnWidth: calc(checkboxSize).add(calc(token2.padding).mul(2)).equal(),
+    tableExpandedRowBg: rowExpandedBg,
+    // Dropdown
+    tableFilterDropdownWidth: 120,
+    tableFilterDropdownHeight: 264,
+    tableFilterDropdownSearchWidth: 140,
+    // Virtual Scroll Bar
+    tableScrollThumbSize: 8,
+    // Mac scroll bar size
+    tableScrollThumbBg: stickyScrollBarBg,
+    tableScrollThumbBgHover: colorTextHeading,
+    tableScrollBg: colorSplit
+  });
+  return [genTableStyle(tableToken), genPaginationStyle(tableToken), genSummaryStyle(tableToken), genSorterStyle(tableToken), genFilterStyle(tableToken), genBorderedStyle(tableToken), genRadiusStyle(tableToken), genExpandStyle(tableToken), genSummaryStyle(tableToken), genEmptyStyle(tableToken), genSelectionStyle(tableToken), genFixedStyle(tableToken), genStickyStyle(tableToken), genEllipsisStyle(tableToken), genSizeStyle(tableToken), genStyle(tableToken), genVirtualStyle(tableToken)];
+}, prepareComponentToken, {
+  unitless: {
+    expandIconScale: true
+  }
+});
+const EMPTY_LIST = [];
+const InternalTable = (props, ref) => {
+  var _a, _b;
+  const {
+    prefixCls: customizePrefixCls,
+    className,
+    rootClassName,
+    style: style2,
+    size: customizeSize,
+    bordered,
+    dropdownPrefixCls: customizeDropdownPrefixCls,
+    dataSource,
+    pagination,
+    rowSelection,
+    rowKey = "key",
+    rowClassName,
+    columns: columns2,
+    children,
+    childrenColumnName: legacyChildrenColumnName,
+    onChange,
+    getPopupContainer,
+    loading,
+    expandIcon,
+    expandable,
+    expandedRowRender,
+    expandIconColumnIndex,
+    indentSize,
+    scroll,
+    sortDirections,
+    locale: locale2,
+    showSorterTooltip = {
+      target: "full-header"
+    },
+    virtual
+  } = props;
+  devUseWarning();
+  const baseColumns = reactExports.useMemo(() => columns2 || convertChildrenToColumns(children), [columns2, children]);
+  const needResponsive = reactExports.useMemo(() => baseColumns.some((col) => col.responsive), [baseColumns]);
+  const screens = useBreakpoint(needResponsive);
+  const mergedColumns = reactExports.useMemo(() => {
+    const matched = new Set(Object.keys(screens).filter((m2) => screens[m2]));
+    return baseColumns.filter((c2) => !c2.responsive || c2.responsive.some((r2) => matched.has(r2)));
+  }, [baseColumns, screens]);
+  const tableProps = omit(props, ["className", "style", "columns"]);
+  const {
+    locale: contextLocale = localeValues,
+    direction,
+    table,
+    renderEmpty,
+    getPrefixCls,
+    getPopupContainer: getContextPopupContainer
+  } = reactExports.useContext(ConfigContext);
+  const mergedSize = useSize(customizeSize);
+  const tableLocale = Object.assign(Object.assign({}, contextLocale.Table), locale2);
+  const rawData = dataSource || EMPTY_LIST;
+  const prefixCls = getPrefixCls("table", customizePrefixCls);
+  const dropdownPrefixCls = getPrefixCls("dropdown", customizeDropdownPrefixCls);
+  const [, token2] = useToken();
+  const rootCls = useCSSVarCls(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle(prefixCls, rootCls);
+  const mergedExpandable = Object.assign(Object.assign({
+    childrenColumnName: legacyChildrenColumnName,
+    expandIconColumnIndex
+  }, expandable), {
+    expandIcon: (_a = expandable === null || expandable === void 0 ? void 0 : expandable.expandIcon) !== null && _a !== void 0 ? _a : (_b = table === null || table === void 0 ? void 0 : table.expandable) === null || _b === void 0 ? void 0 : _b.expandIcon
+  });
+  const {
+    childrenColumnName = "children"
+  } = mergedExpandable;
+  const expandType = reactExports.useMemo(() => {
+    if (rawData.some((item) => item === null || item === void 0 ? void 0 : item[childrenColumnName])) {
+      return "nest";
+    }
+    if (expandedRowRender || (expandable === null || expandable === void 0 ? void 0 : expandable.expandedRowRender)) {
+      return "row";
+    }
+    return null;
+  }, [rawData]);
+  const internalRefs = {
+    body: reactExports.useRef()
+  };
+  const getContainerWidth = useContainerWidth(prefixCls);
+  const rootRef = reactExports.useRef(null);
+  const tblRef = reactExports.useRef(null);
+  useProxyImperativeHandle(ref, () => Object.assign(Object.assign({}, tblRef.current), {
+    nativeElement: rootRef.current
+  }));
+  const getRowKey = reactExports.useMemo(() => {
+    if (typeof rowKey === "function") {
+      return rowKey;
+    }
+    return (record) => record === null || record === void 0 ? void 0 : record[rowKey];
+  }, [rowKey]);
+  const [getRecordByKey] = useLazyKVMap(rawData, childrenColumnName, getRowKey);
+  const changeEventInfo = {};
+  const triggerOnChange = function(info, action) {
+    let reset = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : false;
+    var _a2, _b2, _c, _d;
+    const changeInfo = Object.assign(Object.assign({}, changeEventInfo), info);
+    if (reset) {
+      (_a2 = changeEventInfo.resetPagination) === null || _a2 === void 0 ? void 0 : _a2.call(changeEventInfo);
+      if ((_b2 = changeInfo.pagination) === null || _b2 === void 0 ? void 0 : _b2.current) {
+        changeInfo.pagination.current = 1;
+      }
+      if (pagination) {
+        (_c = pagination.onChange) === null || _c === void 0 ? void 0 : _c.call(pagination, 1, (_d = changeInfo.pagination) === null || _d === void 0 ? void 0 : _d.pageSize);
+      }
+    }
+    if (scroll && scroll.scrollToFirstRowOnChange !== false && internalRefs.body.current) {
+      scrollTo(0, {
+        getContainer: () => internalRefs.body.current
+      });
+    }
+    onChange === null || onChange === void 0 ? void 0 : onChange(changeInfo.pagination, changeInfo.filters, changeInfo.sorter, {
+      currentDataSource: getFilterData(getSortData(rawData, changeInfo.sorterStates, childrenColumnName), changeInfo.filterStates, childrenColumnName),
+      action
+    });
+  };
+  const onSorterChange = (sorter, sorterStates) => {
+    triggerOnChange({
+      sorter,
+      sorterStates
+    }, "sort", false);
+  };
+  const [transformSorterColumns, sortStates, sorterTitleProps, getSorters] = useFilterSorter({
+    prefixCls,
+    mergedColumns,
+    onSorterChange,
+    sortDirections: sortDirections || ["ascend", "descend"],
+    tableLocale,
+    showSorterTooltip
+  });
+  const sortedData = reactExports.useMemo(() => getSortData(rawData, sortStates, childrenColumnName), [rawData, sortStates]);
+  changeEventInfo.sorter = getSorters();
+  changeEventInfo.sorterStates = sortStates;
+  const onFilterChange = (filters2, filterStates2) => {
+    triggerOnChange({
+      filters: filters2,
+      filterStates: filterStates2
+    }, "filter", true);
+  };
+  const [transformFilterColumns, filterStates, filters] = useFilter({
+    prefixCls,
+    locale: tableLocale,
+    dropdownPrefixCls,
+    mergedColumns,
+    onFilterChange,
+    getPopupContainer: getPopupContainer || getContextPopupContainer,
+    rootClassName: classNames(rootClassName, rootCls)
+  });
+  const mergedData = getFilterData(sortedData, filterStates, childrenColumnName);
+  changeEventInfo.filters = filters;
+  changeEventInfo.filterStates = filterStates;
+  const columnTitleProps = reactExports.useMemo(() => {
+    const mergedFilters = {};
+    Object.keys(filters).forEach((filterKey) => {
+      if (filters[filterKey] !== null) {
+        mergedFilters[filterKey] = filters[filterKey];
+      }
+    });
+    return Object.assign(Object.assign({}, sorterTitleProps), {
+      filters: mergedFilters
+    });
+  }, [sorterTitleProps, filters]);
+  const [transformTitleColumns] = useTitleColumns(columnTitleProps);
+  const onPaginationChange = (current, pageSize) => {
+    triggerOnChange({
+      pagination: Object.assign(Object.assign({}, changeEventInfo.pagination), {
+        current,
+        pageSize
+      })
+    }, "paginate");
+  };
+  const [mergedPagination, resetPagination] = usePagination(mergedData.length, onPaginationChange, pagination);
+  changeEventInfo.pagination = pagination === false ? {} : getPaginationParam(mergedPagination, pagination);
+  changeEventInfo.resetPagination = resetPagination;
+  const pageData = reactExports.useMemo(() => {
+    if (pagination === false || !mergedPagination.pageSize) {
+      return mergedData;
+    }
+    const {
+      current = 1,
+      total,
+      pageSize = DEFAULT_PAGE_SIZE
+    } = mergedPagination;
+    if (mergedData.length < total) {
+      if (mergedData.length > pageSize) {
+        return mergedData.slice((current - 1) * pageSize, current * pageSize);
+      }
+      return mergedData;
+    }
+    return mergedData.slice((current - 1) * pageSize, current * pageSize);
+  }, [!!pagination, mergedData, mergedPagination === null || mergedPagination === void 0 ? void 0 : mergedPagination.current, mergedPagination === null || mergedPagination === void 0 ? void 0 : mergedPagination.pageSize, mergedPagination === null || mergedPagination === void 0 ? void 0 : mergedPagination.total]);
+  const [transformSelectionColumns, selectedKeySet] = useSelection({
+    prefixCls,
+    data: mergedData,
+    pageData,
+    getRowKey,
+    getRecordByKey,
+    expandType,
+    childrenColumnName,
+    locale: tableLocale,
+    getPopupContainer: getPopupContainer || getContextPopupContainer
+  }, rowSelection);
+  const internalRowClassName = (record, index2, indent) => {
+    let mergedRowClassName;
+    if (typeof rowClassName === "function") {
+      mergedRowClassName = classNames(rowClassName(record, index2, indent));
+    } else {
+      mergedRowClassName = classNames(rowClassName);
+    }
+    return classNames({
+      [`${prefixCls}-row-selected`]: selectedKeySet.has(getRowKey(record, index2))
+    }, mergedRowClassName);
+  };
+  mergedExpandable.__PARENT_RENDER_ICON__ = mergedExpandable.expandIcon;
+  mergedExpandable.expandIcon = mergedExpandable.expandIcon || expandIcon || renderExpandIcon(tableLocale);
+  if (expandType === "nest" && mergedExpandable.expandIconColumnIndex === void 0) {
+    mergedExpandable.expandIconColumnIndex = rowSelection ? 1 : 0;
+  } else if (mergedExpandable.expandIconColumnIndex > 0 && rowSelection) {
+    mergedExpandable.expandIconColumnIndex -= 1;
+  }
+  if (typeof mergedExpandable.indentSize !== "number") {
+    mergedExpandable.indentSize = typeof indentSize === "number" ? indentSize : 15;
+  }
+  const transformColumns = reactExports.useCallback((innerColumns) => transformTitleColumns(transformSelectionColumns(transformFilterColumns(transformSorterColumns(innerColumns)))), [transformSorterColumns, transformFilterColumns, transformSelectionColumns]);
+  let topPaginationNode;
+  let bottomPaginationNode;
+  if (pagination !== false && (mergedPagination === null || mergedPagination === void 0 ? void 0 : mergedPagination.total)) {
+    let paginationSize;
+    if (mergedPagination.size) {
+      paginationSize = mergedPagination.size;
+    } else {
+      paginationSize = mergedSize === "small" || mergedSize === "middle" ? "small" : void 0;
+    }
+    const renderPagination = (position22) => /* @__PURE__ */ reactExports.createElement(Pagination, Object.assign({}, mergedPagination, {
+      className: classNames(`${prefixCls}-pagination ${prefixCls}-pagination-${position22}`, mergedPagination.className),
+      size: paginationSize
+    }));
+    const defaultPosition = direction === "rtl" ? "left" : "right";
+    const {
+      position: position2
+    } = mergedPagination;
+    if (position2 !== null && Array.isArray(position2)) {
+      const topPos = position2.find((p2) => p2.includes("top"));
+      const bottomPos = position2.find((p2) => p2.includes("bottom"));
+      const isDisable = position2.every((p2) => `${p2}` === "none");
+      if (!topPos && !bottomPos && !isDisable) {
+        bottomPaginationNode = renderPagination(defaultPosition);
+      }
+      if (topPos) {
+        topPaginationNode = renderPagination(topPos.toLowerCase().replace("top", ""));
+      }
+      if (bottomPos) {
+        bottomPaginationNode = renderPagination(bottomPos.toLowerCase().replace("bottom", ""));
+      }
+    } else {
+      bottomPaginationNode = renderPagination(defaultPosition);
+    }
+  }
+  let spinProps;
+  if (typeof loading === "boolean") {
+    spinProps = {
+      spinning: loading
+    };
+  } else if (typeof loading === "object") {
+    spinProps = Object.assign({
+      spinning: true
+    }, loading);
+  }
+  const wrapperClassNames = classNames(cssVarCls, rootCls, `${prefixCls}-wrapper`, table === null || table === void 0 ? void 0 : table.className, {
+    [`${prefixCls}-wrapper-rtl`]: direction === "rtl"
+  }, className, rootClassName, hashId);
+  const mergedStyle = Object.assign(Object.assign({}, table === null || table === void 0 ? void 0 : table.style), style2);
+  const emptyText = typeof (locale2 === null || locale2 === void 0 ? void 0 : locale2.emptyText) !== "undefined" ? locale2.emptyText : (renderEmpty === null || renderEmpty === void 0 ? void 0 : renderEmpty("Table")) || /* @__PURE__ */ reactExports.createElement(DefaultRenderEmpty, {
+    componentName: "Table"
+  });
+  const TableComponent = virtual ? RcVirtualTable : RcTable;
+  const virtualProps = {};
+  const listItemHeight = reactExports.useMemo(() => {
+    const {
+      fontSize,
+      lineHeight,
+      padding,
+      paddingXS,
+      paddingSM
+    } = token2;
+    const fontHeight = Math.floor(fontSize * lineHeight);
+    switch (mergedSize) {
+      case "large":
+        return padding * 2 + fontHeight;
+      case "small":
+        return paddingXS * 2 + fontHeight;
+      default:
+        return paddingSM * 2 + fontHeight;
+    }
+  }, [token2, mergedSize]);
+  if (virtual) {
+    virtualProps.listItemHeight = listItemHeight;
+  }
+  return wrapCSSVar(/* @__PURE__ */ reactExports.createElement("div", {
+    ref: rootRef,
+    className: wrapperClassNames,
+    style: mergedStyle
+  }, /* @__PURE__ */ reactExports.createElement(Spin, Object.assign({
+    spinning: false
+  }, spinProps), topPaginationNode, /* @__PURE__ */ reactExports.createElement(TableComponent, Object.assign({}, virtualProps, tableProps, {
+    ref: tblRef,
+    columns: mergedColumns,
+    direction,
+    expandable: mergedExpandable,
+    prefixCls,
+    className: classNames({
+      [`${prefixCls}-middle`]: mergedSize === "middle",
+      [`${prefixCls}-small`]: mergedSize === "small",
+      [`${prefixCls}-bordered`]: bordered,
+      [`${prefixCls}-empty`]: rawData.length === 0
+    }, cssVarCls, rootCls, hashId),
+    data: pageData,
+    rowKey: getRowKey,
+    rowClassName: internalRowClassName,
+    emptyText,
+    // Internal
+    internalHooks: INTERNAL_HOOKS,
+    internalRefs,
+    transformColumns,
+    getContainerWidth
+  })), bottomPaginationNode)));
+};
+const InternalTable$1 = /* @__PURE__ */ reactExports.forwardRef(InternalTable);
+const Table = (props, ref) => {
+  const renderTimesRef = reactExports.useRef(0);
+  renderTimesRef.current += 1;
+  return /* @__PURE__ */ reactExports.createElement(InternalTable$1, Object.assign({}, props, {
+    ref,
+    _renderTimes: renderTimesRef.current
+  }));
+};
+const ForwardTable = /* @__PURE__ */ reactExports.forwardRef(Table);
+ForwardTable.SELECTION_COLUMN = SELECTION_COLUMN;
+ForwardTable.EXPAND_COLUMN = EXPAND_COLUMN;
+ForwardTable.SELECTION_ALL = SELECTION_ALL;
+ForwardTable.SELECTION_INVERT = SELECTION_INVERT;
+ForwardTable.SELECTION_NONE = SELECTION_NONE;
+ForwardTable.Column = Column;
+ForwardTable.ColumnGroup = ColumnGroup;
+ForwardTable.Summary = FooterComponents;
+tsteam_settings.ajax_url;
+tsteam_settings.admin_url;
 var define_import_meta_env_default$1 = { BASE_URL: "/", MODE: "production", DEV: false, PROD: true, SSR: false };
 const createStoreImpl = (createState) => {
   let state;
@@ -47291,222 +59120,195 @@ const useStore = create((set2) => ({
   postId: null,
   setPostId: (id2) => set2({ postId: id2 })
 }));
-function CPT() {
-  const { isOpen, openModal, closeModal } = useStore();
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex mt-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { onClick: openModal, type: "primary", children: "Create New Showcase" }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Modal,
-      {
-        title: "Add New Showcase",
-        open: isOpen,
-        onOk: closeModal,
-        onCancel: closeModal,
-        width: 500,
-        footer: [],
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(AddNew, {})
+const ajax_url$1 = tsteam_settings.ajax_url;
+tsteam_settings.admin_url;
+const createShowcase = (data) => {
+  jQuery.post(
+    ajax_url$1,
+    {
+      _ajax_nonce: tsteam_settings.nonce,
+      action: "tsteam_showcase/create_showcase",
+      title: data.title
+    },
+    function(response) {
+      if (response.success) ;
+      else {
+        console.log("Error:", response);
       }
-    )
+    }
+  );
+};
+const onFinishFailed = (errorInfo) => {
+  console.log("Failed:", errorInfo);
+};
+function AddNew() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    Form2,
+    {
+      initialValues: {
+        remember: true
+      },
+      onFinish: createShowcase,
+      onFinishFailed,
+      autoComplete: "off",
+      layout: "vertical",
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Form2.Item,
+          {
+            label: "Showcase Name",
+            name: "title",
+            rules: [
+              {
+                required: true,
+                message: "Please input your username!"
+              }
+            ],
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Input, {})
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Form2.Item,
+          {
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, { type: "primary", htmlType: "submit", children: "Create Showcase" })
+          }
+        )
+      ]
+    }
+  ) });
+}
+function Sidebar$1() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("aside", { className: "w-64 bg-white shadow-md", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-6 py-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-semibold text-gray-700", children: "Help & Support" }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("nav", { className: "mt-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", className: "block px-6 py-2 text-gray-700 hover:bg-gray-200", children: "All" }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", className: "block px-6 py-2 text-gray-700 hover:bg-gray-200", children: "Published" }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", className: "block px-6 py-2 text-gray-700 hover:bg-gray-200", children: "Draft" }) })
+    ] }) })
   ] });
 }
-var LaptopOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M956.9 845.1L896.4 632V168c0-17.7-14.3-32-32-32h-704c-17.7 0-32 14.3-32 32v464L67.9 845.1C60.4 866 75.8 888 98 888h828.8c22.2 0 37.6-22 30.1-42.9zM200.4 208h624v395h-624V208zm228.3 608l8.1-37h150.3l8.1 37H428.7zm224 0l-19.1-86.7c-.8-3.7-4.1-6.3-7.8-6.3H398.2c-3.8 0-7 2.6-7.8 6.3L371.3 816H151l42.3-149h638.2l42.3 149H652.7z" } }] }, "name": "laptop", "theme": "outlined" };
-var LaptopOutlined = function LaptopOutlined2(props, ref) {
-  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
-    ref,
-    icon: LaptopOutlined$1
-  }));
+const ajax_url = tsteam_settings.ajax_url;
+const getShowcase = (callback) => {
+  jQuery.get(ajax_url, {
+    _ajax_nonce: tsteam_settings.nonce,
+    action: "tsteam_showcase/get_showcase"
+  }, function(response) {
+    if (typeof callback === "function") {
+      callback(response);
+    }
+  });
 };
-var RefIcon$2 = /* @__PURE__ */ reactExports.forwardRef(LaptopOutlined);
-var NotificationOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M880 112c-3.8 0-7.7.7-11.6 2.3L292 345.9H128c-8.8 0-16 7.4-16 16.6v299c0 9.2 7.2 16.6 16 16.6h101.7c-3.7 11.6-5.7 23.9-5.7 36.4 0 65.9 53.8 119.5 120 119.5 55.4 0 102.1-37.6 115.9-88.4l408.6 164.2c3.9 1.5 7.8 2.3 11.6 2.3 16.9 0 32-14.2 32-33.2V145.2C912 126.2 897 112 880 112zM344 762.3c-26.5 0-48-21.4-48-47.8 0-11.2 3.9-21.9 11-30.4l84.9 34.1c-2 24.6-22.7 44.1-47.9 44.1zm496 58.4L318.8 611.3l-12.9-5.2H184V417.9h121.9l12.9-5.2L840 203.3v617.4z" } }] }, "name": "notification", "theme": "outlined" };
-var NotificationOutlined = function NotificationOutlined2(props, ref) {
-  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
-    ref,
-    icon: NotificationOutlined$1
-  }));
-};
-var RefIcon$1 = /* @__PURE__ */ reactExports.forwardRef(NotificationOutlined);
-var UserOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M858.5 763.6a374 374 0 00-80.6-119.5 375.63 375.63 0 00-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 00-80.6 119.5A371.7 371.7 0 00136 901.8a8 8 0 008 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 008-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z" } }] }, "name": "user", "theme": "outlined" };
-var UserOutlined = function UserOutlined2(props, ref) {
-  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
-    ref,
-    icon: UserOutlined$1
-  }));
-};
-var RefIcon = /* @__PURE__ */ reactExports.forwardRef(UserOutlined);
-const { Header, Content, Sider } = Layout;
-const items1 = ["1", "2", "3"].map((key) => ({
-  key,
-  label: `nav ${key}`
-}));
-const items2 = [RefIcon, RefIcon$2, RefIcon$1].map((icon, index2) => {
-  const key = String(index2 + 1);
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index2 * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`
-      };
-    })
-  };
-});
-const Sidebar$1 = () => {
-  const {
-    token: { colorBgContainer, borderRadiusLG }
-  } = theme.useToken();
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Layout, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(
-      Header,
-      {
-        style: {
-          display: "flex",
-          alignItems: "center"
-        },
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "demo-logo" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            Menu,
-            {
-              theme: "dark",
-              mode: "horizontal",
-              defaultSelectedKeys: ["2"],
-              items: items1,
-              style: {
-                flex: 1,
-                minWidth: 0
-              }
-            }
-          )
-        ]
+const columns = [
+  {
+    title: "Title",
+    dataIndex: "name",
+    key: "name",
+    render: (text) => /* @__PURE__ */ jsxRuntimeExports.jsx("a", { children: text })
+  },
+  {
+    title: "Shortcode",
+    dataIndex: "shortcode",
+    key: "shortcode"
+  },
+  {
+    title: "Action",
+    key: "action",
+    render: (_, record) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Space, { size: "middle", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("a", { children: "Edit" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("a", { children: "Delete" })
+    ] })
+  }
+];
+function Content() {
+  const { isOpen, openModal, closeModal } = useStore();
+  const [data, setData] = reactExports.useState([]);
+  reactExports.useEffect(() => {
+    getShowcase((response) => {
+      console.log(response);
+      if (response && response.success) {
+        const showcaseData = response.data.map((item) => ({
+          key: item.post_id,
+          name: item.title,
+          shortcode: `[showcase id="${item.post_id}"]`
+        }));
+        setData(showcaseData);
+      } else {
+        console.error("Error fetching showcases:", response);
       }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(Layout, { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Sider,
-        {
-          width: 200,
-          style: {
-            background: colorBgContainer
-          },
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-            Menu,
-            {
-              mode: "inline",
-              defaultSelectedKeys: ["1"],
-              defaultOpenKeys: ["sub1"],
-              style: {
-                height: "100%",
-                borderRight: 0
-              },
-              items: items2
-            }
-          )
-        }
-      ),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        Layout,
-        {
-          style: {
-            padding: "0 24px 24px"
-          },
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              Breadcrumb,
-              {
-                style: {
-                  margin: "16px 0"
-                },
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(Breadcrumb.Item, { children: "Home" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(Breadcrumb.Item, { children: "List" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(Breadcrumb.Item, { children: "App" })
-                ]
-              }
-            ),
+    });
+  }, []);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-100 min-h-fit flex", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 p-6", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-6", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-2xl font-semibold text-gray-700", children: "Team Showcase" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between mt-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: openModal, className: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600", children: "Create New Showcase" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
-              Content,
+              Modal,
               {
-                style: {
-                  padding: 24,
-                  margin: 0,
-                  minHeight: 280,
-                  background: colorBgContainer,
-                  borderRadius: borderRadiusLG
-                },
-                children: "Content"
+                title: "Add New Showcase",
+                open: isOpen,
+                onOk: closeModal,
+                onCancel: closeModal,
+                width: 500,
+                footer: [],
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(AddNew, {})
               }
             )
-          ]
-        }
-      )
-    ] })
-  ] });
-};
-function Media() {
-  jQuery(document).ready(function($2) {
-    var wkMedia;
-    $2("#wk-button").click(function(e2) {
-      e2.preventDefault();
-      if (wkMedia) {
-        wkMedia.open();
-        return;
-      }
-      wkMedia = wp.media.frames.file_frame = wp.media({
-        title: "Select media",
-        button: {
-          text: "Select media"
-        },
-        multiple: false
-      });
-      wkMedia.on("select", function() {
-        var attachment = wkMedia.state().get("selection").first().toJSON();
-        console.log(attachment);
-        $2("#wk-media-url").val(attachment.url);
-      });
-      wkMedia.open();
-    });
-  });
-  const admin_url2 = tsteam_settings.admin_url;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 gap-6 w-2/6", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { id: "wk-button", type: "primary", children: "Open Media Library" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { href: `${admin_url2}edit.php?post_type=tsteam-showcase&path=editor`, type: "primary", children: "Open Editor" })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "input",
+            {
+              type: "text",
+              placeholder: "Search Pages",
+              className: "px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
+            }
+          ) })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-white shadow-md rounded-lg overflow-hidden", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ForwardTable, { columns, dataSource: data }) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Sidebar$1, {})
   ] });
 }
-function AdminModal() {
+function AdminPanel() {
   useStore();
   return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-12", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Media, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx("br", {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Sidebar$1, {})
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Content, {})
   ] }) });
 }
 function Topbar() {
   const { openModal } = useStore();
-  const { Header: Header2, Content: Content2, Footer: Footer2 } = Layout;
+  const { Header: Header3, Content: Content2, Footer: Footer2 } = Layout;
   return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Layout, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Header2,
+    Header3,
     {
       style: {
         display: "flex",
         alignItems: "center"
       },
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button, { onClick: openModal, type: "primary", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { xmlns: "http://www.w3.org/2000/svg", fill: "none", viewBox: "0 0 24 24", strokeWidth: 1.5, stroke: "currentColor", className: "size-6", children: [
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, { onClick: openModal, type: "primary", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { xmlns: "http://www.w3.org/2000/svg", fill: "none", viewBox: "0 0 24 24", strokeWidth: 1.5, stroke: "currentColor", className: "size-6", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" })
       ] }) })
     }
   ) }) });
 }
-function ContentTab({ theme: theme2, setTheme }) {
+function ContentTab({ theme, setTheme }) {
+  const loadButtonRef = reactExports.useRef(null);
+  if (window.ProComponent) {
+    loadButtonRef.current = window.ProComponent.loadButton;
+  }
+  const loadButton = loadButtonRef.current;
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-sm font-medium text-gray-700", children: "Layout" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(Select, { value: theme2, onChange: (e2) => setTheme(e2.target.value), mt: 2, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Select, { value: theme, onChange: (value) => setTheme(value), mt: 2, children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Theme One", children: "Card" }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("option", { value: "Theme Two", children: "Profile Card" })
-    ] })
+    ] }),
+    loadButton && loadButton.type === "Button" && /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, { type: "primary", children: "Loaded From Pro Button" })
   ] }) });
 }
 function u() {
@@ -47763,12 +59565,12 @@ function AdvanceTab() {
     /* @__PURE__ */ jsxRuntimeExports.jsx(Collapse$1, { accordion: true, items })
   ] });
 }
-function OptionTabs({ theme: theme2, setTheme }) {
+function OptionTabs({ theme, setTheme }) {
   const items = [
     {
       label: "Content",
       key: "1",
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(ContentTab, { theme: theme2, setTheme })
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(ContentTab, { theme, setTheme })
     },
     {
       label: "Style",
@@ -47794,7 +59596,7 @@ function OptionTabs({ theme: theme2, setTheme }) {
     }
   );
 }
-function Sidebar({ isOpen, onClose, theme: theme2, setTheme }) {
+function Sidebar({ isOpen, onClose, theme, setTheme }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     Drawer,
     {
@@ -47806,7 +59608,7 @@ function Sidebar({ isOpen, onClose, theme: theme2, setTheme }) {
       children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         OptionTabs,
         {
-          theme: theme2,
+          theme,
           setTheme
         }
       )
@@ -47884,7 +59686,7 @@ function Frontend() {
 }
 function Editor() {
   useStore();
-  const [theme2, setTheme] = reactExports.useState("Theme One");
+  const [theme, setTheme] = reactExports.useState("Theme One");
   const [isSidebarOpen, setIsSidebarOpen] = reactExports.useState(false);
   reactExports.useEffect(() => {
     const handleClick = () => setIsSidebarOpen(true);
@@ -47908,7 +59710,7 @@ function Editor() {
       {
         isOpen: isSidebarOpen,
         onClose: handleCloseSidebar,
-        theme: theme2,
+        theme,
         setTheme
       }
     ),
@@ -47916,16 +59718,17 @@ function Editor() {
   ] });
 }
 jQuery(document).ready(function($2) {
-  var button = $2(".page-title-action");
+  var button = $2(".wrap");
   var newDiv = $2("<div></div>", {
     id: "react-root",
     // Assign an id to the new div
+    // class: 'page-title-action-div'
     class: "page-title-action-div"
   });
   button.replaceWith(newDiv);
   const element = document.getElementById("react-root");
   if (element) {
-    client.createRoot(element).render(/* @__PURE__ */ jsxRuntimeExports.jsx(CPT, {}));
+    client.createRoot(element).render(/* @__PURE__ */ jsxRuntimeExports.jsx(AdminPanel, {}));
   }
 });
 const currentUrl = window.location.href;
