@@ -9,8 +9,45 @@ class AJAX {
 
 	public static function init() {
 		$self = new self();
+		add_action( 'wp_ajax_tsteam_showcase/get_showcase', array( $self, 'get_showcase' ) );
 		add_action( 'wp_ajax_tsteam_showcase/create_showcase', array( $self, 'create_showcase' ) );
 	}
+
+	public function get_showcase() {
+		check_ajax_referer( 'tsteam_nonce' );
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die();
+		}
+	
+		$args = array(
+			'post_type'      => 'tsteam-showcase',
+		);
+	
+		$query = new \WP_Query( $args );
+	
+		if ( ! $query->have_posts() ) {
+			wp_send_json_error( array( 'message' => 'No showcases found' ) );
+		}
+	
+		$showcases = array();
+	
+		while ( $query->have_posts() ) {
+			$query->the_post();
+	
+			$showcases[] = array(
+				'post_id'   => get_the_ID(),
+				'title'     => get_the_title(),
+				'content'   => get_the_content(),
+				'status'    => get_post_status(),
+				'author'    => get_the_author_meta( 'display_name' ),
+				'date'      => get_the_date(),
+			);
+		}
+	
+		wp_reset_postdata();
+	
+		wp_send_json_success( $showcases );
+	}	
 
 	public function create_showcase() {
 		check_ajax_referer( 'tsteam_nonce' );
