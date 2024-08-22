@@ -5,13 +5,13 @@ import Media from './components/Media';
 
 import useStore from '../store';
 
-function AdminModal() {
+function AdminPanel() {
   const { isOpen, openModal, closeModal } = useStore();
 
   return (
     <>
     <div className='p-12'>
-    <Media />
+    {/* <Media /> */}
     <br />
     <Content />
     </div>     
@@ -19,4 +19,4 @@ function AdminModal() {
   );
 }
 
-export default AdminModal;
+export default AdminPanel;
