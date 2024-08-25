@@ -3,40 +3,17 @@ import { useEffect, useState } from 'react';
 import AddNew from './AddNew.jsx';
 import Media from './Media.jsx';
 import Sidebar from './Sidebar.jsx';
-import useStore from '../../store.js';
+import { toastNotification } from '../actions/toastNotification.js';
+import useAdminStore from '../states/admin-store.js';
 import { getShowcase } from '../actions/getShowcase.js';
-
-const columns = [
-  {
-    title: 'Title',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'Shortcode',
-    dataIndex: 'shortcode',
-    key: 'shortcode',
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Edit</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
-];
+import { deleteShowcase } from '../actions/deleteShowcase.js'; 
 
 function Content() {
-  const { isOpen, openModal, closeModal } = useStore();
+  const { isOpen, openModal, closeShowcaseModal } = useAdminStore();
   const [data, setData] = useState([]);
 
-  useEffect(() => {
+  const loadShowcaseData = () => {
     getShowcase((response) => {
-      console.log(response); // Check the structure here
       if (response && response.success) {
         const showcaseData = response.data.map((item) => ({
           key: item.post_id,
@@ -48,6 +25,46 @@ function Content() {
         console.error('Error fetching showcases:', response);
       }
     });
+  };
+
+  const handleDelete = (post_id) => {
+    deleteShowcase(post_id)
+      .then(() => {
+        toastNotification('success', 'Showcase Deleted', 'The showcase has been successfully deleted.');
+        loadShowcaseData();
+      })
+      .catch((error) => {
+        toastNotification('error', 'Error', 'There was an error deleting the showcase.');
+        console.log('Error:', error);
+      });
+  };
+
+  const columns = [
+    {
+      title: 'Title',
+      dataIndex: 'name',
+      key: 'name',
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: 'Shortcode',
+      dataIndex: 'shortcode',
+      key: 'shortcode',
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_, record) => (
+        <Space size="middle">
+          <a>Edit</a>
+          <a onClick={() => handleDelete(record.key)}>Delete</a>
+        </Space>
+      ),
+    },
+  ];
+
+  useEffect(() => {
+    loadShowcaseData();
   }, []);
 
   return (
@@ -64,12 +81,12 @@ function Content() {
               <Modal 
                 title="Add New Showcase" 
                 open={isOpen} 
-                onOk={closeModal} 
-                onCancel={closeModal}
+                onOk={closeShowcaseModal} 
+                onCancel={closeShowcaseModal}
                 width={500}
                 footer={[]}
               >
-                <AddNew />
+                <AddNew onShowcaseAdded={loadShowcaseData} />
               </Modal>
             </div>
             <div>
