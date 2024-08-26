@@ -10,11 +10,7 @@ function AdminPanel() {
 
   return (
     <>
-    <div className='p-12'>
-    {/* <Media /> */}
-    <br />
     <Content />
-    </div>     
     </>
   );
 }
