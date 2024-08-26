@@ -28,9 +28,9 @@ class Common {
 
     public static function get_current_screen_info(){
         $current_screen  = get_current_screen();
-        $targeted_screen = 'tsteam-showcase';
+        $targeted_screen = 'ts-team_page_tsteam-showcase';
 
-        if ( $targeted_screen === $current_screen->post_type ) {
+        if ( $targeted_screen === $current_screen->base ) {
             return true;
         }
         return false;
