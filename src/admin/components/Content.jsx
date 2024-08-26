@@ -6,10 +6,12 @@ import Sidebar from './Sidebar.jsx';
 import { toastNotification } from '../actions/toastNotification.js';
 import useAdminStore from '../states/admin-store.js';
 import { getShowcase } from '../actions/getShowcase.js';
-import { deleteShowcase } from '../actions/deleteShowcase.js'; 
+import { deleteShowcase } from '../actions/deleteShowcase.js';
+import Editor from '../../editor/Editor.jsx';
 
 function Content() {
   const { isOpen, openModal, closeShowcaseModal } = useAdminStore();
+  const [selectedItem, setSelectedItem] = useState(null);
   const [data, setData] = useState([]);
 
   const loadShowcaseData = () => {
@@ -39,6 +41,10 @@ function Content() {
       });
   };
 
+  const handleEdit = (item) => {
+    setSelectedItem(item);  // Set the selected item
+  };
+
   const columns = [
     {
       title: 'Title',
@@ -56,7 +62,7 @@ function Content() {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <a>Edit</a>
+          <a onClick={() => handleEdit(record)}>Edit</a>  {/* Use handleEdit to select item */}
           <a onClick={() => handleDelete(record.key)}>Delete</a>
         </Space>
       ),
@@ -66,6 +72,18 @@ function Content() {
   useEffect(() => {
     loadShowcaseData();
   }, []);
+
+  if (selectedItem) {
+    return (
+      <>
+      {/* <Media /> */}
+      <Editor 
+        item={selectedItem} 
+        onClose={() => setSelectedItem(null)}  // Callback to close the edit view
+      />
+      </>
+    );
+  }
 
   return (
     <div className="bg-gray-100 min-h-fit flex">

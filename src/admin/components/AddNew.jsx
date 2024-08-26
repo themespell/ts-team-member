@@ -16,7 +16,7 @@ function AddNew({ onShowcaseAdded }) {
         }
       })
       .catch((error) => {
-        toastNotification('error', `Showcase Creation Failed', 'The showcase creation has failed. Error: ${error}`);
+        toastNotification('error', 'Showcase Creation Failed', `The showcase creation has failed. Error: ${error}`);
       });
   };
 
@@ -27,7 +27,7 @@ function AddNew({ onShowcaseAdded }) {
   return (
     <>
       <Form
-        initialValues={{ remember: true }}
+        initialValues={{ remember: false }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
