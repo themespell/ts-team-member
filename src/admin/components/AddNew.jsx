@@ -1,65 +1,53 @@
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { createShowcase } from '../actions/createShowcase.js';
+import { toastNotification } from '../actions/toastNotification.js';
+import useAdminStore from '../states/admin-store.js';
 
-const onFinish = (values) => {
-    console.log('Success:', values);
+function AddNew({ onShowcaseAdded }) {
+  const { closeShowcaseModal } = useAdminStore();
+
+  const onFinish = (data) => {
+    createShowcase(data)
+      .then(() => {
+        closeShowcaseModal();
+        toastNotification('success', 'Showcase Created', 'The showcase has been successfully created.');
+        if (onShowcaseAdded) {
+          onShowcaseAdded();
+        }
+      })
+      .catch((error) => {
+        toastNotification('error', 'Showcase Creation Failed', `The showcase creation has failed. Error: ${error}`);
+      });
   };
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+
+  const onFinishFailed = (error) => {
+    toastNotification('error', `Showcase Creation Failed', 'The showcase creation has failed. Error: ${error}`);
   };
 
-//   const ajax_url = tsteam_settings.ajax_url;
-//   const admin_url = tsteam_settings.admin_url;
-
-//   const createShowcase = ( data ) => {
-//     jQuery.post(ajax_url, {
-//       _ajax_nonce: tsteam_settings.nonce,
-//       action: "tsteam_showcase/create_showcase",
-//       title: data.title,
-//       }, function(response) {
-//         if (response.success) {
-//             window.location.href = `${admin_url}edit.php?post_type=tsteam-showcase&path=admin`
-//           } else {
-//             console.log('Error:', response);
-//           }
-//       }
-//     );
-// }
-
-function AddNew() {
-  
   return (
     <>
       <Form
-        initialValues={{
-        remember: true,
-        }}
-        onFinish={createShowcase}
+        initialValues={{ remember: false }}
+        onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
-        layout='vertical'
+        layout="vertical"
       >
-    <Form.Item
-      label="Showcase Name"
-      name="title"
-      rules={[
-        {
-          required: true,
-          message: 'Please input your username!',
-        },
-      ]}
-    >
-      <Input />
-    </Form.Item>
-
-    <Form.Item
-      
-    >
-      <Button type="primary" htmlType="submit">
-        Create Showcase
-      </Button>
-    </Form.Item>
-  </Form>
+        <Form.Item
+          label="Showcase Name"
+          name="title"
+          rules={[
+            { required: true, message: 'Please input your showcase name!' },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Create Showcase
+          </Button>
+        </Form.Item>
+      </Form>
     </>
   );
 }

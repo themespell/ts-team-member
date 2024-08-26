@@ -23,7 +23,7 @@ class Database {
 			'supports'            => array( 'title', 'author' ),
 			'hierarchical'        => false,
 			'public'              => true,
-			'show_ui'             => true,
+			'show_ui'             => false,
 			'can_export'          => true,
 			'has_archive'         => false,
 			'exclude_from_search' => true,

@@ -5,25 +5,9 @@ import CPT from './common/CPT.jsx';
 import Editor from './editor/Editor.jsx';
 import AdminPanel from './admin/Admin.jsx';
 
-// Load Blank Div using jQuery
-jQuery(document).ready(function($) {
-  var button = $('.wrap');
-
-  var newDiv = $('<div></div>', {
-      id: 'react-root', // Assign an id to the new div
-      // class: 'page-title-action-div'
-      class: 'page-title-action-div'
-  });
-
-  // Replace the button with the new div
-  button.replaceWith(newDiv);
-
-  // Create a new React root for the new div
-  const element = document.getElementById('react-root');
-  if (element) {
-      ReactDOM.createRoot(element).render(<AdminPanel />);
-  }
-});
+ReactDOM.createRoot(document.getElementById('tsteam-admin')).render(
+  <AdminPanel />
+);
 
 const currentUrl = window.location.href;
 

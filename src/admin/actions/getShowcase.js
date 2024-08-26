@@ -9,4 +9,4 @@ export const getShowcase = (callback) => {
         callback(response);
       }
     });
-};  
+};

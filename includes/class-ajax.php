@@ -11,6 +11,7 @@ class AJAX {
 		$self = new self();
 		add_action( 'wp_ajax_tsteam_showcase/get_showcase', array( $self, 'get_showcase' ) );
 		add_action( 'wp_ajax_tsteam_showcase/create_showcase', array( $self, 'create_showcase' ) );
+		add_action( 'wp_ajax_tsteam_showcase/delete_showcase', array( $self, 'delete_showcase' ) );
 	}
 
 	public function get_showcase() {
@@ -65,5 +66,26 @@ class AJAX {
 		);
 		$is_post = wp_insert_post( $args );
 		wp_send_json_success( array( 'post_id' => $is_post ) );
+	}
+
+	public function delete_showcase() {
+		check_ajax_referer( 'tsteam_nonce' );
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die();
+		}
+
+		$post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
+
+		if ( ! $post_id ) {
+			wp_send_json_error( array( 'message' => 'Invalid showcase ID' ) );
+		}
+
+		$deleted = wp_delete_post( $post_id, true );
+
+		if ( $deleted ) {
+			wp_send_json_success( array( 'message' => 'Showcase deleted successfully', 'post_id' => $post_id ) );
+		} else {
+			wp_send_json_error( array( 'message' => 'Failed to delete showcase' ) );
+		}
 	}
 }
