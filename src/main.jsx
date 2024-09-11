@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import CPT from './common/CPT.jsx';
 import Editor from './editor/Editor.jsx';
 import AdminPanel from './admin/Admin.jsx';
 
@@ -48,28 +47,28 @@ if (currentUrl.includes(`&path=admin`)) {
 
 
 // document.addEventListener('DOMContentLoaded', () => {
-//   const element = document.querySelector('.page-title-action');
+//   const element = document.querySelector('#adminmenu .wp-submenu');
 //   if (element) {
+//     console.log(element);
 //     // const button = document.createElement('button');
 //     // button.textContent = 'Click Me';
 //     // button.className = 'add-team-button'; // Add your desired classes here
-//     element.replaceWith(button);
+//     // element.replaceWith(button);
 
-//     // Create the div
-//     const newDiv = document.createElement('div');
-//     newDiv.textContent = 'New div content';
-//     newDiv.id = 'root';
-//     element.replaceWith(newDiv);
+//     // // Create the div
+//     // const newDiv = document.createElement('div');
+//     // newDiv.textContent = 'New div content';
+//     // newDiv.id = 'root';
+//     // element.replaceWith(newDiv);
 
 //     // button.insertAdjacentElement('afterend', newDiv);
 
-//     // Create a new React root for the new div
 //     // const NewRootComponent = () => {
 //     //   return (
-//     //     <AddModal />
+//     //     <NavMenu />
 //     //   );
 //     // };
 
-//     ReactDOM.createRoot(newDiv).render(<NewRootComponent />);
+//     // ReactDOM.createRoot(newDiv).render(<NewRootComponent />);
 //   }
 // });
