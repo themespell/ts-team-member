@@ -12,7 +12,9 @@ class Database {
 		$self            = new self();
 		$self->rest_base = 'tsteam-showcase';
 		add_action( 'init', array( $self, 'tsteam_post_type' ) );
+		add_action( 'init', array( $self, 'tsteam_member_post_type' ) );
 		add_action( 'rest_api_init', array( $self, 'register_tsteam_meta' ) );
+		add_action( 'rest_api_init', array( $self, 'register_tsteam_member_meta' ) );
 		add_action( 'rest_api_init', array( $self, 'tsteam_rest_routes' ) );
 	}
 
@@ -35,6 +37,25 @@ class Database {
 		register_post_type( $this->rest_base, $args );
 	}
 
+	public function tsteam_member_post_type() {
+		$args = array(
+			'label'               => __( 'TS Team Member', 'ts-team' ),
+			'description'         => __( 'Post Type For TS Team member', 'ts-team' ),
+			'supports'            => array( 'title', 'author' ),
+			'hierarchical'        => false,
+			'public'              => true,
+			'show_ui'             => false,
+			'can_export'          => true,
+			'has_archive'         => false,
+			'exclude_from_search' => true,
+			'publicly_queryable'  => true,
+			'capability_type'     => 'post',
+			'show_in_rest'        => false,
+		);
+
+		register_post_type( 'tsteam-member', $args );
+	}
+
 	public function register_tsteam_meta() {
 		$meeting_meta = array(
 			'tsteam_information'     => 'string',
@@ -46,6 +67,25 @@ class Database {
 				$meta_key,
 				array(
 					'object_subtype' => 'tsteam-showcase',
+					'type'           => $meta_value_type,
+					'single'         => true,
+					'show_in_rest'   => false,
+				)
+			);
+		}
+	}
+
+	public function register_tsteam_member_meta() {
+		$tsteam_member_meta = array(
+			'tsteam_member_information'     => 'string',
+		);
+
+		foreach ( $tsteam_member_meta as $meta_key => $meta_value_type ) {
+			register_meta(
+				'post',
+				$meta_key,
+				array(
+					'object_subtype' => 'tsteam-member',
 					'type'           => $meta_value_type,
 					'single'         => true,
 					'show_in_rest'   => true,

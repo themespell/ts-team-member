@@ -1,18 +1,26 @@
-import { Form, Modal } from 'antd';
+import TeamShowcase from './components/TeamShowcase';
+import TeamMember from './components/TeamMember';
+import Sidebar from './components/Sidebar';
 
-import Content from './components/Content';
-import Media from './components/Media';
-
-import useStore from '../store';
+const currentUrl = window.location.href;
 
 function AdminPanel() {
-  const { isOpen, openModal, closeModal } = useStore();
-
-  return (
-    <>
-    <Content />
-    </>
-  );
+  if (currentUrl.includes(`&path=team-member`)) {
+    return (
+      <div className='flex'>
+        <TeamMember />
+        <Sidebar />
+      </div>
+    );
+  }
+  else{
+    return (
+      <div className='flex'>
+        <TeamShowcase />
+        <Sidebar />
+      </div>
+    );
+  }
 }
 
 export default AdminPanel;

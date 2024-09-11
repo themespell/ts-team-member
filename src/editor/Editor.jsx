@@ -18,7 +18,7 @@ function Editor() {
     // Simulate a loading delay of up to 2 seconds
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 100); // 2 seconds
+    }, 50); // 2 seconds
 
     return () => clearTimeout(timer); // Cleanup timer on component unmount
   }, []);

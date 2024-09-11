@@ -1,4 +1,3 @@
-import { HexColorPicker } from "react-colorful";
 import { ColorPicker } from "antd";
 
 import HoverAnimation from './Controls/HoverAnimation';
@@ -18,7 +17,6 @@ function StyleTab(){
                 defaultValue="#1677ff"
                 size="small"
                 />
-                <HexColorPicker color={backgroundColor} onChange={setBackgroundColor} />
             </div>
             <HoverAnimation />
         </div>
