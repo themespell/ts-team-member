@@ -2,25 +2,29 @@ import { useState, useEffect } from 'react';
 import useStore from '../store.js';
 import { Spin } from 'antd';
 import Topbar from './components/Topbar.jsx';
-import Sidebar from './components/Sidebar.jsx';
+import Sidebar from './components/Sidebar/Sidebar.jsx';
 import Frontend from '../frontend/Frontend.jsx';
 import { hideAdminElements } from './utils/utils.js';
+import './components/assets/editorStyle.css';
+
+import editorStore from './states/editorStore.js';
 
 function Editor() {
+  const { layout } = editorStore();
+
   const { selectedAnimation } = useStore();
-  const [theme, setTheme] = useState('Theme One'); // New state for theme selection
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // State to manage sidebar visibility
-  const [isLoading, setIsLoading] = useState(true); // State for loading spinner
+  const [theme, setTheme] = useState('Theme One');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     hideAdminElements();
 
-    // Simulate a loading delay of up to 2 seconds
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 50); // 2 seconds
+    }, 10); // 2 seconds
 
-    return () => clearTimeout(timer); // Cleanup timer on component unmount
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -55,12 +59,16 @@ function Editor() {
     <>
       <Topbar />
       <Sidebar 
-        isOpen={isSidebarOpen} 
-        onClose={handleCloseSidebar} 
-        theme={theme} 
-        setTheme={setTheme} 
+        isOpen={isSidebarOpen}
+        onClose={handleCloseSidebar}
+        theme={theme}
+        setTheme={setTheme}
       />
-      <Frontend />
+      <div className='editor-hover editor-container'>
+        <Frontend layout={layout} />
+        <Frontend layout={layout} />
+        <Frontend layout={layout} />
+      </div>
     </>
   );
 }
