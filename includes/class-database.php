@@ -59,6 +59,7 @@ class Database {
 	public function register_tsteam_meta() {
 		$meeting_meta = array(
 			'tsteam_information'     => 'string',
+			'tsteam_team_members'    => 'array',
 		);
 
 		foreach ( $meeting_meta as $meta_key => $meta_value_type ) {
@@ -70,14 +71,24 @@ class Database {
 					'type'           => $meta_value_type,
 					'single'         => true,
 					'show_in_rest'   => false,
+					'sanitize_callback' => array($this, 'sanitize_team_members_meta'),
+					'auth_callback'  => function() {
+					return current_user_can( 'edit_posts' );  // Permission check
+					},
 				)
 			);
 		}
 	}
 
+	public function sanitize_team_members_meta( $meta_value ) {
+		// Ensure the array contains only integers (post IDs)
+		return array_map( 'intval', (array) $meta_value );
+	}
+
 	public function register_tsteam_member_meta() {
 		$tsteam_member_meta = array(
 			'tsteam_member_information'     => 'string',
+			'tsteam_member_image'     		=> 'string',
 		);
 
 		foreach ( $tsteam_member_meta as $meta_key => $meta_value_type ) {

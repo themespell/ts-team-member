@@ -28,6 +28,7 @@ function TeamShowcase() {
       <Container
             type='team_showcase'
             title='Team Showcase'
+            editor={true}
         />
       </div>
     </div>

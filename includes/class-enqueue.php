@@ -38,5 +38,14 @@ class Enqueue {
 				)
 			);
 		}
+
+		add_filter( 'script_loader_tag', array( $this, 'add_module_type_to_script' ), 10, 3 );
 	}
+
+	public function add_module_type_to_script( $tag, $handle, $src ) {
+		if ( 'tsteam-admin-script' === $handle ) {
+			$tag = '<script type="module" src="' . esc_url( $src ) . '"></script>';
+		}
+		return $tag;
+	}	
 }

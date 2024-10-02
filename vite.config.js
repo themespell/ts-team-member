@@ -11,6 +11,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
       'admin': path.resolve(__dirname, 'src/main.jsx'),
+      'frontend': path.resolve(__dirname, 'src/frontend/Frontend.jsx')
       },
 
         output:{

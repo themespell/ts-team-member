@@ -7,7 +7,7 @@ export const fetchData = (action, callback, additionalParams = {}) => {
     ...additionalParams,
   };
 
-  jQuery.get(ajax_url, params, function(response) {
+  jQuery.post(ajax_url, params, function(response) {
     if (typeof callback === "function") {
       callback(response);
     }

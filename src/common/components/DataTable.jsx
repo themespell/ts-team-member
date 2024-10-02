@@ -3,8 +3,10 @@ import { Table, Space } from 'antd';
 import { fetchData } from '../services/fetchData';
 import { deleteData } from "../services/deleteData";
 import { toastNotification } from '.././utils/toastNotification.js';
+import CrudModal from "./CrudModal.jsx";
+import Editor from "../../editor/Editor.jsx";
 
-function DataTable({ type, title }) {
+function DataTable({ type, title, editor }) {
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
 
@@ -15,22 +17,23 @@ function DataTable({ type, title }) {
           key: item.post_id,
           ...item,
         }));
-        
-        // Dynamically generate columns based on the keys in the response data
+
         const dynamicColumns = Object.keys(showcaseData[0]).map((key) => ({
-          title: key.charAt(0).toUpperCase() + key.slice(1), // Capitalize the first letter
+          title: key.charAt(0).toUpperCase() + key.slice(1),
           dataIndex: key,
           key: key,
           render: (text) => <span>{text}</span>,
         }));
 
-        // Add static "Action" column
         const actionColumn = {
           title: 'Action',
           key: 'action',
           render: (_, record) => (
             <Space size="middle">
-              <a onClick={() => handleEdit(record)}>Edit</a>
+              <a onClick={() => handleEdit(record.key)}>Edit</a>
+              {editor && (
+                <a onClick={() => handleEditor(record.key, type)}>Edit Design</a>
+              )}
               <a onClick={() => handleDelete(record.key)}>Delete</a>
             </Space>
           ),
@@ -58,6 +61,22 @@ function DataTable({ type, title }) {
         toastNotification('error', 'Error', `There was an error deleting the ${title}.`);
     });
   };
+
+  const handleEdit = (post_id) => {
+    return(
+      <CrudModal />
+    )
+  }
+
+  const handleEditor = (post_id, type) => {
+    let currentUrl = window.location.href;
+    if (currentUrl.includes('?')) {
+        currentUrl += `&path=editor&type=${type}&post_id=${post_id}`;
+    } else {
+        currentUrl += `?path=editor&type=${type}&post_id=${post_id}`;
+    }
+    window.location.href = currentUrl;
+  }
 
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden">

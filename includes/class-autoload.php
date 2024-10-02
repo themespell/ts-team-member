@@ -6,7 +6,7 @@ class Autoload {
 	public static function autoload() {
 		$directories = array(
 			TSTEAM_INCLUDES_DIR_PATH,
-			// MEETINGWP_INCLUDES_DIR_PATH . 'channel/',
+			TSTEAM_INCLUDES_DIR_PATH . 'ajax/',
 		);
 
 		foreach ( $directories as $directory ) {

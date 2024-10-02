@@ -1,7 +1,7 @@
 import { Tabs } from "antd";
-import ContentTab from './tabs/Content';
-import StyleTab from './tabs/Style';
-import AdvanceTab from './tabs/Advance';
+import ContentTab from './Content';
+import StyleTab from './Style';
+import AdvanceTab from './Advance';
 
 function OptionTabs({theme, setTheme }){
   const items = [

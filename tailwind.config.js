@@ -3,6 +3,7 @@ export default {
   content: [
     "./index.html",
     './src/**/*.jsx',
+    './src/**/*.json',
     './templates/**/*.html',
     './includes/templates/**/*.php',
     './parts/**/*.html',

@@ -1,71 +1,47 @@
-import { Form, Input, Select,Space } from 'antd';
+import { useState, useEffect } from 'react';
+import { TsSelect } from '../../controls/tsControls';
+import { Form, Input, Space } from 'antd';
+import { fetchData } from '../../../services/fetchData';
 
 function TeamShowcaseFields() {
+  const [teamMembers, setTeamMembers] = useState([]);
+
+  useEffect(() => {
+    fetchData('tsteam/team_member/fetch', (response) => {
+      if (response.success && response.data) {
+        const options = response.data.map((member) => ({
+          label: member.title,
+          value: member.post_id,
+        }));
+        setTeamMembers(options);
+      } else {
+        console.error('Failed to fetch team members.');
+      }
+    });
+  }, []);
+
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
-  const options = [
-    {
-      label: 'China',
-      value: 'china',
-      emoji: '🇨🇳',
-      desc: 'China (中国)',
-    },
-    {
-      label: 'USA',
-      value: 'usa',
-      emoji: '🇺🇸',
-      desc: 'USA (美国)',
-    },
-    {
-      label: 'Japan',
-      value: 'japan',
-      emoji: '🇯🇵',
-      desc: 'Japan (日本)',
-    },
-    {
-      label: 'Korea',
-      value: 'korea',
-      emoji: '🇰🇷',
-      desc: 'Korea (韩国)',
-    },
-  ];
 
   return (
     <>
-        <Form.Item
-          label="Showcase Name"
-          name="title"
-          rules={[
-            { required: true, message: 'Please input your showcase name!' },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-        name="member"
-        label="Team Member"
-        rules={[
-          {
-            required: false,
-          },
-        ]}
+      <Form.Item
+        label="Showcase Name"
+        name="title"
+        rules={[{ required: true, message: 'Please input your showcase name!' }]}
       >
-        <Select
-          mode="multiple"
-          placeholder="Select a option and change input text above"
-          onChange={handleChange}
-          allowClear
-          options={options}
-          optionRender={(option) => (
-            <Space>
-              <span role="img" aria-label={option.data.label}>
-                {option.data.emoji}
-              </span>
-              {option.data.desc}
-            </Space>
-          )}
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        name="team_members"
+        rules={[{ required: false }]}
+      >
+        <TsSelect 
+        label='Team Members'
+        options={teamMembers}
+        mode="multiple"
         />
       </Form.Item>
     </>
