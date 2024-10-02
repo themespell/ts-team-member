@@ -11,7 +11,7 @@ import { fetchData } from '../common/services/fetchData.js';
 import editorStore from './states/editorStore.js';
 
 function Editor() {
-  const { layout } = editorStore();
+  const { layout, view } = editorStore();
 
   const { selectedAnimation } = useStore();
   const [theme, setTheme] = useState('Theme One');
@@ -91,6 +91,7 @@ function Editor() {
       <div className='editor-hover editor-container'>
         <Frontend 
           layout={layout}
+          view={view}
           data={postData}
         />
       </div>
