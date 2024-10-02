@@ -29,6 +29,17 @@ const defaultLayouts = [
   },
 ];
 
+const viewStyle = [
+  {
+    label: 'Static / Grid',
+    value: 'grid',
+  },
+  {
+    label: 'Carousel',
+    value: 'carousel',
+  },
+];
+
 const range = {
   min: 1,
   max: 20,
@@ -43,6 +54,7 @@ const padding = {
 
 function ContentTab() {
   const { layout, setLayout } = editorStore();
+  const { view, setView } = editorStore();
 
   return (
     <div>
@@ -54,10 +66,10 @@ function ContentTab() {
       />
 
       <TsSelect
-      label="Layout Action"
-      value={layout}
-      options={defaultLayouts}
-      onChange={(value) => setLayout(value)}
+      label="View Style"
+      value={view}
+      options={viewStyle}
+      onChange={(value) => setView(value)}
       />
       <TsDivider />
       <TsSlider
