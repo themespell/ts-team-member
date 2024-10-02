@@ -12003,7 +12003,7 @@ function getAlphaColor$1(frontColor, backgroundColor) {
     a: 1
   }).toRgbString();
 }
-var __rest$P = function(s, e2) {
+var __rest$S = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -12014,7 +12014,7 @@ var __rest$P = function(s, e2) {
 function formatToken(derivativeToken) {
   const {
     override
-  } = derivativeToken, restToken = __rest$P(derivativeToken, ["override"]);
+  } = derivativeToken, restToken = __rest$S(derivativeToken, ["override"]);
   const overrideTokens = Object.assign({}, override);
   Object.keys(seedToken).forEach((token2) => {
     delete overrideTokens[token2];
@@ -12168,7 +12168,7 @@ function formatToken(derivativeToken) {
   }), overrideTokens);
   return aliasToken;
 }
-var __rest$O = function(s, e2) {
+var __rest$R = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -12229,7 +12229,7 @@ const getComputedToken = (originToken, overrideToken, theme) => {
   const derivativeToken = theme.getDerivativeToken(originToken);
   const {
     override
-  } = overrideToken, components = __rest$O(overrideToken, ["override"]);
+  } = overrideToken, components = __rest$R(overrideToken, ["override"]);
   let mergedDerivativeToken = Object.assign(Object.assign({}, derivativeToken), {
     override
   });
@@ -12239,7 +12239,7 @@ const getComputedToken = (originToken, overrideToken, theme) => {
       let [key, value] = _ref;
       const {
         theme: componentTheme
-      } = value, componentTokens = __rest$O(value, ["theme"]);
+      } = value, componentTokens = __rest$R(value, ["theme"]);
       let mergedComponentToken = componentTokens;
       if (componentTheme) {
         mergedComponentToken = getComputedToken(Object.assign(Object.assign({}, mergedDerivativeToken), componentTokens), {
@@ -12521,10 +12521,10 @@ function useTheme(theme, parentTheme, config) {
     return !isEqual(prevTheme, nextTheme, true);
   }));
 }
-var _excluded$R = ["children"];
+var _excluded$U = ["children"];
 var Context$1 = /* @__PURE__ */ reactExports.createContext({});
 function MotionProvider(_ref) {
-  var children = _ref.children, props = _objectWithoutProperties(_ref, _excluded$R);
+  var children = _ref.children, props = _objectWithoutProperties(_ref, _excluded$U);
   return /* @__PURE__ */ reactExports.createElement(Context$1.Provider, {
     value: props
   }, children);
@@ -12729,7 +12729,7 @@ const useStepQueue = function(status, prepareOnly, callback) {
   }, []);
   return [startQueue, step];
 };
-function useStatus(supportMotion, visible, getElement, _ref) {
+function useStatus$1(supportMotion, visible, getElement, _ref) {
   var _ref$motionEnter = _ref.motionEnter, motionEnter = _ref$motionEnter === void 0 ? true : _ref$motionEnter, _ref$motionAppear = _ref.motionAppear, motionAppear = _ref$motionAppear === void 0 ? true : _ref$motionAppear, _ref$motionLeave = _ref.motionLeave, motionLeave = _ref$motionLeave === void 0 ? true : _ref$motionLeave, motionDeadline = _ref.motionDeadline, motionLeaveImmediately = _ref.motionLeaveImmediately, onAppearPrepare = _ref.onAppearPrepare, onEnterPrepare = _ref.onEnterPrepare, onLeavePrepare = _ref.onLeavePrepare, onAppearStart = _ref.onAppearStart, onEnterStart = _ref.onEnterStart, onLeaveStart = _ref.onLeaveStart, onAppearActive = _ref.onAppearActive, onEnterActive = _ref.onEnterActive, onLeaveActive = _ref.onLeaveActive, onAppearEnd = _ref.onAppearEnd, onEnterEnd = _ref.onEnterEnd, onLeaveEnd = _ref.onLeaveEnd, onVisibleChanged = _ref.onVisibleChanged;
   var _useState = useSafeState(), _useState2 = _slicedToArray(_useState, 2), asyncVisible = _useState2[0], setAsyncVisible = _useState2[1];
   var _useSyncState = useSyncState$2(STATUS_NONE), _useSyncState2 = _slicedToArray(_useSyncState, 2), getStatus2 = _useSyncState2[0], setStatus = _useSyncState2[1];
@@ -12892,7 +12892,7 @@ function genCSSMotion(config) {
         return null;
       }
     }
-    var _useStatus = useStatus(supportMotion, visible, getDomElement, props), _useStatus2 = _slicedToArray(_useStatus, 4), status = _useStatus2[0], statusStep = _useStatus2[1], statusStyle = _useStatus2[2], mergedVisible = _useStatus2[3];
+    var _useStatus = useStatus$1(supportMotion, visible, getDomElement, props), _useStatus2 = _slicedToArray(_useStatus, 4), status = _useStatus2[0], statusStep = _useStatus2[1], statusStyle = _useStatus2[2], mergedVisible = _useStatus2[3];
     var renderedRef = reactExports.useRef(mergedVisible);
     if (mergedVisible) {
       renderedRef.current = true;
@@ -13038,7 +13038,7 @@ function diffKeys() {
   });
   return list;
 }
-var _excluded$Q = ["component", "children", "onVisibleChanged", "onAllRemoved"], _excluded2$8 = ["status"];
+var _excluded$T = ["component", "children", "onVisibleChanged", "onAllRemoved"], _excluded2$b = ["status"];
 var MOTION_PROP_NAMES = ["eventProps", "visible", "children", "motionName", "motionAppear", "motionEnter", "motionLeave", "motionLeaveImmediately", "motionDeadline", "removeOnLeave", "leavedClassName", "onAppearPrepare", "onAppearStart", "onAppearActive", "onAppearEnd", "onEnterStart", "onEnterActive", "onEnterEnd", "onLeaveStart", "onLeaveActive", "onLeaveEnd"];
 function genCSSMotionList(transitionSupport) {
   var CSSMotion$1 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : CSSMotion;
@@ -13078,7 +13078,7 @@ function genCSSMotionList(transitionSupport) {
       value: function render2() {
         var _this2 = this;
         var keyEntities = this.state.keyEntities;
-        var _this$props = this.props, component = _this$props.component, children = _this$props.children, _onVisibleChanged = _this$props.onVisibleChanged, onAllRemoved = _this$props.onAllRemoved, restProps = _objectWithoutProperties(_this$props, _excluded$Q);
+        var _this$props = this.props, component = _this$props.component, children = _this$props.children, _onVisibleChanged = _this$props.onVisibleChanged, onAllRemoved = _this$props.onAllRemoved, restProps = _objectWithoutProperties(_this$props, _excluded$T);
         var Component = component || reactExports.Fragment;
         var motionProps = {};
         MOTION_PROP_NAMES.forEach(function(prop) {
@@ -13087,7 +13087,7 @@ function genCSSMotionList(transitionSupport) {
         });
         delete restProps.keys;
         return /* @__PURE__ */ reactExports.createElement(Component, restProps, keyEntities.map(function(_ref2, index2) {
-          var status = _ref2.status, eventProps = _objectWithoutProperties(_ref2, _excluded2$8);
+          var status = _ref2.status, eventProps = _objectWithoutProperties(_ref2, _excluded2$b);
           var visible = status === STATUS_ADD || status === STATUS_KEEP;
           return /* @__PURE__ */ reactExports.createElement(CSSMotion$1, _extends({}, motionProps, {
             key: eventProps.key,
@@ -13158,7 +13158,7 @@ function MotionWrapper(props) {
   return children;
 }
 const PropWarning = () => null;
-var __rest$N = function(s, e2) {
+var __rest$Q = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -13447,7 +13447,7 @@ const ProviderChildren = (props) => {
       token: token2,
       components,
       cssVar
-    } = _a, rest = __rest$N(_a, ["algorithm", "token", "components", "cssVar"]);
+    } = _a, rest = __rest$Q(_a, ["algorithm", "token", "components", "cssVar"]);
     const themeObj = algorithm && (!Array.isArray(algorithm) || algorithm.length > 0) ? createTheme(algorithm) : defaultTheme;
     const parsedComponents = {};
     Object.entries(components || {}).forEach((_ref) => {
@@ -13588,7 +13588,7 @@ var useInsertStyles = function useInsertStyles2(eleRef) {
     });
   }, []);
 };
-var _excluded$P = ["icon", "className", "onClick", "style", "primaryColor", "secondaryColor"];
+var _excluded$S = ["icon", "className", "onClick", "style", "primaryColor", "secondaryColor"];
 var twoToneColorPalette = {
   primaryColor: "#333",
   secondaryColor: "#E6E6E6",
@@ -13604,7 +13604,7 @@ function getTwoToneColors() {
   return _objectSpread2({}, twoToneColorPalette);
 }
 var IconBase = function IconBase2(props) {
-  var icon = props.icon, className = props.className, onClick = props.onClick, style2 = props.style, primaryColor = props.primaryColor, secondaryColor = props.secondaryColor, restProps = _objectWithoutProperties(props, _excluded$P);
+  var icon = props.icon, className = props.className, onClick = props.onClick, style2 = props.style, primaryColor = props.primaryColor, secondaryColor = props.secondaryColor, restProps = _objectWithoutProperties(props, _excluded$S);
   var svgRef = reactExports.useRef();
   var colors = twoToneColorPalette;
   if (primaryColor) {
@@ -13654,10 +13654,10 @@ function getTwoToneColor() {
   }
   return [colors.primaryColor, colors.secondaryColor];
 }
-var _excluded$O = ["className", "icon", "spin", "rotate", "tabIndex", "onClick", "twoToneColor"];
+var _excluded$R = ["className", "icon", "spin", "rotate", "tabIndex", "onClick", "twoToneColor"];
 setTwoToneColor(blue.primary);
 var Icon$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
-  var className = props.className, icon = props.icon, spin = props.spin, rotate = props.rotate, tabIndex = props.tabIndex, onClick = props.onClick, twoToneColor = props.twoToneColor, restProps = _objectWithoutProperties(props, _excluded$O);
+  var className = props.className, icon = props.icon, spin = props.spin, rotate = props.rotate, tabIndex = props.tabIndex, onClick = props.onClick, twoToneColor = props.twoToneColor, restProps = _objectWithoutProperties(props, _excluded$R);
   var _React$useContext = reactExports.useContext(IconContext), _React$useContext$pre = _React$useContext.prefixCls, prefixCls = _React$useContext$pre === void 0 ? "anticon" : _React$useContext$pre, rootClassName = _React$useContext.rootClassName;
   var classString = classNames(rootClassName, prefixCls, _defineProperty(_defineProperty({}, "".concat(prefixCls, "-").concat(icon.name), !!icon.name), "".concat(prefixCls, "-spin"), !!spin || icon.name === "loading"), className);
   var iconTabIndex = tabIndex;
@@ -13693,7 +13693,7 @@ var CheckCircleFilled = function CheckCircleFilled2(props, ref) {
     icon: CheckCircleFilled$1
   }));
 };
-var RefIcon$t = /* @__PURE__ */ reactExports.forwardRef(CheckCircleFilled);
+var RefIcon$y = /* @__PURE__ */ reactExports.forwardRef(CheckCircleFilled);
 var CloseCircleFilled$1 = { "icon": { "tag": "svg", "attrs": { "fill-rule": "evenodd", "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M512 64c247.4 0 448 200.6 448 448S759.4 960 512 960 64 759.4 64 512 264.6 64 512 64zm127.98 274.82h-.04l-.08.06L512 466.75 384.14 338.88c-.04-.05-.06-.06-.08-.06a.12.12 0 00-.07 0c-.03 0-.05.01-.09.05l-45.02 45.02a.2.2 0 00-.05.09.12.12 0 000 .07v.02a.27.27 0 00.06.06L466.75 512 338.88 639.86c-.05.04-.06.06-.06.08a.12.12 0 000 .07c0 .03.01.05.05.09l45.02 45.02a.2.2 0 00.09.05.12.12 0 00.07 0c.02 0 .04-.01.08-.05L512 557.25l127.86 127.87c.04.04.06.05.08.05a.12.12 0 00.07 0c.03 0 .05-.01.09-.05l45.02-45.02a.2.2 0 00.05-.09.12.12 0 000-.07v-.02a.27.27 0 00-.05-.06L557.25 512l127.87-127.86c.04-.04.05-.06.05-.08a.12.12 0 000-.07c0-.03-.01-.05-.05-.09l-45.02-45.02a.2.2 0 00-.09-.05.12.12 0 00-.07 0z" } }] }, "name": "close-circle", "theme": "filled" };
 var CloseCircleFilled = function CloseCircleFilled2(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
@@ -13701,7 +13701,7 @@ var CloseCircleFilled = function CloseCircleFilled2(props, ref) {
     icon: CloseCircleFilled$1
   }));
 };
-var RefIcon$s = /* @__PURE__ */ reactExports.forwardRef(CloseCircleFilled);
+var RefIcon$x = /* @__PURE__ */ reactExports.forwardRef(CloseCircleFilled);
 var CloseOutlined$1 = { "icon": { "tag": "svg", "attrs": { "fill-rule": "evenodd", "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M799.86 166.31c.02 0 .04.02.08.06l57.69 57.7c.04.03.05.05.06.08a.12.12 0 010 .06c0 .03-.02.05-.06.09L569.93 512l287.7 287.7c.04.04.05.06.06.09a.12.12 0 010 .07c0 .02-.02.04-.06.08l-57.7 57.69c-.03.04-.05.05-.07.06a.12.12 0 01-.07 0c-.03 0-.05-.02-.09-.06L512 569.93l-287.7 287.7c-.04.04-.06.05-.09.06a.12.12 0 01-.07 0c-.02 0-.04-.02-.08-.06l-57.69-57.7c-.04-.03-.05-.05-.06-.07a.12.12 0 010-.07c0-.03.02-.05.06-.09L454.07 512l-287.7-287.7c-.04-.04-.05-.06-.06-.09a.12.12 0 010-.07c0-.02.02-.04.06-.08l57.7-57.69c.03-.04.05-.05.07-.06a.12.12 0 01.07 0c.03 0 .05.02.09.06L512 454.07l287.7-287.7c.04-.04.06-.05.09-.06a.12.12 0 01.07 0z" } }] }, "name": "close", "theme": "outlined" };
 var CloseOutlined = function CloseOutlined2(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
@@ -13709,7 +13709,7 @@ var CloseOutlined = function CloseOutlined2(props, ref) {
     icon: CloseOutlined$1
   }));
 };
-var RefIcon$r = /* @__PURE__ */ reactExports.forwardRef(CloseOutlined);
+var RefIcon$w = /* @__PURE__ */ reactExports.forwardRef(CloseOutlined);
 var ExclamationCircleFilled$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm-32 232c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v272c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V296zm32 440a48.01 48.01 0 010-96 48.01 48.01 0 010 96z" } }] }, "name": "exclamation-circle", "theme": "filled" };
 var ExclamationCircleFilled = function ExclamationCircleFilled2(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
@@ -13717,7 +13717,7 @@ var ExclamationCircleFilled = function ExclamationCircleFilled2(props, ref) {
     icon: ExclamationCircleFilled$1
   }));
 };
-var RefIcon$q = /* @__PURE__ */ reactExports.forwardRef(ExclamationCircleFilled);
+var RefIcon$v = /* @__PURE__ */ reactExports.forwardRef(ExclamationCircleFilled);
 var InfoCircleFilled$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm32 664c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V456c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v272zm-32-344a48.01 48.01 0 010-96 48.01 48.01 0 010 96z" } }] }, "name": "info-circle", "theme": "filled" };
 var InfoCircleFilled = function InfoCircleFilled2(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
@@ -13725,7 +13725,7 @@ var InfoCircleFilled = function InfoCircleFilled2(props, ref) {
     icon: InfoCircleFilled$1
   }));
 };
-var RefIcon$p = /* @__PURE__ */ reactExports.forwardRef(InfoCircleFilled);
+var RefIcon$u = /* @__PURE__ */ reactExports.forwardRef(InfoCircleFilled);
 var attributes = "accept acceptCharset accessKey action allowFullScreen allowTransparency\n    alt async autoComplete autoFocus autoPlay capture cellPadding cellSpacing challenge\n    charSet checked classID className colSpan cols content contentEditable contextMenu\n    controls coords crossOrigin data dateTime default defer dir disabled download draggable\n    encType form formAction formEncType formMethod formNoValidate formTarget frameBorder\n    headers height hidden high href hrefLang htmlFor httpEquiv icon id inputMode integrity\n    is keyParams keyType kind label lang list loop low manifest marginHeight marginWidth max maxLength media\n    mediaGroup method min minLength multiple muted name noValidate nonce open\n    optimum pattern placeholder poster preload radioGroup readOnly rel required\n    reversed role rowSpan rows sandbox scope scoped scrolling seamless selected\n    shape size sizes span spellCheck src srcDoc srcLang srcSet start step style\n    summary tabIndex target title type useMap value width wmode wrap";
 var eventsName = "onCopy onCut onPaste onCompositionEnd onCompositionStart onCompositionUpdate onKeyDown\n    onKeyPress onKeyUp onFocus onBlur onChange onInput onSubmit onClick onContextMenu onDoubleClick\n    onDrag onDragEnd onDragEnter onDragExit onDragLeave onDragOver onDragStart onDrop onMouseDown\n    onMouseEnter onMouseLeave onMouseMove onMouseOut onMouseOver onMouseUp onSelect onTouchCancel\n    onTouchEnd onTouchMove onTouchStart onScroll onWheel onAbort onCanPlay onCanPlayThrough\n    onDurationChange onEmptied onEncrypted onEnded onError onLoadedData onLoadedMetadata\n    onLoadStart onPause onPlay onPlaying onProgress onRateChange onSeeked onSeeking onStalled onSuspend onTimeUpdate onVolumeChange onWaiting onLoad onError";
 var propList = "".concat(attributes, " ").concat(eventsName).split(/[\s\n]+/);
@@ -13775,6 +13775,427 @@ const replaceElement = (element, replacement, props) => {
 function cloneElement(element, props) {
   return replaceElement(element, element, props);
 }
+const genAlertTypeStyle = (bgColor, borderColor, iconColor, token2, alertCls) => ({
+  background: bgColor,
+  border: `${unit$1(token2.lineWidth)} ${token2.lineType} ${borderColor}`,
+  [`${alertCls}-icon`]: {
+    color: iconColor
+  }
+});
+const genBaseStyle$7 = (token2) => {
+  const {
+    componentCls,
+    motionDurationSlow: duration,
+    marginXS,
+    marginSM,
+    fontSize,
+    fontSizeLG,
+    lineHeight,
+    borderRadiusLG: borderRadius,
+    motionEaseInOutCirc,
+    withDescriptionIconSize,
+    colorText,
+    colorTextHeading,
+    withDescriptionPadding,
+    defaultPadding
+  } = token2;
+  return {
+    [componentCls]: Object.assign(Object.assign({}, resetComponent(token2)), {
+      position: "relative",
+      display: "flex",
+      alignItems: "center",
+      padding: defaultPadding,
+      wordWrap: "break-word",
+      borderRadius,
+      [`&${componentCls}-rtl`]: {
+        direction: "rtl"
+      },
+      [`${componentCls}-content`]: {
+        flex: 1,
+        minWidth: 0
+      },
+      [`${componentCls}-icon`]: {
+        marginInlineEnd: marginXS,
+        lineHeight: 0
+      },
+      "&-description": {
+        display: "none",
+        fontSize,
+        lineHeight
+      },
+      "&-message": {
+        color: colorTextHeading
+      },
+      [`&${componentCls}-motion-leave`]: {
+        overflow: "hidden",
+        opacity: 1,
+        transition: `max-height ${duration} ${motionEaseInOutCirc}, opacity ${duration} ${motionEaseInOutCirc},
+        padding-top ${duration} ${motionEaseInOutCirc}, padding-bottom ${duration} ${motionEaseInOutCirc},
+        margin-bottom ${duration} ${motionEaseInOutCirc}`
+      },
+      [`&${componentCls}-motion-leave-active`]: {
+        maxHeight: 0,
+        marginBottom: "0 !important",
+        paddingTop: 0,
+        paddingBottom: 0,
+        opacity: 0
+      }
+    }),
+    [`${componentCls}-with-description`]: {
+      alignItems: "flex-start",
+      padding: withDescriptionPadding,
+      [`${componentCls}-icon`]: {
+        marginInlineEnd: marginSM,
+        fontSize: withDescriptionIconSize,
+        lineHeight: 0
+      },
+      [`${componentCls}-message`]: {
+        display: "block",
+        marginBottom: marginXS,
+        color: colorTextHeading,
+        fontSize: fontSizeLG
+      },
+      [`${componentCls}-description`]: {
+        display: "block",
+        color: colorText
+      }
+    },
+    [`${componentCls}-banner`]: {
+      marginBottom: 0,
+      border: "0 !important",
+      borderRadius: 0
+    }
+  };
+};
+const genTypeStyle = (token2) => {
+  const {
+    componentCls,
+    colorSuccess,
+    colorSuccessBorder,
+    colorSuccessBg,
+    colorWarning,
+    colorWarningBorder,
+    colorWarningBg,
+    colorError,
+    colorErrorBorder,
+    colorErrorBg,
+    colorInfo,
+    colorInfoBorder,
+    colorInfoBg
+  } = token2;
+  return {
+    [componentCls]: {
+      "&-success": genAlertTypeStyle(colorSuccessBg, colorSuccessBorder, colorSuccess, token2, componentCls),
+      "&-info": genAlertTypeStyle(colorInfoBg, colorInfoBorder, colorInfo, token2, componentCls),
+      "&-warning": genAlertTypeStyle(colorWarningBg, colorWarningBorder, colorWarning, token2, componentCls),
+      "&-error": Object.assign(Object.assign({}, genAlertTypeStyle(colorErrorBg, colorErrorBorder, colorError, token2, componentCls)), {
+        [`${componentCls}-description > pre`]: {
+          margin: 0,
+          padding: 0
+        }
+      })
+    }
+  };
+};
+const genActionStyle = (token2) => {
+  const {
+    componentCls,
+    iconCls,
+    motionDurationMid,
+    marginXS,
+    fontSizeIcon,
+    colorIcon,
+    colorIconHover
+  } = token2;
+  return {
+    [componentCls]: {
+      "&-action": {
+        marginInlineStart: marginXS
+      },
+      [`${componentCls}-close-icon`]: {
+        marginInlineStart: marginXS,
+        padding: 0,
+        overflow: "hidden",
+        fontSize: fontSizeIcon,
+        lineHeight: unit$1(fontSizeIcon),
+        backgroundColor: "transparent",
+        border: "none",
+        outline: "none",
+        cursor: "pointer",
+        [`${iconCls}-close`]: {
+          color: colorIcon,
+          transition: `color ${motionDurationMid}`,
+          "&:hover": {
+            color: colorIconHover
+          }
+        }
+      },
+      "&-close-text": {
+        color: colorIcon,
+        transition: `color ${motionDurationMid}`,
+        "&:hover": {
+          color: colorIconHover
+        }
+      }
+    }
+  };
+};
+const prepareComponentToken$m = (token2) => {
+  const paddingHorizontal = 12;
+  return {
+    withDescriptionIconSize: token2.fontSizeHeading3,
+    defaultPadding: `${token2.paddingContentVerticalSM}px ${paddingHorizontal}px`,
+    withDescriptionPadding: `${token2.paddingMD}px ${token2.paddingContentHorizontalLG}px`
+  };
+};
+const useStyle$s = genStyleHooks("Alert", (token2) => [genBaseStyle$7(token2), genTypeStyle(token2), genActionStyle(token2)], prepareComponentToken$m);
+var __rest$P = function(s, e2) {
+  var t2 = {};
+  for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
+    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p2[i2])) t2[p2[i2]] = s[p2[i2]];
+  }
+  return t2;
+};
+const iconMapFilled = {
+  success: RefIcon$y,
+  info: RefIcon$u,
+  error: RefIcon$x,
+  warning: RefIcon$v
+};
+const IconNode = (props) => {
+  const {
+    icon,
+    prefixCls,
+    type: type4
+  } = props;
+  const iconType = iconMapFilled[type4] || null;
+  if (icon) {
+    return replaceElement(icon, /* @__PURE__ */ reactExports.createElement("span", {
+      className: `${prefixCls}-icon`
+    }, icon), () => ({
+      className: classNames(`${prefixCls}-icon`, {
+        [icon.props.className]: icon.props.className
+      })
+    }));
+  }
+  return /* @__PURE__ */ reactExports.createElement(iconType, {
+    className: `${prefixCls}-icon`
+  });
+};
+const CloseIconNode = (props) => {
+  const {
+    isClosable,
+    prefixCls,
+    closeIcon,
+    handleClose,
+    ariaProps
+  } = props;
+  const mergedCloseIcon = closeIcon === true || closeIcon === void 0 ? /* @__PURE__ */ reactExports.createElement(RefIcon$w, null) : closeIcon;
+  return isClosable ? /* @__PURE__ */ reactExports.createElement("button", Object.assign({
+    type: "button",
+    onClick: handleClose,
+    className: `${prefixCls}-close-icon`,
+    tabIndex: 0
+  }, ariaProps), mergedCloseIcon) : null;
+};
+const Alert$1 = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
+  const {
+    description,
+    prefixCls: customizePrefixCls,
+    message,
+    banner,
+    className,
+    rootClassName,
+    style: style2,
+    onMouseEnter,
+    onMouseLeave,
+    onClick,
+    afterClose,
+    showIcon,
+    closable,
+    closeText,
+    closeIcon,
+    action,
+    id: id2
+  } = props, otherProps = __rest$P(props, ["description", "prefixCls", "message", "banner", "className", "rootClassName", "style", "onMouseEnter", "onMouseLeave", "onClick", "afterClose", "showIcon", "closable", "closeText", "closeIcon", "action", "id"]);
+  const [closed, setClosed] = reactExports.useState(false);
+  const internalRef = reactExports.useRef(null);
+  reactExports.useImperativeHandle(ref, () => ({
+    nativeElement: internalRef.current
+  }));
+  const {
+    getPrefixCls,
+    direction,
+    alert
+  } = reactExports.useContext(ConfigContext);
+  const prefixCls = getPrefixCls("alert", customizePrefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$s(prefixCls);
+  const handleClose = (e2) => {
+    var _a;
+    setClosed(true);
+    (_a = props.onClose) === null || _a === void 0 ? void 0 : _a.call(props, e2);
+  };
+  const type4 = reactExports.useMemo(() => {
+    if (props.type !== void 0) {
+      return props.type;
+    }
+    return banner ? "warning" : "info";
+  }, [props.type, banner]);
+  const isClosable = reactExports.useMemo(() => {
+    if (typeof closable === "object" && closable.closeIcon) return true;
+    if (closeText) {
+      return true;
+    }
+    if (typeof closable === "boolean") {
+      return closable;
+    }
+    if (closeIcon !== false && closeIcon !== null && closeIcon !== void 0) {
+      return true;
+    }
+    return !!(alert === null || alert === void 0 ? void 0 : alert.closable);
+  }, [closeText, closeIcon, closable, alert === null || alert === void 0 ? void 0 : alert.closable]);
+  const isShowIcon = banner && showIcon === void 0 ? true : showIcon;
+  const alertCls = classNames(prefixCls, `${prefixCls}-${type4}`, {
+    [`${prefixCls}-with-description`]: !!description,
+    [`${prefixCls}-no-icon`]: !isShowIcon,
+    [`${prefixCls}-banner`]: !!banner,
+    [`${prefixCls}-rtl`]: direction === "rtl"
+  }, alert === null || alert === void 0 ? void 0 : alert.className, className, rootClassName, cssVarCls, hashId);
+  const restProps = pickAttrs(otherProps, {
+    aria: true,
+    data: true
+  });
+  const mergedCloseIcon = reactExports.useMemo(() => {
+    var _a, _b;
+    if (typeof closable === "object" && closable.closeIcon) {
+      return closable.closeIcon;
+    }
+    if (closeText) {
+      return closeText;
+    }
+    if (closeIcon !== void 0) {
+      return closeIcon;
+    }
+    if (typeof (alert === null || alert === void 0 ? void 0 : alert.closable) === "object" && ((_a = alert === null || alert === void 0 ? void 0 : alert.closable) === null || _a === void 0 ? void 0 : _a.closeIcon)) {
+      return (_b = alert === null || alert === void 0 ? void 0 : alert.closable) === null || _b === void 0 ? void 0 : _b.closeIcon;
+    }
+    return alert === null || alert === void 0 ? void 0 : alert.closeIcon;
+  }, [closeIcon, closable, closeText, alert === null || alert === void 0 ? void 0 : alert.closeIcon]);
+  const mergedAriaProps = reactExports.useMemo(() => {
+    const merged = closable !== null && closable !== void 0 ? closable : alert === null || alert === void 0 ? void 0 : alert.closable;
+    if (typeof merged === "object") {
+      const ariaProps = __rest$P(merged, ["closeIcon"]);
+      return ariaProps;
+    }
+    return {};
+  }, [closable, alert === null || alert === void 0 ? void 0 : alert.closable]);
+  return wrapCSSVar(/* @__PURE__ */ reactExports.createElement(CSSMotion, {
+    visible: !closed,
+    motionName: `${prefixCls}-motion`,
+    motionAppear: false,
+    motionEnter: false,
+    onLeaveStart: (node2) => ({
+      maxHeight: node2.offsetHeight
+    }),
+    onLeaveEnd: afterClose
+  }, (_ref, setRef) => {
+    let {
+      className: motionClassName,
+      style: motionStyle
+    } = _ref;
+    return /* @__PURE__ */ reactExports.createElement("div", Object.assign({
+      id: id2,
+      ref: composeRef(internalRef, setRef),
+      "data-show": !closed,
+      className: classNames(alertCls, motionClassName),
+      style: Object.assign(Object.assign(Object.assign({}, alert === null || alert === void 0 ? void 0 : alert.style), style2), motionStyle),
+      onMouseEnter,
+      onMouseLeave,
+      onClick,
+      role: "alert"
+    }, restProps), isShowIcon ? /* @__PURE__ */ reactExports.createElement(IconNode, {
+      description,
+      icon: props.icon,
+      prefixCls,
+      type: type4
+    }) : null, /* @__PURE__ */ reactExports.createElement("div", {
+      className: `${prefixCls}-content`
+    }, message ? /* @__PURE__ */ reactExports.createElement("div", {
+      className: `${prefixCls}-message`
+    }, message) : null, description ? /* @__PURE__ */ reactExports.createElement("div", {
+      className: `${prefixCls}-description`
+    }, description) : null), action ? /* @__PURE__ */ reactExports.createElement("div", {
+      className: `${prefixCls}-action`
+    }, action) : null, /* @__PURE__ */ reactExports.createElement(CloseIconNode, {
+      isClosable,
+      prefixCls,
+      closeIcon: mergedCloseIcon,
+      handleClose,
+      ariaProps: mergedAriaProps
+    }));
+  }));
+});
+function _callSuper(t2, o2, e2) {
+  return o2 = _getPrototypeOf(o2), _possibleConstructorReturn(t2, _isNativeReflectConstruct() ? Reflect.construct(o2, e2 || [], _getPrototypeOf(t2).constructor) : o2.apply(t2, e2));
+}
+let ErrorBoundary = /* @__PURE__ */ function(_React$Component) {
+  function ErrorBoundary2() {
+    var _this;
+    _classCallCheck(this, ErrorBoundary2);
+    _this = _callSuper(this, ErrorBoundary2, arguments);
+    _this.state = {
+      error: void 0,
+      info: {
+        componentStack: ""
+      }
+    };
+    return _this;
+  }
+  _inherits(ErrorBoundary2, _React$Component);
+  return _createClass(ErrorBoundary2, [{
+    key: "componentDidCatch",
+    value: function componentDidCatch(error, info) {
+      this.setState({
+        error,
+        info
+      });
+    }
+  }, {
+    key: "render",
+    value: function render2() {
+      const {
+        message,
+        description,
+        id: id2,
+        children
+      } = this.props;
+      const {
+        error,
+        info
+      } = this.state;
+      const componentStack = (info === null || info === void 0 ? void 0 : info.componentStack) || null;
+      const errorMessage = typeof message === "undefined" ? (error || "").toString() : message;
+      const errorDescription = typeof description === "undefined" ? componentStack : description;
+      if (error) {
+        return /* @__PURE__ */ reactExports.createElement(Alert$1, {
+          id: id2,
+          type: "error",
+          message: errorMessage,
+          description: /* @__PURE__ */ reactExports.createElement("pre", {
+            style: {
+              fontSize: "0.9em",
+              overflowX: "auto"
+            }
+          }, errorDescription)
+        });
+      }
+      return children;
+    }
+  }]);
+}(reactExports.Component);
+const Alert = Alert$1;
+Alert.ErrorBoundary = ErrorBoundary;
 const t$2 = (t2) => "object" == typeof t2 && null != t2 && 1 === t2.nodeType, e$2 = (t2, e2) => (!e2 || "hidden" !== t2) && ("visible" !== t2 && "clip" !== t2), n$3 = (t2, n2) => {
   if (t2.clientHeight < t2.scrollHeight || t2.clientWidth < t2.scrollWidth) {
     const o2 = getComputedStyle(t2, null);
@@ -14563,7 +14984,7 @@ var useStack = function useStack2(config) {
   }
   return [!!config, result];
 };
-var _excluded$N = ["className", "style", "classNames", "styles"];
+var _excluded$Q = ["className", "style", "classNames", "styles"];
 var NoticeList = function NoticeList2(props) {
   var configList = props.configList, placement = props.placement, prefixCls = props.prefixCls, className = props.className, style2 = props.style, motion2 = props.motion, onAllNoticeRemoved = props.onAllNoticeRemoved, onNoticeClose = props.onNoticeClose, stackConfig = props.stack;
   var _useContext = reactExports.useContext(NotificationContext), ctxCls = _useContext.classNames;
@@ -14612,7 +15033,7 @@ var NoticeList = function NoticeList2(props) {
     var config = _ref2.config, motionClassName = _ref2.className, motionStyle = _ref2.style, motionIndex = _ref2.index;
     var _ref3 = config, key = _ref3.key, times = _ref3.times;
     var strKey = String(key);
-    var _ref4 = config, configClassName = _ref4.className, configStyle = _ref4.style, configClassNames = _ref4.classNames, configStyles = _ref4.styles, restConfig = _objectWithoutProperties(_ref4, _excluded$N);
+    var _ref4 = config, configClassName = _ref4.className, configStyle = _ref4.style, configClassNames = _ref4.classNames, configStyles = _ref4.styles, restConfig = _objectWithoutProperties(_ref4, _excluded$Q);
     var dataIndex = keys2.findIndex(function(item) {
       return item.key === strKey;
     });
@@ -14776,7 +15197,7 @@ var Notifications = /* @__PURE__ */ reactExports.forwardRef(function(props, ref)
     }) : list;
   })), container);
 });
-var _excluded$M = ["getContainer", "motion", "prefixCls", "maxCount", "className", "style", "onAllRemoved", "stack", "renderNotifications"];
+var _excluded$P = ["getContainer", "motion", "prefixCls", "maxCount", "className", "style", "onAllRemoved", "stack", "renderNotifications"];
 var defaultGetContainer = function defaultGetContainer2() {
   return document.body;
 };
@@ -14800,7 +15221,7 @@ function mergeConfig() {
 }
 function useNotification$1() {
   var rootConfig = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
-  var _rootConfig$getContai = rootConfig.getContainer, getContainer2 = _rootConfig$getContai === void 0 ? defaultGetContainer : _rootConfig$getContai, motion2 = rootConfig.motion, prefixCls = rootConfig.prefixCls, maxCount = rootConfig.maxCount, className = rootConfig.className, style2 = rootConfig.style, onAllRemoved = rootConfig.onAllRemoved, stack = rootConfig.stack, renderNotifications2 = rootConfig.renderNotifications, shareConfig = _objectWithoutProperties(rootConfig, _excluded$M);
+  var _rootConfig$getContai = rootConfig.getContainer, getContainer2 = _rootConfig$getContai === void 0 ? defaultGetContainer : _rootConfig$getContai, motion2 = rootConfig.motion, prefixCls = rootConfig.prefixCls, maxCount = rootConfig.maxCount, className = rootConfig.className, style2 = rootConfig.style, onAllRemoved = rootConfig.onAllRemoved, stack = rootConfig.stack, renderNotifications2 = rootConfig.renderNotifications, shareConfig = _objectWithoutProperties(rootConfig, _excluded$P);
   var _React$useState = reactExports.useState(), _React$useState2 = _slicedToArray(_React$useState, 2), container = _React$useState2[0], setContainer = _React$useState2[1];
   var notificationsRef = reactExports.useRef();
   var contextHolder = /* @__PURE__ */ reactExports.createElement(Notifications, {
@@ -14882,7 +15303,7 @@ var LoadingOutlined = function LoadingOutlined2(props, ref) {
     icon: LoadingOutlined$1
   }));
 };
-var RefIcon$o = /* @__PURE__ */ reactExports.forwardRef(LoadingOutlined);
+var RefIcon$t = /* @__PURE__ */ reactExports.forwardRef(LoadingOutlined);
 const zIndexContext = /* @__PURE__ */ React.createContext(void 0);
 const CONTAINER_OFFSET = 100;
 const CONTAINER_OFFSET_MAX_COUNT = 10;
@@ -15413,7 +15834,7 @@ const genWaveStyle = (token2) => {
     }
   };
 };
-const useStyle$q = genComponentStyleHook("Wave", (token2) => [genWaveStyle(token2)]);
+const useStyle$r = genComponentStyleHook("Wave", (token2) => [genWaveStyle(token2)]);
 const TARGET_CLS = `${defaultPrefixCls}-wave-target`;
 function isNotGrey(color) {
   const match2 = (color || "").match(/rgba?\((\d*), (\d*), (\d*)(, [\d.]*)?\)/);
@@ -15598,7 +16019,7 @@ const Wave = (props) => {
   } = reactExports.useContext(ConfigContext);
   const containerRef = reactExports.useRef(null);
   const prefixCls = getPrefixCls("wave");
-  const [, hashId] = useStyle$q(prefixCls);
+  const [, hashId] = useStyle$r(prefixCls);
   const showWave = useWave(containerRef, classNames(prefixCls, hashId), component);
   React.useEffect(() => {
     const node2 = containerRef.current;
@@ -15723,7 +16144,7 @@ const genSpaceGapStyle = (token2) => {
     }
   };
 };
-const useStyle$p = genStyleHooks("Space", (token2) => {
+const useStyle$q = genStyleHooks("Space", (token2) => {
   const spaceToken = merge(token2, {
     spaceGapSmallSize: token2.paddingXS,
     spaceGapMiddleSize: token2.padding,
@@ -15735,7 +16156,7 @@ const useStyle$p = genStyleHooks("Space", (token2) => {
   // https://github.com/ant-design/ant-design/issues/40315
   resetStyle: false
 });
-var __rest$M = function(s, e2) {
+var __rest$O = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -15779,7 +16200,7 @@ const NoCompactStyle = (_ref) => {
 const CompactItem = (_a) => {
   var {
     children
-  } = _a, otherProps = __rest$M(_a, ["children"]);
+  } = _a, otherProps = __rest$O(_a, ["children"]);
   return /* @__PURE__ */ reactExports.createElement(SpaceCompactItemContext.Provider, {
     value: otherProps
   }, children);
@@ -15797,10 +16218,10 @@ const Compact = (props) => {
     className,
     rootClassName,
     children
-  } = props, restProps = __rest$M(props, ["size", "direction", "block", "prefixCls", "className", "rootClassName", "children"]);
+  } = props, restProps = __rest$O(props, ["size", "direction", "block", "prefixCls", "className", "rootClassName", "children"]);
   const mergedSize = useSize((ctx) => size !== null && size !== void 0 ? size : ctx);
   const prefixCls = getPrefixCls("space-compact", customizePrefixCls);
-  const [wrapCSSVar, hashId] = useStyle$p(prefixCls);
+  const [wrapCSSVar, hashId] = useStyle$q(prefixCls);
   const clx = classNames(prefixCls, hashId, {
     [`${prefixCls}-rtl`]: directionConfig === "rtl",
     [`${prefixCls}-block`]: block,
@@ -15825,7 +16246,7 @@ const Compact = (props) => {
     className: clx
   }, restProps), nodes));
 };
-var __rest$L = function(s, e2) {
+var __rest$N = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -15843,7 +16264,7 @@ const ButtonGroup = (props) => {
     prefixCls: customizePrefixCls,
     size,
     className
-  } = props, others = __rest$L(props, ["prefixCls", "size", "className"]);
+  } = props, others = __rest$N(props, ["prefixCls", "size", "className"]);
   const prefixCls = getPrefixCls("btn-group", customizePrefixCls);
   const [, , hashId] = useToken();
   let sizeCls = "";
@@ -15945,7 +16366,7 @@ const InnerLoadingIcon = /* @__PURE__ */ reactExports.forwardRef((props, ref) =>
     className: mergedIconCls,
     style: style2,
     ref
-  }, /* @__PURE__ */ React.createElement(RefIcon$o, {
+  }, /* @__PURE__ */ React.createElement(RefIcon$t, {
     className: iconClassName
   }));
 });
@@ -16082,7 +16503,7 @@ const prepareToken$3 = (token2) => {
   });
   return buttonToken;
 };
-const prepareComponentToken$k = (token2) => {
+const prepareComponentToken$l = (token2) => {
   var _a, _b, _c, _d, _e2, _f;
   const contentFontSize = (_a = token2.contentFontSize) !== null && _a !== void 0 ? _a : token2.fontSize;
   const contentFontSizeSM = (_b = token2.contentFontSizeSM) !== null && _b !== void 0 ? _b : token2.fontSize;
@@ -16440,7 +16861,7 @@ const genBlockButtonStyle = (token2) => {
     }
   };
 };
-const useStyle$o = genStyleHooks("Button", (token2) => {
+const useStyle$p = genStyleHooks("Button", (token2) => {
   const buttonToken = prepareToken$3(token2);
   return [
     // Shared
@@ -16456,7 +16877,7 @@ const useStyle$o = genStyleHooks("Button", (token2) => {
     // Button Group
     genGroupStyle$1(buttonToken)
   ];
-}, prepareComponentToken$k, {
+}, prepareComponentToken$l, {
   unitless: {
     fontWeight: true,
     contentLineHeight: true,
@@ -16619,8 +17040,8 @@ const CompactCmp = genSubStyleComponent(["Button", "compact"], (token2) => {
     genCompactItemVerticalStyle(buttonToken),
     genButtonCompactStyle(buttonToken)
   ];
-}, prepareComponentToken$k);
-var __rest$K = function(s, e2) {
+}, prepareComponentToken$l);
+var __rest$M = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -16665,7 +17086,7 @@ const InternalCompoundedButton = /* @__PURE__ */ React.forwardRef((props, ref) =
     classNames: customClassNames,
     style: customStyle = {},
     autoInsertSpace
-  } = props, rest = __rest$K(props, ["loading", "prefixCls", "type", "danger", "shape", "size", "styles", "disabled", "className", "rootClassName", "children", "icon", "iconPosition", "ghost", "block", "htmlType", "classNames", "style", "autoInsertSpace"]);
+  } = props, rest = __rest$M(props, ["loading", "prefixCls", "type", "danger", "shape", "size", "styles", "disabled", "className", "rootClassName", "children", "icon", "iconPosition", "ghost", "block", "htmlType", "classNames", "style", "autoInsertSpace"]);
   const mergedType = type4 || "default";
   const {
     getPrefixCls,
@@ -16674,7 +17095,7 @@ const InternalCompoundedButton = /* @__PURE__ */ React.forwardRef((props, ref) =
   } = reactExports.useContext(ConfigContext);
   const mergedInsertSpace = (_a = autoInsertSpace !== null && autoInsertSpace !== void 0 ? autoInsertSpace : button === null || button === void 0 ? void 0 : button.autoInsertSpace) !== null && _a !== void 0 ? _a : true;
   const prefixCls = getPrefixCls("btn", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$o(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$p(prefixCls);
   const disabled = reactExports.useContext(DisabledContext);
   const mergedDisabled = customDisabled !== null && customDisabled !== void 0 ? customDisabled : disabled;
   const groupSize = reactExports.useContext(GroupSizeContext);
@@ -18979,7 +19400,7 @@ function move(array4, moveIndex, toIndex) {
   }
   return array4;
 }
-var _excluded$L = ["name"];
+var _excluded$O = ["name"];
 var EMPTY_ERRORS = [];
 function requireUpdate(shouldUpdate, prev2, next2, prevValue, nextValue, info) {
   if (typeof shouldUpdate === "function") {
@@ -19412,7 +19833,7 @@ _defineProperty(Field, "defaultProps", {
   valuePropName: "value"
 });
 function WrapperField(_ref6) {
-  var name = _ref6.name, restProps = _objectWithoutProperties(_ref6, _excluded$L);
+  var name = _ref6.name, restProps = _objectWithoutProperties(_ref6, _excluded$O);
   var fieldContext = reactExports.useContext(Context);
   var listContext = reactExports.useContext(ListContext);
   var namePath = name !== void 0 ? getNamePath(name) : void 0;
@@ -19634,7 +20055,7 @@ var NameMap = /* @__PURE__ */ function() {
   }]);
   return NameMap2;
 }();
-var _excluded$K = ["name"];
+var _excluded$N = ["name"];
 var FormStore = /* @__PURE__ */ _createClass(function FormStore2(forceRootUpdate) {
   var _this = this;
   _classCallCheck(this, FormStore2);
@@ -20028,7 +20449,7 @@ var FormStore = /* @__PURE__ */ _createClass(function FormStore2(forceRootUpdate
     var prevStore = _this.store;
     var namePathList = [];
     fields.forEach(function(fieldData) {
-      var name = fieldData.name, data = _objectWithoutProperties(fieldData, _excluded$K);
+      var name = fieldData.name, data = _objectWithoutProperties(fieldData, _excluded$N);
       var namePath = getNamePath(name);
       namePathList.push(namePath);
       if ("value" in data) {
@@ -20432,9 +20853,9 @@ var FormProvider$1 = function FormProvider(_ref) {
     })
   }, children);
 };
-var _excluded$J = ["name", "initialValues", "fields", "form", "preserve", "children", "component", "validateMessages", "validateTrigger", "onValuesChange", "onFieldsChange", "onFinish", "onFinishFailed", "clearOnDestroy"];
+var _excluded$M = ["name", "initialValues", "fields", "form", "preserve", "children", "component", "validateMessages", "validateTrigger", "onValuesChange", "onFieldsChange", "onFinish", "onFinishFailed", "clearOnDestroy"];
 var Form$2 = function Form(_ref, ref) {
-  var name = _ref.name, initialValues = _ref.initialValues, fields = _ref.fields, form = _ref.form, preserve2 = _ref.preserve, children = _ref.children, _ref$component = _ref.component, Component = _ref$component === void 0 ? "form" : _ref$component, validateMessages = _ref.validateMessages, _ref$validateTrigger = _ref.validateTrigger, validateTrigger = _ref$validateTrigger === void 0 ? "onChange" : _ref$validateTrigger, onValuesChange = _ref.onValuesChange, _onFieldsChange = _ref.onFieldsChange, _onFinish = _ref.onFinish, onFinishFailed = _ref.onFinishFailed, clearOnDestroy = _ref.clearOnDestroy, restProps = _objectWithoutProperties(_ref, _excluded$J);
+  var name = _ref.name, initialValues = _ref.initialValues, fields = _ref.fields, form = _ref.form, preserve2 = _ref.preserve, children = _ref.children, _ref$component = _ref.component, Component = _ref$component === void 0 ? "form" : _ref$component, validateMessages = _ref.validateMessages, _ref$validateTrigger = _ref.validateTrigger, validateTrigger = _ref$validateTrigger === void 0 ? "onChange" : _ref$validateTrigger, onValuesChange = _ref.onValuesChange, _onFieldsChange = _ref.onFieldsChange, _onFinish = _ref.onFinish, onFinishFailed = _ref.onFinishFailed, clearOnDestroy = _ref.clearOnDestroy, restProps = _objectWithoutProperties(_ref, _excluded$M);
   var nativeElementRef = reactExports.useRef(null);
   var formContext = reactExports.useContext(FormContext$1);
   var _useForm = useForm$1(form), _useForm2 = _slicedToArray(_useForm, 1), formInstance = _useForm2[0];
@@ -20710,7 +21131,7 @@ function useClosable(propCloseCollection, contextCloseCollection) {
   const propCloseConfig = useClosableConfig(propCloseCollection);
   const contextCloseConfig = useClosableConfig(contextCloseCollection);
   const mergedFallbackCloseCollection = React.useMemo(() => Object.assign({
-    closeIcon: /* @__PURE__ */ React.createElement(RefIcon$r, null)
+    closeIcon: /* @__PURE__ */ React.createElement(RefIcon$w, null)
   }, fallbackCloseCollection), [fallbackCloseCollection]);
   const mergedClosableConfig = React.useMemo(() => {
     if (propCloseConfig === false) {
@@ -21069,7 +21490,7 @@ const genBaseStyle$6 = (token2) => {
     }
   };
 };
-const prepareComponentToken$j = (token2) => {
+const prepareComponentToken$k = (token2) => {
   const {
     colorFillContent,
     colorFill
@@ -21087,7 +21508,7 @@ const prepareComponentToken$j = (token2) => {
     paragraphLiHeight: token2.controlHeight / 2
   };
 };
-const useStyle$n = genStyleHooks("Skeleton", (token2) => {
+const useStyle$o = genStyleHooks("Skeleton", (token2) => {
   const {
     componentCls,
     calc
@@ -21106,7 +21527,7 @@ const useStyle$n = genStyleHooks("Skeleton", (token2) => {
     skeletonLoadingMotionDuration: "1.4s"
   });
   return [genBaseStyle$6(skeletonToken)];
-}, prepareComponentToken$j, {
+}, prepareComponentToken$k, {
   deprecatedTokens: [["color", "gradientFromColor"], ["colorGradientEnd", "gradientToColor"]]
 });
 const SkeletonAvatar = (props) => {
@@ -21122,7 +21543,7 @@ const SkeletonAvatar = (props) => {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("skeleton", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$n(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$o(prefixCls);
   const otherProps = omit(props, ["prefixCls", "className"]);
   const cls = classNames(prefixCls, `${prefixCls}-element`, {
     [`${prefixCls}-active`]: active
@@ -21148,7 +21569,7 @@ const SkeletonButton = (props) => {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("skeleton", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$n(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$o(prefixCls);
   const otherProps = omit(props, ["prefixCls"]);
   const cls = classNames(prefixCls, `${prefixCls}-element`, {
     [`${prefixCls}-active`]: active,
@@ -21174,7 +21595,7 @@ const SkeletonImage = (props) => {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("skeleton", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$n(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$o(prefixCls);
   const cls = classNames(prefixCls, `${prefixCls}-element`, {
     [`${prefixCls}-active`]: active
   }, className, rootClassName, hashId, cssVarCls);
@@ -21205,7 +21626,7 @@ const SkeletonInput = (props) => {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("skeleton", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$n(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$o(prefixCls);
   const otherProps = omit(props, ["prefixCls"]);
   const cls = classNames(prefixCls, `${prefixCls}-element`, {
     [`${prefixCls}-active`]: active,
@@ -21225,7 +21646,7 @@ var DotChartOutlined = function DotChartOutlined2(props, ref) {
     icon: DotChartOutlined$1
   }));
 };
-var RefIcon$n = /* @__PURE__ */ reactExports.forwardRef(DotChartOutlined);
+var RefIcon$s = /* @__PURE__ */ reactExports.forwardRef(DotChartOutlined);
 const SkeletonNode = (props) => {
   const {
     prefixCls: customizePrefixCls,
@@ -21239,11 +21660,11 @@ const SkeletonNode = (props) => {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("skeleton", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$n(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$o(prefixCls);
   const cls = classNames(prefixCls, `${prefixCls}-element`, {
     [`${prefixCls}-active`]: active
   }, hashId, className, rootClassName, cssVarCls);
-  const content = children !== null && children !== void 0 ? children : /* @__PURE__ */ reactExports.createElement(RefIcon$n, null);
+  const content = children !== null && children !== void 0 ? children : /* @__PURE__ */ reactExports.createElement(RefIcon$s, null);
   return wrapCSSVar(/* @__PURE__ */ reactExports.createElement("div", {
     className: cls
   }, /* @__PURE__ */ reactExports.createElement("div", {
@@ -21365,7 +21786,7 @@ const Skeleton = (props) => {
     skeleton
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("skeleton", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$n(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$o(prefixCls);
   if (loading || !("loading" in props)) {
     const hasAvatar = !!avatar;
     const hasTitle = !!title;
@@ -21463,7 +21884,7 @@ const NormalOkBtn = () => {
 function renderCloseIcon(prefixCls, closeIcon) {
   return /* @__PURE__ */ React.createElement("span", {
     className: `${prefixCls}-close-x`
-  }, closeIcon || /* @__PURE__ */ React.createElement(RefIcon$r, {
+  }, closeIcon || /* @__PURE__ */ React.createElement(RefIcon$w, {
     className: `${prefixCls}-close-icon`
   }));
 }
@@ -22301,7 +22722,7 @@ const prepareToken$2 = (token2) => {
   });
   return modalToken;
 };
-const prepareComponentToken$i = (token2) => ({
+const prepareComponentToken$j = (token2) => ({
   footerBg: "transparent",
   headerBg: token2.colorBgElevated,
   titleLineHeight: token2.lineHeightHeading5,
@@ -22322,15 +22743,15 @@ const prepareComponentToken$i = (token2) => ({
   confirmIconMarginInlineEnd: token2.wireframe ? token2.margin : token2.marginSM,
   confirmBtnsMarginTop: token2.wireframe ? token2.marginLG : token2.marginSM
 });
-const useStyle$m = genStyleHooks("Modal", (token2) => {
+const useStyle$n = genStyleHooks("Modal", (token2) => {
   const modalToken = prepareToken$2(token2);
   return [genModalStyle(modalToken), genRTLStyle(modalToken), genModalMaskStyle(modalToken), initZoomMotion(modalToken, "zoom")];
-}, prepareComponentToken$i, {
+}, prepareComponentToken$j, {
   unitless: {
     titleLineHeight: true
   }
 });
-var __rest$J = function(s, e2) {
+var __rest$L = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -22389,11 +22810,11 @@ const Modal$1 = (props) => {
     styles: modalStyles,
     children,
     loading
-  } = props, restProps = __rest$J(props, ["prefixCls", "className", "rootClassName", "open", "wrapClassName", "centered", "getContainer", "focusTriggerAfterClose", "style", "visible", "width", "footer", "classNames", "styles", "children", "loading"]);
+  } = props, restProps = __rest$L(props, ["prefixCls", "className", "rootClassName", "open", "wrapClassName", "centered", "getContainer", "focusTriggerAfterClose", "style", "visible", "width", "footer", "classNames", "styles", "children", "loading"]);
   const prefixCls = getPrefixCls("modal", customizePrefixCls);
   const rootPrefixCls = getPrefixCls();
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$m(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$n(prefixCls, rootCls);
   const wrapClassNameExtended = classNames(wrapClassName, {
     [`${prefixCls}-centered`]: !!centered,
     [`${prefixCls}-wrap-rtl`]: direction === "rtl"
@@ -22404,7 +22825,7 @@ const Modal$1 = (props) => {
   })) : null;
   const [mergedClosable, mergedCloseIcon] = useClosable(pickClosable(props), pickClosable(modalContext), {
     closable: true,
-    closeIcon: /* @__PURE__ */ reactExports.createElement(RefIcon$r, {
+    closeIcon: /* @__PURE__ */ reactExports.createElement(RefIcon$w, {
       className: `${prefixCls}-close-icon`
     }),
     closeIconRender: (icon) => renderCloseIcon(prefixCls, icon)
@@ -22537,11 +22958,11 @@ const genModalConfirmStyle = (token2) => {
 const Confirm = genSubStyleComponent(["Modal", "confirm"], (token2) => {
   const modalToken = prepareToken$2(token2);
   return [genModalConfirmStyle(modalToken)];
-}, prepareComponentToken$i, {
+}, prepareComponentToken$j, {
   // confirm is weak than modal since no conflict here
   order: -1e3
 });
-var __rest$I = function(s, e2) {
+var __rest$K = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -22561,21 +22982,21 @@ function ConfirmContent(props) {
     footer,
     // Legacy for static function usage
     locale: staticLocale
-  } = props, resetProps = __rest$I(props, ["prefixCls", "icon", "okText", "cancelText", "confirmPrefixCls", "type", "okCancel", "footer", "locale"]);
+  } = props, resetProps = __rest$K(props, ["prefixCls", "icon", "okText", "cancelText", "confirmPrefixCls", "type", "okCancel", "footer", "locale"]);
   let mergedIcon = icon;
   if (!icon && icon !== null) {
     switch (type4) {
       case "info":
-        mergedIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$p, null);
+        mergedIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$u, null);
         break;
       case "success":
-        mergedIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$t, null);
+        mergedIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$y, null);
         break;
       case "error":
-        mergedIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$s, null);
+        mergedIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$x, null);
         break;
       default:
-        mergedIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$q, null);
+        mergedIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$v, null);
     }
   }
   const mergedOkCancel = okCancel !== null && okCancel !== void 0 ? okCancel : type4 === "confirm";
@@ -22842,7 +23263,7 @@ function modalGlobalConfig(_ref) {
   } = _ref;
   defaultRootPrefixCls = rootPrefixCls;
 }
-var __rest$H = function(s, e2) {
+var __rest$J = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -22855,7 +23276,7 @@ const HookModal = (_a, ref) => {
   var {
     afterClose: hookAfterClose,
     config
-  } = _a, restProps = __rest$H(_a, ["afterClose", "config"]);
+  } = _a, restProps = __rest$J(_a, ["afterClose", "config"]);
   const [open2, setOpen] = reactExports.useState(true);
   const [innerConfig, setInnerConfig] = reactExports.useState(config);
   const {
@@ -23393,7 +23814,7 @@ const genNotificationStyle = (token2) => {
     }
   ];
 };
-const prepareComponentToken$h = (token2) => ({
+const prepareComponentToken$i = (token2) => ({
   zIndexPopup: token2.zIndexPopupBase + CONTAINER_MAX_OFFSET + 50,
   width: 384
 });
@@ -23416,10 +23837,10 @@ const prepareNotificationToken = (token2) => {
   });
   return notificationToken;
 };
-const useStyle$l = genStyleHooks("Notification", (token2) => {
+const useStyle$m = genStyleHooks("Notification", (token2) => {
   const notificationToken = prepareNotificationToken(token2);
   return [genNotificationStyle(notificationToken), genNotificationPlacementStyle(notificationToken), genStackStyle(notificationToken)];
-}, prepareComponentToken$h);
+}, prepareComponentToken$i);
 const PurePanelStyle = genSubStyleComponent(["Notification", "PurePanel"], (token2) => {
   const noticeCls = `${token2.componentCls}-notice`;
   const notificationToken = prepareNotificationToken(token2);
@@ -23430,8 +23851,8 @@ const PurePanelStyle = genSubStyleComponent(["Notification", "PurePanel"], (toke
       margin: 0
     })
   };
-}, prepareComponentToken$h);
-var __rest$G = function(s, e2) {
+}, prepareComponentToken$i);
+var __rest$I = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -23443,15 +23864,15 @@ function getCloseIcon(prefixCls, closeIcon) {
   if (closeIcon === null || closeIcon === false) {
     return null;
   }
-  return closeIcon || /* @__PURE__ */ reactExports.createElement(RefIcon$r, {
+  return closeIcon || /* @__PURE__ */ reactExports.createElement(RefIcon$w, {
     className: `${prefixCls}-close-icon`
   });
 }
 const typeToIcon = {
-  success: RefIcon$t,
-  info: RefIcon$p,
-  error: RefIcon$s,
-  warning: RefIcon$q
+  success: RefIcon$y,
+  info: RefIcon$u,
+  error: RefIcon$x,
+  warning: RefIcon$v
 };
 const PureContent = (props) => {
   const {
@@ -23498,14 +23919,14 @@ const PurePanel$8 = (props) => {
     closable = true,
     closeIcon,
     className: notificationClassName
-  } = props, restProps = __rest$G(props, ["prefixCls", "className", "icon", "type", "message", "description", "btn", "closable", "closeIcon", "className"]);
+  } = props, restProps = __rest$I(props, ["prefixCls", "className", "icon", "type", "message", "description", "btn", "closable", "closeIcon", "className"]);
   const {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = staticPrefixCls || getPrefixCls("notification");
   const noticePrefixCls = `${prefixCls}-notice`;
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$l(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$m(prefixCls, rootCls);
   return wrapCSSVar(/* @__PURE__ */ reactExports.createElement("div", {
     className: classNames(`${noticePrefixCls}-pure-panel`, hashId, className, cssVarCls, rootCls)
   }, /* @__PURE__ */ reactExports.createElement(PurePanelStyle, {
@@ -23586,7 +24007,7 @@ function getMotion$2(prefixCls) {
     motionName: `${prefixCls}-fade`
   };
 }
-var __rest$F = function(s, e2) {
+var __rest$H = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -23603,7 +24024,7 @@ const Wrapper = (_ref) => {
     prefixCls
   } = _ref;
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$l(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$m(prefixCls, rootCls);
   return wrapCSSVar(/* @__PURE__ */ React.createElement(NotificationProvider, {
     classNames: {
       list: classNames(hashId, cssVarCls, rootCls)
@@ -23699,7 +24120,7 @@ function useInternalNotification(notificationConfig) {
         role = "alert",
         closeIcon,
         closable
-      } = config, restConfig = __rest$F(config, ["message", "description", "icon", "type", "btn", "className", "style", "role", "closeIcon", "closable"]);
+      } = config, restConfig = __rest$H(config, ["message", "description", "icon", "type", "btn", "className", "style", "role", "closeIcon", "closable"]);
       const realCloseIcon = getCloseIcon(noticePrefixCls, typeof closeIcon !== "undefined" ? closeIcon : notification2 === null || notification2 === void 0 ? void 0 : notification2.closeIcon);
       return originOpen(Object.assign(Object.assign({
         // use placement from props instead of hard-coding "topRight"
@@ -23987,10 +24408,10 @@ function isValidateOpenKey(currentKeyCode) {
     KeyCode.F12
   ].includes(currentKeyCode);
 }
-var _excluded$I = ["prefixCls", "invalidate", "item", "renderItem", "responsive", "responsiveDisabled", "registerSize", "itemKey", "className", "style", "children", "display", "order", "component"];
+var _excluded$L = ["prefixCls", "invalidate", "item", "renderItem", "responsive", "responsiveDisabled", "registerSize", "itemKey", "className", "style", "children", "display", "order", "component"];
 var UNDEFINED = void 0;
 function InternalItem(props, ref) {
-  var prefixCls = props.prefixCls, invalidate = props.invalidate, item = props.item, renderItem = props.renderItem, responsive = props.responsive, responsiveDisabled = props.responsiveDisabled, registerSize = props.registerSize, itemKey2 = props.itemKey, className = props.className, style2 = props.style, children = props.children, display = props.display, order = props.order, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, restProps = _objectWithoutProperties(props, _excluded$I);
+  var prefixCls = props.prefixCls, invalidate = props.invalidate, item = props.item, renderItem = props.renderItem, responsive = props.responsive, responsiveDisabled = props.responsiveDisabled, registerSize = props.registerSize, itemKey2 = props.itemKey, className = props.className, style2 = props.style, children = props.children, display = props.display, order = props.order, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, restProps = _objectWithoutProperties(props, _excluded$L);
   var mergedHidden = responsive && !display;
   function internalRegisterSize(width) {
     registerSize(itemKey2, width);
@@ -24074,16 +24495,16 @@ function useEffectState(notifyEffectUpdate, defaultValue) {
   return [stateValue, setEffectVal];
 }
 var OverflowContext = /* @__PURE__ */ React.createContext(null);
-var _excluded$H = ["component"], _excluded2$7 = ["className"], _excluded3$1 = ["className"];
+var _excluded$K = ["component"], _excluded2$a = ["className"], _excluded3$1 = ["className"];
 var InternalRawItem = function InternalRawItem2(props, ref) {
   var context = reactExports.useContext(OverflowContext);
   if (!context) {
-    var _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, _restProps = _objectWithoutProperties(props, _excluded$H);
+    var _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, _restProps = _objectWithoutProperties(props, _excluded$K);
     return /* @__PURE__ */ reactExports.createElement(Component, _extends({}, _restProps, {
       ref
     }));
   }
-  var contextClassName = context.className, restContext = _objectWithoutProperties(context, _excluded2$7);
+  var contextClassName = context.className, restContext = _objectWithoutProperties(context, _excluded2$a);
   var className = props.className, restProps = _objectWithoutProperties(props, _excluded3$1);
   return /* @__PURE__ */ reactExports.createElement(OverflowContext.Provider, {
     value: null
@@ -24094,14 +24515,14 @@ var InternalRawItem = function InternalRawItem2(props, ref) {
 };
 var RawItem = /* @__PURE__ */ reactExports.forwardRef(InternalRawItem);
 RawItem.displayName = "RawItem";
-var _excluded$G = ["prefixCls", "data", "renderItem", "renderRawItem", "itemKey", "itemWidth", "ssr", "style", "className", "maxCount", "renderRest", "renderRawRest", "suffix", "component", "itemComponent", "onVisibleChange"];
+var _excluded$J = ["prefixCls", "data", "renderItem", "renderRawItem", "itemKey", "itemWidth", "ssr", "style", "className", "maxCount", "renderRest", "renderRawRest", "suffix", "component", "itemComponent", "onVisibleChange"];
 var RESPONSIVE = "responsive";
 var INVALIDATE = "invalidate";
 function defaultRenderRest(omittedItems) {
   return "+ ".concat(omittedItems.length, " ...");
 }
 function Overflow(props, ref) {
-  var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-overflow" : _props$prefixCls, _props$data = props.data, data = _props$data === void 0 ? [] : _props$data, renderItem = props.renderItem, renderRawItem = props.renderRawItem, itemKey2 = props.itemKey, _props$itemWidth = props.itemWidth, itemWidth = _props$itemWidth === void 0 ? 10 : _props$itemWidth, ssr = props.ssr, style2 = props.style, className = props.className, maxCount = props.maxCount, renderRest = props.renderRest, renderRawRest = props.renderRawRest, suffix = props.suffix, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, itemComponent = props.itemComponent, onVisibleChange = props.onVisibleChange, restProps = _objectWithoutProperties(props, _excluded$G);
+  var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-overflow" : _props$prefixCls, _props$data = props.data, data = _props$data === void 0 ? [] : _props$data, renderItem = props.renderItem, renderRawItem = props.renderRawItem, itemKey2 = props.itemKey, _props$itemWidth = props.itemWidth, itemWidth = _props$itemWidth === void 0 ? 10 : _props$itemWidth, ssr = props.ssr, style2 = props.style, className = props.className, maxCount = props.maxCount, renderRest = props.renderRest, renderRawRest = props.renderRawRest, suffix = props.suffix, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, itemComponent = props.itemComponent, onVisibleChange = props.onVisibleChange, restProps = _objectWithoutProperties(props, _excluded$J);
   var fullySSR = ssr === "full";
   var notifyEffectUpdate = useBatcher();
   var _useEffectState = useEffectState(notifyEffectUpdate, null), _useEffectState2 = _slicedToArray(_useEffectState, 2), containerWidth = _useEffectState2[0], setContainerWidth = _useEffectState2[1];
@@ -25487,11 +25908,11 @@ function useWinClick(open2, clickToHide, targetEle, popupEle, mask, maskClosable
     }
   }, [clickToHide, targetEle, popupEle, mask, maskClosable]);
 }
-var _excluded$F = ["prefixCls", "children", "action", "showAction", "hideAction", "popupVisible", "defaultPopupVisible", "onPopupVisibleChange", "afterPopupVisibleChange", "mouseEnterDelay", "mouseLeaveDelay", "focusDelay", "blurDelay", "mask", "maskClosable", "getPopupContainer", "forceRender", "autoDestroy", "destroyPopupOnHide", "popup", "popupClassName", "popupStyle", "popupPlacement", "builtinPlacements", "popupAlign", "zIndex", "stretch", "getPopupClassNameFromAlign", "fresh", "alignPoint", "onPopupClick", "onPopupAlign", "arrow", "popupMotion", "maskMotion", "popupTransitionName", "popupAnimation", "maskTransitionName", "maskAnimation", "className", "getTriggerDOMNode"];
+var _excluded$I = ["prefixCls", "children", "action", "showAction", "hideAction", "popupVisible", "defaultPopupVisible", "onPopupVisibleChange", "afterPopupVisibleChange", "mouseEnterDelay", "mouseLeaveDelay", "focusDelay", "blurDelay", "mask", "maskClosable", "getPopupContainer", "forceRender", "autoDestroy", "destroyPopupOnHide", "popup", "popupClassName", "popupStyle", "popupPlacement", "builtinPlacements", "popupAlign", "zIndex", "stretch", "getPopupClassNameFromAlign", "fresh", "alignPoint", "onPopupClick", "onPopupAlign", "arrow", "popupMotion", "maskMotion", "popupTransitionName", "popupAnimation", "maskTransitionName", "maskAnimation", "className", "getTriggerDOMNode"];
 function generateTrigger() {
   var PortalComponent = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : Portal;
   var Trigger2 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
-    var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-trigger-popup" : _props$prefixCls, children = props.children, _props$action = props.action, action = _props$action === void 0 ? "hover" : _props$action, showAction = props.showAction, hideAction = props.hideAction, popupVisible = props.popupVisible, defaultPopupVisible = props.defaultPopupVisible, onPopupVisibleChange = props.onPopupVisibleChange, afterPopupVisibleChange = props.afterPopupVisibleChange, mouseEnterDelay = props.mouseEnterDelay, _props$mouseLeaveDela = props.mouseLeaveDelay, mouseLeaveDelay = _props$mouseLeaveDela === void 0 ? 0.1 : _props$mouseLeaveDela, focusDelay = props.focusDelay, blurDelay = props.blurDelay, mask = props.mask, _props$maskClosable = props.maskClosable, maskClosable = _props$maskClosable === void 0 ? true : _props$maskClosable, getPopupContainer = props.getPopupContainer, forceRender = props.forceRender, autoDestroy = props.autoDestroy, destroyPopupOnHide = props.destroyPopupOnHide, popup = props.popup, popupClassName = props.popupClassName, popupStyle = props.popupStyle, popupPlacement = props.popupPlacement, _props$builtinPlaceme = props.builtinPlacements, builtinPlacements = _props$builtinPlaceme === void 0 ? {} : _props$builtinPlaceme, popupAlign = props.popupAlign, zIndex = props.zIndex, stretch = props.stretch, getPopupClassNameFromAlign = props.getPopupClassNameFromAlign, fresh = props.fresh, alignPoint = props.alignPoint, onPopupClick = props.onPopupClick, onPopupAlign = props.onPopupAlign, arrow = props.arrow, popupMotion = props.popupMotion, maskMotion = props.maskMotion, popupTransitionName = props.popupTransitionName, popupAnimation = props.popupAnimation, maskTransitionName = props.maskTransitionName, maskAnimation = props.maskAnimation, className = props.className, getTriggerDOMNode = props.getTriggerDOMNode, restProps = _objectWithoutProperties(props, _excluded$F);
+    var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-trigger-popup" : _props$prefixCls, children = props.children, _props$action = props.action, action = _props$action === void 0 ? "hover" : _props$action, showAction = props.showAction, hideAction = props.hideAction, popupVisible = props.popupVisible, defaultPopupVisible = props.defaultPopupVisible, onPopupVisibleChange = props.onPopupVisibleChange, afterPopupVisibleChange = props.afterPopupVisibleChange, mouseEnterDelay = props.mouseEnterDelay, _props$mouseLeaveDela = props.mouseLeaveDelay, mouseLeaveDelay = _props$mouseLeaveDela === void 0 ? 0.1 : _props$mouseLeaveDela, focusDelay = props.focusDelay, blurDelay = props.blurDelay, mask = props.mask, _props$maskClosable = props.maskClosable, maskClosable = _props$maskClosable === void 0 ? true : _props$maskClosable, getPopupContainer = props.getPopupContainer, forceRender = props.forceRender, autoDestroy = props.autoDestroy, destroyPopupOnHide = props.destroyPopupOnHide, popup = props.popup, popupClassName = props.popupClassName, popupStyle = props.popupStyle, popupPlacement = props.popupPlacement, _props$builtinPlaceme = props.builtinPlacements, builtinPlacements = _props$builtinPlaceme === void 0 ? {} : _props$builtinPlaceme, popupAlign = props.popupAlign, zIndex = props.zIndex, stretch = props.stretch, getPopupClassNameFromAlign = props.getPopupClassNameFromAlign, fresh = props.fresh, alignPoint = props.alignPoint, onPopupClick = props.onPopupClick, onPopupAlign = props.onPopupAlign, arrow = props.arrow, popupMotion = props.popupMotion, maskMotion = props.maskMotion, popupTransitionName = props.popupTransitionName, popupAnimation = props.popupAnimation, maskTransitionName = props.maskTransitionName, maskAnimation = props.maskAnimation, className = props.className, getTriggerDOMNode = props.getTriggerDOMNode, restProps = _objectWithoutProperties(props, _excluded$I);
     var mergedAutoDestroy = autoDestroy || destroyPopupOnHide || false;
     var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), mobile = _React$useState2[0], setMobile = _React$useState2[1];
     useLayoutEffect$1(function() {
@@ -25807,7 +26228,7 @@ function generateTrigger() {
   return Trigger2;
 }
 const Trigger = generateTrigger(Portal);
-var _excluded$E = ["prefixCls", "disabled", "visible", "children", "popupElement", "animation", "transitionName", "dropdownStyle", "dropdownClassName", "direction", "placement", "builtinPlacements", "dropdownMatchSelectWidth", "dropdownRender", "dropdownAlign", "getPopupContainer", "empty", "getTriggerDOMNode", "onPopupVisibleChange", "onPopupMouseEnter"];
+var _excluded$H = ["prefixCls", "disabled", "visible", "children", "popupElement", "animation", "transitionName", "dropdownStyle", "dropdownClassName", "direction", "placement", "builtinPlacements", "dropdownMatchSelectWidth", "dropdownRender", "dropdownAlign", "getPopupContainer", "empty", "getTriggerDOMNode", "onPopupVisibleChange", "onPopupMouseEnter"];
 var getBuiltInPlacements$1 = function getBuiltInPlacements2(dropdownMatchSelectWidth) {
   var adjustX = dropdownMatchSelectWidth === true ? 0 : 1;
   return {
@@ -25852,7 +26273,7 @@ var getBuiltInPlacements$1 = function getBuiltInPlacements2(dropdownMatchSelectW
 var SelectTrigger = function SelectTrigger2(props, ref) {
   var prefixCls = props.prefixCls;
   props.disabled;
-  var visible = props.visible, children = props.children, popupElement = props.popupElement, animation = props.animation, transitionName = props.transitionName, dropdownStyle = props.dropdownStyle, dropdownClassName = props.dropdownClassName, _props$direction = props.direction, direction = _props$direction === void 0 ? "ltr" : _props$direction, placement = props.placement, builtinPlacements = props.builtinPlacements, dropdownMatchSelectWidth = props.dropdownMatchSelectWidth, dropdownRender = props.dropdownRender, dropdownAlign = props.dropdownAlign, getPopupContainer = props.getPopupContainer, empty = props.empty, getTriggerDOMNode = props.getTriggerDOMNode, onPopupVisibleChange = props.onPopupVisibleChange, onPopupMouseEnter = props.onPopupMouseEnter, restProps = _objectWithoutProperties(props, _excluded$E);
+  var visible = props.visible, children = props.children, popupElement = props.popupElement, animation = props.animation, transitionName = props.transitionName, dropdownStyle = props.dropdownStyle, dropdownClassName = props.dropdownClassName, _props$direction = props.direction, direction = _props$direction === void 0 ? "ltr" : _props$direction, placement = props.placement, builtinPlacements = props.builtinPlacements, dropdownMatchSelectWidth = props.dropdownMatchSelectWidth, dropdownRender = props.dropdownRender, dropdownAlign = props.dropdownAlign, getPopupContainer = props.getPopupContainer, empty = props.empty, getTriggerDOMNode = props.getTriggerDOMNode, onPopupVisibleChange = props.onPopupVisibleChange, onPopupMouseEnter = props.onPopupMouseEnter, restProps = _objectWithoutProperties(props, _excluded$H);
   var dropdownPrefixCls = "".concat(prefixCls, "-dropdown");
   var popupNode = popupElement;
   if (dropdownRender) {
@@ -26025,14 +26446,14 @@ function Polite(props) {
     return ["number", "string"].includes(_typeof(label)) ? label : value;
   }).join(", ")), values.length > MAX_COUNT ? ", ..." : null);
 }
-var _excluded$D = ["id", "prefixCls", "className", "showSearch", "tagRender", "direction", "omitDomProps", "displayValues", "onDisplayValuesChange", "emptyOptions", "notFoundContent", "onClear", "mode", "disabled", "loading", "getInputElement", "getRawInputElement", "open", "defaultOpen", "onDropdownVisibleChange", "activeValue", "onActiveValueChange", "activeDescendantId", "searchValue", "autoClearSearchValue", "onSearch", "onSearchSplit", "tokenSeparators", "allowClear", "suffixIcon", "clearIcon", "OptionList", "animation", "transitionName", "dropdownStyle", "dropdownClassName", "dropdownMatchSelectWidth", "dropdownRender", "dropdownAlign", "placement", "builtinPlacements", "getPopupContainer", "showAction", "onFocus", "onBlur", "onKeyUp", "onKeyDown", "onMouseDown"];
+var _excluded$G = ["id", "prefixCls", "className", "showSearch", "tagRender", "direction", "omitDomProps", "displayValues", "onDisplayValuesChange", "emptyOptions", "notFoundContent", "onClear", "mode", "disabled", "loading", "getInputElement", "getRawInputElement", "open", "defaultOpen", "onDropdownVisibleChange", "activeValue", "onActiveValueChange", "activeDescendantId", "searchValue", "autoClearSearchValue", "onSearch", "onSearchSplit", "tokenSeparators", "allowClear", "suffixIcon", "clearIcon", "OptionList", "animation", "transitionName", "dropdownStyle", "dropdownClassName", "dropdownMatchSelectWidth", "dropdownRender", "dropdownAlign", "placement", "builtinPlacements", "getPopupContainer", "showAction", "onFocus", "onBlur", "onKeyUp", "onKeyDown", "onMouseDown"];
 var DEFAULT_OMIT_PROPS = ["value", "onChange", "removeIcon", "placeholder", "autoFocus", "maxTagCount", "maxTagTextLength", "maxTagPlaceholder", "choiceTransitionName", "onInputKeyDown", "onPopupScroll", "tabIndex"];
 var isMultiple = function isMultiple2(mode) {
   return mode === "tags" || mode === "multiple";
 };
 var BaseSelect = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
   var _customizeRawInputEle;
-  var id2 = props.id, prefixCls = props.prefixCls, className = props.className, showSearch = props.showSearch, tagRender = props.tagRender, direction = props.direction, omitDomProps = props.omitDomProps, displayValues = props.displayValues, onDisplayValuesChange = props.onDisplayValuesChange, emptyOptions = props.emptyOptions, _props$notFoundConten = props.notFoundContent, notFoundContent = _props$notFoundConten === void 0 ? "Not Found" : _props$notFoundConten, onClear = props.onClear, mode = props.mode, disabled = props.disabled, loading = props.loading, getInputElement = props.getInputElement, getRawInputElement = props.getRawInputElement, open2 = props.open, defaultOpen = props.defaultOpen, onDropdownVisibleChange = props.onDropdownVisibleChange, activeValue = props.activeValue, onActiveValueChange = props.onActiveValueChange, activeDescendantId = props.activeDescendantId, searchValue = props.searchValue, autoClearSearchValue = props.autoClearSearchValue, onSearch = props.onSearch, onSearchSplit = props.onSearchSplit, tokenSeparators = props.tokenSeparators, allowClear = props.allowClear, suffixIcon = props.suffixIcon, clearIcon = props.clearIcon, OptionList3 = props.OptionList, animation = props.animation, transitionName = props.transitionName, dropdownStyle = props.dropdownStyle, dropdownClassName = props.dropdownClassName, dropdownMatchSelectWidth = props.dropdownMatchSelectWidth, dropdownRender = props.dropdownRender, dropdownAlign = props.dropdownAlign, placement = props.placement, builtinPlacements = props.builtinPlacements, getPopupContainer = props.getPopupContainer, _props$showAction = props.showAction, showAction = _props$showAction === void 0 ? [] : _props$showAction, onFocus = props.onFocus, onBlur = props.onBlur, onKeyUp = props.onKeyUp, onKeyDown2 = props.onKeyDown, onMouseDown = props.onMouseDown, restProps = _objectWithoutProperties(props, _excluded$D);
+  var id2 = props.id, prefixCls = props.prefixCls, className = props.className, showSearch = props.showSearch, tagRender = props.tagRender, direction = props.direction, omitDomProps = props.omitDomProps, displayValues = props.displayValues, onDisplayValuesChange = props.onDisplayValuesChange, emptyOptions = props.emptyOptions, _props$notFoundConten = props.notFoundContent, notFoundContent = _props$notFoundConten === void 0 ? "Not Found" : _props$notFoundConten, onClear = props.onClear, mode = props.mode, disabled = props.disabled, loading = props.loading, getInputElement = props.getInputElement, getRawInputElement = props.getRawInputElement, open2 = props.open, defaultOpen = props.defaultOpen, onDropdownVisibleChange = props.onDropdownVisibleChange, activeValue = props.activeValue, onActiveValueChange = props.onActiveValueChange, activeDescendantId = props.activeDescendantId, searchValue = props.searchValue, autoClearSearchValue = props.autoClearSearchValue, onSearch = props.onSearch, onSearchSplit = props.onSearchSplit, tokenSeparators = props.tokenSeparators, allowClear = props.allowClear, suffixIcon = props.suffixIcon, clearIcon = props.clearIcon, OptionList3 = props.OptionList, animation = props.animation, transitionName = props.transitionName, dropdownStyle = props.dropdownStyle, dropdownClassName = props.dropdownClassName, dropdownMatchSelectWidth = props.dropdownMatchSelectWidth, dropdownRender = props.dropdownRender, dropdownAlign = props.dropdownAlign, placement = props.placement, builtinPlacements = props.builtinPlacements, getPopupContainer = props.getPopupContainer, _props$showAction = props.showAction, showAction = _props$showAction === void 0 ? [] : _props$showAction, onFocus = props.onFocus, onBlur = props.onBlur, onKeyUp = props.onKeyUp, onKeyDown2 = props.onKeyDown, onMouseDown = props.onMouseDown, restProps = _objectWithoutProperties(props, _excluded$G);
   var multiple = isMultiple(mode);
   var mergedShowSearch = (showSearch !== void 0 ? showSearch : multiple) || mode === "combobox";
   var domProps = _objectSpread2({}, restProps);
@@ -27113,14 +27534,14 @@ function getSpinSize() {
   baseSize = Math.max(baseSize, MIN_SIZE);
   return Math.floor(baseSize);
 }
-var _excluded$C = ["prefixCls", "className", "height", "itemHeight", "fullHeight", "style", "data", "children", "itemKey", "virtual", "direction", "scrollWidth", "component", "onScroll", "onVirtualScroll", "onVisibleChange", "innerProps", "extraRender", "styles"];
+var _excluded$F = ["prefixCls", "className", "height", "itemHeight", "fullHeight", "style", "data", "children", "itemKey", "virtual", "direction", "scrollWidth", "component", "onScroll", "onVirtualScroll", "onVisibleChange", "innerProps", "extraRender", "styles"];
 var EMPTY_DATA$1 = [];
 var ScrollStyle = {
   overflowY: "auto",
   overflowAnchor: "none"
 };
 function RawList(props, ref) {
-  var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-virtual-list" : _props$prefixCls, className = props.className, height = props.height, itemHeight = props.itemHeight, _props$fullHeight = props.fullHeight, fullHeight = _props$fullHeight === void 0 ? true : _props$fullHeight, style2 = props.style, data = props.data, children = props.children, itemKey2 = props.itemKey, virtual = props.virtual, direction = props.direction, scrollWidth = props.scrollWidth, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, onScroll = props.onScroll, onVirtualScroll = props.onVirtualScroll, onVisibleChange = props.onVisibleChange, innerProps = props.innerProps, extraRender = props.extraRender, styles = props.styles, restProps = _objectWithoutProperties(props, _excluded$C);
+  var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-virtual-list" : _props$prefixCls, className = props.className, height = props.height, itemHeight = props.itemHeight, _props$fullHeight = props.fullHeight, fullHeight = _props$fullHeight === void 0 ? true : _props$fullHeight, style2 = props.style, data = props.data, children = props.children, itemKey2 = props.itemKey, virtual = props.virtual, direction = props.direction, scrollWidth = props.scrollWidth, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, onScroll = props.onScroll, onVirtualScroll = props.onVirtualScroll, onVisibleChange = props.onVisibleChange, innerProps = props.innerProps, extraRender = props.extraRender, styles = props.styles, restProps = _objectWithoutProperties(props, _excluded$F);
   var getKey2 = reactExports.useCallback(function(item) {
     if (typeof itemKey2 === "function") {
       return itemKey2(item);
@@ -27484,7 +27905,7 @@ List.displayName = "List";
 function isPlatformMac() {
   return /(mac\sos|macintosh)/i.test(navigator.appVersion);
 }
-var _excluded$B = ["disabled", "title", "children", "style", "className"];
+var _excluded$E = ["disabled", "title", "children", "style", "className"];
 function isTitleType(content) {
   return typeof content === "string" || typeof content === "number";
 }
@@ -27706,7 +28127,7 @@ var OptionList = function OptionList2(_, ref) {
     }
     var disabled = data.disabled, title = data.title;
     data.children;
-    var style2 = data.style, className = data.className, otherProps = _objectWithoutProperties(data, _excluded$B);
+    var style2 = data.style, className = data.className, otherProps = _objectWithoutProperties(data, _excluded$E);
     var passedProps = omit(otherProps, omitFieldNameList);
     var selected = isSelected(value);
     var mergedDisabled = disabled || !selected && overMaxCount;
@@ -27849,9 +28270,9 @@ function useId2(id2) {
   }, []);
   return id2 || innerId;
 }
-var _excluded$A = ["children", "value"], _excluded2$6 = ["children"];
+var _excluded$D = ["children", "value"], _excluded2$9 = ["children"];
 function convertNodeToOption(node2) {
-  var _ref = node2, key = _ref.key, _ref$props = _ref.props, children = _ref$props.children, value = _ref$props.value, restProps = _objectWithoutProperties(_ref$props, _excluded$A);
+  var _ref = node2, key = _ref.key, _ref$props = _ref.props, children = _ref$props.children, value = _ref$props.value, restProps = _objectWithoutProperties(_ref$props, _excluded$D);
   return _objectSpread2({
     key,
     value: value !== void 0 ? value : key,
@@ -27864,7 +28285,7 @@ function convertChildrenToData(nodes) {
     if (!/* @__PURE__ */ reactExports.isValidElement(node2) || !node2.type) {
       return null;
     }
-    var _ref2 = node2, isSelectOptGroup = _ref2.type.isSelectOptGroup, key = _ref2.key, _ref2$props = _ref2.props, children = _ref2$props.children, restProps = _objectWithoutProperties(_ref2$props, _excluded2$6);
+    var _ref2 = node2, isSelectOptGroup = _ref2.type.isSelectOptGroup, key = _ref2.key, _ref2$props = _ref2.props, children = _ref2$props.children, restProps = _objectWithoutProperties(_ref2$props, _excluded2$9);
     if (optionOnly || !isSelectOptGroup) {
       return convertNodeToOption(node2);
     }
@@ -27922,13 +28343,13 @@ function useRefFunc(callback) {
   }, []);
   return cacheFn;
 }
-var _excluded$z = ["id", "mode", "prefixCls", "backfill", "fieldNames", "inputValue", "searchValue", "onSearch", "autoClearSearchValue", "onSelect", "onDeselect", "dropdownMatchSelectWidth", "filterOption", "filterSort", "optionFilterProp", "optionLabelProp", "options", "optionRender", "children", "defaultActiveFirstOption", "menuItemSelectedIcon", "virtual", "direction", "listHeight", "listItemHeight", "labelRender", "value", "defaultValue", "labelInValue", "onChange", "maxCount"];
+var _excluded$C = ["id", "mode", "prefixCls", "backfill", "fieldNames", "inputValue", "searchValue", "onSearch", "autoClearSearchValue", "onSelect", "onDeselect", "dropdownMatchSelectWidth", "filterOption", "filterSort", "optionFilterProp", "optionLabelProp", "options", "optionRender", "children", "defaultActiveFirstOption", "menuItemSelectedIcon", "virtual", "direction", "listHeight", "listItemHeight", "labelRender", "value", "defaultValue", "labelInValue", "onChange", "maxCount"];
 var OMIT_DOM_PROPS = ["inputValue"];
 function isRawValue(value) {
   return !value || _typeof(value) !== "object";
 }
 var Select$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
-  var id2 = props.id, mode = props.mode, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-select" : _props$prefixCls, backfill = props.backfill, fieldNames = props.fieldNames, inputValue = props.inputValue, searchValue = props.searchValue, onSearch = props.onSearch, _props$autoClearSearc = props.autoClearSearchValue, autoClearSearchValue = _props$autoClearSearc === void 0 ? true : _props$autoClearSearc, onSelect = props.onSelect, onDeselect = props.onDeselect, _props$dropdownMatchS = props.dropdownMatchSelectWidth, dropdownMatchSelectWidth = _props$dropdownMatchS === void 0 ? true : _props$dropdownMatchS, filterOption = props.filterOption, filterSort = props.filterSort, optionFilterProp = props.optionFilterProp, optionLabelProp = props.optionLabelProp, options = props.options, optionRender = props.optionRender, children = props.children, defaultActiveFirstOption = props.defaultActiveFirstOption, menuItemSelectedIcon = props.menuItemSelectedIcon, virtual = props.virtual, direction = props.direction, _props$listHeight = props.listHeight, listHeight = _props$listHeight === void 0 ? 200 : _props$listHeight, _props$listItemHeight = props.listItemHeight, listItemHeight = _props$listItemHeight === void 0 ? 20 : _props$listItemHeight, labelRender = props.labelRender, value = props.value, defaultValue = props.defaultValue, labelInValue = props.labelInValue, onChange = props.onChange, maxCount = props.maxCount, restProps = _objectWithoutProperties(props, _excluded$z);
+  var id2 = props.id, mode = props.mode, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-select" : _props$prefixCls, backfill = props.backfill, fieldNames = props.fieldNames, inputValue = props.inputValue, searchValue = props.searchValue, onSearch = props.onSearch, _props$autoClearSearc = props.autoClearSearchValue, autoClearSearchValue = _props$autoClearSearc === void 0 ? true : _props$autoClearSearc, onSelect = props.onSelect, onDeselect = props.onDeselect, _props$dropdownMatchS = props.dropdownMatchSelectWidth, dropdownMatchSelectWidth = _props$dropdownMatchS === void 0 ? true : _props$dropdownMatchS, filterOption = props.filterOption, filterSort = props.filterSort, optionFilterProp = props.optionFilterProp, optionLabelProp = props.optionLabelProp, options = props.options, optionRender = props.optionRender, children = props.children, defaultActiveFirstOption = props.defaultActiveFirstOption, menuItemSelectedIcon = props.menuItemSelectedIcon, virtual = props.virtual, direction = props.direction, _props$listHeight = props.listHeight, listHeight = _props$listHeight === void 0 ? 200 : _props$listHeight, _props$listItemHeight = props.listItemHeight, listItemHeight = _props$listItemHeight === void 0 ? 20 : _props$listItemHeight, labelRender = props.labelRender, value = props.value, defaultValue = props.defaultValue, labelInValue = props.labelInValue, onChange = props.onChange, maxCount = props.maxCount, restProps = _objectWithoutProperties(props, _excluded$C);
   var mergedId = useId2(id2);
   var multiple = isMultiple(mode);
   var childrenAsData = !!(!options && children);
@@ -28401,7 +28822,7 @@ const genSharedEmptyStyle = (token2) => {
     }
   };
 };
-const useStyle$k = genStyleHooks("Empty", (token2) => {
+const useStyle$l = genStyleHooks("Empty", (token2) => {
   const {
     componentCls,
     controlHeightLG,
@@ -28415,7 +28836,7 @@ const useStyle$k = genStyleHooks("Empty", (token2) => {
   });
   return [genSharedEmptyStyle(emptyToken)];
 });
-var __rest$E = function(s, e2) {
+var __rest$G = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -28435,14 +28856,14 @@ const Empty = (_a) => {
     children,
     imageStyle,
     style: style2
-  } = _a, restProps = __rest$E(_a, ["className", "rootClassName", "prefixCls", "image", "description", "children", "imageStyle", "style"]);
+  } = _a, restProps = __rest$G(_a, ["className", "rootClassName", "prefixCls", "image", "description", "children", "imageStyle", "style"]);
   const {
     getPrefixCls,
     direction,
     empty
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("empty", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$k(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$l(prefixCls);
   const [locale2] = useLocale("Empty");
   const des = typeof description !== "undefined" ? description : locale2 === null || locale2 === void 0 ? void 0 : locale2.description;
   const alt = typeof des === "string" ? des : "empty";
@@ -29100,7 +29521,7 @@ function genSingleStyle(token2) {
     }), "lg")
   ];
 }
-const prepareComponentToken$g = (token2) => {
+const prepareComponentToken$h = (token2) => {
   const {
     fontSize,
     lineHeight,
@@ -29508,7 +29929,7 @@ const useSelectStyle = genStyleHooks("Select", (token2, _ref) => {
     selectHeight: token2.controlHeight
   });
   return [genSelectStyle(selectToken), genVariantsStyle(selectToken)];
-}, prepareComponentToken$g, {
+}, prepareComponentToken$h, {
   unitless: {
     optionLineHeight: true,
     optionSelectedFontWeight: true
@@ -29521,7 +29942,7 @@ var CheckOutlined = function CheckOutlined2(props, ref) {
     icon: CheckOutlined$1
   }));
 };
-var RefIcon$m = /* @__PURE__ */ reactExports.forwardRef(CheckOutlined);
+var RefIcon$r = /* @__PURE__ */ reactExports.forwardRef(CheckOutlined);
 var DownOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z" } }] }, "name": "down", "theme": "outlined" };
 var DownOutlined = function DownOutlined2(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
@@ -29529,7 +29950,7 @@ var DownOutlined = function DownOutlined2(props, ref) {
     icon: DownOutlined$1
   }));
 };
-var RefIcon$l = /* @__PURE__ */ reactExports.forwardRef(DownOutlined);
+var RefIcon$q = /* @__PURE__ */ reactExports.forwardRef(DownOutlined);
 var SearchOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z" } }] }, "name": "search", "theme": "outlined" };
 var SearchOutlined = function SearchOutlined2(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
@@ -29537,7 +29958,7 @@ var SearchOutlined = function SearchOutlined2(props, ref) {
     icon: SearchOutlined$1
   }));
 };
-var RefIcon$k = /* @__PURE__ */ reactExports.forwardRef(SearchOutlined);
+var RefIcon$p = /* @__PURE__ */ reactExports.forwardRef(SearchOutlined);
 function useIcons(_ref) {
   let {
     suffixIcon,
@@ -29553,7 +29974,7 @@ function useIcons(_ref) {
     showArrow,
     componentName
   } = _ref;
-  const mergedClearIcon = clearIcon !== null && clearIcon !== void 0 ? clearIcon : /* @__PURE__ */ reactExports.createElement(RefIcon$s, null);
+  const mergedClearIcon = clearIcon !== null && clearIcon !== void 0 ? clearIcon : /* @__PURE__ */ reactExports.createElement(RefIcon$x, null);
   const getSuffixIconNode = (arrowIcon) => {
     if (suffixIcon === null && !hasFeedback && !showArrow) {
       return null;
@@ -29564,7 +29985,7 @@ function useIcons(_ref) {
   if (suffixIcon !== void 0) {
     mergedSuffixIcon = getSuffixIconNode(suffixIcon);
   } else if (loading) {
-    mergedSuffixIcon = getSuffixIconNode(/* @__PURE__ */ reactExports.createElement(RefIcon$o, {
+    mergedSuffixIcon = getSuffixIconNode(/* @__PURE__ */ reactExports.createElement(RefIcon$t, {
       spin: true
     }));
   } else {
@@ -29575,11 +29996,11 @@ function useIcons(_ref) {
         showSearch
       } = _ref2;
       if (open2 && showSearch) {
-        return getSuffixIconNode(/* @__PURE__ */ reactExports.createElement(RefIcon$k, {
+        return getSuffixIconNode(/* @__PURE__ */ reactExports.createElement(RefIcon$p, {
           className: iconCls
         }));
       }
-      return getSuffixIconNode(/* @__PURE__ */ reactExports.createElement(RefIcon$l, {
+      return getSuffixIconNode(/* @__PURE__ */ reactExports.createElement(RefIcon$q, {
         className: iconCls
       }));
     };
@@ -29588,7 +30009,7 @@ function useIcons(_ref) {
   if (menuItemSelectedIcon !== void 0) {
     mergedItemIcon = menuItemSelectedIcon;
   } else if (multiple) {
-    mergedItemIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$m, null);
+    mergedItemIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$r, null);
   } else {
     mergedItemIcon = null;
   }
@@ -29596,7 +30017,7 @@ function useIcons(_ref) {
   if (removeIcon !== void 0) {
     mergedRemoveIcon = removeIcon;
   } else {
-    mergedRemoveIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$r, null);
+    mergedRemoveIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$w, null);
   }
   return {
     clearIcon: mergedClearIcon,
@@ -29608,7 +30029,7 @@ function useIcons(_ref) {
 function useShowArrow(suffixIcon, showArrow) {
   return showArrow !== void 0 ? showArrow : suffixIcon !== null;
 }
-var __rest$D = function(s, e2) {
+var __rest$F = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -29645,7 +30066,7 @@ const InternalSelect = (props, ref) => {
     transitionName,
     tagRender,
     maxCount
-  } = props, rest = __rest$D(props, ["prefixCls", "bordered", "className", "rootClassName", "getPopupContainer", "popupClassName", "dropdownClassName", "listHeight", "placement", "listItemHeight", "size", "disabled", "notFoundContent", "status", "builtinPlacements", "dropdownMatchSelectWidth", "popupMatchSelectWidth", "direction", "style", "allowClear", "variant", "dropdownStyle", "transitionName", "tagRender", "maxCount"]);
+  } = props, rest = __rest$F(props, ["prefixCls", "bordered", "className", "rootClassName", "getPopupContainer", "popupClassName", "dropdownClassName", "listHeight", "placement", "listItemHeight", "size", "disabled", "notFoundContent", "status", "builtinPlacements", "dropdownMatchSelectWidth", "popupMatchSelectWidth", "direction", "style", "allowClear", "variant", "dropdownStyle", "transitionName", "tagRender", "maxCount"]);
   const {
     getPopupContainer: getContextPopupContainer,
     getPrefixCls,
@@ -29988,11 +30409,11 @@ var placements$2 = {
     targetOffset: targetOffset$1
   }
 };
-var _excluded$y = ["overlayClassName", "trigger", "mouseEnterDelay", "mouseLeaveDelay", "overlayStyle", "prefixCls", "children", "onVisibleChange", "afterVisibleChange", "transitionName", "animation", "motion", "placement", "align", "destroyTooltipOnHide", "defaultVisible", "getTooltipContainer", "overlayInnerStyle", "arrowContent", "overlay", "id", "showArrow"];
+var _excluded$B = ["overlayClassName", "trigger", "mouseEnterDelay", "mouseLeaveDelay", "overlayStyle", "prefixCls", "children", "onVisibleChange", "afterVisibleChange", "transitionName", "animation", "motion", "placement", "align", "destroyTooltipOnHide", "defaultVisible", "getTooltipContainer", "overlayInnerStyle", "arrowContent", "overlay", "id", "showArrow"];
 var Tooltip$1 = function Tooltip(props, ref) {
   var overlayClassName = props.overlayClassName, _props$trigger = props.trigger, trigger = _props$trigger === void 0 ? ["hover"] : _props$trigger, _props$mouseEnterDela = props.mouseEnterDelay, mouseEnterDelay = _props$mouseEnterDela === void 0 ? 0 : _props$mouseEnterDela, _props$mouseLeaveDela = props.mouseLeaveDelay, mouseLeaveDelay = _props$mouseLeaveDela === void 0 ? 0.1 : _props$mouseLeaveDela, overlayStyle = props.overlayStyle, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-tooltip" : _props$prefixCls, children = props.children, onVisibleChange = props.onVisibleChange, afterVisibleChange = props.afterVisibleChange, transitionName = props.transitionName, animation = props.animation, motion2 = props.motion, _props$placement = props.placement, placement = _props$placement === void 0 ? "right" : _props$placement, _props$align = props.align, align = _props$align === void 0 ? {} : _props$align, _props$destroyTooltip = props.destroyTooltipOnHide, destroyTooltipOnHide = _props$destroyTooltip === void 0 ? false : _props$destroyTooltip, defaultVisible = props.defaultVisible, getTooltipContainer = props.getTooltipContainer, overlayInnerStyle = props.overlayInnerStyle;
   props.arrowContent;
-  var overlay = props.overlay, id2 = props.id, _props$showArrow = props.showArrow, showArrow = _props$showArrow === void 0 ? true : _props$showArrow, restProps = _objectWithoutProperties(props, _excluded$y);
+  var overlay = props.overlay, id2 = props.id, _props$showArrow = props.showArrow, showArrow = _props$showArrow === void 0 ? true : _props$showArrow, restProps = _objectWithoutProperties(props, _excluded$B);
   var triggerRef = reactExports.useRef(null);
   reactExports.useImperativeHandle(ref, function() {
     return triggerRef.current;
@@ -30503,7 +30924,7 @@ const genTooltipStyle = (token2) => {
     }
   ];
 };
-const prepareComponentToken$f = (token2) => Object.assign(Object.assign({
+const prepareComponentToken$g = (token2) => Object.assign(Object.assign({
   zIndexPopup: token2.zIndexPopupBase + 70
 }, getArrowOffsetToken({
   contentRadius: token2.borderRadius,
@@ -30511,7 +30932,7 @@ const prepareComponentToken$f = (token2) => Object.assign(Object.assign({
 })), getArrowToken(merge(token2, {
   borderRadiusOuter: Math.min(token2.borderRadiusOuter, 4)
 })));
-const useStyle$j = function(prefixCls) {
+const useStyle$k = function(prefixCls) {
   let injectStyle = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : true;
   const useStyle2 = genStyleHooks("Tooltip", (token2) => {
     const {
@@ -30527,7 +30948,7 @@ const useStyle$j = function(prefixCls) {
       tooltipBg: colorBgSpotlight
     });
     return [genTooltipStyle(TooltipToken), initZoomMotion(token2, "zoom-big-fast")];
-  }, prepareComponentToken$f, {
+  }, prepareComponentToken$g, {
     resetStyle: false,
     // Popover use Tooltip as internal component. We do not need to handle this.
     injectStyle
@@ -30572,7 +30993,7 @@ const PurePanel$6 = (props) => {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("tooltip", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$j(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$k(prefixCls);
   const colorInfo = parseColor(prefixCls, color);
   const arrowContentStyle = colorInfo.arrowStyle;
   const formattedOverlayInnerStyle = Object.assign(Object.assign({}, overlayInnerStyle), colorInfo.overlayStyle);
@@ -30588,7 +31009,7 @@ const PurePanel$6 = (props) => {
     overlayInnerStyle: formattedOverlayInnerStyle
   }), title)));
 };
-var __rest$C = function(s, e2) {
+var __rest$E = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -30684,7 +31105,7 @@ const InternalTooltip = /* @__PURE__ */ reactExports.forwardRef((props, ref) => 
     mouseLeaveDelay = 0.1,
     overlayStyle,
     rootClassName
-  } = props, otherProps = __rest$C(props, ["getPopupContainer", "placement", "mouseEnterDelay", "mouseLeaveDelay", "overlayStyle", "rootClassName"]);
+  } = props, otherProps = __rest$E(props, ["getPopupContainer", "placement", "mouseEnterDelay", "mouseLeaveDelay", "overlayStyle", "rootClassName"]);
   const prefixCls = getPrefixCls("tooltip", customizePrefixCls);
   const rootPrefixCls = getPrefixCls();
   const injectFromPopover = props["data-popover-inject"];
@@ -30695,7 +31116,7 @@ const InternalTooltip = /* @__PURE__ */ reactExports.forwardRef((props, ref) => 
   const child = /* @__PURE__ */ reactExports.isValidElement(children) && !isFragment(children) ? children : /* @__PURE__ */ reactExports.createElement("span", null, children);
   const childProps = child.props;
   const childCls = !childProps.className || typeof childProps.className === "string" ? classNames(childProps.className, openClassName || `${prefixCls}-open`) : childProps.className;
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$j(prefixCls, !injectFromPopover);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$k(prefixCls, !injectFromPopover);
   const colorInfo = parseColor(prefixCls, color);
   const arrowContentStyle = colorInfo.arrowStyle;
   const formattedOverlayInnerStyle = Object.assign(Object.assign({}, overlayInnerStyle), colorInfo.overlayStyle);
@@ -30842,7 +31263,7 @@ const genColorStyle = (token2) => {
     })
   };
 };
-const prepareComponentToken$e = (token2) => {
+const prepareComponentToken$f = (token2) => {
   const {
     lineWidth,
     controlHeight,
@@ -30875,7 +31296,7 @@ const prepareComponentToken$e = (token2) => {
     innerContentPadding: wireframe ? `${paddingSM}px ${popoverPaddingHorizontal}px` : 0
   });
 };
-const useStyle$i = genStyleHooks("Popover", (token2) => {
+const useStyle$j = genStyleHooks("Popover", (token2) => {
   const {
     colorBgElevated,
     colorText
@@ -30885,11 +31306,11 @@ const useStyle$i = genStyleHooks("Popover", (token2) => {
     popoverColor: colorText
   });
   return [genBaseStyle$4(popoverToken), genColorStyle(popoverToken), initZoomMotion(popoverToken, "zoom-big")];
-}, prepareComponentToken$e, {
+}, prepareComponentToken$f, {
   resetStyle: false,
   deprecatedTokens: [["width", "titleMinWidth"], ["minWidth", "titleMinWidth"]]
 });
-var __rest$B = function(s, e2) {
+var __rest$D = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -30944,19 +31365,19 @@ const PurePanel$5 = (props) => {
   const {
     prefixCls: customizePrefixCls,
     className
-  } = props, restProps = __rest$B(props, ["prefixCls", "className"]);
+  } = props, restProps = __rest$D(props, ["prefixCls", "className"]);
   const {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("popover", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$i(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$j(prefixCls);
   return wrapCSSVar(/* @__PURE__ */ reactExports.createElement(RawPurePanel, Object.assign({}, restProps, {
     prefixCls,
     hashId,
     className: classNames(className, cssVarCls)
   })));
 };
-var __rest$A = function(s, e2) {
+var __rest$C = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -30978,12 +31399,12 @@ const InternalPopover = /* @__PURE__ */ reactExports.forwardRef((props, ref) => 
     mouseLeaveDelay = 0.1,
     onOpenChange,
     overlayStyle = {}
-  } = props, otherProps = __rest$A(props, ["prefixCls", "title", "content", "overlayClassName", "placement", "trigger", "children", "mouseEnterDelay", "mouseLeaveDelay", "onOpenChange", "overlayStyle"]);
+  } = props, otherProps = __rest$C(props, ["prefixCls", "title", "content", "overlayClassName", "placement", "trigger", "children", "mouseEnterDelay", "mouseLeaveDelay", "onOpenChange", "overlayStyle"]);
   const {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("popover", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$i(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$j(prefixCls);
   const rootPrefixCls = getPrefixCls();
   const overlayCls = classNames(overlayClassName, hashId, cssVarCls);
   const [open2, setOpen] = useMergedState(false, {
@@ -31042,7 +31463,7 @@ var RightOutlined = function RightOutlined2(props, ref) {
     icon: RightOutlined$1
   }));
 };
-var RefIcon$j = /* @__PURE__ */ reactExports.forwardRef(RightOutlined);
+var RefIcon$o = /* @__PURE__ */ reactExports.forwardRef(RightOutlined);
 var ESC$1 = KeyCode.ESC, TAB = KeyCode.TAB;
 function useAccessibility$1(_ref) {
   var visible = _ref.visible, triggerRef = _ref.triggerRef, onVisibleChange = _ref.onVisibleChange, autoFocus = _ref.autoFocus, overlayRef = _ref.overlayRef;
@@ -31159,10 +31580,10 @@ var placements$1 = {
     targetOffset
   }
 };
-var _excluded$x = ["arrow", "prefixCls", "transitionName", "animation", "align", "placement", "placements", "getPopupContainer", "showAction", "hideAction", "overlayClassName", "overlayStyle", "visible", "trigger", "autoFocus", "overlay", "children", "onVisibleChange"];
+var _excluded$A = ["arrow", "prefixCls", "transitionName", "animation", "align", "placement", "placements", "getPopupContainer", "showAction", "hideAction", "overlayClassName", "overlayStyle", "visible", "trigger", "autoFocus", "overlay", "children", "onVisibleChange"];
 function Dropdown$2(props, ref) {
   var _children$props;
-  var _props$arrow = props.arrow, arrow = _props$arrow === void 0 ? false : _props$arrow, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-dropdown" : _props$prefixCls, transitionName = props.transitionName, animation = props.animation, align = props.align, _props$placement = props.placement, placement = _props$placement === void 0 ? "bottomLeft" : _props$placement, _props$placements = props.placements, placements2 = _props$placements === void 0 ? placements$1 : _props$placements, getPopupContainer = props.getPopupContainer, showAction = props.showAction, hideAction = props.hideAction, overlayClassName = props.overlayClassName, overlayStyle = props.overlayStyle, visible = props.visible, _props$trigger = props.trigger, trigger = _props$trigger === void 0 ? ["hover"] : _props$trigger, autoFocus = props.autoFocus, overlay = props.overlay, children = props.children, onVisibleChange = props.onVisibleChange, otherProps = _objectWithoutProperties(props, _excluded$x);
+  var _props$arrow = props.arrow, arrow = _props$arrow === void 0 ? false : _props$arrow, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-dropdown" : _props$prefixCls, transitionName = props.transitionName, animation = props.animation, align = props.align, _props$placement = props.placement, placement = _props$placement === void 0 ? "bottomLeft" : _props$placement, _props$placements = props.placements, placements2 = _props$placements === void 0 ? placements$1 : _props$placements, getPopupContainer = props.getPopupContainer, showAction = props.showAction, hideAction = props.hideAction, overlayClassName = props.overlayClassName, overlayStyle = props.overlayStyle, visible = props.visible, _props$trigger = props.trigger, trigger = _props$trigger === void 0 ? ["hover"] : _props$trigger, autoFocus = props.autoFocus, overlay = props.overlay, children = props.children, onVisibleChange = props.onVisibleChange, otherProps = _objectWithoutProperties(props, _excluded$A);
   var _React$useState = React.useState(), _React$useState2 = _slicedToArray(_React$useState, 2), triggerVisible = _React$useState2[0], setTriggerVisible = _React$useState2[1];
   var mergedVisible = "visible" in props ? visible : triggerVisible;
   var triggerRef = React.useRef(null);
@@ -31259,7 +31680,7 @@ function useMenuId(eventKey) {
   var id2 = reactExports.useContext(IdContext);
   return getMenuId(id2, eventKey);
 }
-var _excluded$w = ["children", "locked"];
+var _excluded$z = ["children", "locked"];
 var MenuContext$1 = /* @__PURE__ */ reactExports.createContext(null);
 function mergeProps(origin, target) {
   var clone = _objectSpread2({}, origin);
@@ -31272,7 +31693,7 @@ function mergeProps(origin, target) {
   return clone;
 }
 function InheritableContextProvider(_ref) {
-  var children = _ref.children, locked = _ref.locked, restProps = _objectWithoutProperties(_ref, _excluded$w);
+  var children = _ref.children, locked = _ref.locked, restProps = _objectWithoutProperties(_ref, _excluded$z);
   var context = reactExports.useContext(MenuContext$1);
   var inheritableContext = useMemo(function() {
     return mergeProps(context, restProps);
@@ -31699,9 +32120,9 @@ function Icon(_ref) {
   }
   return iconNode || children || null;
 }
-var _excluded$v = ["item"];
+var _excluded$y = ["item"];
 function warnItemProp(_ref) {
-  var item = _ref.item, restInfo = _objectWithoutProperties(_ref, _excluded$v);
+  var item = _ref.item, restInfo = _objectWithoutProperties(_ref, _excluded$y);
   Object.defineProperty(restInfo, "item", {
     get: function get2() {
       warningOnce(false, "`info.item` is deprecated since we will move to function component that not provides React Node instance in future.");
@@ -31710,7 +32131,7 @@ function warnItemProp(_ref) {
   });
   return restInfo;
 }
-var _excluded$u = ["title", "attribute", "elementRef"], _excluded2$5 = ["style", "className", "eventKey", "warnKey", "disabled", "itemIcon", "children", "role", "onMouseEnter", "onMouseLeave", "onClick", "onKeyDown", "onFocus"], _excluded3 = ["active"];
+var _excluded$x = ["title", "attribute", "elementRef"], _excluded2$8 = ["style", "className", "eventKey", "warnKey", "disabled", "itemIcon", "children", "role", "onMouseEnter", "onMouseLeave", "onClick", "onKeyDown", "onFocus"], _excluded3 = ["active"];
 var LegacyMenuItem = /* @__PURE__ */ function(_React$Component) {
   _inherits(LegacyMenuItem2, _React$Component);
   var _super = _createSuper(LegacyMenuItem2);
@@ -31721,7 +32142,7 @@ var LegacyMenuItem = /* @__PURE__ */ function(_React$Component) {
   _createClass(LegacyMenuItem2, [{
     key: "render",
     value: function render2() {
-      var _this$props = this.props, title = _this$props.title, attribute = _this$props.attribute, elementRef = _this$props.elementRef, restProps = _objectWithoutProperties(_this$props, _excluded$u);
+      var _this$props = this.props, title = _this$props.title, attribute = _this$props.attribute, elementRef = _this$props.elementRef, restProps = _objectWithoutProperties(_this$props, _excluded$x);
       var passedProps = omit(restProps, ["eventKey", "popupClassName", "popupOffset", "onTitleClick"]);
       warningOnce(!attribute, "`attribute` of Menu.Item is deprecated. Please pass attribute directly.");
       return /* @__PURE__ */ reactExports.createElement(ForwardOverflow.Item, _extends({}, attribute, {
@@ -31737,7 +32158,7 @@ var InternalMenuItem = /* @__PURE__ */ reactExports.forwardRef(function(props, r
   var _classNames;
   var style2 = props.style, className = props.className, eventKey = props.eventKey;
   props.warnKey;
-  var disabled = props.disabled, itemIcon = props.itemIcon, children = props.children, role = props.role, onMouseEnter = props.onMouseEnter, onMouseLeave = props.onMouseLeave, onClick = props.onClick, onKeyDown2 = props.onKeyDown, onFocus = props.onFocus, restProps = _objectWithoutProperties(props, _excluded2$5);
+  var disabled = props.disabled, itemIcon = props.itemIcon, children = props.children, role = props.role, onMouseEnter = props.onMouseEnter, onMouseLeave = props.onMouseLeave, onClick = props.onClick, onKeyDown2 = props.onKeyDown, onFocus = props.onFocus, restProps = _objectWithoutProperties(props, _excluded2$8);
   var domDataId = useMenuId(eventKey);
   var _React$useContext = reactExports.useContext(MenuContext$1), prefixCls = _React$useContext.prefixCls, onItemClick = _React$useContext.onItemClick, contextDisabled = _React$useContext.disabled, overflowDisabled = _React$useContext.overflowDisabled, contextItemIcon = _React$useContext.itemIcon, selectedKeys = _React$useContext.selectedKeys, onActive = _React$useContext.onActive;
   var _React$useContext2 = reactExports.useContext(PrivateContext), _internalRenderMenuItem = _React$useContext2._internalRenderMenuItem;
@@ -31831,9 +32252,9 @@ function MenuItem$1(props, ref) {
   }));
 }
 const MenuItem$2 = /* @__PURE__ */ reactExports.forwardRef(MenuItem$1);
-var _excluded$t = ["className", "children"];
+var _excluded$w = ["className", "children"];
 var InternalSubMenuList = function InternalSubMenuList2(_ref, ref) {
-  var className = _ref.className, children = _ref.children, restProps = _objectWithoutProperties(_ref, _excluded$t);
+  var className = _ref.className, children = _ref.children, restProps = _objectWithoutProperties(_ref, _excluded$w);
   var _React$useContext = reactExports.useContext(MenuContext$1), prefixCls = _React$useContext.prefixCls, mode = _React$useContext.mode, rtl = _React$useContext.rtl;
   return /* @__PURE__ */ reactExports.createElement("ul", _extends({
     className: classNames(prefixCls, rtl && "".concat(prefixCls, "-rtl"), "".concat(prefixCls, "-sub"), "".concat(prefixCls, "-").concat(mode === "inline" ? "inline" : "vertical"), className),
@@ -32043,12 +32464,12 @@ function InlineSubMenuList(_ref) {
     }, children);
   }));
 }
-var _excluded$s = ["style", "className", "title", "eventKey", "warnKey", "disabled", "internalPopupClose", "children", "itemIcon", "expandIcon", "popupClassName", "popupOffset", "popupStyle", "onClick", "onMouseEnter", "onMouseLeave", "onTitleClick", "onTitleMouseEnter", "onTitleMouseLeave"], _excluded2$4 = ["active"];
+var _excluded$v = ["style", "className", "title", "eventKey", "warnKey", "disabled", "internalPopupClose", "children", "itemIcon", "expandIcon", "popupClassName", "popupOffset", "popupStyle", "onClick", "onMouseEnter", "onMouseLeave", "onTitleClick", "onTitleMouseEnter", "onTitleMouseLeave"], _excluded2$7 = ["active"];
 var InternalSubMenu = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
   var _classNames;
   var style2 = props.style, className = props.className, title = props.title, eventKey = props.eventKey;
   props.warnKey;
-  var disabled = props.disabled, internalPopupClose = props.internalPopupClose, children = props.children, itemIcon = props.itemIcon, expandIcon = props.expandIcon, popupClassName = props.popupClassName, popupOffset = props.popupOffset, popupStyle = props.popupStyle, onClick = props.onClick, onMouseEnter = props.onMouseEnter, onMouseLeave = props.onMouseLeave, onTitleClick = props.onTitleClick, onTitleMouseEnter = props.onTitleMouseEnter, onTitleMouseLeave = props.onTitleMouseLeave, restProps = _objectWithoutProperties(props, _excluded$s);
+  var disabled = props.disabled, internalPopupClose = props.internalPopupClose, children = props.children, itemIcon = props.itemIcon, expandIcon = props.expandIcon, popupClassName = props.popupClassName, popupOffset = props.popupOffset, popupStyle = props.popupStyle, onClick = props.onClick, onMouseEnter = props.onMouseEnter, onMouseLeave = props.onMouseLeave, onTitleClick = props.onTitleClick, onTitleMouseEnter = props.onTitleMouseEnter, onTitleMouseLeave = props.onTitleMouseLeave, restProps = _objectWithoutProperties(props, _excluded$v);
   var domDataId = useMenuId(eventKey);
   var _React$useContext = reactExports.useContext(MenuContext$1), prefixCls = _React$useContext.prefixCls, mode = _React$useContext.mode, openKeys = _React$useContext.openKeys, contextDisabled = _React$useContext.disabled, overflowDisabled = _React$useContext.overflowDisabled, activeKey = _React$useContext.activeKey, selectedKeys = _React$useContext.selectedKeys, contextItemIcon = _React$useContext.itemIcon, contextExpandIcon = _React$useContext.expandIcon, onItemClick = _React$useContext.onItemClick, onOpenChange = _React$useContext.onOpenChange, onActive = _React$useContext.onActive;
   var _React$useContext2 = reactExports.useContext(PrivateContext), _internalRenderSubMenuItem = _React$useContext2._internalRenderSubMenuItem;
@@ -32063,7 +32484,7 @@ var InternalSubMenu = /* @__PURE__ */ reactExports.forwardRef(function(props, re
   var originOpen = openKeys.includes(eventKey);
   var open2 = !overflowDisabled && originOpen;
   var childrenSelected = isSubPathKey(selectedKeys, eventKey);
-  var _useActive = useActive(eventKey, mergedDisabled, onTitleMouseEnter, onTitleMouseLeave), active = _useActive.active, activeProps = _objectWithoutProperties(_useActive, _excluded2$4);
+  var _useActive = useActive(eventKey, mergedDisabled, onTitleMouseEnter, onTitleMouseLeave), active = _useActive.active, activeProps = _objectWithoutProperties(_useActive, _excluded2$7);
   var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), childrenActive = _React$useState2[0], setChildrenActive = _React$useState2[1];
   var triggerChildrenActive = function triggerChildrenActive2(newActive) {
     if (!mergedDisabled) {
@@ -32239,11 +32660,11 @@ function Divider$1(_ref) {
     style: style2
   });
 }
-var _excluded$r = ["className", "title", "eventKey", "children"];
+var _excluded$u = ["className", "title", "eventKey", "children"];
 var InternalMenuItemGroup = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
   var className = props.className, title = props.title;
   props.eventKey;
-  var children = props.children, restProps = _objectWithoutProperties(props, _excluded$r);
+  var children = props.children, restProps = _objectWithoutProperties(props, _excluded$u);
   var _React$useContext = reactExports.useContext(MenuContext$1), prefixCls = _React$useContext.prefixCls;
   var groupPrefixCls = "".concat(prefixCls, "-item-group");
   return /* @__PURE__ */ reactExports.createElement("li", _extends({
@@ -32275,12 +32696,12 @@ var MenuItemGroup = /* @__PURE__ */ reactExports.forwardRef(function(props, ref)
     ref
   }, omit(props, ["warnKey"])), childList);
 });
-var _excluded$q = ["label", "children", "key", "type"];
+var _excluded$t = ["label", "children", "key", "type"];
 function convertItemsToNodes$1(list, components) {
   var MergedMenuItem = components.item, MergedMenuItemGroup = components.group, MergedSubMenu = components.submenu, MergedDivider = components.divider;
   return (list || []).map(function(opt, index2) {
     if (opt && _typeof(opt) === "object") {
-      var _ref = opt, label = _ref.label, children = _ref.children, key = _ref.key, type4 = _ref.type, restProps = _objectWithoutProperties(_ref, _excluded$q);
+      var _ref = opt, label = _ref.label, children = _ref.children, key = _ref.key, type4 = _ref.type, restProps = _objectWithoutProperties(_ref, _excluded$t);
       var mergedKey = key !== null && key !== void 0 ? key : "tmp-".concat(index2);
       if (children || type4 === "group") {
         if (type4 === "group") {
@@ -32323,14 +32744,14 @@ function parseItems(children, items, keyPath, components) {
   }
   return parseChildren(childNodes, keyPath);
 }
-var _excluded$p = ["prefixCls", "rootClassName", "style", "className", "tabIndex", "items", "children", "direction", "id", "mode", "inlineCollapsed", "disabled", "disabledOverflow", "subMenuOpenDelay", "subMenuCloseDelay", "forceSubMenuRender", "defaultOpenKeys", "openKeys", "activeKey", "defaultActiveFirst", "selectable", "multiple", "defaultSelectedKeys", "selectedKeys", "onSelect", "onDeselect", "inlineIndent", "motion", "defaultMotions", "triggerSubMenuAction", "builtinPlacements", "itemIcon", "expandIcon", "overflowedIndicator", "overflowedIndicatorPopupClassName", "getPopupContainer", "onClick", "onOpenChange", "onKeyDown", "openAnimation", "openTransitionName", "_internalRenderMenuItem", "_internalRenderSubMenuItem", "_internalComponents"];
+var _excluded$s = ["prefixCls", "rootClassName", "style", "className", "tabIndex", "items", "children", "direction", "id", "mode", "inlineCollapsed", "disabled", "disabledOverflow", "subMenuOpenDelay", "subMenuCloseDelay", "forceSubMenuRender", "defaultOpenKeys", "openKeys", "activeKey", "defaultActiveFirst", "selectable", "multiple", "defaultSelectedKeys", "selectedKeys", "onSelect", "onDeselect", "inlineIndent", "motion", "defaultMotions", "triggerSubMenuAction", "builtinPlacements", "itemIcon", "expandIcon", "overflowedIndicator", "overflowedIndicatorPopupClassName", "getPopupContainer", "onClick", "onOpenChange", "onKeyDown", "openAnimation", "openTransitionName", "_internalRenderMenuItem", "_internalRenderSubMenuItem", "_internalComponents"];
 var EMPTY_LIST$3 = [];
 var Menu$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
   var _childList$, _classNames;
   var _ref = props, _ref$prefixCls = _ref.prefixCls, prefixCls = _ref$prefixCls === void 0 ? "rc-menu" : _ref$prefixCls, rootClassName = _ref.rootClassName, style2 = _ref.style, className = _ref.className, _ref$tabIndex = _ref.tabIndex, tabIndex = _ref$tabIndex === void 0 ? 0 : _ref$tabIndex, items = _ref.items, children = _ref.children, direction = _ref.direction, id2 = _ref.id, _ref$mode = _ref.mode, mode = _ref$mode === void 0 ? "vertical" : _ref$mode, inlineCollapsed = _ref.inlineCollapsed, disabled = _ref.disabled, disabledOverflow = _ref.disabledOverflow, _ref$subMenuOpenDelay = _ref.subMenuOpenDelay, subMenuOpenDelay = _ref$subMenuOpenDelay === void 0 ? 0.1 : _ref$subMenuOpenDelay, _ref$subMenuCloseDela = _ref.subMenuCloseDelay, subMenuCloseDelay = _ref$subMenuCloseDela === void 0 ? 0.1 : _ref$subMenuCloseDela, forceSubMenuRender = _ref.forceSubMenuRender, defaultOpenKeys = _ref.defaultOpenKeys, openKeys = _ref.openKeys, activeKey = _ref.activeKey, defaultActiveFirst = _ref.defaultActiveFirst, _ref$selectable = _ref.selectable, selectable = _ref$selectable === void 0 ? true : _ref$selectable, _ref$multiple = _ref.multiple, multiple = _ref$multiple === void 0 ? false : _ref$multiple, defaultSelectedKeys = _ref.defaultSelectedKeys, selectedKeys = _ref.selectedKeys, onSelect = _ref.onSelect, onDeselect = _ref.onDeselect, _ref$inlineIndent = _ref.inlineIndent, inlineIndent = _ref$inlineIndent === void 0 ? 24 : _ref$inlineIndent, motion2 = _ref.motion, defaultMotions = _ref.defaultMotions, _ref$triggerSubMenuAc = _ref.triggerSubMenuAction, triggerSubMenuAction = _ref$triggerSubMenuAc === void 0 ? "hover" : _ref$triggerSubMenuAc, builtinPlacements = _ref.builtinPlacements, itemIcon = _ref.itemIcon, expandIcon = _ref.expandIcon, _ref$overflowedIndica = _ref.overflowedIndicator, overflowedIndicator = _ref$overflowedIndica === void 0 ? "..." : _ref$overflowedIndica, overflowedIndicatorPopupClassName = _ref.overflowedIndicatorPopupClassName, getPopupContainer = _ref.getPopupContainer, onClick = _ref.onClick, onOpenChange = _ref.onOpenChange, onKeyDown2 = _ref.onKeyDown;
   _ref.openAnimation;
   _ref.openTransitionName;
-  var _internalRenderMenuItem = _ref._internalRenderMenuItem, _internalRenderSubMenuItem = _ref._internalRenderSubMenuItem, _internalComponents = _ref._internalComponents, restProps = _objectWithoutProperties(_ref, _excluded$p);
+  var _internalRenderMenuItem = _ref._internalRenderMenuItem, _internalRenderSubMenuItem = _ref._internalRenderSubMenuItem, _internalComponents = _ref._internalComponents, restProps = _objectWithoutProperties(_ref, _excluded$s);
   var _React$useMemo = reactExports.useMemo(function() {
     return [parseItems(children, items, EMPTY_LIST$3, _internalComponents), parseItems(children, items, EMPTY_LIST$3, {})];
   }, [children, items, _internalComponents]), _React$useMemo2 = _slicedToArray(_React$useMemo, 2), childList = _React$useMemo2[0], measureChildList = _React$useMemo2[1];
@@ -32611,7 +33032,7 @@ var LeftOutlined = function LeftOutlined2(props, ref) {
     icon: LeftOutlined$1
   }));
 };
-var RefIcon$i = /* @__PURE__ */ reactExports.forwardRef(LeftOutlined);
+var RefIcon$n = /* @__PURE__ */ reactExports.forwardRef(LeftOutlined);
 const SiderContext = /* @__PURE__ */ reactExports.createContext({});
 var EllipsisOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M176 511a56 56 0 10112 0 56 56 0 10-112 0zm280 0a56 56 0 10112 0 56 56 0 10-112 0zm280 0a56 56 0 10112 0 56 56 0 10-112 0z" } }] }, "name": "ellipsis", "theme": "outlined" };
 var EllipsisOutlined = function EllipsisOutlined2(props, ref) {
@@ -32620,13 +33041,13 @@ var EllipsisOutlined = function EllipsisOutlined2(props, ref) {
     icon: EllipsisOutlined$1
   }));
 };
-var RefIcon$h = /* @__PURE__ */ reactExports.forwardRef(EllipsisOutlined);
+var RefIcon$m = /* @__PURE__ */ reactExports.forwardRef(EllipsisOutlined);
 const MenuContext = /* @__PURE__ */ reactExports.createContext({
   prefixCls: "",
   firstLevel: true,
   inlineCollapsed: false
 });
-var __rest$z = function(s, e2) {
+var __rest$B = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -32639,7 +33060,7 @@ const MenuDivider = (props) => {
     prefixCls: customizePrefixCls,
     className,
     dashed
-  } = props, restProps = __rest$z(props, ["prefixCls", "className", "dashed"]);
+  } = props, restProps = __rest$B(props, ["prefixCls", "className", "dashed"]);
   const {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
@@ -32714,7 +33135,7 @@ const MenuItem = (props) => {
   }
   return returnNode;
 };
-var __rest$y = function(s, e2) {
+var __rest$A = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -32726,7 +33147,7 @@ const OverrideContext = /* @__PURE__ */ reactExports.createContext(null);
 const OverrideProvider = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   const {
     children
-  } = props, restProps = __rest$y(props, ["children"]);
+  } = props, restProps = __rest$A(props, ["children"]);
   const override = reactExports.useContext(OverrideContext);
   const context = reactExports.useMemo(() => Object.assign(Object.assign({}, override), restProps), [
     override,
@@ -33543,7 +33964,7 @@ const getBaseStyle = (token2) => {
     }
   ];
 };
-const prepareComponentToken$d = (token2) => {
+const prepareComponentToken$e = (token2) => {
   var _a, _b, _c;
   const {
     colorPrimary,
@@ -33660,7 +34081,7 @@ const prepareComponentToken$d = (token2) => {
     itemWidth: activeBarWidth ? `calc(100% + ${activeBarBorderWidth}px)` : `calc(100% - ${itemMarginInline * 2}px)`
   };
 };
-const useStyle$h = function(prefixCls) {
+const useStyle$i = function(prefixCls) {
   let rootCls = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : prefixCls;
   let injectStyle = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : true;
   const useStyle2 = genStyleHooks("Menu", (token2) => {
@@ -33740,7 +34161,7 @@ const useStyle$h = function(prefixCls) {
       initSlideMotion(menuToken, "slide-down"),
       initZoomMotion(menuToken, "zoom-big")
     ];
-  }, prepareComponentToken$d, {
+  }, prepareComponentToken$e, {
     deprecatedTokens: [["colorGroupTitle", "groupTitleColor"], ["radiusItem", "itemBorderRadius"], ["radiusSubMenuItem", "subMenuItemBorderRadius"], ["colorItemText", "itemColor"], ["colorItemTextHover", "itemHoverColor"], ["colorItemTextHoverHorizontal", "horizontalItemHoverColor"], ["colorItemTextSelected", "itemSelectedColor"], ["colorItemTextSelectedHorizontal", "horizontalItemSelectedColor"], ["colorItemTextDisabled", "itemDisabledColor"], ["colorDangerItemText", "dangerItemColor"], ["colorDangerItemTextHover", "dangerItemHoverColor"], ["colorDangerItemTextSelected", "dangerItemSelectedColor"], ["colorDangerItemBgActive", "dangerItemActiveBg"], ["colorDangerItemBgSelected", "dangerItemSelectedBg"], ["colorItemBg", "itemBg"], ["colorItemBgHover", "itemHoverBg"], ["colorSubItemBg", "subMenuItemBg"], ["colorItemBgActive", "itemActiveBg"], ["colorItemBgSelectedHorizontal", "horizontalItemSelectedBg"], ["colorActiveBarWidth", "activeBarWidth"], ["colorActiveBarHeight", "activeBarHeight"], ["colorActiveBarBorderSize", "activeBarBorderWidth"], ["colorItemBgSelected", "itemSelectedBg"]],
     // Dropdown will handle menu style self. We do not need to handle this.
     injectStyle,
@@ -33794,7 +34215,7 @@ const SubMenu = (props) => {
     }
   })));
 };
-var __rest$x = function(s, e2) {
+var __rest$z = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -33835,7 +34256,7 @@ const InternalMenu = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     selectable,
     onClick,
     overflowedIndicatorPopupClassName
-  } = props, restProps = __rest$x(props, ["prefixCls", "className", "style", "theme", "expandIcon", "_internalDisableMenuItemTitleTooltip", "inlineCollapsed", "siderCollapsed", "rootClassName", "mode", "selectable", "onClick", "overflowedIndicatorPopupClassName"]);
+  } = props, restProps = __rest$z(props, ["prefixCls", "className", "style", "theme", "expandIcon", "_internalDisableMenuItemTitleTooltip", "inlineCollapsed", "siderCollapsed", "rootClassName", "mode", "selectable", "onClick", "overflowedIndicatorPopupClassName"]);
   const passedProps = omit(restProps, ["collapsedWidth"]);
   (_a = overrideObj.validator) === null || _a === void 0 ? void 0 : _a.call(overrideObj, {
     mode
@@ -33864,7 +34285,7 @@ const InternalMenu = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   };
   const prefixCls = getPrefixCls("menu", customizePrefixCls || overrideObj.prefixCls);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$h(prefixCls, rootCls, !override);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$i(prefixCls, rootCls, !override);
   const menuClassName = classNames(`${prefixCls}-${theme}`, menu === null || menu === void 0 ? void 0 : menu.className, className);
   const mergedExpandIcon = reactExports.useMemo(() => {
     var _a2, _b;
@@ -33897,7 +34318,7 @@ const InternalMenu = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     value: contextValue
   }, /* @__PURE__ */ reactExports.createElement(ExportMenu, Object.assign({
     getPopupContainer,
-    overflowedIndicator: /* @__PURE__ */ reactExports.createElement(RefIcon$h, null),
+    overflowedIndicator: /* @__PURE__ */ reactExports.createElement(RefIcon$m, null),
     overflowedIndicatorPopupClassName: classNames(prefixCls, `${prefixCls}-${theme}`, overflowedIndicatorPopupClassName),
     mode: mergedMode,
     selectable: mergedSelectable,
@@ -34209,14 +34630,14 @@ const genBaseStyle$3 = (token2) => {
     [initSlideMotion(token2, "slide-up"), initSlideMotion(token2, "slide-down"), initMoveMotion(token2, "move-up"), initMoveMotion(token2, "move-down"), initZoomMotion(token2, "zoom-big")]
   ];
 };
-const prepareComponentToken$c = (token2) => Object.assign(Object.assign({
+const prepareComponentToken$d = (token2) => Object.assign(Object.assign({
   zIndexPopup: token2.zIndexPopupBase + 50,
   paddingBlock: (token2.controlHeight - token2.fontSize * token2.lineHeight) / 2
 }, getArrowOffsetToken({
   contentRadius: token2.borderRadiusLG,
   limitVerticalRadius: true
 })), getArrowToken(token2));
-const useStyle$g = genStyleHooks("Dropdown", (token2) => {
+const useStyle$h = genStyleHooks("Dropdown", (token2) => {
   const {
     marginXXS,
     sizePopupArrow,
@@ -34229,7 +34650,7 @@ const useStyle$g = genStyleHooks("Dropdown", (token2) => {
     dropdownEdgeChildPadding: paddingXXS
   });
   return [genBaseStyle$3(dropdownToken), genStatusStyle$1(dropdownToken)];
-}, prepareComponentToken$c, {
+}, prepareComponentToken$d, {
   resetStyle: false
 });
 const Dropdown$1 = (props) => {
@@ -34286,7 +34707,7 @@ const Dropdown$1 = (props) => {
   }, [placement, direction]);
   const prefixCls = getPrefixCls("dropdown", customizePrefixCls);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$g(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$h(prefixCls, rootCls);
   const [, token2] = useToken();
   const child = reactExports.Children.only(children);
   const dropdownTrigger = cloneElement(child, {
@@ -34344,7 +34765,7 @@ const Dropdown$1 = (props) => {
       rootClassName: classNames(cssVarCls, rootCls),
       expandIcon: /* @__PURE__ */ reactExports.createElement("span", {
         className: `${prefixCls}-menu-submenu-arrow`
-      }, /* @__PURE__ */ reactExports.createElement(RefIcon$j, {
+      }, /* @__PURE__ */ reactExports.createElement(RefIcon$o, {
         className: `${prefixCls}-menu-submenu-arrow-icon`
       })),
       mode: "vertical",
@@ -34399,9 +34820,9 @@ const RadioGroupContext = /* @__PURE__ */ reactExports.createContext(null);
 const RadioGroupContextProvider = RadioGroupContext.Provider;
 const RadioOptionTypeContext = /* @__PURE__ */ reactExports.createContext(null);
 const RadioOptionTypeContextProvider = RadioOptionTypeContext.Provider;
-var _excluded$o = ["prefixCls", "className", "style", "checked", "disabled", "defaultChecked", "type", "title", "onChange"];
+var _excluded$r = ["prefixCls", "className", "style", "checked", "disabled", "defaultChecked", "type", "title", "onChange"];
 var Checkbox$2 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
-  var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-checkbox" : _props$prefixCls, className = props.className, style2 = props.style, checked = props.checked, disabled = props.disabled, _props$defaultChecked = props.defaultChecked, defaultChecked = _props$defaultChecked === void 0 ? false : _props$defaultChecked, _props$type = props.type, type4 = _props$type === void 0 ? "checkbox" : _props$type, title = props.title, onChange = props.onChange, inputProps = _objectWithoutProperties(props, _excluded$o);
+  var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-checkbox" : _props$prefixCls, className = props.className, style2 = props.style, checked = props.checked, disabled = props.disabled, _props$defaultChecked = props.defaultChecked, defaultChecked = _props$defaultChecked === void 0 ? false : _props$defaultChecked, _props$type = props.type, type4 = _props$type === void 0 ? "checkbox" : _props$type, title = props.title, onChange = props.onChange, inputProps = _objectWithoutProperties(props, _excluded$r);
   var inputRef = reactExports.useRef(null);
   var holderRef = reactExports.useRef(null);
   var _useMergedState = useMergedState(defaultChecked, {
@@ -34840,7 +35261,7 @@ const getRadioButtonStyle = (token2) => {
     }
   };
 };
-const prepareComponentToken$b = (token2) => {
+const prepareComponentToken$c = (token2) => {
   const {
     wireframe,
     padding,
@@ -34882,7 +35303,7 @@ const prepareComponentToken$b = (token2) => {
     radioBgColor: wireframe ? colorBgContainer : colorPrimary
   };
 };
-const useStyle$f = genStyleHooks("Radio", (token2) => {
+const useStyle$g = genStyleHooks("Radio", (token2) => {
   const {
     controlOutline,
     controlOutlineWidth
@@ -34894,13 +35315,13 @@ const useStyle$f = genStyleHooks("Radio", (token2) => {
     radioButtonFocusShadow
   });
   return [getGroupRadioStyle(radioToken), getRadioBasicStyle(radioToken), getRadioButtonStyle(radioToken)];
-}, prepareComponentToken$b, {
+}, prepareComponentToken$c, {
   unitless: {
     radioSize: true,
     dotSize: true
   }
 });
-var __rest$w = function(s, e2) {
+var __rest$y = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -34934,12 +35355,12 @@ const InternalRadio = (props, ref) => {
     children,
     style: style2,
     title
-  } = props, restProps = __rest$w(props, ["prefixCls", "className", "rootClassName", "children", "style", "title"]);
+  } = props, restProps = __rest$y(props, ["prefixCls", "className", "rootClassName", "children", "style", "title"]);
   const radioPrefixCls = getPrefixCls("radio", customizePrefixCls);
   const isButtonType = ((groupContext === null || groupContext === void 0 ? void 0 : groupContext.optionType) || radioOptionTypeContext) === "button";
   const prefixCls = isButtonType ? `${radioPrefixCls}-button` : radioPrefixCls;
   const rootCls = useCSSVarCls(radioPrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$f(radioPrefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$g(radioPrefixCls, rootCls);
   const radioProps = Object.assign({}, restProps);
   const disabled = reactExports.useContext(DisabledContext);
   if (groupContext) {
@@ -35014,7 +35435,7 @@ const RadioGroup = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   const prefixCls = getPrefixCls("radio", customizePrefixCls);
   const groupPrefixCls = `${prefixCls}-group`;
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$f(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$g(prefixCls, rootCls);
   let childrenToRender = children;
   if (options && options.length > 0) {
     childrenToRender = options.map((option) => {
@@ -35067,8 +35488,8 @@ const RadioGroup = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     }
   }, childrenToRender)));
 });
-const Group$1 = /* @__PURE__ */ reactExports.memo(RadioGroup);
-var __rest$v = function(s, e2) {
+const Group$2 = /* @__PURE__ */ reactExports.memo(RadioGroup);
+var __rest$x = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -35082,7 +35503,7 @@ const RadioButton = (props, ref) => {
   } = reactExports.useContext(ConfigContext);
   const {
     prefixCls: customizePrefixCls
-  } = props, radioProps = __rest$v(props, ["prefixCls"]);
+  } = props, radioProps = __rest$x(props, ["prefixCls"]);
   const prefixCls = getPrefixCls("radio", customizePrefixCls);
   return /* @__PURE__ */ reactExports.createElement(RadioOptionTypeContextProvider, {
     value: "button"
@@ -35096,7 +35517,7 @@ const RadioButton = (props, ref) => {
 const Button = /* @__PURE__ */ reactExports.forwardRef(RadioButton);
 const Radio = Radio$1;
 Radio.Button = Button;
-Radio.Group = Group$1;
+Radio.Group = Group$2;
 Radio.__ANT_RADIO = true;
 function initInputToken(token2) {
   return merge(token2, {
@@ -36075,7 +36496,7 @@ const genRangeStyle = (token2) => {
     }
   };
 };
-const useStyle$e = genStyleHooks("Input", (token2) => {
+const useStyle$f = genStyleHooks("Input", (token2) => {
   const inputToken = merge(token2, initInputToken(token2));
   return [
     genInputStyle$1(inputToken),
@@ -36099,7 +36520,7 @@ var PlusOutlined = function PlusOutlined2(props, ref) {
     icon: PlusOutlined$1
   }));
 };
-var RefIcon$g = /* @__PURE__ */ reactExports.forwardRef(PlusOutlined);
+var RefIcon$l = /* @__PURE__ */ reactExports.forwardRef(PlusOutlined);
 const TabContext = /* @__PURE__ */ reactExports.createContext(null);
 var useIndicator = function useIndicator2(options) {
   var activeTabOffset = options.activeTabOffset, horizontal = options.horizontal, rtl = options.rtl, _options$indicator = options.indicator, indicator = _options$indicator === void 0 ? {} : _options$indicator;
@@ -37026,15 +37447,15 @@ var TabPane$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
     ref
   }, children);
 });
-var _excluded$n = ["renderTabBar"], _excluded2$3 = ["label", "key"];
+var _excluded$q = ["renderTabBar"], _excluded2$6 = ["label", "key"];
 var TabNavListWrapper = function TabNavListWrapper2(_ref) {
-  var renderTabBar = _ref.renderTabBar, restProps = _objectWithoutProperties(_ref, _excluded$n);
+  var renderTabBar = _ref.renderTabBar, restProps = _objectWithoutProperties(_ref, _excluded$q);
   var _React$useContext = reactExports.useContext(TabContext), tabs = _React$useContext.tabs;
   if (renderTabBar) {
     var tabNavBarProps = _objectSpread2(_objectSpread2({}, restProps), {}, {
       // Legacy support. We do not use this actually
       panes: tabs.map(function(_ref2) {
-        var label = _ref2.label, key = _ref2.key, restTabProps = _objectWithoutProperties(_ref2, _excluded2$3);
+        var label = _ref2.label, key = _ref2.key, restTabProps = _objectWithoutProperties(_ref2, _excluded2$6);
         return /* @__PURE__ */ reactExports.createElement(TabPane$1, _extends({
           tab: label,
           key,
@@ -37046,7 +37467,7 @@ var TabNavListWrapper = function TabNavListWrapper2(_ref) {
   }
   return /* @__PURE__ */ reactExports.createElement(TabNavList, restProps);
 };
-var _excluded$m = ["key", "forceRender", "style", "className", "destroyInactiveTabPane"];
+var _excluded$p = ["key", "forceRender", "style", "className", "destroyInactiveTabPane"];
 var TabPanelList = function TabPanelList2(props) {
   var id2 = props.id, activeKey = props.activeKey, animated = props.animated, tabPosition = props.tabPosition, destroyInactiveTabPane = props.destroyInactiveTabPane;
   var _React$useContext = reactExports.useContext(TabContext), prefixCls = _React$useContext.prefixCls, tabs = _React$useContext.tabs;
@@ -37057,7 +37478,7 @@ var TabPanelList = function TabPanelList2(props) {
   }, /* @__PURE__ */ reactExports.createElement("div", {
     className: classNames("".concat(prefixCls, "-content"), "".concat(prefixCls, "-content-").concat(tabPosition), _defineProperty({}, "".concat(prefixCls, "-content-animated"), tabPaneAnimated))
   }, tabs.map(function(item) {
-    var key = item.key, forceRender = item.forceRender, paneStyle = item.style, paneClassName = item.className, itemDestroyInactiveTabPane = item.destroyInactiveTabPane, restTabProps = _objectWithoutProperties(item, _excluded$m);
+    var key = item.key, forceRender = item.forceRender, paneStyle = item.style, paneClassName = item.className, itemDestroyInactiveTabPane = item.destroyInactiveTabPane, restTabProps = _objectWithoutProperties(item, _excluded$p);
     var active = key === activeKey;
     return /* @__PURE__ */ reactExports.createElement(CSSMotion, _extends({
       key,
@@ -37109,10 +37530,10 @@ function useAnimateConfig$1() {
   }
   return mergedAnimated;
 }
-var _excluded$l = ["id", "prefixCls", "className", "items", "direction", "activeKey", "defaultActiveKey", "editable", "animated", "tabPosition", "tabBarGutter", "tabBarStyle", "tabBarExtraContent", "locale", "more", "destroyInactiveTabPane", "renderTabBar", "onChange", "onTabClick", "onTabScroll", "getPopupContainer", "popupClassName", "indicator"];
+var _excluded$o = ["id", "prefixCls", "className", "items", "direction", "activeKey", "defaultActiveKey", "editable", "animated", "tabPosition", "tabBarGutter", "tabBarStyle", "tabBarExtraContent", "locale", "more", "destroyInactiveTabPane", "renderTabBar", "onChange", "onTabClick", "onTabScroll", "getPopupContainer", "popupClassName", "indicator"];
 var uuid = 0;
 var Tabs$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
-  var id2 = props.id, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-tabs" : _props$prefixCls, className = props.className, items = props.items, direction = props.direction, activeKey = props.activeKey, defaultActiveKey = props.defaultActiveKey, editable = props.editable, animated = props.animated, _props$tabPosition = props.tabPosition, tabPosition = _props$tabPosition === void 0 ? "top" : _props$tabPosition, tabBarGutter = props.tabBarGutter, tabBarStyle = props.tabBarStyle, tabBarExtraContent = props.tabBarExtraContent, locale2 = props.locale, more = props.more, destroyInactiveTabPane = props.destroyInactiveTabPane, renderTabBar = props.renderTabBar, onChange = props.onChange, onTabClick = props.onTabClick, onTabScroll = props.onTabScroll, getPopupContainer = props.getPopupContainer, popupClassName = props.popupClassName, indicator = props.indicator, restProps = _objectWithoutProperties(props, _excluded$l);
+  var id2 = props.id, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-tabs" : _props$prefixCls, className = props.className, items = props.items, direction = props.direction, activeKey = props.activeKey, defaultActiveKey = props.defaultActiveKey, editable = props.editable, animated = props.animated, _props$tabPosition = props.tabPosition, tabPosition = _props$tabPosition === void 0 ? "top" : _props$tabPosition, tabBarGutter = props.tabBarGutter, tabBarStyle = props.tabBarStyle, tabBarExtraContent = props.tabBarExtraContent, locale2 = props.locale, more = props.more, destroyInactiveTabPane = props.destroyInactiveTabPane, renderTabBar = props.renderTabBar, onChange = props.onChange, onTabClick = props.onTabClick, onTabScroll = props.onTabScroll, getPopupContainer = props.getPopupContainer, popupClassName = props.popupClassName, indicator = props.indicator, restProps = _objectWithoutProperties(props, _excluded$o);
   var tabs = reactExports.useMemo(function() {
     return (items || []).filter(function(item) {
       return item && _typeof(item) === "object" && "key" in item;
@@ -37238,7 +37659,7 @@ function useAnimateConfig(prefixCls) {
   }
   return mergedAnimated;
 }
-var __rest$u = function(s, e2) {
+var __rest$w = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -37261,7 +37682,7 @@ function useLegacyItems(items, children) {
       } = node2;
       const _a = props || {}, {
         tab
-      } = _a, restProps = __rest$u(_a, ["tab"]);
+      } = _a, restProps = __rest$w(_a, ["tab"]);
       const item = Object.assign(Object.assign({
         key: String(key)
       }, restProps), {
@@ -38091,7 +38512,7 @@ const genTabsStyle = (token2) => {
     }
   };
 };
-const prepareComponentToken$a = (token2) => {
+const prepareComponentToken$b = (token2) => {
   const cardHeight = token2.controlHeightLG;
   return {
     zIndexPopup: token2.zIndexPopupBase + 50,
@@ -38123,7 +38544,7 @@ const prepareComponentToken$a = (token2) => {
     cardGutter: token2.marginXXS / 2
   };
 };
-const useStyle$d = genStyleHooks("Tabs", (token2) => {
+const useStyle$e = genStyleHooks("Tabs", (token2) => {
   const tabsToken = merge(token2, {
     // `cardPadding` is empty by default, so we could calculate with dynamic `cardHeight`
     tabsCardPadding: token2.cardPadding,
@@ -38135,9 +38556,9 @@ const useStyle$d = genStyleHooks("Tabs", (token2) => {
     tabsHorizontalItemMarginRTL: `0 0 0 ${unit$1(token2.horizontalItemGutter)}`
   });
   return [genSizeStyle$2(tabsToken), genRtlStyle$1(tabsToken), genPositionStyle(tabsToken), genDropdownStyle(tabsToken), genCardStyle(tabsToken), genTabsStyle(tabsToken), genMotionStyle$1(tabsToken)];
-}, prepareComponentToken$a);
+}, prepareComponentToken$b);
 const TabPane = () => null;
-var __rest$t = function(s, e2) {
+var __rest$v = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -38166,7 +38587,7 @@ const Tabs = (props) => {
     style: style2,
     indicatorSize,
     indicator
-  } = props, otherProps = __rest$t(props, ["type", "className", "rootClassName", "size", "onEdit", "hideAdd", "centered", "addIcon", "removeIcon", "moreIcon", "more", "popupClassName", "children", "items", "animated", "style", "indicatorSize", "indicator"]);
+  } = props, otherProps = __rest$v(props, ["type", "className", "rootClassName", "size", "onEdit", "hideAdd", "centered", "addIcon", "removeIcon", "moreIcon", "more", "popupClassName", "children", "items", "animated", "style", "indicatorSize", "indicator"]);
   const {
     prefixCls: customizePrefixCls
   } = otherProps;
@@ -38178,7 +38599,7 @@ const Tabs = (props) => {
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("tabs", customizePrefixCls);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$d(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$e(prefixCls, rootCls);
   let editable;
   if (type4 === "editable-card") {
     editable = {
@@ -38189,8 +38610,8 @@ const Tabs = (props) => {
         } = _ref;
         onEdit === null || onEdit === void 0 ? void 0 : onEdit(editType === "add" ? event : key, editType);
       },
-      removeIcon: (_a = removeIcon !== null && removeIcon !== void 0 ? removeIcon : tabs === null || tabs === void 0 ? void 0 : tabs.removeIcon) !== null && _a !== void 0 ? _a : /* @__PURE__ */ reactExports.createElement(RefIcon$r, null),
-      addIcon: (addIcon !== null && addIcon !== void 0 ? addIcon : tabs === null || tabs === void 0 ? void 0 : tabs.addIcon) || /* @__PURE__ */ reactExports.createElement(RefIcon$g, null),
+      removeIcon: (_a = removeIcon !== null && removeIcon !== void 0 ? removeIcon : tabs === null || tabs === void 0 ? void 0 : tabs.removeIcon) !== null && _a !== void 0 ? _a : /* @__PURE__ */ reactExports.createElement(RefIcon$w, null),
+      addIcon: (addIcon !== null && addIcon !== void 0 ? addIcon : tabs === null || tabs === void 0 ? void 0 : tabs.addIcon) || /* @__PURE__ */ reactExports.createElement(RefIcon$l, null),
       showAdd: hideAdd !== true
     };
   }
@@ -38218,7 +38639,7 @@ const Tabs = (props) => {
     style: mergedStyle,
     editable,
     more: Object.assign({
-      icon: (_l = (_k = (_j = (_h = tabs === null || tabs === void 0 ? void 0 : tabs.more) === null || _h === void 0 ? void 0 : _h.icon) !== null && _j !== void 0 ? _j : tabs === null || tabs === void 0 ? void 0 : tabs.moreIcon) !== null && _k !== void 0 ? _k : moreIcon) !== null && _l !== void 0 ? _l : /* @__PURE__ */ reactExports.createElement(RefIcon$h, null),
+      icon: (_l = (_k = (_j = (_h = tabs === null || tabs === void 0 ? void 0 : tabs.more) === null || _h === void 0 ? void 0 : _h.icon) !== null && _j !== void 0 ? _j : tabs === null || tabs === void 0 ? void 0 : tabs.moreIcon) !== null && _k !== void 0 ? _k : moreIcon) !== null && _l !== void 0 ? _l : /* @__PURE__ */ reactExports.createElement(RefIcon$m, null),
       transitionName: `${rootPrefixCls}-slide-up`
     }, more),
     prefixCls,
@@ -38287,7 +38708,7 @@ function debounce(delay, callback, options) {
 function getEntity(keyEntities, key) {
   return keyEntities[key];
 }
-var _excluded$k = ["children"];
+var _excluded$n = ["children"];
 function getPosition$2(level, index2) {
   return "".concat(level, "-").concat(index2);
 }
@@ -38319,7 +38740,7 @@ function convertTreeToData(rootNodes) {
         return null;
       }
       var key = treeNode.key;
-      var _treeNode$props = treeNode.props, children = _treeNode$props.children, rest = _objectWithoutProperties(_treeNode$props, _excluded$k);
+      var _treeNode$props = treeNode.props, children = _treeNode$props.children, rest = _objectWithoutProperties(_treeNode$props, _excluded$n);
       var dataNode = _objectSpread2({
         key
       }, rest);
@@ -38905,14 +39326,14 @@ function getStyle(prefixCls, token2) {
   });
   return [genCheckboxStyle(checkboxToken)];
 }
-const useStyle$c = genStyleHooks("Checkbox", (token2, _ref) => {
+const useStyle$d = genStyleHooks("Checkbox", (token2, _ref) => {
   let {
     prefixCls
   } = _ref;
   return [getStyle(prefixCls, token2)];
 });
 const GroupContext = /* @__PURE__ */ React.createContext(null);
-var __rest$s = function(s, e2) {
+var __rest$u = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -38933,7 +39354,7 @@ const InternalCheckbox = (props, ref) => {
     onMouseLeave,
     skipGroup = false,
     disabled
-  } = props, restProps = __rest$s(props, ["prefixCls", "className", "rootClassName", "children", "indeterminate", "style", "onMouseEnter", "onMouseLeave", "skipGroup", "disabled"]);
+  } = props, restProps = __rest$u(props, ["prefixCls", "className", "rootClassName", "children", "indeterminate", "style", "onMouseEnter", "onMouseLeave", "skipGroup", "disabled"]);
   const {
     getPrefixCls,
     direction,
@@ -38962,7 +39383,7 @@ const InternalCheckbox = (props, ref) => {
   }, [restProps.value]);
   const prefixCls = getPrefixCls("checkbox", customizePrefixCls);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$c(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$d(prefixCls, rootCls);
   const checkboxProps = Object.assign({}, restProps);
   if (checkboxGroup && !skipGroup) {
     checkboxProps.onChange = function() {
@@ -39007,7 +39428,7 @@ const InternalCheckbox = (props, ref) => {
   })), children !== void 0 && /* @__PURE__ */ reactExports.createElement("span", null, children))));
 };
 const Checkbox$1 = /* @__PURE__ */ reactExports.forwardRef(InternalCheckbox);
-var __rest$r = function(s, e2) {
+var __rest$t = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -39025,7 +39446,7 @@ const CheckboxGroup = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     rootClassName,
     style: style2,
     onChange
-  } = props, restProps = __rest$r(props, ["defaultValue", "children", "options", "prefixCls", "className", "rootClassName", "style", "onChange"]);
+  } = props, restProps = __rest$t(props, ["defaultValue", "children", "options", "prefixCls", "className", "rootClassName", "style", "onChange"]);
   const {
     getPrefixCls,
     direction
@@ -39072,7 +39493,7 @@ const CheckboxGroup = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   const prefixCls = getPrefixCls("checkbox", customizePrefixCls);
   const groupPrefixCls = `${prefixCls}-group`;
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$c(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$d(prefixCls, rootCls);
   const domProps = omit(restProps, ["value", "disabled"]);
   const childrenNode = options.length ? memoOptions.map((option) => /* @__PURE__ */ reactExports.createElement(Checkbox$1, {
     prefixCls,
@@ -39263,7 +39684,7 @@ const useColStyle = genStyleHooks("Grid", (token2) => {
   };
   return [genGridColStyle(gridToken), genGridStyle(gridToken, ""), genGridStyle(gridToken, "-xs"), Object.keys(gridMediaSizesMap).map((key) => genGridMediaStyle(gridToken, gridMediaSizesMap[key], key)).reduce((pre, cur) => Object.assign(Object.assign({}, pre), cur), {})];
 }, prepareColComponentToken);
-var __rest$q = function(s, e2) {
+var __rest$s = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -39301,7 +39722,7 @@ const Col = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     children,
     flex,
     style: style2
-  } = props, others = __rest$q(props, ["prefixCls", "span", "order", "offset", "push", "pull", "className", "children", "flex", "style"]);
+  } = props, others = __rest$s(props, ["prefixCls", "span", "order", "offset", "push", "pull", "className", "children", "flex", "style"]);
   const prefixCls = getPrefixCls("col", customizePrefixCls);
   const [wrapCSSVar, hashId, cssVarCls] = useColStyle(prefixCls);
   const sizeStyle = {};
@@ -39353,7 +39774,7 @@ const Col = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     ref
   }), children));
 });
-var __rest$p = function(s, e2) {
+var __rest$r = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -39397,7 +39818,7 @@ const Row = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     children,
     gutter = 0,
     wrap
-  } = props, others = __rest$p(props, ["prefixCls", "justify", "align", "className", "style", "children", "gutter", "wrap"]);
+  } = props, others = __rest$r(props, ["prefixCls", "justify", "align", "className", "style", "children", "gutter", "wrap"]);
   const {
     getPrefixCls,
     direction
@@ -39500,9 +39921,9 @@ var PanelContent = /* @__PURE__ */ React.forwardRef(function(props, ref) {
   }, children));
 });
 PanelContent.displayName = "PanelContent";
-var _excluded$j = ["showArrow", "headerClass", "isActive", "onItemClick", "forceRender", "className", "prefixCls", "collapsible", "accordion", "panelKey", "extra", "header", "expandIcon", "openMotion", "destroyInactivePanel", "children"];
+var _excluded$m = ["showArrow", "headerClass", "isActive", "onItemClick", "forceRender", "className", "prefixCls", "collapsible", "accordion", "panelKey", "extra", "header", "expandIcon", "openMotion", "destroyInactivePanel", "children"];
 var CollapsePanel$1 = /* @__PURE__ */ React.forwardRef(function(props, ref) {
-  var _props$showArrow = props.showArrow, showArrow = _props$showArrow === void 0 ? true : _props$showArrow, headerClass = props.headerClass, isActive2 = props.isActive, onItemClick = props.onItemClick, forceRender = props.forceRender, className = props.className, prefixCls = props.prefixCls, collapsible = props.collapsible, accordion = props.accordion, panelKey = props.panelKey, extra = props.extra, header = props.header, expandIcon = props.expandIcon, openMotion = props.openMotion, destroyInactivePanel = props.destroyInactivePanel, children = props.children, resetProps = _objectWithoutProperties(props, _excluded$j);
+  var _props$showArrow = props.showArrow, showArrow = _props$showArrow === void 0 ? true : _props$showArrow, headerClass = props.headerClass, isActive2 = props.isActive, onItemClick = props.onItemClick, forceRender = props.forceRender, className = props.className, prefixCls = props.prefixCls, collapsible = props.collapsible, accordion = props.accordion, panelKey = props.panelKey, extra = props.extra, header = props.header, expandIcon = props.expandIcon, openMotion = props.openMotion, destroyInactivePanel = props.destroyInactivePanel, children = props.children, resetProps = _objectWithoutProperties(props, _excluded$m);
   var disabled = collapsible === "disabled";
   var collapsibleHeader = collapsible === "header";
   var collapsibleIcon = collapsible === "icon";
@@ -39564,11 +39985,11 @@ var CollapsePanel$1 = /* @__PURE__ */ React.forwardRef(function(props, ref) {
     }, children);
   }));
 });
-var _excluded$i = ["children", "label", "key", "collapsible", "onItemClick", "destroyInactivePanel"];
+var _excluded$l = ["children", "label", "key", "collapsible", "onItemClick", "destroyInactivePanel"];
 var convertItemsToNodes = function convertItemsToNodes2(items, props) {
   var prefixCls = props.prefixCls, accordion = props.accordion, collapsible = props.collapsible, destroyInactivePanel = props.destroyInactivePanel, onItemClick = props.onItemClick, activeKey = props.activeKey, openMotion = props.openMotion, expandIcon = props.expandIcon;
   return items.map(function(item, index2) {
-    var children = item.children, label = item.label, rawKey = item.key, rawCollapsible = item.collapsible, rawOnItemClick = item.onItemClick, rawDestroyInactivePanel = item.destroyInactivePanel, restProps = _objectWithoutProperties(item, _excluded$i);
+    var children = item.children, label = item.label, rawKey = item.key, rawCollapsible = item.collapsible, rawOnItemClick = item.onItemClick, rawDestroyInactivePanel = item.destroyInactivePanel, restProps = _objectWithoutProperties(item, _excluded$l);
     var key = String(rawKey !== null && rawKey !== void 0 ? rawKey : index2);
     var mergeCollapsible = rawCollapsible !== null && rawCollapsible !== void 0 ? rawCollapsible : collapsible;
     var mergeDestroyInactivePanel = rawDestroyInactivePanel !== null && rawDestroyInactivePanel !== void 0 ? rawDestroyInactivePanel : destroyInactivePanel;
@@ -39966,21 +40387,21 @@ const genGhostStyle = (token2) => {
     }
   };
 };
-const prepareComponentToken$9 = (token2) => ({
+const prepareComponentToken$a = (token2) => ({
   headerPadding: `${token2.paddingSM}px ${token2.padding}px`,
   headerBg: token2.colorFillAlter,
   contentPadding: `${token2.padding}px 16px`,
   // Fixed Value
   contentBg: token2.colorBgContainer
 });
-const useStyle$b = genStyleHooks("Collapse", (token2) => {
+const useStyle$c = genStyleHooks("Collapse", (token2) => {
   const collapseToken = merge(token2, {
     collapseHeaderPaddingSM: `${unit$1(token2.paddingXS)} ${unit$1(token2.paddingSM)}`,
     collapseHeaderPaddingLG: `${unit$1(token2.padding)} ${unit$1(token2.paddingLG)}`,
     collapsePanelBorderRadius: token2.borderRadiusLG
   });
   return [genBaseStyle$2(collapseToken), genBorderlessStyle(collapseToken), genGhostStyle(collapseToken), genArrowStyle(collapseToken), genCollapseMotion(collapseToken)];
-}, prepareComponentToken$9);
+}, prepareComponentToken$a);
 const Collapse = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   const {
     getPrefixCls,
@@ -40005,7 +40426,7 @@ const Collapse = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   });
   const prefixCls = getPrefixCls("collapse", customizePrefixCls);
   const rootPrefixCls = getPrefixCls();
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$b(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$c(prefixCls);
   const mergedExpandIconPosition = reactExports.useMemo(() => {
     if (expandIconPosition === "left") {
       return "start";
@@ -40015,7 +40436,7 @@ const Collapse = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   const mergedExpandIcon = expandIcon !== null && expandIcon !== void 0 ? expandIcon : collapse === null || collapse === void 0 ? void 0 : collapse.expandIcon;
   const renderExpandIcon2 = reactExports.useCallback(function() {
     let panelProps = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
-    const icon = typeof mergedExpandIcon === "function" ? mergedExpandIcon(panelProps) : /* @__PURE__ */ reactExports.createElement(RefIcon$j, {
+    const icon = typeof mergedExpandIcon === "function" ? mergedExpandIcon(panelProps) : /* @__PURE__ */ reactExports.createElement(RefIcon$o, {
       rotate: panelProps.isActive ? 90 : void 0,
       "aria-label": panelProps.isActive ? "expanded" : "collapsed"
     });
@@ -40190,24 +40611,24 @@ const genSharedDividerStyle = (token2) => {
     })
   };
 };
-const prepareComponentToken$8 = (token2) => ({
+const prepareComponentToken$9 = (token2) => ({
   textPaddingInline: "1em",
   orientationMargin: 0.05,
   verticalMarginInline: token2.marginXS
 });
-const useStyle$a = genStyleHooks("Divider", (token2) => {
+const useStyle$b = genStyleHooks("Divider", (token2) => {
   const dividerToken = merge(token2, {
     dividerHorizontalWithTextGutterMargin: token2.margin,
     dividerHorizontalGutterMargin: token2.marginLG,
     sizePaddingEdgeHorizontal: 0
   });
   return [genSharedDividerStyle(dividerToken)];
-}, prepareComponentToken$8, {
+}, prepareComponentToken$9, {
   unitless: {
     orientationMargin: true
   }
 });
-var __rest$o = function(s, e2) {
+var __rest$q = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -40232,9 +40653,9 @@ const Divider = (props) => {
     dashed,
     plain,
     style: style2
-  } = props, restProps = __rest$o(props, ["prefixCls", "type", "orientation", "orientationMargin", "className", "rootClassName", "children", "dashed", "plain", "style"]);
+  } = props, restProps = __rest$q(props, ["prefixCls", "type", "orientation", "orientationMargin", "className", "rootClassName", "children", "dashed", "plain", "style"]);
   const prefixCls = getPrefixCls("divider", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$a(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$b(prefixCls);
   const hasChildren = !!children;
   const hasCustomMarginLeft = orientation === "left" && orientationMargin != null;
   const hasCustomMarginRight = orientation === "right" && orientationMargin != null;
@@ -40272,13 +40693,13 @@ const Divider = (props) => {
     style: innerStyle
   }, children)));
 };
-var _excluded$h = ["b"], _excluded2$2 = ["v"];
+var _excluded$k = ["b"], _excluded2$5 = ["v"];
 var getRoundNumber$1 = function getRoundNumber(value) {
   return Math.round(Number(value || 0));
 };
 var convertHsb2Hsv = function convertHsb2Hsv2(color) {
   if (color && _typeof(color) === "object" && "h" in color && "b" in color) {
-    var _ref = color, b2 = _ref.b, resets = _objectWithoutProperties(_ref, _excluded$h);
+    var _ref = color, b2 = _ref.b, resets = _objectWithoutProperties(_ref, _excluded$k);
     return _objectSpread2(_objectSpread2({}, resets), {}, {
       v: b2
     });
@@ -40318,7 +40739,7 @@ var Color = /* @__PURE__ */ function(_TinyColor) {
       }
       var _hsv = hsv;
       _hsv.v;
-      var resets = _objectWithoutProperties(_hsv, _excluded2$2);
+      var resets = _objectWithoutProperties(_hsv, _excluded2$5);
       return _objectSpread2(_objectSpread2({}, resets), {}, {
         b: hsv.v,
         a: this.a
@@ -40822,7 +41243,7 @@ var UpOutlined = function UpOutlined2(props, ref) {
     icon: UpOutlined$1
   }));
 };
-var RefIcon$f = /* @__PURE__ */ reactExports.forwardRef(UpOutlined);
+var RefIcon$k = /* @__PURE__ */ reactExports.forwardRef(UpOutlined);
 function supportBigInt() {
   return typeof BigInt === "function";
 }
@@ -41334,7 +41755,7 @@ var BaseInput = /* @__PURE__ */ React.forwardRef(function(props, ref) {
     hidden
   });
 });
-var _excluded$g = ["show"];
+var _excluded$j = ["show"];
 function useCount(count, showCount) {
   return reactExports.useMemo(function() {
     var mergedConfig = {};
@@ -41342,7 +41763,7 @@ function useCount(count, showCount) {
       mergedConfig.show = _typeof(showCount) === "object" && showCount.formatter ? showCount.formatter : !!showCount;
     }
     mergedConfig = _objectSpread2(_objectSpread2({}, mergedConfig), count);
-    var _ref = mergedConfig, show = _ref.show, rest = _objectWithoutProperties(_ref, _excluded$g);
+    var _ref = mergedConfig, show = _ref.show, rest = _objectWithoutProperties(_ref, _excluded$j);
     return _objectSpread2(_objectSpread2({}, rest), {}, {
       show: !!show,
       showFormatter: typeof show === "function" ? show : void 0,
@@ -41352,9 +41773,9 @@ function useCount(count, showCount) {
     });
   }, [count, showCount]);
 }
-var _excluded$f = ["autoComplete", "onChange", "onFocus", "onBlur", "onPressEnter", "onKeyDown", "prefixCls", "disabled", "htmlSize", "className", "maxLength", "suffix", "showCount", "count", "type", "classes", "classNames", "styles", "onCompositionStart", "onCompositionEnd"];
+var _excluded$i = ["autoComplete", "onChange", "onFocus", "onBlur", "onPressEnter", "onKeyDown", "prefixCls", "disabled", "htmlSize", "className", "maxLength", "suffix", "showCount", "count", "type", "classes", "classNames", "styles", "onCompositionStart", "onCompositionEnd"];
 var Input$2 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
-  var autoComplete = props.autoComplete, onChange = props.onChange, onFocus = props.onFocus, onBlur = props.onBlur, onPressEnter = props.onPressEnter, onKeyDown2 = props.onKeyDown, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-input" : _props$prefixCls, disabled = props.disabled, htmlSize = props.htmlSize, className = props.className, maxLength = props.maxLength, suffix = props.suffix, showCount = props.showCount, count = props.count, _props$type = props.type, type4 = _props$type === void 0 ? "text" : _props$type, classes = props.classes, classNames$1 = props.classNames, styles = props.styles, _onCompositionStart = props.onCompositionStart, onCompositionEnd = props.onCompositionEnd, rest = _objectWithoutProperties(props, _excluded$f);
+  var autoComplete = props.autoComplete, onChange = props.onChange, onFocus = props.onFocus, onBlur = props.onBlur, onPressEnter = props.onPressEnter, onKeyDown2 = props.onKeyDown, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-input" : _props$prefixCls, disabled = props.disabled, htmlSize = props.htmlSize, className = props.className, maxLength = props.maxLength, suffix = props.suffix, showCount = props.showCount, count = props.count, _props$type = props.type, type4 = _props$type === void 0 ? "text" : _props$type, classes = props.classes, classNames$1 = props.classNames, styles = props.styles, _onCompositionStart = props.onCompositionStart, onCompositionEnd = props.onCompositionEnd, rest = _objectWithoutProperties(props, _excluded$i);
   var _useState = reactExports.useState(false), _useState2 = _slicedToArray(_useState, 2), focused = _useState2[0], setFocused = _useState2[1];
   var compositionRef = reactExports.useRef(false);
   var inputRef = reactExports.useRef(null);
@@ -41678,7 +42099,7 @@ const useFrame = function() {
     });
   };
 };
-var _excluded$e = ["prefixCls", "className", "style", "min", "max", "step", "defaultValue", "value", "disabled", "readOnly", "upHandler", "downHandler", "keyboard", "changeOnWheel", "controls", "classNames", "stringMode", "parser", "formatter", "precision", "decimalSeparator", "onChange", "onInput", "onPressEnter", "onStep", "changeOnBlur", "domRef"], _excluded2$1 = ["disabled", "style", "prefixCls", "value", "prefix", "suffix", "addonBefore", "addonAfter", "className", "classNames"];
+var _excluded$h = ["prefixCls", "className", "style", "min", "max", "step", "defaultValue", "value", "disabled", "readOnly", "upHandler", "downHandler", "keyboard", "changeOnWheel", "controls", "classNames", "stringMode", "parser", "formatter", "precision", "decimalSeparator", "onChange", "onInput", "onPressEnter", "onStep", "changeOnBlur", "domRef"], _excluded2$4 = ["disabled", "style", "prefixCls", "value", "prefix", "suffix", "addonBefore", "addonAfter", "className", "classNames"];
 var getDecimalValue = function getDecimalValue2(stringMode, decimalValue) {
   if (stringMode || decimalValue.isEmpty()) {
     return decimalValue.toString();
@@ -41692,7 +42113,7 @@ var getDecimalIfValidate = function getDecimalIfValidate2(value) {
 var InternalInputNumber = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
   var prefixCls = props.prefixCls, className = props.className, style2 = props.style, min = props.min, max = props.max, _props$step = props.step, step = _props$step === void 0 ? 1 : _props$step, defaultValue = props.defaultValue, value = props.value, disabled = props.disabled, readOnly = props.readOnly, upHandler = props.upHandler, downHandler = props.downHandler, keyboard = props.keyboard, _props$changeOnWheel = props.changeOnWheel, changeOnWheel = _props$changeOnWheel === void 0 ? false : _props$changeOnWheel, _props$controls = props.controls, controls = _props$controls === void 0 ? true : _props$controls;
   props.classNames;
-  var stringMode = props.stringMode, parser = props.parser, formatter = props.formatter, precision = props.precision, decimalSeparator = props.decimalSeparator, onChange = props.onChange, onInput = props.onInput, onPressEnter = props.onPressEnter, onStep = props.onStep, _props$changeOnBlur = props.changeOnBlur, changeOnBlur = _props$changeOnBlur === void 0 ? true : _props$changeOnBlur, domRef = props.domRef, inputProps = _objectWithoutProperties(props, _excluded$e);
+  var stringMode = props.stringMode, parser = props.parser, formatter = props.formatter, precision = props.precision, decimalSeparator = props.decimalSeparator, onChange = props.onChange, onInput = props.onInput, onPressEnter = props.onPressEnter, onStep = props.onStep, _props$changeOnBlur = props.changeOnBlur, changeOnBlur = _props$changeOnBlur === void 0 ? true : _props$changeOnBlur, domRef = props.domRef, inputProps = _objectWithoutProperties(props, _excluded$h);
   var inputClassName = "".concat(prefixCls, "-input");
   var inputRef = reactExports.useRef(null);
   var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), focus = _React$useState2[0], setFocus = _React$useState2[1];
@@ -41992,7 +42413,7 @@ var InternalInputNumber = /* @__PURE__ */ reactExports.forwardRef(function(props
   }))));
 });
 var InputNumber$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
-  var disabled = props.disabled, style2 = props.style, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-input-number" : _props$prefixCls, value = props.value, prefix = props.prefix, suffix = props.suffix, addonBefore = props.addonBefore, addonAfter = props.addonAfter, className = props.className, classNames2 = props.classNames, rest = _objectWithoutProperties(props, _excluded2$1);
+  var disabled = props.disabled, style2 = props.style, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-input-number" : _props$prefixCls, value = props.value, prefix = props.prefix, suffix = props.suffix, addonBefore = props.addonBefore, addonAfter = props.addonAfter, className = props.className, classNames2 = props.classNames, rest = _objectWithoutProperties(props, _excluded2$4);
   var holderRef = reactExports.useRef(null);
   var inputNumberDomRef = reactExports.useRef(null);
   var inputFocusRef = reactExports.useRef(null);
@@ -42033,7 +42454,7 @@ var InputNumber$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref)
     className: classNames2 === null || classNames2 === void 0 ? void 0 : classNames2.input
   }, rest)));
 });
-const prepareComponentToken$7 = (token2) => {
+const prepareComponentToken$8 = (token2) => {
   var _a;
   const handleVisible = (_a = token2.handleVisible) !== null && _a !== void 0 ? _a : "auto";
   return Object.assign(Object.assign({}, initComponentToken$1(token2)), {
@@ -42422,7 +42843,7 @@ const genAffixWrapperStyles = (token2) => {
     })
   };
 };
-const useStyle$9 = genStyleHooks("InputNumber", (token2) => {
+const useStyle$a = genStyleHooks("InputNumber", (token2) => {
   const inputNumberToken = merge(token2, initInputToken(token2));
   return [
     genInputNumberStyles(inputNumberToken),
@@ -42432,12 +42853,12 @@ const useStyle$9 = genStyleHooks("InputNumber", (token2) => {
     // =====================================================
     genCompactItemStyle(inputNumberToken)
   ];
-}, prepareComponentToken$7, {
+}, prepareComponentToken$8, {
   unitless: {
     handleOpacity: true
   }
 });
-var __rest$n = function(s, e2) {
+var __rest$p = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -42466,18 +42887,18 @@ const InputNumber = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     status: customStatus,
     controls,
     variant: customVariant
-  } = props, others = __rest$n(props, ["className", "rootClassName", "size", "disabled", "prefixCls", "addonBefore", "addonAfter", "prefix", "bordered", "readOnly", "status", "controls", "variant"]);
+  } = props, others = __rest$p(props, ["className", "rootClassName", "size", "disabled", "prefixCls", "addonBefore", "addonAfter", "prefix", "bordered", "readOnly", "status", "controls", "variant"]);
   const prefixCls = getPrefixCls("input-number", customizePrefixCls);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$9(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$a(prefixCls, rootCls);
   const {
     compactSize,
     compactItemClassnames
   } = useCompactItemContext(prefixCls, direction);
-  let upIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$f, {
+  let upIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$k, {
     className: `${prefixCls}-handler-up-inner`
   });
-  let downIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$l, {
+  let downIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$q, {
     className: `${prefixCls}-handler-down-inner`
   });
   const controlsTemp = typeof controls === "boolean" ? controls : void 0;
@@ -42626,7 +43047,7 @@ const ColorAlphaInput = (_ref) => {
     onChange: handleAlphaChange
   });
 };
-const Group = (props) => {
+const Group$1 = (props) => {
   const {
     getPrefixCls,
     direction
@@ -42637,7 +43058,7 @@ const Group = (props) => {
   } = props;
   const prefixCls = getPrefixCls("input-group", customizePrefixCls);
   const inputPrefixCls = getPrefixCls("input");
-  const [wrapCSSVar, hashId] = useStyle$e(inputPrefixCls);
+  const [wrapCSSVar, hashId] = useStyle$f(inputPrefixCls);
   const cls = classNames(prefixCls, {
     [`${prefixCls}-lg`]: props.size === "large",
     [`${prefixCls}-sm`]: props.size === "small",
@@ -42665,7 +43086,7 @@ const getAllowClear = (allowClear) => {
     mergedAllowClear = allowClear;
   } else if (allowClear) {
     mergedAllowClear = {
-      clearIcon: /* @__PURE__ */ React.createElement(RefIcon$s, null)
+      clearIcon: /* @__PURE__ */ React.createElement(RefIcon$x, null)
     };
   }
   return mergedAllowClear;
@@ -42695,7 +43116,7 @@ function useRemovePasswordTimeout(inputRef, triggerOnMount) {
 function hasPrefixSuffix(props) {
   return !!(props.prefix || props.suffix || props.allowClear || props.showCount);
 }
-var __rest$m = function(s, e2) {
+var __rest$o = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -42746,7 +43167,7 @@ const Input$1 = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     onChange,
     classNames: classes,
     variant: customVariant
-  } = props, rest = __rest$m(props, ["prefixCls", "bordered", "status", "size", "disabled", "onBlur", "onFocus", "suffix", "allowClear", "addonAfter", "addonBefore", "className", "style", "styles", "rootClassName", "onChange", "classNames", "variant"]);
+  } = props, rest = __rest$o(props, ["prefixCls", "bordered", "status", "size", "disabled", "onBlur", "onFocus", "suffix", "allowClear", "addonAfter", "addonBefore", "className", "style", "styles", "rootClassName", "onChange", "classNames", "variant"]);
   const {
     getPrefixCls,
     direction,
@@ -42755,7 +43176,7 @@ const Input$1 = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   const prefixCls = getPrefixCls("input", customizePrefixCls);
   const inputRef = reactExports.useRef(null);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$e(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$f(prefixCls, rootCls);
   const {
     compactSize,
     compactItemClassnames
@@ -42866,11 +43287,11 @@ const genOTPStyle = (token2) => {
     }
   };
 };
-const useStyle$8 = genStyleHooks(["Input", "OTP"], (token2) => {
+const useStyle$9 = genStyleHooks(["Input", "OTP"], (token2) => {
   const inputToken = merge(token2, initInputToken(token2));
   return [genOTPStyle(inputToken)];
 }, initComponentToken$1);
-var __rest$l = function(s, e2) {
+var __rest$n = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -42885,7 +43306,7 @@ const OTPInput = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     onActiveChange,
     index: index2,
     mask
-  } = props, restProps = __rest$l(props, ["value", "onChange", "onActiveChange", "index", "mask"]);
+  } = props, restProps = __rest$n(props, ["value", "onChange", "onActiveChange", "index", "mask"]);
   const internalValue = value && typeof mask === "string" ? mask : value;
   const onInternalChange = (e2) => {
     onChange(index2, e2.target.value);
@@ -42930,7 +43351,7 @@ const OTPInput = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     type: mask === true ? "password" : "text"
   }));
 });
-var __rest$k = function(s, e2) {
+var __rest$m = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -42955,7 +43376,7 @@ const OTP = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     status: customStatus,
     autoFocus,
     mask
-  } = props, restProps = __rest$k(props, ["prefixCls", "length", "size", "defaultValue", "value", "onChange", "formatter", "variant", "disabled", "status", "autoFocus", "mask"]);
+  } = props, restProps = __rest$m(props, ["prefixCls", "length", "size", "defaultValue", "value", "onChange", "formatter", "variant", "disabled", "status", "autoFocus", "mask"]);
   const {
     getPrefixCls,
     direction
@@ -42967,7 +43388,7 @@ const OTP = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     attr: true
   });
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$8(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$9(prefixCls, rootCls);
   const mergedSize = useSize((ctx) => customSize !== null && customSize !== void 0 ? customSize : ctx);
   const formContext = reactExports.useContext(FormItemInputContext);
   const mergedStatus = getMergedStatus(formContext.status, customStatus);
@@ -43088,7 +43509,7 @@ var EyeInvisibleOutlined = function EyeInvisibleOutlined2(props, ref) {
     icon: EyeInvisibleOutlined$1
   }));
 };
-var RefIcon$e = /* @__PURE__ */ reactExports.forwardRef(EyeInvisibleOutlined);
+var RefIcon$j = /* @__PURE__ */ reactExports.forwardRef(EyeInvisibleOutlined);
 var EyeOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z" } }] }, "name": "eye", "theme": "outlined" };
 var EyeOutlined = function EyeOutlined2(props, ref) {
   return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
@@ -43096,8 +43517,8 @@ var EyeOutlined = function EyeOutlined2(props, ref) {
     icon: EyeOutlined$1
   }));
 };
-var RefIcon$d = /* @__PURE__ */ reactExports.forwardRef(EyeOutlined);
-var __rest$j = function(s, e2) {
+var RefIcon$i = /* @__PURE__ */ reactExports.forwardRef(EyeOutlined);
+var __rest$l = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -43105,7 +43526,7 @@ var __rest$j = function(s, e2) {
   }
   return t2;
 };
-const defaultIconRender = (visible) => visible ? /* @__PURE__ */ reactExports.createElement(RefIcon$d, null) : /* @__PURE__ */ reactExports.createElement(RefIcon$e, null);
+const defaultIconRender = (visible) => visible ? /* @__PURE__ */ reactExports.createElement(RefIcon$i, null) : /* @__PURE__ */ reactExports.createElement(RefIcon$j, null);
 const actionMap = {
   click: "onClick",
   hover: "onMouseOver"
@@ -43163,7 +43584,7 @@ const Password = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     prefixCls: customizePrefixCls,
     inputPrefixCls: customizeInputPrefixCls,
     size
-  } = props, restProps = __rest$j(props, ["className", "prefixCls", "inputPrefixCls", "size"]);
+  } = props, restProps = __rest$l(props, ["className", "prefixCls", "inputPrefixCls", "size"]);
   const {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
@@ -43186,7 +43607,7 @@ const Password = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     ref: composeRef(ref, inputRef)
   }, omittedProps));
 });
-var __rest$i = function(s, e2) {
+var __rest$k = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -43209,7 +43630,7 @@ const Search = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     onChange: customOnChange,
     onCompositionStart,
     onCompositionEnd
-  } = props, restProps = __rest$i(props, ["prefixCls", "inputPrefixCls", "className", "size", "suffix", "enterButton", "addonAfter", "loading", "disabled", "onSearch", "onChange", "onCompositionStart", "onCompositionEnd"]);
+  } = props, restProps = __rest$k(props, ["prefixCls", "inputPrefixCls", "className", "size", "suffix", "enterButton", "addonAfter", "loading", "disabled", "onSearch", "onChange", "onCompositionStart", "onCompositionEnd"]);
   const {
     getPrefixCls,
     direction
@@ -43253,7 +43674,7 @@ const Search = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     }
     onSearch(e2);
   };
-  const searchIcon = typeof enterButton === "boolean" ? /* @__PURE__ */ reactExports.createElement(RefIcon$k, null) : null;
+  const searchIcon = typeof enterButton === "boolean" ? /* @__PURE__ */ reactExports.createElement(RefIcon$p, null) : null;
   const btnClassName = `${prefixCls}-button`;
   let button;
   const enterButtonAsElement = enterButton || {};
@@ -43404,7 +43825,7 @@ function calculateAutoSizeStyle(uiTextNode) {
   }
   return style2;
 }
-var _excluded$d = ["prefixCls", "onPressEnter", "defaultValue", "value", "autoSize", "onResize", "className", "style", "disabled", "onChange", "onInternalAutoSize"];
+var _excluded$g = ["prefixCls", "onPressEnter", "defaultValue", "value", "autoSize", "onResize", "className", "style", "disabled", "onChange", "onInternalAutoSize"];
 var RESIZE_START = 0;
 var RESIZE_MEASURING = 1;
 var RESIZE_STABLE = 2;
@@ -43413,7 +43834,7 @@ var ResizableTextArea = /* @__PURE__ */ reactExports.forwardRef(function(props, 
   _ref.onPressEnter;
   var defaultValue = _ref.defaultValue, value = _ref.value, autoSize = _ref.autoSize, onResize2 = _ref.onResize, className = _ref.className, style2 = _ref.style, disabled = _ref.disabled, onChange = _ref.onChange;
   _ref.onInternalAutoSize;
-  var restProps = _objectWithoutProperties(_ref, _excluded$d);
+  var restProps = _objectWithoutProperties(_ref, _excluded$g);
   var _useMergedState = useMergedState(defaultValue, {
     value,
     postState: function postState(val) {
@@ -43504,10 +43925,10 @@ var ResizableTextArea = /* @__PURE__ */ reactExports.forwardRef(function(props, 
     onChange: onInternalChange
   })));
 });
-var _excluded$c = ["defaultValue", "value", "onFocus", "onBlur", "onChange", "allowClear", "maxLength", "onCompositionStart", "onCompositionEnd", "suffix", "prefixCls", "showCount", "count", "className", "style", "disabled", "hidden", "classNames", "styles", "onResize", "readOnly"];
+var _excluded$f = ["defaultValue", "value", "onFocus", "onBlur", "onChange", "allowClear", "maxLength", "onCompositionStart", "onCompositionEnd", "suffix", "prefixCls", "showCount", "count", "className", "style", "disabled", "hidden", "classNames", "styles", "onResize", "readOnly"];
 var TextArea$1 = /* @__PURE__ */ React.forwardRef(function(_ref, ref) {
   var _countConfig$max;
-  var defaultValue = _ref.defaultValue, customValue = _ref.value, onFocus = _ref.onFocus, onBlur = _ref.onBlur, onChange = _ref.onChange, allowClear = _ref.allowClear, maxLength = _ref.maxLength, onCompositionStart = _ref.onCompositionStart, onCompositionEnd = _ref.onCompositionEnd, suffix = _ref.suffix, _ref$prefixCls = _ref.prefixCls, prefixCls = _ref$prefixCls === void 0 ? "rc-textarea" : _ref$prefixCls, showCount = _ref.showCount, count = _ref.count, className = _ref.className, style2 = _ref.style, disabled = _ref.disabled, hidden = _ref.hidden, classNames$1 = _ref.classNames, styles = _ref.styles, onResize2 = _ref.onResize, readOnly = _ref.readOnly, rest = _objectWithoutProperties(_ref, _excluded$c);
+  var defaultValue = _ref.defaultValue, customValue = _ref.value, onFocus = _ref.onFocus, onBlur = _ref.onBlur, onChange = _ref.onChange, allowClear = _ref.allowClear, maxLength = _ref.maxLength, onCompositionStart = _ref.onCompositionStart, onCompositionEnd = _ref.onCompositionEnd, suffix = _ref.suffix, _ref$prefixCls = _ref.prefixCls, prefixCls = _ref$prefixCls === void 0 ? "rc-textarea" : _ref$prefixCls, showCount = _ref.showCount, count = _ref.count, className = _ref.className, style2 = _ref.style, disabled = _ref.disabled, hidden = _ref.hidden, classNames$1 = _ref.classNames, styles = _ref.styles, onResize2 = _ref.onResize, readOnly = _ref.readOnly, rest = _objectWithoutProperties(_ref, _excluded$f);
   var _useMergedState = useMergedState(defaultValue, {
     value: customValue,
     defaultValue
@@ -43665,7 +44086,7 @@ var TextArea$1 = /* @__PURE__ */ React.forwardRef(function(_ref, ref) {
     readOnly
   })));
 });
-var __rest$h = function(s, e2) {
+var __rest$j = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -43688,7 +44109,7 @@ const TextArea = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     style: style2,
     styles,
     variant: customVariant
-  } = props, rest = __rest$h(props, ["prefixCls", "bordered", "size", "disabled", "status", "allowClear", "classNames", "rootClassName", "className", "style", "styles", "variant"]);
+  } = props, rest = __rest$j(props, ["prefixCls", "bordered", "size", "disabled", "status", "allowClear", "classNames", "rootClassName", "className", "style", "styles", "variant"]);
   const {
     getPrefixCls,
     direction,
@@ -43720,7 +44141,7 @@ const TextArea = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   });
   const prefixCls = getPrefixCls("input", customizePrefixCls);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$e(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$f(prefixCls, rootCls);
   const [variant, enableVariantCls] = useVariant("textArea", customVariant, bordered);
   const mergedAllowClear = getAllowClear(allowClear !== null && allowClear !== void 0 ? allowClear : textArea === null || textArea === void 0 ? void 0 : textArea.allowClear);
   return wrapCSSVar(/* @__PURE__ */ reactExports.createElement(TextArea$1, Object.assign({
@@ -43754,7 +44175,7 @@ const TextArea = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   })));
 });
 const Input = Input$1;
-Input.Group = Group;
+Input.Group = Group$1;
 Input.Search = Search;
 Input.TextArea = TextArea;
 Input.Password = Password;
@@ -43943,7 +44364,7 @@ const ColorInput = (props) => {
     onChange
   }));
 };
-var __rest$g = function(s, e2) {
+var __rest$i = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -43960,7 +44381,7 @@ const PanelPicker = () => {
     onChange,
     onClear,
     onChangeComplete
-  } = _a, injectProps = __rest$g(_a, ["prefixCls", "allowClear", "value", "disabledAlpha", "onChange", "onClear", "onChangeComplete"]);
+  } = _a, injectProps = __rest$i(_a, ["prefixCls", "allowClear", "value", "disabledAlpha", "onChange", "onClear", "onChangeComplete"]);
   return /* @__PURE__ */ React.createElement(React.Fragment, null, allowClear && /* @__PURE__ */ React.createElement(ColorClear, Object.assign({
     prefixCls,
     value,
@@ -44081,7 +44502,7 @@ const PanelPresets = () => {
     onChange
   }) : null;
 };
-var __rest$f = function(s, e2) {
+var __rest$h = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -44097,7 +44518,7 @@ const ColorPickerPanel = (props) => {
     color,
     onChange,
     onClear
-  } = props, injectProps = __rest$f(props, ["prefixCls", "presets", "panelRender", "color", "onChange", "onClear"]);
+  } = props, injectProps = __rest$h(props, ["prefixCls", "presets", "panelRender", "color", "onChange", "onClear"]);
   const colorPickerPanelPrefixCls = `${prefixCls}-inner`;
   const panelPickerProps = Object.assign({
     prefixCls,
@@ -44127,7 +44548,7 @@ const ColorPickerPanel = (props) => {
     }
   }) : innerPanel)));
 };
-var __rest$e = function(s, e2) {
+var __rest$g = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -44144,7 +44565,7 @@ const ColorTrigger = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     format: format2,
     className,
     showText
-  } = props, rest = __rest$e(props, ["color", "prefixCls", "open", "disabled", "format", "className", "showText"]);
+  } = props, rest = __rest$g(props, ["color", "prefixCls", "open", "disabled", "format", "className", "showText"]);
   const colorTriggerPrefixCls = `${prefixCls}-trigger`;
   const containerNode = reactExports.useMemo(() => color.cleared ? /* @__PURE__ */ React.createElement(ColorClear, {
     prefixCls
@@ -44730,7 +45151,7 @@ const genColorPickerStyle = (token2) => {
     }, genRtlStyle(token2))
   }];
 };
-const useStyle$7 = genStyleHooks("ColorPicker", (token2) => {
+const useStyle$8 = genStyleHooks("ColorPicker", (token2) => {
   const {
     colorTextQuaternary,
     marginSM
@@ -44749,7 +45170,7 @@ const useStyle$7 = genStyleHooks("ColorPicker", (token2) => {
   });
   return [genColorPickerStyle(colorPickerToken)];
 });
-var __rest$d = function(s, e2) {
+var __rest$f = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -44788,7 +45209,7 @@ const ColorPicker = (props) => {
     getPopupContainer,
     autoAdjustOverflow: autoAdjustOverflow2 = true,
     destroyTooltipOnHide
-  } = props, rest = __rest$d(props, ["value", "defaultValue", "format", "defaultFormat", "allowClear", "presets", "children", "trigger", "open", "disabled", "placement", "arrow", "panelRender", "showText", "style", "className", "size", "rootClassName", "prefixCls", "styles", "disabledAlpha", "onFormatChange", "onChange", "onClear", "onOpenChange", "onChangeComplete", "getPopupContainer", "autoAdjustOverflow", "destroyTooltipOnHide"]);
+  } = props, rest = __rest$f(props, ["value", "defaultValue", "format", "defaultFormat", "allowClear", "presets", "children", "trigger", "open", "disabled", "placement", "arrow", "panelRender", "showText", "style", "className", "size", "rootClassName", "prefixCls", "styles", "disabledAlpha", "onFormatChange", "onChange", "onClear", "onOpenChange", "onChangeComplete", "getPopupContainer", "autoAdjustOverflow", "destroyTooltipOnHide"]);
   const {
     getPrefixCls,
     direction,
@@ -44817,7 +45238,7 @@ const ColorPicker = (props) => {
   } = React.useContext(FormItemInputContext);
   const mergedSize = useSize(customizeSize);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$7(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$8(prefixCls, rootCls);
   const rtlCls = {
     [`${prefixCls}-rtl`]: direction
   };
@@ -44923,9 +45344,9 @@ const PurePanel$3 = genPurePanel(
 ColorPicker._InternalPanelDoNotUseOrYouWillBeFired = PurePanel$3;
 var DrawerContext = /* @__PURE__ */ reactExports.createContext(null);
 var RefContext = /* @__PURE__ */ reactExports.createContext({});
-var _excluded$b = ["prefixCls", "className", "containerRef"];
+var _excluded$e = ["prefixCls", "className", "containerRef"];
 var DrawerPanel$1 = function DrawerPanel2(props) {
-  var prefixCls = props.prefixCls, className = props.className, containerRef = props.containerRef, restProps = _objectWithoutProperties(props, _excluded$b);
+  var prefixCls = props.prefixCls, className = props.className, containerRef = props.containerRef, restProps = _objectWithoutProperties(props, _excluded$e);
   var _React$useContext = reactExports.useContext(RefContext), panelRef = _React$useContext.panel;
   var mergedRef = useComposeRef(panelRef, containerRef);
   return /* @__PURE__ */ reactExports.createElement("div", _extends({
@@ -45516,16 +45937,16 @@ const genDrawerStyle = (token2) => {
     }
   };
 };
-const prepareComponentToken$6 = (token2) => ({
+const prepareComponentToken$7 = (token2) => ({
   zIndexPopup: token2.zIndexPopupBase,
   footerPaddingBlock: token2.paddingXS,
   footerPaddingInline: token2.padding
 });
-const useStyle$6 = genStyleHooks("Drawer", (token2) => {
+const useStyle$7 = genStyleHooks("Drawer", (token2) => {
   const drawerToken = merge(token2, {});
   return [genDrawerStyle(drawerToken), genMotionStyle(drawerToken)];
-}, prepareComponentToken$6);
-var __rest$c = function(s, e2) {
+}, prepareComponentToken$7);
+var __rest$e = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -45557,7 +45978,7 @@ const Drawer = (props) => {
     maskStyle,
     drawerStyle,
     contentWrapperStyle
-  } = props, rest = __rest$c(props, ["rootClassName", "width", "height", "size", "mask", "push", "open", "afterOpenChange", "onClose", "prefixCls", "getContainer", "style", "className", "visible", "afterVisibleChange", "maskStyle", "drawerStyle", "contentWrapperStyle"]);
+  } = props, rest = __rest$e(props, ["rootClassName", "width", "height", "size", "mask", "push", "open", "afterOpenChange", "onClose", "prefixCls", "getContainer", "style", "className", "visible", "afterVisibleChange", "maskStyle", "drawerStyle", "contentWrapperStyle"]);
   const {
     getPopupContainer,
     getPrefixCls,
@@ -45565,7 +45986,7 @@ const Drawer = (props) => {
     drawer
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("drawer", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$6(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$7(prefixCls);
   const getContainer2 = (
     // 有可能为 false，所以不能直接判断
     customizeGetContainer === void 0 && getPopupContainer ? () => getPopupContainer(document.body) : customizeGetContainer
@@ -45645,12 +46066,12 @@ const PurePanel$2 = (props) => {
     style: style2,
     className,
     placement = "right"
-  } = props, restProps = __rest$c(props, ["prefixCls", "style", "className", "placement"]);
+  } = props, restProps = __rest$e(props, ["prefixCls", "style", "className", "placement"]);
   const {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
   const prefixCls = getPrefixCls("drawer", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$6(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$7(prefixCls);
   const cls = classNames(prefixCls, `${prefixCls}-pure`, `${prefixCls}-${placement}`, hashId, cssVarCls, className);
   return wrapCSSVar(/* @__PURE__ */ reactExports.createElement("div", {
     className: cls,
@@ -45694,7 +46115,7 @@ const Item = (_ref) => {
     className: `${className}-split`
   }, split));
 };
-var __rest$b = function(s, e2) {
+var __rest$d = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -45722,7 +46143,7 @@ const InternalSpace = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     wrap = false,
     classNames: customClassNames,
     styles
-  } = props, otherProps = __rest$b(props, ["size", "align", "className", "rootClassName", "children", "direction", "prefixCls", "split", "style", "wrap", "classNames", "styles"]);
+  } = props, otherProps = __rest$d(props, ["size", "align", "className", "rootClassName", "children", "direction", "prefixCls", "split", "style", "wrap", "classNames", "styles"]);
   const [horizontalSize, verticalSize] = Array.isArray(size) ? size : [size, size];
   const isPresetVerticalSize = isPresetSize(verticalSize);
   const isPresetHorizontalSize = isPresetSize(horizontalSize);
@@ -45733,7 +46154,7 @@ const InternalSpace = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   });
   const mergedAlign = align === void 0 && direction === "horizontal" ? "center" : align;
   const prefixCls = getPrefixCls("space", customizePrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$p(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$q(prefixCls);
   const cls = classNames(prefixCls, space === null || space === void 0 ? void 0 : space.className, hashId, `${prefixCls}-${direction}`, {
     [`${prefixCls}-rtl`]: directionConfig === "rtl",
     [`${prefixCls}-align-${mergedAlign}`]: mergedAlign,
@@ -45782,7 +46203,7 @@ const InternalSpace = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
 });
 const Space = InternalSpace;
 Space.Compact = Compact;
-var __rest$a = function(s, e2) {
+var __rest$c = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -45817,7 +46238,7 @@ const DropdownButton = (props) => {
     placement,
     getPopupContainer,
     href,
-    icon = /* @__PURE__ */ reactExports.createElement(RefIcon$h, null),
+    icon = /* @__PURE__ */ reactExports.createElement(RefIcon$m, null),
     title,
     buttonsRender = (buttons) => buttons,
     mouseEnterDelay,
@@ -45826,7 +46247,7 @@ const DropdownButton = (props) => {
     overlayStyle,
     destroyPopupOnHide,
     dropdownRender
-  } = props, restProps = __rest$a(props, ["prefixCls", "type", "danger", "disabled", "loading", "onClick", "htmlType", "children", "className", "menu", "arrow", "autoFocus", "overlay", "trigger", "align", "open", "onOpenChange", "placement", "getPopupContainer", "href", "icon", "title", "buttonsRender", "mouseEnterDelay", "mouseLeaveDelay", "overlayClassName", "overlayStyle", "destroyPopupOnHide", "dropdownRender"]);
+  } = props, restProps = __rest$c(props, ["prefixCls", "type", "danger", "disabled", "loading", "onClick", "htmlType", "children", "className", "menu", "arrow", "autoFocus", "overlay", "trigger", "align", "open", "onOpenChange", "placement", "getPopupContainer", "href", "icon", "title", "buttonsRender", "mouseEnterDelay", "mouseLeaveDelay", "overlayClassName", "overlayStyle", "destroyPopupOnHide", "dropdownRender"]);
   const prefixCls = getPrefixCls("dropdown", customizePrefixCls);
   const buttonPrefixCls = `${prefixCls}-button`;
   const dropdownProps = {
@@ -46402,7 +46823,7 @@ const genItemVerticalStyle = (token2) => {
     }
   };
 };
-const prepareComponentToken$5 = (token2) => ({
+const prepareComponentToken$6 = (token2) => ({
   labelRequiredMarkColor: token2.colorError,
   labelColor: token2.colorTextHeading,
   labelFontSize: token2.fontSize,
@@ -46421,13 +46842,13 @@ const prepareToken$1 = (token2, rootPrefixCls) => {
   });
   return formToken;
 };
-const useStyle$5 = genStyleHooks("Form", (token2, _ref) => {
+const useStyle$6 = genStyleHooks("Form", (token2, _ref) => {
   let {
     rootPrefixCls
   } = _ref;
   const formToken = prepareToken$1(token2, rootPrefixCls);
   return [genFormStyle(formToken), genFormItemStyle(formToken), genFormValidateMotionStyle(formToken), genHorizontalStyle$1(formToken, formToken.componentCls), genHorizontalStyle$1(formToken, formToken.formItemCls), genInlineStyle(formToken), genVerticalStyle$1(formToken), genItemVerticalStyle(formToken), genCollapseMotion(formToken), zoomIn];
-}, prepareComponentToken$5, {
+}, prepareComponentToken$6, {
   // Let From style before the Grid
   // ref https://github.com/ant-design/ant-design/issues/44386
   order: -1e3
@@ -46456,7 +46877,7 @@ const ErrorList = (_ref) => {
   } = reactExports.useContext(FormItemPrefixContext);
   const baseClassName = `${prefixCls}-item-explain`;
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$5(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$6(prefixCls, rootCls);
   const collapseMotion = reactExports.useMemo(() => initCollapseMotion(prefixCls), [prefixCls]);
   const debounceErrors = useDebounce(errors);
   const debounceWarnings = useDebounce(warnings);
@@ -46585,7 +47006,7 @@ function useForm(form) {
   }), [form, rcForm]);
   return [wrapForm];
 }
-var __rest$9 = function(s, e2) {
+var __rest$b = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -46621,7 +47042,7 @@ const InternalForm = (props, ref) => {
     style: style2,
     feedbackIcons,
     variant
-  } = props, restFormProps = __rest$9(props, ["prefixCls", "className", "rootClassName", "size", "disabled", "form", "colon", "labelAlign", "labelWrap", "labelCol", "wrapperCol", "hideRequiredMark", "layout", "scrollToFirstError", "requiredMark", "onFinishFailed", "name", "style", "feedbackIcons", "variant"]);
+  } = props, restFormProps = __rest$b(props, ["prefixCls", "className", "rootClassName", "size", "disabled", "form", "colon", "labelAlign", "labelWrap", "labelCol", "wrapperCol", "hideRequiredMark", "layout", "scrollToFirstError", "requiredMark", "onFinishFailed", "name", "style", "feedbackIcons", "variant"]);
   const mergedSize = useSize(size);
   const contextValidateMessages = reactExports.useContext(ValidateMessagesContext);
   const mergedRequiredMark = reactExports.useMemo(() => {
@@ -46639,7 +47060,7 @@ const InternalForm = (props, ref) => {
   const mergedColon = colon !== null && colon !== void 0 ? colon : contextForm === null || contextForm === void 0 ? void 0 : contextForm.colon;
   const prefixCls = getPrefixCls("form", customizePrefixCls);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$5(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$6(prefixCls, rootCls);
   const formClassName = classNames(prefixCls, `${prefixCls}-${layout}`, {
     [`${prefixCls}-hide-required-mark`]: mergedRequiredMark === false,
     [`${prefixCls}-rtl`]: direction === "rtl",
@@ -46887,8 +47308,8 @@ var QuestionCircleOutlined = function QuestionCircleOutlined2(props, ref) {
     icon: QuestionCircleOutlined$1
   }));
 };
-var RefIcon$c = /* @__PURE__ */ reactExports.forwardRef(QuestionCircleOutlined);
-var __rest$8 = function(s, e2) {
+var RefIcon$h = /* @__PURE__ */ reactExports.forwardRef(QuestionCircleOutlined);
+var __rest$a = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -46946,8 +47367,8 @@ const FormItemLabel = (_ref) => {
   const tooltipProps = toTooltipProps(tooltip);
   if (tooltipProps) {
     const {
-      icon = /* @__PURE__ */ reactExports.createElement(RefIcon$c, null)
-    } = tooltipProps, restTooltipProps = __rest$8(tooltipProps, ["icon"]);
+      icon = /* @__PURE__ */ reactExports.createElement(RefIcon$h, null)
+    } = tooltipProps, restTooltipProps = __rest$a(tooltipProps, ["icon"]);
     const tooltipNode = /* @__PURE__ */ reactExports.createElement(Tooltip2, Object.assign({}, restTooltipProps), /* @__PURE__ */ reactExports.cloneElement(icon, {
       className: `${prefixCls}-item-tooltip`,
       title: "",
@@ -46984,10 +47405,10 @@ const FormItemLabel = (_ref) => {
   }, labelChildren));
 };
 const iconMap = {
-  success: RefIcon$t,
-  warning: RefIcon$q,
-  error: RefIcon$s,
-  validating: RefIcon$o
+  success: RefIcon$y,
+  warning: RefIcon$v,
+  error: RefIcon$x,
+  validating: RefIcon$t
 };
 function StatusProvider(_ref) {
   let {
@@ -47021,10 +47442,10 @@ function StatusProvider(_ref) {
         errors,
         warnings
       })) === null || _a === void 0 ? void 0 : _a[mergedValidateStatus]);
-      const IconNode = mergedValidateStatus && iconMap[mergedValidateStatus];
-      feedbackIcon = customIconNode !== false && IconNode ? /* @__PURE__ */ reactExports.createElement("span", {
+      const IconNode2 = mergedValidateStatus && iconMap[mergedValidateStatus];
+      feedbackIcon = customIconNode !== false && IconNode2 ? /* @__PURE__ */ reactExports.createElement("span", {
         className: classNames(`${itemPrefixCls}-feedback-icon`, `${itemPrefixCls}-feedback-icon-${mergedValidateStatus}`)
-      }, customIconNode || /* @__PURE__ */ reactExports.createElement(IconNode, null)) : null;
+      }, customIconNode || /* @__PURE__ */ reactExports.createElement(IconNode2, null)) : null;
     }
     const context = {
       status: mergedValidateStatus || "",
@@ -47046,7 +47467,7 @@ function StatusProvider(_ref) {
     value: formItemStatusContext
   }, children);
 }
-var __rest$7 = function(s, e2) {
+var __rest$9 = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -47073,7 +47494,7 @@ function ItemHolder(props) {
     isRequired,
     onSubItemMetaChange,
     layout
-  } = props, restProps = __rest$7(props, ["prefixCls", "className", "rootClassName", "style", "help", "errors", "warnings", "validateStatus", "meta", "hasFeedback", "hidden", "children", "fieldId", "required", "isRequired", "onSubItemMetaChange", "layout"]);
+  } = props, restProps = __rest$9(props, ["prefixCls", "className", "rootClassName", "style", "help", "errors", "warnings", "validateStatus", "meta", "hasFeedback", "hidden", "children", "fieldId", "required", "isRequired", "onSubItemMetaChange", "layout"]);
   const itemPrefixCls = `${prefixCls}-item`;
   const {
     requiredMark,
@@ -47248,7 +47669,7 @@ function InternalFormItem(props) {
   const hasName = !(name === void 0 || name === null);
   const prefixCls = getPrefixCls("form", customizePrefixCls);
   const rootCls = useCSSVarCls(prefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$5(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$6(prefixCls, rootCls);
   devUseWarning();
   const listContext = reactExports.useContext(ListContext);
   const fieldKeyPathRef = reactExports.useRef();
@@ -47408,7 +47829,7 @@ function InternalFormItem(props) {
 }
 const FormItem = InternalFormItem;
 FormItem.useStatus = useFormItemStatus;
-var __rest$6 = function(s, e2) {
+var __rest$8 = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
   if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
@@ -47420,7 +47841,7 @@ const FormList = (_a) => {
   var {
     prefixCls: customizePrefixCls,
     children
-  } = _a, props = __rest$6(_a, ["prefixCls", "children"]);
+  } = _a, props = __rest$8(_a, ["prefixCls", "children"]);
   const {
     getPrefixCls
   } = reactExports.useContext(ConfigContext);
@@ -47454,6 +47875,14 @@ Form2.useWatch = useWatch$1;
 Form2.Provider = FormProvider2;
 Form2.create = () => {
 };
+function getClientSize() {
+  var width = document.documentElement.clientWidth;
+  var height = window.innerHeight || document.documentElement.clientHeight;
+  return {
+    width,
+    height
+  };
+}
 function getOffset$1(node2) {
   var box2 = node2.getBoundingClientRect();
   var docElem = document.documentElement;
@@ -47477,6 +47906,1415 @@ function addEventListenerWrap(target, eventType, cb2, option) {
     }
   };
 }
+var PreviewGroupContext = /* @__PURE__ */ reactExports.createContext(null);
+var Operations = function Operations2(props) {
+  var visible = props.visible, maskTransitionName = props.maskTransitionName, getContainer2 = props.getContainer, prefixCls = props.prefixCls, rootClassName = props.rootClassName, icons2 = props.icons, countRender = props.countRender, showSwitch = props.showSwitch, showProgress = props.showProgress, current = props.current, transform = props.transform, count = props.count, scale = props.scale, minScale = props.minScale, maxScale = props.maxScale, closeIcon = props.closeIcon, onSwitchLeft = props.onSwitchLeft, onSwitchRight = props.onSwitchRight, onClose = props.onClose, onZoomIn = props.onZoomIn, onZoomOut = props.onZoomOut, onRotateRight = props.onRotateRight, onRotateLeft = props.onRotateLeft, onFlipX = props.onFlipX, onFlipY = props.onFlipY, onReset = props.onReset, toolbarRender = props.toolbarRender, zIndex = props.zIndex, image = props.image;
+  var groupContext = reactExports.useContext(PreviewGroupContext);
+  var rotateLeft = icons2.rotateLeft, rotateRight = icons2.rotateRight, zoomIn2 = icons2.zoomIn, zoomOut2 = icons2.zoomOut, close = icons2.close, left = icons2.left, right = icons2.right, flipX = icons2.flipX, flipY = icons2.flipY;
+  var toolClassName = "".concat(prefixCls, "-operations-operation");
+  reactExports.useEffect(function() {
+    var onKeyDown2 = function onKeyDown3(e2) {
+      if (e2.keyCode === KeyCode.ESC) {
+        onClose();
+      }
+    };
+    if (visible) {
+      window.addEventListener("keydown", onKeyDown2);
+    }
+    return function() {
+      window.removeEventListener("keydown", onKeyDown2);
+    };
+  }, [visible]);
+  var tools = [{
+    icon: flipY,
+    onClick: onFlipY,
+    type: "flipY"
+  }, {
+    icon: flipX,
+    onClick: onFlipX,
+    type: "flipX"
+  }, {
+    icon: rotateLeft,
+    onClick: onRotateLeft,
+    type: "rotateLeft"
+  }, {
+    icon: rotateRight,
+    onClick: onRotateRight,
+    type: "rotateRight"
+  }, {
+    icon: zoomOut2,
+    onClick: onZoomOut,
+    type: "zoomOut",
+    disabled: scale <= minScale
+  }, {
+    icon: zoomIn2,
+    onClick: onZoomIn,
+    type: "zoomIn",
+    disabled: scale === maxScale
+  }];
+  var toolsNode = tools.map(function(_ref) {
+    var _classnames;
+    var icon = _ref.icon, onClick = _ref.onClick, type4 = _ref.type, disabled = _ref.disabled;
+    return /* @__PURE__ */ reactExports.createElement("div", {
+      className: classNames(toolClassName, (_classnames = {}, _defineProperty(_classnames, "".concat(prefixCls, "-operations-operation-").concat(type4), true), _defineProperty(_classnames, "".concat(prefixCls, "-operations-operation-disabled"), !!disabled), _classnames)),
+      onClick,
+      key: type4
+    }, icon);
+  });
+  var toolbarNode = /* @__PURE__ */ reactExports.createElement("div", {
+    className: "".concat(prefixCls, "-operations")
+  }, toolsNode);
+  return /* @__PURE__ */ reactExports.createElement(CSSMotion, {
+    visible,
+    motionName: maskTransitionName
+  }, function(_ref2) {
+    var className = _ref2.className, style2 = _ref2.style;
+    return /* @__PURE__ */ reactExports.createElement(Portal, {
+      open: true,
+      getContainer: getContainer2 !== null && getContainer2 !== void 0 ? getContainer2 : document.body
+    }, /* @__PURE__ */ reactExports.createElement("div", {
+      className: classNames("".concat(prefixCls, "-operations-wrapper"), className, rootClassName),
+      style: _objectSpread2(_objectSpread2({}, style2), {}, {
+        zIndex
+      })
+    }, closeIcon === null ? null : /* @__PURE__ */ reactExports.createElement("button", {
+      className: "".concat(prefixCls, "-close"),
+      onClick: onClose
+    }, closeIcon || close), showSwitch && /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("div", {
+      className: classNames("".concat(prefixCls, "-switch-left"), _defineProperty({}, "".concat(prefixCls, "-switch-left-disabled"), current === 0)),
+      onClick: onSwitchLeft
+    }, left), /* @__PURE__ */ reactExports.createElement("div", {
+      className: classNames("".concat(prefixCls, "-switch-right"), _defineProperty({}, "".concat(prefixCls, "-switch-right-disabled"), current === count - 1)),
+      onClick: onSwitchRight
+    }, right)), /* @__PURE__ */ reactExports.createElement("div", {
+      className: "".concat(prefixCls, "-footer")
+    }, showProgress && /* @__PURE__ */ reactExports.createElement("div", {
+      className: "".concat(prefixCls, "-progress")
+    }, countRender ? countRender(current + 1, count) : "".concat(current + 1, " / ").concat(count)), toolbarRender ? toolbarRender(toolbarNode, _objectSpread2(_objectSpread2({
+      icons: {
+        flipYIcon: toolsNode[0],
+        flipXIcon: toolsNode[1],
+        rotateLeftIcon: toolsNode[2],
+        rotateRightIcon: toolsNode[3],
+        zoomOutIcon: toolsNode[4],
+        zoomInIcon: toolsNode[5]
+      },
+      actions: {
+        onFlipY,
+        onFlipX,
+        onRotateLeft,
+        onRotateRight,
+        onZoomOut,
+        onZoomIn,
+        onReset,
+        onClose
+      },
+      transform
+    }, groupContext ? {
+      current,
+      total: count
+    } : {}), {}, {
+      image
+    })) : toolbarNode)));
+  });
+};
+var initialTransform = {
+  x: 0,
+  y: 0,
+  rotate: 0,
+  scale: 1,
+  flipX: false,
+  flipY: false
+};
+function useImageTransform(imgRef, minScale, maxScale, onTransform) {
+  var frame = reactExports.useRef(null);
+  var queue = reactExports.useRef([]);
+  var _useState = reactExports.useState(initialTransform), _useState2 = _slicedToArray(_useState, 2), transform = _useState2[0], setTransform = _useState2[1];
+  var resetTransform = function resetTransform2(action) {
+    setTransform(initialTransform);
+    if (!isEqual(initialTransform, transform)) {
+      onTransform === null || onTransform === void 0 || onTransform({
+        transform: initialTransform,
+        action
+      });
+    }
+  };
+  var updateTransform = function updateTransform2(newTransform, action) {
+    if (frame.current === null) {
+      queue.current = [];
+      frame.current = wrapperRaf(function() {
+        setTransform(function(preState) {
+          var memoState = preState;
+          queue.current.forEach(function(queueState) {
+            memoState = _objectSpread2(_objectSpread2({}, memoState), queueState);
+          });
+          frame.current = null;
+          onTransform === null || onTransform === void 0 || onTransform({
+            transform: memoState,
+            action
+          });
+          return memoState;
+        });
+      });
+    }
+    queue.current.push(_objectSpread2(_objectSpread2({}, transform), newTransform));
+  };
+  var dispatchZoomChange = function dispatchZoomChange2(ratio, action, centerX, centerY, isTouch) {
+    var _imgRef$current = imgRef.current, width = _imgRef$current.width, height = _imgRef$current.height, offsetWidth = _imgRef$current.offsetWidth, offsetHeight = _imgRef$current.offsetHeight, offsetLeft = _imgRef$current.offsetLeft, offsetTop = _imgRef$current.offsetTop;
+    var newRatio = ratio;
+    var newScale = transform.scale * ratio;
+    if (newScale > maxScale) {
+      newScale = maxScale;
+      newRatio = maxScale / transform.scale;
+    } else if (newScale < minScale) {
+      newScale = isTouch ? newScale : minScale;
+      newRatio = newScale / transform.scale;
+    }
+    var mergedCenterX = centerX !== null && centerX !== void 0 ? centerX : innerWidth / 2;
+    var mergedCenterY = centerY !== null && centerY !== void 0 ? centerY : innerHeight / 2;
+    var diffRatio = newRatio - 1;
+    var diffImgX = diffRatio * width * 0.5;
+    var diffImgY = diffRatio * height * 0.5;
+    var diffOffsetLeft = diffRatio * (mergedCenterX - transform.x - offsetLeft);
+    var diffOffsetTop = diffRatio * (mergedCenterY - transform.y - offsetTop);
+    var newX = transform.x - (diffOffsetLeft - diffImgX);
+    var newY = transform.y - (diffOffsetTop - diffImgY);
+    if (ratio < 1 && newScale === 1) {
+      var mergedWidth = offsetWidth * newScale;
+      var mergedHeight = offsetHeight * newScale;
+      var _getClientSize = getClientSize(), clientWidth = _getClientSize.width, clientHeight = _getClientSize.height;
+      if (mergedWidth <= clientWidth && mergedHeight <= clientHeight) {
+        newX = 0;
+        newY = 0;
+      }
+    }
+    updateTransform({
+      x: newX,
+      y: newY,
+      scale: newScale
+    }, action);
+  };
+  return {
+    transform,
+    resetTransform,
+    updateTransform,
+    dispatchZoomChange
+  };
+}
+function fixPoint(key, start, width, clientWidth) {
+  var startAddWidth = start + width;
+  var offsetStart = (width - clientWidth) / 2;
+  if (width > clientWidth) {
+    if (start > 0) {
+      return _defineProperty({}, key, offsetStart);
+    }
+    if (start < 0 && startAddWidth < clientWidth) {
+      return _defineProperty({}, key, -offsetStart);
+    }
+  } else if (start < 0 || startAddWidth > clientWidth) {
+    return _defineProperty({}, key, start < 0 ? offsetStart : -offsetStart);
+  }
+  return {};
+}
+function getFixScaleEleTransPosition(width, height, left, top) {
+  var _getClientSize = getClientSize(), clientWidth = _getClientSize.width, clientHeight = _getClientSize.height;
+  var fixPos = null;
+  if (width <= clientWidth && height <= clientHeight) {
+    fixPos = {
+      x: 0,
+      y: 0
+    };
+  } else if (width > clientWidth || height > clientHeight) {
+    fixPos = _objectSpread2(_objectSpread2({}, fixPoint("x", left, width, clientWidth)), fixPoint("y", top, height, clientHeight));
+  }
+  return fixPos;
+}
+var BASE_SCALE_RATIO = 1;
+var WHEEL_MAX_SCALE_RATIO = 1;
+function useMouseEvent(imgRef, movable, visible, scaleStep, transform, updateTransform, dispatchZoomChange) {
+  var rotate = transform.rotate, scale = transform.scale, x = transform.x, y2 = transform.y;
+  var _useState = reactExports.useState(false), _useState2 = _slicedToArray(_useState, 2), isMoving = _useState2[0], setMoving = _useState2[1];
+  var startPositionInfo = reactExports.useRef({
+    diffX: 0,
+    diffY: 0,
+    transformX: 0,
+    transformY: 0
+  });
+  var onMouseDown = function onMouseDown2(event) {
+    if (!movable || event.button !== 0) return;
+    event.preventDefault();
+    event.stopPropagation();
+    startPositionInfo.current = {
+      diffX: event.pageX - x,
+      diffY: event.pageY - y2,
+      transformX: x,
+      transformY: y2
+    };
+    setMoving(true);
+  };
+  var onMouseMove = function onMouseMove2(event) {
+    if (visible && isMoving) {
+      updateTransform({
+        x: event.pageX - startPositionInfo.current.diffX,
+        y: event.pageY - startPositionInfo.current.diffY
+      }, "move");
+    }
+  };
+  var onMouseUp = function onMouseUp2() {
+    if (visible && isMoving) {
+      setMoving(false);
+      var _startPositionInfo$cu = startPositionInfo.current, transformX = _startPositionInfo$cu.transformX, transformY = _startPositionInfo$cu.transformY;
+      var hasChangedPosition = x !== transformX && y2 !== transformY;
+      if (!hasChangedPosition) return;
+      var width = imgRef.current.offsetWidth * scale;
+      var height = imgRef.current.offsetHeight * scale;
+      var _imgRef$current$getBo = imgRef.current.getBoundingClientRect(), left = _imgRef$current$getBo.left, top = _imgRef$current$getBo.top;
+      var isRotate = rotate % 180 !== 0;
+      var fixState = getFixScaleEleTransPosition(isRotate ? height : width, isRotate ? width : height, left, top);
+      if (fixState) {
+        updateTransform(_objectSpread2({}, fixState), "dragRebound");
+      }
+    }
+  };
+  var onWheel = function onWheel2(event) {
+    if (!visible || event.deltaY == 0) return;
+    var scaleRatio = Math.abs(event.deltaY / 100);
+    var mergedScaleRatio = Math.min(scaleRatio, WHEEL_MAX_SCALE_RATIO);
+    var ratio = BASE_SCALE_RATIO + mergedScaleRatio * scaleStep;
+    if (event.deltaY > 0) {
+      ratio = BASE_SCALE_RATIO / ratio;
+    }
+    dispatchZoomChange(ratio, "wheel", event.clientX, event.clientY);
+  };
+  reactExports.useEffect(function() {
+    var onTopMouseUpListener;
+    var onTopMouseMoveListener;
+    var onMouseUpListener;
+    var onMouseMoveListener;
+    if (movable) {
+      onMouseUpListener = addEventListenerWrap(window, "mouseup", onMouseUp, false);
+      onMouseMoveListener = addEventListenerWrap(window, "mousemove", onMouseMove, false);
+      try {
+        if (window.top !== window.self) {
+          onTopMouseUpListener = addEventListenerWrap(window.top, "mouseup", onMouseUp, false);
+          onTopMouseMoveListener = addEventListenerWrap(window.top, "mousemove", onMouseMove, false);
+        }
+      } catch (error) {
+      }
+    }
+    return function() {
+      var _onMouseUpListener, _onMouseMoveListener, _onTopMouseUpListener, _onTopMouseMoveListen;
+      (_onMouseUpListener = onMouseUpListener) === null || _onMouseUpListener === void 0 || _onMouseUpListener.remove();
+      (_onMouseMoveListener = onMouseMoveListener) === null || _onMouseMoveListener === void 0 || _onMouseMoveListener.remove();
+      (_onTopMouseUpListener = onTopMouseUpListener) === null || _onTopMouseUpListener === void 0 || _onTopMouseUpListener.remove();
+      (_onTopMouseMoveListen = onTopMouseMoveListener) === null || _onTopMouseMoveListen === void 0 || _onTopMouseMoveListen.remove();
+    };
+  }, [visible, isMoving, x, y2, rotate, movable]);
+  return {
+    isMoving,
+    onMouseDown,
+    onMouseMove,
+    onMouseUp,
+    onWheel
+  };
+}
+function isImageValid(src) {
+  return new Promise(function(resolve) {
+    var img = document.createElement("img");
+    img.onerror = function() {
+      return resolve(false);
+    };
+    img.onload = function() {
+      return resolve(true);
+    };
+    img.src = src;
+  });
+}
+function useStatus(_ref) {
+  var src = _ref.src, isCustomPlaceholder = _ref.isCustomPlaceholder, fallback = _ref.fallback;
+  var _useState = reactExports.useState(isCustomPlaceholder ? "loading" : "normal"), _useState2 = _slicedToArray(_useState, 2), status = _useState2[0], setStatus = _useState2[1];
+  var isLoaded = reactExports.useRef(false);
+  var isError = status === "error";
+  reactExports.useEffect(function() {
+    var isCurrentSrc = true;
+    isImageValid(src).then(function(isValid) {
+      if (!isValid && isCurrentSrc) {
+        setStatus("error");
+      }
+    });
+    return function() {
+      isCurrentSrc = false;
+    };
+  }, [src]);
+  reactExports.useEffect(function() {
+    if (isCustomPlaceholder && !isLoaded.current) {
+      setStatus("loading");
+    } else if (isError) {
+      setStatus("normal");
+    }
+  }, [src]);
+  var onLoad = function onLoad2() {
+    setStatus("normal");
+  };
+  var getImgRef = function getImgRef2(img) {
+    isLoaded.current = false;
+    if (status === "loading" && img !== null && img !== void 0 && img.complete && (img.naturalWidth || img.naturalHeight)) {
+      isLoaded.current = true;
+      onLoad();
+    }
+  };
+  var srcAndOnload = isError && fallback ? {
+    src: fallback
+  } : {
+    onLoad,
+    src
+  };
+  return [getImgRef, srcAndOnload, status];
+}
+function getDistance(a2, b2) {
+  var x = a2.x - b2.x;
+  var y2 = a2.y - b2.y;
+  return Math.hypot(x, y2);
+}
+function getCenter(oldPoint1, oldPoint2, newPoint1, newPoint2) {
+  var distance1 = getDistance(oldPoint1, newPoint1);
+  var distance2 = getDistance(oldPoint2, newPoint2);
+  if (distance1 === 0 && distance2 === 0) {
+    return [oldPoint1.x, oldPoint1.y];
+  }
+  var ratio = distance1 / (distance1 + distance2);
+  var x = oldPoint1.x + ratio * (oldPoint2.x - oldPoint1.x);
+  var y2 = oldPoint1.y + ratio * (oldPoint2.y - oldPoint1.y);
+  return [x, y2];
+}
+function useTouchEvent(imgRef, movable, visible, minScale, transform, updateTransform, dispatchZoomChange) {
+  var rotate = transform.rotate, scale = transform.scale, x = transform.x, y2 = transform.y;
+  var _useState = reactExports.useState(false), _useState2 = _slicedToArray(_useState, 2), isTouching = _useState2[0], setIsTouching = _useState2[1];
+  var touchPointInfo = reactExports.useRef({
+    point1: {
+      x: 0,
+      y: 0
+    },
+    point2: {
+      x: 0,
+      y: 0
+    },
+    eventType: "none"
+  });
+  var updateTouchPointInfo = function updateTouchPointInfo2(values) {
+    touchPointInfo.current = _objectSpread2(_objectSpread2({}, touchPointInfo.current), values);
+  };
+  var onTouchStart = function onTouchStart2(event) {
+    if (!movable) return;
+    event.stopPropagation();
+    setIsTouching(true);
+    var _event$touches = event.touches, touches = _event$touches === void 0 ? [] : _event$touches;
+    if (touches.length > 1) {
+      updateTouchPointInfo({
+        point1: {
+          x: touches[0].clientX,
+          y: touches[0].clientY
+        },
+        point2: {
+          x: touches[1].clientX,
+          y: touches[1].clientY
+        },
+        eventType: "touchZoom"
+      });
+    } else {
+      updateTouchPointInfo({
+        point1: {
+          x: touches[0].clientX - x,
+          y: touches[0].clientY - y2
+        },
+        eventType: "move"
+      });
+    }
+  };
+  var onTouchMove = function onTouchMove2(event) {
+    var _event$touches2 = event.touches, touches = _event$touches2 === void 0 ? [] : _event$touches2;
+    var _touchPointInfo$curre = touchPointInfo.current, point1 = _touchPointInfo$curre.point1, point2 = _touchPointInfo$curre.point2, eventType = _touchPointInfo$curre.eventType;
+    if (touches.length > 1 && eventType === "touchZoom") {
+      var newPoint1 = {
+        x: touches[0].clientX,
+        y: touches[0].clientY
+      };
+      var newPoint2 = {
+        x: touches[1].clientX,
+        y: touches[1].clientY
+      };
+      var _getCenter = getCenter(point1, point2, newPoint1, newPoint2), _getCenter2 = _slicedToArray(_getCenter, 2), centerX = _getCenter2[0], centerY = _getCenter2[1];
+      var ratio = getDistance(newPoint1, newPoint2) / getDistance(point1, point2);
+      dispatchZoomChange(ratio, "touchZoom", centerX, centerY, true);
+      updateTouchPointInfo({
+        point1: newPoint1,
+        point2: newPoint2,
+        eventType: "touchZoom"
+      });
+    } else if (eventType === "move") {
+      updateTransform({
+        x: touches[0].clientX - point1.x,
+        y: touches[0].clientY - point1.y
+      }, "move");
+      updateTouchPointInfo({
+        eventType: "move"
+      });
+    }
+  };
+  var onTouchEnd = function onTouchEnd2() {
+    if (!visible) return;
+    if (isTouching) {
+      setIsTouching(false);
+    }
+    updateTouchPointInfo({
+      eventType: "none"
+    });
+    if (minScale > scale) {
+      return updateTransform({
+        x: 0,
+        y: 0,
+        scale: minScale
+      }, "touchZoom");
+    }
+    var width = imgRef.current.offsetWidth * scale;
+    var height = imgRef.current.offsetHeight * scale;
+    var _imgRef$current$getBo = imgRef.current.getBoundingClientRect(), left = _imgRef$current$getBo.left, top = _imgRef$current$getBo.top;
+    var isRotate = rotate % 180 !== 0;
+    var fixState = getFixScaleEleTransPosition(isRotate ? height : width, isRotate ? width : height, left, top);
+    if (fixState) {
+      updateTransform(_objectSpread2({}, fixState), "dragRebound");
+    }
+  };
+  reactExports.useEffect(function() {
+    var onTouchMoveListener;
+    if (visible && movable) {
+      onTouchMoveListener = addEventListenerWrap(window, "touchmove", function(e2) {
+        return e2.preventDefault();
+      }, {
+        passive: false
+      });
+    }
+    return function() {
+      var _onTouchMoveListener;
+      (_onTouchMoveListener = onTouchMoveListener) === null || _onTouchMoveListener === void 0 || _onTouchMoveListener.remove();
+    };
+  }, [visible, movable]);
+  return {
+    isTouching,
+    onTouchStart,
+    onTouchMove,
+    onTouchEnd
+  };
+}
+var _excluded$d = ["fallback", "src", "imgRef"], _excluded2$3 = ["prefixCls", "src", "alt", "imageInfo", "fallback", "movable", "onClose", "visible", "icons", "rootClassName", "closeIcon", "getContainer", "current", "count", "countRender", "scaleStep", "minScale", "maxScale", "transitionName", "maskTransitionName", "imageRender", "imgCommonProps", "toolbarRender", "onTransform", "onChange"];
+var PreviewImage = function PreviewImage2(_ref) {
+  var fallback = _ref.fallback, src = _ref.src, imgRef = _ref.imgRef, props = _objectWithoutProperties(_ref, _excluded$d);
+  var _useStatus = useStatus({
+    src,
+    fallback
+  }), _useStatus2 = _slicedToArray(_useStatus, 2), getImgRef = _useStatus2[0], srcAndOnload = _useStatus2[1];
+  return /* @__PURE__ */ React.createElement("img", _extends({
+    ref: function ref(_ref2) {
+      imgRef.current = _ref2;
+      getImgRef(_ref2);
+    }
+  }, props, srcAndOnload));
+};
+var Preview = function Preview2(props) {
+  var prefixCls = props.prefixCls, src = props.src, alt = props.alt, imageInfo = props.imageInfo, fallback = props.fallback, _props$movable = props.movable, movable = _props$movable === void 0 ? true : _props$movable, onClose = props.onClose, visible = props.visible, _props$icons = props.icons, icons2 = _props$icons === void 0 ? {} : _props$icons, rootClassName = props.rootClassName, closeIcon = props.closeIcon, getContainer2 = props.getContainer, _props$current = props.current, current = _props$current === void 0 ? 0 : _props$current, _props$count = props.count, count = _props$count === void 0 ? 1 : _props$count, countRender = props.countRender, _props$scaleStep = props.scaleStep, scaleStep = _props$scaleStep === void 0 ? 0.5 : _props$scaleStep, _props$minScale = props.minScale, minScale = _props$minScale === void 0 ? 1 : _props$minScale, _props$maxScale = props.maxScale, maxScale = _props$maxScale === void 0 ? 50 : _props$maxScale, _props$transitionName = props.transitionName, transitionName = _props$transitionName === void 0 ? "zoom" : _props$transitionName, _props$maskTransition = props.maskTransitionName, maskTransitionName = _props$maskTransition === void 0 ? "fade" : _props$maskTransition, imageRender = props.imageRender, imgCommonProps = props.imgCommonProps, toolbarRender = props.toolbarRender, onTransform = props.onTransform, onChange = props.onChange, restProps = _objectWithoutProperties(props, _excluded2$3);
+  var imgRef = reactExports.useRef();
+  var groupContext = reactExports.useContext(PreviewGroupContext);
+  var showLeftOrRightSwitches = groupContext && count > 1;
+  var showOperationsProgress = groupContext && count >= 1;
+  var _useState = reactExports.useState(true), _useState2 = _slicedToArray(_useState, 2), enableTransition = _useState2[0], setEnableTransition = _useState2[1];
+  var _useImageTransform = useImageTransform(imgRef, minScale, maxScale, onTransform), transform = _useImageTransform.transform, resetTransform = _useImageTransform.resetTransform, updateTransform = _useImageTransform.updateTransform, dispatchZoomChange = _useImageTransform.dispatchZoomChange;
+  var _useMouseEvent = useMouseEvent(imgRef, movable, visible, scaleStep, transform, updateTransform, dispatchZoomChange), isMoving = _useMouseEvent.isMoving, onMouseDown = _useMouseEvent.onMouseDown, onWheel = _useMouseEvent.onWheel;
+  var _useTouchEvent = useTouchEvent(imgRef, movable, visible, minScale, transform, updateTransform, dispatchZoomChange), isTouching = _useTouchEvent.isTouching, onTouchStart = _useTouchEvent.onTouchStart, onTouchMove = _useTouchEvent.onTouchMove, onTouchEnd = _useTouchEvent.onTouchEnd;
+  var rotate = transform.rotate, scale = transform.scale;
+  var wrapClassName = classNames(_defineProperty({}, "".concat(prefixCls, "-moving"), isMoving));
+  reactExports.useEffect(function() {
+    if (!enableTransition) {
+      setEnableTransition(true);
+    }
+  }, [enableTransition]);
+  var onAfterClose = function onAfterClose2() {
+    resetTransform("close");
+  };
+  var onZoomIn = function onZoomIn2() {
+    dispatchZoomChange(BASE_SCALE_RATIO + scaleStep, "zoomIn");
+  };
+  var onZoomOut = function onZoomOut2() {
+    dispatchZoomChange(BASE_SCALE_RATIO / (BASE_SCALE_RATIO + scaleStep), "zoomOut");
+  };
+  var onRotateRight = function onRotateRight2() {
+    updateTransform({
+      rotate: rotate + 90
+    }, "rotateRight");
+  };
+  var onRotateLeft = function onRotateLeft2() {
+    updateTransform({
+      rotate: rotate - 90
+    }, "rotateLeft");
+  };
+  var onFlipX = function onFlipX2() {
+    updateTransform({
+      flipX: !transform.flipX
+    }, "flipX");
+  };
+  var onFlipY = function onFlipY2() {
+    updateTransform({
+      flipY: !transform.flipY
+    }, "flipY");
+  };
+  var onReset = function onReset2() {
+    resetTransform("reset");
+  };
+  var onSwitchLeft = function onSwitchLeft2(event) {
+    event === null || event === void 0 || event.preventDefault();
+    event === null || event === void 0 || event.stopPropagation();
+    if (current > 0) {
+      setEnableTransition(false);
+      resetTransform("prev");
+      onChange === null || onChange === void 0 || onChange(current - 1, current);
+    }
+  };
+  var onSwitchRight = function onSwitchRight2(event) {
+    event === null || event === void 0 || event.preventDefault();
+    event === null || event === void 0 || event.stopPropagation();
+    if (current < count - 1) {
+      setEnableTransition(false);
+      resetTransform("next");
+      onChange === null || onChange === void 0 || onChange(current + 1, current);
+    }
+  };
+  var onKeyDown2 = function onKeyDown3(event) {
+    if (!visible || !showLeftOrRightSwitches) return;
+    if (event.keyCode === KeyCode.LEFT) {
+      onSwitchLeft();
+    } else if (event.keyCode === KeyCode.RIGHT) {
+      onSwitchRight();
+    }
+  };
+  var onDoubleClick = function onDoubleClick2(event) {
+    if (visible) {
+      if (scale !== 1) {
+        updateTransform({
+          x: 0,
+          y: 0,
+          scale: 1
+        }, "doubleClick");
+      } else {
+        dispatchZoomChange(BASE_SCALE_RATIO + scaleStep, "doubleClick", event.clientX, event.clientY);
+      }
+    }
+  };
+  reactExports.useEffect(function() {
+    var onKeyDownListener = addEventListenerWrap(window, "keydown", onKeyDown2, false);
+    return function() {
+      onKeyDownListener.remove();
+    };
+  }, [visible, showLeftOrRightSwitches, current]);
+  var imgNode = /* @__PURE__ */ React.createElement(PreviewImage, _extends({}, imgCommonProps, {
+    width: props.width,
+    height: props.height,
+    imgRef,
+    className: "".concat(prefixCls, "-img"),
+    alt,
+    style: {
+      transform: "translate3d(".concat(transform.x, "px, ").concat(transform.y, "px, 0) scale3d(").concat(transform.flipX ? "-" : "").concat(scale, ", ").concat(transform.flipY ? "-" : "").concat(scale, ", 1) rotate(").concat(rotate, "deg)"),
+      transitionDuration: (!enableTransition || isTouching) && "0s"
+    },
+    fallback,
+    src,
+    onWheel,
+    onMouseDown,
+    onDoubleClick,
+    onTouchStart,
+    onTouchMove,
+    onTouchEnd,
+    onTouchCancel: onTouchEnd
+  }));
+  var image = _objectSpread2({
+    url: src,
+    alt
+  }, imageInfo);
+  return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement(DialogWrap, _extends({
+    transitionName,
+    maskTransitionName,
+    closable: false,
+    keyboard: true,
+    prefixCls,
+    onClose,
+    visible,
+    classNames: {
+      wrapper: wrapClassName
+    },
+    rootClassName,
+    getContainer: getContainer2
+  }, restProps, {
+    afterClose: onAfterClose
+  }), /* @__PURE__ */ React.createElement("div", {
+    className: "".concat(prefixCls, "-img-wrapper")
+  }, imageRender ? imageRender(imgNode, _objectSpread2({
+    transform,
+    image
+  }, groupContext ? {
+    current
+  } : {})) : imgNode)), /* @__PURE__ */ React.createElement(Operations, {
+    visible,
+    transform,
+    maskTransitionName,
+    closeIcon,
+    getContainer: getContainer2,
+    prefixCls,
+    rootClassName,
+    icons: icons2,
+    countRender,
+    showSwitch: showLeftOrRightSwitches,
+    showProgress: showOperationsProgress,
+    current,
+    count,
+    scale,
+    minScale,
+    maxScale,
+    toolbarRender,
+    onSwitchLeft,
+    onSwitchRight,
+    onZoomIn,
+    onZoomOut,
+    onRotateRight,
+    onRotateLeft,
+    onFlipX,
+    onFlipY,
+    onClose,
+    onReset,
+    zIndex: restProps.zIndex !== void 0 ? restProps.zIndex + 1 : void 0,
+    image
+  }));
+};
+var COMMON_PROPS = ["crossOrigin", "decoding", "draggable", "loading", "referrerPolicy", "sizes", "srcSet", "useMap", "alt"];
+function usePreviewItems(items) {
+  var _React$useState = reactExports.useState({}), _React$useState2 = _slicedToArray(_React$useState, 2), images = _React$useState2[0], setImages = _React$useState2[1];
+  var registerImage = reactExports.useCallback(function(id2, data) {
+    setImages(function(imgs) {
+      return _objectSpread2(_objectSpread2({}, imgs), {}, _defineProperty({}, id2, data));
+    });
+    return function() {
+      setImages(function(imgs) {
+        var cloneImgs = _objectSpread2({}, imgs);
+        delete cloneImgs[id2];
+        return cloneImgs;
+      });
+    };
+  }, []);
+  var mergedItems = reactExports.useMemo(function() {
+    if (items) {
+      return items.map(function(item) {
+        if (typeof item === "string") {
+          return {
+            data: {
+              src: item
+            }
+          };
+        }
+        var data = {};
+        Object.keys(item).forEach(function(key) {
+          if (["src"].concat(_toConsumableArray(COMMON_PROPS)).includes(key)) {
+            data[key] = item[key];
+          }
+        });
+        return {
+          data
+        };
+      });
+    }
+    return Object.keys(images).reduce(function(total, id2) {
+      var _images$id = images[id2], canPreview = _images$id.canPreview, data = _images$id.data;
+      if (canPreview) {
+        total.push({
+          data,
+          id: id2
+        });
+      }
+      return total;
+    }, []);
+  }, [items, images]);
+  return [mergedItems, registerImage, !!items];
+}
+var _excluded$c = ["visible", "onVisibleChange", "getContainer", "current", "movable", "minScale", "maxScale", "countRender", "closeIcon", "onChange", "onTransform", "toolbarRender", "imageRender"], _excluded2$2 = ["src"];
+var Group = function Group2(_ref) {
+  var _mergedItems$current;
+  var _ref$previewPrefixCls = _ref.previewPrefixCls, previewPrefixCls = _ref$previewPrefixCls === void 0 ? "rc-image-preview" : _ref$previewPrefixCls, children = _ref.children, _ref$icons = _ref.icons, icons2 = _ref$icons === void 0 ? {} : _ref$icons, items = _ref.items, preview = _ref.preview, fallback = _ref.fallback;
+  var _ref2 = _typeof(preview) === "object" ? preview : {}, previewVisible = _ref2.visible, onVisibleChange = _ref2.onVisibleChange, getContainer2 = _ref2.getContainer, currentIndex = _ref2.current, movable = _ref2.movable, minScale = _ref2.minScale, maxScale = _ref2.maxScale, countRender = _ref2.countRender, closeIcon = _ref2.closeIcon, onChange = _ref2.onChange, onTransform = _ref2.onTransform, toolbarRender = _ref2.toolbarRender, imageRender = _ref2.imageRender, dialogProps = _objectWithoutProperties(_ref2, _excluded$c);
+  var _usePreviewItems = usePreviewItems(items), _usePreviewItems2 = _slicedToArray(_usePreviewItems, 3), mergedItems = _usePreviewItems2[0], register2 = _usePreviewItems2[1], fromItems = _usePreviewItems2[2];
+  var _useMergedState = useMergedState(0, {
+    value: currentIndex
+  }), _useMergedState2 = _slicedToArray(_useMergedState, 2), current = _useMergedState2[0], setCurrent = _useMergedState2[1];
+  var _useState = reactExports.useState(false), _useState2 = _slicedToArray(_useState, 2), keepOpenIndex = _useState2[0], setKeepOpenIndex = _useState2[1];
+  var _ref3 = ((_mergedItems$current = mergedItems[current]) === null || _mergedItems$current === void 0 ? void 0 : _mergedItems$current.data) || {}, src = _ref3.src, imgCommonProps = _objectWithoutProperties(_ref3, _excluded2$2);
+  var _useMergedState3 = useMergedState(!!previewVisible, {
+    value: previewVisible,
+    onChange: function onChange2(val, prevVal) {
+      onVisibleChange === null || onVisibleChange === void 0 || onVisibleChange(val, prevVal, current);
+    }
+  }), _useMergedState4 = _slicedToArray(_useMergedState3, 2), isShowPreview = _useMergedState4[0], setShowPreview = _useMergedState4[1];
+  var _useState3 = reactExports.useState(null), _useState4 = _slicedToArray(_useState3, 2), mousePosition2 = _useState4[0], setMousePosition = _useState4[1];
+  var onPreviewFromImage = reactExports.useCallback(function(id2, imageSrc, mouseX, mouseY) {
+    var index2 = fromItems ? mergedItems.findIndex(function(item) {
+      return item.data.src === imageSrc;
+    }) : mergedItems.findIndex(function(item) {
+      return item.id === id2;
+    });
+    setCurrent(index2 < 0 ? 0 : index2);
+    setShowPreview(true);
+    setMousePosition({
+      x: mouseX,
+      y: mouseY
+    });
+    setKeepOpenIndex(true);
+  }, [mergedItems, fromItems]);
+  reactExports.useEffect(function() {
+    if (isShowPreview) {
+      if (!keepOpenIndex) {
+        setCurrent(0);
+      }
+    } else {
+      setKeepOpenIndex(false);
+    }
+  }, [isShowPreview]);
+  var onInternalChange = function onInternalChange2(next2, prev2) {
+    setCurrent(next2);
+    onChange === null || onChange === void 0 || onChange(next2, prev2);
+  };
+  var onPreviewClose = function onPreviewClose2() {
+    setShowPreview(false);
+    setMousePosition(null);
+  };
+  var previewGroupContext = reactExports.useMemo(function() {
+    return {
+      register: register2,
+      onPreview: onPreviewFromImage
+    };
+  }, [register2, onPreviewFromImage]);
+  return /* @__PURE__ */ reactExports.createElement(PreviewGroupContext.Provider, {
+    value: previewGroupContext
+  }, children, /* @__PURE__ */ reactExports.createElement(Preview, _extends({
+    "aria-hidden": !isShowPreview,
+    movable,
+    visible: isShowPreview,
+    prefixCls: previewPrefixCls,
+    closeIcon,
+    onClose: onPreviewClose,
+    mousePosition: mousePosition2,
+    imgCommonProps,
+    src,
+    fallback,
+    icons: icons2,
+    minScale,
+    maxScale,
+    getContainer: getContainer2,
+    current,
+    count: mergedItems.length,
+    countRender,
+    onTransform,
+    toolbarRender,
+    imageRender,
+    onChange: onInternalChange
+  }, dialogProps)));
+};
+var uid = 0;
+function useRegisterImage(canPreview, data) {
+  var _React$useState = reactExports.useState(function() {
+    uid += 1;
+    return String(uid);
+  }), _React$useState2 = _slicedToArray(_React$useState, 1), id2 = _React$useState2[0];
+  var groupContext = reactExports.useContext(PreviewGroupContext);
+  var registerData = {
+    data,
+    canPreview
+  };
+  reactExports.useEffect(function() {
+    if (groupContext) {
+      return groupContext.register(id2, registerData);
+    }
+  }, []);
+  reactExports.useEffect(function() {
+    if (groupContext) {
+      groupContext.register(id2, registerData);
+    }
+  }, [canPreview, data]);
+  return id2;
+}
+var _excluded$b = ["src", "alt", "onPreviewClose", "prefixCls", "previewPrefixCls", "placeholder", "fallback", "width", "height", "style", "preview", "className", "onClick", "onError", "wrapperClassName", "wrapperStyle", "rootClassName"], _excluded2$1 = ["src", "visible", "onVisibleChange", "getContainer", "mask", "maskClassName", "movable", "icons", "scaleStep", "minScale", "maxScale", "imageRender", "toolbarRender"];
+var ImageInternal = function ImageInternal2(props) {
+  var imgSrc = props.src, alt = props.alt, onInitialPreviewClose = props.onPreviewClose, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-image" : _props$prefixCls, _props$previewPrefixC = props.previewPrefixCls, previewPrefixCls = _props$previewPrefixC === void 0 ? "".concat(prefixCls, "-preview") : _props$previewPrefixC, placeholder = props.placeholder, fallback = props.fallback, width = props.width, height = props.height, style2 = props.style, _props$preview = props.preview, preview = _props$preview === void 0 ? true : _props$preview, className = props.className, onClick = props.onClick, onError = props.onError, wrapperClassName = props.wrapperClassName, wrapperStyle = props.wrapperStyle, rootClassName = props.rootClassName, otherProps = _objectWithoutProperties(props, _excluded$b);
+  var isCustomPlaceholder = placeholder && placeholder !== true;
+  var _ref = _typeof(preview) === "object" ? preview : {}, previewSrc = _ref.src, _ref$visible = _ref.visible, previewVisible = _ref$visible === void 0 ? void 0 : _ref$visible, _ref$onVisibleChange = _ref.onVisibleChange, onPreviewVisibleChange = _ref$onVisibleChange === void 0 ? onInitialPreviewClose : _ref$onVisibleChange, _ref$getContainer = _ref.getContainer, getPreviewContainer = _ref$getContainer === void 0 ? void 0 : _ref$getContainer, previewMask = _ref.mask, maskClassName = _ref.maskClassName, movable = _ref.movable, icons2 = _ref.icons, scaleStep = _ref.scaleStep, minScale = _ref.minScale, maxScale = _ref.maxScale, imageRender = _ref.imageRender, toolbarRender = _ref.toolbarRender, dialogProps = _objectWithoutProperties(_ref, _excluded2$1);
+  var src = previewSrc !== null && previewSrc !== void 0 ? previewSrc : imgSrc;
+  var _useMergedState = useMergedState(!!previewVisible, {
+    value: previewVisible,
+    onChange: onPreviewVisibleChange
+  }), _useMergedState2 = _slicedToArray(_useMergedState, 2), isShowPreview = _useMergedState2[0], setShowPreview = _useMergedState2[1];
+  var _useStatus = useStatus({
+    src: imgSrc,
+    isCustomPlaceholder,
+    fallback
+  }), _useStatus2 = _slicedToArray(_useStatus, 3), getImgRef = _useStatus2[0], srcAndOnload = _useStatus2[1], status = _useStatus2[2];
+  var _useState = reactExports.useState(null), _useState2 = _slicedToArray(_useState, 2), mousePosition2 = _useState2[0], setMousePosition = _useState2[1];
+  var groupContext = reactExports.useContext(PreviewGroupContext);
+  var canPreview = !!preview;
+  var onPreviewClose = function onPreviewClose2() {
+    setShowPreview(false);
+    setMousePosition(null);
+  };
+  var wrapperClass = classNames(prefixCls, wrapperClassName, rootClassName, _defineProperty({}, "".concat(prefixCls, "-error"), status === "error"));
+  var imgCommonProps = reactExports.useMemo(function() {
+    var obj = {};
+    COMMON_PROPS.forEach(function(prop) {
+      if (props[prop] !== void 0) {
+        obj[prop] = props[prop];
+      }
+    });
+    return obj;
+  }, COMMON_PROPS.map(function(prop) {
+    return props[prop];
+  }));
+  var registerData = reactExports.useMemo(function() {
+    return _objectSpread2(_objectSpread2({}, imgCommonProps), {}, {
+      src
+    });
+  }, [src, imgCommonProps]);
+  var imageId = useRegisterImage(canPreview, registerData);
+  var onPreview = function onPreview2(e2) {
+    var _getOffset = getOffset$1(e2.target), left = _getOffset.left, top = _getOffset.top;
+    if (groupContext) {
+      groupContext.onPreview(imageId, src, left, top);
+    } else {
+      setMousePosition({
+        x: left,
+        y: top
+      });
+      setShowPreview(true);
+    }
+    onClick === null || onClick === void 0 || onClick(e2);
+  };
+  return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement("div", _extends({}, otherProps, {
+    className: wrapperClass,
+    onClick: canPreview ? onPreview : onClick,
+    style: _objectSpread2({
+      width,
+      height
+    }, wrapperStyle)
+  }), /* @__PURE__ */ reactExports.createElement("img", _extends({}, imgCommonProps, {
+    className: classNames("".concat(prefixCls, "-img"), _defineProperty({}, "".concat(prefixCls, "-img-placeholder"), placeholder === true), className),
+    style: _objectSpread2({
+      height
+    }, style2),
+    ref: getImgRef
+  }, srcAndOnload, {
+    width,
+    height,
+    onError
+  })), status === "loading" && /* @__PURE__ */ reactExports.createElement("div", {
+    "aria-hidden": "true",
+    className: "".concat(prefixCls, "-placeholder")
+  }, placeholder), previewMask && canPreview && /* @__PURE__ */ reactExports.createElement("div", {
+    className: classNames("".concat(prefixCls, "-mask"), maskClassName),
+    style: {
+      display: (style2 === null || style2 === void 0 ? void 0 : style2.display) === "none" ? "none" : void 0
+    }
+  }, previewMask)), !groupContext && canPreview && /* @__PURE__ */ reactExports.createElement(Preview, _extends({
+    "aria-hidden": !isShowPreview,
+    visible: isShowPreview,
+    prefixCls: previewPrefixCls,
+    onClose: onPreviewClose,
+    mousePosition: mousePosition2,
+    src,
+    alt,
+    imageInfo: {
+      width,
+      height
+    },
+    fallback,
+    getContainer: getPreviewContainer,
+    icons: icons2,
+    movable,
+    scaleStep,
+    minScale,
+    maxScale,
+    rootClassName,
+    imageRender,
+    imgCommonProps,
+    toolbarRender
+  }, dialogProps)));
+};
+ImageInternal.PreviewGroup = Group;
+var RotateLeftOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "defs", "attrs": {}, "children": [{ "tag": "style", "attrs": {} }] }, { "tag": "path", "attrs": { "d": "M672 418H144c-17.7 0-32 14.3-32 32v414c0 17.7 14.3 32 32 32h528c17.7 0 32-14.3 32-32V450c0-17.7-14.3-32-32-32zm-44 402H188V494h440v326z" } }, { "tag": "path", "attrs": { "d": "M819.3 328.5c-78.8-100.7-196-153.6-314.6-154.2l-.2-64c0-6.5-7.6-10.1-12.6-6.1l-128 101c-4 3.1-3.9 9.1 0 12.3L492 318.6c5.1 4 12.7.4 12.6-6.1v-63.9c12.9.1 25.9.9 38.8 2.5 42.1 5.2 82.1 18.2 119 38.7 38.1 21.2 71.2 49.7 98.4 84.3 27.1 34.7 46.7 73.7 58.1 115.8a325.95 325.95 0 016.5 140.9h74.9c14.8-103.6-11.3-213-81-302.3z" } }] }, "name": "rotate-left", "theme": "outlined" };
+var RotateLeftOutlined = function RotateLeftOutlined2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: RotateLeftOutlined$1
+  }));
+};
+var RefIcon$g = /* @__PURE__ */ reactExports.forwardRef(RotateLeftOutlined);
+var RotateRightOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "defs", "attrs": {}, "children": [{ "tag": "style", "attrs": {} }] }, { "tag": "path", "attrs": { "d": "M480.5 251.2c13-1.6 25.9-2.4 38.8-2.5v63.9c0 6.5 7.5 10.1 12.6 6.1L660 217.6c4-3.2 4-9.2 0-12.3l-128-101c-5.1-4-12.6-.4-12.6 6.1l-.2 64c-118.6.5-235.8 53.4-314.6 154.2A399.75 399.75 0 00123.5 631h74.9c-.9-5.3-1.7-10.7-2.4-16.1-5.1-42.1-2.1-84.1 8.9-124.8 11.4-42.2 31-81.1 58.1-115.8 27.2-34.7 60.3-63.2 98.4-84.3 37-20.6 76.9-33.6 119.1-38.8z" } }, { "tag": "path", "attrs": { "d": "M880 418H352c-17.7 0-32 14.3-32 32v414c0 17.7 14.3 32 32 32h528c17.7 0 32-14.3 32-32V450c0-17.7-14.3-32-32-32zm-44 402H396V494h440v326z" } }] }, "name": "rotate-right", "theme": "outlined" };
+var RotateRightOutlined = function RotateRightOutlined2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: RotateRightOutlined$1
+  }));
+};
+var RefIcon$f = /* @__PURE__ */ reactExports.forwardRef(RotateRightOutlined);
+var SwapOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M847.9 592H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h605.2L612.9 851c-4.1 5.2-.4 13 6.3 13h72.5c4.9 0 9.5-2.2 12.6-6.1l168.8-214.1c16.5-21 1.6-51.8-25.2-51.8zM872 356H266.8l144.3-183c4.1-5.2.4-13-6.3-13h-72.5c-4.9 0-9.5 2.2-12.6 6.1L150.9 380.2c-16.5 21-1.6 51.8 25.1 51.8h696c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z" } }] }, "name": "swap", "theme": "outlined" };
+var SwapOutlined = function SwapOutlined2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: SwapOutlined$1
+  }));
+};
+var RefIcon$e = /* @__PURE__ */ reactExports.forwardRef(SwapOutlined);
+var ZoomInOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M637 443H519V309c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v134H325c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h118v134c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V519h118c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8zm284 424L775 721c122.1-148.9 113.6-369.5-26-509-148-148.1-388.4-148.1-537 0-148.1 148.6-148.1 389 0 537 139.5 139.6 360.1 148.1 509 26l146 146c3.2 2.8 8.3 2.8 11 0l43-43c2.8-2.7 2.8-7.8 0-11zM696 696c-118.8 118.7-311.2 118.7-430 0-118.7-118.8-118.7-311.2 0-430 118.8-118.7 311.2-118.7 430 0 118.7 118.8 118.7 311.2 0 430z" } }] }, "name": "zoom-in", "theme": "outlined" };
+var ZoomInOutlined = function ZoomInOutlined2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: ZoomInOutlined$1
+  }));
+};
+var RefIcon$d = /* @__PURE__ */ reactExports.forwardRef(ZoomInOutlined);
+var ZoomOutOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M637 443H325c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h312c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8zm284 424L775 721c122.1-148.9 113.6-369.5-26-509-148-148.1-388.4-148.1-537 0-148.1 148.6-148.1 389 0 537 139.5 139.6 360.1 148.1 509 26l146 146c3.2 2.8 8.3 2.8 11 0l43-43c2.8-2.7 2.8-7.8 0-11zM696 696c-118.8 118.7-311.2 118.7-430 0-118.7-118.8-118.7-311.2 0-430 118.8-118.7 311.2-118.7 430 0 118.7 118.8 118.7 311.2 0 430z" } }] }, "name": "zoom-out", "theme": "outlined" };
+var ZoomOutOutlined = function ZoomOutOutlined2(props, ref) {
+  return /* @__PURE__ */ reactExports.createElement(Icon$1, _extends({}, props, {
+    ref,
+    icon: ZoomOutOutlined$1
+  }));
+};
+var RefIcon$c = /* @__PURE__ */ reactExports.forwardRef(ZoomOutOutlined);
+const genBoxStyle = (position2) => ({
+  position: position2 || "absolute",
+  inset: 0
+});
+const genImageMaskStyle = (token2) => {
+  const {
+    iconCls,
+    motionDurationSlow,
+    paddingXXS,
+    marginXXS,
+    prefixCls,
+    colorTextLightSolid
+  } = token2;
+  return {
+    position: "absolute",
+    inset: 0,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: colorTextLightSolid,
+    background: new TinyColor("#000").setAlpha(0.5).toRgbString(),
+    cursor: "pointer",
+    opacity: 0,
+    transition: `opacity ${motionDurationSlow}`,
+    [`.${prefixCls}-mask-info`]: Object.assign(Object.assign({}, textEllipsis), {
+      padding: `0 ${unit$1(paddingXXS)}`,
+      [iconCls]: {
+        marginInlineEnd: marginXXS,
+        svg: {
+          verticalAlign: "baseline"
+        }
+      }
+    })
+  };
+};
+const genPreviewOperationsStyle = (token2) => {
+  const {
+    previewCls,
+    modalMaskBg,
+    paddingSM,
+    marginXL,
+    margin,
+    paddingLG,
+    previewOperationColorDisabled,
+    previewOperationHoverColor,
+    motionDurationSlow,
+    iconCls,
+    colorTextLightSolid
+  } = token2;
+  const operationBg = new TinyColor(modalMaskBg).setAlpha(0.1);
+  const operationBgHover = operationBg.clone().setAlpha(0.2);
+  return {
+    [`${previewCls}-footer`]: {
+      position: "fixed",
+      bottom: marginXL,
+      left: {
+        _skip_check_: true,
+        value: "50%"
+      },
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      color: token2.previewOperationColor,
+      transform: "translateX(-50%)"
+    },
+    [`${previewCls}-progress`]: {
+      marginBottom: margin
+    },
+    [`${previewCls}-close`]: {
+      position: "fixed",
+      top: marginXL,
+      right: {
+        _skip_check_: true,
+        value: marginXL
+      },
+      display: "flex",
+      color: colorTextLightSolid,
+      backgroundColor: operationBg.toRgbString(),
+      borderRadius: "50%",
+      padding: paddingSM,
+      outline: 0,
+      border: 0,
+      cursor: "pointer",
+      transition: `all ${motionDurationSlow}`,
+      "&:hover": {
+        backgroundColor: operationBgHover.toRgbString()
+      },
+      [`& > ${iconCls}`]: {
+        fontSize: token2.previewOperationSize
+      }
+    },
+    [`${previewCls}-operations`]: {
+      display: "flex",
+      alignItems: "center",
+      padding: `0 ${unit$1(paddingLG)}`,
+      backgroundColor: operationBg.toRgbString(),
+      borderRadius: 100,
+      "&-operation": {
+        marginInlineStart: paddingSM,
+        padding: paddingSM,
+        cursor: "pointer",
+        transition: `all ${motionDurationSlow}`,
+        userSelect: "none",
+        [`&:not(${previewCls}-operations-operation-disabled):hover > ${iconCls}`]: {
+          color: previewOperationHoverColor
+        },
+        "&-disabled": {
+          color: previewOperationColorDisabled,
+          cursor: "not-allowed"
+        },
+        "&:first-of-type": {
+          marginInlineStart: 0
+        },
+        [`& > ${iconCls}`]: {
+          fontSize: token2.previewOperationSize
+        }
+      }
+    }
+  };
+};
+const genPreviewSwitchStyle = (token2) => {
+  const {
+    modalMaskBg,
+    iconCls,
+    previewOperationColorDisabled,
+    previewCls,
+    zIndexPopup,
+    motionDurationSlow
+  } = token2;
+  const operationBg = new TinyColor(modalMaskBg).setAlpha(0.1);
+  const operationBgHover = operationBg.clone().setAlpha(0.2);
+  return {
+    [`${previewCls}-switch-left, ${previewCls}-switch-right`]: {
+      position: "fixed",
+      insetBlockStart: "50%",
+      zIndex: token2.calc(zIndexPopup).add(1).equal(),
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      width: token2.imagePreviewSwitchSize,
+      height: token2.imagePreviewSwitchSize,
+      marginTop: token2.calc(token2.imagePreviewSwitchSize).mul(-1).div(2).equal(),
+      color: token2.previewOperationColor,
+      background: operationBg.toRgbString(),
+      borderRadius: "50%",
+      transform: `translateY(-50%)`,
+      cursor: "pointer",
+      transition: `all ${motionDurationSlow}`,
+      userSelect: "none",
+      "&:hover": {
+        background: operationBgHover.toRgbString()
+      },
+      "&-disabled": {
+        "&, &:hover": {
+          color: previewOperationColorDisabled,
+          background: "transparent",
+          cursor: "not-allowed",
+          [`> ${iconCls}`]: {
+            cursor: "not-allowed"
+          }
+        }
+      },
+      [`> ${iconCls}`]: {
+        fontSize: token2.previewOperationSize
+      }
+    },
+    [`${previewCls}-switch-left`]: {
+      insetInlineStart: token2.marginSM
+    },
+    [`${previewCls}-switch-right`]: {
+      insetInlineEnd: token2.marginSM
+    }
+  };
+};
+const genImagePreviewStyle = (token2) => {
+  const {
+    motionEaseOut,
+    previewCls,
+    motionDurationSlow,
+    componentCls
+  } = token2;
+  return [
+    {
+      [`${componentCls}-preview-root`]: {
+        [previewCls]: {
+          height: "100%",
+          textAlign: "center",
+          pointerEvents: "none"
+        },
+        [`${previewCls}-body`]: Object.assign(Object.assign({}, genBoxStyle()), {
+          overflow: "hidden"
+        }),
+        [`${previewCls}-img`]: {
+          maxWidth: "100%",
+          maxHeight: "70%",
+          verticalAlign: "middle",
+          transform: "scale3d(1, 1, 1)",
+          cursor: "grab",
+          transition: `transform ${motionDurationSlow} ${motionEaseOut} 0s`,
+          userSelect: "none",
+          "&-wrapper": Object.assign(Object.assign({}, genBoxStyle()), {
+            transition: `transform ${motionDurationSlow} ${motionEaseOut} 0s`,
+            // https://github.com/ant-design/ant-design/issues/39913
+            // TailwindCSS will reset img default style.
+            // Let's set back.
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            "& > *": {
+              pointerEvents: "auto"
+            },
+            "&::before": {
+              display: "inline-block",
+              width: 1,
+              height: "50%",
+              marginInlineEnd: -1,
+              content: '""'
+            }
+          })
+        },
+        [`${previewCls}-moving`]: {
+          [`${previewCls}-preview-img`]: {
+            cursor: "grabbing",
+            "&-wrapper": {
+              transitionDuration: "0s"
+            }
+          }
+        }
+      }
+    },
+    // Override
+    {
+      [`${componentCls}-preview-root`]: {
+        [`${previewCls}-wrap`]: {
+          zIndex: token2.zIndexPopup
+        }
+      }
+    },
+    // Preview operations & switch
+    {
+      [`${componentCls}-preview-operations-wrapper`]: {
+        position: "fixed",
+        zIndex: token2.calc(token2.zIndexPopup).add(1).equal()
+      },
+      "&": [genPreviewOperationsStyle(token2), genPreviewSwitchStyle(token2)]
+    }
+  ];
+};
+const genImageStyle = (token2) => {
+  const {
+    componentCls
+  } = token2;
+  return {
+    // ============================== image ==============================
+    [componentCls]: {
+      position: "relative",
+      display: "inline-block",
+      [`${componentCls}-img`]: {
+        width: "100%",
+        height: "auto",
+        verticalAlign: "middle"
+      },
+      [`${componentCls}-img-placeholder`]: {
+        backgroundColor: token2.colorBgContainerDisabled,
+        backgroundImage: "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTQuNSAyLjVoLTEzQS41LjUgMCAwIDAgMSAzdjEwYS41LjUgMCAwIDAgLjUuNWgxM2EuNS41IDAgMCAwIC41LS41VjNhLjUuNSAwIDAgMC0uNS0uNXpNNS4yODEgNC43NWExIDEgMCAwIDEgMCAyIDEgMSAwIDAgMSAwLTJ6bTguMDMgNi44M2EuMTI3LjEyNyAwIDAgMS0uMDgxLjAzSDIuNzY5YS4xMjUuMTI1IDAgMCAxLS4wOTYtLjIwN2wyLjY2MS0zLjE1NmEuMTI2LjEyNiAwIDAgMSAuMTc3LS4wMTZsLjAxNi4wMTZMNy4wOCAxMC4wOWwyLjQ3LTIuOTNhLjEyNi4xMjYgMCAwIDEgLjE3Ny0uMDE2bC4wMTUuMDE2IDMuNTg4IDQuMjQ0YS4xMjcuMTI3IDAgMCAxLS4wMi4xNzV6IiBmaWxsPSIjOEM4QzhDIiBmaWxsLXJ1bGU9Im5vbnplcm8iLz48L3N2Zz4=')",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center center",
+        backgroundSize: "30%"
+      },
+      [`${componentCls}-mask`]: Object.assign({}, genImageMaskStyle(token2)),
+      [`${componentCls}-mask:hover`]: {
+        opacity: 1
+      },
+      [`${componentCls}-placeholder`]: Object.assign({}, genBoxStyle())
+    }
+  };
+};
+const genPreviewMotion = (token2) => {
+  const {
+    previewCls
+  } = token2;
+  return {
+    [`${previewCls}-root`]: initZoomMotion(token2, "zoom"),
+    "&": initFadeMotion(token2, true)
+  };
+};
+const prepareComponentToken$5 = (token2) => ({
+  zIndexPopup: token2.zIndexPopupBase + 80,
+  previewOperationColor: new TinyColor(token2.colorTextLightSolid).setAlpha(0.65).toRgbString(),
+  previewOperationHoverColor: new TinyColor(token2.colorTextLightSolid).setAlpha(0.85).toRgbString(),
+  previewOperationColorDisabled: new TinyColor(token2.colorTextLightSolid).setAlpha(0.25).toRgbString(),
+  previewOperationSize: token2.fontSizeIcon * 1.5
+  // FIXME: fontSizeIconLG
+});
+const useStyle$5 = genStyleHooks("Image", (token2) => {
+  const previewCls = `${token2.componentCls}-preview`;
+  const imageToken = merge(token2, {
+    previewCls,
+    modalMaskBg: new TinyColor("#000").setAlpha(0.45).toRgbString(),
+    // FIXME: Shared Token
+    imagePreviewSwitchSize: token2.controlHeightLG
+  });
+  return [genImageStyle(imageToken), genImagePreviewStyle(imageToken), genModalMaskStyle(merge(imageToken, {
+    componentCls: previewCls
+  })), genPreviewMotion(imageToken)];
+}, prepareComponentToken$5);
+var __rest$7 = function(s, e2) {
+  var t2 = {};
+  for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
+    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p2[i2])) t2[p2[i2]] = s[p2[i2]];
+  }
+  return t2;
+};
+const icons = {
+  rotateLeft: /* @__PURE__ */ reactExports.createElement(RefIcon$g, null),
+  rotateRight: /* @__PURE__ */ reactExports.createElement(RefIcon$f, null),
+  zoomIn: /* @__PURE__ */ reactExports.createElement(RefIcon$d, null),
+  zoomOut: /* @__PURE__ */ reactExports.createElement(RefIcon$c, null),
+  close: /* @__PURE__ */ reactExports.createElement(RefIcon$w, null),
+  left: /* @__PURE__ */ reactExports.createElement(RefIcon$n, null),
+  right: /* @__PURE__ */ reactExports.createElement(RefIcon$o, null),
+  flipX: /* @__PURE__ */ reactExports.createElement(RefIcon$e, null),
+  flipY: /* @__PURE__ */ reactExports.createElement(RefIcon$e, {
+    rotate: 90
+  })
+};
+const InternalPreviewGroup = (_a) => {
+  var {
+    previewPrefixCls: customizePrefixCls,
+    preview
+  } = _a, otherProps = __rest$7(_a, ["previewPrefixCls", "preview"]);
+  const {
+    getPrefixCls
+  } = reactExports.useContext(ConfigContext);
+  const prefixCls = getPrefixCls("image", customizePrefixCls);
+  const previewPrefixCls = `${prefixCls}-preview`;
+  const rootPrefixCls = getPrefixCls();
+  const rootCls = useCSSVarCls(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$5(prefixCls, rootCls);
+  const [zIndex] = useZIndex("ImagePreview", typeof preview === "object" ? preview.zIndex : void 0);
+  const mergedPreview = reactExports.useMemo(() => {
+    var _a2;
+    if (preview === false) {
+      return preview;
+    }
+    const _preview = typeof preview === "object" ? preview : {};
+    const mergedRootClassName = classNames(hashId, cssVarCls, rootCls, (_a2 = _preview.rootClassName) !== null && _a2 !== void 0 ? _a2 : "");
+    return Object.assign(Object.assign({}, _preview), {
+      transitionName: getTransitionName(rootPrefixCls, "zoom", _preview.transitionName),
+      maskTransitionName: getTransitionName(rootPrefixCls, "fade", _preview.maskTransitionName),
+      rootClassName: mergedRootClassName,
+      zIndex
+    });
+  }, [preview]);
+  return wrapCSSVar(/* @__PURE__ */ reactExports.createElement(ImageInternal.PreviewGroup, Object.assign({
+    preview: mergedPreview,
+    previewPrefixCls,
+    icons
+  }, otherProps)));
+};
+const PreviewGroup = InternalPreviewGroup;
+var __rest$6 = function(s, e2) {
+  var t2 = {};
+  for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
+  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i2 = 0, p2 = Object.getOwnPropertySymbols(s); i2 < p2.length; i2++) {
+    if (e2.indexOf(p2[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p2[i2])) t2[p2[i2]] = s[p2[i2]];
+  }
+  return t2;
+};
+const Image = (props) => {
+  var _a;
+  const {
+    prefixCls: customizePrefixCls,
+    preview,
+    className,
+    rootClassName,
+    style: style2
+  } = props, otherProps = __rest$6(props, ["prefixCls", "preview", "className", "rootClassName", "style"]);
+  const {
+    getPrefixCls,
+    locale: contextLocale = localeValues,
+    getPopupContainer: getContextPopupContainer,
+    image
+  } = reactExports.useContext(ConfigContext);
+  const prefixCls = getPrefixCls("image", customizePrefixCls);
+  const rootPrefixCls = getPrefixCls();
+  const imageLocale = contextLocale.Image || localeValues.Image;
+  const rootCls = useCSSVarCls(prefixCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$5(prefixCls, rootCls);
+  const mergedRootClassName = classNames(rootClassName, hashId, cssVarCls, rootCls);
+  const mergedClassName = classNames(className, hashId, image === null || image === void 0 ? void 0 : image.className);
+  const [zIndex] = useZIndex("ImagePreview", typeof preview === "object" ? preview.zIndex : void 0);
+  const mergedPreview = reactExports.useMemo(() => {
+    var _a2;
+    if (preview === false) {
+      return preview;
+    }
+    const _preview = typeof preview === "object" ? preview : {};
+    const {
+      getContainer: getContainer2,
+      closeIcon
+    } = _preview, restPreviewProps = __rest$6(_preview, ["getContainer", "closeIcon"]);
+    return Object.assign(Object.assign({
+      mask: /* @__PURE__ */ reactExports.createElement("div", {
+        className: `${prefixCls}-mask-info`
+      }, /* @__PURE__ */ reactExports.createElement(RefIcon$i, null), imageLocale === null || imageLocale === void 0 ? void 0 : imageLocale.preview),
+      icons
+    }, restPreviewProps), {
+      getContainer: getContainer2 !== null && getContainer2 !== void 0 ? getContainer2 : getContextPopupContainer,
+      transitionName: getTransitionName(rootPrefixCls, "zoom", _preview.transitionName),
+      maskTransitionName: getTransitionName(rootPrefixCls, "fade", _preview.maskTransitionName),
+      zIndex,
+      closeIcon: closeIcon !== null && closeIcon !== void 0 ? closeIcon : (_a2 = image === null || image === void 0 ? void 0 : image.preview) === null || _a2 === void 0 ? void 0 : _a2.closeIcon
+    });
+  }, [preview, imageLocale, (_a = image === null || image === void 0 ? void 0 : image.preview) === null || _a === void 0 ? void 0 : _a.closeIcon]);
+  const mergedStyle = Object.assign(Object.assign({}, image === null || image === void 0 ? void 0 : image.style), style2);
+  return wrapCSSVar(/* @__PURE__ */ reactExports.createElement(ImageInternal, Object.assign({
+    prefixCls,
+    preview: mergedPreview,
+    rootClassName: mergedRootClassName,
+    className: mergedClassName,
+    style: mergedStyle
+  }, otherProps)));
+};
+Image.PreviewGroup = PreviewGroup;
 const extendsObject = function() {
   const result = Object.assign({}, arguments.length <= 0 ? void 0 : arguments[0]);
   for (let i2 = 1; i2 < arguments.length; i2++) {
@@ -48674,12 +50512,12 @@ const Pagination = (props) => {
       className: `${prefixCls}-item-link`,
       type: "button",
       tabIndex: -1
-    }, direction === "rtl" ? /* @__PURE__ */ reactExports.createElement(RefIcon$j, null) : /* @__PURE__ */ reactExports.createElement(RefIcon$i, null));
+    }, direction === "rtl" ? /* @__PURE__ */ reactExports.createElement(RefIcon$o, null) : /* @__PURE__ */ reactExports.createElement(RefIcon$n, null));
     const nextIcon = /* @__PURE__ */ reactExports.createElement("button", {
       className: `${prefixCls}-item-link`,
       type: "button",
       tabIndex: -1
-    }, direction === "rtl" ? /* @__PURE__ */ reactExports.createElement(RefIcon$i, null) : /* @__PURE__ */ reactExports.createElement(RefIcon$j, null));
+    }, direction === "rtl" ? /* @__PURE__ */ reactExports.createElement(RefIcon$n, null) : /* @__PURE__ */ reactExports.createElement(RefIcon$o, null));
     const jumpPrevIcon = (
       // biome-ignore lint/a11y/useValidAnchor: it is hard to refactor
       /* @__PURE__ */ reactExports.createElement("a", {
@@ -49247,7 +51085,7 @@ const PurePanel = (props) => {
   const rootPrefixCls = getPrefixCls();
   const prefixCls = customizePrefixCls || getPrefixCls("modal");
   const rootCls = useCSSVarCls(rootPrefixCls);
-  const [wrapCSSVar, hashId, cssVarCls] = useStyle$m(prefixCls, rootCls);
+  const [wrapCSSVar, hashId, cssVarCls] = useStyle$n(prefixCls, rootCls);
   const confirmPrefixCls = `${prefixCls}-confirm`;
   let additionalProps = {};
   if (type4) {
@@ -54163,7 +56001,7 @@ const useSelection = (config, rowSelection) => {
         }, /* @__PURE__ */ reactExports.createElement(Dropdown, {
           menu,
           getPopupContainer
-        }, /* @__PURE__ */ reactExports.createElement("span", null, /* @__PURE__ */ reactExports.createElement(RefIcon$l, null))));
+        }, /* @__PURE__ */ reactExports.createElement("span", null, /* @__PURE__ */ reactExports.createElement(RefIcon$q, null))));
       }
       const allDisabledData = flattedData.map((record, index2) => {
         const key = getRowKey(record, index2);
@@ -56286,7 +58124,7 @@ const SwitcherIconCom = (props) => {
     loading
   } = treeNodeProps;
   if (loading) {
-    return /* @__PURE__ */ reactExports.createElement(RefIcon$o, {
+    return /* @__PURE__ */ reactExports.createElement(RefIcon$t, {
       className: `${prefixCls}-switcher-loading-icon`
     });
   }
@@ -56650,7 +58488,7 @@ function FilterSearch(_ref) {
   return /* @__PURE__ */ reactExports.createElement("div", {
     className: `${tablePrefixCls}-filter-dropdown-search`
   }, /* @__PURE__ */ reactExports.createElement(Input, {
-    prefix: /* @__PURE__ */ reactExports.createElement(RefIcon$k, null),
+    prefix: /* @__PURE__ */ reactExports.createElement(RefIcon$p, null),
     placeholder: locale2.filterSearchPlaceholder,
     onChange,
     value,
@@ -59694,75 +61532,157 @@ const toastNotification = (type4, message, description) => {
     showProgress: true
   });
 };
-function TeamShowcaseFields() {
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
-  };
-  const options = [
-    {
-      label: "China",
-      value: "china",
-      emoji: "🇨🇳",
-      desc: "China (中国)"
-    },
-    {
-      label: "USA",
-      value: "usa",
-      emoji: "🇺🇸",
-      desc: "USA (美国)"
-    },
-    {
-      label: "Japan",
-      value: "japan",
-      emoji: "🇯🇵",
-      desc: "Japan (日本)"
-    },
-    {
-      label: "Korea",
-      value: "korea",
-      emoji: "🇰🇷",
-      desc: "Korea (韩国)"
-    }
-  ];
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Form2.Item,
+function TsSelect({ label, value, options, onChange, mode }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
+    label && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "label",
       {
-        label: "Showcase Name",
-        name: "title",
-        rules: [
-          { required: true, message: "Please input your showcase name!" }
-        ],
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(Input, {})
+        className: "block text-sm font-medium text-gray-700 mb-2",
+        style: {
+          color: globalSettings.theme.textColor
+        },
+        children: label
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Form2.Item,
+      Select,
       {
-        name: "member",
-        label: "Team Member",
-        rules: [
-          {
-            required: false
-          }
-        ],
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Select,
-          {
-            mode: "multiple",
-            placeholder: "Select a option and change input text above",
-            onChange: handleChange,
-            allowClear: true,
-            options,
-            optionRender: (option) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Space, { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { role: "img", "aria-label": option.data.label, children: option.data.emoji }),
-              option.data.desc
-            ] })
-          }
-        )
+        placeholder: `Select ${label}`,
+        value,
+        style: {
+          width: "100%"
+        },
+        onChange,
+        options,
+        mode
       }
     )
   ] });
+}
+function TsSlider({ label, range: range3, value, onChange }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    label && /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-sm font-medium text-gray-700 mb-1", children: label }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4 flex justify-between items-center w-full", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full mr-6", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Slider2,
+        {
+          value,
+          min: range3.min,
+          max: range3.max,
+          onChange,
+          style: {
+            track: {
+              background: "#000"
+            },
+            width: "100%"
+          }
+        }
+      ) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        TypedInputNumber,
+        {
+          value,
+          min: range3.min,
+          max: range3.max,
+          onChange
+        }
+      ) })
+    ] })
+  ] });
+}
+function TsColor({ label, value, options, onChange }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
+    label && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "label",
+      {
+        className: "block text-sm font-medium text-gray-700 mb-2",
+        style: {
+          color: globalSettings.theme.textColor
+        },
+        children: label
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ColorPicker,
+      {
+        defaultValue: value,
+        onChange
+      }
+    )
+  ] });
+}
+function TsDivider({ value, options, onChange }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-8 mb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Divider,
+    {
+      style: {
+        borderColor: globalSettings.theme.borderColor
+      }
+    }
+  ) });
+}
+function TsInputGroup({ label, value1, value2, value3, value4, onChange }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
+    label && /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-sm font-medium text-gray-700 mb-2", children: label }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex space-x-2", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(TypedInputNumber, { defaultValue: value1, onChange }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(TypedInputNumber, { defaultValue: value2, onChange }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(TypedInputNumber, { defaultValue: value3, onChange }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(TypedInputNumber, { defaultValue: value4, onChange })
+    ] })
+  ] });
+}
+function TsMedia({ label, name, required: required4, form }) {
+  const [mediaUrl, setMediaUrl] = reactExports.useState(null);
+  const openMediaLibrary = () => {
+    var wkMedia;
+    if (wkMedia) {
+      wkMedia.open();
+      return;
+    }
+    wkMedia = wp.media.frames.file_frame = wp.media({
+      title: `Select ${label}`,
+      button: {
+        text: `Select ${label}`
+      },
+      multiple: false
+      // Only allow single selection
+    });
+    wkMedia.on("select", function() {
+      const attachment = wkMedia.state().get("selection").first().toJSON();
+      setMediaUrl(attachment.url);
+      form.setFieldsValue({ [name]: attachment.url });
+    });
+    wkMedia.open();
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Form2.Item,
+    {
+      label,
+      name,
+      rules: [
+        {
+          required: required4,
+          // Fix this line
+          message: `Please select ${label}!`
+        }
+      ],
+      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 gap-6 w-2/6", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(Button$1, { id: "wk-button", type: "primary", onClick: openMediaLibrary, children: [
+          "Select ",
+          label
+        ] }),
+        mediaUrl && /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Image,
+          {
+            src: mediaUrl,
+            alt: "Selected media",
+            style: { marginTop: "20px" }
+          }
+        )
+      ] })
+    }
+  ) });
 }
 (function() {
   try {
@@ -70731,7 +72651,7 @@ class n {
     };
   }
 }
-function TeamMemberBasic({ form }) {
+function TsEditor({ label, name, required: required4, form }) {
   const editorRef = reactExports.useRef(null);
   reactExports.useEffect(() => {
     const editor = new Ts({
@@ -70757,7 +72677,7 @@ function TeamMemberBasic({ form }) {
         try {
           if (form) {
             const editorData = await editorRef.current.save();
-            form.setFieldsValue({ information: JSON.stringify(editorData) });
+            form.setFieldsValue({ [name]: JSON.stringify(editorData) });
           } else {
             console.error("Form is not defined");
           }
@@ -70772,7 +72692,78 @@ function TeamMemberBasic({ form }) {
         editorRef.current = null;
       }
     };
-  }, [form]);
+  }, [form, name]);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Form2.Item,
+    {
+      label,
+      name,
+      rules: [
+        {
+          required: required4,
+          message: `Please input ${label}!`
+        }
+      ],
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id: "editorjs", style: { padding: "16px", backgroundColor: "#f7f7f7" } })
+    }
+  );
+}
+const ajax_url$1 = tsteam_settings.ajax_url;
+const fetchData = (action, callback, additionalParams = {}) => {
+  const params = {
+    _ajax_nonce: tsteam_settings.nonce,
+    action,
+    ...additionalParams
+  };
+  jQuery.post(ajax_url$1, params, function(response) {
+    if (typeof callback === "function") {
+      callback(response);
+    }
+  });
+};
+function TeamShowcaseFields() {
+  const [teamMembers, setTeamMembers] = reactExports.useState([]);
+  reactExports.useEffect(() => {
+    fetchData("tsteam/team_member/fetch", (response) => {
+      if (response.success && response.data) {
+        const options = response.data.map((member) => ({
+          label: member.title,
+          value: member.post_id
+        }));
+        setTeamMembers(options);
+      } else {
+        console.error("Failed to fetch team members.");
+      }
+    });
+  }, []);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Form2.Item,
+      {
+        label: "Showcase Name",
+        name: "title",
+        rules: [{ required: true, message: "Please input your showcase name!" }],
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(Input, {})
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Form2.Item,
+      {
+        name: "team_members",
+        rules: [{ required: false }],
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          TsSelect,
+          {
+            label: "Team Members",
+            options: teamMembers,
+            mode: "multiple"
+          }
+        )
+      }
+    )
+  ] });
+}
+function TeamMemberBasic({ form }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       Form2.Item,
@@ -70786,14 +72777,21 @@ function TeamMemberBasic({ form }) {
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Form2.Item,
+      TsMedia,
+      {
+        label: "Team Member Image",
+        name: "member_image",
+        required: true,
+        form
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TsEditor,
       {
         label: "Team Member Information",
         name: "information",
-        rules: [
-          { required: true, message: "Please input team member information!" }
-        ],
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { id: "editorjs", style: { padding: "16px", backgroundColor: "#f7f7f7" } })
+        required: true,
+        form
       }
     )
   ] });
@@ -70920,19 +72918,6 @@ function TableNav({ type: type4, title }) {
     ] })
   ] });
 }
-const ajax_url$1 = tsteam_settings.ajax_url;
-const fetchData = (action, callback, additionalParams = {}) => {
-  const params = {
-    _ajax_nonce: tsteam_settings.nonce,
-    action,
-    ...additionalParams
-  };
-  jQuery.get(ajax_url$1, params, function(response) {
-    if (typeof callback === "function") {
-      callback(response);
-    }
-  });
-};
 const ajax_url = tsteam_settings.ajax_url;
 const deleteData = (action, post_id) => {
   return new Promise((resolve, reject) => {
@@ -70945,7 +72930,7 @@ const deleteData = (action, post_id) => {
     }).fail(reject);
   });
 };
-function DataTable({ type: type4, title }) {
+function DataTable({ type: type4, title, editor }) {
   const [data, setData] = reactExports.useState([]);
   const [columns, setColumns] = reactExports.useState([]);
   reactExports.useEffect(() => {
@@ -70957,7 +72942,6 @@ function DataTable({ type: type4, title }) {
         }));
         const dynamicColumns = Object.keys(showcaseData[0]).map((key) => ({
           title: key.charAt(0).toUpperCase() + key.slice(1),
-          // Capitalize the first letter
           dataIndex: key,
           key,
           render: (text) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: text })
@@ -70966,7 +72950,8 @@ function DataTable({ type: type4, title }) {
           title: "Action",
           key: "action",
           render: (_, record) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Space, { size: "middle", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("a", { onClick: () => handleEdit(record), children: "Edit" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("a", { onClick: () => handleEdit(record.key), children: "Edit" }),
+            editor && /* @__PURE__ */ jsxRuntimeExports.jsx("a", { onClick: () => handleEditor(record.key, type4), children: "Edit Design" }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("a", { onClick: () => handleDelete(record.key), children: "Delete" })
           ] })
         };
@@ -70989,6 +72974,18 @@ function DataTable({ type: type4, title }) {
       toastNotification("error", "Error", `There was an error deleting the ${title}.`);
     });
   };
+  const handleEdit = (post_id) => {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(CrudModal, {});
+  };
+  const handleEditor = (post_id, type22) => {
+    let currentUrl2 = window.location.href;
+    if (currentUrl2.includes("?")) {
+      currentUrl2 += `&path=editor&type=${type22}&post_id=${post_id}`;
+    } else {
+      currentUrl2 += `?path=editor&type=${type22}&post_id=${post_id}`;
+    }
+    window.location.href = currentUrl2;
+  };
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-white shadow-md rounded-lg overflow-hidden", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     ForwardTable,
     {
@@ -70997,10 +72994,10 @@ function DataTable({ type: type4, title }) {
     }
   ) });
 }
-function Container({ type: type4, title }) {
+function Container({ type: type4, title, editor }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(TableNav, { type: type4, title }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(DataTable, { type: type4, title })
+    /* @__PURE__ */ jsxRuntimeExports.jsx(DataTable, { type: type4, title, editor })
   ] });
 }
 function Data() {
@@ -71084,88 +73081,109 @@ function Topbar() {
     )
   ] });
 }
-function TsInputGroup({ label, value1, value2, value3, value4, onChange }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
-    label && /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-sm font-medium text-gray-700 mb-2", children: label }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex space-x-2", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(TypedInputNumber, { defaultValue: value1, onChange }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(TypedInputNumber, { defaultValue: value2, onChange }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(TypedInputNumber, { defaultValue: value3, onChange }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(TypedInputNumber, { defaultValue: value4, onChange })
-    ] })
-  ] });
-}
-function TsSelect({ label, value, options, onChange }) {
+const editorStore = create((set2) => ({
+  // Variables
+  layout: "Card",
+  // Functions
+  setLayout: (selectedLayout) => set2({ layout: selectedLayout })
+}));
+const googleFonts = [
+  { label: "Dancing Script", value: "Dancing+Script:wght@400;700" },
+  { label: "Pacifico", value: "Pacifico" },
+  { label: "Shadows Into Light", value: "Shadows+Into+Light" },
+  { label: "Great Vibes", value: "Great+Vibes" },
+  { label: "Satisfy", value: "Satisfy" },
+  { label: "Caveat", value: "Caveat:wght@400;700" },
+  { label: "Courgette", value: "Courgette" },
+  { label: "Kaushan Script", value: "Kaushan+Script" },
+  { label: "Sacramento", value: "Sacramento" },
+  { label: "Indie Flower", value: "Indie+Flower" },
+  { label: "Merriweather", value: "Merriweather:wght@400;700" },
+  { label: "Playfair Display", value: "Playfair+Display:wght@400;700" },
+  { label: "Lora", value: "Lora:wght@400;700" },
+  { label: "Crimson Pro", value: "Crimson+Pro:wght@400;700" },
+  { label: "Slabo 27px", value: "Slabo+27px" },
+  { label: "Bitter", value: "Bitter:wght@400;700" },
+  { label: "EB Garamond", value: "EB+Garamond:wght@400;700" },
+  { label: "Cormorant Garamond", value: "Cormorant+Garamond:wght@400;700" },
+  { label: "Spectral", value: "Spectral:wght@400;700" },
+  { label: "Cardo", value: "Cardo:wght@400;700" },
+  { label: "Roboto", value: "Roboto:wght@400;700" },
+  { label: "Open Sans", value: "Open+Sans:wght@400;700" },
+  { label: "Poppins", value: "Poppins:wght@400;700" },
+  { label: "Lato", value: "Lato:wght@400;700" },
+  { label: "Montserrat", value: "Montserrat:wght@400;700" },
+  { label: "Nunito", value: "Nunito:wght@400;700" },
+  { label: "Work Sans", value: "Work+Sans:wght@400;700" },
+  { label: "Raleway", value: "Raleway:wght@400;700" },
+  { label: "Inter", value: "Inter:wght@400;700" },
+  { label: "Ubuntu", value: "Ubuntu:wght@400;700" },
+  { label: "Oswald", value: "Oswald:wght@400;700" },
+  { label: "Righteous", value: "Righteous" },
+  { label: "Cinzel", value: "Cinzel:wght@400;700" },
+  { label: "Anton", value: "Anton" },
+  { label: "Abril Fatface", value: "Abril+Fatface" },
+  { label: "Bebas Neue", value: "Bebas+Neue" },
+  { label: "Alfa Slab One", value: "Alfa+Slab+One" },
+  { label: "Lobster", value: "Lobster" },
+  { label: "Quicksand", value: "Quicksand:wght@400;700" },
+  { label: "Patua One", value: "Patua+One" },
+  { label: "Inconsolata", value: "Inconsolata:wght@400;700" },
+  { label: "Roboto Mono", value: "Roboto+Mono:wght@400;700" },
+  { label: "Source Code Pro", value: "Source+Code+Pro:wght@400;700" },
+  { label: "Fira Code", value: "Fira+Code:wght@400;700" },
+  { label: "Space Mono", value: "Space+Mono:wght@400;700" },
+  { label: "VT323", value: "VT323" },
+  { label: "JetBrains Mono", value: "JetBrains+Mono:wght@400;700" },
+  { label: "Anonymous Pro", value: "Anonymous+Pro:wght@400;700" },
+  { label: "IBM Plex Mono", value: "IBM+Plex+Mono:wght@400;700" },
+  { label: "Courier Prime", value: "Courier+Prime:wght@400;700" }
+];
+function TsFont({ label, targetedClass, isPro }) {
+  const [value, setValue] = reactExports.useState(null);
+  reactExports.useEffect(() => {
+    if (value) {
+      const fontName = value.split(":")[0].replace(/\+/g, " ");
+      const fontLink = document.createElement("link");
+      fontLink.rel = "stylesheet";
+      fontLink.href = `https://fonts.googleapis.com/css2?family=${value}&display=swap`;
+      fontLink.id = "dynamic-google-font";
+      const existingFontLink = document.getElementById("dynamic-google-font");
+      if (existingFontLink) {
+        document.head.removeChild(existingFontLink);
+      }
+      document.head.appendChild(fontLink);
+      document.body.style.fontFamily = fontName;
+    }
+  }, [value]);
+  const handleChange = (selectedFont) => {
+    setValue(selectedFont);
+  };
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
     label && /* @__PURE__ */ jsxRuntimeExports.jsx(
       "label",
       {
         className: "block text-sm font-medium text-gray-700 mb-2",
-        style: {
-          color: globalSettings.theme.textColor
-        },
+        style: { color: globalSettings.theme.textColor },
         children: label
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
+    isPro ? /* @__PURE__ */ jsxRuntimeExports.jsx(Alert, { banner: true, message: "This feature is available for Pro users only." }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
       Select,
       {
+        placeholder: `Select ${label}`,
         value,
         style: {
-          width: "100%"
+          width: "100%",
+          fontFamily: value ? value.split(":")[0].replace(/\+/g, " ") : void 0
         },
-        onChange,
-        options
+        onChange: handleChange,
+        options: googleFonts,
+        targetedClass
       }
     )
   ] });
 }
-function TsSlider({ label, range: range3, value, onChange }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    label && /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-sm font-medium text-gray-700 mb-1", children: label }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4 flex justify-between items-center w-full", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full mr-6", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        Slider2,
-        {
-          value,
-          min: range3.min,
-          max: range3.max,
-          onChange,
-          style: {
-            track: {
-              background: "#000"
-            },
-            width: "100%"
-          }
-        }
-      ) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        TypedInputNumber,
-        {
-          value,
-          min: range3.min,
-          max: range3.max,
-          onChange
-        }
-      ) })
-    ] })
-  ] });
-}
-function TsDivider({ value, options, onChange }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-8 mb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Divider,
-    {
-      style: {
-        borderColor: globalSettings.theme.borderColor
-      }
-    }
-  ) });
-}
-const editorStore = create((set2) => ({
-  // Content Tab
-  layout: "Card",
-  setLayout: (selectedLayout) => set2({ layout: selectedLayout })
-}));
 const defaultLayouts = [
   {
     label: "Card",
@@ -71241,26 +73259,12 @@ function ContentTab() {
         label: "Vertical Gap",
         range: range2
       }
-    )
-  ] });
-}
-function TsColor({ label, value, options, onChange }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
-    label && /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "label",
-      {
-        className: "block text-sm font-medium text-gray-700 mb-2",
-        style: {
-          color: globalSettings.theme.textColor
-        },
-        children: label
-      }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
-      ColorPicker,
+      TsFont,
       {
-        defaultValue: value,
-        onChange
+        label: "Font",
+        isPro: false
       }
     )
   ] });
@@ -71375,12 +73379,30 @@ function Editor() {
   const [theme, setTheme] = reactExports.useState("Theme One");
   const [isSidebarOpen, setIsSidebarOpen] = reactExports.useState(true);
   const [isLoading, setIsLoading] = reactExports.useState(true);
+  const [postData, setPostData] = reactExports.useState(null);
   reactExports.useEffect(() => {
     hideAdminElements();
-    const timer = setTimeout(() => {
+    setIsLoading(true);
+    const queryParams = new URLSearchParams(window.location.search);
+    const postIdFromUrl = queryParams.get("post_id");
+    const postTypeFromUrl = queryParams.get("type");
+    if (postIdFromUrl) {
+      fetchData(`tsteam/${postTypeFromUrl}/fetch/single`, (response) => {
+        console.log(response.data);
+        if (response && response.success) {
+          setPostData(response.data.meta_data);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 1e3);
+        } else {
+          console.error("Error fetching post data:", response);
+          setIsLoading(false);
+        }
+      }, { post_id: postIdFromUrl });
+    } else {
+      console.error("No post_id found in the URL");
       setIsLoading(false);
-    }, 10);
-    return () => clearTimeout(timer);
+    }
   }, []);
   reactExports.useEffect(() => {
     const handleClick = () => setIsSidebarOpen(true);
@@ -71397,7 +73419,7 @@ function Editor() {
   const handleCloseSidebar = () => {
     setIsSidebarOpen(false);
   };
-  if (isLoading) {
+  if (isLoading || postData === null) {
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-center items-center h-screen bg-blue-700", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       Spin,
       {
@@ -71418,11 +73440,13 @@ function Editor() {
         setTheme
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "editor-hover editor-container", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Frontend, { layout }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Frontend, { layout }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Frontend, { layout })
-    ] })
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "editor-hover editor-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Frontend,
+      {
+        layout,
+        data: postData
+      }
+    ) })
   ] });
 }
 function TeamShowcase() {
@@ -71440,7 +73464,8 @@ function TeamShowcase() {
     Container,
     {
       type: "team_showcase",
-      title: "Team Showcase"
+      title: "Team Showcase",
+      editor: true
     }
   ) }) });
 }
