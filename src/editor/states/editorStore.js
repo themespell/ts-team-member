@@ -1,8 +1,10 @@
 import { create } from 'zustand'
 
 const editorStore = create((set) => ({
-    // Content Tab
+    // Variables
     layout: 'Card',
+
+    // Functions
     setLayout: (selectedLayout) => set({ layout: selectedLayout }),
 }))
 
