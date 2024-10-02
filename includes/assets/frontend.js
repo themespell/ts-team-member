@@ -421,18 +421,20 @@ function Layout({ layoutType, imageUrl, title, subtitle, description, socialIcon
     ] })
   ] });
 }
-function Frontend({ layout }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-container grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-3/6", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+function Frontend({ layout, data }) {
+  const team_members = data.team_members;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-container grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-3/6", children: team_members && team_members.length > 0 ? team_members.map((member, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
     Layout,
     {
       layoutType: layout,
-      imageUrl: "https://qodeinteractive.com/qi-addons-for-elementor/wp-content/uploads/2021/01/team-img-28.jpg",
-      title: "John Doe",
-      subtitle: "Managing Director",
-      description: "Experienced leader in managing teams across various industries.",
-      socialIcons: ["<i class='fab fa-facebook'></i>", "<i class='fab fa-twitter'></i>"]
-    }
-  ) }) });
+      imageUrl: member.team_member_image || "https://qodeinteractive.com/qi-addons-for-elementor/wp-content/uploads/2021/01/team-img-28.jpg",
+      title: member.title || "No Name",
+      subtitle: member.subtitle || "No Subtitle",
+      description: member.description || "No description available.",
+      socialIcons: member.socialIcons || []
+    },
+    index
+  )) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No team members found." }) }) });
 }
 export {
   Frontend as F,
