@@ -4,6 +4,7 @@ import TsSlider from '../../../../common/components/controls/TsSlider';
 import TsDivider from '../../../../common/components/controls/TsDivider';
 
 import editorStore from '../../../states/editorStore';
+import TsFont from '../../../../common/components/controls/TsFont';
 
 const defaultLayouts = [
   {
@@ -74,6 +75,10 @@ function ContentTab() {
       <TsSlider
       label="Vertical Gap"
       range={range}
+      />
+      <TsFont
+      label="Font"
+      isPro={false}
       />
     </div>
   );
