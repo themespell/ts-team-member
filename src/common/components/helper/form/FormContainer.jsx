@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Form } from 'antd';
 import { createData } from '../../../services/createData.js';
 import { toastNotification } from '../../../utils/toastNotification.js';
