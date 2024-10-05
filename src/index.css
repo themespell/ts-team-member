@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+#wpcontent {
+    padding-left: 0 !important;
+}
+
 .add-team-button{
     @apply bg-black text-white p-4
 }
