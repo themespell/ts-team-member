@@ -3,12 +3,13 @@ import { Table, Space } from 'antd';
 import { fetchData } from '../services/fetchData';
 import { deleteData } from "../services/deleteData";
 import { toastNotification } from '.././utils/toastNotification.js';
-import CrudModal from "./CrudModal.jsx";
-import Editor from "../../editor/Editor.jsx";
+import { TsModal } from './controls/tsControls.js';
 
 function DataTable({ type, title, editor }) {
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
 
   useEffect(() => {
     fetchData(`tsteam/${type}/fetch`, (response) => {
@@ -63,10 +64,15 @@ function DataTable({ type, title, editor }) {
   };
 
   const handleEdit = (post_id) => {
-    return(
-      <CrudModal />
-    )
-  }
+    console.log(post_id);
+    setSelectedPost(post_id);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedPost(null);
+  };
 
   const handleEditor = (post_id, type) => {
     let currentUrl = window.location.href;
@@ -79,10 +85,20 @@ function DataTable({ type, title, editor }) {
   }
 
   return (
-    <div className="bg-white shadow-md rounded-lg overflow-hidden">
+    <div className="shadow-md rounded-lg overflow-hidden">
       <Table
       columns={columns} 
       dataSource={data} />
+
+      <TsModal
+          actionType='edit'
+          formSupport={true}
+          name={title}
+          type={type}
+          id={selectedPost}
+          isOpen={isModalOpen}
+          isClose={closeModal}
+          width={550} />
     </div>
   );
 }
