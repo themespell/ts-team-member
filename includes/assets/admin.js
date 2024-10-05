@@ -35966,7 +35966,6 @@ const InternalPreviewGroup = (_a) => {
     icons
   }, otherProps)));
 };
-const PreviewGroup = InternalPreviewGroup;
 var __rest$6 = function(s, e2) {
   var t2 = {};
   for (var p2 in s) if (Object.prototype.hasOwnProperty.call(s, p2) && e2.indexOf(p2) < 0) t2[p2] = s[p2];
@@ -36030,7 +36029,7 @@ const Image = (props) => {
     style: mergedStyle
   }, otherProps)));
 };
-Image.PreviewGroup = PreviewGroup;
+Image.PreviewGroup = InternalPreviewGroup;
 const extendsObject = function() {
   const result = Object.assign({}, arguments.length <= 0 ? void 0 : arguments[0]);
   for (let i2 = 1; i2 < arguments.length; i2++) {
@@ -48035,7 +48034,7 @@ const globalSettings = {
     borderColor: "#ededed"
   }
 };
-var define_import_meta_env_default$1 = { BASE_URL: "/", MODE: "production", DEV: false, PROD: true, SSR: false };
+const __vite_import_meta_env__$1 = { "BASE_URL": "/", "DEV": false, "MODE": "production", "PROD": true, "SSR": false };
 const createStoreImpl = (createState) => {
   let state;
   const listeners = /* @__PURE__ */ new Set();
@@ -48054,7 +48053,7 @@ const createStoreImpl = (createState) => {
     return () => listeners.delete(listener);
   };
   const destroy2 = () => {
-    if ((define_import_meta_env_default$1 ? "production" : void 0) !== "production") {
+    if ((__vite_import_meta_env__$1 ? "production" : void 0) !== "production") {
       console.warn(
         "[DEPRECATED] The `destroy` method will be unsupported in a future version. Instead use unsubscribe function returned by subscribe. Everything will be garbage-collected if store is garbage-collected."
       );
@@ -48178,13 +48177,13 @@ withSelector_production_min.useSyncExternalStoreWithSelector = function(a2, b2, 
 }
 var withSelectorExports = withSelector.exports;
 const useSyncExternalStoreExports = /* @__PURE__ */ getDefaultExportFromCjs(withSelectorExports);
-var define_import_meta_env_default = { BASE_URL: "/", MODE: "production", DEV: false, PROD: true, SSR: false };
+const __vite_import_meta_env__ = { "BASE_URL": "/", "DEV": false, "MODE": "production", "PROD": true, "SSR": false };
 const { useDebugValue } = React;
 const { useSyncExternalStoreWithSelector } = useSyncExternalStoreExports;
 let didWarnAboutEqualityFn = false;
 const identity = (arg) => arg;
 function useStore$1(api, selector = identity, equalityFn) {
-  if ((define_import_meta_env_default ? "production" : void 0) !== "production" && equalityFn && !didWarnAboutEqualityFn) {
+  if ((__vite_import_meta_env__ ? "production" : void 0) !== "production" && equalityFn && !didWarnAboutEqualityFn) {
     console.warn(
       "[DEPRECATED] Use `createWithEqualityFn` instead of `create` or use `useStoreWithEqualityFn` instead of `useStore`. They can be imported from 'zustand/traditional'. https://github.com/pmndrs/zustand/discussions/1937"
     );
@@ -48201,7 +48200,7 @@ function useStore$1(api, selector = identity, equalityFn) {
   return slice;
 }
 const createImpl = (createState) => {
-  if ((define_import_meta_env_default ? "production" : void 0) !== "production" && typeof createState !== "function") {
+  if ((__vite_import_meta_env__ ? "production" : void 0) !== "production" && typeof createState !== "function") {
     console.warn(
       "[DEPRECATED] Passing a vanilla store will be unsupported in a future version. Instead use `import { useStore } from 'zustand'`."
     );
@@ -48223,6 +48222,18 @@ const useStore = create((set2) => ({
   postId: null,
   setPostId: (id) => set2({ postId: id })
 }));
+const useAdminStore = create((set2) => ({
+  isOpen: false,
+  openModal: () => set2({ isOpen: true }),
+  closeShowcaseModal: () => set2({ isOpen: false })
+}));
+function TableNavItems({ title }) {
+  const { isOpen, openModal, closeShowcaseModal } = useAdminStore();
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-between", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: openModal, className: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600", children: [
+    "Create New ",
+    title
+  ] }) });
+}
 const ajax_url$2 = tsteam_settings.ajax_url;
 const createData = (action, data) => {
   return new Promise((resolve, reject) => {
@@ -48246,6 +48257,19 @@ const toastNotification = (type4, message, description) => {
     description,
     placement: "topRight",
     showProgress: true
+  });
+};
+const ajax_url$1 = tsteam_settings.ajax_url;
+const fetchData = (action, callback, additionalParams = {}) => {
+  const params = {
+    _ajax_nonce: tsteam_settings.nonce,
+    action,
+    ...additionalParams
+  };
+  jQuery.post(ajax_url$1, params, function(response) {
+    if (typeof callback === "function") {
+      callback(response);
+    }
   });
 };
 function TsSelect({ label, value, options, onChange, mode }) {
@@ -59424,21 +59448,25 @@ function TsEditor({ label, name, required: required4, form }) {
     }
   );
 }
-const ajax_url$1 = tsteam_settings.ajax_url;
-const fetchData = (action, callback, additionalParams = {}) => {
-  const params = {
-    _ajax_nonce: tsteam_settings.nonce,
-    action,
-    ...additionalParams
-  };
-  jQuery.post(ajax_url$1, params, function(response) {
-    if (typeof callback === "function") {
-      callback(response);
+function TsModal({ actionType, formSupport, name, type: type4, id, isOpen, isClose, width, children }) {
+  console.log(id);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Modal,
+    {
+      title: actionType === "create" ? `Add New ${name}` : actionType === "edit" ? `Edit ${name}` : actionType === "delete" ? `Delete ${name}` : "",
+      open: isOpen,
+      onCancel: isClose,
+      footer: null,
+      closable: true,
+      centered: true,
+      width,
+      children: formSupport ? /* @__PURE__ */ jsxRuntimeExports.jsx(FormContainer, { actionType, name, type: type4, post_id: id }) : children
     }
-  });
-};
-function TeamShowcaseFields() {
+  );
+}
+function TeamShowcaseFields({ post_id }) {
   const [teamMembers, setTeamMembers] = reactExports.useState([]);
+  const [form] = Form2.useForm();
   reactExports.useEffect(() => {
     fetchData("tsteam/team_member/fetch", (response) => {
       if (response.success && response.data) {
@@ -59452,25 +59480,48 @@ function TeamShowcaseFields() {
       }
     });
   }, []);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+  reactExports.useEffect(() => {
+    if (post_id) {
+      fetchData(`tsteam/team_showcase/fetch/single`, (response) => {
+        if (response.success && response.data) {
+          form.setFieldsValue({
+            title: response.data.title,
+            team_members: response.data.meta_data.team_members.map((member) => ({
+              label: member.title,
+              value: member.post_id
+            }))
+          });
+        } else {
+          console.error("Failed to fetch showcase data.");
+        }
+      }, { post_id });
+    }
+  }, [post_id, form]);
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Form2, { form, layout: "vertical", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       Form2.Item,
       {
         label: "Showcase Name",
         name: "title",
         rules: [{ required: true, message: "Please input your showcase name!" }],
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(Input, {})
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Input,
+          {
+            defaultValue: form.getFieldValue("title")
+          }
+        )
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       Form2.Item,
       {
         name: "team_members",
+        label: "Team Members",
         rules: [{ required: false }],
         children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           TsSelect,
           {
-            label: "Team Members",
+            value: form.getFieldValue("team_members"),
             options: teamMembers,
             mode: "multiple"
           }
@@ -59553,7 +59604,7 @@ function TeamMemberFields({ form }) {
   ];
   return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Tabs, { defaultActiveKey: "1", items, onChange }) });
 }
-function FormContainer({ type: type4, name, onShowcaseAdded }) {
+function FormContainer({ actionType, type: type4, name, post_id, onShowcaseAdded }) {
   const [form] = Form2.useForm();
   const onFinish = (data) => {
     createData(`tsteam/${type4}/create`, data).then((response) => {
@@ -59578,59 +59629,32 @@ function FormContainer({ type: type4, name, onShowcaseAdded }) {
       autoComplete: "off",
       layout: "vertical",
       children: [
-        type4 === "team_showcase" && /* @__PURE__ */ jsxRuntimeExports.jsx(TeamShowcaseFields, {}),
+        type4 === "team_showcase" && /* @__PURE__ */ jsxRuntimeExports.jsx(TeamShowcaseFields, { post_id }),
         type4 === "team_member" && /* @__PURE__ */ jsxRuntimeExports.jsx(TeamMemberFields, { form }),
         "  ",
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Form2.Item, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Button$1, { type: "primary", htmlType: "submit", children: [
-          "Create ",
-          name
-        ] }) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(Form2.Item, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, { type: "primary", htmlType: "submit", children: actionType === "create" ? `Create ${name}` : actionType === "edit" ? `Update ${name}` : actionType === "delete" ? `Delete ${name}` : `Create ${name}` }) })
       ]
     }
   );
 }
-const useAdminStore = create((set2) => ({
-  isOpen: false,
-  openModal: () => set2({ isOpen: true }),
-  closeShowcaseModal: () => set2({ isOpen: false })
-}));
-function CrudModal({ type: type4, name }) {
-  const { isOpen, openModal, closeShowcaseModal } = useAdminStore();
-  const modalTitle = `Add New ${name}`;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Modal,
-    {
-      title: modalTitle,
-      open: isOpen,
-      onOk: closeShowcaseModal,
-      onCancel: closeShowcaseModal,
-      width: 700,
-      footer: [],
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(FormContainer, { name, type: type4 })
-    }
-  ) });
-}
-function TableNavItems({ title }) {
-  const { isOpen, openModal, closeShowcaseModal } = useAdminStore();
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-between", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: openModal, className: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600", children: [
-    "Create New ",
-    title
-  ] }) });
-}
 function TableNav({ type: type4, title }) {
+  const { isOpen, closeShowcaseModal } = useAdminStore();
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-6", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-2xl font-semibold text-gray-700", children: title }),
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between mt-4", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(TableNavItems, { title }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "input",
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        TsModal,
         {
-          type: "text",
-          placeholder: "Search Pages",
-          className: "px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
+          actionType: "create",
+          formSupport: true,
+          name: title,
+          type: type4,
+          isOpen,
+          isClose: closeShowcaseModal,
+          width: 550
         }
-      ) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CrudModal, { name: title, type: type4 })
+      )
     ] })
   ] });
 }
@@ -59649,6 +59673,8 @@ const deleteData = (action, post_id) => {
 function DataTable({ type: type4, title, editor }) {
   const [data, setData] = reactExports.useState([]);
   const [columns, setColumns] = reactExports.useState([]);
+  const [isModalOpen, setIsModalOpen] = reactExports.useState(false);
+  const [selectedPost, setSelectedPost] = reactExports.useState(null);
   reactExports.useEffect(() => {
     fetchData(`tsteam/${type4}/fetch`, (response) => {
       if (response && response.success) {
@@ -59691,7 +59717,13 @@ function DataTable({ type: type4, title, editor }) {
     });
   };
   const handleEdit = (post_id) => {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(CrudModal, {});
+    console.log(post_id);
+    setSelectedPost(post_id);
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedPost(null);
   };
   const handleEditor = (post_id, type22) => {
     let currentUrl2 = window.location.href;
@@ -59702,16 +59734,31 @@ function DataTable({ type: type4, title, editor }) {
     }
     window.location.href = currentUrl2;
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-white shadow-md rounded-lg overflow-hidden", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    ForwardTable,
-    {
-      columns,
-      dataSource: data
-    }
-  ) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "shadow-md rounded-lg overflow-hidden", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ForwardTable,
+      {
+        columns,
+        dataSource: data
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TsModal,
+      {
+        actionType: "edit",
+        formSupport: true,
+        name: title,
+        type: type4,
+        id: selectedPost,
+        isOpen: isModalOpen,
+        isClose: closeModal,
+        width: 550
+      }
+    )
+  ] });
 }
 function Container({ type: type4, title, editor }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-4/6", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(TableNav, { type: type4, title }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(DataTable, { type: type4, title, editor })
   ] });
@@ -59725,8 +59772,11 @@ function Data() {
     }
   ) });
 }
-function Topbar() {
+function Topbar$1() {
   const [isModalVisible, setIsModalVisible] = reactExports.useState(false);
+  const [isModalOpen, setIsModalOpen] = reactExports.useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -59772,15 +59822,8 @@ function Topbar() {
             ]
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
-          {
-            onclick: "openModal()",
-            type: "button",
-            class: "ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center",
-            children: "Publish"
-          }
-        )
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "btn", onClick: openModal, children: "Open Modal" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(TsModal, { isOpen: isModalOpen, onClose: closeModal, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Data, {}) })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx("main", { class: "flex-grow" })
     ] }),
@@ -60063,7 +60106,7 @@ function OptionTabs({ theme, setTheme }) {
     }
   );
 }
-function Sidebar$1({ isOpen, onClose, theme, setTheme }) {
+function Sidebar({ isOpen, onClose, theme, setTheme }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     Drawer,
     {
@@ -60159,9 +60202,9 @@ function Editor() {
     ) });
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Topbar, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Topbar$1, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Sidebar$1,
+      Sidebar,
       {
         isOpen: isSidebarOpen,
         onClose: handleCloseSidebar,
@@ -60180,17 +60223,7 @@ function Editor() {
   ] });
 }
 function TeamShowcase() {
-  const [selectedItem, setSelectedItem] = reactExports.useState(null);
-  if (selectedItem) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Editor,
-      {
-        item: selectedItem,
-        onClose: () => setSelectedItem(null)
-      }
-    ) });
-  }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-gray-100 min-h-fit flex", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 p-6", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "min-h-fit flex", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1 p-6", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     Container,
     {
       type: "team_showcase",
@@ -60208,14 +60241,20 @@ function TeamMember() {
     }
   ) }) });
 }
-function Sidebar() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("aside", { className: "w-64 bg-white shadow-md", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-6 py-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-semibold text-gray-700", children: "Help & Support" }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("nav", { className: "mt-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("ul", { children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", className: "block px-6 py-2 text-gray-700 hover:bg-gray-200", children: "All" }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", className: "block px-6 py-2 text-gray-700 hover:bg-gray-200", children: "Published" }) }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", className: "block px-6 py-2 text-gray-700 hover:bg-gray-200", children: "Draft" }) })
-    ] }) })
+function Topbar() {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full bg-blue-900 text-white py-4 shadow-4xl flex items-center justify-between px-4", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-sm text-blue-600", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("a", { href: "#", className: "hover:underline", children: "Home" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-500 mx-2", children: "/" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-gray-700", children: "Dashboard" })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center space-x-4", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative", children: /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-gray-200", children: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { className: "w-6 h-6 text-gray-500", xmlns: "http://www.w3.org/2000/svg", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M3 12h18M3 6h18M3 18h18" }) }) }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center hover:bg-gray-200", children: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { className: "w-6 h-6 text-gray-500", xmlns: "http://www.w3.org/2000/svg", fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M4 6h16M4 12h16m-7 6h7" }) }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "absolute top-0 right-0 inline-block w-4 h-4 bg-red-600 text-white text-xs font-bold rounded-full flex items-center justify-center", children: "10" })
+      ] })
+    ] })
   ] });
 }
 const currentUrl$1 = window.location.href;
@@ -60223,12 +60262,12 @@ function AdminPanel() {
   if (currentUrl$1.includes(`&path=team-member`)) {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(TeamMember, {}),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Sidebar, {})
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Topbar, {})
     ] });
   } else {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(TeamShowcase, {}),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Sidebar, {})
+    return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Topbar, {}),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(TeamShowcase, {})
     ] });
   }
 }

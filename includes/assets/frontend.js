@@ -16020,7 +16020,7 @@ const __vitePreload = function preload(baseModule, deps, importerUrl) {
       "meta[property=csp-nonce]"
     );
     const cspNonce = (cspNonceMeta == null ? void 0 : cspNonceMeta.nonce) || (cspNonceMeta == null ? void 0 : cspNonceMeta.getAttribute("nonce"));
-    promise = Promise.all(
+    promise = Promise.allSettled(
       deps.map((dep) => {
         dep = assetsURL(dep);
         if (dep in seen) return;
@@ -16034,8 +16034,8 @@ const __vitePreload = function preload(baseModule, deps, importerUrl) {
         link.rel = isCss ? "stylesheet" : scriptRel;
         if (!isCss) {
           link.as = "script";
-          link.crossOrigin = "";
         }
+        link.crossOrigin = "";
         link.href = dep;
         if (cspNonce) {
           link.setAttribute("nonce", cspNonce);
@@ -16053,13 +16053,22 @@ const __vitePreload = function preload(baseModule, deps, importerUrl) {
       })
     );
   }
-  return promise.then(() => baseModule()).catch((err) => {
-    const e2 = new Event("vite:preloadError", { cancelable: true });
+  function handlePreloadError(err) {
+    const e2 = new Event("vite:preloadError", {
+      cancelable: true
+    });
     e2.payload = err;
     window.dispatchEvent(e2);
     if (!e2.defaultPrevented) {
       throw err;
     }
+  }
+  return promise.then((res) => {
+    for (const item of res || []) {
+      if (item.status !== "rejected") continue;
+      handlePreloadError(item.reason);
+    }
+    return baseModule().catch(handlePreloadError);
   });
 };
 const __variableDynamicImportRuntimeHelper = (glob, path, segs) => {
