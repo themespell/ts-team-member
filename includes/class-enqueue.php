@@ -37,6 +37,8 @@ class Enqueue {
 					'wp_url' => site_url(),
 				)
 			);
+			 remove_all_actions('admin_notices');
+        	 remove_all_actions('all_admin_notices');
 		}
 
 		add_filter( 'script_loader_tag', array( $this, 'add_module_type_to_script' ), 10, 3 );
