@@ -1,9 +1,14 @@
 import { Modal, Button } from 'antd';
 import { useState } from 'react';
 import Data from "./Data";
+import TsModal from '../../common/components/controls/TsModal';
 
 function Topbar() {
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
 
     const showModal = () => {
         setIsModalVisible(true);
@@ -43,13 +48,10 @@ function Topbar() {
           </svg>
           Members
         </Button>
-            <button
-            onclick="openModal()"
-            type="button"
-            class="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center"
-            >
-            Publish
-            </button>
+            <button className="btn" onClick={openModal}>Open Modal</button>
+            <TsModal isOpen={isModalOpen} onClose={closeModal}>
+                <Data />
+            </TsModal>
         </header>
         <main class="flex-grow">
         </main>
