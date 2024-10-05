@@ -5,3 +5,4 @@ export { default as TsDivider } from './TsDivider';
 export { default as TsInputGroup } from './TsInputGroup';
 export { default as TsMedia } from './TsMedia';
 export { default as TsEditor } from './TsEditor';
+export { default as TsModal } from './TsModal';
