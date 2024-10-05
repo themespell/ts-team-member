@@ -4,7 +4,7 @@ import { toastNotification } from '../../../utils/toastNotification.js';
 import TeamShowcaseFields from './TeamShowcaseFields.jsx';
 import TeamMemberFields from './TeamMemberFields.jsx';
 
-function FormContainer({ type, name, onShowcaseAdded }) {
+function FormContainer({ actionType, type, name, post_id, onShowcaseAdded }) {
   const [form] = Form.useForm();
 
   const onFinish = (data) => {
@@ -33,12 +33,18 @@ function FormContainer({ type, name, onShowcaseAdded }) {
       autoComplete="off"
       layout="vertical"
     >
-      {type === 'team_showcase' && <TeamShowcaseFields />}
+      {type === 'team_showcase' && <TeamShowcaseFields post_id={post_id} />}
       {type === 'team_member' && <TeamMemberFields form={form} />}  {/* Pass form to TeamMemberFields */}
       
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Create {name}
+        {actionType === 'create' 
+        ? `Create ${name}` 
+        : actionType === 'edit' 
+        ? `Update ${name}` 
+        : actionType === 'delete' 
+        ? `Delete ${name}` 
+        : `Create ${name}`}
         </Button>
       </Form.Item>
     </Form>
