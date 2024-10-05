@@ -98,7 +98,7 @@ class TeamShowcase {
 	
 		$showcase = array(
 			'post_id'   => $post_id,
-			'title'     => get_the_title(),
+			'title'     => get_the_title($post_id),
 			'content'   => get_the_content(),
 			'meta_data' => [
 				'team_members' => $team_members
