@@ -44,9 +44,7 @@ class TeamShowcase {
 				'post_id'   => get_the_ID(),
 				'title'     => get_the_title(),
 				'content'   => get_the_content(),
-				'status'    => get_post_status(),
-				'author'    => get_the_author_meta( 'display_name' ),
-				'date'      => get_the_date(),
+				'shortcode' => '[tsteam_showcase id="' . get_the_ID() . '"]',
 			);
 		}
 	
