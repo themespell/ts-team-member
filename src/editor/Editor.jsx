@@ -1,19 +1,18 @@
 import { useState, useEffect } from 'react';
 import useStore from '../store.js';
-import { Spin } from 'antd';
 import Topbar from './components/Topbar.jsx';
 import Sidebar from './components/Sidebar/Sidebar.jsx';
 import Frontend from '../frontend/Frontend.jsx';
 import { hideAdminElements } from './utils/utils.js';
 import './components/assets/editorStyle.css';
 import { fetchData } from '../common/services/fetchData.js';
+import { TsLoader } from '../common/components/controls/tsControls.js';
 
 import editorStore from './states/editorStore.js';
 
 function Editor() {
   const { layout, view } = editorStore();
-
-  const { selectedAnimation } = useStore();
+  
   const [theme, setTheme] = useState('Theme One');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -39,13 +38,13 @@ function Editor() {
           }, 1000);
         } else {
           console.error("Error fetching post data:", response);
-          setIsLoading(false); // Stop loader even if data fetch fails
+          setIsLoading(false);
         }
       }, { post_id: postIdFromUrl });
   
     } else {
       console.error("No post_id found in the URL");
-      setIsLoading(false); // Stop loader if no post ID found
+      setIsLoading(false);
     }
   }, []);
 
@@ -69,13 +68,9 @@ function Editor() {
   // Show loader until postData is fetched
   if (isLoading || postData === null) {
     return (
-      <div className="flex justify-center items-center h-screen bg-blue-700">
-        <Spin
-          fullscreen 
-          tip="Loading Editor"
-          size="large" 
-        />
-      </div>
+      <TsLoader
+      label="Loading Editor"
+      />
     );
   }
 
@@ -88,7 +83,7 @@ function Editor() {
         theme={theme}
         setTheme={setTheme}
       />
-      <div className='editor-hover editor-container'>
+      <div className='editor-container'>
         <Frontend 
           layout={layout}
           view={view}
