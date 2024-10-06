@@ -1,28 +1,33 @@
-import { Drawer } from 'antd';
-import OptionTabs from './Tabs/Tabs';
+import { Tabs } from "antd";
+import ContentTab from "./Tabs/ContentTab";
+import StyleTab from './Tabs/StyleTab';
+import AdvanceTab from "./Tabs/AdvanceTab";
+import { TsDrawer } from '../../../common/components/controls/tsControls';
 
-function Sidebar({ isOpen, onClose, theme, setTheme }) {
+function Sidebar({ isOpen, onClose }) {
+
+  const items = [
+    {
+      label: 'Content',
+      key: '1',
+      children: <ContentTab />,
+    },
+    {
+      label: 'Style',
+      key: '2',
+      children: <StyleTab />,
+    },
+    {
+      label: 'Advance',
+      key: '3',
+      children: <AdvanceTab />,
+    },
+  ];
+
   return (
-    <Drawer 
-      title="Editor"
-      onClose={onClose}
-      open={isOpen}
-      placement="left"
-      mask={false}
-    >
-      <div className='flex flex-col justify-between h-full'>
-        <div>
-            <OptionTabs
-            theme={theme}
-            setTheme={setTheme}
-          />
-        </div>
-
-        <div>
-            
-        </div>
-      </div>
-    </Drawer>
+    <TsDrawer label="Editor" isOpen={isOpen} onClose={onClose} position="left">
+      <Tabs type="card" items={items} size="large"/>
+    </TsDrawer>
   );
 }
 
