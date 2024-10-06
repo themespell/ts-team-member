@@ -299,13 +299,13 @@ const React$1 = /* @__PURE__ */ _mergeNamespaces({
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var f$1 = reactExports, k$1 = Symbol.for("react.element"), l$1 = Symbol.for("react.fragment"), m$1 = Object.prototype.hasOwnProperty, n$1 = f$1.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, p$2 = { key: true, ref: true, __self: true, __source: true };
+var f$1 = reactExports, k$1 = Symbol.for("react.element"), l$1 = Symbol.for("react.fragment"), m$2 = Object.prototype.hasOwnProperty, n$1 = f$1.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, p$2 = { key: true, ref: true, __self: true, __source: true };
 function q$1(c2, a, g2) {
   var b2, d2 = {}, e2 = null, h2 = null;
   void 0 !== g2 && (e2 = "" + g2);
   void 0 !== a.key && (e2 = "" + a.key);
   void 0 !== a.ref && (h2 = a.ref);
-  for (b2 in a) m$1.call(a, b2) && !p$2.hasOwnProperty(b2) && (d2[b2] = a[b2]);
+  for (b2 in a) m$2.call(a, b2) && !p$2.hasOwnProperty(b2) && (d2[b2] = a[b2]);
   if (c2 && c2.defaultProps) for (b2 in a = c2.defaultProps, a) void 0 === d2[b2] && (d2[b2] = a[b2]);
   return { $$typeof: k$1, type: c2, key: e2, ref: h2, props: d2, _owner: n$1.current };
 }
@@ -316,6 +316,7 @@ reactJsxRuntime_production_min.jsxs = q$1;
   jsxRuntime.exports = reactJsxRuntime_production_min;
 }
 var jsxRuntimeExports = jsxRuntime.exports;
+var client = {};
 var reactDom = { exports: {} };
 var reactDom_production_min = {};
 var scheduler = { exports: {} };
@@ -6988,6 +6989,12 @@ const ReactDOM$1 = /* @__PURE__ */ _mergeNamespaces({
   __proto__: null,
   default: ReactDOM
 }, [reactDomExports]);
+var createRoot;
+var m$1 = reactDomExports;
+{
+  createRoot = client.createRoot = m$1.createRoot;
+  client.hydrateRoot = m$1.hydrateRoot;
+}
 var classnames = { exports: {} };
 /*!
 	Copyright (c) 2018 Jed Watson.
@@ -16007,6 +16014,19 @@ const Carousel = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
     waitForAnimate
   }))));
 });
+const ajax_url = tsteam_settings.ajax_url;
+const fetchData = (action, callback, additionalParams = {}) => {
+  const params = {
+    _ajax_nonce: tsteam_settings.nonce,
+    action,
+    ...additionalParams
+  };
+  jQuery.post(ajax_url, params, function(response) {
+    if (typeof callback === "function") {
+      callback(response);
+    }
+  });
+};
 const scriptRel = "modulepreload";
 const assetsURL = function(dep) {
   return "/" + dep;
@@ -16087,11 +16107,11 @@ const __variableDynamicImportRuntimeHelper = (glob, path, segs) => {
     );
   });
 };
-function Layout({ layoutType, imageUrl, title, subtitle, description, socialIcons }) {
+function StaticView({ layoutType, imageUrl, title, subtitle, description, socialIcons }) {
   const [cardData, setCardData] = reactExports.useState(null);
   reactExports.useEffect(() => {
     if (layoutType) {
-      __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "./layouts/Avatar.json": () => __vitePreload(() => import("./assets/Avatar-K2fyF8Qa.js"), true ? [] : void 0), "./layouts/Blur.json": () => __vitePreload(() => import("./assets/Blur-CLcpmPsK.js"), true ? [] : void 0), "./layouts/Card.json": () => __vitePreload(() => import("./assets/Card-DfZpw8uo.js"), true ? [] : void 0), "./layouts/HorizontalCard.json": () => __vitePreload(() => import("./assets/HorizontalCard-Dru_u0Sn.js"), true ? [] : void 0), "./layouts/Overlay.json": () => __vitePreload(() => import("./assets/Overlay-3VYBkb-y.js"), true ? [] : void 0) }), `./layouts/${layoutType}.json`, 3).then((module) => {
+      __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "./layouts/Avatar.json": () => __vitePreload(() => import("./assets/Avatar-K2fyF8Qa.js"), true ? [] : void 0), "./layouts/Blur.json": () => __vitePreload(() => import("./assets/Blur-BEi_BvSi.js"), true ? [] : void 0), "./layouts/Card.json": () => __vitePreload(() => import("./assets/Card-DfZpw8uo.js"), true ? [] : void 0), "./layouts/HorizontalCard.json": () => __vitePreload(() => import("./assets/HorizontalCard-Dru_u0Sn.js"), true ? [] : void 0), "./layouts/Overlay.json": () => __vitePreload(() => import("./assets/Overlay-CtOe5z2-.js"), true ? [] : void 0) }), `./layouts/${layoutType}.json`, 3).then((module) => {
         setCardData(module.default);
       }).catch((error) => {
         console.error("Error loading JSON:", error);
@@ -16121,13 +16141,12 @@ function Layout({ layoutType, imageUrl, title, subtitle, description, socialIcon
     ] })
   ] });
 }
-function Frontend({ layout, view, data }) {
-  const team_members = data.team_members;
+function CarouselView({ team_members, layout }) {
   const onChange = (currentSlide) => {
     console.log(currentSlide);
   };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: view === "carousel" ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-container w-3/6", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Carousel, { slidesPerRow: 2, slidesToScroll: 1, draggable: true, centerMode: true, autoplay: true, afterChange: onChange, children: team_members && team_members.length > 0 ? team_members.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Layout,
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-container w-3/6", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Carousel, { slidesPerRow: 2, slidesToScroll: 1, draggable: true, centerMode: true, autoplay: true, afterChange: onChange, children: team_members && team_members.length > 0 ? team_members.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    StaticView,
     {
       layoutType: layout,
       imageUrl: member.team_member_image || "https://qodeinteractive.com/qi-addons-for-elementor/wp-content/uploads/2021/01/team-img-28.jpg",
@@ -16136,35 +16155,78 @@ function Frontend({ layout, view, data }) {
       description: member.description || "No description available.",
       socialIcons: member.socialIcons || []
     }
-  ) }, index2)) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No team members found." }) }) }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-container grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-3/6", children: team_members && team_members.length > 0 ? team_members.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Layout,
+  ) }, index2)) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No team members found." }) }) });
+}
+const showcaseElements = document.querySelectorAll(".tsteam-showcase");
+showcaseElements.forEach((element) => {
+  const id2 = element.getAttribute("data-id");
+  const layoutType = element.getAttribute("data-layout-type");
+  createRoot(element).render(
+    /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Frontend,
+      {
+        layout: layoutType || "Overlay",
+        id: id2
+      }
+    ) })
+  );
+});
+function Frontend({ layout, view, id: id2, data }) {
+  const [team_members, setTeamMembers] = reactExports.useState((data == null ? void 0 : data.team_members) || null);
+  reactExports.useEffect(() => {
+    if (!team_members && id2) {
+      fetchData(`tsteam/team_showcase/fetch/single`, (response) => {
+        if (response && response.success) {
+          setTeamMembers(response.data.meta_data.team_members);
+        } else {
+          console.error("Error fetching post data:", response);
+        }
+      }, { post_id: id2 });
+    } else if (!id2) {
+      console.error("No post_id found");
+    }
+  });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: view === "carousel" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+    CarouselView,
     {
-      layoutType: layout,
-      imageUrl: member.team_member_image || "https://qodeinteractive.com/qi-addons-for-elementor/wp-content/uploads/2021/01/team-img-28.jpg",
-      title: member.title || "No Name",
-      subtitle: member.subtitle || "No Subtitle",
-      description: member.description || "No description available.",
-      socialIcons: member.socialIcons || []
-    },
-    index2
-  )) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No team members found." }) }) });
+      team_members,
+      layout
+    }
+  ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      className: "tsteam-container",
+      children: team_members && team_members.length > 0 ? team_members.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        StaticView,
+        {
+          layoutType: layout,
+          imageUrl: member.team_member_image,
+          title: member.title || "No Name",
+          subtitle: member.subtitle || "No Subtitle",
+          description: member.description || "No description available.",
+          socialIcons: member.socialIcons || []
+        },
+        index2
+      )) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No team members found." })
+    }
+  ) });
 }
 export {
   removeCSS as $,
-  resetComponent as A,
-  unit$1 as B,
+  unit$1 as A,
+  CSSMotion as B,
   ConfigContext as C,
-  CSSMotion as D,
-  composeRef as E,
-  _getPrototypeOf as F,
-  _possibleConstructorReturn as G,
-  _isNativeReflectConstruct as H,
+  composeRef as D,
+  _getPrototypeOf as E,
+  _possibleConstructorReturn as F,
+  _isNativeReflectConstruct as G,
+  wrapperRaf as H,
   IconContext as I,
-  wrapperRaf as J,
-  useToken as K,
+  useToken as J,
+  CSSMotionList as K,
   LocaleContext as L,
-  CSSMotionList as M,
-  _toConsumableArray as N,
+  _toConsumableArray as M,
+  reactDomExports as N,
   ReactDOM$1 as O,
   defaultPrefixCls as P,
   genComponentStyleHook as Q,
@@ -16178,7 +16240,7 @@ export {
   canUseDom as Y,
   useLayoutEffect as Z,
   _inherits as _,
-  reactIsExports as a,
+  reactExports as a,
   React$1 as a0,
   contains as a1,
   _setPrototypeOf as a2,
@@ -16211,30 +16273,32 @@ export {
   debounce as at,
   getDefaultExportFromCjs as au,
   jsxRuntimeExports as av,
-  Frontend as aw,
-  reactExports as b,
-  _createSuper as c,
-  _classCallCheck as d,
-  _createClass as e,
-  _objectSpread2 as f,
-  findDOMNode as g,
-  _typeof as h,
+  fetchData as aw,
+  Frontend as ax,
+  client as ay,
+  _createSuper as b,
+  _classCallCheck as c,
+  _createClass as d,
+  _objectSpread2 as e,
+  findDOMNode as f,
+  _typeof as g,
+  _extends as h,
   index as i,
-  _extends as j,
-  _defineProperty as k,
+  _defineProperty as j,
+  useSafeState as k,
   localeValues as l,
-  useSafeState as m,
-  _slicedToArray as n,
-  useEvent as o,
-  useLayoutUpdateEffect as p,
-  generate as q,
-  reactDomExports as r,
+  _slicedToArray as m,
+  useEvent as n,
+  useLayoutUpdateEffect as o,
+  generate as p,
+  updateCSS as q,
+  reactIsExports as r,
   supportRef as s,
-  updateCSS as t,
+  _objectWithoutProperties as t,
   useComposeRef as u,
-  _objectWithoutProperties as v,
+  blue as v,
   warningOnce as w,
-  blue as x,
-  classNames as y,
-  genStyleHooks as z
+  classNames as x,
+  genStyleHooks as y,
+  resetComponent as z
 };

@@ -1,10 +1,4 @@
-import { r as reactDomExports, R as React, a as reactIsExports, b as reactExports, i as index, _ as _inherits, c as _createSuper, d as _classCallCheck, e as _createClass, s as supportRef, u as useComposeRef, f as _objectSpread2, g as findDOMNode, h as _typeof, j as _extends, k as _defineProperty, L as LocaleContext, l as localeValues, m as useSafeState, n as _slicedToArray, o as useEvent, p as useLayoutUpdateEffect, w as warningOnce, q as generate$1, I as IconContext, t as updateCSS, v as _objectWithoutProperties, x as blue, y as classNames, z as genStyleHooks, A as resetComponent, B as unit, C as ConfigContext, D as CSSMotion, E as composeRef, F as _getPrototypeOf, G as _possibleConstructorReturn, H as _isNativeReflectConstruct, J as wrapperRaf, K as useToken, M as CSSMotionList, N as _toConsumableArray, O as ReactDOM, P as defaultPrefixCls, Q as genComponentStyleHook, S as SizeContext, T as merge, U as getLineHeight, V as genFocusStyle, W as genSubStyleComponent, X as DisabledContext, Y as canUseDom, Z as useLayoutEffect$1, $ as removeCSS, a0 as React$1, a1 as contains, a2 as _setPrototypeOf, a3 as _assertThisInitialized, a4 as merge$1, a5 as get, a6 as set, a7 as isEqual, a8 as DisabledContextProvider, a9 as getConfirmLocale, aa as clearFix, ab as ConfigProvider, ac as globalConfig, ad as devUseWarning, ae as warning$2, af as fillRef, ag as isDOM, ah as _toArray, ai as useMemo, aj as TinyColor, ak as Variants, al as textEllipsis, am as resetIcon, an as supportNodeRef, ao as genFocusOutline, ap as getDOM, aq as ValidateMessagesContext, ar as ReactDOM$1, as as locale$1, at as debounce, au as getDefaultExportFromCjs, av as jsxRuntimeExports, aw as Frontend } from "./frontend.js";
-var client = {};
-var m$1 = reactDomExports;
-{
-  client.createRoot = m$1.createRoot;
-  client.hydrateRoot = m$1.hydrateRoot;
-}
+import { R as React, r as reactIsExports, a as reactExports, i as index, _ as _inherits, b as _createSuper, c as _classCallCheck, d as _createClass, s as supportRef, u as useComposeRef, e as _objectSpread2, f as findDOMNode, g as _typeof, h as _extends, j as _defineProperty, L as LocaleContext, l as localeValues, k as useSafeState, m as _slicedToArray, n as useEvent, o as useLayoutUpdateEffect, w as warningOnce, p as generate$1, I as IconContext, q as updateCSS, t as _objectWithoutProperties, v as blue, x as classNames, y as genStyleHooks, z as resetComponent, A as unit, C as ConfigContext, B as CSSMotion, D as composeRef, E as _getPrototypeOf, F as _possibleConstructorReturn, G as _isNativeReflectConstruct, H as wrapperRaf, J as useToken, K as CSSMotionList, M as _toConsumableArray, N as reactDomExports, O as ReactDOM, P as defaultPrefixCls, Q as genComponentStyleHook, S as SizeContext, T as merge, U as getLineHeight, V as genFocusStyle, W as genSubStyleComponent, X as DisabledContext, Y as canUseDom, Z as useLayoutEffect$1, $ as removeCSS, a0 as React$1, a1 as contains, a2 as _setPrototypeOf, a3 as _assertThisInitialized, a4 as merge$1, a5 as get, a6 as set, a7 as isEqual, a8 as DisabledContextProvider, a9 as getConfirmLocale, aa as clearFix, ab as ConfigProvider, ac as globalConfig, ad as devUseWarning, ae as warning$2, af as fillRef, ag as isDOM, ah as _toArray, ai as useMemo, aj as TinyColor, ak as Variants, al as textEllipsis, am as resetIcon, an as supportNodeRef, ao as genFocusOutline, ap as getDOM, aq as ValidateMessagesContext, ar as ReactDOM$1, as as locale$1, at as debounce, au as getDefaultExportFromCjs, av as jsxRuntimeExports, aw as fetchData, ax as Frontend, ay as client } from "./frontend.js";
 function toArray$5(children) {
   var option = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
   var ret = [];
@@ -48182,7 +48176,7 @@ const { useDebugValue } = React;
 const { useSyncExternalStoreWithSelector } = useSyncExternalStoreExports;
 let didWarnAboutEqualityFn = false;
 const identity = (arg) => arg;
-function useStore$1(api, selector = identity, equalityFn) {
+function useStore(api, selector = identity, equalityFn) {
   if ((__vite_import_meta_env__ ? "production" : void 0) !== "production" && equalityFn && !didWarnAboutEqualityFn) {
     console.warn(
       "[DEPRECATED] Use `createWithEqualityFn` instead of `create` or use `useStoreWithEqualityFn` instead of `useStore`. They can be imported from 'zustand/traditional'. https://github.com/pmndrs/zustand/discussions/1937"
@@ -48206,72 +48200,32 @@ const createImpl = (createState) => {
     );
   }
   const api = typeof createState === "function" ? createStore(createState) : createState;
-  const useBoundStore = (selector, equalityFn) => useStore$1(api, selector, equalityFn);
+  const useBoundStore = (selector, equalityFn) => useStore(api, selector, equalityFn);
   Object.assign(useBoundStore, api);
   return useBoundStore;
 };
 const create = (createState) => createState ? createImpl(createState) : createImpl;
-const useStore = create((set2) => ({
+create((set2) => ({
   isOpen: false,
   openModal: () => set2({ isOpen: true }),
-  closeModal: () => set2({ isOpen: false }),
-  selectedAnimation: "tsh-3d-float",
-  setSelectedAnimation: (animation) => set2({ selectedAnimation: animation }),
-  backgroundColor: "#ffffff",
-  setBackgroundColor: (color) => set2({ backgroundColor: color }),
-  postId: null,
-  setPostId: (id) => set2({ postId: id })
+  closeModal: () => set2({ isOpen: false })
 }));
-const useAdminStore = create((set2) => ({
-  isOpen: false,
-  openModal: () => set2({ isOpen: true }),
-  closeShowcaseModal: () => set2({ isOpen: false })
-}));
-function TableNavItems({ title }) {
-  const { isOpen, openModal, closeShowcaseModal } = useAdminStore();
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-between", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: openModal, className: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600", children: [
-    "Create New ",
-    title
-  ] }) });
-}
-const ajax_url$2 = tsteam_settings.ajax_url;
-const createData = (action, data) => {
-  return new Promise((resolve, reject) => {
-    jQuery.post(ajax_url$2, {
-      _ajax_nonce: tsteam_settings.nonce,
-      action,
-      ...data
-      // Spread the data object to include all form fields
-    }, function(response) {
-      if (response.success) {
-        resolve(response);
-      } else {
-        reject(response);
-      }
-    });
-  });
-};
-const toastNotification = (type4, message, description) => {
-  staticMethods[type4]({
-    message,
-    description,
-    placement: "topRight",
-    showProgress: true
-  });
-};
-const ajax_url$1 = tsteam_settings.ajax_url;
-const fetchData = (action, callback, additionalParams = {}) => {
-  const params = {
-    _ajax_nonce: tsteam_settings.nonce,
-    action,
-    ...additionalParams
-  };
-  jQuery.post(ajax_url$1, params, function(response) {
-    if (typeof callback === "function") {
-      callback(response);
+function TsButton({ id, prefix, label, onClick, htmlType }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "button",
+    {
+      id,
+      class: "btn btn-primary",
+      onclick: onClick,
+      type: htmlType,
+      children: [
+        prefix,
+        " ",
+        label
+      ]
     }
-  });
-};
+  ) });
+}
 function TsSelect({ label, value, options, onChange, mode }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
     label && /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -59448,22 +59402,128 @@ function TsEditor({ label, name, required: required4, form }) {
     }
   );
 }
-function TsModal({ actionType, formSupport, name, type: type4, id, isOpen, isClose, width, children }) {
-  console.log(id);
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Modal,
-    {
-      title: actionType === "create" ? `Add New ${name}` : actionType === "edit" ? `Edit ${name}` : actionType === "delete" ? `Delete ${name}` : "",
-      open: isOpen,
-      onCancel: isClose,
-      footer: null,
-      closable: true,
-      centered: true,
-      width,
-      children: formSupport ? /* @__PURE__ */ jsxRuntimeExports.jsx(FormContainer, { actionType, name, type: type4, post_id: id }) : children
+const googleFonts = [
+  { label: "Dancing Script", value: "Dancing+Script:wght@400;700" },
+  { label: "Pacifico", value: "Pacifico" },
+  { label: "Shadows Into Light", value: "Shadows+Into+Light" },
+  { label: "Great Vibes", value: "Great+Vibes" },
+  { label: "Satisfy", value: "Satisfy" },
+  { label: "Caveat", value: "Caveat:wght@400;700" },
+  { label: "Courgette", value: "Courgette" },
+  { label: "Kaushan Script", value: "Kaushan+Script" },
+  { label: "Sacramento", value: "Sacramento" },
+  { label: "Indie Flower", value: "Indie+Flower" },
+  { label: "Merriweather", value: "Merriweather:wght@400;700" },
+  { label: "Playfair Display", value: "Playfair+Display:wght@400;700" },
+  { label: "Lora", value: "Lora:wght@400;700" },
+  { label: "Crimson Pro", value: "Crimson+Pro:wght@400;700" },
+  { label: "Slabo 27px", value: "Slabo+27px" },
+  { label: "Bitter", value: "Bitter:wght@400;700" },
+  { label: "EB Garamond", value: "EB+Garamond:wght@400;700" },
+  { label: "Cormorant Garamond", value: "Cormorant+Garamond:wght@400;700" },
+  { label: "Spectral", value: "Spectral:wght@400;700" },
+  { label: "Cardo", value: "Cardo:wght@400;700" },
+  { label: "Roboto", value: "Roboto:wght@400;700" },
+  { label: "Open Sans", value: "Open+Sans:wght@400;700" },
+  { label: "Poppins", value: "Poppins:wght@400;700" },
+  { label: "Lato", value: "Lato:wght@400;700" },
+  { label: "Montserrat", value: "Montserrat:wght@400;700" },
+  { label: "Nunito", value: "Nunito:wght@400;700" },
+  { label: "Work Sans", value: "Work+Sans:wght@400;700" },
+  { label: "Raleway", value: "Raleway:wght@400;700" },
+  { label: "Inter", value: "Inter:wght@400;700" },
+  { label: "Ubuntu", value: "Ubuntu:wght@400;700" },
+  { label: "Oswald", value: "Oswald:wght@400;700" },
+  { label: "Righteous", value: "Righteous" },
+  { label: "Cinzel", value: "Cinzel:wght@400;700" },
+  { label: "Anton", value: "Anton" },
+  { label: "Abril Fatface", value: "Abril+Fatface" },
+  { label: "Bebas Neue", value: "Bebas+Neue" },
+  { label: "Alfa Slab One", value: "Alfa+Slab+One" },
+  { label: "Lobster", value: "Lobster" },
+  { label: "Quicksand", value: "Quicksand:wght@400;700" },
+  { label: "Patua One", value: "Patua+One" },
+  { label: "Inconsolata", value: "Inconsolata:wght@400;700" },
+  { label: "Roboto Mono", value: "Roboto+Mono:wght@400;700" },
+  { label: "Source Code Pro", value: "Source+Code+Pro:wght@400;700" },
+  { label: "Fira Code", value: "Fira+Code:wght@400;700" },
+  { label: "Space Mono", value: "Space+Mono:wght@400;700" },
+  { label: "VT323", value: "VT323" },
+  { label: "JetBrains Mono", value: "JetBrains+Mono:wght@400;700" },
+  { label: "Anonymous Pro", value: "Anonymous+Pro:wght@400;700" },
+  { label: "IBM Plex Mono", value: "IBM+Plex+Mono:wght@400;700" },
+  { label: "Courier Prime", value: "Courier+Prime:wght@400;700" }
+];
+function TsFont({ label, targetedClass, isPro }) {
+  const [value, setValue] = reactExports.useState(null);
+  reactExports.useEffect(() => {
+    if (value) {
+      const fontName = value.split(":")[0].replace(/\+/g, " ");
+      const fontLink = document.createElement("link");
+      fontLink.rel = "stylesheet";
+      fontLink.href = `https://fonts.googleapis.com/css2?family=${value}&display=swap`;
+      fontLink.id = "dynamic-google-font";
+      const existingFontLink = document.getElementById("dynamic-google-font");
+      if (existingFontLink) {
+        document.head.removeChild(existingFontLink);
+      }
+      document.head.appendChild(fontLink);
+      document.body.style.fontFamily = fontName;
     }
-  );
+  }, [value]);
+  const handleChange = (selectedFont) => {
+    setValue(selectedFont);
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
+    label && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "label",
+      {
+        className: "block text-sm font-medium text-gray-700 mb-2",
+        style: { color: globalSettings.theme.textColor },
+        children: label
+      }
+    ),
+    isPro ? /* @__PURE__ */ jsxRuntimeExports.jsx(Alert, { banner: true, message: "This feature is available for Pro users only." }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Select,
+      {
+        placeholder: `Select ${label}`,
+        value,
+        style: {
+          width: "100%",
+          fontFamily: value ? value.split(":")[0].replace(/\+/g, " ") : void 0
+        },
+        onChange: handleChange,
+        options: googleFonts,
+        targetedClass
+      }
+    )
+  ] });
 }
+const ajax_url$1 = tsteam_settings.ajax_url;
+const createData = (action, data) => {
+  return new Promise((resolve, reject) => {
+    jQuery.post(ajax_url$1, {
+      _ajax_nonce: tsteam_settings.nonce,
+      action,
+      ...data
+      // Spread the data object to include all form fields
+    }, function(response) {
+      if (response.success) {
+        resolve(response);
+      } else {
+        reject(response);
+      }
+    });
+  });
+};
+const toastNotification = (type4, message, description) => {
+  staticMethods[type4]({
+    message,
+    description,
+    placement: "topRight",
+    showProgress: true
+  });
+};
 function TeamShowcaseFields({ post_id }) {
   const [teamMembers, setTeamMembers] = reactExports.useState([]);
   const [form] = Form2.useForm();
@@ -59637,208 +59697,58 @@ function FormContainer({ actionType, type: type4, name, post_id, onShowcaseAdded
     }
   );
 }
-function TableNav({ type: type4, title }) {
-  const { isOpen, closeShowcaseModal } = useAdminStore();
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-6", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-2xl font-semibold text-gray-700", children: title }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between mt-4", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(TableNavItems, { title }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx(
-        TsModal,
+function TsModal({ actionType, formSupport, name, type: type4, id, isOpen, isClose, width, children }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Modal,
+    {
+      title: actionType === "create" ? `Add New ${name}` : actionType === "edit" ? `Edit ${name}` : actionType === "delete" ? `Delete ${name}` : "",
+      open: isOpen,
+      onCancel: isClose,
+      footer: null,
+      closable: true,
+      centered: true,
+      width,
+      children: formSupport ? /* @__PURE__ */ jsxRuntimeExports.jsx(FormContainer, { actionType, name, type: type4, post_id: id }) : children
+    }
+  );
+}
+function TsDrawer({ label, isOpen, onClose, position, children }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Drawer,
+    {
+      title: label,
+      onClose,
+      open: isOpen,
+      placement: position,
+      mask: false,
+      children
+    }
+  );
+}
+function TsLoader({ label }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      className: "flex justify-center items-center h-screen",
+      style: { backgroundColor: globalSettings.theme.primaryColor },
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Spin,
         {
-          actionType: "create",
-          formSupport: true,
-          name: title,
-          type: type4,
-          isOpen,
-          isClose: closeShowcaseModal,
-          width: 550
+          fullscreen: true,
+          tip: label,
+          size: "large"
         }
       )
-    ] })
-  ] });
-}
-const ajax_url = tsteam_settings.ajax_url;
-const deleteData = (action, post_id) => {
-  return new Promise((resolve, reject) => {
-    jQuery.post(ajax_url, {
-      _ajax_nonce: tsteam_settings.nonce,
-      action,
-      post_id
-    }).done((response) => {
-      response.success ? resolve(response) : reject(response);
-    }).fail(reject);
-  });
-};
-function DataTable({ type: type4, title, editor }) {
-  const [data, setData] = reactExports.useState([]);
-  const [columns, setColumns] = reactExports.useState([]);
-  const [isModalOpen, setIsModalOpen] = reactExports.useState(false);
-  const [selectedPost, setSelectedPost] = reactExports.useState(null);
-  reactExports.useEffect(() => {
-    fetchData(`tsteam/${type4}/fetch`, (response) => {
-      if (response && response.success) {
-        const showcaseData = response.data.map((item) => ({
-          key: item.post_id,
-          ...item
-        }));
-        const dynamicColumns = Object.keys(showcaseData[0]).map((key) => ({
-          title: key.charAt(0).toUpperCase() + key.slice(1),
-          dataIndex: key,
-          key,
-          render: (text) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: text })
-        }));
-        const actionColumn = {
-          title: "Action",
-          key: "action",
-          render: (_, record) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Space, { size: "middle", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("a", { onClick: () => handleEdit(record.key), children: "Edit" }),
-            editor && /* @__PURE__ */ jsxRuntimeExports.jsx("a", { onClick: () => handleEditor(record.key, type4), children: "Edit Design" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("a", { onClick: () => handleDelete(record.key), children: "Delete" })
-          ] })
-        };
-        setColumns([...dynamicColumns, actionColumn]);
-        setData(showcaseData);
-      } else {
-        console.error("Error fetching showcases:", response);
-      }
-    });
-  }, [type4]);
-  const handleDelete = (post_id) => {
-    deleteData(`tsteam/${type4}/delete`, post_id).then((response) => {
-      if (response.success) {
-        toastNotification("success", `${title} Deleted`, `The ${title} has been successfully deleted.`);
-        setData((prevData) => prevData.filter((item) => item.key !== post_id));
-      } else {
-        toastNotification("error", "Error", `There was an error deleting the ${title}.`);
-      }
-    }).catch((error) => {
-      toastNotification("error", "Error", `There was an error deleting the ${title}.`);
-    });
-  };
-  const handleEdit = (post_id) => {
-    console.log(post_id);
-    setSelectedPost(post_id);
-    setIsModalOpen(true);
-  };
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedPost(null);
-  };
-  const handleEditor = (post_id, type22) => {
-    let currentUrl2 = window.location.href;
-    if (currentUrl2.includes("?")) {
-      currentUrl2 += `&path=editor&type=${type22}&post_id=${post_id}`;
-    } else {
-      currentUrl2 += `?path=editor&type=${type22}&post_id=${post_id}`;
     }
-    window.location.href = currentUrl2;
-  };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "shadow-md rounded-lg overflow-hidden", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      ForwardTable,
-      {
-        columns,
-        dataSource: data
-      }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      TsModal,
-      {
-        actionType: "edit",
-        formSupport: true,
-        name: title,
-        type: type4,
-        id: selectedPost,
-        isOpen: isModalOpen,
-        isClose: closeModal,
-        width: 550
-      }
-    )
-  ] });
-}
-function Container({ type: type4, title, editor }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-4/6", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(TableNav, { type: type4, title }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(DataTable, { type: type4, title, editor })
-  ] });
-}
-function Data() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Container,
-    {
-      type: "team_member",
-      title: "Team Member"
-    }
-  ) });
+  );
 }
 function Topbar$1() {
-  const [isModalVisible, setIsModalVisible] = reactExports.useState(false);
-  const [isModalOpen, setIsModalOpen] = reactExports.useState(false);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { class: "flex flex-col", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("header", { class: "flex items-center justify-between p-4 bg-black", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          Button$1,
-          {
-            onClick: showModal,
-            type: "primary",
-            className: "ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold p-3 rounded flex items-center",
-            children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                "svg",
-                {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  fill: "none",
-                  viewBox: "0 0 24 24",
-                  strokeWidth: "1.5",
-                  stroke: "currentColor",
-                  className: "w-6 h-6",
-                  children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(
-                      "path",
-                      {
-                        strokeLinecap: "round",
-                        strokeLinejoin: "round",
-                        d: "M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"
-                      }
-                    ),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", d: "M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" })
-                  ]
-                }
-              ),
-              "Members"
-            ]
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "btn", onClick: openModal, children: "Open Modal" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(TsModal, { isOpen: isModalOpen, onClose: closeModal, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Data, {}) })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("main", { class: "flex-grow" })
-    ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Modal,
-      {
-        title: "Basic Modal",
-        open: isModalVisible,
-        onOk: handleOk,
-        onCancel: handleCancel,
-        width: 700,
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(Data, {})
-      }
-    )
-  ] });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { class: "flex flex-col justify-end bg-black p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    TsButton,
+    {
+      label: "Publish"
+    }
+  ) }) });
 }
 const editorStore = create((set2) => ({
   // Variables
@@ -59848,103 +59758,6 @@ const editorStore = create((set2) => ({
   setLayout: (selectedLayout) => set2({ layout: selectedLayout }),
   setView: (selectedView) => set2({ view: selectedView })
 }));
-const googleFonts = [
-  { label: "Dancing Script", value: "Dancing+Script:wght@400;700" },
-  { label: "Pacifico", value: "Pacifico" },
-  { label: "Shadows Into Light", value: "Shadows+Into+Light" },
-  { label: "Great Vibes", value: "Great+Vibes" },
-  { label: "Satisfy", value: "Satisfy" },
-  { label: "Caveat", value: "Caveat:wght@400;700" },
-  { label: "Courgette", value: "Courgette" },
-  { label: "Kaushan Script", value: "Kaushan+Script" },
-  { label: "Sacramento", value: "Sacramento" },
-  { label: "Indie Flower", value: "Indie+Flower" },
-  { label: "Merriweather", value: "Merriweather:wght@400;700" },
-  { label: "Playfair Display", value: "Playfair+Display:wght@400;700" },
-  { label: "Lora", value: "Lora:wght@400;700" },
-  { label: "Crimson Pro", value: "Crimson+Pro:wght@400;700" },
-  { label: "Slabo 27px", value: "Slabo+27px" },
-  { label: "Bitter", value: "Bitter:wght@400;700" },
-  { label: "EB Garamond", value: "EB+Garamond:wght@400;700" },
-  { label: "Cormorant Garamond", value: "Cormorant+Garamond:wght@400;700" },
-  { label: "Spectral", value: "Spectral:wght@400;700" },
-  { label: "Cardo", value: "Cardo:wght@400;700" },
-  { label: "Roboto", value: "Roboto:wght@400;700" },
-  { label: "Open Sans", value: "Open+Sans:wght@400;700" },
-  { label: "Poppins", value: "Poppins:wght@400;700" },
-  { label: "Lato", value: "Lato:wght@400;700" },
-  { label: "Montserrat", value: "Montserrat:wght@400;700" },
-  { label: "Nunito", value: "Nunito:wght@400;700" },
-  { label: "Work Sans", value: "Work+Sans:wght@400;700" },
-  { label: "Raleway", value: "Raleway:wght@400;700" },
-  { label: "Inter", value: "Inter:wght@400;700" },
-  { label: "Ubuntu", value: "Ubuntu:wght@400;700" },
-  { label: "Oswald", value: "Oswald:wght@400;700" },
-  { label: "Righteous", value: "Righteous" },
-  { label: "Cinzel", value: "Cinzel:wght@400;700" },
-  { label: "Anton", value: "Anton" },
-  { label: "Abril Fatface", value: "Abril+Fatface" },
-  { label: "Bebas Neue", value: "Bebas+Neue" },
-  { label: "Alfa Slab One", value: "Alfa+Slab+One" },
-  { label: "Lobster", value: "Lobster" },
-  { label: "Quicksand", value: "Quicksand:wght@400;700" },
-  { label: "Patua One", value: "Patua+One" },
-  { label: "Inconsolata", value: "Inconsolata:wght@400;700" },
-  { label: "Roboto Mono", value: "Roboto+Mono:wght@400;700" },
-  { label: "Source Code Pro", value: "Source+Code+Pro:wght@400;700" },
-  { label: "Fira Code", value: "Fira+Code:wght@400;700" },
-  { label: "Space Mono", value: "Space+Mono:wght@400;700" },
-  { label: "VT323", value: "VT323" },
-  { label: "JetBrains Mono", value: "JetBrains+Mono:wght@400;700" },
-  { label: "Anonymous Pro", value: "Anonymous+Pro:wght@400;700" },
-  { label: "IBM Plex Mono", value: "IBM+Plex+Mono:wght@400;700" },
-  { label: "Courier Prime", value: "Courier+Prime:wght@400;700" }
-];
-function TsFont({ label, targetedClass, isPro }) {
-  const [value, setValue] = reactExports.useState(null);
-  reactExports.useEffect(() => {
-    if (value) {
-      const fontName = value.split(":")[0].replace(/\+/g, " ");
-      const fontLink = document.createElement("link");
-      fontLink.rel = "stylesheet";
-      fontLink.href = `https://fonts.googleapis.com/css2?family=${value}&display=swap`;
-      fontLink.id = "dynamic-google-font";
-      const existingFontLink = document.getElementById("dynamic-google-font");
-      if (existingFontLink) {
-        document.head.removeChild(existingFontLink);
-      }
-      document.head.appendChild(fontLink);
-      document.body.style.fontFamily = fontName;
-    }
-  }, [value]);
-  const handleChange = (selectedFont) => {
-    setValue(selectedFont);
-  };
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
-    label && /* @__PURE__ */ jsxRuntimeExports.jsx(
-      "label",
-      {
-        className: "block text-sm font-medium text-gray-700 mb-2",
-        style: { color: globalSettings.theme.textColor },
-        children: label
-      }
-    ),
-    isPro ? /* @__PURE__ */ jsxRuntimeExports.jsx(Alert, { banner: true, message: "This feature is available for Pro users only." }) : /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Select,
-      {
-        placeholder: `Select ${label}`,
-        value,
-        style: {
-          width: "100%",
-          fontFamily: value ? value.split(":")[0].replace(/\+/g, " ") : void 0
-        },
-        onChange: handleChange,
-        options: googleFonts,
-        targetedClass
-      }
-    )
-  ] });
-}
 const defaultLayouts = [
   {
     label: "Card",
@@ -60031,13 +59844,6 @@ function ContentTab() {
         label: "Vertical Gap",
         range: range2
       }
-    ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      TsFont,
-      {
-        label: "Font",
-        isPro: false
-      }
     )
   ] });
 }
@@ -60055,6 +59861,14 @@ function StyleTab() {
       {
         label: "Text Color",
         value: "#000"
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TsDivider, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TsFont,
+      {
+        label: "Font",
+        isPro: false
       }
     )
   ] });
@@ -60075,12 +59889,12 @@ function AdvanceTab() {
     )
   ] });
 }
-function OptionTabs({ theme, setTheme }) {
+function Sidebar({ isOpen, onClose }) {
   const items = [
     {
       label: "Content",
       key: "1",
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(ContentTab, { theme, setTheme })
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(ContentTab, {})
     },
     {
       label: "Style",
@@ -60093,40 +59907,7 @@ function OptionTabs({ theme, setTheme }) {
       children: /* @__PURE__ */ jsxRuntimeExports.jsx(AdvanceTab, {})
     }
   ];
-  const onChange = (key) => {
-    console.log(key);
-  };
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Tabs,
-    {
-      onChange,
-      type: "card",
-      items,
-      size: "large"
-    }
-  );
-}
-function Sidebar({ isOpen, onClose, theme, setTheme }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Drawer,
-    {
-      title: "Editor",
-      onClose,
-      open: isOpen,
-      placement: "left",
-      mask: false,
-      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col justify-between h-full", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          OptionTabs,
-          {
-            theme,
-            setTheme
-          }
-        ) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", {})
-      ] })
-    }
-  );
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(TsDrawer, { label: "Editor", isOpen, onClose, position: "left", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Tabs, { type: "card", items, size: "large" }) });
 }
 function hideAdminElements() {
   const adminMenuBack = document.getElementById("adminmenuback");
@@ -60147,7 +59928,6 @@ function hideAdminElements() {
 }
 function Editor() {
   const { layout, view } = editorStore();
-  useStore();
   const [theme, setTheme] = reactExports.useState("Theme One");
   const [isSidebarOpen, setIsSidebarOpen] = reactExports.useState(true);
   const [isLoading, setIsLoading] = reactExports.useState(true);
@@ -60192,14 +59972,12 @@ function Editor() {
     setIsSidebarOpen(false);
   };
   if (isLoading || postData === null) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-center items-center h-screen bg-blue-700", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Spin,
+    return /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TsLoader,
       {
-        fullscreen: true,
-        tip: "Loading Editor",
-        size: "large"
+        label: "Loading Editor"
       }
-    ) });
+    );
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(Topbar$1, {}),
@@ -60212,7 +59990,7 @@ function Editor() {
         setTheme
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "editor-hover editor-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "editor-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       Frontend,
       {
         layout,
@@ -60220,6 +59998,145 @@ function Editor() {
         data: postData
       }
     ) })
+  ] });
+}
+const useAdminStore = create((set2) => ({
+  isOpen: false,
+  openModal: () => set2({ isOpen: true }),
+  closeShowcaseModal: () => set2({ isOpen: false })
+}));
+function TableNavItems({ title }) {
+  const { isOpen, openModal, closeShowcaseModal } = useAdminStore();
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-between", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: openModal, className: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600", children: [
+    "Create New ",
+    title
+  ] }) });
+}
+function TableNav({ type: type4, title }) {
+  const { isOpen, closeShowcaseModal } = useAdminStore();
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-6", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-2xl font-semibold text-gray-700", children: title }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between mt-4", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(TableNavItems, { title }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        TsModal,
+        {
+          actionType: "create",
+          formSupport: true,
+          name: title,
+          type: type4,
+          isOpen,
+          isClose: closeShowcaseModal,
+          width: 550
+        }
+      )
+    ] })
+  ] });
+}
+const ajax_url = tsteam_settings.ajax_url;
+const deleteData = (action, post_id) => {
+  return new Promise((resolve, reject) => {
+    jQuery.post(ajax_url, {
+      _ajax_nonce: tsteam_settings.nonce,
+      action,
+      post_id
+    }).done((response) => {
+      response.success ? resolve(response) : reject(response);
+    }).fail(reject);
+  });
+};
+function DataTable({ type: type4, title, editor }) {
+  const [data, setData] = reactExports.useState([]);
+  const [columns, setColumns] = reactExports.useState([]);
+  const [isModalOpen, setIsModalOpen] = reactExports.useState(false);
+  const [selectedPost, setSelectedPost] = reactExports.useState(null);
+  reactExports.useEffect(() => {
+    fetchData(`tsteam/${type4}/fetch`, (response) => {
+      if (response && response.success) {
+        console.log(response.data);
+        const showcaseData = response.data.map((item) => ({
+          key: item.post_id,
+          ...item
+        }));
+        const dynamicColumns = Object.keys(showcaseData[0]).map((key) => ({
+          title: key.charAt(0).toUpperCase() + key.slice(1),
+          dataIndex: key,
+          key,
+          render: (text) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: text })
+        }));
+        const actionColumn = {
+          title: "Action",
+          key: "action",
+          render: (_, record) => /* @__PURE__ */ jsxRuntimeExports.jsxs(Space, { size: "middle", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("a", { onClick: () => handleEdit(record.key), children: "Edit" }),
+            editor && /* @__PURE__ */ jsxRuntimeExports.jsx("a", { onClick: () => handleEditor(record.key, type4), children: "Edit Design" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("a", { onClick: () => handleDelete(record.key), children: "Delete" })
+          ] })
+        };
+        setColumns([...dynamicColumns, actionColumn]);
+        setData(showcaseData);
+      } else {
+        console.error("Error fetching showcases:", response);
+      }
+    });
+  }, [type4]);
+  const handleDelete = (post_id) => {
+    deleteData(`tsteam/${type4}/delete`, post_id).then((response) => {
+      if (response.success) {
+        toastNotification("success", `${title} Deleted`, `The ${title} has been successfully deleted.`);
+        setData((prevData) => prevData.filter((item) => item.key !== post_id));
+      } else {
+        toastNotification("error", "Error", `There was an error deleting the ${title}.`);
+      }
+    }).catch((error) => {
+      toastNotification("error", "Error", `There was an error deleting the ${title}.`);
+    });
+  };
+  const handleEdit = (post_id) => {
+    console.log(post_id);
+    setSelectedPost(post_id);
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedPost(null);
+  };
+  const handleEditor = (post_id, type22) => {
+    let currentUrl2 = window.location.href;
+    if (currentUrl2.includes("?")) {
+      currentUrl2 += `&path=editor&type=${type22}&post_id=${post_id}`;
+    } else {
+      currentUrl2 += `?path=editor&type=${type22}&post_id=${post_id}`;
+    }
+    window.location.href = currentUrl2;
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "shadow-md rounded-lg overflow-hidden", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      ForwardTable,
+      {
+        columns,
+        dataSource: data
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      TsModal,
+      {
+        actionType: "edit",
+        formSupport: true,
+        name: title,
+        type: type4,
+        id: selectedPost,
+        isOpen: isModalOpen,
+        isClose: closeModal,
+        width: 550
+      }
+    )
+  ] });
+}
+function Container({ type: type4, title, editor }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(TableNav, { type: type4, title }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(DataTable, { type: type4, title, editor })
   ] });
 }
 function TeamShowcase() {
@@ -60257,9 +60174,9 @@ function Topbar() {
     ] })
   ] });
 }
-const currentUrl$1 = window.location.href;
+const currentUrl = window.location.href;
 function AdminPanel() {
-  if (currentUrl$1.includes(`&path=team-member`)) {
+  if (currentUrl.includes(`&path=team-member`)) {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx(TeamMember, {}),
       /* @__PURE__ */ jsxRuntimeExports.jsx(Topbar, {})
@@ -60271,23 +60188,11 @@ function AdminPanel() {
     ] });
   }
 }
+const RootComponent = () => {
+  const currentUrl2 = window.location.href;
+  const isEditor = currentUrl2.includes(`&path=editor`);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ConfigProvider, { theme: globalSettings, children: isEditor ? /* @__PURE__ */ jsxRuntimeExports.jsx(Editor, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx(AdminPanel, {}) }) });
+};
 client.createRoot(document.getElementById("tsteam-admin")).render(
-  /* @__PURE__ */ jsxRuntimeExports.jsx(ConfigProvider, { theme: globalSettings, children: /* @__PURE__ */ jsxRuntimeExports.jsx(AdminPanel, {}) })
+  /* @__PURE__ */ jsxRuntimeExports.jsx(RootComponent, {})
 );
-const currentUrl = window.location.href;
-if (currentUrl.includes(`&path=editor`)) {
-  const RootComponent = () => {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(ConfigProvider, { theme: globalSettings, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Editor, {}) }) });
-  };
-  client.createRoot(document.getElementById("wpwrap")).render(
-    /* @__PURE__ */ jsxRuntimeExports.jsx(RootComponent, {})
-  );
-}
-if (currentUrl.includes(`&path=admin`)) {
-  const RootComponent = () => {
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(React.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(AdminModal, {}) });
-  };
-  client.createRoot(document.getElementById("wpbody")).render(
-    /* @__PURE__ */ jsxRuntimeExports.jsx(ConfigProvider, { theme: globalSettings, children: /* @__PURE__ */ jsxRuntimeExports.jsx(RootComponent, {}) })
-  );
-}
