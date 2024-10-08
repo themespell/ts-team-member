@@ -5,12 +5,12 @@ export const createData = (action, data) => {
         jQuery.post(ajax_url, {
             _ajax_nonce: tsteam_settings.nonce,
             action: action,
-            ...data,  // Spread the data object to include all form fields
+            ...data,
         }, function(response) {
             if (response.success) {
-                resolve(response);  // Resolve the promise on success
+                resolve(response);
             } else {
-                reject(response);  // Reject the promise on failure
+                reject(response);
             }
         });
     });
