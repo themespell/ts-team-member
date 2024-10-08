@@ -1,6 +1,7 @@
 <?php
 namespace TSTeam;
 use TSTeam\Helper;
+use TSTeam\Common;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -14,6 +15,8 @@ class TeamShowcase {
 		add_action( 'wp_ajax_tsteam/team_showcase/fetch', array( $self, 'get_showcase' ) );
         add_action( 'wp_ajax_tsteam/team_showcase/fetch/single', array($self, 'get_showcase_by_id'));
 		add_action( 'wp_ajax_tsteam/team_showcase/create', array( $self, 'create_showcase' ) );
+		add_action( 'wp_ajax_tsteam/team_showcase/update', array( $self, 'update_showcase' ) );
+		add_action( 'wp_ajax_tsteam/team_showcase/update/settings', array( $self, 'update_showcase_settings' ) );
 		add_action( 'wp_ajax_tsteam/team_showcase/delete', array( $self, 'delete_showcase' ) );
 	}
 
@@ -79,9 +82,9 @@ class TeamShowcase {
 	
 		// Get the team member IDs stored as meta data
 		$team_member_ids = get_post_meta($post_id, 'tsteam_team_members', true);
+		$showcase_settings = get_post_meta($post_id, 'tsteam_showcase_settings', true);
 	
 		if (!empty($team_member_ids) && is_array($team_member_ids)) {
-			// Use the static helper function to get the team members by IDs
 			$team_members_result = Helper::get_team_members_by_ids($team_member_ids);
 	
 			if ($team_members_result['error']) {
@@ -99,53 +102,14 @@ class TeamShowcase {
 			'title'     => get_the_title($post_id),
 			'content'   => get_the_content(),
 			'meta_data' => [
-				'team_members' => $team_members
+				'team_members' => $team_members,
+				'showcase_settings' => !empty($showcase_settings) ? $showcase_settings : Common::get_default_showcase_settings()
 			]
 		);
 	
 		wp_reset_postdata();
 		wp_send_json_success($showcase);
-	}	
-
-	// public function get_showcase_by_id() {
-	// 	check_ajax_referer('tsteam_nonce');
-
-	// 	if (!current_user_can('manage_options')) {
-	// 		wp_die();
-	// 	}
-
-	// 	$post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
-
-
-	// 	$args = array(
-	// 		'post_type'      => 'tsteam-showcase',
-	// 		'p'              => $post_id,
-	// 	);
-
-	// 	$query = new \WP_Query($args);
-
-	// 	if (!$query->have_posts()) {
-	// 		wp_send_json_error(array('message' => 'Showcase not found'));
-	// 		return;
-	// 	}
-
-	// 	$query->the_post();
-	// 	$post_id = get_the_ID();
-
-	// 	$team_members = get_post_meta($post_id, 'tsteam_team_members', true);
-
-	// 	$showcase = array(
-	// 		'post_id'   => $post_id,
-	// 		'title'     => get_the_title(),
-	// 		'content'   => get_the_content(),
-	// 		'meta_data' => [
-	// 			'team_members' => $team_members
-	// 		]
-	// 	);
-
-	// 	wp_reset_postdata();
-	// 	wp_send_json_success($showcase);
-	// }
+	}
 
 	public function create_showcase() {
 		// Verify the nonce
@@ -158,6 +122,7 @@ class TeamShowcase {
 
 		$showcase_title = isset($_POST['title']) ? sanitize_text_field($_POST['title']) : '';
 		$team_members = isset($_POST['team_members']) ? array_map('intval', (array) $_POST['team_members']) : array();
+		$showcase_settings = isset($_POST['data']) ? json_encode($_POST['data'], true) : array();
 
 		$args = array(
 			'post_title'   => $showcase_title,
@@ -174,7 +139,80 @@ class TeamShowcase {
 		}
 
 		update_post_meta($is_post, 'tsteam_team_members', $team_members);
+		update_post_meta($is_post, 'tsteam_showcase_settings', $showcase_settings);
 		wp_send_json_success(array('post_id' => $is_post));
+	}
+
+	public function update_showcase() {
+		// Verify the nonce
+		check_ajax_referer('tsteam_nonce');
+	
+		// Check user capabilities
+		if (!current_user_can('manage_options')) {
+			wp_die();
+		}
+	
+		// Get the post ID (since we're updating an existing post)
+		$post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
+	
+		// Check if post exists and is of the correct post type
+		if (!$post_id || get_post_type($post_id) !== 'tsteam-showcase') {
+			wp_send_json_error(array('message' => 'Invalid post ID or post type'));
+			return;
+		}
+	
+		// Get and sanitize the new values
+		// $showcase_title = isset($_POST['title']) ? sanitize_text_field($_POST['title']) : '';
+		// $team_members = isset($_POST['team_members']) ? array_map('intval', (array) $_POST['team_members']) : array();
+		$showcase_settings = isset($_POST['team_members']) ? array_map('intval', (array) $_POST['team_members']) : array();
+	
+		// Prepare the arguments to update the post
+		$args = array(
+			'ID'          => $post_id,  // Post ID to update
+			// 'post_title'  => $showcase_title,
+		);
+	
+		// Perform the post update
+		$is_post = wp_update_post($args, true);  // Use true for error reporting
+		
+		// Check for errors in the update
+		if (is_wp_error($is_post)) {
+			wp_send_json_error(array('message' => 'Failed to update showcase'));
+			return;
+		}
+	
+		// Update custom post meta
+		
+		update_post_meta($post_id, 'showcase_settings', $team_members);
+	
+		// Send success response with the updated post ID
+		wp_send_json_success(array('post_id' => $post_id));
+	}
+
+	public function update_showcase_settings() {
+		check_ajax_referer('tsteam_nonce');
+		if (!current_user_can('manage_options')) {
+			wp_die();
+		}
+
+		$post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
+		$showcase_settings = isset($_POST['data']) ? json_encode($_POST['data'], true) : array();
+
+		$args = array(
+			'ID'          => $post_id,
+			'post_type'    => 'tsteam-showcase',
+		);
+
+		$is_post = wp_update_post($args, true);
+		
+		// Check for errors in the update
+		if (is_wp_error($is_post)) {
+			wp_send_json_error(array('message' => 'Failed to update showcase'));
+			return;
+		}
+
+		update_post_meta($post_id, 'tsteam_showcase_settings', $showcase_settings);
+		wp_send_json_success(array('post_id' => $post_id));
 	}
 
 	public function delete_showcase() {
