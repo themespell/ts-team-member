@@ -9,9 +9,15 @@ import { fetchData } from '../common/services/fetchData.js';
 import { TsLoader } from '../common/components/controls/tsControls.js';
 
 import editorStore from './states/editorStore.js';
+import editorFunction from './states/editorFunction.js';
+
+import CarouselView from '../frontend/components/CarouselView.jsx';
+import StaticView from '../frontend/components/StaticView.jsx';
 
 function Editor() {
-  const { layout, view } = editorStore();
+  const { postType } = editorStore();
+  const allSettings = editorStore();
+  const { saveSettings } = editorFunction();
   
   const [theme, setTheme] = useState('Theme One');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -20,19 +26,26 @@ function Editor() {
 
   useEffect(() => {
     hideAdminElements();
-
-    // Simulate loader until the post data is fetched
     setIsLoading(true);
 
     const queryParams = new URLSearchParams(window.location.search);
     const postIdFromUrl = queryParams.get('post_id');
     const postTypeFromUrl = queryParams.get('type');
+
+    saveSettings('postID', postIdFromUrl);
+    saveSettings('postType', postTypeFromUrl);
   
     if (postIdFromUrl) {
       fetchData(`tsteam/${postTypeFromUrl}/fetch/single`, (response) => {
-        console.log(response.data);
         if (response && response.success) {
           setPostData(response.data.meta_data);
+          
+          const showcaseSettings = JSON.parse(response.data.meta_data.showcase_settings);
+          Object.keys(showcaseSettings).forEach((key) => {
+            const value = showcaseSettings[key];
+            saveSettings(key, value);
+          });
+
           setTimeout(() => {
             setIsLoading(false);
           }, 1000);
@@ -65,7 +78,6 @@ function Editor() {
     setIsSidebarOpen(false);
   };
 
-  // Show loader until postData is fetched
   if (isLoading || postData === null) {
     return (
       <TsLoader
@@ -76,7 +88,9 @@ function Editor() {
 
   return (
     <>
-      <Topbar />
+      <Topbar
+      type={postType}
+      />
       <Sidebar 
         isOpen={isSidebarOpen}
         onClose={handleCloseSidebar}
@@ -84,11 +98,17 @@ function Editor() {
         setTheme={setTheme}
       />
       <div className='editor-container'>
-        <Frontend 
-          layout={layout}
-          view={view}
-          data={postData}
+      {allSettings.view === "carousel" ? (
+        <CarouselView
+          team_members={postData.team_members}
+          settings={allSettings}
         />
+      ) : (
+        <StaticView
+          team_members={postData.team_members}
+          settings={allSettings}
+        />
+      )}
       </div>
     </>
   );
