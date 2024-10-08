@@ -9,3 +9,8 @@
 .add-team-button{
     @apply bg-black text-white p-4
 }
+
+.tsteam-button {
+    height: 2rem;
+    min-height: 2rem;
+}
