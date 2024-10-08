@@ -3,9 +3,9 @@ import { Form, Input } from 'antd';
 import { fetchData } from '../../../services/fetchData';
 import { TsSelect } from '../../controls/tsControls';
 
-function TeamShowcaseFields({ post_id }) {
+function TeamShowcaseFields({ form, post_id }) {
   const [teamMembers, setTeamMembers] = useState([]);
-  const [form] = Form.useForm(); // Create form instance
+  // const [form] = Form.useForm(); // Create form instance
 
   // Fetch team members for select options
   useEffect(() => {
@@ -42,7 +42,7 @@ function TeamShowcaseFields({ post_id }) {
   }, [post_id, form]);
 
   return (
-    <Form form={form} layout="vertical">
+    <>
       <Form.Item
         label="Showcase Name"
         name="title"
@@ -64,7 +64,7 @@ function TeamShowcaseFields({ post_id }) {
           mode="multiple"
         />
       </Form.Item>
-    </Form>
+    </>
   );
 }
 
