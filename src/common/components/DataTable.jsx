@@ -18,7 +18,7 @@ function DataTable({ type, title, editor }) {
           key: item.post_id,
           ...item,
         }));
-
+        
         const dynamicColumns = Object.keys(showcaseData[0]).map((key) => ({
           title: key.charAt(0).toUpperCase() + key.slice(1),
           dataIndex: key,
