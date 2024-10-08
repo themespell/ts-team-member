@@ -1,29 +1,58 @@
-import { useEffect, useRef } from 'react';
+import { StrictMode, useEffect, useState } from 'react';
+import { createRoot } from 'react-dom/client';
 import './assets/hover.css';
 import './assets/style.css';
-import Layout from './components/Layout.jsx';
+import StaticView from './components/StaticView.jsx';
+import CarouselView from './components/CarouselView.jsx';
+import { fetchData } from '../common/services/fetchData.js';
 
-function Frontend({ layout, data }) {
-  const team_members = data.team_members;
+const showcaseElements = document.querySelectorAll('.tsteam-showcase');
+
+showcaseElements.forEach(element => {
+  const id = element.getAttribute('data-id');
+
+  createRoot(element).render(
+    <StrictMode>
+      <Frontend
+        id={id}
+      />
+    </StrictMode>
+  );
+});
+
+function Frontend({ id }) {
+  const [teamMembers, setTeamMembers] = useState([]);
+  const [settings, setSettings] = useState({});
+
+  useEffect(() => {
+    if (id) {
+      fetchData(`tsteam/team_showcase/fetch/single`, (response) => {
+        if (response && response.success) {
+          setTeamMembers(response.data.meta_data.team_members);
+          const showcaseSettings = JSON.parse(response.data.meta_data.showcase_settings);
+          setSettings(showcaseSettings);
+        } else {
+          console.error("Error fetching post data:", response);
+        }
+      }, { post_id: id });
+    } else {
+      console.error("No post_id found");
+    }
+  }, [id]);
+
   return (
     <>
-      <div className="tsteam-container grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-3/6">
-        {team_members && team_members.length > 0 ? (
-          team_members.map((member, index) => (
-            <Layout
-              key={index}
-              layoutType={layout}
-              imageUrl={member.team_member_image || "https://qodeinteractive.com/qi-addons-for-elementor/wp-content/uploads/2021/01/team-img-28.jpg"} // Fallback image if none provided
-              title={member.title || "No Name"}
-              subtitle={member.subtitle || "No Subtitle"}
-              description={member.description || "No description available."}
-              socialIcons={member.socialIcons || []}
-            />
-          ))
-        ) : (
-          <p>No team members found.</p>
-        )}
-      </div>
+      {settings.view === "carousel" ? (
+        <CarouselView
+          team_members={teamMembers}
+          settings={settings}
+        />
+      ) : (
+        <StaticView
+          team_members={teamMembers}
+          settings={settings}
+        />
+      )}
     </>
   );
 }

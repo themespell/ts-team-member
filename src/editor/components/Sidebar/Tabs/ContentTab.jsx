@@ -1,10 +1,6 @@
-import TsInputGroup from '../../../../common/components/controls/TsInputGroup';
-import TsSelect from '../../../../common/components/controls/TsSelect';
-import TsSlider from '../../../../common/components/controls/TsSlider';
-import TsDivider from '../../../../common/components/controls/TsDivider';
-
+import { TsSelect, TsSlider, TsDivider } from '../../../../common/components/controls/tsControls';
 import editorStore from '../../../states/editorStore';
-import TsFont from '../../../../common/components/controls/TsFont';
+import editorFunction from '../../../states/editorFunction';
 
 const defaultLayouts = [
   {
@@ -29,20 +25,25 @@ const defaultLayouts = [
   },
 ];
 
+const viewStyle = [
+  {
+    label: 'Static / Grid',
+    value: 'grid',
+  },
+  {
+    label: 'Carousel',
+    value: 'carousel',
+  },
+];
+
 const range = {
   min: 1,
   max: 20,
 };
 
-const padding = {
-  top: 1,
-  right: 20,
-  bottom: 20,
-  left: 10
-};
-
 function ContentTab() {
-  const { layout, setLayout } = editorStore();
+  const { layout, view } = editorStore();
+  const { saveSettings } = editorFunction();
 
   return (
     <div>
@@ -50,14 +51,14 @@ function ContentTab() {
       label="Choose a Layout"
       value={layout}
       options={defaultLayouts}
-      onChange={(value) => setLayout(value)}
+      onChange={(value) => saveSettings('layout', value)}
       />
 
       <TsSelect
-      label="Layout Action"
-      value={layout}
-      options={defaultLayouts}
-      onChange={(value) => setLayout(value)}
+      label="View Style"
+      value={view}
+      options={viewStyle}
+      onChange={(value) => saveSettings('view', value)}
       />
       <TsDivider />
       <TsSlider
@@ -75,10 +76,6 @@ function ContentTab() {
       <TsSlider
       label="Vertical Gap"
       range={range}
-      />
-      <TsFont
-      label="Font"
-      isPro={false}
       />
     </div>
   );

@@ -4,7 +4,7 @@ const layout = {
     style: "max-w-sm rounded overflow-hidden shadow-lg relative group"
   },
   image: {
-    style: "w-full h-auto rounded-lg"
+    style: "w-full !h-full rounded-lg object-cover"
   },
   animation: {
     style: "transition-transform duration-500"

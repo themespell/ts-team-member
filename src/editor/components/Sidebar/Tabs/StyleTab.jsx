@@ -1,4 +1,5 @@
-import TsColor from "../../../../common/components/controls/TsColor";
+import { TsDivider, TsColor, TsFont } from '../../../../common/components/controls/tsControls';
+import editorStore from '../../../states/editorStore';
 
 function StyleTab(){
     
@@ -11,6 +12,11 @@ function StyleTab(){
             <TsColor
             label='Text Color'
             value={'#000'}
+            />
+            <TsDivider />
+            <TsFont
+            label="Font"
+            isPro={false}
             />
         </div>
     );

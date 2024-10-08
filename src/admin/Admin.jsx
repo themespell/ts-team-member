@@ -1,6 +1,7 @@
 import TeamShowcase from './components/TeamShowcase';
 import TeamMember from './components/TeamMember';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/Topbar';
+import Topbar from './components/Topbar';
 
 const currentUrl = window.location.href;
 
@@ -9,16 +10,16 @@ function AdminPanel() {
     return (
       <div className='flex'>
         <TeamMember />
-        <Sidebar />
+        <Topbar />
       </div>
     );
   }
   else{
     return (
-      <div className='flex'>
+      <>
+        <Topbar />
         <TeamShowcase />
-        <Sidebar />
-      </div>
+      </>
     );
   }
 }

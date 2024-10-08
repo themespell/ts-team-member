@@ -4,15 +4,15 @@ import { toastNotification } from '../../../utils/toastNotification.js';
 import TeamShowcaseFields from './TeamShowcaseFields.jsx';
 import TeamMemberFields from './TeamMemberFields.jsx';
 
-function FormContainer({ type, name, onShowcaseAdded }) {
+function FormContainer({ actionType, type, name, post_id, onShowcaseAdded }) {
   const [form] = Form.useForm();
 
   const onFinish = (data) => {
-    createData(`tsteam/${type}/create`, data)  // Pass the form data directly
+    createData(`tsteam/${type}/create`, data)
     .then(response => {
         toastNotification('success', `${name} Created`, `The ${name} has been successfully created.`);
         if (onShowcaseAdded) {
-          onShowcaseAdded();  // Call callback if provided
+          onShowcaseAdded();
         }
     })
     .catch(error => {
@@ -33,12 +33,18 @@ function FormContainer({ type, name, onShowcaseAdded }) {
       autoComplete="off"
       layout="vertical"
     >
-      {type === 'team_showcase' && <TeamShowcaseFields />}
-      {type === 'team_member' && <TeamMemberFields form={form} />}  {/* Pass form to TeamMemberFields */}
+      {type === 'team_showcase' && <TeamShowcaseFields form={form} post_id={post_id} />}
+      {type === 'team_member' && <TeamMemberFields form={form} />}
       
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Create {name}
+        {actionType === 'create' 
+        ? `Create ${name}` 
+        : actionType === 'edit' 
+        ? `Update ${name}` 
+        : actionType === 'delete' 
+        ? `Delete ${name}` 
+        : `Create ${name}`}
         </Button>
       </Form.Item>
     </Form>

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { TsSelect } from '../../controls/tsControls';
-import { Form, Input, Space } from 'antd';
+import { Form, Input } from 'antd';
 import { fetchData } from '../../../services/fetchData';
+import { TsSelect } from '../../controls/tsControls';
 
-function TeamShowcaseFields() {
+function TeamShowcaseFields({ form, post_id }) {
   const [teamMembers, setTeamMembers] = useState([]);
+  // const [form] = Form.useForm(); // Create form instance
 
+  // Fetch team members for select options
   useEffect(() => {
     fetchData('tsteam/team_member/fetch', (response) => {
       if (response.success && response.data) {
@@ -20,9 +22,24 @@ function TeamShowcaseFields() {
     });
   }, []);
 
-  const handleChange = (value) => {
-    console.log(`selected ${value}`);
-  };
+  // Fetch showcase data if `id` is provided and set form values
+  useEffect(() => {
+    if (post_id) {
+      fetchData(`tsteam/team_showcase/fetch/single`, (response) => {
+        if (response.success && response.data) {
+          form.setFieldsValue({
+            title: response.data.title,
+            team_members: response.data.meta_data.team_members.map((member) => ({
+              label: member.title,
+              value: member.post_id,
+            }))
+          });
+        } else {
+          console.error('Failed to fetch showcase data.');
+        }
+      }, { post_id: post_id });
+    }
+  }, [post_id, form]);
 
   return (
     <>
@@ -31,17 +48,20 @@ function TeamShowcaseFields() {
         name="title"
         rules={[{ required: true, message: 'Please input your showcase name!' }]}
       >
-        <Input />
+        <Input 
+        defaultValue={form.getFieldValue('title')}
+        />
       </Form.Item>
 
       <Form.Item
         name="team_members"
+        label="Team Members"
         rules={[{ required: false }]}
       >
-        <TsSelect 
-        label='Team Members'
-        options={teamMembers}
-        mode="multiple"
+        <TsSelect
+          value={form.getFieldValue('team_members')}
+          options={teamMembers}
+          mode="multiple"
         />
       </Form.Item>
     </>
