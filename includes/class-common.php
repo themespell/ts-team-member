@@ -36,4 +36,13 @@ class Common {
         return false;
     }
 
+    public static function get_default_showcase_settings(){
+        $showcase_settings = array(
+            'layout' => 'Card',
+            'view'   => 'grid'
+        );
+
+        return json_encode($showcase_settings);
+    }
+
 }
