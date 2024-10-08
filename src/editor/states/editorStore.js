@@ -1,13 +1,18 @@
 import { create } from 'zustand'
 
 const editorStore = create((set) => ({
-    // Variables
+    // Post Data
+    postID: null,
+    postType: null,
+
+    // Settings Variable
     layout: 'Card',
     view: 'grid',
 
-    // Functions
-    setLayout: (selectedLayout) => set({ layout: selectedLayout }),
-    setView: (selectedView) => set({ view: selectedView }),
+    updateState: (key, value) => set((state) => ({
+        ...state,
+        [key]: value,
+    })),
 }))
 
 export default editorStore;
