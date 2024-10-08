@@ -5,8 +5,8 @@ function TsButton({ id, prefix, label, onClick, htmlType }) {
     <>
       <button
       id={id}
-      class="btn btn-primary"
-      onclick={onClick}
+      className="tsteam-button btn btn-primary"
+      onClick={onClick}
       type={htmlType}
       >{prefix} {label}</button>
     </>
