@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Carousel } from 'antd';
-import StaticView from './StaticView';
+import Layout from './Layout';
 
-function CarouselView({ team_members, layout }) {
+function CarouselView({ team_members, settings }) {
     const onChange = (currentSlide) => {
         console.log(currentSlide);
     };
@@ -13,8 +13,8 @@ function CarouselView({ team_members, layout }) {
             {team_members && team_members.length > 0 ? (
               team_members.map((member, index) => (
                 <div key={index}>
-                  <StaticView
-                    layoutType={layout}
+                  <Layout
+                    layoutType={settings.layout}
                     imageUrl={member.team_member_image || "https://qodeinteractive.com/qi-addons-for-elementor/wp-content/uploads/2021/01/team-img-28.jpg"} // Fallback image if none provided
                     title={member.title || "No Name"}
                     subtitle={member.subtitle || "No Subtitle"}
