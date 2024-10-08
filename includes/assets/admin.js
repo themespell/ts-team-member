@@ -1,4 +1,4 @@
-import { R as React, r as reactIsExports, a as reactExports, i as index, _ as _inherits, b as _createSuper, c as _classCallCheck, d as _createClass, s as supportRef, u as useComposeRef, e as _objectSpread2, f as findDOMNode, g as _typeof, h as _extends, j as _defineProperty, L as LocaleContext, l as localeValues, k as useSafeState, m as _slicedToArray, n as useEvent, o as useLayoutUpdateEffect, w as warningOnce, p as generate$1, I as IconContext, q as updateCSS, t as _objectWithoutProperties, v as blue, x as classNames, y as genStyleHooks, z as resetComponent, A as unit, C as ConfigContext, B as CSSMotion, D as composeRef, E as _getPrototypeOf, F as _possibleConstructorReturn, G as _isNativeReflectConstruct, H as wrapperRaf, J as useToken, K as CSSMotionList, M as _toConsumableArray, N as reactDomExports, O as ReactDOM, P as defaultPrefixCls, Q as genComponentStyleHook, S as SizeContext, T as merge, U as getLineHeight, V as genFocusStyle, W as genSubStyleComponent, X as DisabledContext, Y as canUseDom, Z as useLayoutEffect$1, $ as removeCSS, a0 as React$1, a1 as contains, a2 as _setPrototypeOf, a3 as _assertThisInitialized, a4 as merge$1, a5 as get, a6 as set, a7 as isEqual, a8 as DisabledContextProvider, a9 as getConfirmLocale, aa as clearFix, ab as ConfigProvider, ac as globalConfig, ad as devUseWarning, ae as warning$2, af as fillRef, ag as isDOM, ah as _toArray, ai as useMemo, aj as TinyColor, ak as Variants, al as textEllipsis, am as resetIcon, an as supportNodeRef, ao as genFocusOutline, ap as getDOM, aq as ValidateMessagesContext, ar as ReactDOM$1, as as locale$1, at as debounce, au as getDefaultExportFromCjs, av as jsxRuntimeExports, aw as fetchData, ax as Frontend, ay as client } from "./frontend.js";
+import { R as React, r as reactIsExports, a as reactExports, i as index, _ as _inherits, b as _createSuper, c as _classCallCheck, d as _createClass, s as supportRef, u as useComposeRef, e as _objectSpread2, f as findDOMNode, g as _typeof, h as _extends, j as _defineProperty, L as LocaleContext, l as localeValues, k as useSafeState, m as _slicedToArray, n as useEvent, o as useLayoutUpdateEffect, w as warningOnce, p as generate$1, I as IconContext, q as updateCSS, t as _objectWithoutProperties, v as blue, x as classNames, y as genStyleHooks, z as resetComponent, A as unit, C as ConfigContext, B as CSSMotion, D as composeRef, E as _getPrototypeOf, F as _possibleConstructorReturn, G as _isNativeReflectConstruct, H as wrapperRaf, J as useToken, K as CSSMotionList, M as _toConsumableArray, N as reactDomExports, O as ReactDOM, P as defaultPrefixCls, Q as genComponentStyleHook, S as SizeContext, T as merge, U as getLineHeight, V as genFocusStyle, W as genSubStyleComponent, X as DisabledContext, Y as canUseDom, Z as useLayoutEffect$1, $ as removeCSS, a0 as React$1, a1 as contains, a2 as _setPrototypeOf, a3 as _assertThisInitialized, a4 as merge$1, a5 as get, a6 as set, a7 as isEqual, a8 as DisabledContextProvider, a9 as getConfirmLocale, aa as clearFix, ab as ConfigProvider, ac as globalConfig, ad as devUseWarning, ae as warning$2, af as fillRef, ag as isDOM, ah as _toArray, ai as useMemo, aj as TinyColor, ak as Variants, al as textEllipsis, am as resetIcon, an as supportNodeRef, ao as genFocusOutline, ap as getDOM, aq as ValidateMessagesContext, ar as ReactDOM$1, as as locale$1, at as debounce, au as getDefaultExportFromCjs, av as jsxRuntimeExports, aw as fetchData, ax as CarouselView, ay as StaticView, az as client } from "./frontend.js";
 function toArray$5(children) {
   var option = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
   var ret = [];
@@ -48215,8 +48215,8 @@ function TsButton({ id, prefix, label, onClick, htmlType }) {
     "button",
     {
       id,
-      class: "btn btn-primary",
-      onclick: onClick,
+      className: "tsteam-button btn btn-primary",
+      onClick,
       type: htmlType,
       children: [
         prefix,
@@ -59499,14 +59499,13 @@ function TsFont({ label, targetedClass, isPro }) {
     )
   ] });
 }
-const ajax_url$1 = tsteam_settings.ajax_url;
+const ajax_url$2 = tsteam_settings.ajax_url;
 const createData = (action, data) => {
   return new Promise((resolve, reject) => {
-    jQuery.post(ajax_url$1, {
+    jQuery.post(ajax_url$2, {
       _ajax_nonce: tsteam_settings.nonce,
       action,
       ...data
-      // Spread the data object to include all form fields
     }, function(response) {
       if (response.success) {
         resolve(response);
@@ -59524,9 +59523,8 @@ const toastNotification = (type4, message, description) => {
     showProgress: true
   });
 };
-function TeamShowcaseFields({ post_id }) {
+function TeamShowcaseFields({ form, post_id }) {
   const [teamMembers, setTeamMembers] = reactExports.useState([]);
-  const [form] = Form2.useForm();
   reactExports.useEffect(() => {
     fetchData("tsteam/team_member/fetch", (response) => {
       if (response.success && response.data) {
@@ -59557,7 +59555,7 @@ function TeamShowcaseFields({ post_id }) {
       }, { post_id });
     }
   }, [post_id, form]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(Form2, { form, layout: "vertical", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       Form2.Item,
       {
@@ -59689,9 +59687,8 @@ function FormContainer({ actionType, type: type4, name, post_id, onShowcaseAdded
       autoComplete: "off",
       layout: "vertical",
       children: [
-        type4 === "team_showcase" && /* @__PURE__ */ jsxRuntimeExports.jsx(TeamShowcaseFields, { post_id }),
+        type4 === "team_showcase" && /* @__PURE__ */ jsxRuntimeExports.jsx(TeamShowcaseFields, { form, post_id }),
         type4 === "team_member" && /* @__PURE__ */ jsxRuntimeExports.jsx(TeamMemberFields, { form }),
-        "  ",
         /* @__PURE__ */ jsxRuntimeExports.jsx(Form2.Item, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, { type: "primary", htmlType: "submit", children: actionType === "create" ? `Create ${name}` : actionType === "edit" ? `Update ${name}` : actionType === "delete" ? `Delete ${name}` : `Create ${name}` }) })
       ]
     }
@@ -59742,22 +59739,76 @@ function TsLoader({ label }) {
     }
   );
 }
-function Topbar$1() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { class: "flex flex-col justify-end bg-black p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    TsButton,
-    {
-      label: "Publish"
-    }
-  ) }) });
-}
 const editorStore = create((set2) => ({
-  // Variables
+  // Post Data
+  postID: null,
+  postType: null,
+  // Settings Variable
   layout: "Card",
   view: "grid",
-  // Functions
-  setLayout: (selectedLayout) => set2({ layout: selectedLayout }),
-  setView: (selectedView) => set2({ view: selectedView })
+  updateState: (key, value) => set2((state) => ({
+    ...state,
+    [key]: value
+  }))
 }));
+const ajax_url$1 = tsteam_settings.ajax_url;
+const updateData = (action, data, id) => {
+  return new Promise((resolve, reject) => {
+    jQuery.post(ajax_url$1, {
+      _ajax_nonce: tsteam_settings.nonce,
+      action,
+      post_id: id,
+      data
+    }, function(response) {
+      if (response.success) {
+        resolve(response);
+      } else {
+        reject(response);
+      }
+    });
+  });
+};
+const editorFunction = create((set2) => ({
+  saveSettings: (key, value) => {
+    const updateState = editorStore.getState().updateState;
+    updateState(key, value);
+  },
+  updateSettings: (action) => {
+    const state = editorStore.getState();
+    const { postID, postType, ...restState } = state;
+    const data = Object.keys(restState).filter((key) => typeof restState[key] !== "function").reduce((obj, key) => {
+      obj[key] = restState[key];
+      return obj;
+    }, {});
+    if (postID) {
+      updateData(action, data, postID).then((response) => {
+        toastNotification("success", `Successfully Updated`, `The settings have been successfully updated.`);
+        console.log("Settings updated successfully on the server:", response);
+        Object.keys(data).forEach((key) => {
+          editorStore.getState().updateState(key, data[key]);
+        });
+      }).catch((error) => {
+        toastNotification("error", `Update Failed`, `The settings have failed to update. Error: ${error}`);
+        console.error("Failed to update settings on the server:", error);
+      });
+    } else {
+      console.log("No postID available. Cannot update settings.");
+    }
+  }
+}));
+function Topbar$1({ type: type4 }) {
+  const handlePublishClick = () => {
+    const action = `tsteam/${type4}/update/settings`;
+    editorFunction.getState().updateSettings(action);
+  };
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-end bg-black p-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-end w-2/6", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    TsButton,
+    {
+      label: "Publish",
+      onClick: handlePublishClick
+    }
+  ) }) }) });
+}
 const defaultLayouts = [
   {
     label: "Card",
@@ -59795,8 +59846,8 @@ const range2 = {
   max: 20
 };
 function ContentTab() {
-  const { layout, setLayout } = editorStore();
-  const { view, setView } = editorStore();
+  const { layout, view } = editorStore();
+  const { saveSettings } = editorFunction();
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       TsSelect,
@@ -59804,7 +59855,7 @@ function ContentTab() {
         label: "Choose a Layout",
         value: layout,
         options: defaultLayouts,
-        onChange: (value) => setLayout(value)
+        onChange: (value) => saveSettings("layout", value)
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -59813,7 +59864,7 @@ function ContentTab() {
         label: "View Style",
         value: view,
         options: viewStyle,
-        onChange: (value) => setView(value)
+        onChange: (value) => saveSettings("view", value)
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(TsDivider, {}),
@@ -59927,7 +59978,9 @@ function hideAdminElements() {
   }
 }
 function Editor() {
-  const { layout, view } = editorStore();
+  const { postType } = editorStore();
+  const allSettings = editorStore();
+  const { saveSettings } = editorFunction();
   const [theme, setTheme] = reactExports.useState("Theme One");
   const [isSidebarOpen, setIsSidebarOpen] = reactExports.useState(true);
   const [isLoading, setIsLoading] = reactExports.useState(true);
@@ -59938,11 +59991,17 @@ function Editor() {
     const queryParams = new URLSearchParams(window.location.search);
     const postIdFromUrl = queryParams.get("post_id");
     const postTypeFromUrl = queryParams.get("type");
+    saveSettings("postID", postIdFromUrl);
+    saveSettings("postType", postTypeFromUrl);
     if (postIdFromUrl) {
       fetchData(`tsteam/${postTypeFromUrl}/fetch/single`, (response) => {
-        console.log(response.data);
         if (response && response.success) {
           setPostData(response.data.meta_data);
+          const showcaseSettings = JSON.parse(response.data.meta_data.showcase_settings);
+          Object.keys(showcaseSettings).forEach((key) => {
+            const value = showcaseSettings[key];
+            saveSettings(key, value);
+          });
           setTimeout(() => {
             setIsLoading(false);
           }, 1e3);
@@ -59980,7 +60039,12 @@ function Editor() {
     );
   }
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(Topbar$1, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      Topbar$1,
+      {
+        type: postType
+      }
+    ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       Sidebar,
       {
@@ -59990,12 +60054,17 @@ function Editor() {
         setTheme
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "editor-container", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Frontend,
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "editor-container", children: allSettings.view === "carousel" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+      CarouselView,
       {
-        layout,
-        view,
-        data: postData
+        team_members: postData.team_members,
+        settings: allSettings
+      }
+    ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+      StaticView,
+      {
+        team_members: postData.team_members,
+        settings: allSettings
       }
     ) })
   ] });
@@ -60007,10 +60076,14 @@ const useAdminStore = create((set2) => ({
 }));
 function TableNavItems({ title }) {
   const { isOpen, openModal, closeShowcaseModal } = useAdminStore();
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-between", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: openModal, className: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600", children: [
-    "Create New ",
-    title
-  ] }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-between", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    TsButton,
+    {
+      label: title,
+      prefix: "Create",
+      onClick: openModal
+    }
+  ) });
 }
 function TableNav({ type: type4, title }) {
   const { isOpen, closeShowcaseModal } = useAdminStore();
@@ -60053,7 +60126,6 @@ function DataTable({ type: type4, title, editor }) {
   reactExports.useEffect(() => {
     fetchData(`tsteam/${type4}/fetch`, (response) => {
       if (response && response.success) {
-        console.log(response.data);
         const showcaseData = response.data.map((item) => ({
           key: item.post_id,
           ...item

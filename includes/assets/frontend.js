@@ -16107,7 +16107,7 @@ const __variableDynamicImportRuntimeHelper = (glob, path, segs) => {
     );
   });
 };
-function StaticView({ layoutType, imageUrl, title, subtitle, description, socialIcons }) {
+function Layout({ layoutType, imageUrl, title, subtitle, description, socialIcons }) {
   const [cardData, setCardData] = reactExports.useState(null);
   reactExports.useEffect(() => {
     if (layoutType) {
@@ -16141,14 +16141,27 @@ function StaticView({ layoutType, imageUrl, title, subtitle, description, social
     ] })
   ] });
 }
-function CarouselView({ team_members, layout }) {
+function StaticView({ team_members, settings }) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-container w-3/6", children: team_members && team_members.length > 0 ? team_members.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Layout,
+    {
+      layoutType: settings.layout,
+      imageUrl: member.team_member_image || "https://qodeinteractive.com/qi-addons-for-elementor/wp-content/uploads/2021/01/team-img-28.jpg",
+      title: member.title || "No Name",
+      subtitle: member.subtitle || "No Subtitle",
+      description: member.description || "No description available.",
+      socialIcons: member.socialIcons || []
+    }
+  ) }, index2)) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No team members found." }) });
+}
+function CarouselView({ team_members, settings }) {
   const onChange = (currentSlide) => {
     console.log(currentSlide);
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-container w-3/6", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Carousel, { slidesPerRow: 2, slidesToScroll: 1, draggable: true, centerMode: true, autoplay: true, afterChange: onChange, children: team_members && team_members.length > 0 ? team_members.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-    StaticView,
+    Layout,
     {
-      layoutType: layout,
+      layoutType: settings.layout,
       imageUrl: member.team_member_image || "https://qodeinteractive.com/qi-addons-for-elementor/wp-content/uploads/2021/01/team-img-28.jpg",
       title: member.title || "No Name",
       subtitle: member.subtitle || "No Subtitle",
@@ -16160,54 +16173,44 @@ function CarouselView({ team_members, layout }) {
 const showcaseElements = document.querySelectorAll(".tsteam-showcase");
 showcaseElements.forEach((element) => {
   const id2 = element.getAttribute("data-id");
-  const layoutType = element.getAttribute("data-layout-type");
   createRoot(element).render(
     /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       Frontend,
       {
-        layout: layoutType || "Overlay",
         id: id2
       }
     ) })
   );
 });
-function Frontend({ layout, view, id: id2, data }) {
-  const [team_members, setTeamMembers] = reactExports.useState((data == null ? void 0 : data.team_members) || null);
+function Frontend({ id: id2 }) {
+  const [teamMembers, setTeamMembers] = reactExports.useState([]);
+  const [settings, setSettings] = reactExports.useState({});
   reactExports.useEffect(() => {
-    if (!team_members && id2) {
+    if (id2) {
       fetchData(`tsteam/team_showcase/fetch/single`, (response) => {
         if (response && response.success) {
           setTeamMembers(response.data.meta_data.team_members);
+          const showcaseSettings = JSON.parse(response.data.meta_data.showcase_settings);
+          setSettings(showcaseSettings);
         } else {
           console.error("Error fetching post data:", response);
         }
       }, { post_id: id2 });
-    } else if (!id2) {
+    } else {
       console.error("No post_id found");
     }
-  });
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: view === "carousel" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+  }, [id2]);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: settings.view === "carousel" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
     CarouselView,
     {
-      team_members,
-      layout
+      team_members: teamMembers,
+      settings
     }
   ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
+    StaticView,
     {
-      className: "tsteam-container",
-      children: team_members && team_members.length > 0 ? team_members.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        StaticView,
-        {
-          layoutType: layout,
-          imageUrl: member.team_member_image,
-          title: member.title || "No Name",
-          subtitle: member.subtitle || "No Subtitle",
-          description: member.description || "No description available.",
-          socialIcons: member.socialIcons || []
-        },
-        index2
-      )) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No team members found." })
+      team_members: teamMembers,
+      settings
     }
   ) });
 }
@@ -16274,8 +16277,9 @@ export {
   getDefaultExportFromCjs as au,
   jsxRuntimeExports as av,
   fetchData as aw,
-  Frontend as ax,
-  client as ay,
+  CarouselView as ax,
+  StaticView as ay,
+  client as az,
   _createSuper as b,
   _classCallCheck as c,
   _createClass as d,
