@@ -8,11 +8,11 @@ function FormContainer({ actionType, type, name, post_id, onShowcaseAdded }) {
   const [form] = Form.useForm();
 
   const onFinish = (data) => {
-    createData(`tsteam/${type}/create`, data)  // Pass the form data directly
+    createData(`tsteam/${type}/create`, data)
     .then(response => {
         toastNotification('success', `${name} Created`, `The ${name} has been successfully created.`);
         if (onShowcaseAdded) {
-          onShowcaseAdded();  // Call callback if provided
+          onShowcaseAdded();
         }
     })
     .catch(error => {
@@ -33,8 +33,8 @@ function FormContainer({ actionType, type, name, post_id, onShowcaseAdded }) {
       autoComplete="off"
       layout="vertical"
     >
-      {type === 'team_showcase' && <TeamShowcaseFields post_id={post_id} />}
-      {type === 'team_member' && <TeamMemberFields form={form} />}  {/* Pass form to TeamMemberFields */}
+      {type === 'team_showcase' && <TeamShowcaseFields form={form} post_id={post_id} />}
+      {type === 'team_member' && <TeamMemberFields form={form} />}
       
       <Form.Item>
         <Button type="primary" htmlType="submit">
