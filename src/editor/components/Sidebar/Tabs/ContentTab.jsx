@@ -1,5 +1,6 @@
 import { TsSelect, TsSlider, TsDivider } from '../../../../common/components/controls/tsControls';
 import editorStore from '../../../states/editorStore';
+import editorFunction from '../../../states/editorFunction';
 
 const defaultLayouts = [
   {
@@ -41,8 +42,8 @@ const range = {
 };
 
 function ContentTab() {
-  const { layout, setLayout } = editorStore();
-  const { view, setView } = editorStore();
+  const { layout, view } = editorStore();
+  const { saveSettings } = editorFunction();
 
   return (
     <div>
@@ -50,14 +51,14 @@ function ContentTab() {
       label="Choose a Layout"
       value={layout}
       options={defaultLayouts}
-      onChange={(value) => setLayout(value)}
+      onChange={(value) => saveSettings('layout', value)}
       />
 
       <TsSelect
       label="View Style"
       value={view}
       options={viewStyle}
-      onChange={(value) => setView(value)}
+      onChange={(value) => saveSettings('view', value)}
       />
       <TsDivider />
       <TsSlider
