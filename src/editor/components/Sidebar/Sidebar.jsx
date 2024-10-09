@@ -4,8 +4,9 @@ import StyleTab from './Tabs/StyleTab';
 import AdvanceTab from "./Tabs/AdvanceTab";
 import { TsDrawer } from '../../../common/components/controls/tsControls';
 
-function Sidebar({ isOpen, onClose }) {
+import editorStore from "../../states/editorStore";
 
+function Sidebar({ isOpen, onClose }) {
   const items = [
     {
       label: 'Content',

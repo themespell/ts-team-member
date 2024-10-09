@@ -1,11 +1,16 @@
+#wpbody-content {
+    padding-bottom: 0px !important;
+    overflow: auto;
+}
+
 .editor-container {
-    @apply flex justify-center items-center h-screen;
+    max-width: 50%;
 }
   
 .editor-hover {
-    @apply p-2 border border-transparent hover:border-blue-500 transition duration-300;
+    @apply p-2 border border-transparent hover:border-blue-500 transition duration-300 w-full;
 }
 
 .tsteam-container{
-    @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-3/6 h-fit;
+    @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-3/6 h-full;
   }
