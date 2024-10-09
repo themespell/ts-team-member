@@ -1,4 +1,5 @@
-import { TsSelect, TsSlider, TsDivider } from '../../../../common/components/controls/tsControls';
+import { Collapse } from "antd";
+import { TsSelect, TsSlider, TsDivider, TsSwitch } from '../../../../common/components/controls/tsControls';
 import editorStore from '../../../states/editorStore';
 import editorFunction from '../../../states/editorFunction';
 
@@ -36,15 +37,9 @@ const viewStyle = [
   },
 ];
 
-const range = {
-  min: 1,
-  max: 20,
-};
-
 function ContentTab() {
-  const { layout, view } = editorStore();
+  const { layout, view, carouselSettings } = editorStore();
   const { saveSettings } = editorFunction();
-
   return (
     <div>
       <TsSelect
@@ -60,23 +55,58 @@ function ContentTab() {
       options={viewStyle}
       onChange={(value) => saveSettings('view', value)}
       />
+
+      {view === 'carousel' && (
+      <div>
       <TsDivider />
-      <TsSlider
-      label="Container Width"
-      range={range}
-      />
-      <TsSlider
-      label="Columns"
-      range={range}
-      />
-      <TsSlider
+      <Collapse
+      defaultActiveKey={['1']}
+      items={[
+        {
+          key: '1',
+          label: 'Carousel Settings',
+          children: [
+            <>
+            <TsSlider
+              label="Slides To Show"
+              range={carouselSettings.slidesToShow?.range}
+              value={carouselSettings.slidesToShow?.default}
+              onChange={(value) => saveSettings('carouselSettings.slidesToShow.default', value)}
+              />
+            <TsSlider
+            label="Slides To Scroll"
+            range={carouselSettings.slidesToScroll?.range}
+            value={carouselSettings.slidesToScroll?.default}
+            onChange={(value) => saveSettings('carouselSettings.slidesToScroll.default', value)}
+            />
+            <TsSwitch
+            label="Draggable"
+            value={carouselSettings.draggable}
+            onChange={(value) => saveSettings('carouselSettings.draggable', value ? 'true' : 'false')}
+            />
+            <TsSwitch
+            label="Centered Slide"
+            value={carouselSettings.centerSlide}
+            onChange={(value) => saveSettings('carouselSettings.centerSlide', value ? 'true' : 'false')}
+            />
+            <TsSwitch
+            label="Autoplay"
+            value={carouselSettings.autoPlay}
+            onChange={(value) => saveSettings('carouselSettings.autoPlay', value ? 'true' : 'false')}
+            />
+            </>
+          ],
+        },
+      ]}
+    />
+    </div>
+      )}
+      {/* <TsSlider
       label="Horizontal Gap"
-      range={range}
       />
       <TsSlider
       label="Vertical Gap"
-      range={range}
-      />
+      /> */}
     </div>
   );
 }
