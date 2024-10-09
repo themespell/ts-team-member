@@ -4,6 +4,7 @@ import { fetchData } from '../services/fetchData';
 import { deleteData } from "../services/deleteData";
 import { toastNotification } from '.././utils/toastNotification.js';
 import { TsModal } from './controls/tsControls.js';
+import { PaintBrushIcon, PencilIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 
 function DataTable({ type, title, editor }) {
   const [data, setData] = useState([]);
@@ -31,11 +32,11 @@ function DataTable({ type, title, editor }) {
           key: 'action',
           render: (_, record) => (
             <Space size="middle">
-              <a onClick={() => handleEdit(record.key)}>Edit</a>
+              <a onClick={() => handleEdit(record.key)}><PencilSquareIcon className="size-5 tsteam__color--icon" /></a>
               {editor && (
-                <a onClick={() => handleEditor(record.key, type)}>Edit Design</a>
+                <a onClick={() => handleEditor(record.key, type)}><PaintBrushIcon className="size-5 tsteam__color--icon" /></a>
               )}
-              <a onClick={() => handleDelete(record.key)}>Delete</a>
+              <a onClick={() => handleDelete(record.key)}><TrashIcon className="size-5 text-red-500" /></a>
             </Space>
           ),
         };
@@ -85,7 +86,7 @@ function DataTable({ type, title, editor }) {
   }
 
   return (
-    <div className="shadow-md rounded-lg overflow-hidden">
+    <div className="shadow-md rounded-lg overflow-hidden mt-4">
       <Table
       columns={columns} 
       dataSource={data} />
