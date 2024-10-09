@@ -4,7 +4,7 @@ function TeamShowcase() {
   return (
     <div className="min-h-fit flex">
       {/* Main Content */}
-      <div className="flex-1 p-6">
+      <div className="flex-1">
       <Container
             type='team_showcase'
             title='Team Showcase'
