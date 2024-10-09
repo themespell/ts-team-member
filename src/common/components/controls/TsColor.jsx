@@ -1,7 +1,7 @@
-import { ColorPicker } from 'antd';
+import { ColorPicker } from "antd";
 import globalSettings from '../../utils/globalSettings';
 
-function TsColor({ label, value, options, onChange }) {
+function TsColor({ label, value, onChange }) {
   return (
     <div className="mb-4">
       {label && (
@@ -14,9 +14,9 @@ function TsColor({ label, value, options, onChange }) {
         }
         >{label}</label>
       )}
-      <ColorPicker 
-      defaultValue={value} 
-      onChange={onChange}
+      <ColorPicker
+      defaultValue={`#${value}`}
+      onChange={(c) => {onChange(c.toHexString());}}
       />
     </div>
   );
