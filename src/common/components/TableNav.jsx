@@ -6,9 +6,9 @@ import { TsModal } from './controls/tsControls.js';
 function TableNav({type, title}) {
   const { isOpen, closeShowcaseModal } = useAdminStore();
   return (
-    <div className="mb-6">
-          <h2 className="text-2xl font-semibold text-gray-700">{title}</h2>
-          <div className="flex justify-between mt-4">
+    <div className="">
+          <h4 className="text-xl font-semibold mb-4">{title}</h4>
+          <div className="flex justify-between">
             <TableNavItems title={title} />
 
             <TsModal
@@ -18,7 +18,7 @@ function TableNav({type, title}) {
               type={type}
               isOpen={isOpen}
               isClose={closeShowcaseModal}
-              width={550} />
+              width={650} />
         </div>
     </div>
   );
