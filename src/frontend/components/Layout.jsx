@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Layout({ layoutType, imageUrl, title, subtitle, description, socialIcons }) {
+function Layout({ settings, layoutType, imageUrl, title, subtitle, description, socialIcons }) {
     const [cardData, setCardData] = useState(null);
 
     // Dynamically import the JSON based on the layoutType prop
@@ -22,9 +22,12 @@ function Layout({ layoutType, imageUrl, title, subtitle, description, socialIcon
     }
 
     const { container, image, animation, content } = cardData.layout;
-
     return (
-        <div className={`${container.style} ${animation.style}`}>
+        <div className={`${container.style} ${animation.style}`}
+        style={{
+            backgroundColor: settings?.cardStyle?.color?.backgroundColor,
+        }}
+        >
             {/* Image Section */}
             <img
                 className={image.style}
@@ -33,7 +36,11 @@ function Layout({ layoutType, imageUrl, title, subtitle, description, socialIcon
             />
 
             {/* Content Section */}
-            <div className={content.style}>
+            <div className={content.style}
+            style={{
+                color: settings?.cardStyle?.color?.textColor,
+            }}
+            >
                 {/* Header Section */}
                 {content.header && (
                     <div>

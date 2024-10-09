@@ -1,7 +1,7 @@
-import { ColorPicker } from "antd";
+import { Switch } from "antd";
 import globalSettings from '../../utils/globalSettings';
 
-function TsColor({ label, value, onChange }) {
+function TsSwitch({ label, value, onChange }) {
   return (
     <div className="mb-4">
       {label && (
@@ -14,12 +14,11 @@ function TsColor({ label, value, onChange }) {
         }
         >{label}</label>
       )}
-      <ColorPicker
-      defaultValue={`#${value}`}
-      onChange={(c) => {onChange(c.toHexString());}}
-      />
+      <Switch
+      value={value === 'true' || value === true}
+      onChange={onChange} />
     </div>
   );
 }
 
-export default TsColor;
+export default TsSwitch;

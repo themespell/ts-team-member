@@ -3,16 +3,25 @@ import Layout from './Layout';
 
 function StaticView({ team_members, settings }) {  
     return (
-        <div className='tsteam-container w-3/6'>
+        <div 
+        className='tsteam-container w-3/6'
+        style={{
+            width: `${settings?.containerSettings?.width?.default}px`,
+            // // display: 'grid',
+            gridTemplateColumns: `repeat(${settings.columnSettings?.column?.default}, 1fr)`,
+            gap: `${settings.columnSettings?.gap?.default}px`,
+        }}
+        >
             {team_members && team_members.length > 0 ? (
               team_members.map((member, index) => (
                 <div key={index}>
                   <Layout
+                    settings={settings}
                     layoutType={settings.layout}
-                    imageUrl={member.team_member_image || "https://qodeinteractive.com/qi-addons-for-elementor/wp-content/uploads/2021/01/team-img-28.jpg"} // Fallback image if none provided
-                    title={member.title || "No Name"}
-                    subtitle={member.subtitle || "No Subtitle"}
-                    description={member.description || "No description available."}
+                    imageUrl={member.team_member_image}
+                    title={member.title}
+                    subtitle={member.subtitle}
+                    description={member.description}
                     socialIcons={member.socialIcons || []}
                   />
                 </div>

@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
-import useStore from '../store.js';
-import Topbar from './components/Topbar.jsx';
-import Sidebar from './components/Sidebar/Sidebar.jsx';
-import Frontend from '../frontend/Frontend.jsx';
 import { hideAdminElements } from './utils/utils.js';
-import './components/assets/editorStyle.css';
 import { fetchData } from '../common/services/fetchData.js';
 import { TsLoader } from '../common/components/controls/tsControls.js';
 
 import editorStore from './states/editorStore.js';
 import editorFunction from './states/editorFunction.js';
+
+import Topbar from './components/Topbar.jsx';
+import Sidebar from './components/Sidebar/Sidebar.jsx';
+import './components/assets/editorStyle.css';
 
 import CarouselView from '../frontend/components/CarouselView.jsx';
 import StaticView from '../frontend/components/StaticView.jsx';
@@ -78,6 +77,12 @@ function Editor() {
     setIsSidebarOpen(false);
   };
 
+  const handleEditorClick = () => {
+    if (!isSidebarOpen) {
+      setIsSidebarOpen(true);
+    }
+  };
+
   if (isLoading || postData === null) {
     return (
       <TsLoader
@@ -97,7 +102,11 @@ function Editor() {
         theme={theme}
         setTheme={setTheme}
       />
-      <div className='editor-container'>
+      <div className='flex justify-center items-center min-h-screen mx-auto'>
+      <div 
+          className="editor-container editor-hover" 
+          onClick={handleEditorClick}
+      >
       {allSettings.view === "carousel" ? (
         <CarouselView
           team_members={postData.team_members}
@@ -109,6 +118,7 @@ function Editor() {
           settings={allSettings}
         />
       )}
+      </div>
       </div>
     </>
   );
