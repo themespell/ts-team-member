@@ -46,7 +46,6 @@ class TeamShowcase {
 			$showcases[] = array(
 				'post_id'   => get_the_ID(),
 				'title'     => get_the_title(),
-				'content'   => get_the_content(),
 				'shortcode' => '[tsteam_showcase id="' . get_the_ID() . '"]',
 			);
 		}
