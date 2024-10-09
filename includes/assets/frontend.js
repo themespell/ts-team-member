@@ -8839,8 +8839,8 @@ function trim(value) {
 function replace(value, pattern, replacement) {
   return value.replace(pattern, replacement);
 }
-function indexof(value, search) {
-  return value.indexOf(search);
+function indexof(value, search, position2) {
+  return value.indexOf(search, position2);
 }
 function charat(value, index2) {
   return value.charCodeAt(index2) | 0;
@@ -8863,8 +8863,8 @@ var length = 0;
 var position = 0;
 var character = 0;
 var characters = "";
-function node(value, root, parent, type, props, children, length2) {
-  return { value, root, parent, type, props, children, line, column, length: length2, return: "" };
+function node(value, root, parent, type, props, children, length2, siblings) {
+  return { value, root, parent, type, props, children, line, column, length: length2, return: "", siblings };
 }
 function char() {
   return character;
@@ -9001,7 +9001,7 @@ function parse(value, root, parent, rule, rules, rulesets, pseudo, points, decla
     switch (previous = character2, character2 = next()) {
       case 40:
         if (previous != 108 && charat(characters2, length2 - 1) == 58) {
-          if (indexof(characters2 += replace(delimit(character2), "&", "&\f"), "&\f") != -1)
+          if (indexof(characters2 += replace(delimit(character2), "&", "&\f"), "&\f", abs(index2 ? points[index2 - 1] : 0)) != -1)
             ampersand = -1;
           break;
         }
@@ -9023,7 +9023,8 @@ function parse(value, root, parent, rule, rules, rulesets, pseudo, points, decla
         switch (peek()) {
           case 42:
           case 47:
-            append(comment(commenter(next(), caret()), root, parent), declarations);
+            append(comment(commenter(next(), caret()), root, parent, declarations), declarations);
+            if ((token(previous || 1) == 5 || token(peek() || 1) == 5) && strlen(characters2) && substr(characters2, -1, void 0) !== " ") characters2 += " ";
             break;
           default:
             characters2 += "/";
@@ -9040,13 +9041,13 @@ function parse(value, root, parent, rule, rules, rulesets, pseudo, points, decla
             scanning = 0;
           case 59 + offset:
             if (ampersand == -1) characters2 = replace(characters2, /\f/g, "");
-            if (property > 0 && strlen(characters2) - length2)
-              append(property > 32 ? declaration(characters2 + ";", rule, parent, length2 - 1) : declaration(replace(characters2, " ", "") + ";", rule, parent, length2 - 2), declarations);
+            if (property > 0 && (strlen(characters2) - length2 || variable === 0 && previous === 47))
+              append(property > 32 ? declaration(characters2 + ";", rule, parent, length2 - 1, declarations) : declaration(replace(characters2, " ", "") + ";", rule, parent, length2 - 2, declarations), declarations);
             break;
           case 59:
             characters2 += ";";
           default:
-            append(reference = ruleset(characters2, root, parent, index2, offset, rules, points, type, props = [], children = [], length2), rulesets);
+            append(reference = ruleset(characters2, root, parent, index2, offset, rules, points, type, props = [], children = [], length2, rulesets), rulesets);
             if (character2 === 123)
               if (offset === 0)
                 parse(characters2, root, reference, reference, props, rulesets, length2, points, children);
@@ -9056,7 +9057,7 @@ function parse(value, root, parent, rule, rules, rulesets, pseudo, points, decla
                   case 108:
                   case 109:
                   case 115:
-                    parse(value, reference, reference, rule && append(ruleset(value, reference, reference, 0, 0, rules, points, type, rules, props = [], length2), children), rules, children, length2, points, rule ? props : children);
+                    parse(value, reference, reference, rule && append(ruleset(value, reference, reference, 0, 0, rules, points, type, rules, props = [], length2, children), children), rules, children, length2, points, rule ? props : children);
                     break;
                   default:
                     parse(characters2, reference, reference, reference, [""], children, 0, points, children);
@@ -9092,7 +9093,7 @@ function parse(value, root, parent, rule, rules, rulesets, pseudo, points, decla
     }
   return rulesets;
 }
-function ruleset(value, root, parent, index2, offset, rules, points, type, props, children, length2) {
+function ruleset(value, root, parent, index2, offset, rules, points, type, props, children, length2, siblings) {
   var post = offset - 1;
   var rule = offset === 0 ? rules : [""];
   var size = sizeof(rule);
@@ -9100,18 +9101,17 @@ function ruleset(value, root, parent, index2, offset, rules, points, type, props
     for (var x2 = 0, y2 = substr(value, post + 1, post = abs(j = points[i])), z2 = value; x2 < size; ++x2)
       if (z2 = trim(j > 0 ? rule[x2] + " " + y2 : replace(y2, /&\f/g, rule[x2])))
         props[k2++] = z2;
-  return node(value, root, parent, offset === 0 ? RULESET : type, props, children, length2);
+  return node(value, root, parent, offset === 0 ? RULESET : type, props, children, length2, siblings);
 }
-function comment(value, root, parent) {
-  return node(value, root, parent, COMMENT, from(char()), substr(value, 2, -2), 0);
+function comment(value, root, parent, siblings) {
+  return node(value, root, parent, COMMENT, from(char()), substr(value, 2, -2), 0, siblings);
 }
-function declaration(value, root, parent, length2) {
-  return node(value, root, parent, DECLARATION, substr(value, 0, length2), substr(value, length2 + 1, -1), length2);
+function declaration(value, root, parent, length2, siblings) {
+  return node(value, root, parent, DECLARATION, substr(value, 0, length2), substr(value, length2 + 1, -1), length2, siblings);
 }
 function serialize(children, callback) {
   var output = "";
-  var length2 = sizeof(children);
-  for (var i = 0; i < length2; i++)
+  for (var i = 0; i < children.length; i++)
     output += callback(children[i], i, children, callback) || "";
   return output;
 }
@@ -9127,7 +9127,7 @@ function stringify(element, index2, children, callback) {
     case KEYFRAMES:
       return element.return = element.value + "{" + serialize(element.children, callback) + "}";
     case RULESET:
-      element.value = element.props.join(",");
+      if (!strlen(element.value = element.props.join(","))) return "";
   }
   return strlen(children = serialize(element.children, callback)) ? element.return = element.value + "{" + children + "}" : "";
 }
@@ -9261,6 +9261,8 @@ var parseStyle = function parseStyle2(interpolation) {
           if ((root || injectHash) && hashId) {
             if (mergedKey.startsWith("@")) {
               subInjectHash = true;
+            } else if (mergedKey === "&") {
+              mergedKey = injectSelectorHash("", hashId, hashPriority);
             } else {
               mergedKey = injectSelectorHash(key, hashId, hashPriority);
             }
@@ -9856,7 +9858,10 @@ const localeValues = {
     scanned: "Scanned"
   },
   ColorPicker: {
-    presetEmpty: "Empty"
+    presetEmpty: "Empty",
+    transparent: "Transparent",
+    singleColor: "Single",
+    gradientColor: "Gradient"
   }
 };
 let runtimeLocale = Object.assign({}, localeValues.Modal);
@@ -11064,6 +11069,7 @@ function genColorMapToken(seed, _ref) {
   const neutralColors = generateNeutralColorPalettes2(colorBgBase, colorTextBase);
   const colorLink = seed.colorLink || seed.colorInfo;
   const linkColors = generateColorPalettes2(colorLink);
+  const colorErrorBgFilledHover = new TinyColor(errorColors[1]).mix(new TinyColor(errorColors[3]), 50).toHexString();
   return Object.assign(Object.assign({}, neutralColors), {
     colorPrimaryBg: primaryColors[1],
     colorPrimaryBgHover: primaryColors[2],
@@ -11087,6 +11093,7 @@ function genColorMapToken(seed, _ref) {
     colorSuccessTextActive: successColors[10],
     colorErrorBg: errorColors[1],
     colorErrorBgHover: errorColors[2],
+    colorErrorBgFilledHover,
     colorErrorBgActive: errorColors[3],
     colorErrorBorder: errorColors[3],
     colorErrorBorderHover: errorColors[4],
@@ -11302,6 +11309,9 @@ const generateNeutralColorPalettes = (bgBaseColor, textBaseColor) => {
     colorFillSecondary: getAlphaColor$1(colorTextBase, 0.06),
     colorFillTertiary: getAlphaColor$1(colorTextBase, 0.04),
     colorFillQuaternary: getAlphaColor$1(colorTextBase, 0.02),
+    colorBgSolid: getAlphaColor$1(colorTextBase, 1),
+    colorBgSolidHover: getAlphaColor$1(colorTextBase, 0.75),
+    colorBgSolidActive: getAlphaColor$1(colorTextBase, 0.95),
     colorBgLayout: getSolidColor(colorBgBase, 4),
     colorBgContainer: getSolidColor(colorBgBase, 0),
     colorBgElevated: getSolidColor(colorBgBase, 0),
@@ -11685,7 +11695,9 @@ function merge() {
   recording = false;
   var ret = {};
   objs.forEach(function(obj) {
-    if (_typeof(obj) !== "object") return;
+    if (_typeof(obj) !== "object") {
+      return;
+    }
     var keys2 = Object.keys(obj);
     keys2.forEach(function(key) {
       Object.defineProperty(ret, key, {
@@ -11712,7 +11724,8 @@ var statisticToken = function statisticToken2(token2) {
     proxy = new Proxy(token2, {
       get: function get2(obj, prop) {
         if (recording) {
-          tokenKeys2.add(prop);
+          var _tokenKeys;
+          (_tokenKeys = tokenKeys2) === null || _tokenKeys === void 0 || _tokenKeys.add(prop);
         }
         return obj[prop];
       }
@@ -11916,6 +11929,9 @@ function genStyleUtils(config) {
     var cells = Array.isArray(componentName) ? componentName : [componentName, componentName];
     var _cells = _slicedToArray(cells, 1), component = _cells[0];
     var concatComponent = cells.join("-");
+    var mergedLayer = config.layer || {
+      name: "antd"
+    };
     return function(prefixCls) {
       var rootCls = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : prefixCls;
       var _useToken3 = useToken2(), theme = _useToken3.theme, realToken = _useToken3.realToken, hashId = _useToken3.hashId, token2 = _useToken3.token, cssVar = _useToken3.cssVar;
@@ -11941,9 +11957,7 @@ function genStyleUtils(config) {
           return csp.nonce;
         },
         clientOnly: options.clientOnly,
-        layer: {
-          name: "antd"
-        },
+        layer: mergedLayer,
         // antd is always at top of styles
         order: options.order || -999
       };
@@ -11965,7 +11979,7 @@ function genStyleUtils(config) {
         var componentToken = getComponentToken(component, realToken, defaultComponentToken, {
           deprecatedTokens: options.deprecatedTokens
         });
-        if (cssVar && _typeof(defaultComponentToken) === "object") {
+        if (cssVar && defaultComponentToken && _typeof(defaultComponentToken) === "object") {
           Object.keys(defaultComponentToken).forEach(function(key) {
             defaultComponentToken[key] = "var(".concat(token2CSSVar(key, getCompVarPrefix(component, cssVar.prefix)), ")");
           });
@@ -12014,7 +12028,7 @@ function genStyleUtils(config) {
     genComponentStyleHook: genComponentStyleHook2
   };
 }
-const version = "5.19.4";
+const version = "5.21.2";
 function isStableColor(color) {
   return color >= 0 && color <= 255;
 }
@@ -12108,7 +12122,7 @@ function formatToken(derivativeToken) {
     // Font
     fontSizeIcon: mergedToken.fontSizeSM,
     // Line
-    lineWidthFocus: mergedToken.lineWidth * 4,
+    lineWidthFocus: mergedToken.lineWidth * 3,
     // Control
     lineWidth: mergedToken.lineWidth,
     controlOutlineWidth: mergedToken.lineWidth * 2,
@@ -12442,6 +12456,26 @@ const genFocusOutline = (token2) => ({
 });
 const genFocusStyle = (token2) => ({
   "&:focus-visible": Object.assign({}, genFocusOutline(token2))
+});
+const operationUnit = (token2) => Object.assign(Object.assign({
+  // FIXME: This use link but is a operation unit. Seems should be a colorPrimary.
+  // And Typography use this to generate link style which should not do this.
+  color: token2.colorLink,
+  textDecoration: token2.linkDecoration,
+  outline: "none",
+  cursor: "pointer",
+  transition: `all ${token2.motionDurationSlow}`,
+  border: 0,
+  padding: 0,
+  background: "none",
+  userSelect: "none"
+}, genFocusStyle(token2)), {
+  "&:focus, &:hover": {
+    color: token2.colorLinkHover
+  },
+  "&:active": {
+    color: token2.colorLinkActive
+  }
 });
 const useResetIconStyle = (iconPrefixCls, csp) => {
   const [theme, token2] = useToken();
@@ -13077,20 +13111,26 @@ function genCSSMotionList(transitionSupport) {
         keyEntities: []
       });
       _defineProperty(_assertThisInitialized(_this), "removeKey", function(removeKey) {
-        var keyEntities = _this.state.keyEntities;
-        var nextKeyEntities = keyEntities.map(function(entity) {
-          if (entity.key !== removeKey) return entity;
-          return _objectSpread2(_objectSpread2({}, entity), {}, {
-            status: STATUS_REMOVED
+        _this.setState(function(prevState) {
+          var nextKeyEntities = prevState.keyEntities.map(function(entity) {
+            if (entity.key !== removeKey) return entity;
+            return _objectSpread2(_objectSpread2({}, entity), {}, {
+              status: STATUS_REMOVED
+            });
           });
+          return {
+            keyEntities: nextKeyEntities
+          };
+        }, function() {
+          var keyEntities = _this.state.keyEntities;
+          var restKeysCount = keyEntities.filter(function(_ref) {
+            var status = _ref.status;
+            return status !== STATUS_REMOVED;
+          }).length;
+          if (restKeysCount === 0 && _this.props.onAllRemoved) {
+            _this.props.onAllRemoved();
+          }
         });
-        _this.setState({
-          keyEntities: nextKeyEntities
-        });
-        return nextKeyEntities.filter(function(_ref) {
-          var status = _ref.status;
-          return status !== STATUS_REMOVED;
-        }).length;
       });
       return _this;
     }
@@ -13099,7 +13139,9 @@ function genCSSMotionList(transitionSupport) {
       value: function render() {
         var _this2 = this;
         var keyEntities = this.state.keyEntities;
-        var _this$props = this.props, component = _this$props.component, children = _this$props.children, _onVisibleChanged = _this$props.onVisibleChanged, onAllRemoved = _this$props.onAllRemoved, restProps = _objectWithoutProperties(_this$props, _excluded$1);
+        var _this$props = this.props, component = _this$props.component, children = _this$props.children, _onVisibleChanged = _this$props.onVisibleChanged;
+        _this$props.onAllRemoved;
+        var restProps = _objectWithoutProperties(_this$props, _excluded$1);
         var Component = component || reactExports.Fragment;
         var motionProps = {};
         MOTION_PROP_NAMES.forEach(function(prop) {
@@ -13119,10 +13161,7 @@ function genCSSMotionList(transitionSupport) {
                 key: eventProps.key
               });
               if (!changedVisible) {
-                var restKeysCount = _this2.removeKey(eventProps.key);
-                if (restKeysCount === 0 && onAllRemoved) {
-                  onAllRemoved();
-                }
+                _this2.removeKey(eventProps.key);
               }
             }
           }), function(props, ref) {
@@ -13254,6 +13293,7 @@ const ProviderChildren = (props) => {
     componentSize,
     direction,
     space,
+    splitter,
     virtual,
     dropdownMatchSelectWidth,
     popupMatchSelectWidth,
@@ -13344,6 +13384,7 @@ const ProviderChildren = (props) => {
     locale: locale2 || legacyLocale,
     direction,
     space,
+    splitter,
     virtual,
     popupMatchSelectWidth: popupMatchSelectWidth !== null && popupMatchSelectWidth !== void 0 ? popupMatchSelectWidth : dropdownMatchSelectWidth,
     popupOverflow,
@@ -15932,13 +15973,13 @@ var __rest = function(s, e2) {
   }
   return t2;
 };
+const dotsClass = "slick-dots";
 const ArrowButton = (_a) => {
   var rest = __rest(_a, ["currentSlide", "slideCount"]);
   return /* @__PURE__ */ reactExports.createElement("button", Object.assign({
     type: "button"
   }, rest));
 };
-const dotsClass = "slick-dots";
 const Carousel = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
   const {
     dots = true,
@@ -16215,7 +16256,7 @@ function Frontend({ id: id2 }) {
   ) });
 }
 export {
-  removeCSS as $,
+  useLayoutEffect as $,
   unit$1 as A,
   CSSMotion as B,
   ConfigContext as C,
@@ -16236,37 +16277,38 @@ export {
   React as R,
   SizeContext as S,
   merge as T,
-  getLineHeight as U,
-  genFocusStyle as V,
-  genSubStyleComponent as W,
-  DisabledContext as X,
-  canUseDom as Y,
-  useLayoutEffect as Z,
+  resetIcon as U,
+  getLineHeight as V,
+  genFocusStyle as W,
+  genSubStyleComponent as X,
+  DisabledContext as Y,
+  canUseDom as Z,
   _inherits as _,
   reactExports as a,
-  React$1 as a0,
-  contains as a1,
-  _setPrototypeOf as a2,
-  _assertThisInitialized as a3,
-  merge$1 as a4,
-  get as a5,
-  set as a6,
-  isEqual as a7,
-  DisabledContextProvider as a8,
+  removeCSS as a0,
+  React$1 as a1,
+  contains as a2,
+  _setPrototypeOf as a3,
+  _assertThisInitialized as a4,
+  merge$1 as a5,
+  get as a6,
+  set as a7,
+  isEqual as a8,
   getConfirmLocale as a9,
-  clearFix as aa,
-  ConfigProvider as ab,
-  globalConfig as ac,
-  devUseWarning as ad,
-  warning as ae,
-  fillRef as af,
-  isDOM as ag,
-  _toArray as ah,
-  useMemo as ai,
-  TinyColor as aj,
-  Variants as ak,
-  textEllipsis as al,
-  resetIcon as am,
+  client as aA,
+  DisabledContextProvider as aa,
+  clearFix as ab,
+  ConfigProvider as ac,
+  globalConfig as ad,
+  devUseWarning as ae,
+  warning as af,
+  fillRef as ag,
+  isDOM as ah,
+  _toArray as ai,
+  useMemo as aj,
+  TinyColor as ak,
+  Variants as al,
+  textEllipsis as am,
   supportNodeRef as an,
   genFocusOutline as ao,
   getDOM as ap,
@@ -16274,12 +16316,12 @@ export {
   ReactDOM as ar,
   locale$3 as as,
   debounce as at,
-  getDefaultExportFromCjs as au,
-  jsxRuntimeExports as av,
-  fetchData as aw,
-  CarouselView as ax,
-  StaticView as ay,
-  client as az,
+  operationUnit as au,
+  getDefaultExportFromCjs as av,
+  jsxRuntimeExports as aw,
+  fetchData as ax,
+  CarouselView as ay,
+  StaticView as az,
   _createSuper as b,
   _classCallCheck as c,
   _createClass as d,

@@ -1,16 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+body{
+  font-family: "Ubuntu", sans-serif;
+}
+
 #wpcontent {
     padding-left: 0 !important;
 }
+
+.tsteam__color--bg {
+    background-color: #18208D;
+ }
+ 
+
+.tsteam__color--text {
+    color: #18208D;
+}
+
+.tsteam__color--text:hover {
+    background-color: #4C5ABD;
+    @apply text-white rounded-lg flex gap-2 transition duration-500 ease-in-out;
+}
+
+.tsteam__color--text:active {
+    background-color: #18208D;
+}
+
+.tsteam__color--icon {
+    color: #18208D;
+}
+
+.tsteam__color--icon:hover {
+    color: #4C5ABD;
+    @apply transition duration-500 ease-in-out;
+}
+  
+
 
 .add-team-button{
     @apply bg-black text-white p-4
 }
 
 .tsteam-button {
-    height: 2rem;
-    min-height: 2rem;
+    background-color: #fff;
+    color: #18208D;
+    border-color: #18208D;
+    height: 2.8rem;
+    min-height: 2.8rem;
+}
+
+.tsteam-button:hover {
+    background-color: #18208D;
+    color: #fff;
+    @apply transition duration-500 ease-in-out;
 }

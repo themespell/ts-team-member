@@ -9,7 +9,7 @@ function Topbar({ type }) {
 
     return (
         <>
-        <div className="flex justify-end bg-black p-4">
+        <div className="flex justify-end tsteam__color--bg p-4">
             <div className="flex justify-end w-2/6">
                 <TsButton 
                     label="Publish"
