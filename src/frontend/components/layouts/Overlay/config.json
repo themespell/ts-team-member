@@ -1,0 +1,46 @@
+{
+    "layout": {
+      "name": "Overlay",
+      "container": {
+        "style": "max-w-sm rounded overflow-hidden shadow-lg relative group"
+      },
+      "image": {
+        "style": "w-full !h-full rounded-lg object-cover"
+      },
+      "animation": {
+        "style": "transition-transform duration-500"
+      },
+      "content": {
+        "style": "absolute bottom-0 bg-white bg-opacity-0 w-full p-4 transition-all duration-500 transform translate-y-full group-hover:bg-opacity-80 group-hover:translate-y-0",
+        "header": {
+          "title": {
+            "markup": "h3",
+            "style": "text-xl font-bold text-gray-800 mb-1"
+          },
+          "subtitle": {
+            "visible": true,
+            "markup": "h4",
+            "style": "text-gray-600 text-sm"
+          }
+        },
+        "body": {
+          "visible": true,
+          "markup": "div",
+          "style": "text-base text-gray-700"
+        },
+        "footer": {
+          "markup": "div",
+          "social": {
+            "visible": false,
+            "markup": "div",
+            "container": {
+              "style": ""
+            },
+            "icon": {
+              "style": ""
+            }
+          }
+        }
+      }
+    }
+  }
