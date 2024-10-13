@@ -69,30 +69,30 @@ function ContentTab() {
             <>
             <TsSlider
               label="Slides To Show"
+              name="carouselSettings.slidesToShow.default"
               range={carouselSettings.slidesToShow?.range}
               value={carouselSettings.slidesToShow?.default}
-              onChange={(value) => saveSettings('carouselSettings.slidesToShow.default', value)}
               />
             <TsSlider
             label="Slides To Scroll"
+            name="carouselSettings.slidesToScroll.default"
             range={carouselSettings.slidesToScroll?.range}
             value={carouselSettings.slidesToScroll?.default}
-            onChange={(value) => saveSettings('carouselSettings.slidesToScroll.default', value)}
             />
             <TsSwitch
             label="Draggable"
+            name="carouselSettings.draggable"
             value={carouselSettings.draggable}
-            onChange={(value) => saveSettings('carouselSettings.draggable', value ? 'true' : 'false')}
             />
             <TsSwitch
             label="Centered Slide"
+            name="carouselSettings.centerSlide"
             value={carouselSettings.centerSlide}
-            onChange={(value) => saveSettings('carouselSettings.centerSlide', value ? 'true' : 'false')}
             />
             <TsSwitch
             label="Autoplay"
+            name="carouselSettings.autoPlay"
             value={carouselSettings.autoPlay}
-            onChange={(value) => saveSettings('carouselSettings.autoPlay', value ? 'true' : 'false')}
             />
             </>
           ],

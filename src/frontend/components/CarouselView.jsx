@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Carousel } from 'antd';
-import Layout from './Layout';
+import Layout from './layouts/Layout';
 
 function CarouselView({ team_members, settings }) {
     return (
@@ -22,7 +22,11 @@ function CarouselView({ team_members, settings }) {
             {team_members && team_members.length > 0 ? (
               team_members.map((member, index) => (
                 <div key={index}>
-                  <Layout
+                  <Layout 
+                  settings={settings}
+                  layoutType={settings.layout}
+                  />
+                  {/* <Layout
                     settings={settings}
                     layoutType={settings.layout}
                     imageUrl={member.team_member_image || "https://qodeinteractive.com/qi-addons-for-elementor/wp-content/uploads/2021/01/team-img-28.jpg"} // Fallback image if none provided
@@ -30,7 +34,7 @@ function CarouselView({ team_members, settings }) {
                     subtitle={member.subtitle || "No Subtitle"}
                     description={member.description || "No description available."}
                     socialIcons={member.socialIcons || []}
-                  />
+                  /> */}
                 </div>
               ))
             ) : (

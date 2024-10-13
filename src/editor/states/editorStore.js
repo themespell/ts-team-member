@@ -93,7 +93,8 @@ const editorStore = create((set) => ({
             }
             return {
                 ...obj,
-                [firstKey]: deepUpdate(obj[firstKey], restKeys),
+                // [firstKey]: deepUpdate(obj[firstKey], restKeys),
+                [firstKey]: deepUpdate(obj[firstKey] !== undefined ? obj[firstKey] : {}, restKeys)
             };
         };
         return deepUpdate(state, keys);
