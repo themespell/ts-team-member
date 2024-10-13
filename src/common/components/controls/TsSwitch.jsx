@@ -1,7 +1,18 @@
 import { Switch } from "antd";
+import editorFunction from '../../../editor/states/editorFunction';
 import globalSettings from '../../utils/globalSettings';
 
-function TsSwitch({ label, value, onChange }) {
+function TsSwitch({ label, name, value, onChange }) {
+  const { saveSettings } = editorFunction();
+
+  const handleChange = (value) => {
+    if (onChange) {
+      onChange(value);
+    } else {
+      saveSettings(name, value ? 'true' : 'false')
+    }
+  };
+
   return (
     <div className="mb-4">
       {label && (
@@ -16,7 +27,7 @@ function TsSwitch({ label, value, onChange }) {
       )}
       <Switch
       value={value === 'true' || value === true}
-      onChange={onChange} />
+      onChange={handleChange} />
     </div>
   );
 }

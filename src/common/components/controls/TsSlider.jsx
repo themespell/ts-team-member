@@ -1,8 +1,26 @@
 import { Slider, InputNumber } from 'antd';
+import editorStore from '../../../editor/states/editorStore';
+import editorFunction from '../../../editor/states/editorFunction';
+import { get } from 'lodash';  // Importing lodash's get function
 
 import globalSettings from '../../utils/globalSettings';
 
-function TsSlider({ label, range, value, unit, onChange }) {
+function TsSlider({ label, name, range, value, unit, onChange }) {
+  
+  const { saveSettings } = editorFunction();
+
+  console.log(name)
+  const dynamicValue = get(editorStore(), name); // Dynamically access the property using 'name'
+  
+
+   const handleChange = (value) => {
+    if (onChange) {
+      onChange(value);
+    } else {
+      saveSettings(name, value);
+    }
+  };
+
   return (
     <>
     {label && (
@@ -17,7 +35,7 @@ function TsSlider({ label, range, value, unit, onChange }) {
             value={parseInt(value)}
             min={parseInt(range.min)}
             max={parseInt(range.max)}
-            onChange={onChange}
+            onChange={handleChange}
             style={{
                 track: {
                     background: '#000',
@@ -31,7 +49,7 @@ function TsSlider({ label, range, value, unit, onChange }) {
             value={parseInt(value)}
             min={parseInt(range.min)}
             max={parseInt(range.max)}
-            onChange={onChange}
+            onChange={handleChange}
           />
         </div>
       </div>
