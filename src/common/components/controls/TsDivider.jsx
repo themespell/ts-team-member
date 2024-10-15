@@ -1,14 +1,14 @@
 import { Divider } from "antd";
 import globalSettings from '../../utils/globalSettings';
 
-function TsDivider({ value, options, onChange }) {
+function TsDivider({ label }) {
   return (
     <div className="mt-8 mb-4">
         <Divider
         style={{
             borderColor: globalSettings.theme.borderColor
         }}
-        ></Divider>
+        >{label}</Divider>
     </div>
   );
 }
