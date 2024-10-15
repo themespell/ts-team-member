@@ -64166,7 +64166,7 @@ function TeamShowcaseFields({ form, post_id }) {
     fetchData("tsteam/team_member/fetch", (response) => {
       if (response.success && response.data) {
         const options = response.data.map((member) => ({
-          label: member.title,
+          label: member.name,
           value: member.post_id
         }));
         setTeamMembers(options);
@@ -64182,7 +64182,7 @@ function TeamShowcaseFields({ form, post_id }) {
           form.setFieldsValue({
             title: response.data.title,
             team_members: response.data.meta_data.team_members.map((member) => ({
-              label: member.title,
+              label: member.name,
               value: member.post_id
             }))
           });
@@ -64194,28 +64194,22 @@ function TeamShowcaseFields({ form, post_id }) {
   }, [post_id, form]);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
-      Form2.Item,
+      TsInput,
       {
         label: "Showcase Name",
         name: "title",
-        rules: [{ required: true, message: "Please input your showcase name!" }],
-        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Input,
-          {
-            defaultValue: form.getFieldValue("title")
-          }
-        )
+        required: true
       }
     ),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       Form2.Item,
       {
         name: "team_members",
-        label: "Team Members",
         rules: [{ required: false }],
         children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           TsSelect,
           {
+            label: "Team Members",
             value: form.getFieldValue("team_members"),
             options: teamMembers,
             mode: "multiple"
