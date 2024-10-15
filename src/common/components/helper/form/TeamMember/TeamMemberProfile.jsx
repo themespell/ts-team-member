@@ -1,20 +1,16 @@
-import React, { useEffect, useRef } from 'react';
-import { Form, Input, Button } from 'antd';
+import { TsEditor } from '../../../controls/tsControls';
 
-function TeamMemberProfile() {
+function TeamMemberProfile({ form }) {
 
   return (
     <>
-        <div className='grid grid-cols-2 gap-3'>
-            <Form.Item
-            label="Team Member Website"
-            name="website"
-            rules={[
-            { required: true, message: 'Please input your team member name!' },
-            ]}
-        >
-            <Input />
-        </Form.Item>
+        <div className='grid grid-cols-1 gap-3'>
+        <TsEditor 
+        label="Member Details" 
+        name="information" 
+        required={true} 
+        form={form} 
+      />
         </div>
     </>
   );
