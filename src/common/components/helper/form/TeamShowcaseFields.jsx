@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Form, Input } from 'antd';
 import { fetchData } from '../../../services/fetchData';
-import { TsSelect } from '../../controls/tsControls';
+import { TsInput, TsSelect } from '../../controls/tsControls';
 
 function TeamShowcaseFields({ form, post_id }) {
   const [teamMembers, setTeamMembers] = useState([]);
@@ -12,7 +12,7 @@ function TeamShowcaseFields({ form, post_id }) {
     fetchData('tsteam/team_member/fetch', (response) => {
       if (response.success && response.data) {
         const options = response.data.map((member) => ({
-          label: member.title,
+          label: member.name,
           value: member.post_id,
         }));
         setTeamMembers(options);
@@ -30,7 +30,7 @@ function TeamShowcaseFields({ form, post_id }) {
           form.setFieldsValue({
             title: response.data.title,
             team_members: response.data.meta_data.team_members.map((member) => ({
-              label: member.title,
+              label: member.name,
               value: member.post_id,
             }))
           });
@@ -43,22 +43,18 @@ function TeamShowcaseFields({ form, post_id }) {
 
   return (
     <>
-      <Form.Item
-        label="Showcase Name"
-        name="title"
-        rules={[{ required: true, message: 'Please input your showcase name!' }]}
-      >
-        <Input 
-        defaultValue={form.getFieldValue('title')}
-        />
-      </Form.Item>
+      <TsInput 
+      label="Showcase Name"
+      name="title"
+      required={true}
+      />
 
       <Form.Item
         name="team_members"
-        label="Team Members"
         rules={[{ required: false }]}
       >
         <TsSelect
+          label="Team Members"
           value={form.getFieldValue('team_members')}
           options={teamMembers}
           mode="multiple"
