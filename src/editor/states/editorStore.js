@@ -91,9 +91,9 @@ const editorStore = create((set) => ({
             if (restKeys.length === 0) {
                 return { ...obj, [firstKey]: value };
             }
+            
             return {
                 ...obj,
-                // [firstKey]: deepUpdate(obj[firstKey], restKeys),
                 [firstKey]: deepUpdate(obj[firstKey] !== undefined ? obj[firstKey] : {}, restKeys)
             };
         };
