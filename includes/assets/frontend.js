@@ -1,4 +1,4 @@
-import { c as createRoot, j as jsxRuntimeExports, r as reactExports, f as fetchData, C as CarouselView, S as StaticView } from "./assets/Frontend-YpMMAKOX.js";
+import { c as createRoot, j as jsxRuntimeExports, r as reactExports, f as fetchData, C as CarouselView, S as StaticView } from "./assets/Frontend-otZikUsK.js";
 const showcaseElements = document.querySelectorAll(".tsteam-showcase");
 showcaseElements.forEach((element) => {
   const id = element.getAttribute("data-id");
