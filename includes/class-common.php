@@ -42,7 +42,7 @@ class Common {
             'view'   => 'grid'
         );
 
-        return json_encode($showcase_settings);
+        return wp_json_encode($showcase_settings);
     }
 
 }

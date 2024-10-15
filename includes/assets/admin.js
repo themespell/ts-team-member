@@ -64106,7 +64106,7 @@ function TsFont({ label, targetedClass, isPro }) {
       const fontName = value.split(":")[0].replace(/\+/g, " ");
       const fontLink = document.createElement("link");
       fontLink.rel = "stylesheet";
-      fontLink.href = `https://fonts.googleapis.com/css2?family=${value}&display=swap`;
+      fontLink.href = ``;
       fontLink.id = "dynamic-google-font";
       const existingFontLink = document.getElementById("dynamic-google-font");
       if (existingFontLink) {

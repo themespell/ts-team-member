@@ -3,19 +3,19 @@
 	/**
 	 *
 	 * @link              https://themespell.com/
-	 * @since             0.0.1
+	 * @since             0.0.3
 	 * @package           Team Showcase Plugin
 	 *
 	 * @wordpress-plugin
-	 * Plugin Name:       TS Team
+	 * Plugin Name:       TS Team Member Showcase
 	 * Plugin URI:        https://themespell.com/ts-team
 	 * Description:       Team Showcase Plugin
-	 * Version:           0.0.1
+	 * Version:           0.0.3
 	 * Author:            Themespell
 	 * Author URI:        https://themespell.com/
 	 * License:           GPL-2.0+
 	 * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
-	 * Text Domain:       ts-team
+	 * Text Domain:       ts-team-member
 	 * Tested up to:      6.6
 	 */
 
@@ -50,7 +50,7 @@ final class TSTeam {
 		define( 'TSTEAM_ROOT_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		define( 'TSTEAM_ROOT_DIR_URL', plugin_dir_url( __FILE__ ) );
 		define( 'TSTEAM_INCLUDES_DIR_PATH', TSTEAM_ROOT_DIR_PATH . 'includes/' );
-		define( 'TSTEAM_PLUGIN_SLUG', 'ts-team' );
+		define( 'TSTEAM_PLUGIN_SLUG', 'ts-team-member' );
 	}
 
 	public function on_plugins_loaded() {
@@ -73,14 +73,13 @@ final class TSTeam {
 
 	public function load_textdomain() {
 		load_plugin_textdomain(
-			'ts-team',
+			'ts-team-member',
 			false,
 			dirname( plugin_basename( __FILE__ ) ) . '/languages/'
 		);
 	}
 
 	public function load_dependency() {
-		// require_once MEETINGWP_ROOT_DIR_PATH . 'library/vendor/autoload.php';
 		require_once TSTEAM_INCLUDES_DIR_PATH . 'class-autoload.php';
 	}
 

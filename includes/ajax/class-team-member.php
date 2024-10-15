@@ -49,10 +49,6 @@ class TeamMember {
 				'name'     => get_the_title(),
 				'designation' => $member_designation,
 				'description'   => get_the_content(),
-				// 'meta_data' => [
-				// 	'member_designation' => $member_designation,
-				// 	'member_image'       => $member_image
-				// ]
 			);
 		}
 	
@@ -68,7 +64,7 @@ class TeamMember {
 			wp_die();
 		}
 
-		$team_member_id = isset($_POST['team_member_id']) ? intval($_POST['team_member_id']) : 0;
+		$team_member_id = isset($_POST['team_member_id']) ? absint($_POST['team_member_id']) : 0;
 
 
 		$args = array(
@@ -107,10 +103,10 @@ class TeamMember {
 				wp_die();
 		}
 
-        $member_name    = ( isset( $_POST['member_name'] ) ? sanitize_text_field( $_POST['member_name'] ) : '' );
-		$member_designation = ( isset( $_POST['member_designation'] ) ? sanitize_text_field( $_POST['member_designation'] ) : '' );
-		$member_image	= isset( $_POST['member_image'] ) ? esc_url_raw( $_POST['member_image'] ) : '';
-		$member_description = isset( $_POST['member_description'] ) ? sanitize_text_field( $_POST['member_description'] ) : '';
+        $member_name    = ( isset( $_POST['member_name'] ) ? sanitize_text_field( wp_unslash($_POST['member_name'] )) : '' );
+		$member_designation = ( isset( $_POST['member_designation'] ) ? sanitize_text_field( wp_unslash($_POST['member_designation'] )) : '' );
+		$member_image	= isset( $_POST['member_image'] ) ? esc_url_raw( wp_unslash($_POST['member_image'] )) : '';
+		$member_description = isset( $_POST['member_description'] ) ? sanitize_text_field( wp_unslash($_POST['member_description'] )) : '';
 
         $args    = array(
 			'post_title'   => $member_name,
@@ -133,7 +129,7 @@ class TeamMember {
 			wp_die();
 		}
 
-		$post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
+		$post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
 
 		if ( ! $post_id ) {
 			wp_send_json_error( array( 'message' => 'Invalid ID' ) );
