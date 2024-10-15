@@ -38,14 +38,21 @@ class TeamMember {
 	
 		while ( $query->have_posts() ) {
 			$query->the_post();
+
+			$post_id = get_the_ID();
+			$member_designation = get_post_meta( $post_id, 'tsteam_member_designation', true );
+			$member_image = get_post_meta( $post_id, 'tsteam_member_image', true );
 	
 			$members[] = array(
-				'post_id'   => get_the_ID(),
-				'title'     => get_the_title(),
-				'content'   => get_the_content(),
-				'status'    => get_post_status(),
-				'author'    => get_the_author_meta( 'display_name' ),
-				'date'      => get_the_date(),
+				'post_id'   => $post_id,
+				'image'       => $member_image,
+				'name'     => get_the_title(),
+				'designation' => $member_designation,
+				'description'   => get_the_content(),
+				// 'meta_data' => [
+				// 	'member_designation' => $member_designation,
+				// 	'member_image'       => $member_image
+				// ]
 			);
 		}
 	
@@ -100,20 +107,20 @@ class TeamMember {
 				wp_die();
 		}
 
-        $member_name    = ( isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : '' );
-		$member_info    = ( isset( $_POST['information'] ) ? sanitize_text_field( $_POST['information'] ) : '' );
-		$member_website    = ( isset( $_POST['website'] ) ? sanitize_text_field( $_POST['website'] ) : '' );
+        $member_name    = ( isset( $_POST['member_name'] ) ? sanitize_text_field( $_POST['member_name'] ) : '' );
+		$member_designation = ( isset( $_POST['member_designation'] ) ? sanitize_text_field( $_POST['member_designation'] ) : '' );
 		$member_image	= isset( $_POST['member_image'] ) ? esc_url_raw( $_POST['member_image'] ) : '';
+		$member_description = isset( $_POST['member_description'] ) ? sanitize_text_field( $_POST['member_description'] ) : '';
 
         $args    = array(
 			'post_title'   => $member_name,
-			'post_content' => $member_info,
+			'post_content' => $member_description,
 			'post_status'  => 'publish',
 			'post_author'  => get_current_user_id(),
 			'post_type'    => 'tsteam-member',
 			'meta_input'   => array(
-            	'tsteam_member_information' => $member_website,
-				'tsteam_member_image' => $member_image
+            	'tsteam_member_designation' => $member_designation,
+				'tsteam_member_image' => $member_image,
         	),
 		);
 		$is_post = wp_insert_post( $args );

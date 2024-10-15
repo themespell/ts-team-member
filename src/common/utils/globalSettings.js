@@ -10,6 +10,11 @@ const globalSettings = {
       Table: {
         "headerBg": "#18208D",
         "headerColor": "#ffffff",
+      },
+      Input: {
+        "colorBorder": "#7684D0",
+        "paddingBlock": 6,
+        "paddingBlockLG": 8
       }
     },
     theme: {

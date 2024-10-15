@@ -1,15 +1,26 @@
-import React, { useState, useEffect } from 'react';
 import { Carousel } from 'antd';
-import Layout from './Layout';
+import Layout from './layouts/Layout';
 
 function CarouselView({ team_members, settings }) {
     return (
         <div className=''
           style={{
             width: `${settings?.containerSettings?.width?.default}px`,
-            // // display: 'grid',
             gridTemplateColumns: `repeat(${settings.columnSettings?.column?.default}, 1fr)`,
             gap: `${settings.columnSettings?.gap?.default}px`,
+            marginTop: `${settings?.containerSettings?.margin_top}px`,
+            marginRight: `${settings?.containerSettings?.margin_right}px`,
+            marginBottom: `${settings?.containerSettings?.margin_bottom}px`,
+            marginLeft: `${settings?.containerSettings?.margin_left}px`,
+            paddingTop: `${settings?.containerSettings?.padding_top}px`,
+            paddingRight: `${settings?.containerSettings?.padding_right}px`,
+            paddingBottom: `${settings?.containerSettings?.padding_bottom}px`,
+            paddingLeft: `${settings?.containerSettings?.padding_left}px`,
+            borderTopLeftRadius: `${settings?.containerSettings?.borderRadius_top}px`,
+            borderTopRightRadius: `${settings?.containerSettings?.borderRadius_right}px`,
+            borderBottomLeftRadius: `${settings?.containerSettings?.borderRadius_bottom}px`,
+            borderBottomRightRadius: `${settings?.containerSettings?.borderRadius_left}px`,
+            backgroundColor: settings.containerSettings?.backgroundColor,
         }}
         >
             <Carousel 
@@ -25,10 +36,10 @@ function CarouselView({ team_members, settings }) {
                   <Layout
                     settings={settings}
                     layoutType={settings.layout}
-                    imageUrl={member.team_member_image || "https://qodeinteractive.com/qi-addons-for-elementor/wp-content/uploads/2021/01/team-img-28.jpg"} // Fallback image if none provided
+                    imageUrl={member.team_member_image}
                     title={member.title || "No Name"}
-                    subtitle={member.subtitle || "No Subtitle"}
-                    description={member.description || "No description available."}
+                    subtitle={member.subtitle}
+                    description={member.description}
                     socialIcons={member.socialIcons || []}
                   />
                 </div>

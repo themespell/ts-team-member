@@ -1,4 +1,5 @@
 import { Button, Form } from 'antd';
+import { TsButton } from '../../controls/tsControls.js';
 import { createData } from '../../../services/createData.js';
 import { toastNotification } from '../../../utils/toastNotification.js';
 import TeamShowcaseFields from './TeamShowcaseFields.jsx';
@@ -37,15 +38,18 @@ function FormContainer({ actionType, type, name, post_id, onShowcaseAdded }) {
       {type === 'team_member' && <TeamMemberFields form={form} />}
       
       <Form.Item>
-        <Button type="primary" htmlType="submit">
-        {actionType === 'create' 
-        ? `Create ${name}` 
-        : actionType === 'edit' 
-        ? `Update ${name}` 
-        : actionType === 'delete' 
-        ? `Delete ${name}` 
-        : `Create ${name}`}
-        </Button>
+      <TsButton
+      label={
+        actionType === 'create'
+          ? `Create ${name}`
+          : actionType === 'edit'
+          ? `Update ${name}`
+          : actionType === 'delete'
+          ? `Delete ${name}`
+          : `Create ${name}`
+      }
+      htmlType="submit"
+      />
       </Form.Item>
     </Form>
   );

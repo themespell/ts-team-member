@@ -1,37 +1,42 @@
 {
     "layout": {
-      "name": "HorizontalCard",
+      "name": "Card",
+      "editor": {
+        "controls":{
+          
+        }
+      },
       "container": {
-        "style": "flex items-center bg-blue-50 rounded-lg shadow-md overflow-hidden p-6"
+        "style": "max-w-sm bg-white rounded-lg shadow-lg overflow-hidden"
       },
       "image": {
-        "style": "w-24 h-24 rounded-full object-cover mr-4"
+        "style": "w-full h-auto rounded-b-lg"
       },
       "animation": {
         "style": ""
       },
       "content": {
-        "style": "flex-1",
+        "style": "p-6",
         "header": {
           "title": {
-            "markup": "h2",
-            "style": "text-lg font-bold text-gray-800 mb-1"
+            "markup": "h3",
+            "style": "text-xl font-bold"
           },
           "subtitle": {
             "visible": true,
-            "markup": "p",
-            "style": "text-gray-600 text-sm"
+            "markup": "h4",
+            "style": "text-sm font-medium"
           }
         },
         "body": {
           "visible": true,
-          "markup": "p",
-          "style": "mt-2 text-gray-500 text-sm"
+          "markup": "div",
+          "style": "mt-4"
         },
         "footer": {
           "markup": "div",
           "social": {
-            "visible": false,
+            "visible": true,
             "markup": "div",
             "container": {
               "style": ""
@@ -43,4 +48,4 @@
         }
       }
     }
-}  
+  }

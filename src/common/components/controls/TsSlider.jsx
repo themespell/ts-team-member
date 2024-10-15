@@ -1,8 +1,22 @@
 import { Slider, InputNumber } from 'antd';
+import get from 'lodash/get';
+import editorStore from '../../../editor/states/editorStore';
+import editorFunction from '../../../editor/states/editorFunction';
 
 import globalSettings from '../../utils/globalSettings';
 
-function TsSlider({ label, range, value, unit, onChange }) {
+function TsSlider({ label, name, range, unit, onChange }) {
+  
+  const { saveSettings } = editorFunction();
+
+   const handleChange = (value) => {
+    if (onChange) {
+      onChange(value);
+    } else {
+      saveSettings(name, value);
+    }
+  };
+
   return (
     <>
     {label && (
@@ -14,10 +28,10 @@ function TsSlider({ label, range, value, unit, onChange }) {
       <div className="mb-4 flex justify-between items-center w-full">
         <div className="w-full mr-6">
           <Slider
-            value={parseInt(value)}
+            value={parseInt(get(editorStore(), name))}
             min={parseInt(range.min)}
             max={parseInt(range.max)}
-            onChange={onChange}
+            onChange={handleChange}
             style={{
                 track: {
                     background: '#000',
@@ -28,10 +42,10 @@ function TsSlider({ label, range, value, unit, onChange }) {
         </div>
         <div>
           <InputNumber
-            value={parseInt(value)}
+            value={parseInt(get(editorStore(), name))}
             min={parseInt(range.min)}
             max={parseInt(range.max)}
-            onChange={onChange}
+            onChange={handleChange}
           />
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import TsButton from './TsButton';
 import { Button, Image, Form } from 'antd';
 
 function TsMedia({ label, name, required, form }) {
@@ -30,10 +31,6 @@ function TsMedia({ label, name, required, form }) {
     wkMedia.open();
   };
 
-  const onFinish = (values) => {
-    console.log('Form values:', values);
-  };
-
   return (
     <>
       <Form.Item
@@ -46,19 +43,26 @@ function TsMedia({ label, name, required, form }) {
             }
         ]}
       >
-        <div className='grid grid-cols-2 gap-6 w-2/6'>
-          <Button id="wk-button" type="primary" onClick={openMediaLibrary}>
-            Select {label}
-          </Button>
-
+        <div className='flex items-center gap-6 w-full'>
           {/* Conditionally render the Image component if mediaUrl is set */}
           {mediaUrl && (
             <Image
               src={mediaUrl}
               alt="Selected media"
-              style={{ marginTop: '20px' }}
+              style={{ 
+                borderRadius: '100%',
+                height: '10rem',
+                width: '10rem',
+              }}
             />
           )}
+          <TsButton 
+          label='Select Member Image'
+          id="wk-button"
+          htmlType="button"
+          onClick={openMediaLibrary}
+          />
+
         </div>
       </Form.Item>
     </>

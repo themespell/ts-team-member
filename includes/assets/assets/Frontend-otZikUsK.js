@@ -17,6 +17,7 @@ function _mergeNamespaces(n2, m2) {
   }
   return Object.freeze(Object.defineProperty(n2, Symbol.toStringTag, { value: "Module" }));
 }
+var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 function getDefaultExportFromCjs(x2) {
   return x2 && x2.__esModule && Object.prototype.hasOwnProperty.call(x2, "default") ? x2["default"] : x2;
 }
@@ -16149,87 +16150,73 @@ const __variableDynamicImportRuntimeHelper = (glob, path, segs) => {
   });
 };
 function Layout({ settings, layoutType, imageUrl, title, subtitle, description, socialIcons }) {
-  var _a, _b, _c, _d;
-  const [cardData, setCardData] = reactExports.useState(null);
+  const [Component, setComponent] = reactExports.useState(null);
   reactExports.useEffect(() => {
     if (layoutType) {
-      __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "./layouts/Avatar.json": () => __vitePreload(() => import("./Avatar-K2fyF8Qa.js"), true ? [] : void 0), "./layouts/Blur.json": () => __vitePreload(() => import("./Blur-BEi_BvSi.js"), true ? [] : void 0), "./layouts/Card.json": () => __vitePreload(() => import("./Card-CuwsU9wU.js"), true ? [] : void 0), "./layouts/HorizontalCard.json": () => __vitePreload(() => import("./HorizontalCard-Dru_u0Sn.js"), true ? [] : void 0), "./layouts/Overlay.json": () => __vitePreload(() => import("./Overlay-CtOe5z2-.js"), true ? [] : void 0) }), `./layouts/${layoutType}.json`, 3).then((module) => {
-        setCardData(module.default);
+      __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "./Avatar/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend), true ? void 0 : void 0), "./Blur/Frontend.jsx": () => __vitePreload(() => import("./Frontend-BBfArQFu.js"), true ? [] : void 0), "./Card/Frontend.jsx": () => __vitePreload(() => import("./Frontend-ChvjVuOt.js"), true ? [] : void 0) }), `./${layoutType}/Frontend.jsx`, 3).then((module) => {
+        const LoadedComponent = module.default;
+        setComponent(() => LoadedComponent);
       }).catch((error) => {
-        console.error("Error loading JSON:", error);
+        console.error("Error loading component:", error);
       });
     }
   }, [layoutType]);
-  if (!cardData) {
+  if (!Component) {
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "Loading..." });
   }
-  const { container, image, animation, content } = cardData.layout;
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-    "div",
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Component,
     {
-      className: `${container.style} ${animation.style}`,
-      style: {
-        backgroundColor: (_b = (_a = settings == null ? void 0 : settings.cardStyle) == null ? void 0 : _a.color) == null ? void 0 : _b.backgroundColor
-      },
-      children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "img",
-          {
-            className: image.style,
-            src: imageUrl,
-            alt: "Team Member"
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs(
-          "div",
-          {
-            className: content.style,
-            style: {
-              color: (_d = (_c = settings == null ? void 0 : settings.cardStyle) == null ? void 0 : _c.color) == null ? void 0 : _d.textColor
-            },
-            children: [
-              content.header && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                content.header.title && /* @__PURE__ */ jsxRuntimeExports.jsx(content.header.title.markup, { className: content.header.title.style, children: title }),
-                content.header.subtitle && content.header.subtitle.visible && /* @__PURE__ */ jsxRuntimeExports.jsx(content.header.subtitle.markup, { className: content.header.subtitle.style, children: subtitle })
-              ] }),
-              content.body && content.body.visible && /* @__PURE__ */ jsxRuntimeExports.jsx(content.body.markup, { className: content.body.style, children: description }),
-              content.footer && /* @__PURE__ */ jsxRuntimeExports.jsx(content.footer.markup, { children: content.footer.social && content.footer.social.visible && /* @__PURE__ */ jsxRuntimeExports.jsx(content.footer.social.markup, { className: content.footer.social.container.style, children: socialIcons.map((icon, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: content.footer.social.icon.style, children: icon }, index2)) }) })
-            ]
-          }
-        )
-      ]
+      settings,
+      imageUrl,
+      title,
+      subtitle,
+      description,
+      socialIcons
     }
-  );
+  ) });
 }
 function CarouselView({ team_members, settings }) {
-  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k;
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x;
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
     {
       className: "",
       style: {
         width: `${(_b = (_a = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _a.width) == null ? void 0 : _b.default}px`,
-        // // display: 'grid',
         gridTemplateColumns: `repeat(${(_d = (_c = settings.columnSettings) == null ? void 0 : _c.column) == null ? void 0 : _d.default}, 1fr)`,
-        gap: `${(_f = (_e = settings.columnSettings) == null ? void 0 : _e.gap) == null ? void 0 : _f.default}px`
+        gap: `${(_f = (_e = settings.columnSettings) == null ? void 0 : _e.gap) == null ? void 0 : _f.default}px`,
+        marginTop: `${(_g = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _g.margin_top}px`,
+        marginRight: `${(_h = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _h.margin_right}px`,
+        marginBottom: `${(_i = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _i.margin_bottom}px`,
+        marginLeft: `${(_j = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _j.margin_left}px`,
+        paddingTop: `${(_k = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _k.padding_top}px`,
+        paddingRight: `${(_l = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _l.padding_right}px`,
+        paddingBottom: `${(_m = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _m.padding_bottom}px`,
+        paddingLeft: `${(_n = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _n.padding_left}px`,
+        borderTopLeftRadius: `${(_o = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _o.borderRadius_top}px`,
+        borderTopRightRadius: `${(_p = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _p.borderRadius_right}px`,
+        borderBottomLeftRadius: `${(_q = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _q.borderRadius_bottom}px`,
+        borderBottomRightRadius: `${(_r = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _r.borderRadius_left}px`,
+        backgroundColor: (_s = settings.containerSettings) == null ? void 0 : _s.backgroundColor
       },
       children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         Carousel,
         {
-          slidesPerRow: (_g = settings.carouselSettings.slidesToShow) == null ? void 0 : _g.default,
-          slidesToScroll: (_h = settings.carouselSettings.slidesToScroll) == null ? void 0 : _h.default,
-          draggable: ((_i = settings.carouselSettings) == null ? void 0 : _i.draggable) === "true" ? true : false,
-          centerMode: ((_j = settings.carouselSettings) == null ? void 0 : _j.centerSlide) === "true" ? true : false,
-          autoplay: ((_k = settings.carouselSettings) == null ? void 0 : _k.autoPlay) === "true" ? true : false,
+          slidesPerRow: (_t = settings.carouselSettings.slidesToShow) == null ? void 0 : _t.default,
+          slidesToScroll: (_u = settings.carouselSettings.slidesToScroll) == null ? void 0 : _u.default,
+          draggable: ((_v = settings.carouselSettings) == null ? void 0 : _v.draggable) === "true" ? true : false,
+          centerMode: ((_w = settings.carouselSettings) == null ? void 0 : _w.centerSlide) === "true" ? true : false,
+          autoplay: ((_x = settings.carouselSettings) == null ? void 0 : _x.autoPlay) === "true" ? true : false,
           children: team_members && team_members.length > 0 ? team_members.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             Layout,
             {
               settings,
               layoutType: settings.layout,
-              imageUrl: member.team_member_image || "https://qodeinteractive.com/qi-addons-for-elementor/wp-content/uploads/2021/01/team-img-28.jpg",
+              imageUrl: member.team_member_image,
               title: member.title || "No Name",
-              subtitle: member.subtitle || "No Subtitle",
-              description: member.description || "No description available.",
+              subtitle: member.subtitle,
+              description: member.description,
               socialIcons: member.socialIcons || []
             }
           ) }, index2)) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No team members found." })
@@ -16239,16 +16226,28 @@ function CarouselView({ team_members, settings }) {
   );
 }
 function StaticView({ team_members, settings }) {
-  var _a, _b, _c, _d, _e, _f;
+  var _a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s;
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
     {
       className: "tsteam-container w-3/6",
       style: {
         width: `${(_b = (_a = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _a.width) == null ? void 0 : _b.default}px`,
-        // // display: 'grid',
         gridTemplateColumns: `repeat(${(_d = (_c = settings.columnSettings) == null ? void 0 : _c.column) == null ? void 0 : _d.default}, 1fr)`,
-        gap: `${(_f = (_e = settings.columnSettings) == null ? void 0 : _e.gap) == null ? void 0 : _f.default}px`
+        gap: `${(_f = (_e = settings.columnSettings) == null ? void 0 : _e.gap) == null ? void 0 : _f.default}px`,
+        marginTop: `${(_g = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _g.margin_top}px`,
+        marginRight: `${(_h = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _h.margin_right}px`,
+        marginBottom: `${(_i = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _i.margin_bottom}px`,
+        marginLeft: `${(_j = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _j.margin_left}px`,
+        paddingTop: `${(_k = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _k.padding_top}px`,
+        paddingRight: `${(_l = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _l.padding_right}px`,
+        paddingBottom: `${(_m = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _m.padding_bottom}px`,
+        paddingLeft: `${(_n = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _n.padding_left}px`,
+        borderTopLeftRadius: `${(_o = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _o.borderRadius_top}px`,
+        borderTopRightRadius: `${(_p = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _p.borderRadius_right}px`,
+        borderBottomLeftRadius: `${(_q = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _q.borderRadius_bottom}px`,
+        borderBottomRightRadius: `${(_r = settings == null ? void 0 : settings.containerSettings) == null ? void 0 : _r.borderRadius_left}px`,
+        backgroundColor: (_s = settings.containerSettings) == null ? void 0 : _s.backgroundColor
       },
       children: team_members && team_members.length > 0 ? team_members.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         Layout,
@@ -16265,97 +16264,102 @@ function StaticView({ team_members, settings }) {
     }
   );
 }
+const Frontend = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null
+}, Symbol.toStringTag, { value: "Module" }));
 export {
-  useLayoutEffect as $,
-  unit$1 as A,
-  CSSMotion as B,
-  ConfigContext as C,
-  composeRef as D,
-  _getPrototypeOf as E,
-  _possibleConstructorReturn as F,
-  _isNativeReflectConstruct as G,
-  wrapperRaf as H,
+  getLineHeight as $,
+  classNames as A,
+  genStyleHooks as B,
+  CarouselView as C,
+  resetComponent as D,
+  unit$1 as E,
+  ConfigContext as F,
+  CSSMotion as G,
+  composeRef as H,
   IconContext as I,
-  useToken as J,
-  CSSMotionList as K,
+  _getPrototypeOf as J,
+  _possibleConstructorReturn as K,
   LocaleContext as L,
-  _toConsumableArray as M,
-  reactDomExports as N,
-  ReactDOM$1 as O,
-  defaultPrefixCls as P,
-  genComponentStyleHook as Q,
+  _isNativeReflectConstruct as M,
+  wrapperRaf as N,
+  useToken as O,
+  CSSMotionList as P,
+  _toConsumableArray as Q,
   React as R,
-  SizeContext as S,
-  merge as T,
-  resetIcon as U,
-  getLineHeight as V,
-  genFocusStyle as W,
-  genSubStyleComponent as X,
-  DisabledContext as Y,
-  canUseDom as Z,
+  StaticView as S,
+  reactDomExports as T,
+  ReactDOM$1 as U,
+  defaultPrefixCls as V,
+  genComponentStyleHook as W,
+  SizeContext as X,
+  merge as Y,
+  resetIcon as Z,
   _inherits as _,
-  reactExports as a,
-  removeCSS as a0,
-  React$1 as a1,
-  contains as a2,
-  _setPrototypeOf as a3,
-  _assertThisInitialized as a4,
-  merge$1 as a5,
-  get as a6,
-  set as a7,
-  isEqual as a8,
-  getConfirmLocale as a9,
-  client as aA,
-  createRoot as aB,
-  DisabledContextProvider as aa,
-  clearFix as ab,
-  ConfigProvider as ac,
-  globalConfig as ad,
-  devUseWarning as ae,
-  warning as af,
-  fillRef as ag,
-  isDOM as ah,
-  _toArray as ai,
-  useMemo as aj,
-  TinyColor as ak,
-  Variants as al,
-  textEllipsis as am,
-  supportNodeRef as an,
-  genFocusOutline as ao,
-  getDOM as ap,
-  ValidateMessagesContext as aq,
-  ReactDOM as ar,
-  locale$3 as as,
-  debounce as at,
-  operationUnit as au,
-  jsxRuntimeExports as av,
-  fetchData as aw,
-  getDefaultExportFromCjs as ax,
-  CarouselView as ay,
-  StaticView as az,
+  reactIsExports as a,
+  genFocusStyle as a0,
+  genSubStyleComponent as a1,
+  DisabledContext as a2,
+  canUseDom as a3,
+  useLayoutEffect as a4,
+  removeCSS as a5,
+  React$1 as a6,
+  contains as a7,
+  _setPrototypeOf as a8,
+  _assertThisInitialized as a9,
+  gold as aA,
+  getDefaultExportFromCjs as aB,
+  commonjsGlobal as aC,
+  client as aD,
+  merge$1 as aa,
+  get as ab,
+  set as ac,
+  isEqual as ad,
+  getConfirmLocale as ae,
+  DisabledContextProvider as af,
+  clearFix as ag,
+  ConfigProvider as ah,
+  globalConfig as ai,
+  devUseWarning as aj,
+  warning as ak,
+  fillRef as al,
+  isDOM as am,
+  _toArray as an,
+  useMemo as ao,
+  TinyColor as ap,
+  Variants as aq,
+  textEllipsis as ar,
+  supportNodeRef as as,
+  genFocusOutline as at,
+  getDOM as au,
+  ValidateMessagesContext as av,
+  ReactDOM as aw,
+  locale$3 as ax,
+  debounce as ay,
+  operationUnit as az,
   _createSuper as b,
-  _classCallCheck as c,
-  _createClass as d,
-  _objectSpread2 as e,
-  findDOMNode as f,
-  _typeof as g,
-  _extends as h,
+  createRoot as c,
+  _classCallCheck as d,
+  _createClass as e,
+  fetchData as f,
+  _objectSpread2 as g,
+  findDOMNode as h,
   index as i,
-  _defineProperty as j,
-  useSafeState as k,
-  localeValues as l,
-  _slicedToArray as m,
-  useEvent as n,
-  useLayoutUpdateEffect as o,
-  generate as p,
-  updateCSS as q,
-  reactIsExports as r,
+  jsxRuntimeExports as j,
+  _typeof as k,
+  _extends as l,
+  _defineProperty as m,
+  localeValues as n,
+  useSafeState as o,
+  _slicedToArray as p,
+  useEvent as q,
+  reactExports as r,
   supportRef as s,
-  _objectWithoutProperties as t,
+  useLayoutUpdateEffect as t,
   useComposeRef as u,
-  blue as v,
+  generate as v,
   warningOnce as w,
-  classNames as x,
-  genStyleHooks as y,
-  resetComponent as z
+  updateCSS as x,
+  _objectWithoutProperties as y,
+  blue as z
 };

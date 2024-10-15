@@ -4,9 +4,7 @@ import StyleTab from './Tabs/StyleTab';
 import AdvanceTab from "./Tabs/AdvanceTab";
 import { TsDrawer } from '../../../common/components/controls/tsControls';
 
-import editorStore from "../../states/editorStore";
-
-function Sidebar({ isOpen, onClose }) {
+function Sidebar({ isOpen, onClose, layoutType }) {
   const items = [
     {
       label: 'Content',
@@ -16,7 +14,7 @@ function Sidebar({ isOpen, onClose }) {
     {
       label: 'Style',
       key: '2',
-      children: <StyleTab />,
+      children: <StyleTab layoutType={layoutType} />,
     },
     {
       label: 'Advance',
