@@ -1,7 +1,6 @@
 <?php
 
 namespace TSTeam;
-use TSTeam\Common;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -17,18 +16,8 @@ class Admin {
     public function add_admin_menu() {
 		$parent = 'tsteam-admin';
 
-		// add_menu_page(
-		// 	__( 'TS Team', 'ts-team' ),
-		// 	'TS Team',
-		// 	'manage_options',
-		// 	$parent,
-		// 	array( $this, 'tsteam_callback' ),
-		// 	plugin_dir_url( __FILE__ ) . 'assets/icon-16x16.png',
-		// 	30
-		// );
-
 		add_menu_page(
-			__( 'TS Team', 'ts-team' ),
+			__( 'TS Team', 'ts-team-member' ),
 			'TS Team',
 			'do_not_allow',
 			$parent,
@@ -38,16 +27,16 @@ class Admin {
 		);
 		add_submenu_page(
 			$parent,
-			__( 'Team Showcase', 'ts-team' ),
-			__( 'Team Showcase', 'ts-team' ),
+			__( 'Team Showcase', 'ts-team-member' ),
+			__( 'Team Showcase', 'ts-team-member' ),
 			'manage_options',
 			'tsteam-showcase',
 			array( $this, 'tsteam_callback' ),
 		);
 		add_submenu_page(
 			$parent,
-			__( 'Team Member', 'ts-team' ),
-			__( 'Team Member', 'ts-team' ),
+			__( 'Team Member', 'ts-team-member' ),
+			__( 'Team Member', 'ts-team-member' ),
 			'manage_options',
 			'tsteam-showcase&path=team-member',
 			array( $this, 'tsteam_callback' ),

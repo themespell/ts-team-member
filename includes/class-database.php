@@ -20,8 +20,8 @@ class Database {
 
 	public function tsteam_post_type() {
 		$args = array(
-			'label'               => __( 'TS Team', 'ts-team' ),
-			'description'         => __( 'Post Type For TS Team', 'ts-team' ),
+			'label'               => __( 'TS Team', 'ts-team-member' ),
+			'description'         => __( 'Post Type For TS Team', 'ts-team-member' ),
 			'supports'            => array( 'title', 'author' ),
 			'hierarchical'        => false,
 			'public'              => true,
@@ -39,8 +39,8 @@ class Database {
 
 	public function tsteam_member_post_type() {
 		$args = array(
-			'label'               => __( 'TS Team Member', 'ts-team' ),
-			'description'         => __( 'Post Type For TS Team member', 'ts-team' ),
+			'label'               => __( 'TS Team Member', 'ts-team-member' ),
+			'description'         => __( 'Post Type For TS Team member', 'ts-team-member' ),
 			'supports'            => array( 'title', 'author' ),
 			'hierarchical'        => false,
 			'public'              => true,
@@ -73,7 +73,7 @@ class Database {
 					'show_in_rest'   => false,
 					'sanitize_callback' => array($this, 'sanitize_team_members_meta'),
 					'auth_callback'  => function() {
-					return current_user_can( 'edit_posts' );  // Permission check
+					return current_user_can( 'edit_posts' );
 					},
 				)
 			);
@@ -81,7 +81,6 @@ class Database {
 	}
 
 	public function sanitize_team_members_meta( $meta_value ) {
-		// Ensure the array contains only integers (post IDs)
 		return array_map( 'intval', (array) $meta_value );
 	}
 

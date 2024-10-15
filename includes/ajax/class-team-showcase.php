@@ -111,17 +111,15 @@ class TeamShowcase {
 	}
 
 	public function create_showcase() {
-		// Verify the nonce
 		check_ajax_referer('tsteam_nonce');
-		
-		// Check user capabilities
+
 		if (!current_user_can('manage_options')) {
 			wp_die();
 		}
 
-		$showcase_title = isset($_POST['title']) ? sanitize_text_field($_POST['title']) : '';
+		$showcase_title = isset($_POST['title']) ? sanitize_text_field(wp_unslash($_POST['title'])) : '';
 		$team_members = isset($_POST['team_members']) ? array_map('intval', (array) $_POST['team_members']) : array();
-		$showcase_settings = isset($_POST['data']) ? json_encode($_POST['data'], true) : array();
+		$showcase_settings = isset($_POST['data']) ? wp_json_encode(wp_unslash($_POST['data']), true) : array();
 
 		$args = array(
 			'post_title'   => $showcase_title,
@@ -143,48 +141,37 @@ class TeamShowcase {
 	}
 
 	public function update_showcase() {
-		// Verify the nonce
 		check_ajax_referer('tsteam_nonce');
 	
-		// Check user capabilities
 		if (!current_user_can('manage_options')) {
 			wp_die();
 		}
-	
-		// Get the post ID (since we're updating an existing post)
-		$post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
-	
-		// Check if post exists and is of the correct post type
+
+		$post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
+		
 		if (!$post_id || get_post_type($post_id) !== 'tsteam-showcase') {
 			wp_send_json_error(array('message' => 'Invalid post ID or post type'));
 			return;
 		}
-	
-		// Get and sanitize the new values
-		// $showcase_title = isset($_POST['title']) ? sanitize_text_field($_POST['title']) : '';
-		// $team_members = isset($_POST['team_members']) ? array_map('intval', (array) $_POST['team_members']) : array();
+
 		$showcase_settings = isset($_POST['team_members']) ? array_map('intval', (array) $_POST['team_members']) : array();
-	
-		// Prepare the arguments to update the post
+
 		$args = array(
 			'ID'          => $post_id,  // Post ID to update
 			// 'post_title'  => $showcase_title,
 		);
 	
 		// Perform the post update
-		$is_post = wp_update_post($args, true);  // Use true for error reporting
+		$is_post = wp_update_post($args, true);
 		
 		// Check for errors in the update
 		if (is_wp_error($is_post)) {
 			wp_send_json_error(array('message' => 'Failed to update showcase'));
 			return;
 		}
-	
-		// Update custom post meta
+
 		
 		update_post_meta($post_id, 'showcase_settings', $team_members);
-	
-		// Send success response with the updated post ID
 		wp_send_json_success(array('post_id' => $post_id));
 	}
 
@@ -194,8 +181,8 @@ class TeamShowcase {
 			wp_die();
 		}
 
-		$post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
-		$showcase_settings = isset($_POST['data']) ? json_encode($_POST['data'], true) : array();
+		$post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
+		$showcase_settings = isset($_POST['data']) ? wp_json_encode(wp_unslash($_POST['data']), true) : array();
 
 		$args = array(
 			'ID'          => $post_id,
@@ -220,7 +207,7 @@ class TeamShowcase {
 			wp_die();
 		}
 
-		$post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
+		$post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
 
 		if ( ! $post_id ) {
 			wp_send_json_error( array( 'message' => 'Invalid showcase ID' ) );
