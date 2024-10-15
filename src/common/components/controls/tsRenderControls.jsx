@@ -1,4 +1,4 @@
-import { TsSlider, TsDivider, TsColor, TsFont } from './tsControls';
+import { TsSlider, TsDivider, TsColor, TsFont, TsInputGroup } from './tsControls';
 
 const renderControls = {
     slider: (control) => (
@@ -6,17 +6,21 @@ const renderControls = {
             label={control.label}
             range={control.range}
             name={control.name}
-            value={control.value}
-            unit={control.unit}
-            onChange={control.onChange}
+            unit={control.unit}            
         />
     ),
-    divider: () => <TsDivider />,
+    divider: (control) => <TsDivider label={control.label} />,
     color: (control) => (
         <TsColor
             label={control.label}
-            value={control.value}
-            onChange={control.onChange}
+            name={control.name}
+        />
+    ),
+    inputgroup: (control) => (
+        <TsInputGroup
+            label={control.label}
+            name={control.name}
+            unit={control.unit}
         />
     ),
     font: (control) => (
