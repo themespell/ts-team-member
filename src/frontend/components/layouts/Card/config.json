@@ -16,7 +16,7 @@
         "style": ""
       },
       "content": {
-        "style": "p-6 text-gray-900",
+        "style": "p-6",
         "header": {
           "title": {
             "markup": "h3",
