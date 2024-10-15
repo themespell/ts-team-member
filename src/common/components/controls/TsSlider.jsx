@@ -1,17 +1,13 @@
 import { Slider, InputNumber } from 'antd';
+import get from 'lodash/get';
 import editorStore from '../../../editor/states/editorStore';
 import editorFunction from '../../../editor/states/editorFunction';
-import { get } from 'lodash';  // Importing lodash's get function
 
 import globalSettings from '../../utils/globalSettings';
 
-function TsSlider({ label, name, range, value, unit, onChange }) {
+function TsSlider({ label, name, range, unit, onChange }) {
   
   const { saveSettings } = editorFunction();
-
-  console.log(name)
-  const dynamicValue = get(editorStore(), name); // Dynamically access the property using 'name'
-  
 
    const handleChange = (value) => {
     if (onChange) {
@@ -32,7 +28,7 @@ function TsSlider({ label, name, range, value, unit, onChange }) {
       <div className="mb-4 flex justify-between items-center w-full">
         <div className="w-full mr-6">
           <Slider
-            value={parseInt(value)}
+            value={parseInt(get(editorStore(), name))}
             min={parseInt(range.min)}
             max={parseInt(range.max)}
             onChange={handleChange}
@@ -46,7 +42,7 @@ function TsSlider({ label, name, range, value, unit, onChange }) {
         </div>
         <div>
           <InputNumber
-            value={parseInt(value)}
+            value={parseInt(get(editorStore(), name))}
             min={parseInt(range.min)}
             max={parseInt(range.max)}
             onChange={handleChange}

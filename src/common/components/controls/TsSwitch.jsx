@@ -1,33 +1,39 @@
 import { Switch } from "antd";
+import get from 'lodash/get';
+import editorStore from "../../../editor/states/editorStore";
 import editorFunction from '../../../editor/states/editorFunction';
 import globalSettings from '../../utils/globalSettings';
 
-function TsSwitch({ label, name, value, onChange }) {
+function TsSwitch({ label, name, onChange }) {
   const { saveSettings } = editorFunction();
 
   const handleChange = (value) => {
     if (onChange) {
       onChange(value);
     } else {
-      saveSettings(name, value ? 'true' : 'false')
+      saveSettings(name, value);
     }
   };
+
+  const storedValue = get(editorStore(), name, false);
+  const isSwitchOn = storedValue === true || storedValue === 'true';
 
   return (
     <div className="mb-4">
       {label && (
         <label 
-        className="block text-sm font-medium text-gray-700 mb-2"
-        style={
-          {
+          className="block text-sm font-medium text-gray-700 mb-2"
+          style={{
             color: globalSettings.theme.textColor,
-          }
-        }
-        >{label}</label>
+          }}
+        >
+          {label}
+        </label>
       )}
       <Switch
-      value={value === 'true' || value === true}
-      onChange={handleChange} />
+        checked={isSwitchOn}
+        onChange={handleChange}
+      />
     </div>
   );
 }
