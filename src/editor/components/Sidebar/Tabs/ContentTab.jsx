@@ -71,28 +71,23 @@ function ContentTab() {
               label="Slides To Show"
               name="carouselSettings.slidesToShow.default"
               range={carouselSettings.slidesToShow?.range}
-              value={carouselSettings.slidesToShow?.default}
               />
             <TsSlider
             label="Slides To Scroll"
             name="carouselSettings.slidesToScroll.default"
             range={carouselSettings.slidesToScroll?.range}
-            value={carouselSettings.slidesToScroll?.default}
             />
             <TsSwitch
             label="Draggable"
             name="carouselSettings.draggable"
-            value={carouselSettings.draggable}
             />
             <TsSwitch
             label="Centered Slide"
             name="carouselSettings.centerSlide"
-            value={carouselSettings.centerSlide}
             />
             <TsSwitch
             label="Autoplay"
             name="carouselSettings.autoPlay"
-            value={carouselSettings.autoPlay}
             />
             </>
           ],
