@@ -1,3 +1,4 @@
+export { default as TsInput } from './TsInput';
 export { default as TsButton } from './TsButton';
 export { default as TsSelect } from './TsSelect';
 export { default as TsSlider } from './TsSlider';
