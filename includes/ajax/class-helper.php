@@ -18,6 +18,8 @@ class Helper {
             'post_type'      => 'tsteam-member',
             'post__in'       => $team_member_ids,
             'posts_per_page' => -1,
+            'orderby'        => 'ID',
+            'order'          => 'ASC',
         );
 
         $query = new \WP_Query($args);
