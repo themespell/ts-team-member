@@ -1,6 +1,6 @@
 === TS Team Member ===
 Contributors: themespell, asadabir
-Tags: team member, team showcase, team profiles, shortcode, live editing, staff showcase
+Tags: team member, team showcase, team profiles, live editing, staff showcase
 Requires at least: 3.0.1
 Tested up to: 6.6
 Requires PHP: 5.4
