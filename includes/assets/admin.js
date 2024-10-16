@@ -52773,13 +52773,13 @@ const editorStore = create((set2) => ({
   })
 }));
 const ajax_url$2 = tsteam_settings.ajax_url;
-const updateData = (action, data, id) => {
+const updateData = (action, data, post_id) => {
   return new Promise((resolve, reject) => {
     jQuery.post(ajax_url$2, {
       _ajax_nonce: tsteam_settings.nonce,
       action,
-      post_id: id,
-      data
+      post_id,
+      ...data
     }, function(response) {
       if (response.success) {
         resolve(response);
@@ -52955,8 +52955,7 @@ function TsInputGroup({ label, name, unit: unit2, onChange }) {
     ] })
   ] });
 }
-function TsMedia({ label, name, required: required4, form }) {
-  const [mediaUrl, setMediaUrl] = reactExports.useState(null);
+function TsMedia({ label, name, form, mediaUrl, setMediaUrl }) {
   const openMediaLibrary = () => {
     var wkMedia;
     if (wkMedia) {
@@ -52973,7 +52972,9 @@ function TsMedia({ label, name, required: required4, form }) {
     });
     wkMedia.on("select", function() {
       const attachment = wkMedia.state().get("selection").first().toJSON();
-      setMediaUrl(attachment.url);
+      if (setMediaUrl) {
+        setMediaUrl(attachment.url);
+      }
       form.setFieldsValue({ [name]: attachment.url });
     });
     wkMedia.open();
@@ -52985,34 +52986,19 @@ function TsMedia({ label, name, required: required4, form }) {
       name,
       rules: [
         {
-          required: required4,
-          // Fix this line
+          required: true,
           message: `Please select ${label}!`
         }
       ],
-      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-6 w-full", children: [
-        mediaUrl && /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Image,
-          {
-            src: mediaUrl,
-            alt: "Selected media",
-            style: {
-              borderRadius: "100%",
-              height: "10rem",
-              width: "10rem"
-            }
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          TsButton,
-          {
-            label: "Select Member Image",
-            id: "wk-button",
-            htmlType: "button",
-            onClick: openMediaLibrary
-          }
-        )
-      ] })
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-6 w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        TsButton,
+        {
+          label: `Select ${label}`,
+          id: "wk-button",
+          htmlType: "button",
+          onClick: openMediaLibrary
+        }
+      ) })
     }
   ) });
 }
@@ -64219,7 +64205,13 @@ function TeamShowcaseFields({ form, post_id }) {
     )
   ] });
 }
-function TeamMemberBasic({ form }) {
+function TeamMemberBasic({ form, member_image }) {
+  const [memberImage, setMemberImage] = reactExports.useState(member_image || null);
+  reactExports.useEffect(() => {
+    if (member_image) {
+      setMemberImage(member_image);
+    }
+  }, [member_image]);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       TsInput,
@@ -64236,14 +64228,25 @@ function TeamMemberBasic({ form }) {
         name: "member_designation"
       }
     ),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(
-      TsMedia,
-      {
-        label: "Member Image",
-        name: "member_image",
-        form
-      }
-    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-6 w-full", children: [
+      memberImage && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        TsImage,
+        {
+          mediaUrl: memberImage,
+          type: "avatar"
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        TsMedia,
+        {
+          label: "Member Image",
+          name: "member_image",
+          form,
+          mediaUrl: memberImage,
+          setMediaUrl: setMemberImage
+        }
+      )
+    ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       TsInput,
       {
@@ -64266,15 +64269,33 @@ function TeamMemberProfile({ form }) {
     }
   ) }) });
 }
-function TeamMemberFields({ form }) {
+function TeamMemberFields({ form, post_id }) {
+  const [memberImage, setMemberImage] = reactExports.useState(null);
   const onChange = (key) => {
     console.log(key);
   };
+  reactExports.useEffect(() => {
+    if (post_id) {
+      fetchData(`tsteam/team_member/fetch/single`, (response) => {
+        if (response.success && response.data) {
+          form.setFieldsValue({
+            member_name: response.data.title,
+            member_designation: response.data.meta_data.designation,
+            member_image: response.data.meta_data.image,
+            member_description: response.data.content
+          });
+          setMemberImage(response.data.meta_data.image);
+        } else {
+          console.error("Failed to fetch showcase data.");
+        }
+      }, { post_id });
+    }
+  }, [post_id, form]);
   const items = [
     {
       key: "1",
       label: "Basic Information",
-      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TeamMemberBasic, { form })
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(TeamMemberBasic, { form, member_image: memberImage })
     },
     {
       key: "2",
@@ -64286,15 +64307,23 @@ function TeamMemberFields({ form }) {
 }
 function FormContainer({ actionType, type: type4, name, post_id, onShowcaseAdded }) {
   const [form] = Form2.useForm();
-  const onFinish = (data) => {
-    createData(`tsteam/${type4}/create`, data).then((response) => {
-      toastNotification("success", `${name} Created`, `The ${name} has been successfully created.`);
-      if (onShowcaseAdded) {
-        onShowcaseAdded();
-      }
-    }).catch((error) => {
-      toastNotification("error", `${name} Creation Failed`, `The ${name} creation has failed. Error: ${error}`);
-    });
+  const onFinish = (data, actionType2, post_id2) => {
+    if (actionType2 === "create") {
+      createData(`tsteam/${type4}/create`, data).then((response) => {
+        toastNotification("success", `${name} Created`, `The ${name} has been successfully created.`);
+        if (onShowcaseAdded) {
+          onShowcaseAdded();
+        }
+      }).catch((error) => {
+        toastNotification("error", `${name} Creation Failed`, `The ${name} creation has failed. Error: ${error}`);
+      });
+    } else if (actionType2 === "edit") {
+      updateData(`tsteam/${type4}/update`, { ...data, post_id: post_id2 }).then((response) => {
+        toastNotification("success", `${name} Updated`, `The ${name} has been successfully updated.`);
+      }).catch((error) => {
+        toastNotification("error", `${name} Update Failed`, `The ${name} update has failed. Error: ${error}`);
+      });
+    }
   };
   const onFinishFailed = (error) => {
     toastNotification("error", `${name} Creation Failed`, `The ${name} creation has failed. Error: ${error}`);
@@ -64304,13 +64333,13 @@ function FormContainer({ actionType, type: type4, name, post_id, onShowcaseAdded
     {
       form,
       initialValues: { remember: false },
-      onFinish,
-      onFinishFailed,
+      onFinish: (data) => onFinish(data, actionType, post_id),
+      onFinishFailed: (errorInfo) => onFinishFailed(errorInfo),
       autoComplete: "off",
       layout: "vertical",
       children: [
         type4 === "team_showcase" && /* @__PURE__ */ jsxRuntimeExports.jsx(TeamShowcaseFields, { form, post_id }),
-        type4 === "team_member" && /* @__PURE__ */ jsxRuntimeExports.jsx(TeamMemberFields, { form }),
+        type4 === "team_member" && /* @__PURE__ */ jsxRuntimeExports.jsx(TeamMemberFields, { form, post_id }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(Form2.Item, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           TsButton,
           {
@@ -64397,6 +64426,44 @@ function TsSwitch({ label, name, onChange }) {
       }
     )
   ] });
+}
+function TsImage({ mediaUrl, alt, type: type4 = "default" }) {
+  const styles = {
+    default: {
+      borderRadius: "0px",
+      height: "100%",
+      width: "100%"
+    },
+    avatar: {
+      borderRadius: "100%",
+      height: "10rem",
+      width: "10rem"
+    },
+    large: {
+      borderRadius: "8px",
+      height: "12rem",
+      width: "12rem"
+    },
+    medium: {
+      borderRadius: "8px",
+      height: "8rem",
+      width: "8rem"
+    },
+    small: {
+      borderRadius: "8px",
+      height: "4rem",
+      width: "4rem"
+    }
+  };
+  const imageStyle = styles[type4] || styles.default;
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-8 mb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    Image,
+    {
+      src: mediaUrl,
+      alt,
+      style: imageStyle
+    }
+  ) });
 }
 function Topbar$1({ type: type4 }) {
   const handlePublishClick = () => {
@@ -64951,7 +65018,6 @@ function DataTable({ type: type4, title, editor }) {
     });
   };
   const handleEdit = (post_id) => {
-    console.log(post_id);
     setSelectedPost(post_id);
     setIsModalOpen(true);
   };
