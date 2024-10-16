@@ -12,3 +12,4 @@ export { default as TsModal } from './TsModal';
 export { default as TsDrawer } from './TsDrawer';
 export { default as TsLoader } from './TsLoader';
 export { default as TsSwitch } from './TsSwitch';
+export { default as TsImage } from './TsImage';
