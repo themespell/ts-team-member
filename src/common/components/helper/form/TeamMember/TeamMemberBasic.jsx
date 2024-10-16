@@ -1,6 +1,15 @@
-import { TsInput, TsMedia } from '../../../controls/tsControls';
+import { useState, useEffect } from 'react';
+import { TsInput, TsMedia, TsImage } from '../../../controls/tsControls';
 
-function TeamMemberBasic({ form }) {
+function TeamMemberBasic({ form, member_image }) {
+  const [memberImage, setMemberImage] = useState(member_image || null);
+
+  useEffect(() => {
+    if (member_image) {
+      setMemberImage(member_image);
+    }
+  }, [member_image]);
+  
   return (
     <>
       <TsInput 
@@ -14,11 +23,22 @@ function TeamMemberBasic({ form }) {
       name="member_designation"
       />
 
+      <div className='flex items-center gap-6 w-full'>
+      {memberImage && 
+      <TsImage
+      mediaUrl={memberImage}
+      type='avatar'
+      />
+      }
+
       <TsMedia 
-        label="Member Image" 
+        label="Member Image"
         name="member_image"
         form={form}
+        mediaUrl={memberImage}
+        setMediaUrl={setMemberImage}
       />
+      </div>
 
       <TsInput 
       label="Member Description"
