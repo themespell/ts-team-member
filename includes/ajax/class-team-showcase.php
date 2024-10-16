@@ -1,5 +1,6 @@
 <?php
 namespace TSTeam;
+
 use TSTeam\Helper;
 use TSTeam\Common;
 
@@ -147,32 +148,25 @@ class TeamShowcase {
 			wp_die();
 		}
 
-		$post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
-		
-		if (!$post_id || get_post_type($post_id) !== 'tsteam-showcase') {
-			wp_send_json_error(array('message' => 'Invalid post ID or post type'));
-			return;
+		$post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
+
+		if ( ! $post_id ) {
+			wp_send_json_error( array( 'message' => 'Invalid ID' ) );
 		}
 
-		$showcase_settings = isset($_POST['team_members']) ? array_map('intval', (array) $_POST['team_members']) : array();
+		$showcase_title    = ( isset( $_POST['title'] ) ? sanitize_text_field( wp_unslash($_POST['title'] )) : '' );
+		$team_members = isset($_POST['team_members']) ? array_map('intval', (array) $_POST['team_members']) : array();
 
-		$args = array(
-			'ID'          => $post_id,  // Post ID to update
-			// 'post_title'  => $showcase_title,
+		$args    = array(
+			'ID'           => $post_id,
+			'post_type'    => 'tsteam-showcase',
+			'post_title'        => $showcase_title,
+			'meta_input'   => array(
+				'tsteam_team_members' => $team_members,
+			),
 		);
-	
-		// Perform the post update
-		$is_post = wp_update_post($args, true);
-		
-		// Check for errors in the update
-		if (is_wp_error($is_post)) {
-			wp_send_json_error(array('message' => 'Failed to update showcase'));
-			return;
-		}
-
-		
-		update_post_meta($post_id, 'showcase_settings', $team_members);
-		wp_send_json_success(array('post_id' => $post_id));
+		$is_post = wp_update_post( $args );
+		wp_send_json_success( array( 'post_id' => $is_post ) );
 	}
 
 	public function update_showcase_settings() {

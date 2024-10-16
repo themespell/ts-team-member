@@ -84,7 +84,6 @@ function DataTable({ type, title, editor }) {
   };
 
   const handleEdit = (post_id) => {
-    console.log(post_id);
     setSelectedPost(post_id);
     setIsModalOpen(true);
   };

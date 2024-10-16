@@ -1,6 +1,7 @@
 import { Button, Form } from 'antd';
 import { TsButton } from '../../controls/tsControls.js';
 import { createData } from '../../../services/createData.js';
+import { updateData } from '../../../services/updateData.js';
 import { toastNotification } from '../../../utils/toastNotification.js';
 import TeamShowcaseFields from './TeamShowcaseFields.jsx';
 import TeamMemberFields from './TeamMemberFields.jsx';
@@ -8,17 +9,27 @@ import TeamMemberFields from './TeamMemberFields.jsx';
 function FormContainer({ actionType, type, name, post_id, onShowcaseAdded }) {
   const [form] = Form.useForm();
 
-  const onFinish = (data) => {
-    createData(`tsteam/${type}/create`, data)
-    .then(response => {
-        toastNotification('success', `${name} Created`, `The ${name} has been successfully created.`);
-        if (onShowcaseAdded) {
-          onShowcaseAdded();
-        }
-    })
-    .catch(error => {
-        toastNotification('error', `${name} Creation Failed`, `The ${name} creation has failed. Error: ${error}`);
-    });
+  const onFinish = (data, actionType, post_id) => {
+    if (actionType === 'create') {
+      createData(`tsteam/${type}/create`, data)
+      .then(response => {
+          toastNotification('success', `${name} Created`, `The ${name} has been successfully created.`);
+          if (onShowcaseAdded) {
+            onShowcaseAdded();
+          }
+      })
+      .catch(error => {
+          toastNotification('error', `${name} Creation Failed`, `The ${name} creation has failed. Error: ${error}`);
+      });
+    } else if (actionType === 'edit') {
+      updateData(`tsteam/${type}/update`, { ...data, post_id })
+        .then(response => {
+          toastNotification('success', `${name} Updated`, `The ${name} has been successfully updated.`);
+        })
+        .catch(error => {
+          toastNotification('error', `${name} Update Failed`, `The ${name} update has failed. Error: ${error}`);
+        });
+    }
   };
 
   const onFinishFailed = (error) => {
@@ -29,13 +40,13 @@ function FormContainer({ actionType, type, name, post_id, onShowcaseAdded }) {
     <Form
       form={form}
       initialValues={{ remember: false }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
+      onFinish={(data) => onFinish(data, actionType, post_id)}
+      onFinishFailed={(errorInfo) => onFinishFailed(errorInfo, actionType, post_id)}
       autoComplete="off"
       layout="vertical"
     >
       {type === 'team_showcase' && <TeamShowcaseFields form={form} post_id={post_id} />}
-      {type === 'team_member' && <TeamMemberFields form={form} />}
+      {type === 'team_member' && <TeamMemberFields form={form} post_id={post_id} />}
       
       <Form.Item>
       <TsButton
