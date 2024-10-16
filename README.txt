@@ -4,7 +4,7 @@ Tags: team member, team showcase, team profiles, shortcode, live editing, staff 
 Requires at least: 3.0.1
 Tested up to: 6.6
 Requires PHP: 5.4
-Stable tag: 0.0.3
+Stable tag: 0.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,10 @@ Yes, the plugin includes a live editing feature, allowing you to see real-time c
 
 == Changelog ==
 
+= 0.0.4 =
+* Fixed Team Member & Team Showcase Issue
+* Minor UI Issue Fixed
+
 = 0.0.3 =
 * Improved Editor, Admin with Full feature support.
 
@@ -60,5 +64,5 @@ Yes, the plugin includes a live editing feature, allowing you to see real-time c
 
 == Upgrade Notice ==
 
-= 0.0.3 =
-Upgrade to this version for improved performance and added customization options for the live editor.
+= 0.0.4 =
+Upgrade to this version for improved performance and fixed update issues.
