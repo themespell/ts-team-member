@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 .tsteam-container{
-  @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-full;
+	@apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-full;
 }
 
 .editor-container{
-  @apply flex justify-center items-center h-screen;
+	@apply flex justify-center items-center h-screen;
 }
 
 .editor-hover {
-    @apply p-2 border border-transparent hover:border-blue-500 transition duration-300;
-  }
+	@apply p-2 border border-transparent hover:border-blue-500 transition duration-300;
+	}
