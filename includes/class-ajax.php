@@ -1,5 +1,6 @@
 <?php
 namespace TSTeam;
+
 use TSTeam\TeamMember;
 use TSTeam\TeamShowcase;
 

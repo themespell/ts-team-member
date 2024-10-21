@@ -58,8 +58,8 @@ class Database {
 
 	public function register_tsteam_meta() {
 		$meeting_meta = array(
-			'tsteam_information'     => 'string',
-			'tsteam_team_members'    => 'array',
+			'tsteam_information'  => 'string',
+			'tsteam_team_members' => 'array',
 		);
 
 		foreach ( $meeting_meta as $meta_key => $meta_value_type ) {
@@ -67,13 +67,13 @@ class Database {
 				'post',
 				$meta_key,
 				array(
-					'object_subtype' => 'tsteam-showcase',
-					'type'           => $meta_value_type,
-					'single'         => true,
-					'show_in_rest'   => false,
-					'sanitize_callback' => array($this, 'sanitize_team_members_meta'),
-					'auth_callback'  => function() {
-					return current_user_can( 'edit_posts' );
+					'object_subtype'    => 'tsteam-showcase',
+					'type'              => $meta_value_type,
+					'single'            => true,
+					'show_in_rest'      => false,
+					'sanitize_callback' => array( $this, 'sanitize_team_members_meta' ),
+					'auth_callback'     => function () {
+						return current_user_can( 'edit_posts' );
 					},
 				)
 			);
@@ -86,8 +86,8 @@ class Database {
 
 	public function register_tsteam_member_meta() {
 		$tsteam_member_meta = array(
-			'tsteam_member_information'     => 'string',
-			'tsteam_member_image'     		=> 'string',
+			'tsteam_member_information' => 'string',
+			'tsteam_member_image'       => 'string',
 		);
 
 		foreach ( $tsteam_member_meta as $meta_key => $meta_value_type ) {
@@ -127,8 +127,8 @@ class Database {
 		if ( ! empty( $meetings ) ) {
 			foreach ( $meetings as $meeting ) {
 				$meeting_meta = array(
-					'meetingwp_meeting_title'    => get_the_title( $meeting->ID ),
-					'tsteam_information'     => get_post_meta( $meeting->ID, 'tsteam_information', true ),
+					'meetingwp_meeting_title' => get_the_title( $meeting->ID ),
+					'tsteam_information'      => get_post_meta( $meeting->ID, 'tsteam_information', true ),
 				);
 
 				$enhanced_meeting    = $meeting_meta;

@@ -13,7 +13,7 @@ class Admin {
 		add_action( 'admin_menu', array( $self, 'add_admin_menu' ) );
 	}
 
-    public function add_admin_menu() {
+	public function add_admin_menu() {
 		$parent = 'tsteam-admin';
 
 		add_menu_page(
