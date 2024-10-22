@@ -1,10 +1,19 @@
 import TableNavItems from "./helper/TableNavItems";
-import FormContainer from './helper/form/FormContainer.jsx';
 import useAdminStore from '../../admin/states/admin-store.js';
 import { TsModal } from './controls/tsControls.js';
 
+import commonStore from "../states/commonStore.js";
+
 function TableNav({type, title}) {
-  const { isOpen, closeShowcaseModal } = useAdminStore();
+  const { saveSettings, createModal } = commonStore((state) => ({
+    saveSettings: state.saveSettings,
+    createModal: state.createModal,
+  }));
+
+  const handleCloseModal = () => {
+    saveSettings('createModal', false);
+  };
+
   return (
     <div className="">
           <h4 className="text-xl font-semibold mb-4">{title}</h4>
@@ -16,9 +25,9 @@ function TableNav({type, title}) {
               formSupport={true}
               name={title}
               type={type}
-              isOpen={isOpen}
-              isClose={closeShowcaseModal}
-              width={650} />
+              isOpen={createModal}
+              isClose={handleCloseModal}
+              width={550} />
         </div>
     </div>
   );
