@@ -12,6 +12,10 @@ body{
 	padding-left: 0 !important;
 }
 
+#wpfooter {
+	display: none !important;
+}
+
 .tsteam__color--bg {
 	background-color: #18208D;
 }
