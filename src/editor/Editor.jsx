@@ -104,7 +104,7 @@ function Editor() {
         setTheme={setTheme}
         layoutType={allSettings.layout}
       />
-      <div className='flex justify-center items-center min-h-screen mx-auto'>
+      <div className='flex justify-center items-center min-h-screen mx-auto bg-gray-100'>
       <div 
           className="editor-container editor-hover" 
           onClick={handleEditorClick}
