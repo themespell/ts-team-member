@@ -6,15 +6,22 @@ import { toastNotification } from '.././utils/toastNotification.js';
 import { TsModal } from './controls/tsControls.js';
 import { PaintBrushIcon, PencilIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 
+import commonStore from "../states/commonStore.js";
+
 import { Typography } from 'antd';
 const { Text } = Typography;
 
 function DataTable({ type, title, editor }) {
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const { saveSettings, updateModal, reloadData } = commonStore((state) => ({
+    saveSettings: state.saveSettings,
+    updateModal: state.updateModal,
+    reloadData: state.reloadData,
+  }));
 
   useEffect(() => {
     setLoading(true);
@@ -66,7 +73,7 @@ function DataTable({ type, title, editor }) {
       }
       setLoading(false);
     });
-  }, [type]);
+  }, [type, reloadData]);
 
   const handleDelete = (post_id) => {
     deleteData(`tsteam/${type}/delete`, post_id)
@@ -79,17 +86,17 @@ function DataTable({ type, title, editor }) {
         }
       })
       .catch((error) => {
-        toastNotification('error', 'Error', `There was an error deleting the ${title}.`);
+        toastNotification('error', 'Error', `There was an error deleting the ${error}.`);
     });
   };
 
   const handleEdit = (post_id) => {
     setSelectedPost(post_id);
-    setIsModalOpen(true);
+    saveSettings('updateModal', true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    saveSettings('updateModal', false);
     setSelectedPost(null);
   };
 
@@ -117,7 +124,7 @@ function DataTable({ type, title, editor }) {
           name={title}
           type={type}
           id={selectedPost}
-          isOpen={isModalOpen}
+          isOpen={updateModal}
           isClose={closeModal}
           width={550} />
     </div>

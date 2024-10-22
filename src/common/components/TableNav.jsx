@@ -1,5 +1,4 @@
 import TableNavItems from "./helper/TableNavItems";
-import useAdminStore from '../../admin/states/admin-store.js';
 import { TsModal } from './controls/tsControls.js';
 
 import commonStore from "../states/commonStore.js";

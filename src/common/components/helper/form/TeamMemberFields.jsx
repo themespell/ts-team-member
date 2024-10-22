@@ -7,9 +7,6 @@ import { fetchData } from '../../../services/fetchData';
 
 function TeamMemberFields({ form, post_id }) {
   const [memberImage, setMemberImage] = useState(null);
-  const onChange = (key) => {
-    console.log(key);
-  };
 
   useEffect(() => {
     if (post_id) {
@@ -45,7 +42,7 @@ function TeamMemberFields({ form, post_id }) {
 
   return (
     <>
-      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />    
+      <Tabs defaultActiveKey="1" items={items} />    
     </>
   );
 }

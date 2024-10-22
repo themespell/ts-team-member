@@ -1,4 +1,4 @@
-import { Button, Form } from 'antd';
+import { Form } from 'antd';
 import { TsButton } from '../../controls/tsControls.js';
 import { createData } from '../../../services/createData.js';
 import { updateData } from '../../../services/updateData.js';
@@ -6,17 +6,22 @@ import { toastNotification } from '../../../utils/toastNotification.js';
 import TeamShowcaseFields from './TeamShowcaseFields.jsx';
 import TeamMemberFields from './TeamMemberFields.jsx';
 
-function FormContainer({ actionType, type, name, post_id, onShowcaseAdded }) {
+import commonStore from '../../../states/commonStore.js';
+
+function FormContainer({ actionType, type, name, post_id }) {
   const [form] = Form.useForm();
+
+  const { saveSettings } = commonStore((state) => ({
+    saveSettings: state.saveSettings,
+  }));
 
   const onFinish = (data, actionType, post_id) => {
     if (actionType === 'create') {
       createData(`tsteam/${type}/create`, data)
       .then(response => {
           toastNotification('success', `${name} Created`, `The ${name} has been successfully created.`);
-          if (onShowcaseAdded) {
-            onShowcaseAdded();
-          }
+          saveSettings('createModal', false);
+          saveSettings('reloadData', Date.now());
       })
       .catch(error => {
           toastNotification('error', `${name} Creation Failed`, `The ${name} creation has failed. Error: ${error}`);
@@ -25,6 +30,8 @@ function FormContainer({ actionType, type, name, post_id, onShowcaseAdded }) {
       updateData(`tsteam/${type}/update`, { ...data, post_id })
         .then(response => {
           toastNotification('success', `${name} Updated`, `The ${name} has been successfully updated.`);
+          saveSettings('updateModal', false);
+          saveSettings('reloadData', Date.now());
         })
         .catch(error => {
           toastNotification('error', `${name} Update Failed`, `The ${name} update has failed. Error: ${error}`);
