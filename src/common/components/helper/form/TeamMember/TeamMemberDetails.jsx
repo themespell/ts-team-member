@@ -28,12 +28,12 @@ function TeamMemberDetails({ form }) {
 
         </div>
 
-        <TsEditor 
+        {/* <TsEditor 
         label="Details Information" 
         name="information" 
         required={false} 
         form={form} 
-        />
+        /> */}
     </>
   );
 }
