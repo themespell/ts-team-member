@@ -4,6 +4,8 @@ import { Tabs } from 'antd';
 import TeamMemberBasic from './TeamMember/TeamMemberBasic';
 import TeamMemberProfile from './TeamMember/TeamMemberProfile';
 import { fetchData } from '../../../services/fetchData';
+import TeamMemberDetails from './TeamMember/TeamMemberDetails';
+import TeamMemberCustom from './TeamMember/TeamMemberCustom';
 
 function TeamMemberFields({ form, post_id }) {
   const [memberImage, setMemberImage] = useState(null);
@@ -17,6 +19,8 @@ function TeamMemberFields({ form, post_id }) {
             member_designation: response.data.meta_data.designation,
             member_image: response.data.meta_data.image,
             member_description: response.data.content,
+            member_email: response.data.meta_data.email,
+            member_phone: response.data.meta_data.phone,
           });
           setMemberImage(response.data.meta_data.image);
         } else {
@@ -34,8 +38,18 @@ function TeamMemberFields({ form, post_id }) {
     },
     {
       key: '2',
+      label: 'Details Information',
+      children: <TeamMemberDetails form={form} />,
+    },
+    {
+      key: '3',
       label: 'Profile Links',
       children: <TeamMemberProfile form={form} />,
+    },
+    {
+      key: '4',
+      label: 'Custom Fields',
+      children: <TeamMemberCustom form={form} />,
     },
   ];
     
