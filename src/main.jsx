@@ -5,6 +5,7 @@ import { ConfigProvider } from 'antd';
 import globalSettings from './common/utils/globalSettings.js';
 import Editor from './editor/Editor.jsx';
 import AdminPanel from './admin/Admin.jsx';
+import Navigation from './admin/components/Navigation.jsx';
 
 const RootComponent = () => {
   const currentUrl = window.location.href;
@@ -21,4 +22,8 @@ const RootComponent = () => {
 
 ReactDOM.createRoot(document.getElementById('tsteam-admin')).render(
   <RootComponent />
+);
+
+ReactDOM.createRoot(document.getElementById('toplevel_page_tsteam-admin')).render(
+  <Navigation />
 );
