@@ -39,13 +39,14 @@ class Helper {
 		while ( $query->have_posts() ) {
 			$query->the_post();
 			$post_id           = get_the_ID();
-			$team_member_image = get_post_meta( $post_id, 'tsteam_member_image', true );
+
+			$member_meta        = get_post_meta( $post_id, 'tsteam_member_info', true );
 
 			$team_members[] = array(
 				'post_id'           => $post_id,
 				'title'             => get_the_title(),
 				'content'           => get_the_content(),
-				'team_member_image' => $team_member_image,
+				'meta_data' => $member_meta,
 			);
 		}
 
@@ -56,4 +57,16 @@ class Helper {
 			'team_members' => $team_members,
 		);
 	}
+
+	public static function team_member_fields() {
+		return array(
+			'name'        => isset( $_POST['member_name'] ) ? sanitize_text_field( wp_unslash( $_POST['member_name'] ) ) : '',
+			'description' => isset( $_POST['member_description'] ) ? sanitize_text_field( wp_unslash( $_POST['member_description'] ) ) : '',
+			'designation' => isset( $_POST['member_designation'] ) ? sanitize_text_field( wp_unslash( $_POST['member_designation'] ) ) : '',
+			'image'       => isset( $_POST['member_image'] ) ? esc_url_raw( wp_unslash( $_POST['member_image'] ) ) : '',
+			'email'       => isset( $_POST['member_email'] ) ? sanitize_email( wp_unslash( $_POST['member_email'] ) ) : '',
+			'phone'       => isset( $_POST['member_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['member_phone'] ) ) : '',
+		);
+	}
+	
 }
