@@ -58,7 +58,7 @@ function TsEditor({ label, name, required, form }) {
         }
       ]}
     >
-      <div id="editorjs" style={{ padding: '16px', backgroundColor: '#f7f7f7' }}></div>
+      <div id="editorjs" style={{ padding: '12px', backgroundColor: '#f7f7f7' }}></div>
     </Form.Item>
   );
 }
