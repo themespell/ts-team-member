@@ -16,6 +16,10 @@ body{
 	display: none !important;
 }
 
+.wpspeedo--notice {
+	display: none !important;
+}
+
 .tsteam__color--bg {
 	background-color: #18208D;
 }
@@ -41,6 +45,11 @@ body{
 .tsteam__color--icon:hover {
 	color: #4C5ABD;
 	@apply transition duration-500 ease-in-out;
+}
+
+.ts-modal {
+	margin-top: 3rem;
+	margin-bottom: 3rem;
 }
 
 
