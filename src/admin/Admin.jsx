@@ -19,7 +19,6 @@ function AdminPanel() {
               <TeamShowcase />
             )}
             </div>
-
           </div>
         </div>
       </>

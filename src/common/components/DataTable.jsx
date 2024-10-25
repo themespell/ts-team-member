@@ -42,7 +42,7 @@ function DataTable({ type, title, editor }) {
             switch (key) {
               case 'image':
               case 'profileImage':
-                return <img src={text} alt={key} style={{ width: '70px', height: 'auto', borderRadius: '100%' }} />;
+                return <img src={text} alt={key} style={{ width: '70px', height: '70px', borderRadius: '100%' }} />;
               case 'shortcode':
                 return <Text copyable>{text}</Text>;
 
@@ -126,7 +126,7 @@ function DataTable({ type, title, editor }) {
           id={selectedPost}
           isOpen={updateModal}
           isClose={closeModal}
-          width={550} />
+          width={650} />
     </div>
   );
 }
