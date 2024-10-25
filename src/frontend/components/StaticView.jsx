@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from './layouts/Layout';
 
-function StaticView({ team_members, settings }) {  
+function StaticView({ team_members, settings }) {
     return (
         <div 
         className='tsteam-container w-3/6'
@@ -30,9 +30,9 @@ function StaticView({ team_members, settings }) {
                   <Layout
                     settings={settings}
                     layoutType={settings.layout}
-                    imageUrl={member.team_member_image}
+                    imageUrl={member.meta_data.image}
                     title={member.title}
-                    subtitle={member.subtitle}
+                    subtitle={member.meta_data.designation}
                     description={member.description}
                     socialIcons={member.socialIcons || []}
                   />

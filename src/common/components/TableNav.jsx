@@ -26,7 +26,7 @@ function TableNav({type, title}) {
               type={type}
               isOpen={createModal}
               isClose={handleCloseModal}
-              width={550} />
+              width={650} />
         </div>
     </div>
   );
