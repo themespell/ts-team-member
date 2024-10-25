@@ -46,11 +46,11 @@ function TeamMemberFields({ form, post_id }) {
       label: 'Profile Links',
       children: <TeamMemberProfile form={form} />,
     },
-    {
-      key: '4',
-      label: 'Custom Fields',
-      children: <TeamMemberCustom form={form} />,
-    },
+    // {
+    //   key: '4',
+    //   label: 'Custom Fields',
+    //   children: <TeamMemberCustom form={form} />,
+    // },
   ];
     
 
