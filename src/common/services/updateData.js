@@ -6,7 +6,7 @@ export const updateData = (action, data, post_id) => {
             _ajax_nonce: tsteam_settings.nonce,
             action: action,
             post_id: post_id,
-            ...data,
+            data: { ...data }
         }, function(response) {
             if (response.success) {
                 resolve(response);

@@ -1,0 +1,1 @@
+import{j as t}from"./Frontend-BF2QTBkg.js";function a({settings:r,imageUrl:e,title:i,subtitle:s,description:n,socialIcons:l}){return t.jsx(t.Fragment,{children:t.jsx("h1",{children:"Ayan Blur Layout"})})}export{a as default};

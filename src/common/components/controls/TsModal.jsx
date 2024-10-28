@@ -4,6 +4,7 @@ import FormContainer from '../helper/form/FormContainer';
 function TsModal({ actionType, formSupport, name, type, id, isOpen, isClose, width, children }) {
   return (
     <Modal
+      className='ts-modal'
       title={
         actionType === 'create' 
           ? `Add New ${name}` 

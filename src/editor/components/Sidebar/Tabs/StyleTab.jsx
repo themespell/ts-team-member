@@ -42,15 +42,14 @@ function StyleTab({ layoutType }) {
 
             <TsSlider
                 label="Columns"
-                range={columnSettings.column?.range}
-                name='containerSettings.column.default'
+                range={columnSettings.column.range}
+                name='columnSettings.column.default'
             />
 
             <TsSlider
                 label="Column Gap"
-                range={columnSettings.gap?.range}
-                name='containerSettings.gap.default'
-                value={columnSettings.gap?.default}
+                range={columnSettings.gap.range}
+                name='columnSettings.gap.default'
                 unit="px"
             />
 

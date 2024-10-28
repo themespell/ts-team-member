@@ -10,7 +10,7 @@ function AdminPanel() {
     return (
       <>
         <Topbar title={isTeamMemberPage ? 'Team Member' : 'Team Showcase'} />
-        <div className='w-full flex justify-center pt-12'>
+        <div className='overflow-x-auto bg-gray-100 w-full flex justify-center pt-12 pb-12'>
           <div className='flex justify-between gap-8 w-5/6'>
             <div className='w-full bg-white p-6 rounded-lg shadow-lg'>
             {isTeamMemberPage ?(
@@ -19,7 +19,6 @@ function AdminPanel() {
               <TeamShowcase />
             )}
             </div>
-
           </div>
         </div>
       </>

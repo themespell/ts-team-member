@@ -8,22 +8,22 @@ const defaultLayouts = [
     label: 'Card',
     value: 'Card',
   },
-  {
-    label: 'Overlay',
-    value: 'Overlay',
-  },
-  {
-    label: 'Blur',
-    value: 'Blur',
-  },
-  {
-    label: 'Avatar',
-    value: 'Avatar',
-  },
-  {
-    label: 'HorizontalCard',
-    value: 'HorizontalCard',
-  },
+  // {
+  //   label: 'Overlay',
+  //   value: 'Overlay',
+  // },
+  // {
+  //   label: 'Blur',
+  //   value: 'Blur',
+  // },
+  // {
+  //   label: 'Avatar',
+  //   value: 'Avatar',
+  // },
+  // {
+  //   label: 'HorizontalCard',
+  //   value: 'HorizontalCard',
+  // },
 ];
 
 const viewStyle = [

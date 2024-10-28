@@ -1,6 +1,8 @@
 <?php
 namespace TSTeam;
 
+use TSTeam\Helper;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -41,14 +43,13 @@ class TeamMember {
 			$query->the_post();
 
 			$post_id            = get_the_ID();
-			$member_designation = get_post_meta( $post_id, 'tsteam_member_designation', true );
-			$member_image       = get_post_meta( $post_id, 'tsteam_member_image', true );
+			$member_meta        = get_post_meta( $post_id, 'tsteam_member_info', true );
 
 			$members[] = array(
 				'post_id'     => $post_id,
-				'image'       => $member_image,
+				'image' => $member_meta['image'],
 				'name'        => get_the_title(),
-				'designation' => $member_designation,
+				'designation' => $member_meta['designation'],
 				'description' => get_the_content(),
 			);
 		}
@@ -81,17 +82,13 @@ class TeamMember {
 
 		$query->the_post();
 
-		$member_image       = get_post_meta( $team_member_id, 'tsteam_member_image', true );
-		$member_designation = get_post_meta( $team_member_id, 'tsteam_member_designation', true );
+		$member_meta        = get_post_meta( $team_member_id, 'tsteam_member_info', true );
 
 		$showcase = array(
 			'post_id'   => $team_member_id,
 			'title'     => get_the_title(),
 			'content'   => get_the_content(),
-			'meta_data' => array(
-				'image'       => $member_image,
-				'designation' => $member_designation,
-			),
+			'meta_data' => $member_meta,
 		);
 
 		wp_reset_postdata();
@@ -104,22 +101,19 @@ class TeamMember {
 				wp_die();
 		}
 
-		$member_name        = ( isset( $_POST['member_name'] ) ? sanitize_text_field( wp_unslash( $_POST['member_name'] ) ) : '' );
-		$member_designation = ( isset( $_POST['member_designation'] ) ? sanitize_text_field( wp_unslash( $_POST['member_designation'] ) ) : '' );
-		$member_image       = isset( $_POST['member_image'] ) ? esc_url_raw( wp_unslash( $_POST['member_image'] ) ) : '';
-		$member_description = isset( $_POST['member_description'] ) ? sanitize_text_field( wp_unslash( $_POST['member_description'] ) ) : '';
+		$fields = Helper::team_member_fields('create');
 
 		$args    = array(
-			'post_title'   => $member_name,
-			'post_content' => $member_description,
+			'post_title'   => $fields['name'],
+			'post_content' => $fields['description'],
 			'post_status'  => 'publish',
 			'post_author'  => get_current_user_id(),
 			'post_type'    => 'tsteam-member',
 			'meta_input'   => array(
-				'tsteam_member_designation' => $member_designation,
-				'tsteam_member_image'       => $member_image,
-			),
+				'tsteam_member_info' => array_merge($fields, array()),
+        	),
 		);
+
 		$is_post = wp_insert_post( $args );
 		wp_send_json_success( array( 'post_id' => $is_post ) );
 	}
@@ -130,28 +124,24 @@ class TeamMember {
 			wp_die();
 		}
 
-		$post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
-
+		$post_id = isset( $_POST['data']['post_id'] ) ? absint( $_POST['data']['post_id'] ) : 0;
+		
 		if ( ! $post_id ) {
 			wp_send_json_error( array( 'message' => 'Invalid ID' ) );
 		}
 
-		$member_name        = ( isset( $_POST['member_name'] ) ? sanitize_text_field( wp_unslash( $_POST['member_name'] ) ) : '' );
-		$member_designation = ( isset( $_POST['member_designation'] ) ? sanitize_text_field( wp_unslash( $_POST['member_designation'] ) ) : '' );
-		$member_image       = isset( $_POST['member_image'] ) ? esc_url_raw( wp_unslash( $_POST['member_image'] ) ) : '';
-		$member_description = isset( $_POST['member_description'] ) ? sanitize_text_field( wp_unslash( $_POST['member_description'] ) ) : '';
+		$fields = Helper::team_member_fields('update');
 
 		$args    = array(
 			'ID'           => $post_id,
-			'post_title'   => $member_name,
-			'post_content' => $member_description,
+			'post_title'   => $fields['name'],
+			'post_content' => $fields['description'],
 			'post_status'  => 'publish',
 			'post_author'  => get_current_user_id(),
 			'post_type'    => 'tsteam-member',
 			'meta_input'   => array(
-				'tsteam_member_designation' => $member_designation,
-				'tsteam_member_image'       => $member_image,
-			),
+				'tsteam_member_info' => array_merge($fields, array()),
+        	),
 		);
 		$is_post = wp_update_post( $args );
 		wp_send_json_success( array( 'post_id' => $is_post ) );

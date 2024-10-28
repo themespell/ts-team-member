@@ -36,9 +36,9 @@ function CarouselView({ team_members, settings }) {
                   <Layout
                     settings={settings}
                     layoutType={settings.layout}
-                    imageUrl={member.team_member_image}
-                    title={member.title || "No Name"}
-                    subtitle={member.subtitle}
+                    imageUrl={member.meta_data.image}
+                    title={member.title}
+                    subtitle={member.meta_data.designation}
                     description={member.description}
                     socialIcons={member.socialIcons || []}
                   />

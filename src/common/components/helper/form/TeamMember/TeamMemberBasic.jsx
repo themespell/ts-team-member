@@ -12,17 +12,30 @@ function TeamMemberBasic({ form, member_image }) {
   
   return (
     <>
-      <TsInput 
-      label="Member Name"
-      name="member_name"
-      required={true}
-      />
+      <div className='grid grid-cols-2 gap-4'>
+        <TsInput 
+        label="Member Name"
+        name="member_name"
+        required={true}
+        />
 
-      <TsInput 
-      label="Member Designation"
-      name="member_designation"
-      />
+        <TsInput 
+        label="Member Designation"
+        name="member_designation"
+        />
 
+        <TsInput
+        label="Member Email"
+        name="member_email"
+        />
+
+        <TsInput 
+        label="Member Mobile"
+        name="member_phone"
+        />
+
+      </div>
+      
       <div className='flex items-center gap-6 w-full'>
       {memberImage && 
       <TsImage

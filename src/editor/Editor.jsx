@@ -40,7 +40,6 @@ function Editor() {
           setPostData(response.data.meta_data);
           
           const showcaseSettings = JSON.parse(response.data.meta_data.showcase_settings);
-          console.log(showcaseSettings)
           Object.keys(showcaseSettings).forEach((key) => {
             const value = showcaseSettings[key];
             saveSettings(key, value);
@@ -104,7 +103,7 @@ function Editor() {
         setTheme={setTheme}
         layoutType={allSettings.layout}
       />
-      <div className='flex justify-center items-center min-h-screen mx-auto'>
+      <div className='flex justify-center items-center min-h-screen mx-auto bg-gray-100'>
       <div 
           className="editor-container editor-hover" 
           onClick={handleEditorClick}

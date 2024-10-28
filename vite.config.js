@@ -21,7 +21,6 @@ export default defineConfig({
           assetFileNames: '[name].[ext]',
           manualChunks: undefined,
         },
-
     }
-  }
+  },
 })
