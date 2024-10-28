@@ -11,15 +11,14 @@ function Navigation() {
       <li className="wp-has-submenu wp-has-current-submenu wp-menu-open menu-top toplevel_page_tsteam-admin">
         <a
           href="admin.php?page=tsteam-showcase"
-          className="tsteam__color--bg wp-has-submenu wp-menu-open menu-top toplevel_page_tsteam-admin"
+          className="tsteam__color--bg wp-has-submenu wp-menu-open menu-top toplevel_page_tsteam-admin ts-glow"
         >
           <div className="wp-menu-arrow">
             <div></div>
           </div>
           <div className="wp-menu-image dashicons-before" aria-hidden="true">
             <img
-              src="http://localhost:10003/wp-content/plugins/ts-team-member/includes/assets/icon-16x16.png"
-              alt=""
+              src={navigation.menuicon}
             />
           </div>
           <div className="wp-menu-name">TS Team</div>
