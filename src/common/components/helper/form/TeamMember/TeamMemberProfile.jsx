@@ -1,6 +1,7 @@
 import { TsInput, TsRepeater } from '../../../controls/tsControls';
+import { safeJsonParse } from '../../../../utils/safeJsonParse';
 
-function TeamMemberProfile({ form }) {
+function TeamMemberProfile({ form, social_links }) {
 
   return (
     <>
@@ -33,6 +34,7 @@ function TeamMemberProfile({ form }) {
         form={form}
         label="Social Links"
         fieldName="member_social"
+        defaultValues={safeJsonParse(social_links)}
         required={false}
         fieldNames={['link']}
         controlSupport={{
