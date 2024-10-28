@@ -148,14 +148,14 @@ class TeamShowcase {
 			wp_die();
 		}
 
-		$post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
+		$post_id = isset( $_POST['data']['post_id'] ) ? absint( $_POST['data']['post_id'] ) : 0;
 
 		if ( ! $post_id ) {
 			wp_send_json_error( array( 'message' => 'Invalid ID' ) );
 		}
 
-		$showcase_title = ( isset( $_POST['title'] ) ? sanitize_text_field( wp_unslash( $_POST['title'] ) ) : '' );
-		$team_members   = isset( $_POST['team_members'] ) ? array_map( 'intval', (array) $_POST['team_members'] ) : array();
+		$showcase_title = ( isset( $_POST['data']['title'] ) ? sanitize_text_field( wp_unslash( $_POST['data']['title'] ) ) : '' );
+		$team_members   = isset( $_POST['data']['team_members'] ) ? array_map( 'intval', (array) $_POST['data']['team_members'] ) : array();
 
 		$args    = array(
 			'ID'         => $post_id,
