@@ -1,4 +1,4 @@
-import { TsInput, TsRepeter } from '../../../controls/tsControls';
+import { TsInput, TsRepeater } from '../../../controls/tsControls';
 
 function TeamMemberProfile({ form }) {
 
@@ -28,11 +28,29 @@ function TeamMemberProfile({ form }) {
         
         </div>
 
-        <TsRepeter
+
+        <TsRepeater
+        form={form}
         label="Social Links"
-        >
-          
-        </TsRepeter>
+        fieldName="member_social"
+        required={false}
+        fieldNames={['link']}
+        controlSupport={{
+          type: 'select',
+          name: 'socialChannel',
+          options: [
+            {
+              label: 'Facebook',
+              value: 'facebook',
+            },
+            {
+              label: 'Twitter',
+              value: 'twitter',
+            },
+          ],
+          placeholder: 'Social Media',
+        }}
+      />
     </>
   );
 }

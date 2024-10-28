@@ -1,4 +1,4 @@
-import { TsRepeter } from '../../../controls/tsControls';
+import { TsRepeater } from '../../../controls/tsControls';
 
 function TeamMemberCustom({ form }) {
 
