@@ -32,10 +32,11 @@ class Enqueue {
 				'tsteam-admin-script',
 				'tsteam_settings',
 				array(
-					'ajax_url'  => admin_url( 'admin-ajax.php' ),
-					'admin_url' => get_admin_url(),
-					'nonce'     => wp_create_nonce( 'tsteam_nonce' ),
-					'wp_url'    => site_url(),
+					'ajax_url'   => admin_url( 'admin-ajax.php' ),
+					'admin_url'  => get_admin_url(),
+					'nonce'      => wp_create_nonce( 'tsteam_nonce' ),
+					'wp_url'     => site_url(),
+					'plugin_url' => TSTEAM_ROOT_DIR_PATH
 				)
 			);
 			remove_all_actions( 'admin_notices' );

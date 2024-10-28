@@ -22,7 +22,7 @@ class Admin {
 			'do_not_allow',
 			$parent,
 			array( $this, 'tsteam_callback' ),
-			plugin_dir_url( __FILE__ ) . 'assets/icon-16x16.png',
+			plugin_dir_url( __FILE__ ) . 'library/icon-16x16.png',
 			30
 		);
 		add_submenu_page(
