@@ -22,8 +22,8 @@ function TeamMemberDetails({ form }) {
         />
 
         <TsInput
-        label="Tag"
-        name="member_tag"
+        label="Location"
+        name="member_location"
         />
 
         </div>
