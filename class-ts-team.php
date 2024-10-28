@@ -10,7 +10,7 @@
 	 * Plugin Name:       TS Team Member Showcase
 	 * Plugin URI:        https://themespell.com/ts-team
 	 * Description:       Team Showcase Plugin
-	 * Version:           0.0.4
+	 * Version:           0.0.5
 	 * Author:            Themespell
 	 * Author URI:        https://themespell.com/
 	 * License:           GPL-2.0+
