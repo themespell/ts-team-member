@@ -101,7 +101,7 @@ class TeamMember {
 				wp_die();
 		}
 
-		$fields = Helper::team_member_fields();
+		$fields = Helper::team_member_fields('create');
 
 		$args    = array(
 			'post_title'   => $fields['name'],
@@ -124,13 +124,13 @@ class TeamMember {
 			wp_die();
 		}
 
-		$post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
-
+		$post_id = isset( $_POST['data']['post_id'] ) ? absint( $_POST['data']['post_id'] ) : 0;
+		
 		if ( ! $post_id ) {
 			wp_send_json_error( array( 'message' => 'Invalid ID' ) );
 		}
 
-		$fields = Helper::team_member_fields();
+		$fields = Helper::team_member_fields('update');
 
 		$args    = array(
 			'ID'           => $post_id,
