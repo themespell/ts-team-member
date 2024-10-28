@@ -1,11 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Form, Button } from 'antd';
 import TsSelectInput from './repeterControls/TsSelectInput';
 import TsMultiInput from './repeterControls/TsMultiInput';
 import { MinusCircleOutlined } from '@ant-design/icons';
 
-const TsRepeater = ({ form, label, fieldName, required, fieldNames = [], controlSupport }) => {
-  const [repeaterData, setRepeaterData] = useState([]);
+const TsRepeater = ({ form, label, fieldName, defaultValues = [], required, fieldNames = [], controlSupport }) => {
+  const [repeaterData, setRepeaterData] = useState(defaultValues);
+  
+  useEffect(() => {
+    const initialData = defaultValues; 
+    setRepeaterData(initialData);
+  }, [form, fieldName, defaultValues]);
+  
 
   useEffect(() => {
     form.setFieldsValue({ [fieldName]: repeaterData });
@@ -81,7 +87,6 @@ const TsRepeater = ({ form, label, fieldName, required, fieldNames = [], control
           Add {label}
         </Button>
       </div>
-      {/* <pre>{JSON.stringify(repeaterData, null, 2)}</pre> */}
     </Form.Item>
   );
 };
