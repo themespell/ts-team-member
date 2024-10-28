@@ -14,7 +14,10 @@ class TeamShowcase {
 		$self = new self();
 		// Team Showcase Ajax
 		add_action( 'wp_ajax_tsteam/team_showcase/fetch', array( $self, 'get_showcase' ) );
+
 		add_action( 'wp_ajax_tsteam/team_showcase/fetch/single', array( $self, 'get_showcase_by_id' ) );
+		add_action( 'wp_ajax_nopriv_tsteam/team_showcase/fetch/single', array( $self, 'get_showcase_by_id' ) );
+		
 		add_action( 'wp_ajax_tsteam/team_showcase/create', array( $self, 'create_showcase' ) );
 		add_action( 'wp_ajax_tsteam/team_showcase/update', array( $self, 'update_showcase' ) );
 		add_action( 'wp_ajax_tsteam/team_showcase/update/settings', array( $self, 'update_showcase_settings' ) );
@@ -58,10 +61,6 @@ class TeamShowcase {
 
 	public function get_showcase_by_id() {
 		check_ajax_referer( 'tsteam_nonce' );
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die();
-		}
 
 		$post_id = isset( $_POST['post_id'] ) ? (int) $_POST['post_id'] : 0;
 
