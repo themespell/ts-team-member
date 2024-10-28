@@ -58,15 +58,18 @@ class Helper {
 		);
 	}
 
-	public static function team_member_fields() {
+	public static function team_member_fields($actiontype) {
+		$post_data = ($actiontype === 'update') ? $_POST['data'] : $_POST;
+	
 		return array(
-			'name'        => isset( $_POST['member_name'] ) ? sanitize_text_field( wp_unslash( $_POST['member_name'] ) ) : '',
-			'description' => isset( $_POST['member_description'] ) ? sanitize_text_field( wp_unslash( $_POST['member_description'] ) ) : '',
-			'designation' => isset( $_POST['member_designation'] ) ? sanitize_text_field( wp_unslash( $_POST['member_designation'] ) ) : '',
-			'image'       => isset( $_POST['member_image'] ) ? esc_url_raw( wp_unslash( $_POST['member_image'] ) ) : '',
-			'email'       => isset( $_POST['member_email'] ) ? sanitize_email( wp_unslash( $_POST['member_email'] ) ) : '',
-			'phone'       => isset( $_POST['member_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['member_phone'] ) ) : '',
+			'name'        => isset( $post_data['member_name'] ) ? sanitize_text_field( wp_unslash( $post_data['member_name'] ) ) : '',
+			'description' => isset( $post_data['member_description'] ) ? sanitize_text_field( wp_unslash( $post_data['member_description'] ) ) : '',
+			'designation' => isset( $post_data['member_designation'] ) ? sanitize_text_field( wp_unslash( $post_data['member_designation'] ) ) : '',
+			'image'       => isset( $post_data['member_image'] ) ? esc_url_raw( wp_unslash( $post_data['member_image'] ) ) : '',
+			'email'       => isset( $post_data['member_email'] ) ? sanitize_email( wp_unslash( $post_data['member_email'] ) ) : '',
+			'phone'       => isset( $post_data['member_phone'] ) ? sanitize_text_field( wp_unslash( $post_data['member_phone'] ) ) : '',
+			'socialLinks' => isset( $_POST['member_social'] ) ? wp_json_encode( wp_unslash( $_POST['member_social'] ), true ) : array()
 		);
-	}
+	}	
 	
 }
