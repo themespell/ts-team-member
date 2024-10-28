@@ -3,7 +3,7 @@
 	/**
 	 *
 	 * @link              https://themespell.com/
-	 * @since             0.0.4
+	 * @since             0.0.5
 	 * @package           Team Showcase Plugin
 	 *
 	 * @wordpress-plugin
@@ -16,7 +16,7 @@
 	 * License:           GPL-2.0+
 	 * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
 	 * Text Domain:       ts-team-member
-	 * Tested up to:      6.6
+	 * Tested up to:      6.6.2
 	 */
 
 if ( ! defined( 'ABSPATH' ) ) {
