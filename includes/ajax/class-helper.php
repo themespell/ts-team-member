@@ -62,13 +62,21 @@ class Helper {
 		$post_data = ($actiontype === 'update') ? $_POST['data'] : $_POST;
 	
 		return array(
-			'name'        => isset( $post_data['member_name'] ) ? sanitize_text_field( wp_unslash( $post_data['member_name'] ) ) : '',
-			'description' => isset( $post_data['member_description'] ) ? sanitize_text_field( wp_unslash( $post_data['member_description'] ) ) : '',
-			'designation' => isset( $post_data['member_designation'] ) ? sanitize_text_field( wp_unslash( $post_data['member_designation'] ) ) : '',
-			'image'       => isset( $post_data['member_image'] ) ? esc_url_raw( wp_unslash( $post_data['member_image'] ) ) : '',
-			'email'       => isset( $post_data['member_email'] ) ? sanitize_email( wp_unslash( $post_data['member_email'] ) ) : '',
-			'phone'       => isset( $post_data['member_phone'] ) ? sanitize_text_field( wp_unslash( $post_data['member_phone'] ) ) : '',
-			'socialLinks' => isset( $_POST['member_social'] ) ? wp_json_encode( wp_unslash( $_POST['member_social'] ), true ) : array()
+			'name'         => isset( $post_data['member_name'] ) ? sanitize_text_field( wp_unslash( $post_data['member_name'] ) ) : '',
+			'description'  => isset( $post_data['member_description'] ) ? sanitize_text_field( wp_unslash( $post_data['member_description'] ) ) : '',
+			'designation'  => isset( $post_data['member_designation'] ) ? sanitize_text_field( wp_unslash( $post_data['member_designation'] ) ) : '',
+			'image'        => isset( $post_data['member_image'] ) ? esc_url_raw( wp_unslash( $post_data['member_image'] ) ) : '',
+			'email'        => isset( $post_data['member_email'] ) ? sanitize_email( wp_unslash( $post_data['member_email'] ) ) : '',
+			'phone'        => isset( $post_data['member_phone'] ) ? sanitize_text_field( wp_unslash( $post_data['member_phone'] ) ) : '',
+			'telephone'    => isset( $post_data['member_telephone'] ) ? sanitize_text_field( wp_unslash( $post_data['member_telephone'] ) ) : '',
+			'experience'   => isset( $post_data['member_experience'] ) ? sanitize_text_field( wp_unslash( $post_data['member_experience'] ) ) : '',
+			'company'      => isset( $post_data['member_company'] ) ? sanitize_text_field( wp_unslash( $post_data['member_company'] ) ) : '',
+			'location'     => isset( $post_data['member_location'] ) ? sanitize_text_field( wp_unslash( $post_data['member_location'] ) ) : '',
+			'website'      => isset( $post_data['member_website'] ) ? sanitize_text_field( wp_unslash( $post_data['member_website'] ) ) : '',
+			'resume'       => isset( $post_data['member_resume'] ) ? sanitize_text_field( wp_unslash( $post_data['member_resume'] ) ) : '',
+			'hireLink'     => isset( $post_data['member_hire'] ) ? sanitize_text_field( wp_unslash( $post_data['member_hire'] ) ) : '',
+			'donationLink' => isset( $post_data['member_donation'] ) ? sanitize_text_field( wp_unslash( $post_data['member_donation'] ) ) : '',
+			'socialLinks'  => isset( $post_data['member_social'] ) ? wp_json_encode( wp_unslash( $post_data['member_social'] ), true ) : array()
 		);
 	}	
 	
