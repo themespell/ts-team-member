@@ -3,6 +3,7 @@ import { hideAdminElements } from './utils/utils.js';
 import { fetchData } from '../common/services/fetchData.js';
 import { TsLoader } from '../common/components/controls/tsControls.js';
 
+import editorLocal from "./states/editorLocal.js";
 import editorStore from './states/editorStore.js';
 import editorFunction from './states/editorFunction.js';
 
@@ -14,6 +15,7 @@ import CarouselView from '../frontend/components/CarouselView.jsx';
 import StaticView from '../frontend/components/StaticView.jsx';
 
 function Editor() {
+  const { isEditor, viewport, setViewport } = editorLocal();
   const { postType } = editorStore();
   const allSettings = editorStore();
   const { saveSettings } = editorFunction();
@@ -73,6 +75,9 @@ function Editor() {
     };
   }, []);
 
+  useEffect(() => {
+  }, [viewport]);
+
   const handleCloseSidebar = () => {
     setIsSidebarOpen(false);
   };
@@ -94,7 +99,8 @@ function Editor() {
   return (
     <>
       <Topbar
-      type={postType}
+          type={postType}
+          viewport={viewport} setViewport={setViewport}
       />
       <Sidebar 
         isOpen={isSidebarOpen}
@@ -103,20 +109,23 @@ function Editor() {
         setTheme={setTheme}
         layoutType={allSettings.layout}
       />
-      <div className='flex justify-center items-center min-h-screen mx-auto bg-gray-100'>
-      <div 
-          className="editor-container editor-hover" 
+      <div className='flex justify-center items-center min-h-screen mx-auto tsteam__editor_bg'>
+      <div className={`editor-container editor-hover viewport-${viewport}`}
           onClick={handleEditorClick}
       >
       {allSettings.view === "carousel" ? (
         <CarouselView
           team_members={postData.team_members}
           settings={allSettings}
+          viewport={viewport}
+          isEditor={isEditor}
         />
       ) : (
         <StaticView
           team_members={postData.team_members}
           settings={allSettings}
+          viewport={viewport}
+          isEditor={isEditor}
         />
       )}
       </div>

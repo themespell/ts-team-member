@@ -37,20 +37,23 @@ function StyleTab({ layoutType }) {
                 label="Container Width"
                 range={containerSettings.width.range}
                 name='containerSettings.width.default'
-                unit="px"
+                responsive={true}
+                unit={true}
             />
 
             <TsSlider
                 label="Columns"
                 range={columnSettings.column.range}
                 name='columnSettings.column.default'
+                responsive={true}
             />
 
             <TsSlider
                 label="Column Gap"
                 range={columnSettings.gap.range}
                 name='columnSettings.gap.default'
-                unit="px"
+                responsive={true}
+                unit={true}
             />
 
             <TsColor

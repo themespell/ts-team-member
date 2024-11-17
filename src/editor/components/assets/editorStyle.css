@@ -4,13 +4,41 @@
 }
 
 .editor-container {
-	max-width: 50%;
+	@apply flex justify-center items-center;
 }
 
 .editor-hover {
-	@apply p-2 border border-transparent hover:border-blue-500 transition duration-300 w-full;
+	@apply p-2 border border-transparent hover:border-blue-500 transition duration-300 max-w-full;
 }
 
-.tsteam-container{
-	@apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-3/6 h-full;
-	}
+.tsteam__editor_bg {
+	@apply bg-gray-100;
+}
+
+.tsteam-container {
+	@apply grid w-full h-full;
+}
+
+.viewport-desktop {
+	@apply flex justify-center items-center;
+	width: 100% !important;
+	min-width: 1200px !important;
+}
+
+.viewport-tablet {
+	@apply m-4 flex justify-center items-center;
+	width: 100% !important;
+	max-width: 768px !important;
+	background: #fff;
+	height: 100vh;
+	overflow-y: auto;
+}
+
+.viewport-mobile {
+	@apply m-4 flex justify-center items-center;
+	width: 100% !important;
+	max-width: 380px !important;
+	background: #fff;
+	height: 100vh;
+	overflow-y: auto;
+}

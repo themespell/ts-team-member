@@ -13,10 +13,10 @@ const editorStore = create((set) => ({
     containerSettings: {
         width:{
           range: {
-            min: 150,
+            min: 0,
             max: 2500,
           },
-          default: 1000
+          default: 100
         }
     },
     columnSettings: {
