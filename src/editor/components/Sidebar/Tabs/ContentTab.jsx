@@ -71,11 +71,13 @@ function ContentTab() {
               label="Slides To Show"
               name="carouselSettings.slidesToShow.default"
               range={carouselSettings.slidesToShow?.range}
+              responsive={true}
               />
             <TsSlider
             label="Slides To Scroll"
             name="carouselSettings.slidesToScroll.default"
             range={carouselSettings.slidesToScroll?.range}
+            responsive={true}
             />
             <TsSwitch
             label="Draggable"
