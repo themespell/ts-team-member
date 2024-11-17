@@ -1,53 +1,63 @@
 import { Carousel } from 'antd';
 import Layout from './layouts/Layout';
+import { getCommonStyles } from './helper/commonStyle.js';
+import { getResponsiveStyles } from './helper/responsiveStyles.js';
+import { getCarouselStyles } from './helper/carouselStyles.js';
+import { useEffect, useState } from 'react';
 
-function CarouselView({ team_members, settings }) {
+function CarouselView({ team_members, settings, viewport, isEditor }) {
+    const commonStyles = getCommonStyles(settings);
+    const [responsiveStyles, setResponsiveStyles] = useState(
+        getResponsiveStyles(settings, viewport, isEditor)
+    );
+
+    const [carouselStyles, setCarouselStyles] = useState(
+        getCarouselStyles(settings, viewport, isEditor)
+    );
+
+    useEffect(() => {
+        const updateStyles = () => {
+            setResponsiveStyles(getResponsiveStyles(settings, viewport, isEditor));
+            setCarouselStyles(getCarouselStyles(settings, viewport, isEditor));
+        };
+
+        if (!isEditor) {
+            window.addEventListener('resize', updateStyles);
+            return () => {
+                window.removeEventListener('resize', updateStyles);
+            };
+        } else {
+            updateStyles();
+        }
+    }, [settings, viewport, isEditor]);
+
     return (
-        <div className=''
-          style={{
-            width: `${settings?.containerSettings?.width?.default}px`,
-            gridTemplateColumns: `repeat(${settings.columnSettings?.column?.default}, 1fr)`,
-            gap: `${settings.columnSettings?.gap?.default}px`,
-            marginTop: `${settings?.containerSettings?.margin_top}px`,
-            marginRight: `${settings?.containerSettings?.margin_right}px`,
-            marginBottom: `${settings?.containerSettings?.margin_bottom}px`,
-            marginLeft: `${settings?.containerSettings?.margin_left}px`,
-            paddingTop: `${settings?.containerSettings?.padding_top}px`,
-            paddingRight: `${settings?.containerSettings?.padding_right}px`,
-            paddingBottom: `${settings?.containerSettings?.padding_bottom}px`,
-            paddingLeft: `${settings?.containerSettings?.padding_left}px`,
-            borderTopLeftRadius: `${settings?.containerSettings?.borderRadius_top}px`,
-            borderTopRightRadius: `${settings?.containerSettings?.borderRadius_right}px`,
-            borderBottomLeftRadius: `${settings?.containerSettings?.borderRadius_bottom}px`,
-            borderBottomRightRadius: `${settings?.containerSettings?.borderRadius_left}px`,
-            backgroundColor: settings.containerSettings?.backgroundColor,
-        }}
-        >
-            <Carousel 
-            slidesPerRow={settings.carouselSettings.slidesToShow?.default} 
-            slidesToScroll={settings.carouselSettings.slidesToScroll?.default} 
-            draggable={settings.carouselSettings?.draggable === 'true' ? true : false}
-            centerMode={settings.carouselSettings?.centerSlide === 'true' ? true : false}
-            autoplay={settings.carouselSettings?.autoPlay === 'true' ? true : false}
+        <div className='' style={{ ...commonStyles, ...responsiveStyles }}>
+            <Carousel
+                slidesPerRow={carouselStyles.slidesToShow}
+                slidesToScroll={carouselStyles.slidesToScroll}
+                draggable={carouselStyles.draggable}
+                centerMode={carouselStyles.centerMode}
+                autoplay={carouselStyles.autoplay}
             >
-            {team_members && team_members.length > 0 ? (
-              team_members.map((member, index) => (
-                <div key={index}>
-                  <Layout
-                    settings={settings}
-                    layoutType={settings.layout}
-                    imageUrl={member.meta_data.image}
-                    title={member.title}
-                    subtitle={member.meta_data.designation}
-                    description={member.description}
-                    socialIcons={member.socialIcons || []}
-                  />
-                </div>
-              ))
-            ) : (
-              <p>No team members found.</p>
-            )}
-          </Carousel>
+                {team_members && team_members.length > 0 ? (
+                    team_members.map((member, index) => (
+                        <div key={index}>
+                            <Layout
+                                settings={settings}
+                                layoutType={settings.layout}
+                                imageUrl={member.meta_data.image}
+                                title={member.title}
+                                subtitle={member.meta_data.designation}
+                                description={member.description}
+                                socialIcons={member.socialIcons || []}
+                            />
+                        </div>
+                    ))
+                ) : (
+                    <p>No team members found.</p>
+                )}
+            </Carousel>
         </div>
     );
 }
