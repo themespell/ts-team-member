@@ -4,9 +4,24 @@ import { updateData } from '../../common/services/updateData';
 import { toastNotification } from '../../common/utils/toastNotification';
 
 const editorFunction = create((set) => ({
+    // saveSettings: (key, value) => {
+    //     const updateState = editorStore.getState().updateState;
+    //     updateState(key, value);
+    // },
+
     saveSettings: (key, value) => {
         const updateState = editorStore.getState().updateState;
-        updateState(key, value);
+        const keyParts = key.split('['); // Split the key into parts to handle nested updates
+
+        if (keyParts.length > 1) {
+            // Handle nested keys for responsive settings
+            const nestedKey = keyParts
+                .map(part => part.replace(']', '')) // Remove the closing brackets
+                .join('.'); // Join parts with dots for deep update
+            updateState(nestedKey, value); // Call updateState with the formatted nested key
+        } else {
+            updateState(key, value); // For default key (non-responsive)
+        }
     },
 
     updateSettings: (action) => {
