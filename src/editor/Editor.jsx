@@ -6,6 +6,7 @@ import { TsLoader } from '../common/components/controls/tsControls.js';
 import editorLocal from "./states/editorLocal.js";
 import editorStore from './states/editorStore.js';
 import editorFunction from './states/editorFunction.js';
+import proLayouts from "../pro_support/proLayouts.js";
 
 import Topbar from './components/Topbar.jsx';
 import Sidebar from './components/Sidebar/Sidebar.jsx';
@@ -49,6 +50,7 @@ function Editor() {
 
           setTimeout(() => {
             setIsLoading(false);
+            proLayouts();
           }, 1000);
         } else {
           console.error("Error fetching post data:", response);
