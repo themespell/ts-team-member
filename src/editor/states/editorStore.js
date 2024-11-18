@@ -6,8 +6,16 @@ const editorStore = create((set) => ({
     postType: null,
 
     // Layouts Settings
-    layout: 'Card',
-    view: 'grid',
+    // layout: 'Card',
+    // view: 'grid',
+    selectedLayout: {
+        name: 'card',
+        type: 'free'
+    },
+    selectedView: {
+        name: 'grid',
+        type: 'free'
+    },
 
     // Container Settings
     containerSettings: {
