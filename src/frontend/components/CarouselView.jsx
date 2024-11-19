@@ -1,11 +1,13 @@
+import {useEffect, useMemo, useState} from 'react';
 import { Carousel } from 'antd';
 import Layout from './layouts/Layout';
 import { getCommonStyles } from './helper/commonStyle.js';
 import { getResponsiveStyles } from './helper/responsiveStyles.js';
 import { getCarouselStyles } from './helper/carouselStyles.js';
-import { useEffect, useState } from 'react';
+import { getProLayout } from "./helper/getProLayout.js";
 
 function CarouselView({ team_members, settings, viewport, isEditor }) {
+    const [ProLayoutComponent, setProLayoutComponent] = useState(null);
     const commonStyles = getCommonStyles(settings);
     const [responsiveStyles, setResponsiveStyles] = useState(
         getResponsiveStyles(settings, viewport, isEditor)
@@ -14,6 +16,10 @@ function CarouselView({ team_members, settings, viewport, isEditor }) {
     const [carouselStyles, setCarouselStyles] = useState(
         getCarouselStyles(settings, viewport, isEditor)
     );
+
+    useMemo(() => {
+        setProLayoutComponent(() => getProLayout(settings));
+    }, [settings?.selectedLayout?.type, settings?.selectedLayout?.value]);
 
     useEffect(() => {
         const updateStyles = () => {
@@ -43,15 +49,26 @@ function CarouselView({ team_members, settings, viewport, isEditor }) {
                 {team_members && team_members.length > 0 ? (
                     team_members.map((member, index) => (
                         <div key={index}>
-                            <Layout
-                                settings={settings}
-                                layoutType={settings.layout}
-                                imageUrl={member.meta_data.image}
-                                title={member.title}
-                                subtitle={member.meta_data.designation}
-                                description={member.description}
-                                socialIcons={member.socialIcons || []}
-                            />
+                            {ProLayoutComponent ? (
+                                <ProLayoutComponent
+                                    settings={settings}
+                                    imageUrl={member.meta_data.image}
+                                    title={member.title}
+                                    subtitle={member.meta_data.designation}
+                                    description={member.description}
+                                    socialIcons={member.socialIcons || []}
+                                />
+                            ) : (
+                                <Layout
+                                    settings={settings}
+                                    layoutType={settings.selectedLayout.value}
+                                    imageUrl={member.meta_data.image}
+                                    title={member.title}
+                                    subtitle={member.meta_data.designation}
+                                    description={member.description}
+                                    socialIcons={member.socialIcons || []}
+                                />
+                            )}
                         </div>
                     ))
                 ) : (
