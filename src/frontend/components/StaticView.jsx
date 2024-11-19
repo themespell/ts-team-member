@@ -3,24 +3,18 @@ import Layout from './layouts/Layout';
 import proLayouts from "../../pro_support/proLayouts.js";
 import { getCommonStyles } from "./helper/commonStyle.js";
 import { getResponsiveStyles } from "./helper/responsiveStyles.js";
+import {getProLayout} from "./helper/getProLayout.js";
 
 function StaticView({ team_members, settings, viewport, isEditor }) {
     const [ProLayoutComponent, setProLayoutComponent] = useState(null);
-
-    // Use useMemo to load ProLayout only if selectedLayout is not 'pro'
-    useMemo(() => {
-        if (settings.selectedLayout.type !== 'free') {
-            const ProLayout = proLayouts(settings.selectedLayout.value);
-            setProLayoutComponent(() => ProLayout); // Set as component function
-        } else {
-            setProLayoutComponent(null); // Reset when type is 'pro'
-        }
-    }, [settings.selectedLayout.type, settings.selectedLayout.value]);
-
     const commonStyles = getCommonStyles(settings);
     const [responsiveStyles, setResponsiveStyles] = useState(
         getResponsiveStyles(settings, viewport, isEditor)
     );
+
+    useMemo(() => {
+        setProLayoutComponent(() => getProLayout(settings));
+    }, [settings?.selectedLayout?.type, settings?.selectedLayout?.value]);
 
     useEffect(() => {
         const updateResponsiveStyles = () => {
