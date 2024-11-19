@@ -15,6 +15,7 @@ function proLayouts(selectedLayout) {
             const layoutNames = Object.keys(layouts).map((layoutName) => ({
                 label: layoutName,
                 value: layoutName,
+                type: 'pro',
             }));
 
             return layoutNames;
