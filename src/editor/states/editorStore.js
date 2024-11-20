@@ -5,15 +5,14 @@ const editorStore = create((set) => ({
     postID: null,
     postType: null,
 
-    // Layouts Settings
-    // layout: 'Card',
-    // view: 'grid',
     selectedLayout: {
-        name: 'card',
+        label: 'Card',
+        value: 'Card',
         type: 'free'
     },
     selectedView: {
-        name: 'grid',
+        label: 'Static / Grid',
+        value: 'grid',
         type: 'free'
     },
 
@@ -24,7 +23,11 @@ const editorStore = create((set) => ({
             min: 0,
             max: 2500,
           },
-          default: 100
+          default: {
+           desktop: '1200px',
+           tablet: '768px',
+           mobile: '100%',
+          }
         }
     },
     columnSettings: {
@@ -33,14 +36,22 @@ const editorStore = create((set) => ({
             min: 1,
             max: 12,
           },
-          default: 3
+          default: {
+            desktop: 3,
+            tablet:  2,
+            mobile:  1,
+          }
         },
         gap:{
             range: {
                 min: 1,
                 max: 100,
             },
-            default: 10
+            default:{
+                desktop: '10px',
+                tablet:  '15px',
+                mobile:  '20px',
+            }
         }
     },
     carouselSettings:{
@@ -49,42 +60,27 @@ const editorStore = create((set) => ({
                 min: 1,
                 max: 12,
             },
-            default: 3
+            default: {
+                desktop: 3,
+                tablet:  2,
+                mobile:  1,
+            }
         },
         slidesToScroll:{
             range: {
                 min: 1,
                 max: 12,
             },
-            default: 1
+            default: {
+                desktop: 1,
+                tablet:  1,
+                mobile:  1,
+            }
         },
         draggable: true,
         centerSlide: true,
         autoPlay: true
     },
-    cardStyle: {
-        color: {
-            backgroundColor: '000',
-            textColor: '000',
-            borderColor: '000',
-            hoverColor: '000',
-            hoverTextColor: '000',
-            hoverBorderColor: '000'
-        }
-    },
-
-    // Card Settings
-    cardWidth: '100%',
-    cardHeight: 'auto',
-    cardBackground: '#ffffff',
-    cardBorderRadius: '0.5rem',
-    cardBorder: '1px solid #e0e0e0',
-    cardShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-    cardMargin: '0 auto',
-    cardPadding: '0.5rem',
-
-    // Card Image Settings
-    cardImageWidth: '100%',
 
     updateState: (key, value) => set((state) => {
         const keys = key.split('.');
