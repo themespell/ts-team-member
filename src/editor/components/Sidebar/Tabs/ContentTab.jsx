@@ -59,6 +59,10 @@ function ContentTab() {
             label="Autoplay"
             name="carouselSettings.autoPlay"
             />
+            <TsSwitch
+             label="Previous & Next Arrow"
+             name="carouselSettings.arrows"
+            />
             </>
           ],
         },
