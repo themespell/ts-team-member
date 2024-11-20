@@ -4,7 +4,7 @@ import editorStore from '../../../states/editorStore';
 import renderControls from '../../../../common/components/controls/tsRenderControls.jsx';
 
 function StyleTab({ layoutType }) {
-    const { containerSettings, columnSettings, cardStyle } = editorStore();
+    const { containerSettings, columnSettings, selectedView } = editorStore();
 
     // Dynamically render controls
     const renderControl = (control, index) => {
@@ -40,13 +40,16 @@ function StyleTab({ layoutType }) {
                 responsive={true}
                 unit={true}
             />
-
-            <TsSlider
-                label="Columns"
-                range={columnSettings.column.range}
-                name='columnSettings.column.default'
-                responsive={true}
-            />
+            {selectedView.value === 'grid' && (
+            <div>
+                <TsSlider
+                    label="Columns"
+                    range={columnSettings.column.range}
+                    name='columnSettings.column.default'
+                    responsive={true}
+                />
+            </div>
+            )}
 
             <TsSlider
                 label="Column Gap"

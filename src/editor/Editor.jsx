@@ -109,13 +109,13 @@ function Editor() {
         onClose={handleCloseSidebar}
         theme={theme}
         setTheme={setTheme}
-        layoutType={allSettings.layout}
+        layoutType={allSettings.selectedLayout.value}
       />
       <div className='flex justify-center items-center min-h-screen mx-auto tsteam__editor_bg'>
       <div className={`editor-container editor-hover viewport-${viewport}`}
           onClick={handleEditorClick}
       >
-      {allSettings.view === "carousel" ? (
+      {allSettings.selectedView.value === "carousel" ? (
         <CarouselView
           team_members={postData.team_members}
           settings={allSettings}

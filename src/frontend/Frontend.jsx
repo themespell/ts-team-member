@@ -42,7 +42,7 @@ function Frontend({ id }) {
 
   return (
     <>
-      {settings.view === "carousel" ? (
+      {settings.selectedView?.value === "carousel" ? (
         <CarouselView
           team_members={teamMembers}
           settings={settings}
