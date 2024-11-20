@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Layout from './layouts/Layout';
-import proLayouts from "../../pro_support/proLayouts.js";
 import { getCommonStyles } from "./helper/commonStyle.js";
 import { getResponsiveStyles } from "./helper/responsiveStyles.js";
 import {getProLayout} from "./helper/getProLayout.js";
