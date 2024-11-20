@@ -37,6 +37,7 @@ export const getCarouselStyles = (settings, viewport, isEditor) => {
     const draggable = carouselSettings?.draggable === 'true';
     const centerMode = carouselSettings?.centerSlide === 'true';
     const autoplay = carouselSettings?.autoPlay === 'true';
+    const arrows = carouselSettings?.arrows === 'true';
 
     return {
         slidesToShow,
@@ -44,5 +45,6 @@ export const getCarouselStyles = (settings, viewport, isEditor) => {
         draggable,
         centerMode,
         autoplay,
+        arrows
     };
 };
