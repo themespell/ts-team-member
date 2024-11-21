@@ -1,9 +1,10 @@
 import { TsSlider, TsColor } from '../../../../common/components/controls/tsControls';
 import * as TsLayouts from '../../../../frontend/components/layouts/layouts.js';
+import proLayouts from "../../../../pro_support/proLayouts.js";
 import editorStore from '../../../states/editorStore';
 import renderControls from '../../../../common/components/controls/tsRenderControls.jsx';
 
-function StyleTab({ layoutType }) {
+function StyleTab({ selectedLayout, layoutType }) {
     const { containerSettings, columnSettings, selectedView } = editorStore();
 
     // Dynamically render controls
@@ -18,17 +19,25 @@ function StyleTab({ layoutType }) {
 
     // Check layoutType and get controls from layout
     let controls = [];
-    if (layoutType && TsLayouts[layoutType]) {
-        const layoutModule = TsLayouts[layoutType];
+    if (layoutType === 'pro') {
+        const layoutModule = proLayouts(selectedLayout);
+        if (layoutModule && layoutModule.Editor) {
+            const controlConfig = layoutModule.Editor();
+            controls = controlConfig.controls || [];
+        } else {
+            console.error(`register_controls not found for layout: ${selectedLayout}`);
+        }
+    } else if (selectedLayout && TsLayouts[selectedLayout]) {
+        const layoutModule = TsLayouts[selectedLayout];
 
         if (layoutModule.register_controls) {
             const controlConfig = layoutModule.register_controls();
             controls = controlConfig.controls || [];
         } else {
-            console.error(`register_controls not found for layout: ${layoutType}`);
+            console.error(`register_controls not found for layout: ${selectedLayout}`);
         }
     } else {
-        console.error(`Layout type "${layoutType}" not found in TsLayouts.`);
+        console.error(`Layout type "${selectedLayout}" not found in TsLayouts.`);
     }
 
     return (

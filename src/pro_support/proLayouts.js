@@ -7,7 +7,7 @@ function proLayouts(selectedLayout) {
 
     else {
         if (selectedLayout) {
-            const layout = window.tsTeamPro?.Layouts[selectedLayout].Frontend;
+            const layout = window.tsTeamPro?.Layouts[selectedLayout];
             return layout;
         }
         else {

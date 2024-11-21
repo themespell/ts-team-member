@@ -109,7 +109,8 @@ function Editor() {
         onClose={handleCloseSidebar}
         theme={theme}
         setTheme={setTheme}
-        layoutType={allSettings.selectedLayout.value}
+        selectedLayout={allSettings.selectedLayout.value}
+        layoutType={allSettings.selectedLayout.type}
       />
       <div className='flex justify-center items-center min-h-screen mx-auto tsteam__editor_bg'>
       <div className={`editor-container editor-hover viewport-${viewport}`}
