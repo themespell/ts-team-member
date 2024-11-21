@@ -3,7 +3,12 @@ import editorHelper from "./editorHelper.js";
 import proLayouts from "../../pro_support/proLayouts.js";
 
 // Get layouts from Pro version
+const isPro = tsteam_settings.is_pro
 const pro_layouts = proLayouts();
+const pro_views = isPro
+    ? [
+        { label: 'Marquee', value: 'marquee', type: 'pro' },
+    ] : [];
 
 // States Only For use in Editor
 const editorLocal = create((set) => ({
@@ -13,15 +18,16 @@ const editorLocal = create((set) => ({
 
     availableLayouts: [
         { label: 'Card', value: 'Card', type: 'free' },
-        { label: 'Overlay', value: 'Overlay', type: 'free' },
-        { label: 'Blur', value: 'Blur', type: 'free' },
-        { label: 'Avatar', value: 'Avatar', type: 'free' },
-        { label: 'HorizontalCard', value: 'HorizontalCard', type: 'free' },
+        // { label: 'Overlay', value: 'Overlay', type: 'free' },
+        // { label: 'Blur', value: 'Blur', type: 'free' },
+        // { label: 'Avatar', value: 'Avatar', type: 'free' },
+        // { label: 'HorizontalCard', value: 'HorizontalCard', type: 'free' },
         ...pro_layouts,
     ],
     availableViews: [
         { label: 'Static / Grid', value: 'grid', type: 'free' },
         { label: 'Carousel', value: 'carousel', type: 'free' },
+        ...pro_views
     ],
 }));
 
