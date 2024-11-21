@@ -1,19 +1,27 @@
+import { useState, useEffect } from 'react';
 import { Select} from 'antd';
 import get from 'lodash/get';
 import editorStore from "../../../editor/states/editorStore.js";
 import editorFunction from '../../../editor/states/editorFunction';
 import globalSettings from '../../utils/globalSettings';
 
-function TsSelect({ label, name, options, onChange, mode, output = 'value' }) {
+function TsSelect({ label, name, defaultValue, options, onChange, mode, output = 'value' }) {
   const { saveSettings } = editorFunction();
+  const [currentValue, setCurrentValue] = useState(defaultValue);
 
-  const handleChange = (value) => {
+    useEffect(() => {
+        setCurrentValue(defaultValue);
+    }, [defaultValue]);
+
+    const handleChange = (value) => {
+        setCurrentValue(value);
+
         if (onChange) {
             onChange(value);
         } else {
-            if ( output === 'value' ) {
+            if (output === 'value') {
                 saveSettings(name, value);
-            } else if ( output === 'object' ) {
+            } else if (output === 'object') {
                 const selectedOption = options.find(option => option.value === value);
                 const result = { ...selectedOption };
                 saveSettings(name, result);
@@ -35,7 +43,7 @@ function TsSelect({ label, name, options, onChange, mode, output = 'value' }) {
       )}
       <Select
         placeholder={`Select ${label}`}
-        value={get(editorStore(), name)}
+        value={get(editorStore(), name) || currentValue}
         style={{ 
           width: '100%',
         }}
