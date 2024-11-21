@@ -51,11 +51,11 @@ function TeamShowcaseFields({ form, post_id }) {
 
       <Form.Item
         name="team_members"
-        rules={[{ required: false }]}
+        rules={[{ required: true, message: 'Please select team members'}]}
       >
         <TsSelect
           label="Team Members"
-          value={form.getFieldValue('team_members')}
+          defaultValue={form.getFieldValue('team_members')}
           options={teamMembers}
           mode="multiple"
         />

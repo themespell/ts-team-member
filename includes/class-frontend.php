@@ -32,6 +32,7 @@ class Frontend {
 				array(
 					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'nonce'    => wp_create_nonce( 'tsteam_nonce' ),
+					'is_pro'     => $isPro,
 				)
 			);
 

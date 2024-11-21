@@ -1,14 +1,20 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import Marquee from "react-fast-marquee";
 import Layout from './layouts/Layout';
 import { getCommonStyles } from "./helper/commonStyle.js";
 import { getResponsiveStyles } from "./helper/responsiveStyles.js";
 import {getProLayout} from "./helper/getProLayout.js";
+import {getMarqueeStyles} from "./helper/marqueeStyles.js";
 
-function StaticView({ team_members, settings, viewport, isEditor }) {
+function MarqueeView({ team_members, settings, viewport, isEditor }) {
     const [ProLayoutComponent, setProLayoutComponent] = useState(null);
     const commonStyles = getCommonStyles(settings);
     const [responsiveStyles, setResponsiveStyles] = useState(
         getResponsiveStyles(settings, viewport, isEditor)
+    );
+
+    const [marqueeStyles, setMarqueeStyles] = useState(
+        getMarqueeStyles(settings, viewport, isEditor)
     );
 
     useMemo(() => {
@@ -17,6 +23,7 @@ function StaticView({ team_members, settings, viewport, isEditor }) {
 
     useEffect(() => {
         const updateResponsiveStyles = () => {
+            setMarqueeStyles(getMarqueeStyles(settings, viewport, isEditor));
             setResponsiveStyles(getResponsiveStyles(settings, viewport, isEditor));
         };
 
@@ -34,15 +41,18 @@ function StaticView({ team_members, settings, viewport, isEditor }) {
 
     return (
         <div
-            className="tsteam-container"
+            className=""
             style={{
                 ...commonStyles,
                 ...responsiveStyles,
             }}
         >
+            <Marquee
+                speed={50}
+            >
             {team_members && team_members.length > 0 ? (
                 team_members.map((member, index) => (
-                    <div key={index}>
+                    <div key={index} style={{ marginRight: marqueeStyles.columnGap }}>
                         {ProLayoutComponent ? (
                             <ProLayoutComponent
                                 settings={settings}
@@ -68,8 +78,9 @@ function StaticView({ team_members, settings, viewport, isEditor }) {
             ) : (
                 <p>No team members found.</p>
             )}
+            </Marquee>
         </div>
     );
 }
 
-export default StaticView;
+export default MarqueeView;

@@ -36,7 +36,7 @@ class Enqueue {
 					'admin_url'  => get_admin_url(),
 					'nonce'      => wp_create_nonce( 'tsteam_nonce' ),
 					'wp_url'     => site_url(),
-					'plugin_url' => TSTEAM_ROOT_DIR_PATH
+					'is_pro'     => $isPro,
 				)
 			);
 			remove_all_actions( 'admin_notices' );

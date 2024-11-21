@@ -1,7 +1,7 @@
 export const getCommonStyles = (settings) => ({
-    width: `${settings?.containerSettings?.width?.default?.desktop || '100%'}`,
-    gridTemplateColumns: `repeat(${settings?.columnSettings?.column?.default?.desktop || 1}, 1fr)`,
-    gap: `${settings?.columnSettings?.gap?.default?.desktop}`,
+    //width: `${settings?.containerSettings?.width?.default?.desktop || '100%'}`,
+    //gridTemplateColumns: `repeat(${settings?.columnSettings?.column?.default?.desktop || 1}, 1fr)`,
+    //gap: `${settings?.columnSettings?.gap?.default?.desktop}`,
     marginTop: `${settings?.containerSettings?.margin_top || 0}px`,
     marginRight: `${settings?.containerSettings?.margin_right || 0}px`,
     marginBottom: `${settings?.containerSettings?.margin_bottom || 0}px`,

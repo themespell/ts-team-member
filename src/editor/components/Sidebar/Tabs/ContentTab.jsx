@@ -1,62 +1,30 @@
 import { Collapse } from "antd";
 import { TsSelect, TsSlider, TsDivider, TsSwitch } from '../../../../common/components/controls/tsControls';
 import editorStore from '../../../states/editorStore';
-import editorFunction from '../../../states/editorFunction';
+import editorLocal from "../../../states/editorLocal.js";
 
-const defaultLayouts = [
-  {
-    label: 'Card',
-    value: 'Card',
-  },
-  // {
-  //   label: 'Overlay',
-  //   value: 'Overlay',
-  // },
-  // {
-  //   label: 'Blur',
-  //   value: 'Blur',
-  // },
-  // {
-  //   label: 'Avatar',
-  //   value: 'Avatar',
-  // },
-  // {
-  //   label: 'HorizontalCard',
-  //   value: 'HorizontalCard',
-  // },
-];
-
-const viewStyle = [
-  {
-    label: 'Static / Grid',
-    value: 'grid',
-  },
-  {
-    label: 'Carousel',
-    value: 'carousel',
-  },
-];
 
 function ContentTab() {
-  const { layout, view, carouselSettings } = editorStore();
-  const { saveSettings } = editorFunction();
+  const { selectedLayout, selectedView, carouselSettings } = editorStore();
+  const { availableLayouts, availableViews } = editorLocal();
+
   return (
     <div>
       <TsSelect
       label="Choose a Layout"
-      value={layout}
-      options={defaultLayouts}
-      onChange={(value) => saveSettings('layout', value)}
+      name="selectedLayout"
+      options={availableLayouts}
+      output="object"
       />
 
       <TsSelect
       label="View Style"
-      value={view}
-      options={viewStyle}
-      onChange={(value) => saveSettings('view', value)}
+      name="selectedView"
+      options={availableViews}
+      output="object"
       />
 
-      {view === 'carousel' && (
+      {selectedView.value === 'carousel' && (
       <div>
       <TsDivider />
       <Collapse
@@ -90,6 +58,10 @@ function ContentTab() {
             <TsSwitch
             label="Autoplay"
             name="carouselSettings.autoPlay"
+            />
+            <TsSwitch
+             label="Previous & Next Arrow"
+             name="carouselSettings.arrows"
             />
             </>
           ],

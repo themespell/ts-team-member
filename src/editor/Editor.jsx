@@ -6,6 +6,7 @@ import { TsLoader } from '../common/components/controls/tsControls.js';
 import editorLocal from "./states/editorLocal.js";
 import editorStore from './states/editorStore.js';
 import editorFunction from './states/editorFunction.js';
+import proLayouts from "../pro_support/proLayouts.js";
 
 import Topbar from './components/Topbar.jsx';
 import Sidebar from './components/Sidebar/Sidebar.jsx';
@@ -13,8 +14,10 @@ import './components/assets/editorStyle.css';
 
 import CarouselView from '../frontend/components/CarouselView.jsx';
 import StaticView from '../frontend/components/StaticView.jsx';
+import MarqueeView from "../frontend/components/MarqueeView.jsx";
 
 function Editor() {
+  const isPro = tsteam_settings.is_pro
   const { isEditor, viewport, setViewport } = editorLocal();
   const { postType } = editorStore();
   const allSettings = editorStore();
@@ -49,6 +52,7 @@ function Editor() {
 
           setTimeout(() => {
             setIsLoading(false);
+            proLayouts();
           }, 1000);
         } else {
           console.error("Error fetching post data:", response);
@@ -107,19 +111,27 @@ function Editor() {
         onClose={handleCloseSidebar}
         theme={theme}
         setTheme={setTheme}
-        layoutType={allSettings.layout}
+        selectedLayout={allSettings.selectedLayout.value}
+        layoutType={allSettings.selectedLayout.type}
       />
       <div className='flex justify-center items-center min-h-screen mx-auto tsteam__editor_bg'>
       <div className={`editor-container editor-hover viewport-${viewport}`}
           onClick={handleEditorClick}
       >
-      {allSettings.view === "carousel" ? (
+      {allSettings.selectedView.value === "carousel" ? (
         <CarouselView
           team_members={postData.team_members}
           settings={allSettings}
           viewport={viewport}
           isEditor={isEditor}
         />
+      ) : allSettings.selectedView.value === "marquee" && isPro ? (
+          <MarqueeView
+              team_members={postData.team_members}
+              settings={allSettings}
+              viewport={viewport}
+              isEditor={isEditor}
+          />
       ) : (
         <StaticView
           team_members={postData.team_members}
