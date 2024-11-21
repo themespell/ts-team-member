@@ -98,7 +98,7 @@ function CarouselView({ team_members, settings, viewport, isEditor }) {
                                  boxSizing: 'border-box', // Include padding in width calculation
                              }}
                              ref={(el) => {
-                                 if (el) el.style.setProperty('padding', settings?.columnSettings?.gap?.default?.desktop, 'important');
+                                 if (el) el.style.setProperty('padding', carouselStyles.columnGap, 'important');
                              }}
                         >
                             {ProLayoutComponent ? (
