@@ -36,9 +36,16 @@ export const getResponsiveStyles = (settings, viewport, isEditor) => {
         }
     }
 
-    return {
-        width: currentWidth,
-        gridTemplateColumns: `repeat(${currentColumns}, 1fr)`,
-        gap: columnGap,
-    };
+    if (settings?.selectedView?.value === 'grid'){
+        return {
+            width: currentWidth,
+            gridTemplateColumns: `repeat(${currentColumns}, 1fr)`,
+            gap: columnGap,
+        };
+    }
+    else {
+        return {
+            width: currentWidth,
+        };
+    }
 };
