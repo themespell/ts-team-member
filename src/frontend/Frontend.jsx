@@ -4,6 +4,7 @@ import './assets/hover.css';
 import './assets/style.css';
 import StaticView from './components/StaticView.jsx';
 import CarouselView from './components/CarouselView.jsx';
+import MarqueeView from './components/MarqueeView.jsx';
 import { fetchData } from '../common/services/fetchData.js';
 
 const showcaseElements = document.querySelectorAll('.tsteam-showcase');
@@ -21,6 +22,7 @@ showcaseElements.forEach(element => {
 });
 
 function Frontend({ id }) {
+  const isPro = tsteam_settings.is_pro
   const [teamMembers, setTeamMembers] = useState([]);
   const [settings, setSettings] = useState({});
 
@@ -47,6 +49,11 @@ function Frontend({ id }) {
           team_members={teamMembers}
           settings={settings}
         />
+      ) : settings.selectedView?.value === "marquee" && isPro ? (
+          <MarqueeView
+              team_members={teamMembers}
+              settings={settings}
+          />
       ) : (
         <StaticView
           team_members={teamMembers}
