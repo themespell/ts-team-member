@@ -3,20 +3,20 @@
 	/**
 	 *
 	 * @link              https://themespell.com/
-	 * @since             0.0.5
+	 * @since             0.0.6
 	 * @package           Team Showcase Plugin
 	 *
 	 * @wordpress-plugin
 	 * Plugin Name:       TS Team Member Showcase
 	 * Plugin URI:        https://themespell.com/ts-team
 	 * Description:       Team Showcase Plugin
-	 * Version:           0.0.5
+	 * Version:           0.0.6
 	 * Author:            Themespell
 	 * Author URI:        https://themespell.com/
 	 * License:           GPL-2.0+
 	 * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
 	 * Text Domain:       ts-team-member
-	 * Tested up to:      6.6.2
+	 * Tested up to:      6.7.1
 	 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -44,7 +44,7 @@ final class TSTeam {
 	}
 
 	public function define_constants() {
-		define( 'TSTEAM_VERSION', '0.0.4' );
+		define( 'TSTEAM_VERSION', '0.0.6' );
 		define( 'TSTEAM_PLUGIN_FILE', __FILE__ );
 		define( 'TSTEAM_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 		define( 'TSTEAM_ROOT_DIR_PATH', plugin_dir_path( __FILE__ ) );
