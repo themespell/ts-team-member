@@ -1,6 +1,6 @@
 import config from './config.json';
 
-function Card({ settings, imageUrl, title, subtitle, description, socialIcons }) {
+function Card({ settings, imageUrl, title, subtitle, description, socialIcons, details }) {
     const {container, image, content, animation} = config.layout;
 
     const { header, body, footer } = content;
@@ -52,6 +52,8 @@ function Card({ settings, imageUrl, title, subtitle, description, socialIcons })
                         </footer.social.markup>
                     </footer.markup>
                 )}
+
+                {details ? details() : ''}
             </div>
         </div>
     );
