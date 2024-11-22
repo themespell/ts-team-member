@@ -4,7 +4,7 @@ import { getCommonStyles } from "./helper/commonStyle.js";
 import { getResponsiveStyles } from "./helper/responsiveStyles.js";
 import {getProLayout} from "./helper/getProLayout.js";
 
-function StaticView({ team_members, settings, viewport, isEditor }) {
+function StaticView({ team_members, settings, viewport, isEditor, details }) {
     const [ProLayoutComponent, setProLayoutComponent] = useState(null);
     const commonStyles = getCommonStyles(settings);
     const [responsiveStyles, setResponsiveStyles] = useState(
@@ -51,6 +51,7 @@ function StaticView({ team_members, settings, viewport, isEditor }) {
                                 subtitle={member.meta_data.designation}
                                 description={member.description}
                                 socialIcons={member.socialIcons || []}
+                                details={details}
                             />
                         ) : (
                             <Layout
@@ -61,6 +62,7 @@ function StaticView({ team_members, settings, viewport, isEditor }) {
                                 subtitle={member.meta_data.designation}
                                 description={member.description}
                                 socialIcons={member.socialIcons || []}
+                                details={details}
                             />
                         )}
                     </div>

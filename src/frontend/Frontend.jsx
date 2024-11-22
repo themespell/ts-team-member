@@ -6,6 +6,7 @@ import StaticView from './components/StaticView.jsx';
 import CarouselView from './components/CarouselView.jsx';
 import MarqueeView from './components/MarqueeView.jsx';
 import { fetchData } from '../common/services/fetchData.js';
+import { loadDetailsComponent } from "./components/details/details.js";
 
 const showcaseElements = document.querySelectorAll('.tsteam-showcase');
 
@@ -25,6 +26,8 @@ function Frontend({ id }) {
   const isPro = tsteam_settings.is_pro
   const [teamMembers, setTeamMembers] = useState([]);
   const [settings, setSettings] = useState({});
+
+  const detailsComponent = loadDetailsComponent(settings.selectedDetails?.value);
 
   useEffect(() => {
     if (id) {
@@ -58,6 +61,7 @@ function Frontend({ id }) {
         <StaticView
           team_members={teamMembers}
           settings={settings}
+          details={detailsComponent}
         />
       )}
     </>
