@@ -29,6 +29,10 @@ const editorLocal = create((set) => ({
         { label: 'Carousel', value: 'carousel', type: 'free' },
         ...pro_views
     ],
+    availableDetails: [
+        { label: 'Popup', value: 'popup', type: 'free' },
+        { label: 'Drawer', value: 'drawer', type: 'free' },
+    ]
 }));
 
 export default editorLocal;

@@ -5,8 +5,8 @@ import editorLocal from "../../../states/editorLocal.js";
 
 
 function ContentTab() {
-  const { selectedLayout, selectedView, carouselSettings } = editorStore();
-  const { availableLayouts, availableViews } = editorLocal();
+  const { selectedLayout, selectedView, carouselSettings, showcaseDetails } = editorStore();
+  const { availableLayouts, availableViews, availableDetails } = editorLocal();
 
   return (
     <div>
@@ -23,6 +23,20 @@ function ContentTab() {
       options={availableViews}
       output="object"
       />
+
+      <TsSwitch
+        label="Show Details"
+        name="showcaseDetails"
+      />
+
+      {showcaseDetails === true && (
+      <TsSelect
+        label="Details Style"
+        name="selectedDetails"
+        options={availableDetails}
+        output="object"
+      />
+      )}
 
       {selectedView.value === 'carousel' && (
       <div>
