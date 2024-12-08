@@ -10,6 +10,11 @@ const pro_views = isPro
         { label: 'Marquee', value: 'marquee', type: 'pro' },
     ] : [];
 
+const pro_details = isPro
+    ? [
+        { label: 'Drawer', value: 'drawer', type: 'pro' },
+    ] : [];
+
 // States Only For use in Editor
 const editorLocal = create((set) => ({
     isEditor: true,
@@ -31,7 +36,7 @@ const editorLocal = create((set) => ({
     ],
     availableDetails: [
         { label: 'Popup', value: 'popup', type: 'free' },
-        { label: 'Drawer', value: 'drawer', type: 'free' },
+        ...pro_details
     ]
 }));
 
