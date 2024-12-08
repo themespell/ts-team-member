@@ -5,7 +5,7 @@ import editorLocal from "../../../states/editorLocal.js";
 
 
 function ContentTab() {
-  const { selectedLayout, selectedView, carouselSettings, showcaseDetails } = editorStore();
+  const { selectedView, carouselSettings, showcaseDetails } = editorStore();
   const { availableLayouts, availableViews, availableDetails } = editorLocal();
 
   return (
@@ -26,10 +26,10 @@ function ContentTab() {
 
       <TsSwitch
         label="Show Details"
-        name="showcaseDetails"
+        name="showcaseDetails.enable"
       />
 
-      {showcaseDetails === true && (
+      {!!showcaseDetails.enable === true && (
       <TsSelect
         label="Details Style"
         name="selectedDetails"
