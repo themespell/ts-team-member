@@ -52,8 +52,9 @@ function Card({ settings, imageUrl, title, subtitle, description, socialIcons, d
                         </footer.social.markup>
                     </footer.markup>
                 )}
-
-                {details ? details() : ''}
+                <div>
+                    {details}
+                </div>
             </div>
         </div>
     );
