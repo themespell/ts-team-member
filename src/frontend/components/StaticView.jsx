@@ -4,9 +4,11 @@ import { getCommonStyles } from "./helper/commonStyle.js";
 import { getResponsiveStyles } from "./helper/responsiveStyles.js";
 import {getProLayout} from "./helper/getProLayout.js";
 
-function StaticView({ team_members, settings, viewport, isEditor, details }) {
+import Details from "./details/details.jsx";
+
+function StaticView({ team_members, settings, viewport, isEditor }) {
     const [ProLayoutComponent, setProLayoutComponent] = useState(null);
-    const commonStyles = getCommonStyles(settings);
+    const commonStyles = getCommonStyles(settings );
     const [responsiveStyles, setResponsiveStyles] = useState(
         getResponsiveStyles(settings, viewport, isEditor)
     );
@@ -43,7 +45,7 @@ function StaticView({ team_members, settings, viewport, isEditor, details }) {
             {team_members && team_members.length > 0 ? (
                 team_members.map((member, index) => (
                     <div key={index}>
-                        {ProLayoutComponent ? (
+        {ProLayoutComponent ? (
                             <ProLayoutComponent
                                 settings={settings}
                                 imageUrl={member.meta_data.image}
@@ -51,7 +53,10 @@ function StaticView({ team_members, settings, viewport, isEditor, details }) {
                                 subtitle={member.meta_data.designation}
                                 description={member.description}
                                 socialIcons={member.socialIcons || []}
-                                details={details}
+                                details={<Details
+                                    settings={settings}
+                                    member={member}
+                                />}
                             />
                         ) : (
                             <Layout
@@ -62,7 +67,15 @@ function StaticView({ team_members, settings, viewport, isEditor, details }) {
                                 subtitle={member.meta_data.designation}
                                 description={member.description}
                                 socialIcons={member.socialIcons || []}
-                                details={details}
+                                details={<Details
+                                    settings={settings}
+                                    member={member}
+                                />}
+                                // details={<DetailsModal
+                                //     title={member.title}
+                                //     imageUrl={member.meta_data.image}
+                                //     description={member.description}
+                                // />}
                             />
                         )}
                     </div>
