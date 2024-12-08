@@ -22,8 +22,7 @@ function Editor() {
   const { postType } = editorStore();
   const allSettings = editorStore();
   const { saveSettings } = editorFunction();
-  
-  const [theme, setTheme] = useState('Theme One');
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [postData, setPostData] = useState(null);
@@ -109,8 +108,6 @@ function Editor() {
       <Sidebar 
         isOpen={isSidebarOpen}
         onClose={handleCloseSidebar}
-        theme={theme}
-        setTheme={setTheme}
         selectedLayout={allSettings.selectedLayout.value}
         layoutType={allSettings.selectedLayout.type}
       />
