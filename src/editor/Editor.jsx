@@ -15,6 +15,7 @@ import './components/assets/editorStyle.css';
 import CarouselView from '../frontend/components/CarouselView.jsx';
 import StaticView from '../frontend/components/StaticView.jsx';
 import MarqueeView from "../frontend/components/MarqueeView.jsx";
+import ConfettiView from "../frontend/components/ConfettiView.jsx";
 
 function Editor() {
   const isPro = tsteam_settings.is_pro
@@ -124,6 +125,13 @@ function Editor() {
         />
       ) : allSettings.selectedView.value === "marquee" && isPro ? (
           <MarqueeView
+              team_members={postData.team_members}
+              settings={allSettings}
+              viewport={viewport}
+              isEditor={isEditor}
+          />
+          ) : allSettings.selectedView.value === "confetti" && isPro ? (
+          <ConfettiView
               team_members={postData.team_members}
               settings={allSettings}
               viewport={viewport}
