@@ -1,5 +1,6 @@
-import DetailsModal from './DetailsModal';
-import DetailsDrawer from './DetailsDrawer.jsx';
+import DetailsModal from "./Components/DetailsModal.jsx";
+import DetailsDrawer from "./Components/DetailsDrawer.jsx";
+import DetailsFullScreen from "./Components/DetailsFullScreen.jsx";
 
 function Details({ settings, member }) {
     if (!!settings.showcaseDetails?.enable !== true) {
@@ -16,6 +17,12 @@ function Details({ settings, member }) {
         case 'drawer':
             return (
                 <DetailsDrawer
+                    member={member}
+                />
+            );
+        case 'fullscreen':
+            return (
+                <DetailsFullScreen
                     member={member}
                 />
             );
