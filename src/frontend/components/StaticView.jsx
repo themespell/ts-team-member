@@ -49,6 +49,7 @@ function StaticView({ team_members, settings, viewport, isEditor }) {
                             <ProLayoutComponent
                                 settings={settings}
                                 imageUrl={member.meta_data.image}
+                                id={member.post_id}
                                 title={member.title}
                                 subtitle={member.meta_data.designation}
                                 description={member.description}
@@ -62,6 +63,7 @@ function StaticView({ team_members, settings, viewport, isEditor }) {
                             <Layout
                                 settings={settings}
                                 layoutType={settings.selectedLayout.value}
+                                id={member.post_id}
                                 imageUrl={member.meta_data.image}
                                 title={member.title}
                                 subtitle={member.meta_data.designation}
@@ -71,11 +73,6 @@ function StaticView({ team_members, settings, viewport, isEditor }) {
                                     settings={settings}
                                     member={member}
                                 />}
-                                // details={<DetailsModal
-                                //     title={member.title}
-                                //     imageUrl={member.meta_data.image}
-                                //     description={member.description}
-                                // />}
                             />
                         )}
                     </div>
