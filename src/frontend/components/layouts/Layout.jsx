@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-function Layout({ settings, layoutType, imageUrl, title, subtitle, description, socialIcons, details }) {
+function Layout({ settings, layoutType, id, imageUrl, title, subtitle, description, socialIcons, details }) {
     const [Component, setComponent] = useState(null);
 
     useEffect(() => {
@@ -24,6 +24,7 @@ function Layout({ settings, layoutType, imageUrl, title, subtitle, description, 
         <div>
             <Component
                 settings={settings}
+                id={id}
                 imageUrl={imageUrl}
                 title={title}
                 subtitle={subtitle}
