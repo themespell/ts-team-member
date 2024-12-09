@@ -4,7 +4,7 @@ Tags: team member, team showcase, team profiles, live editing, staff showcase
 Requires at least: 3.0.1
 Tested up to: 6.7.1
 Requires PHP: 5.4
-Stable tag: 0.0.6
+Stable tag: 0.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,13 @@ Yes, the plugin includes a live editing feature, allowing you to see real-time c
 
 == Changelog ==
 
+= 0.0.7 =
+* Added Details View Support
+- Added Popup View For Details
+- Block Style Editor For Details Information (aka EditorJS)
+- Bug & UI Issue Fixed
+- Tested with Latest WordPress
+
 = 0.0.6 =
 * Added Responsive Control
 * Improve Layout Loading Process
@@ -78,6 +85,9 @@ Yes, the plugin includes a live editing feature, allowing you to see real-time c
 * Initial release.
 
 == Upgrade Notice ==
+
+= 0.0.7 =
+Upgrade to this version for details view support and additional bug fixed.
 
 = 0.0.6 =
 Upgrade to this version for responsive control and other fixed issues.
