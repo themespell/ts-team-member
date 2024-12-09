@@ -72,6 +72,7 @@ class Helper {
 			'experience'   => isset( $post_data['member_experience'] ) ? sanitize_text_field( wp_unslash( $post_data['member_experience'] ) ) : '',
 			'company'      => isset( $post_data['member_company'] ) ? sanitize_text_field( wp_unslash( $post_data['member_company'] ) ) : '',
 			'location'     => isset( $post_data['member_location'] ) ? sanitize_text_field( wp_unslash( $post_data['member_location'] ) ) : '',
+			'information'  => isset( $post_data['member_information'] ) ? $post_data['member_information'] : '',
 			'website'      => isset( $post_data['member_website'] ) ? sanitize_text_field( wp_unslash( $post_data['member_website'] ) ) : '',
 			'resume'       => isset( $post_data['member_resume'] ) ? sanitize_text_field( wp_unslash( $post_data['member_resume'] ) ) : '',
 			'hireLink'     => isset( $post_data['member_hire'] ) ? sanitize_text_field( wp_unslash( $post_data['member_hire'] ) ) : '',
