@@ -1,7 +1,6 @@
 import { TsInput, TsEditor } from '../../../controls/tsControls';
 
-function TeamMemberDetails({ form }) {
-
+function TeamMemberDetails({ form, member_information }) {
   return (
     <>
         <div className='grid grid-cols-2 gap-3'>
@@ -28,12 +27,13 @@ function TeamMemberDetails({ form }) {
 
         </div>
 
-        {/* <TsEditor 
+        <TsEditor
         label="Details Information" 
-        name="information" 
+        name="member_information"
+        defaultValue={member_information}
         required={false} 
         form={form} 
-        /> */}
+        />
     </>
   );
 }
