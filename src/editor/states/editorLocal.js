@@ -8,6 +8,13 @@ const pro_layouts = proLayouts();
 const pro_views = isPro
     ? [
         { label: 'Marquee', value: 'marquee', type: 'pro' },
+        { label: 'Confetti', value: 'confetti', type: 'pro' },
+    ] : [];
+
+const pro_details = isPro
+    ? [
+        { label: 'Drawer', value: 'drawer', type: 'pro' },
+        { label: 'Full Screen', value: 'fullscreen', type: 'pro' },
     ] : [];
 
 // States Only For use in Editor
@@ -29,6 +36,10 @@ const editorLocal = create((set) => ({
         { label: 'Carousel', value: 'carousel', type: 'free' },
         ...pro_views
     ],
+    availableDetails: [
+        { label: 'Popup', value: 'popup', type: 'free' },
+        ...pro_details
+    ]
 }));
 
 export default editorLocal;

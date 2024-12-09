@@ -1,17 +1,23 @@
 import config from './config.json';
 
-function Card({ settings, imageUrl, title, subtitle, description, socialIcons }) {
+function Card({ settings, id, imageUrl, title, subtitle, description, socialIcons, details }) {
     const {container, image, content, animation} = config.layout;
 
     const { header, body, footer } = content;
 
     return (
+        <>
         <div className={container.style}>
             {imageUrl && (
-                <img src={imageUrl} alt={title} className={image.style} />
+                <img
+                    id={`${title.replace(/\s+/g, '-').toLowerCase()}-${id}`}
+                    src={imageUrl}
+                    alt={title}
+                    className={`tsteam-member__image ${image.style} ${details ? 'cursor-pointer' : ''}`}
+                />
             )}
 
-            <div 
+            <div
             className={content.style}
             style={{
                 backgroundColor: settings?.tscard?.backgroundColor,
@@ -20,7 +26,7 @@ function Card({ settings, imageUrl, title, subtitle, description, socialIcons })
                 {header && (
                     <div>
                         {header.title && (
-                            <header.title.markup 
+                            <header.title.markup
                             className={header.title.style}
                             style={{
                                 color: settings?.tscard?.textColor,
@@ -52,8 +58,12 @@ function Card({ settings, imageUrl, title, subtitle, description, socialIcons })
                         </footer.social.markup>
                     </footer.markup>
                 )}
+                <div>
+                    {details}
+                </div>
             </div>
         </div>
+        </>
     );
 }
 

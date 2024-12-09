@@ -5,6 +5,7 @@ import './assets/style.css';
 import StaticView from './components/StaticView.jsx';
 import CarouselView from './components/CarouselView.jsx';
 import MarqueeView from './components/MarqueeView.jsx';
+import ConfettiView from "./components/ConfettiView.jsx";
 import { fetchData } from '../common/services/fetchData.js';
 
 const showcaseElements = document.querySelectorAll('.tsteam-showcase');
@@ -51,6 +52,11 @@ function Frontend({ id }) {
         />
       ) : settings.selectedView?.value === "marquee" && isPro ? (
           <MarqueeView
+              team_members={teamMembers}
+              settings={settings}
+          />
+      ) : settings.selectedView?.value === "confetti" && isPro ? (
+          <ConfettiView
               team_members={teamMembers}
               settings={settings}
           />

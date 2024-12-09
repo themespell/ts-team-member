@@ -6,6 +6,8 @@ import { getResponsiveStyles } from "./helper/responsiveStyles.js";
 import {getProLayout} from "./helper/getProLayout.js";
 import {getMarqueeStyles} from "./helper/marqueeStyles.js";
 
+import Details from "./details/details.jsx";
+
 function MarqueeView({ team_members, settings, viewport, isEditor }) {
     const [ProLayoutComponent, setProLayoutComponent] = useState(null);
     const commonStyles = getCommonStyles(settings);
@@ -57,20 +59,30 @@ function MarqueeView({ team_members, settings, viewport, isEditor }) {
                             <ProLayoutComponent
                                 settings={settings}
                                 imageUrl={member.meta_data.image}
+                                id={member.post_id}
                                 title={member.title}
                                 subtitle={member.meta_data.designation}
                                 description={member.description}
                                 socialIcons={member.socialIcons || []}
+                                details={<Details
+                                    settings={settings}
+                                    member={member}
+                                />}
                             />
                         ) : (
                             <Layout
                                 settings={settings}
                                 layoutType={settings.selectedLayout.value}
+                                id={member.post_id}
                                 imageUrl={member.meta_data.image}
                                 title={member.title}
                                 subtitle={member.meta_data.designation}
                                 description={member.description}
                                 socialIcons={member.socialIcons || []}
+                                details={<Details
+                                    settings={settings}
+                                    member={member}
+                                />}
                             />
                         )}
                     </div>

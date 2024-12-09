@@ -5,7 +5,9 @@ import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import Paragraph from '@editorjs/paragraph';  // Import Paragraph tool
 
-function TsEditor({ label, name, required, form }) {
+import {safeJsonParse} from "../../utils/safeJsonParse.js";
+
+function TsEditor({ label, name, defaultValue, required, form }) {
   const editorRef = useRef(null);
 
   useEffect(() => {
@@ -24,6 +26,11 @@ function TsEditor({ label, name, required, form }) {
       },
       onReady: () => {
         editorRef.current = editor;
+
+        if (defaultValue) {
+          const parsedData = safeJsonParse(defaultValue, []);
+          editorRef.current.render(parsedData);
+        }
       },
       onChange: async () => {
         try {

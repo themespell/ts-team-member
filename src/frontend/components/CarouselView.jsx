@@ -1,10 +1,12 @@
-import {useEffect, useMemo, useState, useRef} from 'react';
+import React, {useEffect, useMemo, useState, useRef} from 'react';
 import { Carousel } from 'antd';
 import Layout from './layouts/Layout';
 import { getCommonStyles } from './helper/commonStyle.js';
 import { getResponsiveStyles } from './helper/responsiveStyles.js';
 import { getCarouselStyles } from './helper/carouselStyles.js';
 import { getProLayout } from "./helper/getProLayout.js";
+
+import Details from "./details/details.jsx";
 
 
 function CarouselView({ team_members, settings, viewport, isEditor }) {
@@ -105,20 +107,30 @@ function CarouselView({ team_members, settings, viewport, isEditor }) {
                                 <ProLayoutComponent
                                     settings={settings}
                                     imageUrl={member.meta_data.image}
+                                    id={member.post_id}
                                     title={member.title}
                                     subtitle={member.meta_data.designation}
                                     description={member.description}
                                     socialIcons={member.socialIcons || []}
+                                    details={<Details
+                                        settings={settings}
+                                        member={member}
+                                    />}
                                 />
                             ) : (
                                 <Layout
                                     settings={settings}
                                     layoutType={settings.selectedLayout.value}
+                                    id={member.post_id}
                                     imageUrl={member.meta_data.image}
                                     title={member.title}
                                     subtitle={member.meta_data.designation}
                                     description={member.description}
                                     socialIcons={member.socialIcons || []}
+                                    details={<Details
+                                        settings={settings}
+                                        member={member}
+                                    />}
                                 />
                             )}
                         </div>

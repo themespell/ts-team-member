@@ -15,6 +15,7 @@ import './components/assets/editorStyle.css';
 import CarouselView from '../frontend/components/CarouselView.jsx';
 import StaticView from '../frontend/components/StaticView.jsx';
 import MarqueeView from "../frontend/components/MarqueeView.jsx";
+import ConfettiView from "../frontend/components/ConfettiView.jsx";
 
 function Editor() {
   const isPro = tsteam_settings.is_pro
@@ -22,8 +23,7 @@ function Editor() {
   const { postType } = editorStore();
   const allSettings = editorStore();
   const { saveSettings } = editorFunction();
-  
-  const [theme, setTheme] = useState('Theme One');
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [postData, setPostData] = useState(null);
@@ -109,8 +109,6 @@ function Editor() {
       <Sidebar 
         isOpen={isSidebarOpen}
         onClose={handleCloseSidebar}
-        theme={theme}
-        setTheme={setTheme}
         selectedLayout={allSettings.selectedLayout.value}
         layoutType={allSettings.selectedLayout.type}
       />
@@ -127,6 +125,13 @@ function Editor() {
         />
       ) : allSettings.selectedView.value === "marquee" && isPro ? (
           <MarqueeView
+              team_members={postData.team_members}
+              settings={allSettings}
+              viewport={viewport}
+              isEditor={isEditor}
+          />
+          ) : allSettings.selectedView.value === "confetti" && isPro ? (
+          <ConfettiView
               team_members={postData.team_members}
               settings={allSettings}
               viewport={viewport}

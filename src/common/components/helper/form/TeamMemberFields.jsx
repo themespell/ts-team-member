@@ -10,13 +10,13 @@ import { fetchData } from '../../../services/fetchData';
 
 function TeamMemberFields({ form, post_id }) {
   const [memberImage, setMemberImage] = useState(null);
+  const [memberInformation, setMemberInformation] = useState(null);
   const [socialLinks, setSocialLinks] = useState(null);
 
   useEffect(() => {
     if (post_id) {
       fetchData(`tsteam/team_member/fetch/single`, (response) => {
         if (response.success && response.data) {
-
           form.setFieldsValue({
             member_name: response.data.title,
             member_designation: response.data.meta_data.designation,
@@ -35,6 +35,7 @@ function TeamMemberFields({ form, post_id }) {
             member_donation: response.data.meta_data.donationLink,
           });
           setMemberImage(response.data.meta_data.image);
+          setMemberInformation(response.data.meta_data.information);
           setSocialLinks(response.data.meta_data.socialLinks);
         } else {
           console.error('Failed to fetch showcase data.');
@@ -52,7 +53,7 @@ function TeamMemberFields({ form, post_id }) {
     {
       key: '2',
       label: 'Details Information',
-      children: <TeamMemberDetails form={form} />,
+      children: <TeamMemberDetails form={form} member_information={memberInformation} />,
     },
     {
       key: '3',
