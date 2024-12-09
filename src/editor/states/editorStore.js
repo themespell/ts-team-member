@@ -16,11 +16,8 @@ const editorStore = create((set) => ({
         type: 'free'
     },
     showcaseDetails: {
-        enable: true,
+        enable: false,
         type: 'modal',
-        button: {
-            text: 'Button Text',
-        }
     },
 
     // Container Settings

@@ -8,11 +8,13 @@ const pro_layouts = proLayouts();
 const pro_views = isPro
     ? [
         { label: 'Marquee', value: 'marquee', type: 'pro' },
+        { label: 'Confetti', value: 'confetti', type: 'pro' },
     ] : [];
 
 const pro_details = isPro
     ? [
         { label: 'Drawer', value: 'drawer', type: 'pro' },
+        { label: 'Full Screen', value: 'fullscreen', type: 'pro' },
     ] : [];
 
 // States Only For use in Editor

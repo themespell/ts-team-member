@@ -13,3 +13,19 @@
 .editor-hover {
 	@apply p-2 border border-transparent hover:border-blue-500 transition duration-300;
 	}
+
+
+/*Fullscreen Details Style*/
+
+.tsteam-fullscreen {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 0;
+	z-index: 9999;
+	background-color: transparent; /* Ensure initial transparency */
+	transition: height 0.3s ease-in-out, background-color 0.5s ease-in-out;
+	overflow: hidden;
+	transform-origin: bottom;
+}
