@@ -31,6 +31,7 @@ final class TSTeam {
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivate' ) );
 		add_action( 'plugins_loaded', array( $this, 'init_plugin' ) );
+		add_action( 'admin_init', array( $this, 'check_activation_redirect' ) );
 	}
 
 	public static function init() {
@@ -59,6 +60,7 @@ final class TSTeam {
 
 	public function init_plugin() {
 		$this->load_textdomain();
+		$this->init_freemius();
 		$this->dispatch_hooks();
 	}
 
@@ -84,10 +86,50 @@ final class TSTeam {
 	}
 
 	public function activate() {
+	    set_transient( 'tsteam_plugin_activated', true, 30 );
 	}
 
 	public function deactivate() {
+	    delete_transient( 'tsteam_plugin_activated' );
 	}
+
+    public function check_activation_redirect() {
+            if ( get_transient( 'tsteam_plugin_activated' ) ) {
+                delete_transient( 'tsteam_plugin_activated' );
+                wp_redirect( admin_url( 'admin.php?page=tsteam-showcase' ) );
+                exit;
+            }
+    }
+
+    public function init_freemius() {
+            if ( ! function_exists( 'tsteammember' ) ) {
+                function tsteammember() {
+                    global $tsteammember;
+
+                    if ( ! isset( $tsteammember ) ) {
+                        require_once TSTEAM_INCLUDES_DIR_PATH . 'library/vendor/freemius/wordpress-sdk/start.php';
+                        $tsteammember = fs_dynamic_init( array(
+                            'id'                  => '17306',
+                            'slug'                => 'ts-team-member',
+                            'type'                => 'plugin',
+                            'public_key'          => 'pk_cb7074e85c7a5734ac990c844add0',
+                            'is_premium'          => false,
+                            'premium_suffix'      => 'Personal',
+                            'has_addons'          => false,
+                            'has_paid_plans'      => false,
+                            'menu' => array(
+                                'slug'           => 'tsteam-admin',
+                                'first-path'     => 'admin.php?page=tsteam-showcase',
+                            ),
+                        ) );
+                    }
+
+                    return $tsteammember;
+                }
+                tsteammember();
+                do_action( 'tsteammember_loaded' );
+            }
+    }
 }
 
 function tsteam_start() {
