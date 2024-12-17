@@ -24,6 +24,6 @@ ReactDOM.createRoot(document.getElementById('tsteam-admin')).render(
   <RootComponent />
 );
 
-ReactDOM.createRoot(document.getElementById('toplevel_page_tsteam-admin')).render(
-  <Navigation />
-);
+// ReactDOM.createRoot(document.getElementById('toplevel_page_tsteam-admin')).render(
+//   <Navigation />
+// );

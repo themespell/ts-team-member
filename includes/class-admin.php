@@ -19,12 +19,22 @@ class Admin {
 		add_menu_page(
 			__( 'TS Team', 'ts-team-member' ),
 			'TS Team',
-			'do_not_allow',
+			'manage_options',
 			$parent,
 			array( $this, 'tsteam_callback' ),
 			plugin_dir_url( __FILE__ ) . 'library/icon-16x16.png',
 			30
 		);
+
+// 		add_submenu_page(
+//         	$parent,
+//         	__( 'Dashboard', 'ts-team-member' ),
+//         	__( 'Dashboard', 'ts-team-member' ),
+//         	'manage_options',
+//         	'tsteam-showcase&path=dashboard',
+//         	array( $this, 'tsteam_callback' ),
+//         );
+
 		add_submenu_page(
 			$parent,
 			__( 'Team Showcase', 'ts-team-member' ),
@@ -41,6 +51,8 @@ class Admin {
 			'tsteam-showcase&path=team-member',
 			array( $this, 'tsteam_callback' ),
 		);
+
+		remove_submenu_page($parent, $parent);
 	}
 
 	public function tsteam_callback() {

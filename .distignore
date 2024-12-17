@@ -35,3 +35,9 @@ src
 *.sql
 *.tar.gz
 *.zip
+
+!includes/library/
+!includes/library/freemius/
+includes/library/composer/
+includes/library/composer.json
+includes/library/composer.lock
