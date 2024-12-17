@@ -1,0 +1,17 @@
+{
+    "name": "themespell/tsteam",
+    "autoload": {
+        "psr-4": {
+            "Themespell\\Tsteam\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Themespell"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "freemius/wordpress-sdk": "^2.9"
+    }
+}
