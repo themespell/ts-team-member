@@ -96,7 +96,7 @@ final class TSTeam {
     public function check_activation_redirect() {
             if ( get_transient( 'tsteam_plugin_activated' ) ) {
                 delete_transient( 'tsteam_plugin_activated' );
-                wp_redirect( admin_url( 'admin.php?page=tsteam-showcase' ) );
+                wp_redirect( admin_url( 'admin.php?page=tsteam-admin' ) );
                 exit;
             }
     }
