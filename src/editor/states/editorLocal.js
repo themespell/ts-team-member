@@ -4,14 +4,15 @@ import proLayouts from "../../pro_support/proLayouts.js";
 
 // Get layouts from Pro version
 const isPro = tsteam_settings.is_pro
+const isLicenseInactive = !!window.tsTeamPro?.is_licence_inactive ?? null;
 const pro_layouts = proLayouts();
-const pro_views = isPro
+const pro_views = isPro && !isLicenseInactive
     ? [
         { label: 'Marquee', value: 'marquee', type: 'pro' },
         { label: 'Confetti', value: 'confetti', type: 'pro' },
     ] : [];
 
-const pro_details = isPro
+const pro_details = isPro && !isLicenseInactive
     ? [
         { label: 'Drawer', value: 'drawer', type: 'pro' },
         { label: 'Full Screen', value: 'fullscreen', type: 'pro' },

@@ -23,6 +23,11 @@ const globalSettings = {
       borderColor: '#ededed'
     },
     navigation: {
+      dashboard:{
+        link: '?page=tsteam-showcase&path=dashboard',
+        label: 'Dashboard',
+        icon: PhotoIcon
+      },
       teamShowcase:{
         link: '?page=tsteam-showcase',
         label: 'Team Showcase',
@@ -32,7 +37,7 @@ const globalSettings = {
         link: '?page=tsteam-showcase&path=team-member',
         label: 'Team Member',
         icon: UserCircleIcon
-      }
+      },
     }
   };
   
