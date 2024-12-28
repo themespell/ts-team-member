@@ -7,9 +7,15 @@ import Editor from './editor/Editor.jsx';
 import AdminPanel from './admin/Admin.jsx';
 import Navigation from './admin/components/Navigation.jsx';
 
+import {menuOverride} from "./common/utils/menuOverride.js";
+
 const RootComponent = () => {
   const currentUrl = window.location.href;
   const isEditor = currentUrl.includes(`&path=editor`);
+
+    useEffect(() => {
+        menuOverride();
+    }, []);
 
   return (
     <React.StrictMode>
