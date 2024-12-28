@@ -1,6 +1,6 @@
-=== TS Team Member ===
+=== Team Members - Best Team Members, Team Showcase, Team Member Slider Plugin for WordPress ===
 Contributors: themespell, asadabir
-Tags: team member, team showcase, team profiles, live editing, staff showcase
+Tags: team, team members, team showcase, team builder, team plugin
 Requires at least: 3.0.1
 Tested up to: 6.7.1
 Requires PHP: 5.4
@@ -49,12 +49,17 @@ Yes, the plugin includes a live editing feature, allowing you to see real-time c
 
 == Changelog ==
 
+= 0.0.8 =
+* Added Freemius Integration
+* Fixed Navigation Issue
+* Fixed Minor Bugs
+
 = 0.0.7 =
 * Added Details View Support
-- Added Popup View For Details
-- Block Style Editor For Details Information (aka EditorJS)
-- Bug & UI Issue Fixed
-- Tested with Latest WordPress
+* Added Popup View For Details
+* Block Style Editor For Details Information (aka EditorJS)
+* Bug & UI Issue Fixed
+* Tested with Latest WordPress
 
 = 0.0.6 =
 * Added Responsive Control
@@ -85,6 +90,9 @@ Yes, the plugin includes a live editing feature, allowing you to see real-time c
 * Initial release.
 
 == Upgrade Notice ==
+
+= 0.0.8 =
+Upgrade to this version for navigation issue fixed and some other minor features added.
 
 = 0.0.7 =
 Upgrade to this version for details view support and additional bug fixed.
