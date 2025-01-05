@@ -36,6 +36,7 @@ class Enqueue {
 					'admin_url'  => get_admin_url(),
 					'nonce'      => wp_create_nonce( 'tsteam_nonce' ),
 					'wp_url'     => site_url(),
+					'assets_path'=> TSTEAM_ROOT_DIR_URL . 'includes/library/',
 					'is_pro'     => $isPro,
 				)
 			);
