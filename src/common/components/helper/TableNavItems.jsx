@@ -1,5 +1,6 @@
 import commonStore from '../../states/commonStore.js';
 import { TsButton } from '../controls/tsControls.js';
+import { CirclePlus } from 'lucide-react';
 
 function TableNavItems({title}) {
     const { saveSettings } = commonStore((state) => ({
@@ -14,7 +15,12 @@ function TableNavItems({title}) {
       <div className="flex justify-between">
         <TsButton 
         label={title}
-        prefix='Create'
+        prefix={
+            <div className="flex items-center gap-1">
+                <CirclePlus size={20} />
+                <span className="-mr-1">Create</span>
+            </div>
+        }
         onClick={handleOpenModal}
         />
       </div>                
