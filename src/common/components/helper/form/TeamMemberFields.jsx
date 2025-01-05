@@ -70,7 +70,15 @@ function TeamMemberFields({ form, post_id }) {
 
   return (
     <>
-      <Tabs defaultActiveKey="1" items={items} />    
+      <Tabs
+          defaultActiveKey="1"
+          items={items}
+          tabPosition="left"
+          tabBarStyle={{
+            width: '200px',
+            borderRight: '1px solid #f0f0f0',
+          }}
+      />
     </>
   );
 }
