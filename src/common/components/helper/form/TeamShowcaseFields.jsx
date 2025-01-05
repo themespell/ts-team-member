@@ -42,8 +42,8 @@ function TeamShowcaseFields({ form, post_id }) {
   }, [post_id, form]);
 
   return (
-    <>
-      <TsInput 
+    <div className="p-6">
+      <TsInput
       label="Showcase Name"
       name="title"
       required={true}
@@ -60,7 +60,7 @@ function TeamShowcaseFields({ form, post_id }) {
           mode="multiple"
         />
       </Form.Item>
-    </>
+    </div>
   );
 }
 
