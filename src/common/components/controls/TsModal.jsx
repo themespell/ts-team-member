@@ -1,5 +1,6 @@
 import { Modal } from 'antd';
 import FormContainer from '../helper/form/FormContainer';
+import './style.css';
 
 function TsModal({ actionType, formSupport, name, type, id, isOpen, isClose, width, children }) {
   return (
