@@ -11,7 +11,7 @@ function TeamMemberBasic({ form, member_image }) {
   }, [member_image]);
   
   return (
-    <>
+    <div className="p-6 bg-white">
       <div className='grid grid-cols-2 gap-4'>
         <TsInput 
         label="Member Name"
@@ -59,7 +59,7 @@ function TeamMemberBasic({ form, member_image }) {
       type="description"
       maxLength={150}
       />
-    </>
+    </div>
   );
 }
 
