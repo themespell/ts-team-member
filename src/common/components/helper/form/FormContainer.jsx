@@ -44,33 +44,40 @@ function FormContainer({ actionType, type, name, post_id }) {
   };
 
   return (
-    <Form
-      form={form}
-      initialValues={{ remember: false }}
-      onFinish={(data) => onFinish(data, actionType, post_id)}
-      onFinishFailed={(errorInfo) => onFinishFailed(errorInfo, actionType, post_id)}
-      autoComplete="off"
-      layout="vertical"
-    >
-      {type === 'team_showcase' && <TeamShowcaseFields form={form} post_id={post_id} />}
-      {type === 'team_member' && <TeamMemberFields form={form} post_id={post_id} />}
-      
-      <Form.Item>
-      <TsButton
-      label={
-        actionType === 'create'
-          ? `Create ${name}`
-          : actionType === 'edit'
-          ? `Update ${name}`
-          : actionType === 'delete'
-          ? `Delete ${name}`
-          : `Create ${name}`
-      }
-      htmlType="submit"
-      />
-      </Form.Item>
-    </Form>
-  );
+      <Form
+          form={form}
+          initialValues={{remember: false}}
+          onFinish={(data) => onFinish(data, actionType, post_id)}
+          onFinishFailed={(errorInfo) => onFinishFailed(errorInfo, actionType, post_id)}
+          autoComplete="off"
+          layout="vertical"
+          className="tsteam__form-container"
+      >
+        {type === 'team_showcase' && <TeamShowcaseFields form={form} post_id={post_id}/>}
+        {type === 'team_member' && <TeamMemberFields form={form} post_id={post_id}/>}
+
+        <div style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            backgroundColor: '#ffffff',
+        }}>
+          <Form.Item>
+            <TsButton
+                label={
+                  actionType === 'create'
+                      ? `Create ${name}`
+                      : actionType === 'edit'
+                          ? `Update ${name}`
+                          : actionType === 'delete'
+                              ? `Delete ${name}`
+                              : `Create ${name}`
+                }
+                htmlType="submit"
+            />
+          </Form.Item>
+        </div>
+      </Form>
+);
 }
 
 export default FormContainer;
