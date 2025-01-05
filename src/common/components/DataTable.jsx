@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Table, Space } from 'antd';
+import { Table, Dropdown, Menu, Space } from 'antd';
 import { fetchData } from '../services/fetchData';
 import { deleteData } from "../services/deleteData";
 import { toastNotification } from '.././utils/toastNotification.js';
 import { TsModal } from './controls/tsControls.js';
-import { PaintBrushIcon, PencilIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { FilePenLine, Brush,Trash2 } from 'lucide-react';
 
 import commonStore from "../states/commonStore.js";
 
@@ -56,13 +56,58 @@ function DataTable({ type, title, editor }) {
           title: 'Action',
           key: 'action',
           render: (_, record) => (
-            <Space size="middle">
-              <a onClick={() => handleEdit(record.key)}><PencilSquareIcon className="size-5 tsteam__color--icon" /></a>
-              {editor && (
-                <a onClick={() => handleEditor(record.key, type)}><PaintBrushIcon className="size-5 tsteam__color--icon" /></a>
-              )}
-              <a onClick={() => handleDelete(record.key)}><TrashIcon className="size-5 text-red-500" /></a>
-            </Space>
+              <Dropdown
+                  menu={{
+                    items: [
+                      {
+                        key: 'edit',
+                        label: (
+                            <div className="flex items-center w-full space-x-2 p-2 bg-gray-100 rounded-xl">
+                                <FilePenLine size={20} className="tsteam__color--icon" />
+                                <span>Edit</span>
+                            </div>
+                        ),
+                        onClick: () => handleEdit(record.key),
+                      },
+                      ...(editor
+                          ? [
+                            {
+                              key: 'editor',
+                              label: (
+                                  <div className="flex items-center w-full bg-gray-100 space-x-2 p-2 rounded-xl">
+                                    <Brush size={20} className="tsteam__color--icon" />
+                                    <span>Edit Design</span>
+                                  </div>
+                              ),
+                              onClick: () => handleEditor(record.key, type),
+                            },
+                          ]
+                          : []),
+                      {
+                        key: 'delete',
+                        label: (
+                            <div className="flex items-center space-x-2 w-full bg-gray-100 p-2 rounded-xl">
+                              <Trash2 size={20} className="text-red-500" />
+                              <span>Delete</span>
+                            </div>
+                        ),
+                        onClick: () => handleDelete(record.key),
+                      },
+                    ],
+                  }}
+                  trigger={['click']}
+                  placement="bottomRight"
+                  overlayStyle={{
+                    width: '250px',
+                    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid rgb(223, 231, 255)',
+                    borderRadius: '10px',
+              }}
+              >
+                <a onClick={(e) => e.preventDefault()}> {/* Prevent default link behavior */}
+                  <span style={{ fontSize: '18px', cursor: 'pointer' }}>•••</span> {/* Three dots */}
+                </a>
+              </Dropdown>
           ),
         };
 
