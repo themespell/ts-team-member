@@ -6,7 +6,7 @@
 
 .ts-modal .ant-modal-header {
     padding: 16px 24px;
-    background: linear-gradient(90deg, #7547D7 18.75%, #A146DB 92.5%);
+    background: #703FD6;
     border-bottom: none;
     margin-bottom: 0;
 }
@@ -28,4 +28,16 @@
 
 .ts-modal .ant-modal-body {
     padding: 0px;
+}
+
+/*Media Styles*/
+
+.ts-media__button {
+    background-color: transparent;
+    color: #703FD6;
+    text-decoration: underline;
+    box-shadow: none;
+    border: none;
+    height: 0rem;
+    min-height: 0rem !important;
 }
