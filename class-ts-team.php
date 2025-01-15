@@ -3,14 +3,14 @@
 	/**
 	 *
 	 * @link              https://themespell.com/
-	 * @since             0.0.8
+	 * @since             0.0.9
 	 * @package           Team Member & Showcase Plugin
 	 *
 	 * @wordpress-plugin
 	 * Plugin Name:       TS Team Member Showcase
 	 * Plugin URI:        https://themespell.com/ts-team
 	 * Description:       Team Showcase Plugin
-	 * Version:           0.0.8
+	 * Version:           0.0.9
 	 * Author:            Themespell
 	 * Author URI:        https://themespell.com/
 	 * License:           GPL-2.0+
@@ -45,7 +45,7 @@ final class TSTeam {
 	}
 
 	public function define_constants() {
-		define( 'TSTEAM_VERSION', '0.0.8' );
+		define( 'TSTEAM_VERSION', '0.0.9' );
 		define( 'TSTEAM_PLUGIN_FILE', __FILE__ );
 		define( 'TSTEAM_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 		define( 'TSTEAM_ROOT_DIR_PATH', plugin_dir_path( __FILE__ ) );
