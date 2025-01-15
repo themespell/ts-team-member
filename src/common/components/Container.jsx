@@ -9,7 +9,7 @@ function Container({ type, title, editor }) {
           {/*    <DataTable type={type} title={title} editor={editor}/>*/}
           {/*</div>*/}
 
-          <div className="w-full bg-white p-6 rounded-xl">
+          <div className="w-full bg-white rounded-xl">
               <DataTable type={type} title={title} editor={editor}/>
           </div>
       </>
