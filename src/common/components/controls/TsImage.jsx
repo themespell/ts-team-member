@@ -12,6 +12,8 @@ function TsImage({ mediaUrl, alt, type = 'default' }) {
       borderRadius: '100%',
       height: '10rem',
       width: '10rem',
+      border: `1px solid ${globalSettings.theme.borderColorLight}`,
+      objectFit: 'cover',
     },
     large: {
       borderRadius: '8px',
