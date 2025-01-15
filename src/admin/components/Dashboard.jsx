@@ -13,7 +13,7 @@ function Dashboard() {
                     label={'Grab Your Discount'}
                     ctalink={'https://themespell.com/ts-product/ts-team-member/'}
                 />
-                <img src={`${tsteamImage}/img/tsteam_dashboard_cover.png`} className="mt-8 w-full"/>
+                <img src={`${tsteamImage}/img/tsteam_dashboard_cover.png`} className="mt-8 tsteam__global--border w-full"/>
 
                 <div className="flex justify-between items-center gap-6 mt-8">
                     <div className="bg-white p-12 pt-8 tsteam__global--border h-96">

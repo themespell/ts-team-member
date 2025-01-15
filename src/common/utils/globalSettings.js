@@ -68,10 +68,10 @@ const globalSettings = {
           // },
       },
        proLink: {
-        link: 'https://themespell.com',
+        link: 'https://themespell.com/ts-product/ts-team-member/',
         label: 'Get Pro',
       },
-      version: '1.0.1'
+      version: '0.0.9'
     }
   };
   
