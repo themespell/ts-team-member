@@ -112,8 +112,17 @@ function TsSlider({ label, name, range, unit, responsive, onChange }) {
                         min={parseInt(range.min)}
                         max={parseInt(range.max)}
                         onChange={handleChange}
-                        style={{
-                            track: { background: '#000' },
+                        styles={{
+                            track: {
+                                background: 'linear-gradient(90deg, rgb(117, 71, 215) 18.75%, rgb(161, 70, 219) 92.5%)',
+                                height: '4px',
+                            },
+                            rail: {
+                                backgroundColor: '#7537D7',
+                            },
+                            handle: {
+                                borderColor: '#7537D7',
+                            },
                             width: '100%',
                         }}
                     />
