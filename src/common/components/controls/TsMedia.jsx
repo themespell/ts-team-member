@@ -1,7 +1,7 @@
 import TsButton from './TsButton';
 import { Image, Form } from 'antd';
 
-function TsMedia({ label, name, form, mediaUrl, setMediaUrl }) {
+function TsMedia({ label, name, form, style, mediaUrl, setMediaUrl }) {
   const openMediaLibrary = () => {
     var wkMedia;
 
@@ -33,7 +33,7 @@ function TsMedia({ label, name, form, mediaUrl, setMediaUrl }) {
   return (
     <>
       <Form.Item
-        label={label}
+        // label={label}
         name={name}
         rules={[
             {
@@ -46,6 +46,7 @@ function TsMedia({ label, name, form, mediaUrl, setMediaUrl }) {
           <TsButton 
             label={`Select ${label}`}
             id="wk-button"
+            className="ts-media__button"
             htmlType="button"
             onClick={openMediaLibrary}
           />

@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
-import { Table, Space } from 'antd';
+import { Table, Dropdown, Menu, Space } from 'antd';
 import { fetchData } from '../services/fetchData';
 import { deleteData } from "../services/deleteData";
 import { toastNotification } from '.././utils/toastNotification.js';
 import { TsModal } from './controls/tsControls.js';
-import { PaintBrushIcon, PencilIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { FilePenLine, Brush, Trash2, AlertTriangle } from 'lucide-react';
 
 import commonStore from "../states/commonStore.js";
 
 import { Typography } from 'antd';
+import TsButton from "./controls/TsButton.jsx";
 const { Text } = Typography;
 
 function DataTable({ type, title, editor }) {
@@ -16,6 +17,8 @@ function DataTable({ type, title, editor }) {
   const [columns, setColumns] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
   const { saveSettings, updateModal, reloadData } = commonStore((state) => ({
     saveSettings: state.saveSettings,
@@ -45,6 +48,8 @@ function DataTable({ type, title, editor }) {
                 return <img src={text} alt={key} style={{ width: '70px', height: '70px', borderRadius: '100%' }} />;
               case 'shortcode':
                 return <Text copyable>{text}</Text>;
+              case 'snippet':
+               return <Text copyable>{text}</Text>;
 
               default:
                 return <span>{text}</span>;
@@ -56,13 +61,58 @@ function DataTable({ type, title, editor }) {
           title: 'Action',
           key: 'action',
           render: (_, record) => (
-            <Space size="middle">
-              <a onClick={() => handleEdit(record.key)}><PencilSquareIcon className="size-5 tsteam__color--icon" /></a>
-              {editor && (
-                <a onClick={() => handleEditor(record.key, type)}><PaintBrushIcon className="size-5 tsteam__color--icon" /></a>
-              )}
-              <a onClick={() => handleDelete(record.key)}><TrashIcon className="size-5 text-red-500" /></a>
-            </Space>
+              <Dropdown
+                  menu={{
+                    items: [
+                      {
+                        key: 'edit',
+                        label: (
+                            <div className="tsteam__action-dropdown flex items-center w-full space-x-2 p-2 rounded-xl">
+                                <FilePenLine size={20} className="tsteam__color--icon" />
+                                <span>Edit</span>
+                            </div>
+                        ),
+                        onClick: () => handleEdit(record.key),
+                      },
+                      ...(editor
+                          ? [
+                            {
+                              key: 'editor',
+                              label: (
+                                  <div className="tsteam__action-dropdown flex items-center w-full space-x-2 p-2 rounded-xl">
+                                    <Brush size={20} className="tsteam__color--icon" />
+                                    <span>Edit Design</span>
+                                  </div>
+                              ),
+                              onClick: () => handleEditor(record.key, type),
+                            },
+                          ]
+                          : []),
+                      {
+                        key: 'delete',
+                        label: (
+                            <div className="tsteam__action-dropdown flex items-center space-x-2 w-full p-2 rounded-xl">
+                              <Trash2 size={20} className="text-red-500" />
+                              <span>Delete</span>
+                            </div>
+                        ),
+                        onClick: () => handleDelete(record.key),
+                      },
+                    ],
+                  }}
+                  trigger={['click']}
+                  placement="bottomRight"
+                  overlayStyle={{
+                    width: '250px',
+                    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid rgb(223, 231, 255)',
+                    borderRadius: '10px',
+              }}
+              >
+                <a onClick={(e) => e.preventDefault()}> {/* Prevent default link behavior */}
+                  <span style={{ fontSize: '18px', cursor: 'pointer' }}>•••</span> {/* Three dots */}
+                </a>
+              </Dropdown>
           ),
         };
 
@@ -75,20 +125,26 @@ function DataTable({ type, title, editor }) {
     });
   }, [type, reloadData]);
 
-  const handleDelete = (post_id) => {
-    deleteData(`tsteam/${type}/delete`, post_id)
-      .then((response) => {
-        if (response.success) {
-          toastNotification('success', `${title} Deleted`, `The ${title} has been successfully deleted.`);
-          setData((prevData) => prevData.filter((item) => item.key !== post_id));
-        } else {
-          toastNotification('error', 'Error', `There was an error deleting the ${title}.`);
-        }
-      })
-      .catch((error) => {
-        toastNotification('error', 'Error', `There was an error deleting the ${error}.`);
-    });
-  };
+    const handleDelete = (post_id) => {
+        setDeleteId(post_id);
+        setDeleteModalOpen(true);
+    };
+
+    const confirmDelete = () => {
+        deleteData(`tsteam/${type}/delete`, deleteId)
+            .then((response) => {
+                if (response.success) {
+                    toastNotification('success', `${title} Deleted`, `The ${title} has been successfully deleted.`);
+                    setData((prevData) => prevData.filter((item) => item.key !== deleteId));
+                    setDeleteModalOpen(false);
+                } else {
+                    toastNotification('error', 'Error', `There was an error deleting the ${title}.`);
+                }
+            })
+            .catch((error) => {
+                toastNotification('error', 'Error', `There was an error deleting the ${error}.`);
+            });
+    };
 
   const handleEdit = (post_id) => {
     setSelectedPost(post_id);
@@ -113,10 +169,14 @@ function DataTable({ type, title, editor }) {
   return (
     <div className="shadow-md rounded-lg overflow-hidden mt-4">
       <Table
+      bordered
       columns={columns} 
       dataSource={data}
       loading={loading}
-       />
+      pagination={{
+          position: ['none', 'bottomCenter'],
+      }}
+      />
 
       <TsModal
           actionType='edit'
@@ -126,7 +186,41 @@ function DataTable({ type, title, editor }) {
           id={selectedPost}
           isOpen={updateModal}
           isClose={closeModal}
-          width={650} />
+          width={800} />
+
+        <TsModal
+            isOpen={deleteModalOpen}
+            isClose={() => setDeleteModalOpen(false)}
+            width={400}
+            name={title}
+        >
+            <div className="flex flex-col items-center justify-center p-6">
+                {/* Warning Icon Circle */}
+                <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-6">
+                    <AlertTriangle className="w-8 h-8 text-red-500" />
+                </div>
+
+                {/* Text Content */}
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Are you sure?</h3>
+                <p className="text-gray-600 text-center mb-8">
+                    You're going to delete this "{title}". Are you sure?
+                </p>
+
+                {/* Buttons */}
+                <div className="flex space-x-4 w-full">
+                    <TsButton
+                        label="No, Keep It."
+                        onClick={() => setDeleteModalOpen(false)}
+                        className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-lg"
+                    />
+                    <TsButton
+                        label="Yes, Delete!"
+                        onClick={confirmDelete}
+                        className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-lg"
+                    />
+                </div>
+            </div>
+        </TsModal>
     </div>
   );
 }

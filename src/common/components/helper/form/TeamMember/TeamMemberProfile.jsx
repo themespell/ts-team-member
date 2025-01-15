@@ -4,7 +4,7 @@ import { safeJsonParse } from '../../../../utils/safeJsonParse';
 function TeamMemberProfile({ form, social_links }) {
 
   return (
-    <>
+    <div className="p-6">
         <div className='grid grid-cols-2 gap-3'>
 
         <TsInput
@@ -53,7 +53,7 @@ function TeamMemberProfile({ form, social_links }) {
           placeholder: 'Social Media',
         }}
       />
-    </>
+    </div>
   );
 }
 

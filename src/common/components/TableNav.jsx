@@ -14,8 +14,8 @@ function TableNav({type, title}) {
   };
 
   return (
-    <div className="">
-          <h4 className="text-xl font-semibold mb-4">{title}</h4>
+    <div className="flex justify-between mb-8">
+          <h4 className="text-xl font-semibold">{title}</h4>
           <div className="flex justify-between">
             <TableNavItems title={title} />
 
@@ -26,7 +26,7 @@ function TableNav({type, title}) {
               type={type}
               isOpen={createModal}
               isClose={handleCloseModal}
-              width={650} />
+              width={800} />
         </div>
     </div>
   );

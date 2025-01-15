@@ -44,6 +44,9 @@ function TsSelect({ label, name, defaultValue, options, onChange, mode, output =
       <Select
         placeholder={`Select ${label}`}
         value={get(editorStore(), name) || currentValue}
+        activeBorderColor="linear-gradient(45deg, #7A5AF8, #7140D9, #950CED, #F46174)"
+        activeOutlineColor="linear-gradient(45deg, #7A5AF8, #7140D9, #950CED, #F46174)"
+        hoverBorderColor="linear-gradient(45deg, #7A5AF8, #7140D9, #950CED, #F46174)"
         style={{ 
           width: '100%',
         }}

@@ -2,7 +2,7 @@ import { TsInput, TsEditor } from '../../../controls/tsControls';
 
 function TeamMemberDetails({ form, member_information }) {
   return (
-    <>
+    <div className="p-6">
         <div className='grid grid-cols-2 gap-3'>
 
         <TsInput 
@@ -34,7 +34,7 @@ function TeamMemberDetails({ form, member_information }) {
         required={false} 
         form={form} 
         />
-    </>
+    </div>
   );
 }
 

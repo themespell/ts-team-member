@@ -8,6 +8,7 @@ function TsInput({ type, label, name, required, maxLength }) {
         return <Input.Password 
         style={{
           borderColor: globalSettings.components.Input.colorBorder,
+          borderRadius: `${globalSettings.components.Input.borderRadius}px`,
           padding: `${globalSettings.components.Input.paddingBlock}px`,
         }}
         placeholder={`Enter ${label.toLowerCase()}`} />;
@@ -29,6 +30,7 @@ function TsInput({ type, label, name, required, maxLength }) {
         return <Input 
         style={{
           borderColor: globalSettings.components.Input.colorBorder,
+          borderRadius: `${globalSettings.components.Input.borderRadius}px`,
           padding: `${globalSettings.components.Input.paddingBlock}px`,
         }}
         type="number" maxLength={maxLength} placeholder={`Enter ${label.toLowerCase()}`} />;
@@ -36,6 +38,7 @@ function TsInput({ type, label, name, required, maxLength }) {
         return <Input
         style={{
           borderColor: globalSettings.components.Input.colorBorder,
+          borderRadius: `${globalSettings.components.Input.borderRadius}px`,
           padding: `${globalSettings.components.Input.paddingBlock}px`,
         }}
         maxLength={maxLength} placeholder={`Enter ${label.toLowerCase()}`} />;

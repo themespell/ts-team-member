@@ -2,11 +2,17 @@ import {useState} from "react";
 import { TsButton } from "../../common/components/controls/tsControls";
 import editorFunction from "../states/editorFunction";
 import editorLocal from "../states/editorLocal.js";
-import {DesktopOutlined, MobileOutlined, TabletOutlined} from "@ant-design/icons";
+import {Monitor, Tablet, Smartphone, Code, CircleX} from 'lucide-react';
 import {Button} from "antd";
+import {TsModal} from "../../common/components/controls/tsControls";
 
 function Topbar({ type }) {
+    const tsteamLogo = tsteam_settings.assets_path;
     const { viewport, setViewport } = editorLocal();
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const post_id = urlParams.get('post_id')
 
     const handleViewportChange = (newViewport) => {
         setViewport(newViewport); // Update global state
@@ -16,34 +22,49 @@ function Topbar({ type }) {
         const action = `tsteam/${type}/update/settings`;
         editorFunction.getState().updateSettings(action);
     };
-    
+
     const handleBacktoAdmin = () => {
         const admin_url = `admin.php?page=tsteam-showcase`;
         window.location.href = admin_url;
     };
 
+    const handleCodeClick = () => {
+        console.log('working')
+        setIsModalVisible(true);
+    };
+
     return (
         <>
-            <div className="flex tsteam__color--bg p-4 justify-between items-center">
+            <div className="flex tsteam__editor-topbar p-3 justify-between items-center">
+                <div>
+                    <img src={`${tsteamLogo}/img/tsteam_icon_white.svg`} className="tsteam__topbar-logo w-10 h-10 ml-16"/>
+                </div>
 
                 {/* Responsive Buttons */}
                 <div className="editor-toolbar flex gap-2 mx-auto">
                     <Button
-                        className={`btn ${viewport === 'desktop' ? 'btn-primary' : ''}`}
-                        style={{width: '40px', height: '40px'}}
-                        icon={<DesktopOutlined />}
+                        className={`btn ${viewport === 'desktop' ? 'responsive-button-primary' : 'responsive-button-secondary'}`}
+                        style={{
+                            width: '40px',
+                            height: '40px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'background-color 0.3s, color 0.3s',
+                    }}
+                        icon={<Monitor/>}
                         onClick={() => handleViewportChange('desktop')}
                     />
                     <Button
-                        className={`btn ${viewport === 'tablet' ? 'btn-primary' : ''}`}
+                        className={`btn ${viewport === 'tablet' ? 'responsive-button-primary' : 'responsive-button-secondary'}`}
                         style={{width: '40px', height: '40px'}}
-                        icon={<TabletOutlined />}
+                        icon={<Tablet/>}
                         onClick={() => handleViewportChange('tablet')}
                     />
                     <Button
-                        className={`btn ${viewport === 'mobile' ? 'btn-primary' : ''}`}
+                        className={`btn ${viewport === 'mobile' ? 'responsive-button-primary' : 'responsive-button-secondary'}`}
                         style={{width: '40px', height: '40px'}}
-                        icon={<MobileOutlined />}
+                        icon={<Smartphone />}
                         onClick={() => handleViewportChange('mobile')}
                     />
                 </div>
@@ -51,16 +72,56 @@ function Topbar({ type }) {
                 {/* Action Buttons */}
                 <div className="flex gap-2">
                     <TsButton
-                        label="Back to Admin"
-                        onClick={handleBacktoAdmin}
+                        label={<Code />}
+                        className="bg-transparent text-white border-none hover:bg-white hover:text-purple-600"
+                        onClick={handleCodeClick}
                     />
                     <TsButton
                         label="Publish"
+                        className="tsteam__editor-button"
                         onClick={handlePublishClick}
+                    />
+                    <TsButton
+                        label={<CircleX />}
+                        className="bg-transparent text-white border-none hover:bg-red-500 hover:text-white"
+                        onClick={handleBacktoAdmin}
                     />
                 </div>
             </div>
 
+            {/*Code Modal*/}
+            <TsModal
+                isOpen={isModalVisible}
+                isClose={() => setIsModalVisible(false)}
+                width={550}
+                name="Code Modal"
+            >
+                <div className="flex flex-col items-center justify-center p-8">
+                    {/* Warning Icon Circle */}
+                    <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-6">
+                        <Code className="w-8 h-8 text-purple-600"/>
+                    </div>
+
+                    {/* Text Content */}
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Shortcode</h3>
+                    <div className="mockup-code tsteam__color--bg-alt text-white">
+                        <pre data-prefix="$"><code>[tsteam_showcase id="{post_id}"]</code></pre>
+                    </div>
+
+                    <h3 className="text-xl font-semibold text-gray-900 mt-8 mb-2">PHP Snippet</h3>
+                    <div className="mockup-code tsteam__color--bg-alt text-white">
+                        <pre data-prefix="$"><code>echo do_shortcode('[tsteam_showcase id="{post_id}"]');</code></pre>
+                    </div>
+
+                    {/* Buttons */}
+                    <div className="flex justify-center items-center mt-8 space-x-4 w-full">
+                        <TsButton
+                            label="Done"
+                            onClick={() => setIsModalVisible(false)}
+                        />
+                    </div>
+                </div>
+            </TsModal>
         </>
     );
 }

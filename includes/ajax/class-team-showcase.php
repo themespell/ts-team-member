@@ -51,6 +51,7 @@ class TeamShowcase {
 				'post_id'   => get_the_ID(),
 				'title'     => get_the_title(),
 				'shortcode' => '[tsteam_showcase id="' . get_the_ID() . '"]',
+				'snippet'  => '<?php echo do_shortcode(\'[tsteam_showcase id="' . get_the_ID() . '"]\'); ?>',
 			);
 		}
 

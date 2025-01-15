@@ -2,25 +2,30 @@ import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 
 const globalSettings = {
     token: {
-        colorPrimary: '#18208D',
+        colorPrimary: '#703FD6',
         colorBgContainer: '#fff',
         colorText: '#000000',
     },
     components: {
       Table: {
-        "headerBg": "#18208D",
-        "headerColor": "#ffffff",
+        "headerBg": "#F3EAFB",
+        "headerColor": "#111C5C",
+        "headerBorderRadius": 15,
+        "borderRadius": 15,
+        "boxShadowSecondary": 0
       },
       Input: {
-        "colorBorder": "#7684D0",
+        "colorBorder": "#C1DAF8",
+        "borderRadius": 12,
         "paddingBlock": 6,
         "paddingBlockLG": 8
-      }
+      },
     },
     theme: {
-      primaryColor: '#18208D',
+      primaryColor: '#703FD6',
       textColor: '#333',
-      borderColor: '#ededed'
+      borderColor: '#ededed',
+      borderColorLight: '#DFD5F6'
     },
     navigation: {
       dashboard:{
@@ -38,6 +43,35 @@ const globalSettings = {
         label: 'Team Member',
         icon: UserCircleIcon
       },
+    },
+    topbar: {
+      menuitems: {
+          dashboard:{
+              link: '?page=tsteam-showcase&path=dashboard',
+              label: 'Dashboard',
+          },
+          teamShowcase:{
+              link: '?page=tsteam-showcase',
+              label: 'Team Showcase',
+          },
+          teamMember:{
+              link: '?page=tsteam-showcase&path=team-member',
+              label: 'Team Member',
+          },
+          // account:{
+          //     link: 'admin.php?page=tsteam-pro-account',
+          //     label: 'Account',
+          // },
+          // supportForum:{
+          //     link: 'https://wordpress.org/support/plugin/ts-team-member',
+          //     label: 'Support Forum',
+          // },
+      },
+       proLink: {
+        link: 'https://themespell.com',
+        label: 'Get Pro',
+      },
+      version: '1.0.1'
     }
   };
   
