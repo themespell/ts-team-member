@@ -59,7 +59,10 @@ function FormContainer({ actionType, type, name, post_id }) {
         <div style={{
             display: 'flex',
             justifyContent: 'flex-end',
-            backgroundColor: '#ffffff',
+            borderTop: '1px solid #f0f0f0',
+            paddingTop: '1rem',
+            paddingRight: '1rem'
+            // backgroundColor: '#ffffff',
         }}>
           <Form.Item>
             <TsButton
