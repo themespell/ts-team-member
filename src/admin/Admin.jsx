@@ -12,17 +12,22 @@ function AdminPanel() {
     if (isDashboardPage) {
         return (
             <>
-               <Topbar title={'Dashboard'} />
-               <Dashboard />
+                <Topbar title={'Dashboard'}/>
+                <div className='tsteam__admin--style overflow-x-auto w-full flex justify-center pt-12 pb-12'>
+                    <div className='flex justify-between gap-8 w-4/6'>
+                        <div className='w-full'>
+                            <Dashboard/>
+                        </div>
+                    </div>
+                </div>
             </>
         );
-    }
-    else {
+    } else {
         return (
             <>
-                <Topbar title={isTeamMemberPage ? 'Team Member' : 'Team Showcase'} />
+                <Topbar title={isTeamMemberPage ? 'Team Member' : 'Team Showcase'}/>
                 <div className='tsteam__admin--style overflow-x-auto w-full flex justify-center pt-12 pb-12'>
-                    <div className='flex justify-between gap-8 w-5/6'>
+                    <div className='flex justify-between gap-8 w-4/6'>
                         <div className='w-full'>
                             {isTeamMemberPage ? (
                                 <TeamMember/>
