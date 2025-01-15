@@ -77,6 +77,8 @@ function TeamMemberFields({ form, post_id }) {
           tabBarStyle={{
             width: '200px',
             borderRight: '1px solid #f0f0f0',
+            paddingTop: '2rem'
+            // backgroundColor: '#F3EEFF',
           }}
       />
     </>
