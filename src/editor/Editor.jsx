@@ -18,7 +18,7 @@ import MarqueeView from "../frontend/components/MarqueeView.jsx";
 import ConfettiView from "../frontend/components/ConfettiView.jsx";
 
 function Editor() {
-  const isPro = tsteam_settings.is_pro
+  const isPro = tsteam_settings.is_pro;
   const { isEditor, viewport, setViewport } = editorLocal();
   const { postType } = editorStore();
   const allSettings = editorStore();
@@ -38,12 +38,12 @@ function Editor() {
 
     saveSettings('postID', postIdFromUrl);
     saveSettings('postType', postTypeFromUrl);
-  
+
     if (postIdFromUrl) {
       fetchData(`tsteam/${postTypeFromUrl}/fetch/single`, (response) => {
         if (response && response.success) {
           setPostData(response.data.meta_data);
-          
+
           const showcaseSettings = JSON.parse(response.data.meta_data.showcase_settings);
           Object.keys(showcaseSettings).forEach((key) => {
             const value = showcaseSettings[key];
@@ -59,95 +59,82 @@ function Editor() {
           setIsLoading(false);
         }
       }, { post_id: postIdFromUrl });
-  
     } else {
       console.error("No post_id found in the URL");
       setIsLoading(false);
     }
   }, []);
 
-  useEffect(() => {
-    const handleClick = () => setIsSidebarOpen(true);
-    const editorPanel = document.getElementById('editorPanel');
-    if (editorPanel) {
-      editorPanel.addEventListener('click', handleClick);
-    }
-    return () => {
-      if (editorPanel) {
-        editorPanel.removeEventListener('click', handleClick);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-  }, [viewport]);
-
-  const handleCloseSidebar = () => {
-    setIsSidebarOpen(false);
-  };
-
-  const handleEditorClick = () => {
-    if (!isSidebarOpen) {
-      setIsSidebarOpen(true);
-    }
+  const handleToggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev); // Toggle the sidebar state
   };
 
   if (isLoading || postData === null) {
     return (
-      <TsLoader
-      label="Loading Editor"
-      />
+        <TsLoader
+            label="Loading Editor"
+        />
     );
   }
 
   return (
-    <>
+      <>
       <Topbar
-          type={postType}
-          viewport={viewport} setViewport={setViewport}
+      type={postType}
+      viewport={viewport}
+      setViewport={setViewport}
       />
-      <Sidebar 
-        isOpen={isSidebarOpen}
-        onClose={handleCloseSidebar}
-        selectedLayout={allSettings.selectedLayout.value}
-        layoutType={allSettings.selectedLayout.type}
-      />
-      <div className='flex justify-center items-center min-h-screen mx-auto tsteam__editor_bg'>
-      <div className={`editor-container editor-hover viewport-${viewport}`}
-          onClick={handleEditorClick}
-      >
-      {allSettings.selectedView.value === "carousel" ? (
-        <CarouselView
-          team_members={postData.team_members}
-          settings={allSettings}
-          viewport={viewport}
-          isEditor={isEditor}
+      <div className="layout-container">
+        <Sidebar
+            isOpen={isSidebarOpen}
+            selectedLayout={allSettings.selectedLayout.value}
+            layoutType={allSettings.selectedLayout.type}
+            onToggleSidebar={handleToggleSidebar} // Pass the toggle function
         />
-      ) : allSettings.selectedView.value === "marquee" && isPro ? (
-          <MarqueeView
-              team_members={postData.team_members}
-              settings={allSettings}
-              viewport={viewport}
-              isEditor={isEditor}
-          />
-          ) : allSettings.selectedView.value === "confetti" && isPro ? (
-          <ConfettiView
-              team_members={postData.team_members}
-              settings={allSettings}
-              viewport={viewport}
-              isEditor={isEditor}
-          />
-      ) : (
-        <StaticView
-          team_members={postData.team_members}
-          settings={allSettings}
-          viewport={viewport}
-          isEditor={isEditor}
-        />
-      )}
+        <div className={`main-content ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
+          {/*<Topbar*/}
+          {/*    type={postType}*/}
+          {/*    viewport={viewport}*/}
+          {/*    setViewport={setViewport}*/}
+          {/*/>*/}
+          <div className='flex justify-center items-center min-h-screen mx-auto tsteam__editor_bg'>
+            <div
+                className={`editor-container editor-hover viewport-${viewport}`}
+            >
+              {allSettings.selectedView.value === "carousel" ? (
+                  <CarouselView
+                      team_members={postData.team_members}
+                      settings={allSettings}
+                      viewport={viewport}
+                      isEditor={isEditor}
+                  />
+              ) : allSettings.selectedView.value === "marquee" && isPro ? (
+                  <MarqueeView
+                      team_members={postData.team_members}
+                      settings={allSettings}
+                      viewport={viewport}
+                      isEditor={isEditor}
+                  />
+              ) : allSettings.selectedView.value === "confetti" && isPro ? (
+                  <ConfettiView
+                      team_members={postData.team_members}
+                      settings={allSettings}
+                      viewport={viewport}
+                      isEditor={isEditor}
+                  />
+              ) : (
+                  <StaticView
+                      team_members={postData.team_members}
+                      settings={allSettings}
+                      viewport={viewport}
+                      isEditor={isEditor}
+                  />
+              )}
+            </div>
+          </div>
+        </div>
       </div>
-      </div>
-    </>
+      </>
   );
 }
 
