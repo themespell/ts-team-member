@@ -27,7 +27,7 @@ class Enqueue {
 		if ( $screen_info ) {
 			wp_enqueue_media();
 			wp_enqueue_style( 'tsteam-admin-main', TSTEAM_ROOT_DIR_URL . 'includes/assets/admin.css' );
-			wp_enqueue_script( 'tsteam-admin-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/admin.js', $dependency, '2.0.6', true );
+			wp_enqueue_script( 'tsteam-admin-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/admin.js', $dependency, '2.0.7', true );
 			wp_localize_script(
 				'tsteam-admin-script',
 				'tsteam_settings',
