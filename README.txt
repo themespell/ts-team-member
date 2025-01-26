@@ -4,7 +4,7 @@ Tags: team, team members, team showcase, team builder, team plugin
 Requires at least: 3.0.1
 Tested up to: 6.7.1
 Requires PHP: 5.4
-Stable tag: 0.0.9
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +48,16 @@ Yes, the plugin includes a live editing feature, allowing you to see real-time c
 4. A team member profile with social media links.
 
 == Changelog ==
+
+= 1.0.0 =
+* 02 New Layouts Added
+* 07 New Hover Animation Added
+* Typography Control Added
+* Motion Control Added
+* Added Image Preview on Admin
+* Improved On-demand Google Font Loading
+* Social Media Icon & Link Issue has fixed
+* UI Issue Fixed
 
 = 0.0.9 =
 * New Improved UI
