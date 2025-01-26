@@ -49,7 +49,7 @@ const DetailsFullScreen = ({ member }) => {
                 Open Full Screen
             </button>
 
-            {/* Full Screen Overlay */}
+            {/* Full Screen OverlayCard */}
             {isFullScreen && (
                 <div
                     id={modalId} // Set the modal ID dynamically based on the member title
