@@ -1,51 +1,49 @@
 {
-    "layout": {
-      "name": "Card",
-      "editor": {
-        "controls":{
-          
+  "layout": {
+    "name": "Card",
+    "editor": {
+      "controls": {}
+    },
+    "container": {
+      "style": "max-w-sm bg-white rounded-2xl shadow-lg overflow-hidden"
+    },
+    "image": {
+      "style": "w-24 h-24 rounded-full border-4 border-white"
+    },
+    "animation": {
+      "style": ""
+    },
+    "content": {
+      "style": "p-6 text-center",
+      "header": {
+        "title": {
+          "markup": "h3",
+          "style": "text-xl font-bold mb-1"
+        },
+        "subtitle": {
+          "visible": true,
+          "markup": "h4",
+          "style": "text-sm text-purple-600 font-medium mb-4"
         }
       },
-      "container": {
-        "style": "max-w-sm bg-white rounded-lg shadow-lg overflow-hidden"
+      "body": {
+        "visible": true,
+        "markup": "div",
+        "style": "text-gray-500 text-sm mb-4"
       },
-      "image": {
-        "style": "w-full h-auto rounded-b-lg"
-      },
-      "animation": {
-        "style": ""
-      },
-      "content": {
-        "style": "p-6",
-        "header": {
-          "title": {
-            "markup": "h3",
-            "style": "text-xl font-bold"
-          },
-          "subtitle": {
-            "visible": true,
-            "markup": "h4",
-            "style": "text-sm font-medium"
-          }
-        },
-        "body": {
+      "footer": {
+        "markup": "div",
+        "social": {
           "visible": true,
           "markup": "div",
-          "style": "mt-4"
-        },
-        "footer": {
-          "markup": "div",
-          "social": {
-            "visible": true,
-            "markup": "div",
-            "container": {
-              "style": ""
-            },
-            "icon": {
-              "style": ""
-            }
+          "container": {
+            "style": "flex justify-center gap-4"
+          },
+          "icon": {
+            "style": "text-gray-600"
           }
         }
       }
     }
   }
+}
