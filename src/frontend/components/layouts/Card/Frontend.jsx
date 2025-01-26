@@ -1,70 +1,128 @@
-import config from './config.json';
+import React from 'react';
+import SocialIcons from './SocialIcons.jsx';
+import { loadGoogleFont } from '../../helper/loadGoogleFont.js';
+import { getAnimationClasses } from "../../helper/motionControl.js";
 
-function Card({ settings, id, imageUrl, title, subtitle, description, socialIcons, details }) {
-    const {container, image, content, animation} = config.layout;
+const Card = ({ settings, id, imageUrl, title, subtitle, description, socialIcons, details }) => {
+    if (settings?.typography?.name) {
+        loadGoogleFont(settings.typography.name);
+    }
+    if (settings?.typography?.designation) {
+        loadGoogleFont(settings.typography.designation);
+    }
+    if (settings?.typography?.description) {
+        loadGoogleFont(settings.typography.description);
+    }
 
-    const { header, body, footer } = content;
+    const animationConfig = getAnimationClasses(settings.hoverAnimation);
 
-    return (
-        <>
-        <div className={container.style}>
-            {imageUrl && (
-                <img
-                    id={`${title.replace(/\s+/g, '-').toLowerCase()}-${id}`}
-                    src={imageUrl}
-                    alt={title}
-                    className={`tsteam-member__image ${image.style} ${details ? 'cursor-pointer' : ''}`}
-                />
-            )}
+    const renderContent = () => (
+        <div className="w-full flex flex-col items-center">
+            <img
+                id={`${title?.replace(/\s+/g, '-').toLowerCase()}-${id}`}
+                src={imageUrl}
+                alt={title}
+                style={{
+                    border: '1px solid',
+                    borderRadius: settings?.tscard?.imageBorderRadius,
+                    borderColor: settings?.tscard?.imageBorderColor,
+                }}
+                className={`tsteam-member__image w-32 h-32 rounded-xl -mb-12 z-10 relative shadow-2xl ${details ? 'cursor-pointer' : ''}`}
+            />
 
-            <div
-            className={content.style}
-            style={{
-                backgroundColor: settings?.tscard?.backgroundColor,
-            }}
-            >
-                {header && (
-                    <div>
-                        {header.title && (
-                            <header.title.markup
-                            className={header.title.style}
+            <div className="w-full max-w-sm bg-white rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] overflow-hidden">
+                <div
+                    className="px-5 pt-16 pb-5 text-center flex flex-col items-center"
+                    style={{
+                        backgroundColor: settings?.tscard?.backgroundColor,
+                    }}
+                >
+                    {title && (
+                        <h3
+                            className="text-[16px] font-semibold mb-0.5"
                             style={{
                                 color: settings?.tscard?.textColor,
+                                fontFamily: settings?.typography?.name || 'inherit',
+                                fontSize: settings?.typography?.name_fontSize || '16px',
+                                fontWeight: settings?.typography?.name_fontWeight || '600',
+                                textTransform: settings?.typography?.name_textTransform || 'none',
+                                letterSpacing: `${settings?.typography?.name_letterSpacing || 0}px`,
+                                lineHeight: settings?.typography?.name_lineHeight || '1.5'
                             }}
-                            >
-                                {title}
-                            </header.title.markup>
-                        )}
-                        {header.subtitle.visible && subtitle && (
-                            <header.subtitle.markup className={header.subtitle.style}>
-                                {subtitle}
-                            </header.subtitle.markup>
-                        )}
-                    </div>
-                )}
+                        >
+                            {title}
+                        </h3>
+                    )}
 
-                {body.visible && description && (
-                    <body.markup className={body.style}>
-                        {description}
-                    </body.markup>
-                )}
+                    {subtitle && (
+                        <h4 className="text-purple-600 text-sm font-medium mb-3"
+                            style={{
+                                fontFamily: settings?.typography?.designation || 'inherit',
+                                fontSize: settings?.typography?.designation_fontSize,
+                                fontWeight: settings?.typography?.designation_fontWeight,
+                                textTransform: settings?.typography?.designation_textTransform,
+                                letterSpacing: `${settings?.typography?.designation_letterSpacing || 0}px`,
+                                lineHeight: settings?.typography?.designation_lineHeight
+                            }}
+                        >
+                            {subtitle}
+                        </h4>
+                    )}
 
-                {footer && footer.social.visible && (
-                    <footer.markup className={footer.social.container.style}>
-                        <footer.social.markup className={footer.social.icon.style}>
-                            {socialIcons && socialIcons.map((icon, index) => (
-                                <span key={index}>{icon}</span>
-                            ))}
-                        </footer.social.markup>
-                    </footer.markup>
-                )}
-                <div>
-                    {details}
+                    <hr className="h-1 w-16 bg-red-500 mt-2 mb-4 rounded-2xl"></hr>
+
+                    {description && (
+                        <div
+                            style={{
+                                fontFamily: settings?.typography?.description || 'inherit',
+                                fontSize: settings?.typography?.description_fontSize,
+                                fontWeight: settings?.typography?.description_fontWeight,
+                                textTransform: settings?.typography?.description_textTransform,
+                                letterSpacing: `${settings?.typography?.description_letterSpacing || 0}px`,
+                                lineHeight: settings?.typography?.description_lineHeight
+                            }}
+                            className="text-gray-600 text-sm mb-4 ml-8 mr-8"
+                        >
+                            {description}
+                        </div>
+                    )}
+
+                    {details && (
+                        <div className="mt-2 flex items-center justify-center">
+                            {details}
+                        </div>
+                    )}
+
+                    <SocialIcons socialIcons={socialIcons} />
                 </div>
             </div>
         </div>
-        </>
     );
-}
+
+    // Handle different animation types
+    if (!animationConfig) {
+        return renderContent();
+    }
+
+    if (animationConfig.type === 'single') {
+        return (
+            <div className={animationConfig.class}>
+                {renderContent()}
+            </div>
+        );
+    }
+
+    if (animationConfig.type === 'wrapper') {
+        return (
+            <div className={animationConfig.parent}>
+                <div className={animationConfig.wrapper}>
+                    {renderContent()}
+                </div>
+            </div>
+        );
+    }
+
+    return renderContent();
+};
 
 export default Card;

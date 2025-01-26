@@ -22,6 +22,18 @@ const register_controls = () => {
             },
             {
                 type: 'color',
+                label: 'Image Border Color',
+                name: 'tscard.imageBorderColor',
+            },
+            {
+                type: 'slider',
+                label: 'Image Border Radius',
+                name: 'tscard.imageBorderRadius',
+                range: '100%',
+                unit: 'px',
+            },
+            {
+                type: 'color',
                 label: 'Hover Background Color',
                 name: 'tscard.hoverColor',
             },

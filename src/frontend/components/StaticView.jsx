@@ -52,7 +52,7 @@ function StaticView({ team_members, settings, viewport, isEditor }) {
                                 id={member.post_id}
                                 title={member.title}
                                 subtitle={member.meta_data.designation}
-                                description={member.description}
+                                description={member.meta_data.description}
                                 socialIcons={member.socialIcons || []}
                                 details={<Details
                                     settings={settings}
@@ -67,8 +67,8 @@ function StaticView({ team_members, settings, viewport, isEditor }) {
                                 imageUrl={member.meta_data.image}
                                 title={member.title}
                                 subtitle={member.meta_data.designation}
-                                description={member.description}
-                                socialIcons={member.socialIcons || []}
+                                description={member.meta_data.description}
+                                socialIcons={member.meta_data.socialLinks || []}
                                 details={<Details
                                     settings={settings}
                                     member={member}

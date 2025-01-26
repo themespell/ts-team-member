@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Table, Dropdown, Menu, Space } from 'antd';
+import { Table, Dropdown, Image } from 'antd';
 import { fetchData } from '../services/fetchData';
 import { deleteData } from "../services/deleteData";
 import { toastNotification } from '.././utils/toastNotification.js';
@@ -45,7 +45,7 @@ function DataTable({ type, title, editor }) {
             switch (key) {
               case 'image':
               case 'profileImage':
-                return <img src={text} alt={key} style={{ width: '70px', height: '70px', borderRadius: '100%' }} />;
+                  return <Image src={text} alt={key} style={{ width: '100px', height: '80px', borderRadius: '100%', objectFit: 'cover' }} />;
               case 'shortcode':
                 return <Text copyable>{text}</Text>;
               case 'snippet':

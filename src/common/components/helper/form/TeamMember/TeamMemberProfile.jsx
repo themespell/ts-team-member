@@ -49,6 +49,22 @@ function TeamMemberProfile({ form, social_links }) {
               label: 'Twitter',
               value: 'twitter',
             },
+            {
+              label: 'Linkedin',
+              value: 'linkedin',
+            },
+            {
+              label: 'Instagram',
+              value: 'instagram',
+            },
+            {
+              label: 'Youtube',
+              value: 'youtube',
+            },
+            {
+              label: 'Github',
+              value: 'github',
+            },
           ],
           placeholder: 'Social Media',
         }}

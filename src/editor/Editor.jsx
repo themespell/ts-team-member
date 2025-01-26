@@ -11,6 +11,7 @@ import proLayouts from "../pro_support/proLayouts.js";
 import Topbar from './components/Topbar.jsx';
 import Sidebar from './components/Sidebar/Sidebar.jsx';
 import './components/assets/editorStyle.css';
+import './components/assets/editorHover.css';
 
 import CarouselView from '../frontend/components/CarouselView.jsx';
 import StaticView from '../frontend/components/StaticView.jsx';
@@ -92,11 +93,6 @@ function Editor() {
             onToggleSidebar={handleToggleSidebar} // Pass the toggle function
         />
         <div className={`main-content ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
-          {/*<Topbar*/}
-          {/*    type={postType}*/}
-          {/*    viewport={viewport}*/}
-          {/*    setViewport={setViewport}*/}
-          {/*/>*/}
           <div className='flex justify-center items-center min-h-screen mx-auto tsteam__editor_bg'>
             <div
                 className={`editor-container editor-hover viewport-${viewport}`}

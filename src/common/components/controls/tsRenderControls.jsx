@@ -26,6 +26,8 @@ const renderControls = {
     font: (control) => (
         <TsFont
             label={control.label}
+            name={control.name}
+            targetedClass={control.targetedClass}
             isPro={control.isPro}
         />
     )
