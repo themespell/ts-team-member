@@ -85,7 +85,9 @@
 }
 
 .tsteam-container {
-	@apply grid w-full h-full;
+	@apply grid w-full;
+	height: 100vh;
+	align-items: center;
 }
 
 .viewport-desktop {
@@ -137,7 +139,7 @@
 }
 
 .sidebar-toggle {
-	width: 60px;
+	width: 65px;
 	height: 100vh;
 	background-color: #111C5C; /* Blue background */
 	color: #ffffff;
