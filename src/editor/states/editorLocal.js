@@ -26,10 +26,10 @@ const editorLocal = create((set) => ({
 
     availableLayouts: [
         { label: 'Card', value: 'Card', type: 'free' },
-        // { label: 'Overlay', value: 'Overlay', type: 'free' },
+        { label: 'Horizontal Card', value: 'HorizontalCard', type: 'free' },
+        { label: 'Overlay Card', value: 'OverlayCard', type: 'free' },
         // { label: 'Blur', value: 'Blur', type: 'free' },
         // { label: 'Avatar', value: 'Avatar', type: 'free' },
-        // { label: 'HorizontalCard', value: 'HorizontalCard', type: 'free' },
         ...pro_layouts,
     ],
     availableViews: [
@@ -40,6 +40,19 @@ const editorLocal = create((set) => ({
     availableDetails: [
         { label: 'Popup', value: 'popup', type: 'free' },
         ...pro_details
+    ],
+    availableHoverAnimation: [
+        { label: 'No Animation', value: 'none', type: 'free' },
+        { label: '3D Float', value: 'float3d', type: 'free' },
+        { label: 'Tilt', value: 'tilt', type: 'free' },
+        { label: 'Blur', value: 'blur', type: 'free' },
+        { label: 'Slide Top', value: 'slideTop', type: 'free' },
+        { label: 'Shadow Top', value: 'shadowPop', type: 'free' },
+        { label: 'Shadow Drop', value: 'shadowDrop', type: 'free' },
+        { label: 'Shadow Drop 02', value: 'shadowDrop2', type: 'free' },
+        // { label: 'Text', value: 'textPopUp', type: 'free' },
+        // { label: 'Flip Scale (Up)', value: 'flipScaleUp', type: 'free' },
+
     ]
 }));
 
