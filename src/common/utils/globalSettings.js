@@ -71,7 +71,7 @@ const globalSettings = {
         link: 'https://themespell.com/ts-product/ts-team-member/',
         label: 'Get Pro',
       },
-      version: '1.0.0'
+      version: '1.0.0',
     }
   };
   
