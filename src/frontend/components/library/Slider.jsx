@@ -181,12 +181,18 @@ const Slider = ({
         }
     };
 
+    const goToSlide = (index) => {
+        setIsAnimating(true);
+        setTimeout(() => setIsAnimating(false), transitionDuration);
+        setCurrentSlide(index);
+    };
+
     const getTransitionStyles = () => {
         const baseStyles = {
             width: `${100 / currentSlidesToShow}%`,
             flexShrink: 0,
             transition: transitionRef.current ? `all ${transitionDuration}ms ease-in-out` : 'none',
-            padding: `0 ${gap/2}px`
+            padding: `0 ${gap / 2}px`
         };
 
         if (centerMode) {
@@ -226,6 +232,13 @@ const Slider = ({
         marginRight: centerMode ? `-${slideWidth / 2}%` : 0
     };
 
+    const totalSlides = slides.length / (infinite ? 4 : 1); // Adjust for infinite mode
+
+    // Normalize the active slide index for repeat mode
+    const normalizedCurrentSlide = repeat
+        ? currentSlide % totalOriginalSlides
+        : currentSlide;
+
     return (
         <div className={`relative w-full ${containerClassName}`}>
             <div className="overflow-hidden">
@@ -264,6 +277,19 @@ const Slider = ({
             >
                 →
             </button>
+
+            {/* Dot Navigation */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                {Array.from({ length: totalOriginalSlides }).map((_, index) => (
+                    <button
+                        key={`dot-${index}`}
+                        onClick={() => goToSlide(index)}
+                        className={`w-3 h-3 rounded-full transition-colors duration-300 ${
+                            index === normalizedCurrentSlide ? 'bg-blue-500' : 'bg-gray-300'
+                        }`}
+                    />
+                ))}
+            </div>
         </div>
     );
 };
