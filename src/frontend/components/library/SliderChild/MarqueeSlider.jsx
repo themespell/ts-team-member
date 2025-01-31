@@ -1,22 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const MarqueeSlider = ({
-                     children,
-                     speed = 5, // Reduced default speed
-                     direction = 'left',
-                     pauseOnHover = true,
-                     gap = 20,
-                     className = '',
-                     containerClassName = '',
-                     slideClassName = '',
-                 }) => {
+                           children,
+                           speed = 5, // Reduced default speed
+                           direction = 'left',
+                           pauseOnHover = true,
+                           gap = 0, // Set gap to 0 to avoid discontinuities
+                           className = '',
+                           containerClassName = '',
+                           slideClassName = '',
+                       }) => {
     const [isHovered, setIsHovered] = useState(false);
     const contentRef = useRef(null);
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
     const [duration, setDuration] = useState(0);
-
     const childrenArray = React.Children.toArray(children);
-    // Create more copies for smoother transition
+
+    // Duplicate content for smoother transition
     const items = [...childrenArray, ...childrenArray, ...childrenArray, ...childrenArray];
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const MarqueeSlider = ({
                 const { offsetWidth, offsetHeight } = contentRef.current;
                 setDimensions({
                     width: offsetWidth / 4, // Divide by 4 because we have 4 copies
-                    height: offsetHeight / 4
+                    height: offsetHeight / 4,
                 });
             }
         };
@@ -36,6 +36,7 @@ const MarqueeSlider = ({
         // Calculate duration based on content size and speed
         const isVertical = direction === 'up' || direction === 'down';
         const size = isVertical ? dimensions.height : dimensions.width;
+
         // Slower animation by multiplying by a larger factor
         const newDuration = size / speed * 100;
         setDuration(newDuration);
@@ -49,35 +50,11 @@ const MarqueeSlider = ({
 
         if (!size || size === 0) return {};
 
-        const getTransform = () => {
-            switch (direction) {
-                case 'up':
-                    return {
-                        transform: `translateY(-${size}px)`,
-                        animationDirection: 'normal'
-                    };
-                case 'down':
-                    return {
-                        transform: `translateY(${size}px)`,
-                        animationDirection: 'reverse'
-                    };
-                case 'right':
-                    return {
-                        transform: `translateX(${size}px)`,
-                        animationDirection: 'reverse'
-                    };
-                default: // left
-                    return {
-                        transform: `translateX(-${size}px)`,
-                        animationDirection: 'normal'
-                    };
-            }
-        };
-
         return {
             animation: `marquee ${duration}ms linear infinite`,
             animationPlayState: isHovered && pauseOnHover ? 'paused' : 'running',
-            ...getTransform()
+            willChange: 'transform', // Optimize rendering performance
+            backfaceVisibility: 'hidden', // Prevent rendering artifacts
         };
     };
 
@@ -85,23 +62,23 @@ const MarqueeSlider = ({
         overflow: 'hidden',
         position: 'relative',
         width: '100%',
-        height: '100%'
+        height: '100%',
     };
 
     const contentStyles = {
         display: 'flex',
         flexDirection: direction === 'up' || direction === 'down' ? 'column' : 'row',
-        gap: `${gap}px`,
+        gap: `${gap}px`, // Ensure gap is minimal or zero
         width: direction === 'up' || direction === 'down' ? '100%' : 'fit-content',
         height: direction === 'up' || direction === 'down' ? 'fit-content' : '100%',
-        ...getAnimationStyle()
+        ...getAnimationStyle(),
     };
 
     const slideStyles = {
         flex: '0 0 auto',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     };
 
     return (
@@ -114,10 +91,10 @@ const MarqueeSlider = ({
                     }
                     100% {
                         transform: ${
-                    direction === 'up' ? 'translateY(-25%)' :
-                        direction === 'down' ? 'translateY(25%)' :
-                            direction === 'right' ? 'translateX(25%)' :
-                                'translateX(-25%)'
+                    direction === 'up' ? 'translateY(-100%)' :
+                        direction === 'down' ? 'translateY(100%)' :
+                            direction === 'right' ? 'translateX(100%)' :
+                                'translateX(-100%)'
                 };
                     }
                 }
