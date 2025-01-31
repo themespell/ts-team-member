@@ -2,10 +2,6 @@ const register_controls = () => {
     return {
         controls: [
             {
-                type: 'divider',
-                label: 'Card Styles'
-            },
-            {
                 type: 'color',
                 label: 'Background Color',
                 name: 'tscard.backgroundColor',
@@ -24,6 +20,9 @@ const register_controls = () => {
                 type: 'color',
                 label: 'Image Border Color',
                 name: 'tscard.imageBorderColor',
+            },
+            {
+                type: 'divider',
             },
             {
                 type: 'slider',

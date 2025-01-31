@@ -10,6 +10,8 @@ import Details from "./details/details.jsx";
 import Slider from "./library/Slider.jsx";
 import VerticalSlider from "./library/SliderChild/VerticalSlider.jsx";
 import MarqueeSlider from "./library/SliderChild/MarqueeSlider.jsx";
+import CascadingTeamGrid from "./library/CascadingTeamGrid.jsx";
+import CurvedCarousel from "./library/CurvedCarousel.jsx";
 
 
 function CarouselView({ team_members, settings, viewport, isEditor }) {
@@ -95,20 +97,21 @@ function CarouselView({ team_members, settings, viewport, isEditor }) {
             {/*    centerMode={carouselStyles.centerMode}*/}
             {/*    autoplay={carouselStyles.autoplay}*/}
             {/*>*/}
-                <MarqueeSlider
-                    speed={5}
-                    direction="left"
-                    pauseOnHover={true}
-                    gap={40}
-                    // slidesToShow={1}
-                    // slidesToScroll={1}
-                    // repeat={true}
-                    // infinite={true}
-                    // autoplay={true}
-                    // transition="slide"
-                    // autoplaySpeed={3000}
-                    containerClassName="px-4"
-                    className="items-center"
+                <CurvedCarousel
+                    // columns={3} gap="20px"
+                    // speed={2}
+                    // direction="left"
+                    // pauseOnHover={true}
+                    // gap={40}
+                    slidesToShow={3}
+                    slidesToScroll={1}
+                    repeat={true}
+                    infinite={true}
+                    autoplay={true}
+                    transition="slide"
+                    autoplaySpeed={3000}
+                    // containerClassName="px-4"
+                    // className="items-center"
                     centerMode={false}
                     responsive={[
                         {
@@ -182,7 +185,7 @@ function CarouselView({ team_members, settings, viewport, isEditor }) {
                     <p>No team members found.</p>
                 )}
             {/*</Carousel>*/}
-            </MarqueeSlider>
+            </CurvedCarousel>
             </div>
             {/*Next Button*/}
             {/*{carouselStyles.arrows && (*/}
