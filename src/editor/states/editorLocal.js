@@ -33,11 +33,12 @@ const editorLocal = create((set) => ({
         ...pro_layouts,
     ],
     availableViews: [
-        { label: 'Static / Grid', value: 'grid', type: 'free' },
+        { label: 'Static', value: 'grid', type: 'free' },
         { label: 'Carousel', value: 'carousel', type: 'free' },
         ...pro_views
     ],
     availableDetails: [
+        { label: 'No Details', value: 'none', type: 'free' },
         { label: 'Popup', value: 'popup', type: 'free' },
         ...pro_details
     ],
