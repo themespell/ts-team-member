@@ -5,10 +5,10 @@ import editorLocal from "../../../states/editorLocal.js";
 
 function ContentTab() {
   const { selectedView, containerSettings, columnSettings, carouselSettings, showcaseDetails } = editorStore();
-  const { availableLayouts, availableViews, availableDetails } = editorLocal();
+  const { availableLayouts, availableViews, availableTransition, availableDetails } = editorLocal();
 
   return (
-    <div>
+    <div className="mb-16">
       <TsSelect
       label="Choose a Layout"
       name="selectedLayout"
@@ -32,6 +32,7 @@ function ContentTab() {
             label="Details Style"
             name="selectedDetails"
             options={availableDetails}
+            defaultValue="none"
             output="object"
      />
 
@@ -87,30 +88,43 @@ function ContentTab() {
               range={carouselSettings.slidesToScroll?.range}
               responsive={true}
           />
-          <TsSwitch
-              label="Draggable"
-              name="carouselSettings.draggable"
+          <TsSlider
+              label="Speed"
+              range={carouselSettings.slideSpeed.range}
+              name='carouselSettings.slideSpeed.default'
+              responsive={false}
+              unit={false}
+          />
+          <TsSlider
+              label="Gap"
+              range={carouselSettings.gap.range}
+              name='carouselSettings.gap.default'
+              responsive={false}
+              unit={false}
+          />
+          <TsSelect
+              label="Transition"
+              name="carouselSettings.transition"
+              options={availableTransition}
           />
           <TsSwitch
-              label="Centered Slide"
-              name="carouselSettings.centerSlide"
+              label="Infinite Mode"
+              name="carouselSettings.infinite"
+          />
+          <TsSwitch
+              label="Repeat Mode"
+              name="carouselSettings.repeat"
           />
           <TsSwitch
               label="Autoplay"
               name="carouselSettings.autoPlay"
           />
           <TsSwitch
-              label="Previous & Next Arrow"
-              name="carouselSettings.arrows"
+              label="Centered Slide"
+              name="carouselSettings.centerSlide"
           />
     </div>
       )}
-      {/* <TsSlider
-      label="Horizontal Gap"
-      />
-      <TsSlider
-      label="Vertical Gap"
-      /> */}
     </div>
   );
 }
