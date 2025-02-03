@@ -6,6 +6,7 @@ import { TsLoader } from '../common/components/controls/tsControls.js';
 import editorLocal from "./states/editorLocal.js";
 import editorStore from './states/editorStore.js';
 import editorFunction from './states/editorFunction.js';
+import {handleCopySettings, handlePasteSettings} from "./utils/copyPasteLayout.js";
 import proLayouts from "../pro_support/proLayouts.js";
 
 import Topbar from './components/Topbar.jsx';
@@ -84,6 +85,8 @@ function Editor() {
       type={postType}
       viewport={viewport}
       setViewport={setViewport}
+      onCopySettings={() => handleCopySettings(allSettings)}
+      onPasteSettings={() => handlePasteSettings(saveSettings)}
       />
       <div className="layout-container">
         <Sidebar

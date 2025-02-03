@@ -29,3 +29,17 @@
 	overflow: hidden;
 	transform-origin: bottom;
 }
+
+.tsteam__frontend-button {
+	background: linear-gradient(90deg, #7547D7 18.75%, #A146DB 92.5%);
+	color: #FFFFFF;
+	font-weight: 700;
+	border: none;
+	padding: 0.8rem;
+	border-radius: 10px;
+}
+
+.tsteam__frontend-button:hover {
+	background-color: #703FD6;
+	color: #FFFFFF;
+}
