@@ -1,4 +1,4 @@
-import { TsSlider, TsColor } from '../../../../common/components/controls/tsControls';
+import {TsSlider, TsColor, TsDivider, TsSelect, TsSwitch} from '../../../../common/components/controls/tsControls';
 import * as TsLayouts from '../../../../frontend/components/layouts/layouts.js';
 import proLayouts from "../../../../pro_support/proLayouts.js";
 import editorStore from '../../../states/editorStore';
@@ -41,41 +41,34 @@ function StyleTab({ selectedLayout, layoutType }) {
     }
 
     return (
-        <>
-            <TsSlider
-                label="Container Width"
-                range={containerSettings.width.range}
-                name='containerSettings.width.default'
-                responsive={true}
-                unit={true}
-            />
-            {selectedView.value === 'grid' && (
-            <div>
-                <TsSlider
-                    label="Columns"
-                    range={columnSettings.column.range}
-                    name='columnSettings.column.default'
-                    responsive={true}
-                />
-            </div>
+        <div className="mb-16">
+            {selectedView.value === 'carousel' && (
+                <div>
+                    <TsDivider
+                        label="Carousel Styles"
+                    />
+
+                    <TsColor
+                        label="Dots Active Color"
+                        name="carouselSettings.dotsColor"
+                    />
+
+                    <TsColor
+                        label="Navigation Background Color"
+                        name="carouselSettings.navBgColor"
+                    />
+
+                    <TsColor
+                        label="Navigation Icon Color"
+                        name="carouselSettings.navColor"
+                    />
+
+                    <TsDivider/>
+                </div>
             )}
-
-            <TsSlider
-                label="Column Gap"
-                range={columnSettings.gap.range}
-                name='columnSettings.gap.default'
-                responsive={true}
-                unit={true}
-            />
-
-            <TsColor
-                label="Container Background Color"
-                name='containerSettings.backgroundColor'
-            />
-
             {/* Dynamically render the controls */}
             {controls.map((control, index) => renderControl(control, index))}
-        </>
+        </div>
     );
 }
 

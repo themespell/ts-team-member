@@ -31,6 +31,10 @@ export const animations = {
         type: 'single',
         class: 'flip-scale-up-hor'
     },
+    gradient: {
+        type: 'single',
+        class: 'tsteam__gradient-hover'
+    },
 
     // Wrapper-based animations (need parent + wrapper)
     float3d: {
