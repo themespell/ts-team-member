@@ -1,4 +1,4 @@
-import {TsSlider, TsColor, TsDivider} from '../../../../common/components/controls/tsControls';
+import {TsSlider, TsColor, TsDivider, TsSelect, TsSwitch} from '../../../../common/components/controls/tsControls';
 import * as TsLayouts from '../../../../frontend/components/layouts/layouts.js';
 import proLayouts from "../../../../pro_support/proLayouts.js";
 import editorStore from '../../../states/editorStore';
@@ -41,10 +41,34 @@ function StyleTab({ selectedLayout, layoutType }) {
     }
 
     return (
-        <>
+        <div className="mb-16">
+            {selectedView.value === 'carousel' && (
+                <div>
+                    <TsDivider
+                        label="Carousel Styles"
+                    />
+
+                    <TsColor
+                        label="Dots Active Color"
+                        name="carouselSettings.dotsColor"
+                    />
+
+                    <TsColor
+                        label="Navigation Background Color"
+                        name="carouselSettings.navBgColor"
+                    />
+
+                    <TsColor
+                        label="Navigation Icon Color"
+                        name="carouselSettings.navColor"
+                    />
+
+                    <TsDivider/>
+                </div>
+            )}
             {/* Dynamically render the controls */}
             {controls.map((control, index) => renderControl(control, index))}
-        </>
+        </div>
     );
 }
 
