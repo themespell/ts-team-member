@@ -3,10 +3,11 @@ import globalSettings from '../../utils/globalSettings';
 
 function TsDivider({ label }) {
   return (
-    <div className="mt-8 mb-4">
+    <div className="mb-4">
         <Divider
         style={{
-            borderColor: globalSettings.theme.borderColor
+            borderColor: globalSettings.theme.borderColor,
+            margin: '0px'
         }}
         >{label}</Divider>
     </div>
