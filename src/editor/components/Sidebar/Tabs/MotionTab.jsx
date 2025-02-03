@@ -11,7 +11,7 @@ function MotionTab() {
     return (
         <div>
             <TsSelect
-                label="Hover Animation"
+                label="Layout Hover Animation"
                 name="hoverAnimation"
                 options={availableHoverAnimation}
             />

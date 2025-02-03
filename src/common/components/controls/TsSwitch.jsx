@@ -19,7 +19,7 @@ function TsSwitch({ label, name, onChange }) {
   const isSwitchOn = storedValue === true || storedValue === 'true';
 
   return (
-    <div className="mb-4">
+    <div className="flex justify-between items-center mb-4">
       {label && (
         <label 
           className="block text-sm font-medium text-gray-700 mb-2"

@@ -36,7 +36,7 @@ const getSocialIcon = (channel) => {
     return icons[channel.toLowerCase()] || null;
 };
 
-const SocialIcons = ({ socialIcons }) => {
+const SocialIcons = ({ socialIcons,settings }) => {
     let data = socialIcons;
 
     if (typeof socialIcons === 'string') {
@@ -59,6 +59,11 @@ const SocialIcons = ({ socialIcons }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-white hover:text-white text-sm bg-purple-500 hover:bg-purple-600 rounded-full p-2 transition-colors"
+                    style={{
+                        backgroundColor: settings?.tscard?.color?.socialIconBg,
+                        color: settings?.tscard?.color?.socialIcon,
+                        borderRadius: settings?.tscard?.borderRadius?.socialIcon
+                    }}
                 >
                     {getSocialIcon(item.socialChannel)}
                 </a>

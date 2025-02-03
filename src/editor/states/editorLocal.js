@@ -33,11 +33,18 @@ const editorLocal = create((set) => ({
         ...pro_layouts,
     ],
     availableViews: [
-        { label: 'Static / Grid', value: 'grid', type: 'free' },
+        { label: 'Static', value: 'grid', type: 'free' },
         { label: 'Carousel', value: 'carousel', type: 'free' },
         ...pro_views
     ],
+    availableTransition: [
+        { label: 'Slide', value: 'slide', type: 'free' },
+        { label: 'Fade', value: 'fade', type: 'free' },
+        { label: 'Zoom', value: 'zoom', type: 'free' },
+        { label: 'Flip', value: 'flip', type: 'free' },
+    ],
     availableDetails: [
+        { label: 'No Details', value: 'none', type: 'free' },
         { label: 'Popup', value: 'popup', type: 'free' },
         ...pro_details
     ],

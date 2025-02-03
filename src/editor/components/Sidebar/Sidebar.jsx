@@ -4,7 +4,7 @@ import ContentTab from "./Tabs/ContentTab";
 import StyleTab from './Tabs/StyleTab';
 import TypographyTab from "./Tabs/TypographyTab.jsx";
 import MotionTab from "./Tabs/MotionTab.jsx";
-import AdvanceTab from "./Tabs/AdvanceTab";
+import GlobalTab from "./Tabs/GlobalTab.jsx";
 
 function Sidebar({ isOpen, selectedLayout, layoutType, onToggleSidebar }) {
     const [activeTab, setActiveTab] = useState("1"); // State to manage active tab
@@ -61,7 +61,7 @@ function Sidebar({ isOpen, selectedLayout, layoutType, onToggleSidebar }) {
                         <button className={`sidebar-button ${activeTab === "5" ? "active" : ""}`}>
                             <Settings size={22}/>
                         </button>
-                        <p className="text-xs mt-1">Advance</p>
+                        <p className="text-xs mt-1">Global</p>
                     </div>
 
                 </div>
@@ -77,7 +77,7 @@ function Sidebar({ isOpen, selectedLayout, layoutType, onToggleSidebar }) {
                     )}
                     {activeTab === "3" && <TypographyTab />}
                     {activeTab === "4" && <MotionTab />}
-                    {activeTab === "5" && <AdvanceTab />}
+                    {activeTab === "5" && <GlobalTab />}
                 </div>
             </div>
         </div>

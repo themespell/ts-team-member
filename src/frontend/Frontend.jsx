@@ -2,6 +2,7 @@ import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './assets/hover.css';
 import './assets/style.css';
+import './assets/entrance.css';
 import StaticView from './components/StaticView.jsx';
 import CarouselView from './components/CarouselView.jsx';
 import MarqueeView from './components/MarqueeView.jsx';

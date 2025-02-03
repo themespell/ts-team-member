@@ -40,18 +40,24 @@ export const getCarouselStyles = (settings, viewport, isEditor) => {
         }
     }
 
-    const draggable = carouselSettings?.draggable === 'true';
-    const centerMode = carouselSettings?.centerSlide === 'true';
-    const autoplay = carouselSettings?.autoPlay === 'true';
-    const arrows = carouselSettings?.arrows === 'true';
+    const slideSpeed = carouselSettings?.slideSpeed?.default;
+    const gap = carouselSettings?.gap?.default;
+    const transition = carouselSettings?.transition;
+    const infinite = carouselSettings?.infinite === true;
+    const repeat = carouselSettings?.repeat === true;
+    const centerMode = carouselSettings?.centerSlide === true;
+    const autoplay = carouselSettings?.autoPlay === true;
 
     return {
         slidesToShow,
         slidesToScroll,
         columnGap,
-        draggable,
+        slideSpeed,
+        gap,
+        transition,
+        infinite,
+        repeat,
         centerMode,
         autoplay,
-        arrows
     };
 };

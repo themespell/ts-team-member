@@ -23,25 +23,28 @@ const Card = ({ settings, id, imageUrl, title, subtitle, description, socialIcon
                 src={imageUrl}
                 alt={title}
                 style={{
-                    border: '1px solid',
-                    borderRadius: settings?.tscard?.imageBorderRadius,
-                    borderColor: settings?.tscard?.imageBorderColor,
+                    borderStyle: 'solid',
+                    borderWidth: settings?.tscard?.borderWidth?.image ?? '1px',
+                    borderRadius: settings?.tscard?.borderRadius?.image,
+                    borderColor: settings?.tscard?.color?.imageBorder,
                 }}
                 className={`tsteam-member__image w-32 h-32 rounded-xl -mb-12 z-10 relative shadow-2xl ${details ? 'cursor-pointer' : ''}`}
             />
 
-            <div className="w-full max-w-sm bg-white rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] overflow-hidden">
-                <div
-                    className="px-5 pt-16 pb-5 text-center flex flex-col items-center"
-                    style={{
-                        backgroundColor: settings?.tscard?.backgroundColor,
-                    }}
-                >
+            <div className="w-full max-w-sm bg-white rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] overflow-hidden"
+                 style={{
+                     backgroundColor: settings?.tscard?.color?.background,
+                     borderStyle: 'solid',
+                     borderWidth: settings?.tscard?.borderWidth?.card ?? '0px',
+                     borderRadius: settings?.tscard?.borderRadius?.card,
+                     borderColor: settings?.tscard?.color?.border,
+                 }}>
+                <div className="px-5 pt-16 pb-5 text-center flex flex-col items-center">
                     {title && (
                         <h3
                             className="text-[16px] font-semibold mb-0.5"
                             style={{
-                                color: settings?.tscard?.textColor,
+                                color: settings?.tscard?.color?.memberName,
                                 fontFamily: settings?.typography?.name || 'inherit',
                                 fontSize: settings?.typography?.name_fontSize || '16px',
                                 fontWeight: settings?.typography?.name_fontWeight || '600',
@@ -57,6 +60,7 @@ const Card = ({ settings, id, imageUrl, title, subtitle, description, socialIcon
                     {subtitle && (
                         <h4 className="text-purple-600 text-sm font-medium mb-3"
                             style={{
+                                color: settings?.tscard?.color?.designation,
                                 fontFamily: settings?.typography?.designation || 'inherit',
                                 fontSize: settings?.typography?.designation_fontSize,
                                 fontWeight: settings?.typography?.designation_fontWeight,
@@ -69,11 +73,16 @@ const Card = ({ settings, id, imageUrl, title, subtitle, description, socialIcon
                         </h4>
                     )}
 
-                    <hr className="h-1 w-16 bg-red-500 mt-2 mb-4 rounded-2xl"></hr>
+                    <hr
+                        style={{
+                            backgroundColor: settings?.tscard?.color?.separator,
+                        }}
+                        className="h-1 w-16 bg-red-500 mt-2 mb-4 rounded-2xl"></hr>
 
                     {description && (
                         <div
                             style={{
+                                color: settings?.tscard?.color?.description,
                                 fontFamily: settings?.typography?.description || 'inherit',
                                 fontSize: settings?.typography?.description_fontSize,
                                 fontWeight: settings?.typography?.description_fontWeight,
@@ -93,7 +102,7 @@ const Card = ({ settings, id, imageUrl, title, subtitle, description, socialIcon
                         </div>
                     )}
 
-                    <SocialIcons socialIcons={socialIcons} />
+                    <SocialIcons socialIcons={socialIcons} settings={settings} />
                 </div>
             </div>
         </div>
