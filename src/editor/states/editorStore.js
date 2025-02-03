@@ -81,8 +81,24 @@ const editorStore = create((set) => ({
                 mobile:  1,
             }
         },
-        draggable: true,
-        centerSlide: true,
+        slideSpeed:{
+            range: {
+                min: 100,
+                max: 5000,
+            },
+            default: 3000
+        },
+        gap:{
+            range: {
+                min: 0,
+                max: 100,
+            },
+            default: 20
+        },
+        transition: 'slide',
+        infinite: true,
+        repeat: true,
+        centerSlide: false,
         autoPlay: true
     },
 

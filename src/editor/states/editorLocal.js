@@ -37,6 +37,12 @@ const editorLocal = create((set) => ({
         { label: 'Carousel', value: 'carousel', type: 'free' },
         ...pro_views
     ],
+    availableTransition: [
+        { label: 'Slide', value: 'slide', type: 'free' },
+        { label: 'Fade', value: 'fade', type: 'free' },
+        { label: 'Zoom', value: 'zoom', type: 'free' },
+        { label: 'Flip', value: 'flip', type: 'free' },
+    ],
     availableDetails: [
         { label: 'No Details', value: 'none', type: 'free' },
         { label: 'Popup', value: 'popup', type: 'free' },
