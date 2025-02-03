@@ -3,7 +3,7 @@ import DetailsDrawer from "./Components/DetailsDrawer.jsx";
 import DetailsFullScreen from "./Components/DetailsFullScreen.jsx";
 
 function Details({ settings, member }) {
-    if (!!settings.showcaseDetails?.enable !== true) {
+    if (settings.selectedDetails?.value === 'none') {
         return null;
     }
 
