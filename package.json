@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node build.js",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "watch": "vite build --watch"
+    "watch": "node build-watch.js"
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.30.5",
