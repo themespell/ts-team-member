@@ -60,17 +60,17 @@ function Frontend({ id }) {
 
   return (
       <>
-        {settings.selectedView?.value === "carousel" ? (
+        {settings?.selectedView?.value === "carousel" ? (
             <CarouselView
                 team_members={teamMembers}
                 settings={settings}
             />
-        ) : settings.selectedView?.value === "marquee" && isPro ? (
+        ) : settings?.selectedView?.value === "marquee" && isPro ? (
             <MarqueeView
                 team_members={teamMembers}
                 settings={settings}
             />
-        ) : settings.selectedView?.value === "confetti" && isPro ? (
+        ) : settings?.selectedView?.value === "confetti" && isPro ? (
             <ConfettiView
                 team_members={teamMembers}
                 settings={settings}
