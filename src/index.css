@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'Ubuntu';
-    src: url('../library/fonts/ubuntu.woff2') format('woff2'),
-         url('../library/fonts/ubuntu.woff') format('woff');
+    src: url('../../library/fonts/ubuntu.woff2') format('woff2'),
+         url('../../library/fonts/ubuntu.woff') format('woff');
     font-weight: 600;
     font-style: normal;
 }
