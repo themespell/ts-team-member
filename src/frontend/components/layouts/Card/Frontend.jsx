@@ -1,7 +1,7 @@
 import React from 'react';
 import SocialIcons from './SocialIcons.jsx';
-import { loadGoogleFont } from '../../helper/loadGoogleFont.js';
-import { getAnimationClasses } from "../../helper/motionControl.js";
+import {loadGoogleFont} from "../../helper/loadGoogleFont.js";
+import {getAnimationClasses} from "../../helper/motionControl.js";
 
 const Card = ({ settings, id, imageUrl, title, subtitle, description, socialIcons, details }) => {
     if (settings?.typography?.name) {

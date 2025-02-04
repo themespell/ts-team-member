@@ -1,4 +1,4 @@
-// carouselStyles.js
+import {stringToBoolean} from "../../../editor/utils/stringToBoolean.js";
 export const getCarouselStyles = (settings, viewport, isEditor) => {
     const { carouselSettings } = settings || {};
 
@@ -43,10 +43,10 @@ export const getCarouselStyles = (settings, viewport, isEditor) => {
     const slideSpeed = carouselSettings?.slideSpeed?.default;
     const gap = carouselSettings?.gap?.default;
     const transition = carouselSettings?.transition;
-    const infinite = carouselSettings?.infinite === true;
-    const repeat = carouselSettings?.repeat === true;
-    const centerMode = carouselSettings?.centerSlide === true;
-    const autoplay = carouselSettings?.autoPlay === true;
+    const infinite = stringToBoolean(carouselSettings?.infinite);
+    const repeat = stringToBoolean(carouselSettings?.repeat);
+    const centerMode = stringToBoolean(carouselSettings?.centerSlide);
+    const autoplay = stringToBoolean(carouselSettings?.autoPlay);
 
     return {
         slidesToShow,

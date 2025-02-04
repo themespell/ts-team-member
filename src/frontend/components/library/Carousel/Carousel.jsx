@@ -1,46 +1,46 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 const Carousel = ({
-                    children,
-                    slidesToShow = 1,
-                    slidesToScroll = 1,
-                    autoplay = false,
-                    autoplaySpeed = 3000,
-                    repeat = false,
-                    infinite = false,
-                    transition = 'slide',
-                    transitionDuration = 300,
-                    centerMode = false,
-                    gap = 20,
-                    dotstyle,
-                    responsive = [
-                        {
-                            breakpoint: 1024,
-                            settings: {
-                                slidesToShow: 3,
-                                slidesToScroll: 1
-                            }
-                        },
-                        {
-                            breakpoint: 768,
-                            settings: {
-                                slidesToShow: 2,
-                                slidesToScroll: 1
-                            }
-                        },
-                        {
-                            breakpoint: 480,
-                            settings: {
-                                slidesToShow: 1,
-                                slidesToScroll: 1
-                            }
-                        }
-                    ],
-                    className = '',
-                    containerClassName = '',
-                    slideClassName = '',
-                    arrowClassName = ''
-                }) => {
+                      children,
+                      slidesToShow = 1,
+                      slidesToScroll = 1,
+                      autoplay = false,
+                      autoplaySpeed = 3000,
+                      repeat = true,
+                      infinite = false,
+                      transition = 'slide',
+                      transitionDuration = 300,
+                      centerMode = false,
+                      gap = 20,
+                      dotstyle,
+                      responsive = [
+                          {
+                              breakpoint: 1024,
+                              settings: {
+                                  slidesToShow: 3,
+                                  slidesToScroll: 1
+                              }
+                          },
+                          {
+                              breakpoint: 768,
+                              settings: {
+                                  slidesToShow: 2,
+                                  slidesToScroll: 1
+                              }
+                          },
+                          {
+                              breakpoint: 480,
+                              settings: {
+                                  slidesToShow: 1,
+                                  slidesToScroll: 1
+                              }
+                          }
+                      ],
+                      className = '',
+                      containerClassName = '',
+                      slideClassName = '',
+                      arrowClassName = ''
+                  }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
     const [isAnimating, setIsAnimating] = useState(false);
@@ -147,7 +147,7 @@ const Carousel = ({
         setTimeout(() => setIsAnimating(false), transitionDuration);
 
         if (infinite) {
-            setCurrentSlide(current => current + currentSlidesToScroll);
+            setCurrentSlide(current => current + Number(currentSlidesToScroll));
         } else {
             setCurrentSlide(current => {
                 const next = current + currentSlidesToScroll;

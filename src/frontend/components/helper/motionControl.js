@@ -49,7 +49,6 @@ export const animations = {
     }
 };
 
-// Helper function to get animation classes
 export const getAnimationClasses = (animationType) => {
     const config = animations[animationType];
     if (!config) return null;

@@ -47,8 +47,8 @@ function CarouselView({ team_members, settings, viewport, isEditor }) {
                 <Carousel
                     slidesToShow={carouselStyles.slidesToShow}
                     slidesToScroll={carouselStyles.slidesToScroll}
-                    repeat={carouselStyles.repeat}
                     infinite={carouselStyles.infinite}
+                    repeat={carouselStyles.repeat}
                     autoplay={carouselStyles.autoplay}
                     centerMode={carouselStyles.centerMode}
                     transition={carouselStyles.transition}
