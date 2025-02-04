@@ -45,7 +45,7 @@ function DataTable({ type, title, editor }) {
             switch (key) {
               case 'image':
               case 'profileImage':
-                  return <Image src={text} alt={key} style={{ width: '100px', height: '80px', borderRadius: '100%', objectFit: 'cover' }} />;
+                  return <Image src={text} alt={key} style={{ width: '80px', height: '80px', borderRadius: '100%', objectFit: 'cover' }} />;
               case 'shortcode':
                 return <Text copyable>{text}</Text>;
               case 'snippet':

@@ -28,7 +28,7 @@ const Card = ({ settings, id, imageUrl, title, subtitle, description, socialIcon
                     borderRadius: settings?.tscard?.borderRadius?.image,
                     borderColor: settings?.tscard?.color?.imageBorder,
                 }}
-                className={`tsteam-member__image w-32 h-32 rounded-xl -mb-12 z-10 relative shadow-2xl ${details ? 'cursor-pointer' : ''}`}
+                className={`tsteam-member__image w-32 h-32 rounded-xl -mb-12 z-10 relative shadow-2xl object-cover ${details ? 'cursor-pointer' : ''}`}
             />
 
             <div className="w-full max-w-sm bg-white rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] overflow-hidden"
