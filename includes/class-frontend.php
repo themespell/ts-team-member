@@ -24,8 +24,8 @@ class Frontend {
 			$dependency[] = 'tsteampro-admin-script';
 		}
 
-			wp_enqueue_style( 'tsteam-member-main', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend.css' );
-			wp_enqueue_script( 'tsteam-member-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend.js', $dependency, '2.0.7', true );
+			wp_enqueue_style( 'tsteam-member-main', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend/frontend.css' );
+			wp_enqueue_script( 'tsteam-member-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend/frontend.js', $dependency, '2.0.7', true );
 			wp_localize_script(
 				'tsteam-member-script',
 				'tsteam_settings',
