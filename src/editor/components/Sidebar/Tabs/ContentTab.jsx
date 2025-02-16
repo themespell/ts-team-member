@@ -5,23 +5,33 @@ import editorLocal from "../../../states/editorLocal.js";
 
 function ContentTab() {
   const { selectedView, containerSettings, columnSettings, carouselSettings, showcaseDetails } = editorStore();
-  const { availableLayouts, availableViews, availableTransition, availableDetails } = editorLocal();
+  const { availableLayouts, availableFlexLayouts, availableViews, availableTransition, availableDetails } = editorLocal();
 
   return (
     <div className="mb-16">
-      <TsSelect
-      label="Choose a Layout"
-      name="selectedLayout"
-      options={availableLayouts}
-      output="object"
-      />
+        <TsSelect
+            label="View Style"
+            name="selectedView"
+            options={availableViews}
+            output="object"
+        />
+        {(selectedView.value === 'grid' || selectedView.value === 'carousel' || selectedView.value === 'marquee') && (
+            <TsSelect
+                label="Layout"
+                name="selectedLayout"
+                options={availableLayouts}
+                output="object"
+            />
+        )}
 
-      <TsSelect
-      label="View Style"
-      name="selectedView"
-      options={availableViews}
-      output="object"
-      />
+        {selectedView.value === 'flex' && (
+            <TsSelect
+                label="Choose a Layout"
+                name="selectedLayout"
+                options={availableFlexLayouts}
+                output="object"
+            />
+        )}
 
       {/*<TsSwitch*/}
       {/*  label="Show Details"*/}
@@ -39,7 +49,7 @@ function ContentTab() {
       {selectedView.value === 'grid' && (
            <div>
                <TsDivider
-                   label="Static Settings"
+                   label="Grid Settings"
                />
                <TsSlider
                    label="Container Width"
@@ -62,6 +72,28 @@ function ContentTab() {
                    unit={true}
                />
            </div>
+      )}
+
+        {selectedView.value === 'flex' && (
+            <div>
+                <TsDivider
+                    label="Flex Settings"
+                />
+                <TsSlider
+                    label="Container Width"
+                    range={containerSettings.width.range}
+                    name='containerSettings.width.default'
+                    responsive={true}
+                    unit={true}
+                />
+                <TsSlider
+                    label="Column Gap"
+                    range={columnSettings.gap.range}
+                    name='columnSettings.gap.default'
+                    responsive={true}
+                    unit={true}
+                />
+            </div>
       )}
 
       {selectedView.value === 'carousel' && (
