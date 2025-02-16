@@ -54,31 +54,18 @@ function CarouselView({ team_members, settings, viewport, isEditor }) {
                     transition={carouselStyles.transition}
                     autoplaySpeed={carouselStyles.slideSpeed}
                     gap={carouselStyles.gap}
+                    dotStyle={{
+                        color: carouselStyles.dotsColor,
+                        inactiveColor: '#9CA3AF',
+                        size: '14px',
+                        gap: '12px',
+                    }}
+                    navigationStyle={{
+                        backgroundColor: carouselStyles.navBgColor,
+                        color: carouselStyles.navColor,
+                    }}
                     // containerClassName="px-4"
                     // className="items-center"
-                    responsive={[
-                        {
-                            breakpoint: 1024,
-                            settings: {
-                                slidesToShow: 3,
-                                slidesToScroll: 1
-                            }
-                        },
-                        {
-                            breakpoint: 768,
-                            settings: {
-                                slidesToShow: 2,
-                                slidesToScroll: 1
-                            }
-                        },
-                        {
-                            breakpoint: 480,
-                            settings: {
-                                slidesToShow: 1,
-                                slidesToScroll: 1
-                            }
-                        }
-                    ]}
                 >
                 {team_members && team_members.length > 0 ? (
                     team_members.map((member, index) => (

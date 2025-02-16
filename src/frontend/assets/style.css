@@ -6,6 +6,14 @@
 	@apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-full;
 }
 
+.tsteam-flex-container {
+	@apply flex flex-wrap gap-6 w-full justify-center;
+}
+
+.tsteam-table-container {
+	@apply flex flex-wrap w-full justify-center;
+}
+
 .editor-container{
 	@apply flex justify-center items-center h-screen;
 }

@@ -4,14 +4,19 @@ const editorStore = create((set) => ({
     // Post Data
     postID: null,
     postType: null,
-
+    common: {
+        range: {
+            min: 0,
+            max: 2500,
+        },
+    },
     selectedLayout: {
         label: 'Card',
         value: 'Card',
         type: 'free'
     },
     selectedView: {
-        label: 'Static / Grid',
+        label: 'Grid',
         value: 'grid',
         type: 'free'
     },

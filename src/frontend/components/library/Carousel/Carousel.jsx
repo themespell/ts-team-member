@@ -12,30 +12,18 @@ const Carousel = ({
                       transitionDuration = 300,
                       centerMode = false,
                       gap = 20,
-                      dotstyle,
-                      responsive = [
-                          {
-                              breakpoint: 1024,
-                              settings: {
-                                  slidesToShow: 3,
-                                  slidesToScroll: 1
-                              }
-                          },
-                          {
-                              breakpoint: 768,
-                              settings: {
-                                  slidesToShow: 2,
-                                  slidesToScroll: 1
-                              }
-                          },
-                          {
-                              breakpoint: 480,
-                              settings: {
-                                  slidesToShow: 1,
-                                  slidesToScroll: 1
-                              }
-                          }
-                      ],
+                      dotStyle = {
+                          color: '#703fd6',
+                          inactiveColor: '#D1D5DB',
+                          size: '12px',
+                          gap: '8px',
+                      },
+                      navigationStyle = {
+                          backgroundColor: '#ffffff',
+                          color: '#703fd6',
+                          size: '15px',
+                      },
+                      responsive = [],
                       className = '',
                       containerClassName = '',
                       slideClassName = '',
@@ -269,25 +257,45 @@ const Carousel = ({
             <button
                 onClick={prevSlide}
                 className={`absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white rounded-full shadow-lg z-10 ${arrowClassName}`}
+                style={{
+                    backgroundColor: navigationStyle.backgroundColor,
+                    color: navigationStyle.color,
+                    fontSize: navigationStyle.size
+            }}
             >
                 ←
             </button>
             <button
                 onClick={nextSlide}
                 className={`absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white rounded-full shadow-lg z-10 ${arrowClassName}`}
+                style={{
+                    backgroundColor: navigationStyle.backgroundColor,
+                    color: navigationStyle.color,
+                    fontSize: navigationStyle.size
+                }}
             >
                 →
             </button>
 
             {/* Dot Navigation */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+            <div
+                className="absolute bottom-4 left-1/2 -translate-x-1/2 flex"
+                style={{gap: dotStyle.gap}}
+            >
                 {Array.from({ length: totalOriginalSlides }).map((_, index) => (
                     <button
                         key={`dot-${index}`}
                         onClick={() => goToSlide(index)}
-                        className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                            index === normalizedCurrentSlide ? 'bg-blue-500' : 'bg-gray-300'
-                        }`}
+                        style={{
+                            width: dotStyle.size,
+                            height: dotStyle.size,
+                            borderRadius: '50%',
+                            backgroundColor:
+                                index === normalizedCurrentSlide
+                                    ? dotStyle.color
+                                    : dotStyle.inactiveColor,
+                            transition: 'background-color 300ms',
+                        }}
                     />
                 ))}
             </div>

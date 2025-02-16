@@ -1,4 +1,5 @@
 import {stringToBoolean} from "../../../editor/utils/stringToBoolean.js";
+import {TsColor} from "../../../common/components/controls/tsControls.js";
 export const getCarouselStyles = (settings, viewport, isEditor) => {
     const { carouselSettings } = settings || {};
 
@@ -47,6 +48,9 @@ export const getCarouselStyles = (settings, viewport, isEditor) => {
     const repeat = stringToBoolean(carouselSettings?.repeat);
     const centerMode = stringToBoolean(carouselSettings?.centerSlide);
     const autoplay = stringToBoolean(carouselSettings?.autoPlay);
+    const dotsColor = carouselSettings.dotsColor || '#703fd6';
+    const navBgColor = carouselSettings.navBgColor;
+    const navColor = carouselSettings.navColor;
 
     return {
         slidesToShow,
@@ -59,5 +63,8 @@ export const getCarouselStyles = (settings, viewport, isEditor) => {
         repeat,
         centerMode,
         autoplay,
+        dotsColor,
+        navBgColor,
+        navColor
     };
 };

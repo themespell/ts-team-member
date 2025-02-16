@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Marquee from "react-fast-marquee";
+import MarqueeCarousel from "./library/Carousel/MarqueeCarousel.jsx";
 import Layout from './layouts/Layout';
 import { getCommonStyles } from "./helper/commonStyle.js";
 import { getResponsiveStyles } from "./helper/responsiveStyles.js";
