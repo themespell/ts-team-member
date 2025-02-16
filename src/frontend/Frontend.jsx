@@ -4,8 +4,10 @@ import './assets/hover.css';
 import './assets/style.css';
 import './assets/entrance.css';
 import StaticView from './components/StaticView.jsx';
+import FlexView from "./components/FlexView.jsx";
 import CarouselView from './components/CarouselView.jsx';
 import MarqueeView from './components/MarqueeView.jsx';
+import TableView from "./components/TableView.jsx";
 import ConfettiView from "./components/ConfettiView.jsx";
 import { fetchData } from '../common/services/fetchData.js';
 import {toastNotification} from "../common/utils/toastNotification.js";
@@ -60,7 +62,12 @@ function Frontend({ id }) {
 
   return (
       <>
-        {settings?.selectedView?.value === "carousel" ? (
+      {settings?.selectedView?.value === "flex" ? (
+              <FlexView
+                  team_members={teamMembers}
+                  settings={settings}
+              />
+      ) : settings?.selectedView?.value === "carousel" ? (
             <CarouselView
                 team_members={teamMembers}
                 settings={settings}
@@ -70,7 +77,12 @@ function Frontend({ id }) {
                 team_members={teamMembers}
                 settings={settings}
             />
-        ) : settings?.selectedView?.value === "confetti" && isPro ? (
+        ) : settings?.selectedView?.value === "table" && isPro ? (
+              <TableView
+                  team_members={teamMembers}
+                  settings={settings}
+              />
+          ) : settings?.selectedView?.value === "confetti" && isPro ? (
             <ConfettiView
                 team_members={teamMembers}
                 settings={settings}
