@@ -90,6 +90,14 @@
 	align-items: center;
 }
 
+.tsteam-flex-container {
+	@apply flex flex-wrap gap-6 w-full justify-center;
+}
+
+.tsteam-table-container {
+	@apply flex flex-wrap w-full justify-center;
+}
+
 .viewport-desktop {
 	@apply flex justify-center items-center;
 	width: 100% !important;
