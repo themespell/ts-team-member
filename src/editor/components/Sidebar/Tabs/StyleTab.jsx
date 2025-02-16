@@ -5,7 +5,7 @@ import editorStore from '../../../states/editorStore';
 import renderControls from '../../../../common/components/controls/tsRenderControls.jsx';
 
 function StyleTab({ selectedLayout, layoutType }) {
-    const { containerSettings, columnSettings, selectedView } = editorStore();
+    const { common, containerSettings, columnSettings, selectedView } = editorStore();
 
     // Dynamically render controls
     const renderControl = (control, index) => {
@@ -66,6 +66,73 @@ function StyleTab({ selectedLayout, layoutType }) {
                     <TsDivider/>
                 </div>
             )}
+
+            {/*Common Controls For Each Layout*/}
+            <TsDivider
+                label="Common Styles"
+            />
+
+            <TsColor
+                label="Background Color"
+                name="layout.color.background"
+            />
+
+            <TsColor
+                label="Member Name Color"
+                name="layout.color.memberName"
+            />
+
+            <TsColor
+                label="Member Designation Color"
+                name="layout.color.designation"
+            />
+
+            <TsColor
+                label="Member Description Color"
+                name="layout.color.description"
+            />
+
+            <TsColor
+                label="Border Color"
+                name="layout.color.border"
+            />
+
+            <TsColor
+                label="Image Border Color"
+                name="layout.color.imageBorder"
+            />
+
+            <TsDivider />
+
+            <TsSlider
+                label="Border Width"
+                name="layout.borderWidth"
+                range={common.range}
+                unit={true}
+            />
+
+            <TsSlider
+                label="Border Radius"
+                name="layout.borderRadius"
+                range={common.range}
+                unit={true}
+            />
+
+            <TsSlider
+                label="Image Border Width"
+                name="layout.borderWidth.image"
+                range={common.range}
+                unit={true}
+            />
+
+            <TsSlider
+                label="Image Border Radius"
+                name="layout.borderRadius.image"
+                range={common.range}
+                unit={true}
+            />
+
+
             {/* Dynamically render the controls */}
             {controls.map((control, index) => renderControl(control, index))}
         </div>
