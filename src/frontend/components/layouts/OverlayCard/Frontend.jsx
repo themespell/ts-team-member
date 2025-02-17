@@ -23,8 +23,10 @@ const OverlayCard = ({ settings, id, imageUrl, title, subtitle, description, soc
                 id={`${title?.replace(/\s+/g, '-').toLowerCase()}-${id}`}
                 src={imageUrl}
                 alt={title}
-                className={`tsteam-member__image w-full h-full object-cover rounded-3xl ${details ? 'cursor-pointer' : ''}`}
+                className={`tsteam-member__image object-cover rounded-3xl ${details ? 'cursor-pointer' : ''}`}
                 style={{
+                    width: settings?.tsoverlay.size?.image ?? '400px',
+                    height: settings?.tsoverlay.size?.image ?? '400px',
                     borderStyle: 'solid',
                     borderWidth: settings?.layout?.borderWidth?.image ?? '1px',
                     borderRadius: settings?.layout?.borderRadius?.image,
@@ -33,8 +35,10 @@ const OverlayCard = ({ settings, id, imageUrl, title, subtitle, description, soc
             />
 
             {/* Overlay Content - Hidden by default, visible on hover */}
-            <div className="absolute inset-0 bg-purple-600 bg-opacity-90 rounded-3xl flex flex-col items-center justify-center text-center p-6 m-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
+            <div className="absolute inset-0 bg-purple-600 bg-opacity-90 rounded-3xl flex flex-col items-center justify-center text-center p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
                  style={{
+                     width: settings?.tsoverlay.size?.image,
+                     height: settings?.tsoverlay.size?.image,
                      backgroundColor: settings?.tsoverlay?.color?.overlay,
                      opacity: settings?.tsoverlay?.opacity,
                      borderStyle: 'solid',

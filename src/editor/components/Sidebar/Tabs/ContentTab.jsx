@@ -4,8 +4,8 @@ import editorLocal from "../../../states/editorLocal.js";
 
 
 function ContentTab() {
-  const { selectedView, containerSettings, columnSettings, carouselSettings, showcaseDetails } = editorStore();
-  const { availableLayouts, availableFlexLayouts, availableViews, availableTransition, availableDetails } = editorLocal();
+  const { selectedView, containerSettings, columnSettings, carouselSettings, marqueeSettings, showcaseDetails } = editorStore();
+  const { availableLayouts, availableFlexLayouts, availableViews, availableTransition, availableDelay, availableDetails } = editorLocal();
 
   return (
     <div className="mb-16">
@@ -157,6 +157,44 @@ function ContentTab() {
           />
     </div>
       )}
+
+        {selectedView.value === 'marquee' && (
+            <div>
+                <TsDivider
+                    label="Marquee Settings"
+                />
+
+                <TsSelect
+                    label="Direction"
+                    name="marqueeSettings.direction"
+                    options={availableDelay}
+                />
+
+                <TsSlider
+                    label="Speed"
+                    name="marqueeSettings.marqueeSpeed.default"
+                    range={marqueeSettings.marqueeSpeed.range}
+                    unit={false}
+                />
+
+                <TsSwitch
+                    label="Infinite Mode"
+                    name="marqueeSettings.infinite"
+                />
+
+                <TsSwitch
+                    label="Pause On Click"
+                    name="marqueeSettings.pauseOnClick"
+                />
+
+                <TsSwitch
+                    label="Pause On Hover"
+                    name="marqueeSettings.pauseOnHover"
+                />
+
+                <TsDivider/>
+            </div>
+        )}
     </div>
   );
 }

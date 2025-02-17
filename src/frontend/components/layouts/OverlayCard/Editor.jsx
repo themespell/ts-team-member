@@ -12,6 +12,13 @@ const register_controls = () => {
             },
             {
                 type: 'slider',
+                label: 'Image Size',
+                name: 'tsoverlay.size.image',
+                range: '450',
+                unit: 'px'
+            },
+            {
+                type: 'slider',
                 label: 'Overlay Opacity',
                 name: 'tsoverlay.opacity',
                 range: '10',

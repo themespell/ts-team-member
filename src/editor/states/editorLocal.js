@@ -57,6 +57,12 @@ const editorLocal = create((set) => ({
         { label: 'Zoom', value: 'zoom', type: 'free' },
         { label: 'Flip', value: 'flip', type: 'free' },
     ],
+    availableDelay: [
+        { label: 'Left', value: 'left', type: 'pro' },
+        { label: 'Right', value: 'right', type: 'pro' },
+        // { label: 'Up', value: 'up', type: 'pro' },
+        // { label: 'Down', value: 'down', type: 'pro' },
+    ],
     availableDetails: [
         { label: 'No Details', value: 'none', type: 'free' },
         { label: 'Popup', value: 'popup', type: 'free' },
