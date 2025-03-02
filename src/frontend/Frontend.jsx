@@ -30,7 +30,7 @@ function Frontend({ id }) {
   const isPro = tsteam_settings.is_pro
   const [teamMembers, setTeamMembers] = useState([]);
   const [settings, setSettings] = useState({});
-  const devMode = false;
+  const devMode = Boolean(tsteam_settings.devmode);
 
   useEffect(() => {
     if (id) {
@@ -62,42 +62,47 @@ function Frontend({ id }) {
 
   return (
       <>
-      {settings?.selectedView?.value === "flex" ? (
+        <div
+            className={`${devMode ? 'group border-[1px] border-transparent hover:border-purple-500 transition-all duration-300' : ''}`}
+        >
+          {settings?.selectedView?.value === "flex" ? (
               <FlexView
                   team_members={teamMembers}
                   settings={settings}
               />
-      ) : settings?.selectedView?.value === "carousel" ? (
-            <CarouselView
-                team_members={teamMembers}
-                settings={settings}
-            />
-        ) : settings?.selectedView?.value === "marquee" && isPro ? (
-            <MarqueeView
-                team_members={teamMembers}
-                settings={settings}
-            />
-        ) : settings?.selectedView?.value === "table" && isPro ? (
+          ) : settings?.selectedView?.value === "carousel" ? (
+              <CarouselView
+                  team_members={teamMembers}
+                  settings={settings}
+              />
+          ) : settings?.selectedView?.value === "marquee" && isPro ? (
+              <MarqueeView
+                  team_members={teamMembers}
+                  settings={settings}
+              />
+          ) : settings?.selectedView?.value === "table" && isPro ? (
               <TableView
                   team_members={teamMembers}
                   settings={settings}
               />
           ) : settings?.selectedView?.value === "confetti" && isPro ? (
-            <ConfettiView
-                team_members={teamMembers}
-                settings={settings}
-            />
-        ) : (
-            <StaticView
-                team_members={teamMembers}
-                settings={settings}
-            />
-        )}
-        {devMode && (
-            <div className="flex justify-center items-center mt-8">
-              <button className="tsteam__frontend-button" onClick={handleCopySettings}>Copy Design</button>
-            </div>
-        )}
+              <ConfettiView
+                  team_members={teamMembers}
+                  settings={settings}
+              />
+          ) : (
+              <StaticView
+                  team_members={teamMembers}
+                  settings={settings}
+              />
+          )}
+
+          {devMode && (
+              <div className="hidden group-hover:flex justify-center items-center mt-4">
+                <button className="tsteam__frontend-button" onClick={handleCopySettings}>Copy Design</button>
+              </div>
+          )}
+        </div>
       </>
   );
 }
