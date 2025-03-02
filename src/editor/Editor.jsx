@@ -16,7 +16,9 @@ import './components/assets/editorHover.css';
 
 import CarouselView from '../frontend/components/CarouselView.jsx';
 import StaticView from '../frontend/components/StaticView.jsx';
+import FlexView from "../frontend/components/FlexView.jsx";
 import MarqueeView from "../frontend/components/MarqueeView.jsx";
+import TableView from "../frontend/components/TableView.jsx";
 import ConfettiView from "../frontend/components/ConfettiView.jsx";
 
 function Editor() {
@@ -100,7 +102,14 @@ function Editor() {
             <div
                 className={`editor-container editor-hover viewport-${viewport}`}
             >
-              {allSettings.selectedView.value === "carousel" ? (
+              {allSettings.selectedView.value === "flex" ? (
+                      <FlexView
+                          team_members={postData.team_members}
+                          settings={allSettings}
+                          viewport={viewport}
+                          isEditor={isEditor}
+                      />
+                  ) : allSettings.selectedView.value === "carousel" ? (
                   <CarouselView
                       team_members={postData.team_members}
                       settings={allSettings}
@@ -114,6 +123,13 @@ function Editor() {
                       viewport={viewport}
                       isEditor={isEditor}
                   />
+              ) : allSettings.selectedView.value === "table" && isPro ? (
+                      <TableView
+                          team_members={postData.team_members}
+                          settings={allSettings}
+                          viewport={viewport}
+                          isEditor={isEditor}
+                      />
               ) : allSettings.selectedView.value === "confetti" && isPro ? (
                   <ConfettiView
                       team_members={postData.team_members}

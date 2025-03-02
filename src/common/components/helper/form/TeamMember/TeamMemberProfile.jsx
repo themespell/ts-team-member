@@ -1,7 +1,7 @@
 import { TsInput, TsRepeater } from '../../../controls/tsControls';
 import { safeJsonParse } from '../../../../utils/safeJsonParse';
 
-function TeamMemberProfile({ form, social_links }) {
+function TeamMemberProfile({ form, social_links, skills }) {
 
   return (
     <div className="p-6">
@@ -69,6 +69,21 @@ function TeamMemberProfile({ form, social_links }) {
           placeholder: 'Social Media',
         }}
       />
+
+
+        <TsRepeater
+            form={form}
+            label="Skills"
+            fieldName="member_skills"
+            defaultValues={safeJsonParse(skills)}
+            required={false}
+            fieldNames={['skill']}
+            controlSupport={{
+                type: 'inputnumber',
+                name: 'rating',
+                placeholder: 'Social Media',
+            }}
+        />
     </div>
   );
 }

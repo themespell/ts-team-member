@@ -1,3 +1,5 @@
+import React from 'react';
+
 const getSocialIcon = (channel) => {
     const icons = {
         facebook: (
@@ -36,14 +38,14 @@ const getSocialIcon = (channel) => {
     return icons[channel.toLowerCase()] || null;
 };
 
-const SocialIcons = ({ socialIcons, settings }) => {
-    let data = socialIcons;
+const SocialLinks = ({ socialLinks }) => {
+    let data = socialLinks;
 
-    if (typeof socialIcons === 'string') {
+    if (typeof socialLinks === 'string') {
         try {
-            data = JSON.parse(socialIcons);
+            data = JSON.parse(socialLinks);
         } catch (error) {
-            console.error('Error parsing socialIcons:', error);
+            console.error('Error parsing socialLinks:', error);
             return null;
         }
     }
@@ -51,18 +53,22 @@ const SocialIcons = ({ socialIcons, settings }) => {
     if (!data || !Array.isArray(data)) return null;
 
     return (
-        <div className="flex flex-wrap items-center justify-center gap-4">
+        <div className="flex space-x-2">
             {data.map((item, index) => (
                 <a
                     key={index}
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white hover:text-white text-sm bg-purple-500 hover:bg-purple-600 rounded-full p-2 transition-colors"
+                    className="w-8 h-8 rounded-sm bg-yellow-400 flex items-center justify-center text-white"
                     style={{
-                        backgroundColor: settings?.layout?.color?.socialIconBg,
-                        color: settings?.layout?.color?.socialIcon,
-                        borderRadius: settings?.layout?.borderRadius?.socialIcon
+                        backgroundColor: item.socialChannel === 'facebook' ? '#4267B2' :
+                            item.socialChannel === 'twitter' ? '#1DA1F2' :
+                                item.socialChannel === 'instagram' ? '#E1306C' :
+                                    item.socialChannel === 'linkedin' ? '#0077B5' :
+                                        item.socialChannel === 'youtube' ? '#FF0000' :
+                                            item.socialChannel === 'github' ? '#333333' :
+                                                '#6B7280'
                     }}
                 >
                     {getSocialIcon(item.socialChannel)}
@@ -72,4 +78,4 @@ const SocialIcons = ({ socialIcons, settings }) => {
     );
 };
 
-export default SocialIcons;
+export default SocialLinks;

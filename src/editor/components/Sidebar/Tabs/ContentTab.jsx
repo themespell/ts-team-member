@@ -4,24 +4,43 @@ import editorLocal from "../../../states/editorLocal.js";
 
 
 function ContentTab() {
-  const { selectedView, containerSettings, columnSettings, carouselSettings, showcaseDetails } = editorStore();
-  const { availableLayouts, availableViews, availableTransition, availableDetails } = editorLocal();
+  const { selectedView, containerSettings, columnSettings, carouselSettings, marqueeSettings, showcaseDetails } = editorStore();
+  const { availableLayouts, availableFlexLayouts, availableTableLayouts, availableViews, availableTransition, availableDelay, availableDetails } = editorLocal();
 
   return (
     <div className="mb-16">
-      <TsSelect
-      label="Choose a Layout"
-      name="selectedLayout"
-      options={availableLayouts}
-      output="object"
-      />
+        <TsSelect
+            label="View Style"
+            name="selectedView"
+            options={availableViews}
+            output="object"
+        />
+        {(selectedView.value === 'grid' || selectedView.value === 'carousel' || selectedView.value === 'marquee') && (
+            <TsSelect
+                label="Layout"
+                name="selectedLayout"
+                options={availableLayouts}
+                output="object"
+            />
+        )}
 
-      <TsSelect
-      label="View Style"
-      name="selectedView"
-      options={availableViews}
-      output="object"
-      />
+        {selectedView.value === 'flex' && (
+            <TsSelect
+                label="Choose a Layout"
+                name="selectedLayout"
+                options={availableFlexLayouts}
+                output="object"
+            />
+        )}
+
+        {selectedView.value === 'table' && (
+            <TsSelect
+                label="Choose a Layout"
+                name="selectedLayout"
+                options={availableTableLayouts}
+                output="object"
+            />
+        )}
 
       {/*<TsSwitch*/}
       {/*  label="Show Details"*/}
@@ -39,7 +58,7 @@ function ContentTab() {
       {selectedView.value === 'grid' && (
            <div>
                <TsDivider
-                   label="Static Settings"
+                   label="Grid Settings"
                />
                <TsSlider
                    label="Container Width"
@@ -62,6 +81,28 @@ function ContentTab() {
                    unit={true}
                />
            </div>
+      )}
+
+        {selectedView.value === 'flex' && (
+            <div>
+                <TsDivider
+                    label="Flex Settings"
+                />
+                <TsSlider
+                    label="Container Width"
+                    range={containerSettings.width.range}
+                    name='containerSettings.width.default'
+                    responsive={true}
+                    unit={true}
+                />
+                <TsSlider
+                    label="Column Gap"
+                    range={columnSettings.gap.range}
+                    name='columnSettings.gap.default'
+                    responsive={true}
+                    unit={true}
+                />
+            </div>
       )}
 
       {selectedView.value === 'carousel' && (
@@ -125,6 +166,44 @@ function ContentTab() {
           />
     </div>
       )}
+
+        {selectedView.value === 'marquee' && (
+            <div>
+                <TsDivider
+                    label="Marquee Settings"
+                />
+
+                <TsSelect
+                    label="Direction"
+                    name="marqueeSettings.direction"
+                    options={availableDelay}
+                />
+
+                <TsSlider
+                    label="Speed"
+                    name="marqueeSettings.marqueeSpeed.default"
+                    range={marqueeSettings.marqueeSpeed.range}
+                    unit={false}
+                />
+
+                <TsSwitch
+                    label="Infinite Mode"
+                    name="marqueeSettings.infinite"
+                />
+
+                <TsSwitch
+                    label="Pause On Click"
+                    name="marqueeSettings.pauseOnClick"
+                />
+
+                <TsSwitch
+                    label="Pause On Hover"
+                    name="marqueeSettings.pauseOnHover"
+                />
+
+                <TsDivider/>
+            </div>
+        )}
     </div>
   );
 }

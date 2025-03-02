@@ -4,14 +4,19 @@ const editorStore = create((set) => ({
     // Post Data
     postID: null,
     postType: null,
-
+    common: {
+        range: {
+            min: 0,
+            max: 2500,
+        },
+    },
     selectedLayout: {
         label: 'Card',
         value: 'Card',
         type: 'free'
     },
     selectedView: {
-        label: 'Static / Grid',
+        label: 'Grid',
         value: 'grid',
         type: 'free'
     },
@@ -100,6 +105,20 @@ const editorStore = create((set) => ({
         repeat: true,
         centerSlide: false,
         autoPlay: true
+    },
+    marqueeSettings:{
+        marqueeSpeed:{
+            range: {
+                min: 1,
+                max: 1000,
+            },
+            default: 50
+        },
+        infinite: true,
+        pauseOnClick: false,
+        pauseOnHover: true,
+        direction: "left",
+        delay: 0
     },
 
     updateState: (key, value) => set((state) => {

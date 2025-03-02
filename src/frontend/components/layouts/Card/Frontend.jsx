@@ -24,27 +24,27 @@ const Card = ({ settings, id, imageUrl, title, subtitle, description, socialIcon
                 alt={title}
                 style={{
                     borderStyle: 'solid',
-                    borderWidth: settings?.tscard?.borderWidth?.image ?? '1px',
-                    borderRadius: settings?.tscard?.borderRadius?.image,
-                    borderColor: settings?.tscard?.color?.imageBorder,
+                    borderWidth: settings?.layout?.borderWidth?.image ?? '1px',
+                    borderRadius: settings?.layout?.borderRadius?.image,
+                    borderColor: settings?.layout?.color?.imageBorder,
                 }}
                 className={`tsteam-member__image w-32 h-32 rounded-xl -mb-12 z-10 relative shadow-2xl object-cover ${details ? 'cursor-pointer' : ''}`}
             />
 
             <div className="w-full max-w-sm bg-white rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] overflow-hidden"
                  style={{
-                     backgroundColor: settings?.tscard?.color?.background,
+                     backgroundColor: settings?.layout?.color?.background,
                      borderStyle: 'solid',
-                     borderWidth: settings?.tscard?.borderWidth?.card ?? '0px',
-                     borderRadius: settings?.tscard?.borderRadius?.card,
-                     borderColor: settings?.tscard?.color?.border,
+                     borderWidth: settings?.layout?.borderWidth?.card ?? '0px',
+                     borderRadius: settings?.layout?.borderRadius?.card,
+                     borderColor: settings?.layout?.color?.border,
                  }}>
                 <div className="px-5 pt-16 pb-5 text-center flex flex-col items-center">
                     {title && (
                         <h3
                             className="text-[16px] font-semibold mb-0.5"
                             style={{
-                                color: settings?.tscard?.color?.memberName,
+                                color: settings?.layout?.color?.memberName,
                                 fontFamily: settings?.typography?.name || 'inherit',
                                 fontSize: settings?.typography?.name_fontSize || '16px',
                                 fontWeight: settings?.typography?.name_fontWeight || '600',
@@ -60,7 +60,7 @@ const Card = ({ settings, id, imageUrl, title, subtitle, description, socialIcon
                     {subtitle && (
                         <h4 className="text-purple-600 text-sm font-medium mb-3"
                             style={{
-                                color: settings?.tscard?.color?.designation,
+                                color: settings?.layout?.color?.designation,
                                 fontFamily: settings?.typography?.designation || 'inherit',
                                 fontSize: settings?.typography?.designation_fontSize,
                                 fontWeight: settings?.typography?.designation_fontWeight,
@@ -82,7 +82,7 @@ const Card = ({ settings, id, imageUrl, title, subtitle, description, socialIcon
                     {description && (
                         <div
                             style={{
-                                color: settings?.tscard?.color?.description,
+                                color: settings?.layout?.color?.description,
                                 fontFamily: settings?.typography?.description || 'inherit',
                                 fontSize: settings?.typography?.description_fontSize,
                                 fontWeight: settings?.typography?.description_fontWeight,

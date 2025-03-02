@@ -27,6 +27,12 @@ const HorizontalCard = ({ settings, id, imageUrl, title, subtitle, description, 
                         src={imageUrl}
                         alt={title}
                         className={`tsteam-member__image w-24 h-24 object-cover shadow-lg ${details ? 'cursor-pointer' : ''}`}
+                        style={{
+                            borderStyle: 'solid',
+                            borderWidth: settings?.layout?.borderWidth?.image ?? '1px',
+                            borderRadius: settings?.layout?.borderRadius?.image,
+                            borderColor: settings?.layout?.color?.imageBorder,
+                        }}
                     />
 
                     {/* Content Section */}
@@ -37,6 +43,7 @@ const HorizontalCard = ({ settings, id, imageUrl, title, subtitle, description, 
                                     <h3
                                         className="text-[16px] font-semibold mb-0.5"
                                         style={{
+                                            color: settings?.layout?.color?.memberName,
                                             fontFamily: settings?.typography?.name || 'inherit',
                                             fontSize: settings?.typography?.name_fontSize || '16px',
                                             fontWeight: settings?.typography?.name_fontWeight || '600',
@@ -52,6 +59,7 @@ const HorizontalCard = ({ settings, id, imageUrl, title, subtitle, description, 
                                 {subtitle && (
                                     <h4 className="text-gray-400 text-sm font-medium"
                                         style={{
+                                            color: settings?.layout?.color?.designation,
                                             fontFamily: settings?.typography?.designation || 'inherit',
                                             fontSize: settings?.typography?.designation_fontSize,
                                             fontWeight: settings?.typography?.designation_fontWeight,
@@ -67,13 +75,14 @@ const HorizontalCard = ({ settings, id, imageUrl, title, subtitle, description, 
 
                             {/* Social Icons */}
                             <div className="flex gap-1">
-                                <SocialIcons socialIcons={socialIcons} />
+                                <SocialIcons socialIcons={socialIcons} settings={settings} />
                             </div>
                         </div>
 
                         {description && (
                             <div className="text-gray-600 text-sm mt-3"
                                  style={{
+                                     color: settings?.layout?.color?.description,
                                      fontFamily: settings?.typography?.description || 'inherit',
                                      fontSize: settings?.typography?.description_fontSize,
                                      fontWeight: settings?.typography?.description_fontWeight,

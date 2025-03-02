@@ -53,7 +53,7 @@ function StaticView({ team_members, settings, viewport, isEditor }) {
                                 title={member.title}
                                 subtitle={member.meta_data.designation}
                                 description={member.meta_data.description}
-                                socialIcons={member.socialIcons || []}
+                                socialIcons={member.meta_data.socialLinks || []}
                                 details={<Details
                                     settings={settings}
                                     member={member}

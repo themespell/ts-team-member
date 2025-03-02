@@ -77,7 +77,8 @@ class Helper {
 			'resume'       => isset( $post_data['member_resume'] ) ? sanitize_text_field( wp_unslash( $post_data['member_resume'] ) ) : '',
 			'hireLink'     => isset( $post_data['member_hire'] ) ? sanitize_text_field( wp_unslash( $post_data['member_hire'] ) ) : '',
 			'donationLink' => isset( $post_data['member_donation'] ) ? sanitize_text_field( wp_unslash( $post_data['member_donation'] ) ) : '',
-			'socialLinks'  => isset( $post_data['member_social'] ) ? wp_json_encode( wp_unslash( $post_data['member_social'] ), true ) : array()
+			'socialLinks'  => isset( $post_data['member_social'] ) ? wp_json_encode( wp_unslash( $post_data['member_social'] ), true ) : array(),
+			'skills'       => isset( $post_data['member_skills'] ) ? wp_json_encode( wp_unslash( $post_data['member_skills'] ), true ) : array()
 		);
 	}	
 	
