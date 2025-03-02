@@ -1,5 +1,6 @@
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 
+const isPro = !!tsteam_settings.is_pro ?? false;
 const globalSettings = {
     token: {
         colorPrimary: '#703FD6',
@@ -58,20 +59,24 @@ const globalSettings = {
               link: '?page=tsteam-showcase&path=team-member',
               label: 'Team Member',
           },
-          // account:{
-          //     link: 'admin.php?page=tsteam-pro-account',
-          //     label: 'Account',
-          // },
-          // supportForum:{
-          //     link: 'https://wordpress.org/support/plugin/ts-team-member',
-          //     label: 'Support Forum',
-          // },
+          ...(isPro && {
+              account:{
+                  link: 'admin.php?page=tsteam-pro-account',
+                  label: 'Account',
+              }
+          }),
+          supportForum:{
+              link: 'https://wordpress.org/support/plugin/ts-team-member',
+              label: 'Support Forum',
+          },
       },
-       proLink: {
-        link: 'https://themespell.com/ts-product/ts-team-member/',
-        label: 'Get Pro',
-      },
-      version: '1.0.1',
+        ...(isPro ? {} : {
+            proLink: {
+                link: 'https://themespell.com/ts-product/ts-team-member/',
+                label: 'Get Pro',
+            }
+        }),
+      version: '1.0.2',
     }
   };
   
