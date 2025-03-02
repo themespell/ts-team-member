@@ -3,7 +3,6 @@ const formatName = (name) => {
 };
 
 function proLayouts(selectedLayout) {
-    console.log(window.tsTeamPro?.Layouts)
     const isPro = !!tsteam_settings.is_pro ?? null;
     const isLicenseInactive = !!window.tsTeamPro?.is_licence_inactive ?? null;
 
