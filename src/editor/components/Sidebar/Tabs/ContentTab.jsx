@@ -5,7 +5,7 @@ import editorLocal from "../../../states/editorLocal.js";
 
 function ContentTab() {
   const { selectedView, containerSettings, columnSettings, carouselSettings, marqueeSettings, showcaseDetails } = editorStore();
-  const { availableLayouts, availableFlexLayouts, availableViews, availableTransition, availableDelay, availableDetails } = editorLocal();
+  const { availableLayouts, availableFlexLayouts, availableTableLayouts, availableViews, availableTransition, availableDelay, availableDetails } = editorLocal();
 
   return (
     <div className="mb-16">
@@ -29,6 +29,15 @@ function ContentTab() {
                 label="Choose a Layout"
                 name="selectedLayout"
                 options={availableFlexLayouts}
+                output="object"
+            />
+        )}
+
+        {selectedView.value === 'table' && (
+            <TsSelect
+                label="Choose a Layout"
+                name="selectedLayout"
+                options={availableTableLayouts}
                 output="object"
             />
         )}

@@ -51,3 +51,40 @@
 	background-color: #703FD6;
 	color: #FFFFFF;
 }
+
+
+@keyframes progress-bar-fill-0 {
+	0% {
+		width: 0%;
+	}
+	100% {
+		width: 80%;
+	}
+}
+
+@keyframes progress-bar-fill-1 {
+	0% {
+		width: 0%;
+	}
+	100% {
+		width: 90%;
+	}
+}
+
+@keyframes progress-bar-fill-2 {
+	0% {
+		width: 0%;
+	}
+	100% {
+		width: 75%;
+	}
+}
+
+.progress-bar-glow {
+	box-shadow: 0 0 10px 0 rgba(124, 58, 237, 0.5);
+	transition: box-shadow 0.3s ease-in-out;
+}
+
+.progress-bar-glow:hover {
+	box-shadow: 0 0 20px 0 rgba(124, 58, 237, 0.8);
+}

@@ -1,35 +1,24 @@
-const SkillBar = ({ label, percentage, barColor, progressColor }) => {
-    return (
-        <div>
-            <div className="flex justify-between mb-1">
-                <span>{label}</span>
-                <span>{percentage}%</span>
-            </div>
-            <div className={`w-full ${barColor} h-2 rounded-full overflow-hidden`}>
-                <div
-                    className={`${progressColor} h-full rounded-full`}
-                    style={{ width: `${percentage}%` }}
-                ></div>
-            </div>
-        </div>
-    );
-};
+import React from 'react';
 
-// Parent Component to Use SkillBar (Accepts Skills as Prop)
-const SkillsSection = ({ skills }) => {
+const SkillsBar = ({ skills }) => {
     return (
         <div className="space-y-6">
             {skills.map((skill, index) => (
-                <SkillBar
-                    key={index}
-                    label={skill.label}
-                    percentage={skill.percentage}
-                    barColor={skill.barColor}
-                    progressColor={skill.progressColor}
-                />
+                <div key={index} className="mt-2">
+                    <div className="flex justify-between items-center">
+                        <span>{skill.skill}</span>
+                        <span>{skill.rating}%</span>
+                    </div>
+                    <div className="w-full bg-red-100 rounded-full h-1.5 mt-1">
+                        <div
+                            className="bg-red-500 h-1.5 rounded-full"
+                            style={{ width: `${skill.rating}%` }}
+                        ></div>
+                    </div>
+                </div>
             ))}
         </div>
     );
 };
 
-export default SkillsSection;
+export default SkillsBar;

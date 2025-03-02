@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Form, Button } from 'antd';
 import TsSelectInput from './repeterControls/TsSelectInput';
 import TsMultiInput from './repeterControls/TsMultiInput';
+import TsInputNumber from "./repeterControls/TsInputNumber.jsx";
 import { MinusCircleOutlined } from '@ant-design/icons';
 
 const TsRepeater = ({ form, label, fieldName, defaultValues = [], required, fieldNames = [], controlSupport }) => {
@@ -56,6 +57,15 @@ const TsRepeater = ({ form, label, fieldName, defaultValues = [], required, fiel
             onChange={handleChange}
             controlSupport={controlSupport}
           />
+        );
+      case 'inputnumber':
+        return (
+            <TsInputNumber
+                field={field}
+                index={index}
+                onChange={handleChange}
+                controlSupport={controlSupport}
+            />
         );
       default:
         return (
