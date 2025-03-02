@@ -4,6 +4,8 @@ import { getCommonStyles } from "./helper/commonStyle.js";
 import { getResponsiveStyles } from "./helper/responsiveStyles.js";
 import { getProLayout } from "./helper/getProLayout.js";
 
+import Details from "./details/details.jsx";
+
 function TableView({ team_members, settings, viewport, isEditor, Details }) {
     const [ProLayoutComponent, setProLayoutComponent] = useState(null);
     const commonStyles = getCommonStyles(settings);
@@ -31,6 +33,12 @@ function TableView({ team_members, settings, viewport, isEditor, Details }) {
         }
     }, [settings, isEditor, viewport]);
 
+    // Create a render function that will be passed to layout components
+    // const renderDetails = (member, settings) => {
+    //     return <Details settings={settings} member={member} />;
+    // };
+
+
     return (
         <div
             className="tsteam-table-container"
@@ -43,14 +51,24 @@ function TableView({ team_members, settings, viewport, isEditor, Details }) {
                 <ProLayoutComponent
                     settings={settings}
                     team_members={team_members}
-                    Details={Details}
+                    details={<Details
+                        settings={settings}
+                        member={team_members}  // Pass all team members instead of a single member
+                    />}
                 />
             ) : (
                 <Layout
                     settings={settings}
                     layoutType={settings.selectedLayout.value}
                     team_members={team_members}
-                    Details={Details}
+                    details={<Details
+                        settings={settings}
+                        member={team_members}  // Pass all team members instead of a single member
+                    />}
+                    // details={<Details
+                    //     settings={settings}
+                    //     member={member}
+                    // />}
                 />
             )}
         </div>

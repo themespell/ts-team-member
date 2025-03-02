@@ -1,11 +1,18 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { safeJsonParse } from "../../../../common/utils/safeJsonParse.js";
 import renderEditorContent from "../Helper/renderEditorContent.jsx";
 import { createPortal } from 'react-dom';
 
+import SkillsBar from "./Child/SkillsBar.jsx";
+import CTAButton from "./Child/CTAButton.jsx";
+import SocialLinks from "./Child/SocialLinks.jsx";
+
 function DetailsDrawer({ member }) {
     const drawerId = `${member.title.replace(/\s+/g, '-').toLowerCase()}-${member.post_id}`;
     const editorData = safeJsonParse(member.meta_data.information);
+    const skills = safeJsonParse(member.meta_data.skills);
+    const socialLinks = member.meta_data.socialLinks;
+    console.log(member)
 
     const handleImageClick = (e) => {
         const imageId = e.target.id;
@@ -76,85 +83,39 @@ function DetailsDrawer({ member }) {
                             <div className="mt-4">
                                 <h3 className="text-sm font-bold">Overview</h3>
                                 <p className="text-xs text-gray-600 mt-1">
-                                    {member.meta_data.overview || "Creative Producer with 15 years of experience across film, television, and digital media. Known for the ability to wear many hats with ease, bring fresh perspective to established concepts, and foster creative collaboration around complex ideas. Widely seen as a natural team leader who values feedback and adjusts course as needed."}
+                                    {member.meta_data.description}
                                 </p>
                             </div>
 
-                            {/* Skills section */}
-                            <div className="mt-4">
-                                <h3 className="text-sm font-bold">Skills</h3>
-                                <p className="text-xs mt-1">{member.meta_data.skills || "Director-oriented"}</p>
+                            {/* Social Media */}
+                            <div className="mt-6">
+                                <div className="font-medium mb-2">Social Media</div>
+                                <SocialLinks socialLinks={socialLinks} />
                             </div>
 
-                            {/* Language section */}
-                            <div className="mt-4">
-                                <h3 className="text-sm font-bold">Language</h3>
-                                <p className="text-xs mt-1">{member.meta_data.language || "English (native)"}</p>
-                            </div>
-
-                            {/* Experience section */}
-                            <div className="mt-4">
-                                <h3 className="text-sm font-bold">Experience</h3>
-                                <p className="text-xs mt-1">{member.meta_data.experience || "12 Years"}</p>
-                            </div>
-
-                            {/* Availability section */}
-                            <div className="mt-4">
-                                <h3 className="text-sm font-bold">Availability</h3>
-                                <p className="text-xs mt-1">{member.meta_data.availability || "Full-time Employment"}</p>
+                            <div className="mt-6">
+                                <div className="font-medium mb-2">Links</div>
+                                <CTAButton
+                                    donationLink={member.meta_data.donationLink}
+                                    hireLink={member.meta_data.hireLink}
+                                    website={member.meta_data.website}
+                                    resume={member.meta_data.resume}
+                                />
                             </div>
 
                             {/* Skills bars section */}
-                            <div className="mt-4">
-                                <h3 className="text-sm font-bold">My Experience & Skill</h3>
-
-                                {/* Creativity bar */}
-                                <div className="mt-2">
-                                    <div className="flex justify-between items-center text-xs">
-                                        <span>Creativity</span>
-                                        <span>{member.meta_data.creativity || "70%"}</span>
-                                    </div>
-                                    <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
-                                        <div
-                                            className="bg-red-400 h-1.5 rounded-full"
-                                            style={{width: member.meta_data.creativity || "70%"}}
-                                        ></div>
-                                    </div>
+                            {skills && skills.length > 0 && (
+                                <div className="mt-4">
+                                    <h3 className="text-sm font-bold">Experience & Skill</h3>
+                                    <SkillsBar skills={skills} />
                                 </div>
-
-                                {/* Work ethic bar */}
-                                <div className="mt-2">
-                                    <div className="flex justify-between items-center text-xs">
-                                        <span>Work Ethic</span>
-                                        <span>{member.meta_data.work_ethic || "80%"}</span>
-                                    </div>
-                                    <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
-                                        <div
-                                            className="bg-red-400 h-1.5 rounded-full"
-                                            style={{width: member.meta_data.work_ethic || "80%"}}
-                                        ></div>
-                                    </div>
-                                </div>
-
-                                {/* Communication bar */}
-                                <div className="mt-2">
-                                    <div className="flex justify-between items-center text-xs">
-                                        <span>Communication</span>
-                                        <span>{member.meta_data.communication || "80%"}</span>
-                                    </div>
-                                    <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
-                                        <div
-                                            className="bg-red-400 h-1.5 rounded-full"
-                                            style={{width: member.meta_data.communication || "80%"}}
-                                        ></div>
-                                    </div>
-                                </div>
-                            </div>
+                            )}
                         </div>
                     </div>
 
                     {/* Render editor content if available */}
                     <div className="p-4">
+                        <h3 className="mb-6">Details</h3>
                         {editorData && editorData.blocks ? renderEditorContent(editorData.blocks) : null}
                     </div>
                 </div>

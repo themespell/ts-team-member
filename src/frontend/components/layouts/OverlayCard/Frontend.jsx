@@ -25,8 +25,8 @@ const OverlayCard = ({ settings, id, imageUrl, title, subtitle, description, soc
                 alt={title}
                 className={`tsteam-member__image object-cover rounded-3xl ${details ? 'cursor-pointer' : ''}`}
                 style={{
-                    width: settings?.tsoverlay.size?.image ?? '400px',
-                    height: settings?.tsoverlay.size?.image ?? '400px',
+                    width: settings?.tsoverlay?.size?.image ?? '400px',
+                    height: settings?.tsoverlay?.size?.image ?? '400px',
                     borderStyle: 'solid',
                     borderWidth: settings?.layout?.borderWidth?.image ?? '1px',
                     borderRadius: settings?.layout?.borderRadius?.image,
@@ -35,10 +35,8 @@ const OverlayCard = ({ settings, id, imageUrl, title, subtitle, description, soc
             />
 
             {/* Overlay Content - Hidden by default, visible on hover */}
-            <div className="absolute inset-0 bg-purple-600 bg-opacity-90 rounded-3xl flex flex-col items-center justify-center text-center p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
+            <div className="absolute w-auto h-auto inset-0 bg-purple-600 bg-opacity-90 rounded-3xl flex flex-col items-center justify-center text-center p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
                  style={{
-                     width: settings?.tsoverlay.size?.image,
-                     height: settings?.tsoverlay.size?.image,
                      backgroundColor: settings?.tsoverlay?.color?.overlay,
                      opacity: settings?.tsoverlay?.opacity,
                      borderStyle: 'solid',
@@ -81,7 +79,7 @@ const OverlayCard = ({ settings, id, imageUrl, title, subtitle, description, soc
                 )}
 
                 {description && (
-                    <div className="text-white text-sm mt-3"
+                    <div className="text-white text-sm mt-3 w-auto"
                          style={{
                              color: settings?.layout?.color?.description,
                              fontFamily: settings?.typography?.description || 'inherit',
@@ -108,7 +106,7 @@ const OverlayCard = ({ settings, id, imageUrl, title, subtitle, description, soc
                     <>
                     <button
                         id={`${title?.replace(/\s+/g, '-').toLowerCase()}-${id}`}
-                        className="tsteam-member-button__details bg-red-500 text-white p-4"
+                        className="tsteam-member-button__details bg-white text-black p-3 mt-4 rounded-md border-none"
                     >Details</button>
                     <div className="mt-4 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-in-out delay-200">
                         {details}
