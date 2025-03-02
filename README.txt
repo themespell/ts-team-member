@@ -126,6 +126,17 @@ Yes, the plugin includes a live editing feature, allowing you to see real-time c
 
 == Changelog ==
 
+= 1.0.2 =
+* Skills Added
+* Editor Sidebar Control Added
+* Fixed Carousel Issue
+* Fixed Additional Data Issue
+* Fixed Details Popup Issue
+* Added Complete Pro Support
+* Compatible & Tested with latest WordPress 6.7.2 support
+* UI Issue & Minor Bug Fixed
+* Readme Updated
+
 = 1.0.1 =
 * Improved Carousel
 * Improved Controls
