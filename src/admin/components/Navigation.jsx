@@ -5,7 +5,7 @@ function Navigation() {
   const { navigation } = globalSettings;
   const currentUrl = new URL(window.location.href);
   const currentPath = currentUrl.search; // Gets the query string part like '?page=tsteam-showcase'
-
+  console.log('from navigation component')
   return (
     <>
       <li className="wp-has-submenu wp-has-current-submenu wp-menu-open menu-top toplevel_page_tsteam-admin">

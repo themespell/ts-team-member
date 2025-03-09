@@ -1,4 +1,3 @@
-import React from 'react';
 import SocialIcons from './SocialIcons.jsx';
 import { loadGoogleFont } from '../../helper/loadGoogleFont.js';
 import { getAnimationClasses } from "../../helper/motionControl.js";
@@ -17,10 +16,19 @@ const HorizontalCard = ({ settings, id, imageUrl, title, subtitle, description, 
 
     const animationConfig = getAnimationClasses(settings.hoverAnimation);
 
+    console.log(settings)
     const renderContent = () => (
         <div className="w-full">
             <div className="bg-white rounded-[20px] overflow-hidden border border-purple-100 hover:border-purple-500">
-                <div className="flex items-start p-6 gap-6">
+                <div className="flex items-start p-6 gap-6"
+                      style={{
+                        backgroundColor: settings?.layout?.color?.background,
+                        borderStyle: 'solid',
+                        borderWidth: settings?.layout?.borderWidth ?? '0px',
+                        borderRadius: settings?.layout?.borderRadius ?? '0px',
+                        borderColor: settings?.layout?.color?.border ?? '0px',
+                    }}
+                >
                     {/* Image Section */}
                     <img
                         id={`${title?.replace(/\s+/g, '-').toLowerCase()}-${id}`}

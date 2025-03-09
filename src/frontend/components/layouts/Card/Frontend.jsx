@@ -35,10 +35,12 @@ const Card = ({ settings, id, imageUrl, title, subtitle, description, socialIcon
                  style={{
                      backgroundColor: settings?.layout?.color?.background,
                      borderStyle: 'solid',
-                     borderWidth: settings?.layout?.borderWidth?.card ?? '0px',
-                     borderRadius: settings?.layout?.borderRadius?.card,
-                     borderColor: settings?.layout?.color?.border,
-                 }}>
+                     borderWidth: settings?.layout?.borderWidth ?? '0px',
+                     borderRadius: settings?.layout?.borderRadius ?? '0px',
+                     borderColor: settings?.layout?.color?.border ?? '0px',
+                 }}
+                 
+                 >
                 <div className="px-5 pt-16 pb-5 text-center flex flex-col items-center">
                     {title && (
                         <h3

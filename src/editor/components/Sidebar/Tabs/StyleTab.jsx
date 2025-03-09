@@ -96,7 +96,6 @@ function StyleTab({ selectedLayout, layoutType }) {
                 label="Border Color"
                 name="layout.color.border"
             />
-
             <TsColor
                 label="Image Border Color"
                 name="layout.color.imageBorder"
