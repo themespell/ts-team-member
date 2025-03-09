@@ -15,8 +15,6 @@ const HorizontalCard = ({ settings, id, imageUrl, title, subtitle, description, 
     }
 
     const animationConfig = getAnimationClasses(settings.hoverAnimation);
-
-    console.log(settings)
     const renderContent = () => (
         <div className="w-full">
             <div className="bg-white rounded-[20px] overflow-hidden border border-purple-100 hover:border-purple-500">
