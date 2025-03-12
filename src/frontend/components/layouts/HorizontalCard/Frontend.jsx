@@ -33,15 +33,7 @@ const HorizontalCard = ({
     <div className="w-full">
       <div className="bg-white rounded-[20px] overflow-hidden border border-purple-100 hover:border-purple-500">
         <div
-          className="flex items-start p-6 gap-6"
-          style={{
-            backgroundColor: settings?.layout?.color?.background,
-            borderStyle: "solid",
-            borderWidth: settings?.layout?.borderWidth ?? "0px",
-            borderRadius: settings?.layout?.borderRadius ?? "0px",
-            borderColor: settings?.layout?.color?.border ?? "0px",
-          }}
-        >
+          className="flex items-start p-6 gap-6 tsteam-horizontalcard-container">
           {/* Image Section */}
           <img
             id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`}

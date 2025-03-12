@@ -1,7 +1,7 @@
 import CSSGenerator from "../../../../utils/css-generator";
 
 import { getTsTeamMemberNameStyle, getTsTeamMemberDesignationStyle, getTsTeamMemberDescriptionStyle } from "../style/commonStyle";
-
+import {getTsTeamHorizontalCardContainerStyle} from './styling'
 
 
 
@@ -9,7 +9,7 @@ const GenerateFancyCardStyle = ({settings = {}}) => {
   // Generate CSS
 
     const cssGenerator = new CSSGenerator();
-
+    cssGenerator.addClassStyles('.tsteam-horizontalcard-container', getTsTeamHorizontalCardContainerStyle(settings))
     cssGenerator.addClassStyles(
         ".tsteam-member__name",
         getTsTeamMemberNameStyle(settings)
