@@ -5,6 +5,7 @@ import TsMemberName from "../components/TsMemberName";
 import GenerateFancyCardStyle from './GenerateStyle'
 import TsMemberDesignation from "../components/TsMemberDesignation.jsx";
 import TsMemberDescription from "../components/TsMemberDescription.jsx";
+import TsMemberAvatar from "../components/TsMemberAvatar.jsx";
 const HorizontalCard = ({
   settings,
   id,
@@ -34,22 +35,7 @@ const HorizontalCard = ({
       <div className="bg-white rounded-[20px] overflow-hidden border border-purple-100 hover:border-purple-500">
         <div
           className="flex items-start p-6 gap-6 tsteam-horizontalcard-container">
-          {/* Image Section */}
-          <img
-            id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`}
-            src={imageUrl}
-            alt={title}
-            className={`tsteam-member__image w-24 h-24 object-cover shadow-lg ${
-              details ? "cursor-pointer" : ""
-            }`}
-            style={{
-              borderStyle: "solid",
-              borderWidth: settings?.layout?.borderWidth?.image ?? "1px",
-              borderRadius: settings?.layout?.borderRadius?.image,
-              borderColor: settings?.layout?.color?.imageBorder,
-            }}
-          />
-
+          <TsMemberAvatar details={details} id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`} imgSrc={imageUrl}  />
           {/* Content Section */}
           <div className="flex-1">
             <div className="flex justify-between items-start">

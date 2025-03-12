@@ -84,3 +84,22 @@ export const getTsTeamMemberDescriptionStyle = (settings) => {
     
     return tsTeamMemberDescriptionCSS;
 };
+
+
+export const getTsTeamMemberAvatarStyle = (settings) => {
+    const tsTeamMemberAvatarCSS = {};
+    
+    tsTeamMemberAvatarCSS['border-style'] = "solid";
+    
+    if (settings?.layout?.borderWidth?.image) {
+        tsTeamMemberAvatarCSS['border-width'] = settings.layout.borderWidth.image;
+    }
+    if (settings?.layout?.borderRadius?.image) {
+        tsTeamMemberAvatarCSS['border-radius'] = settings.layout.borderRadius.image;
+    }
+    if (settings?.layout?.color?.imageBorder) {
+        tsTeamMemberAvatarCSS['border-color'] = settings.layout.color.imageBorder;
+    }
+    
+    return tsTeamMemberAvatarCSS;
+};

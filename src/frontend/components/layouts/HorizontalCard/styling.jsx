@@ -20,3 +20,6 @@ export const getTsTeamHorizontalCardContainerStyle = (settings) => {
     
     return tsTeamHorizontalCardContainerCSS;
 };
+
+
+
