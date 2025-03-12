@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 import SocialIcons from './SocialIcons.jsx';
 import { loadGoogleFont } from '../../helper/loadGoogleFont.js';
 import { getAnimationClasses } from "../../helper/motionControl.js";
@@ -17,7 +17,16 @@ const OverlayCard = ({ settings, id, imageUrl, title, subtitle, description, soc
     const animationConfig = getAnimationClasses(settings.hoverAnimation);
 
     const renderContent = () => (
-        <div className="relative group w-full aspect-square">
+     <>
+   <style jsx>{`
+      .tsoverlay-123 {
+        background-color: blue;
+      }
+        .tsoverlay-123:hover .tsoverlay-div  {
+            background-color: ${settings?.tsoverlay?.color?.overlay}
+      }
+    `}</style>
+        <div className="relative group w-full aspect-square tsoverlay-123" >
             {/* Base Image */}
             <img
                 id={`${title?.replace(/\s+/g, '-').toLowerCase()}-${id}`}
@@ -33,15 +42,15 @@ const OverlayCard = ({ settings, id, imageUrl, title, subtitle, description, soc
                     borderColor: settings?.layout?.color?.imageBorder,
                 }}
             />
-
             {/* Overlay Content - Hidden by default, visible on hover */}
-            <div className="absolute w-auto h-auto inset-0 bg-purple-600 bg-opacity-90 rounded-3xl flex flex-col items-center justify-center text-center p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
+            <div className={`tsoverlay-div absolute inset-0 rounded-3xl flex flex-col items-center justify-center text-center p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out`}
                  style={{
-                     backgroundColor: settings?.tsoverlay?.color?.overlay,
-                     opacity: settings?.tsoverlay?.opacity,
+                    //  backgroundColor: settings?.tsoverlay?.color?.overlay,
                      borderStyle: 'solid',
                      borderWidth: settings?.tsoverlay?.borderWidth,
                      borderRadius: settings?.tsoverlay?.borderRadius,
+                     width: settings?.tsoverlay?.size?.image ?? '400px',
+                     height: settings?.tsoverlay?.size?.image ?? '400px',
                  }}
             >
                 {title && (
@@ -115,6 +124,7 @@ const OverlayCard = ({ settings, id, imageUrl, title, subtitle, description, soc
                 )}
             </div>
         </div>
+     </>
     );
 
     // Handle different animation types

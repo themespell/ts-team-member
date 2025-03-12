@@ -29,7 +29,7 @@ function TypographyTab() {
                 label="Details Typography"
                 name="typography.description"
                 targetedClass=""
-                isPro={true}
+                // isPro={true}
             />
         </div>
     );

@@ -14,7 +14,10 @@ const register_controls = () => {
                 type: 'slider',
                 label: 'Image Size',
                 name: 'tsoverlay.size.image',
-                range: '450',
+                range: {
+                    min:0,
+                    max:450
+                },
                 unit: 'px'
             },
             {
