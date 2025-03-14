@@ -40,6 +40,11 @@ const register_controls = () => {
                 range: '100',
                 unit: 'px',
             },
+            {
+                type: 'color',
+                label: 'Overlay Border Color',
+                name: 'tsoverlay.borderColor',
+            },
         ]
     };
 };

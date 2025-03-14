@@ -91,10 +91,10 @@ export const getTsTeamMemberAvatarStyle = (settings) => {
     
     tsTeamMemberAvatarCSS['border-style'] = "solid";
     
-    if (settings?.layout?.borderWidth?.image) {
+    if (settings?.tsoverlay?.borderWidth) {
         tsTeamMemberAvatarCSS['border-width'] = settings.layout.borderWidth.image;
     }
-    if (settings?.layout?.borderRadius?.image) {
+    if (settings?.tsoverlay?.borderWidth) {
         tsTeamMemberAvatarCSS['border-radius'] = settings.layout.borderRadius.image;
     }
     if (settings?.layout?.color?.imageBorder) {

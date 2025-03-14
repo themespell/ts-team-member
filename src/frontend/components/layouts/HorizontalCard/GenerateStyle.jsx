@@ -1,11 +1,4 @@
 import CSSGenerator from "../../../../utils/css-generator";
-
-import {
-  getTsTeamMemberNameStyle,
-  getTsTeamMemberDesignationStyle,
-  getTsTeamMemberDescriptionStyle,
-  getTsTeamMemberAvatarStyle,
-} from "../style/commonStyle";
 import { getTsTeamHorizontalCardContainerStyle } from "./styling";
 
 const GenerateFancyCardStyle = ({ settings = {} }) => {
@@ -16,22 +9,7 @@ const GenerateFancyCardStyle = ({ settings = {} }) => {
     ".tsteam-horizontalcard-container",
     getTsTeamHorizontalCardContainerStyle(settings)
   );
-  cssGenerator.addClassStyles(
-    ".tsteam-member__name",
-    getTsTeamMemberNameStyle(settings)
-  );
-  cssGenerator.addClassStyles(
-    ".tsteam-member__designation",
-    getTsTeamMemberDesignationStyle(settings)
-  );
-  cssGenerator.addClassStyles(
-    ".tsteam-member__description",
-    getTsTeamMemberDescriptionStyle(settings)
-  );
-  cssGenerator.addClassStyles(
-    ".tsteam-member__image",
-    getTsTeamMemberAvatarStyle(settings)
-  );
+
   const generatedCSS = cssGenerator.generateCSS();
 
   return <style>{generatedCSS}</style>;

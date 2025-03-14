@@ -11,6 +11,7 @@ import TableView from "./components/TableView.jsx";
 import ConfettiView from "./components/ConfettiView.jsx";
 import { fetchData } from '../common/services/fetchData.js';
 import {toastNotification} from "../common/utils/toastNotification.js";
+import GenerateCommonStyle from './style/CommonStyleGenerate.jsx';
 
 const showcaseElements = document.querySelectorAll('.tsteam-showcase');
 
@@ -91,7 +92,8 @@ function Frontend({ id }) {
                   settings={settings}
               />
           ) : (
-              <StaticView
+
+               <StaticView
                   team_members={teamMembers}
                   settings={settings}
               />
