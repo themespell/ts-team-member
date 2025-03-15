@@ -6,6 +6,7 @@ import TsMemberName from "../components/TsMemberName";
 import TsMemberDesignation from "../components/TsMemberDesignation.jsx";
 import TsMemberDescription from "../components/TsMemberDescription.jsx";
 import TsMemberAvatar from "../components/TsMemberAvatar.jsx";
+import GenerateCardStyle from "./GenerateStyle.jsx";
 const Card = ({
   settings,
   id,
@@ -29,6 +30,8 @@ const Card = ({
   const animationConfig = getAnimationClasses(settings.hoverAnimation);
 
   const renderContent = () => (
+   <>
+   <GenerateCardStyle settings={settings} />
     <div className="w-full flex flex-col items-center">
       <img
         id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`}
@@ -39,14 +42,7 @@ const Card = ({
         }`}
       />
       <div
-        className="w-full max-w-sm bg-white rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] overflow-hidden"
-        style={{
-          backgroundColor: settings?.layout?.color?.background,
-          borderStyle: "solid",
-          borderWidth: settings?.layout?.borderWidth ?? "0px",
-          borderRadius: settings?.layout?.borderRadius ?? "0px",
-          borderColor: settings?.layout?.color?.border ?? "0px",
-        }}
+        className="w-full max-w-sm bg-white rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] overflow-hidden tsteam-card-container "
       >
         <div className="px-5 pt-16 pb-5 text-center flex flex-col items-center">
           {title && <TsMemberName> {title} </TsMemberName>}
@@ -74,6 +70,7 @@ const Card = ({
         </div>
       </div>
     </div>
+   </>
   );
 
   // Handle different animation types
