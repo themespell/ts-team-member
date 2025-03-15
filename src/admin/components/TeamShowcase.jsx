@@ -1,6 +1,7 @@
 import Container from '../../common/components/Container.jsx';
 
 function TeamShowcase() {
+  console.log('showcase')
   return (
     <div className="min-h-fit flex">
       {/* Main Content */}

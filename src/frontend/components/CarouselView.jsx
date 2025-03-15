@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import Carousel from "./library/Carousel/Carousel.jsx";
 import Layout from './layouts/Layout';
 import { getCommonStyles } from './helper/commonStyle.js';
@@ -7,6 +7,7 @@ import { getCarouselStyles } from './helper/carouselStyles.js';
 import { getProLayout } from "./helper/getProLayout.js";
 
 import Details from "./details/details.jsx";
+import GenerateLayoutStyle from "./helper/generateLayoutStyle.js";
 
 
 function CarouselView({ team_members, settings, viewport, isEditor }) {
@@ -44,6 +45,7 @@ function CarouselView({ team_members, settings, viewport, isEditor }) {
         <>
             <div className='flex items-center justify-center relative w-full' style={{...commonStyles, ...responsiveStyles}}>
             <div className="w-full">
+                <GenerateLayoutStyle settings={settings} />
                 <Carousel
                     slidesToShow={carouselStyles.slidesToShow}
                     slidesToScroll={carouselStyles.slidesToScroll}

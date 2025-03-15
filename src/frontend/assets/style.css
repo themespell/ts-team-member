@@ -22,6 +22,20 @@
 	@apply p-2 border border-transparent hover:border-blue-500 transition duration-300;
 	}
 
+/*Override Elementor Styles*/
+
+.elementor hr {
+	margin-top: 0.5rem !important;
+	margin-bottom: 1rem !important;
+}
+
+.elementor img {
+	border: initial;
+	border-radius: 0;
+	box-shadow: none;
+	height: auto;
+	max-width: 100%;
+}
 
 /*Fullscreen Details Style*/
 

@@ -3,6 +3,7 @@ import Layout from './layouts/Layout';
 import { getCommonStyles } from "./helper/commonStyle.js";
 import { getResponsiveStyles } from "./helper/responsiveStyles.js";
 import { getProLayout } from "./helper/getProLayout.js";
+import GenerateLayoutStyle from "./helper/generateLayoutStyle.js";
 
 function FlexView({ team_members, settings, viewport, isEditor, Details }) {
     const [ProLayoutComponent, setProLayoutComponent] = useState(null);
@@ -39,6 +40,7 @@ function FlexView({ team_members, settings, viewport, isEditor, Details }) {
                 ...responsiveStyles,
             }}
         >
+            <GenerateLayoutStyle settings={settings} />
             {ProLayoutComponent ? (
                 <ProLayoutComponent
                     settings={settings}

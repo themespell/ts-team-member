@@ -91,7 +91,8 @@ function Frontend({ id }) {
                   settings={settings}
               />
           ) : (
-              <StaticView
+
+               <StaticView
                   team_members={teamMembers}
                   settings={settings}
               />

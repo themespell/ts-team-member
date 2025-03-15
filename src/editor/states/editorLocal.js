@@ -37,8 +37,6 @@ const editorLocal = create((set) => ({
         { label: 'Card', value: 'Card', type: 'free' },
         { label: 'Horizontal Card', value: 'HorizontalCard', type: 'free' },
         { label: 'Overlay Card', value: 'OverlayCard', type: 'free' },
-        // { label: 'Blur', value: 'Blur', type: 'free' },
-        // { label: 'Avatar', value: 'Avatar', type: 'free' },
         ...gridLayouts,
     ],
     availableFlexLayouts: [
