@@ -5,7 +5,6 @@ import { getAnimationClasses } from "../../helper/motionControl.js";
 import TsMemberName from "../components/TsMemberName";
 import TsMemberDesignation from "../components/TsMemberDesignation.jsx";
 import TsMemberDescription from "../components/TsMemberDescription.jsx";
-import TsMemberAvatar from "../components/TsMemberAvatar.jsx";
 import GenerateCardStyle from "./GenerateStyle.jsx";
 const Card = ({
   settings,
