@@ -7,6 +7,7 @@ import {getProLayout} from "./helper/getProLayout.js";
 import {getMarqueeStyles} from "./helper/marqueeStyles.js";
 
 import Details from "./details/details.jsx";
+import GenerateLayoutStyle from "./helper/generateLayoutStyle.js";
 
 function MarqueeView({ team_members, settings, viewport, isEditor }) {
     const [ProLayoutComponent, setProLayoutComponent] = useState(null);
@@ -49,6 +50,7 @@ function MarqueeView({ team_members, settings, viewport, isEditor }) {
                 ...responsiveStyles,
             }}
         >
+            <GenerateLayoutStyle settings={settings} />
             <Marquee
                 speed={marqueeStyles.speed}
                 autoFill={marqueeStyles.infinite}

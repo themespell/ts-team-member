@@ -5,7 +5,7 @@ import { getResponsiveStyles } from "./helper/responsiveStyles.js";
 import {getProLayout} from "./helper/getProLayout.js";
 
 import Details from "./details/details.jsx";
-import GenerateCommonStyle from '../style/CommonStyleGenerate.jsx';
+import GenerateLayoutStyle from "./helper/generateLayoutStyle.js";
 
 function StaticView({ team_members, settings, viewport, isEditor }) {
     const [ProLayoutComponent, setProLayoutComponent] = useState(null);
@@ -43,7 +43,7 @@ function StaticView({ team_members, settings, viewport, isEditor }) {
                 ...responsiveStyles,
             }}
         >
-            <GenerateCommonStyle settings={settings} />
+            <GenerateLayoutStyle settings={settings} />
             {team_members && team_members.length > 0 ? (
                 team_members.map((member, index) => (
                     <div key={index}>

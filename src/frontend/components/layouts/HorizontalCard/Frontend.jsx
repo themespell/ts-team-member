@@ -1,11 +1,14 @@
 import SocialIcons from "./SocialIcons.jsx";
 import { loadGoogleFont } from "../../helper/loadGoogleFont.js";
 import { getAnimationClasses } from "../../helper/motionControl.js";
-import TsMemberName from "../components/TsMemberName";
+
+import TsMemberName from "../__common/components/TsMemberName.jsx";
+import TsMemberDesignation from "../__common/components/TsMemberDesignation.jsx";
+import TsMemberDescription from "../__common/components/TsMemberDescription.jsx";
+
 import GenerateFancyCardStyle from './GenerateStyle'
-import TsMemberDesignation from "../components/TsMemberDesignation.jsx";
-import TsMemberDescription from "../components/TsMemberDescription.jsx";
-import TsMemberAvatar from "../components/TsMemberAvatar.jsx";
+import React from "react";
+
 const HorizontalCard = ({
   settings,
   id,
@@ -35,7 +38,14 @@ const HorizontalCard = ({
       <div className="bg-white rounded-[20px] overflow-hidden border border-purple-100 hover:border-purple-500">
         <div
           className="flex items-start p-6 gap-6 tsteam-horizontalcard-container">
-          <TsMemberAvatar details={details} id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`} imgSrc={imageUrl}  />
+          <img
+              id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`}
+              src={imageUrl}
+              alt={title}
+              className={`tsteam-member__image w-24 h-24 object-cover shadow-lg ${
+                  details ? "cursor-pointer" : ""
+              }`}
+          />
           {/* Content Section */}
           <div className="flex-1">
             <div className="flex justify-between items-start">

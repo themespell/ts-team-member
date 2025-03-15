@@ -1,4 +1,4 @@
-import CSSGenerator from "../../../../utils/css-generator";
+import CSSGenerator from "../../../utils/css-generator.js";
 import {
   getTsTeamOverlayCardImageStyle,
   getTsTeamOverlayCardOverlayStyle,
