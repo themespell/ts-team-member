@@ -229,6 +229,7 @@ const Carousel = ({
         : currentSlide;
 
     return (
+        <>
         <div className={`relative w-full ${containerClassName}`}>
             <div className="overflow-hidden">
                 <div
@@ -253,39 +254,42 @@ const Carousel = ({
                     ))}
                 </div>
             </div>
-
-            <button
-                onClick={prevSlide}
-                className={`absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white rounded-full shadow-lg z-10 ${arrowClassName}`}
-                style={{
-                    backgroundColor: navigationStyle.backgroundColor,
-                    color: navigationStyle.color,
-                    fontSize: navigationStyle.size
-            }}
-            >
-                ←
-            </button>
-            <button
-                onClick={nextSlide}
-                className={`absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white rounded-full shadow-lg z-10 ${arrowClassName}`}
-                style={{
-                    backgroundColor: navigationStyle.backgroundColor,
-                    color: navigationStyle.color,
-                    fontSize: navigationStyle.size
-                }}
-            >
-                →
-            </button>
-
+        </div>
+            {/* Navigation Buttons */}
+            <div>
+                <button
+                    onClick={prevSlide}
+                    className={`absolute left-[-2rem] top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white hover:bg-purple-500 border-none text-purple-500 hover:text-white rounded-full shadow-lg z-10 ${arrowClassName}`}
+                    style={{
+                        backgroundColor: navigationStyle.backgroundColor,
+                        color: navigationStyle.color,
+                        fontSize: navigationStyle.size
+                    }}
+                >
+                    ←
+                </button>
+                <button
+                    onClick={nextSlide}
+                    className={`absolute right-[-2rem] top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white hover:bg-purple-500 border-none text-purple-500 hover:text-white rounded-full shadow-lg z-10 ${arrowClassName}`}
+                    style={{
+                        backgroundColor: navigationStyle.backgroundColor,
+                        color: navigationStyle.color,
+                        fontSize: navigationStyle.size
+                    }}
+                >
+                    →
+                </button>
+            </div>
             {/* Dot Navigation */}
             <div
-                className="absolute bottom-4 left-1/2 -translate-x-1/2 flex"
+                className="relative mt-6 left-1/2 -translate-x-1/2 flex justify-center"
                 style={{gap: dotStyle.gap}}
             >
                 {Array.from({ length: totalOriginalSlides }).map((_, index) => (
                     <button
                         key={`dot-${index}`}
                         onClick={() => goToSlide(index)}
+                        className="p-0 border-none"
                         style={{
                             width: dotStyle.size,
                             height: dotStyle.size,
@@ -299,7 +303,7 @@ const Carousel = ({
                     />
                 ))}
             </div>
-        </div>
+        </>
     );
 };
 
