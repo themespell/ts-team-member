@@ -1,28 +1,47 @@
+// Helper function to add !important to all CSS values
+const addImportantToStyles = (styleObject) => {
+    const importantStyles = {};
+
+    for (const property in styleObject) {
+        if (styleObject.hasOwnProperty(property)) {
+            const value = styleObject[property];
+            // Check if the value already has !important
+            if (typeof value === 'string' && !value.includes('!important')) {
+                importantStyles[property] = value + ' !important';
+            } else {
+                importantStyles[property] = value;
+            }
+        }
+    }
+
+    return importantStyles;
+};
+
 export const getTsTeamMemberNameStyle = (settings) => {
     const tsTeamMemberNameCSS = {}
     if(settings?.layout?.color?.memberName){
-        tsTeamMemberNameCSS['color'] = settings?.layout?.color?.memberName
+        tsTeamMemberNameCSS['color'] = settings?.layout?.color?.memberName;
     }
     if(settings?.typography?.name){
-        tsTeamMemberNameCSS['font-family'] = settings?.typography?.name
+        tsTeamMemberNameCSS['font-family'] = settings?.typography?.name;
     }
-    if( settings?.typography?.name_fontSize){
-        tsTeamMemberNameCSS['font-size'] =    settings?.typography?.name_fontSize
+    if(settings?.typography?.name_fontSize){
+        tsTeamMemberNameCSS['font-size'] = settings?.typography?.name_fontSize;
     }
     if(settings?.typography?.name_fontWeight){
-        tsTeamMemberNameCSS['font-weight'] =  settings?.typography?.name_fontWeight
+        tsTeamMemberNameCSS['font-weight'] = settings?.typography?.name_fontWeight;
     }
     if(settings?.typography?.name_textTransform){
-        tsTeamMemberNameCSS['text-transform'] =    settings?.typography?.name_textTransform
+        tsTeamMemberNameCSS['text-transform'] = settings?.typography?.name_textTransform;
     }
     if(settings?.typography?.name_letterSpacing){
-        tsTeamMemberNameCSS['letter-spacing'] =    settings?.typography?.name_letterSpacing
+        tsTeamMemberNameCSS['letter-spacing'] = settings?.typography?.name_letterSpacing;
     }
-    if( settings?.typography?.name_lineHeight){
-        tsTeamMemberNameCSS['line-height'] =  settings?.typography?.name_lineHeight
+    if(settings?.typography?.name_lineHeight){
+        tsTeamMemberNameCSS['line-height'] = settings?.typography?.name_lineHeight;
     }
 
-    return tsTeamMemberNameCSS;
+    return addImportantToStyles(tsTeamMemberNameCSS);
 }
 
 export const getTsTeamMemberDesignationStyle = (settings) => {
@@ -50,9 +69,8 @@ export const getTsTeamMemberDesignationStyle = (settings) => {
         tsTeamMemberDesignationCSS['line-height'] = settings.typography.designation_lineHeight;
     }
 
-    return tsTeamMemberDesignationCSS;
+    return addImportantToStyles(tsTeamMemberDesignationCSS);
 };
-
 
 export const getTsTeamMemberDescriptionStyle = (settings) => {
     const tsTeamMemberDescriptionCSS = {};
@@ -79,9 +97,8 @@ export const getTsTeamMemberDescriptionStyle = (settings) => {
         tsTeamMemberDescriptionCSS['line-height'] = settings.typography.description_lineHeight;
     }
 
-    return tsTeamMemberDescriptionCSS;
+    return addImportantToStyles(tsTeamMemberDescriptionCSS);
 };
-
 
 export const getTsTeamMemberAvatarStyle = (settings) => {
     const tsTeamMemberAvatarCSS = {};
@@ -98,5 +115,5 @@ export const getTsTeamMemberAvatarStyle = (settings) => {
         tsTeamMemberAvatarCSS['border-color'] = settings.layout.color.imageBorder;
     }
 
-    return tsTeamMemberAvatarCSS;
+    return addImportantToStyles(tsTeamMemberAvatarCSS);
 };
