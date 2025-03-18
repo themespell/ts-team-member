@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "tsteam/team-showcase",
+  "title": "Team Showcase",
+  "category": "widgets",
+  "icon": "groups",
+  "description": "Display team members in a beautiful showcase",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "tsteam-showcase",
+  "editorScript": "file:./build/index.js",
+  "editorStyle": "file:./build/index.css",
+  "attributes": {
+    "teamId": {
+      "type": "string",
+      "default": ""
+    }
+  }
+}
