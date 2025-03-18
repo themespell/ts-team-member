@@ -71,6 +71,7 @@ final class TSTeam {
 		TSTeam\AJAX::init();
 		TSTeam\Enqueue::init();
 		TSTeam\Frontend::init();
+		TSTeam\Addons::init();
 	}
 
 	public function load_textdomain() {
