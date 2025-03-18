@@ -11,19 +11,52 @@ import TableView from "./components/TableView.jsx";
 import ConfettiView from "./components/ConfettiView.jsx";
 import { fetchData } from '../common/services/fetchData.js';
 import {toastNotification} from "../common/utils/toastNotification.js";
+import {elementorLoader} from "./utils/elementorLoader.js";
+import {gutenbergLoader} from "./utils/gutenbergLoader.js";
 
-const showcaseElements = document.querySelectorAll('.tsteam-showcase');
-
-showcaseElements.forEach(element => {
+function initializeReact(element) {
   const id = element.getAttribute('data-id');
+  if (!id) {
+    console.error("No data-id found for element:", element);
+    return;
+  }
 
   createRoot(element).render(
-    <StrictMode>
-      <Frontend
-        id={id}
-      />
-    </StrictMode>
+      <StrictMode>
+        <Frontend id={id} />
+      </StrictMode>
   );
+}
+
+function initializeAllWidgets() {
+  const showcaseElements = document.querySelectorAll('.tsteam-showcase');
+  showcaseElements.forEach((element) => {
+    initializeReact(element);
+  });
+}
+
+// Main initialization
+document.addEventListener('DOMContentLoaded', () => {
+  // Handle Elementor's edit mode
+  if (window.elementorFrontend && window.elementorFrontend.isEditMode()) {
+    elementorLoader(initializeReact);
+  }
+
+  // Handle Gutenberg editor
+  if (window.wp && window.wp.data && window.wp.data.select) {
+    const isGutenbergEditor = !!window.wp.data.select('core/edit-post') || !!window.wp.data.select('core/editor');
+    if (isGutenbergEditor) {
+      gutenbergLoader(initializeReact);
+    }
+  }
+
+  // Handle frontend
+  if (
+      !(window.elementorFrontend && window.elementorFrontend.isEditMode()) &&
+      !(window.wp && window.wp.data && window.wp.data.select)
+  ) {
+    initializeAllWidgets();
+  }
 });
 
 function Frontend({ id }) {
