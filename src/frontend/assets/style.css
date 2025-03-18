@@ -58,6 +58,16 @@
 	color: #FFFFFF;
 }
 
+#tsteam__copy-design {
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.3s, visibility 0.3s;
+	transform: translateY(-50%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 3rem;
+}
 
 @keyframes progress-bar-fill-0 {
 	0% {
