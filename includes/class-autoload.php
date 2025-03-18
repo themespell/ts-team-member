@@ -7,6 +7,7 @@ class Autoload {
 		$directories = array(
 			TSTEAM_INCLUDES_DIR_PATH,
 			TSTEAM_INCLUDES_DIR_PATH . 'ajax/',
+			TSTEAM_INCLUDES_DIR_PATH . 'addons/',
 		);
 
 		foreach ( $directories as $directory ) {
