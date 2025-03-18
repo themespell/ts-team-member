@@ -32,7 +32,7 @@ const Tiles = ({
     <>
       <GenerateTilesStyle settings={settings} />
 
-      <div className="relative group transition-all w-full flex flex-col max-w-sm p-6 items-center justify-center gap-2 bg-[#F7F7FF] hover:bg-[#6F3ED7] tsteam-tiles-container">
+      <div className="relative group transition-all rounded-lg w-full flex flex-col max-w-sm min-h-[440px] p-6 items-center justify-center gap-2 bg-white hover:bg-[#6F3ED7] tsteam-tiles-container">
         <img
           id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`}
           src={imageUrl}
