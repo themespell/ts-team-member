@@ -32,7 +32,7 @@ const Tiles = ({
     <>
       <GenerateTilesStyle settings={settings} />
 
-      <div className="relative group w-full flex flex-col max-w-sm p-6 items-center justify-center gap-2 bg-gray-300 tsteam-tiles-container">
+      <div className="relative group transition-all w-full flex flex-col max-w-sm p-6 items-center justify-center gap-2 bg-[#F7F7FF] hover:bg-[#6F3ED7] tsteam-tiles-container">
         <img
           id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`}
           src={imageUrl}
@@ -42,14 +42,20 @@ const Tiles = ({
           }`}
         />
         {/* Overlay Content - Hidden by default, visible on hover */}
-        {title && <TsMemberName> {title} </TsMemberName>}
-        {subtitle && <TsMemberDesignation> {subtitle} </TsMemberDesignation>}
+        {title && (
+          <TsMemberName className="group-hover:text-white text-[22px] ">
+            {title}
+          </TsMemberName>
+        )}
+        {subtitle && (
+          <TsMemberDesignation className="group-hover:text-white text-sm">
+            {subtitle}
+          </TsMemberDesignation>
+        )}
 
         {details && (
-            <div className="mt-2 flex items-center justify-center">
-              {details}
-            </div>
-          )}
+          <div className="mt-2 flex items-center justify-center">{details}</div>
+        )}
         <div className="flex gap-1 my-4 ">
           <SocialIcons socialIcons={socialIcons} settings={settings} />
         </div>

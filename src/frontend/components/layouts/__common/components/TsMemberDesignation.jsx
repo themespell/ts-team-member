@@ -1,8 +1,8 @@
 
 
-const TsMemberDesignation = ({children}) => {
+const TsMemberDesignation = ({children, className=''}) => {
     return (
-        <h4 className="tsteam-member__designation" > {children} </h4>
+        <h4 className={`tsteam-member__designation ${className} `} > {children} </h4>
     )
 }
 
