@@ -5,8 +5,10 @@ import editorLocal from "../states/editorLocal.js";
 import {Monitor, Tablet, Smartphone, Code, CircleX, Copy, ClipboardPaste, ClipboardCopy} from 'lucide-react';
 import {Button, Dropdown} from "antd";
 import {TsModal} from "../../common/components/controls/tsControls";
+import {getTranslations} from "../../common/utils/translations.js";
 
 function Topbar({ type, onCopySettings, onPasteSettings}) {
+    const translations = getTranslations();
     const tsteamLogo = tsteam_settings.assets_path;
     const isPro = !!tsteam_settings.is_pro ?? null;
     const isLicenseInactive = !!window.tsTeamPro?.is_licence_inactive ?? null;
@@ -43,7 +45,7 @@ function Topbar({ type, onCopySettings, onPasteSettings}) {
                 <TsButton
                     label={
                         <>
-                            <ClipboardCopy /> Copy Design
+                            <ClipboardCopy /> {translations.copyDesign}
                         </>
                     }
                     onClick={onCopySettings}
@@ -56,7 +58,7 @@ function Topbar({ type, onCopySettings, onPasteSettings}) {
                 <TsButton
                     label={
                         <>
-                            <ClipboardPaste /> Paste Design
+                            <ClipboardPaste /> {translations.pasteDesign}
                         </>
                     }
                     onClick={onPasteSettings}
@@ -117,7 +119,7 @@ function Topbar({ type, onCopySettings, onPasteSettings}) {
                         onClick={handleCodeClick}
                     />
                     <TsButton
-                        label="Publish"
+                        label={translations.publish}
                         className="tsteam__editor-button"
                         onClick={handlePublishClick}
                     />

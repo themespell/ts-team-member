@@ -7,8 +7,10 @@ import TeamMemberDetails from './TeamMember/TeamMemberDetails';
 import TeamMemberCustom from './TeamMember/TeamMemberCustom';
 
 import { fetchData } from '../../../services/fetchData';
+import {getTranslations} from "../../../utils/translations.js";
 
 function TeamMemberFields({ form, post_id }) {
+  const translations = getTranslations();
   const [memberImage, setMemberImage] = useState(null);
   const [memberInformation, setMemberInformation] = useState(null);
   const [socialLinks, setSocialLinks] = useState(null);

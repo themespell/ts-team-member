@@ -1,34 +1,36 @@
 import { TsInput, TsEditor } from '../../../controls/tsControls';
+import {getTranslations} from "../../../../utils/translations.js";
 
 function TeamMemberDetails({ form, member_information }) {
+  const translations = getTranslations();
   return (
     <div className="p-6">
         <div className='grid grid-cols-2 gap-3'>
 
         <TsInput 
-        label="Member Telephone"
+        label={translations.memberTelephone}
         name="member_telephone"
         />
 
         <TsInput
-        label="Years of Experience"
+        label={translations.yearsOfExperience}
         name="member_experience"
         />
 
         <TsInput
-        label="Company"
+        label={translations.company}
         name="member_company"
         />
 
         <TsInput
-        label="Location"
+        label={translations.location}
         name="member_location"
         />
 
         </div>
 
         <TsEditor
-        label="Details Information" 
+        label={translations.detailsInformation}
         name="member_information"
         defaultValue={member_information}
         required={false} 
