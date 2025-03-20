@@ -1,23 +1,25 @@
 import { TsSelect, TsSlider, TsDivider, TsSwitch } from '../../../../common/components/controls/tsControls';
 import editorStore from '../../../states/editorStore';
 import editorLocal from "../../../states/editorLocal.js";
+import {getTranslations} from "../../../../common/utils/translations.js";
 
 
 function ContentTab() {
+  const translations = getTranslations();
   const { selectedView, containerSettings, columnSettings, carouselSettings, marqueeSettings, showcaseDetails } = editorStore();
   const { availableLayouts, availableFlexLayouts, availableTableLayouts, availableViews, availableTransition, availableDelay, availableDetails } = editorLocal();
 
   return (
     <div className="mb-16">
         <TsSelect
-            label="View Style"
+            label={translations.viewStyle}
             name="selectedView"
             options={availableViews}
             output="object"
         />
         {(selectedView.value === 'grid' || selectedView.value === 'carousel' || selectedView.value === 'marquee') && (
             <TsSelect
-                label="Layout"
+                label={translations.layout}
                 name="selectedLayout"
                 options={availableLayouts}
                 output="object"
@@ -26,7 +28,7 @@ function ContentTab() {
 
         {selectedView.value === 'flex' && (
             <TsSelect
-                label="Choose a Layout"
+                label={translations.layout}
                 name="selectedLayout"
                 options={availableFlexLayouts}
                 output="object"
@@ -35,7 +37,7 @@ function ContentTab() {
 
         {selectedView.value === 'table' && (
             <TsSelect
-                label="Choose a Layout"
+                label={translations.layout}
                 name="selectedLayout"
                 options={availableTableLayouts}
                 output="object"
@@ -48,7 +50,7 @@ function ContentTab() {
       {/*/>*/}
 
      <TsSelect
-            label="Details Style"
+            label={translations.detailsStyle}
             name="selectedDetails"
             options={availableDetails}
             defaultValue="none"
@@ -61,20 +63,20 @@ function ContentTab() {
                    label="Grid Settings"
                />
                <TsSlider
-                   label="Container Width"
+                   label={translations.containerWidth}
                    range={containerSettings.width.range}
                    name='containerSettings.width.default'
                    responsive={true}
                    unit={true}
                />
                <TsSlider
-                   label="Columns"
+                   label={translations.columns}
                    range={columnSettings.column.range}
                    name='columnSettings.column.default'
                    responsive={true}
                />
                <TsSlider
-                   label="Column Gap"
+                   label={translations.columnGap}
                    range={columnSettings.gap.range}
                    name='columnSettings.gap.default'
                    responsive={true}
@@ -89,14 +91,14 @@ function ContentTab() {
                     label="Flex Settings"
                 />
                 <TsSlider
-                    label="Container Width"
+                    label={translations.containerWidth}
                     range={containerSettings.width.range}
                     name='containerSettings.width.default'
                     responsive={true}
                     unit={true}
                 />
                 <TsSlider
-                    label="Column Gap"
+                    label={translations.columnGap}
                     range={columnSettings.gap.range}
                     name='columnSettings.gap.default'
                     responsive={true}
@@ -111,7 +113,7 @@ function ContentTab() {
         label="Carousel Settings"
       />
           <TsSlider
-              label="Container Width"
+              label={translations.containerWidth}
               range={containerSettings.width.range}
               name='containerSettings.width.default'
               responsive={true}

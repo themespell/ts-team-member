@@ -1,18 +1,20 @@
 import { Modal } from 'antd';
 import FormContainer from '../helper/form/FormContainer';
 import './style.css';
+import {getTranslations} from "../../utils/translations.js";
 
 function TsModal({ actionType, formSupport, name, type, id, isOpen, isClose, width, children }) {
+  const translations = getTranslations();
   return (
     <Modal
       className='ts-modal'
       title={
         actionType === 'create' 
-          ? `Add New ${name}` 
+          ? `${translations.add} ${name}`
           : actionType === 'edit' 
-          ? `Edit ${name}` 
+          ? `${translations.edit} ${name}`
           : actionType === 'delete' 
-          ? `Delete ${name}` 
+          ? `${translations.delete} ${name}`
           : ''
       }
       open={isOpen}

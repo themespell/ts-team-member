@@ -5,6 +5,7 @@ import { deleteData } from "../services/deleteData";
 import { toastNotification } from '.././utils/toastNotification.js';
 import { TsModal } from './controls/tsControls.js';
 import { FilePenLine, Brush, Trash2, AlertTriangle } from 'lucide-react';
+import {getTranslations} from "../utils/translations.js";
 
 import commonStore from "../states/commonStore.js";
 
@@ -13,6 +14,7 @@ import TsButton from "./controls/TsButton.jsx";
 const { Text } = Typography;
 
 function DataTable({ type, title, editor }) {
+  const translations = getTranslations();
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
@@ -69,7 +71,7 @@ function DataTable({ type, title, editor }) {
                         label: (
                             <div className="tsteam__action-dropdown flex items-center w-full space-x-2 p-2 rounded-xl">
                                 <FilePenLine size={20} className="tsteam__color--icon" />
-                                <span>Edit</span>
+                                <span>{translations.edit}</span>
                             </div>
                         ),
                         onClick: () => handleEdit(record.key),
@@ -81,7 +83,7 @@ function DataTable({ type, title, editor }) {
                               label: (
                                   <div className="tsteam__action-dropdown flex items-center w-full space-x-2 p-2 rounded-xl">
                                     <Brush size={20} className="tsteam__color--icon" />
-                                    <span>Edit Design</span>
+                                    <span>{translations.editDesign}</span>
                                   </div>
                               ),
                               onClick: () => handleEditor(record.key, type),
@@ -93,7 +95,7 @@ function DataTable({ type, title, editor }) {
                         label: (
                             <div className="tsteam__action-dropdown flex items-center space-x-2 w-full p-2 rounded-xl">
                               <Trash2 size={20} className="text-red-500" />
-                              <span>Delete</span>
+                              <span>{translations.delete}</span>
                             </div>
                         ),
                         onClick: () => handleDelete(record.key),
@@ -201,20 +203,20 @@ function DataTable({ type, title, editor }) {
                 </div>
 
                 {/* Text Content */}
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Are you sure?</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">{translations.areYouSure}</h3>
                 <p className="text-gray-600 text-center mb-8">
-                    You're going to delete this "{title}". Are you sure?
+                    {translations.deleteConfirmation} "{title}". {translations.areYouSure}
                 </p>
 
                 {/* Buttons */}
                 <div className="flex space-x-4 w-full">
                     <TsButton
-                        label="No, Keep It."
+                        label={translations.noKeepIt}
                         onClick={() => setDeleteModalOpen(false)}
                         className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-lg"
                     />
                     <TsButton
-                        label="Yes, Delete!"
+                        label={translations.yesDelete}
                         onClick={confirmDelete}
                         className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-lg"
                     />

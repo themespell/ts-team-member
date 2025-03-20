@@ -7,8 +7,10 @@ import TeamShowcaseFields from './TeamShowcaseFields.jsx';
 import TeamMemberFields from './TeamMemberFields.jsx';
 
 import commonStore from '../../../states/commonStore.js';
+import {getTranslations} from "../../../utils/translations.js";
 
 function FormContainer({ actionType, type, name, post_id }) {
+  const translations = getTranslations();
   const [form] = Form.useForm();
 
   const { saveSettings } = commonStore((state) => ({
@@ -68,12 +70,12 @@ function FormContainer({ actionType, type, name, post_id }) {
             <TsButton
                 label={
                   actionType === 'create'
-                      ? `Create ${name}`
+                      ? `${translations.create} ${name}`
                       : actionType === 'edit'
-                          ? `Update ${name}`
+                          ? `${translations.update} ${name}`
                           : actionType === 'delete'
-                              ? `Delete ${name}`
-                              : `Create ${name}`
+                              ? `${translations.delete} ${name}`
+                              : `${translations.create} ${name}`
                 }
                 htmlType="submit"
             />
