@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { Table, Dropdown, Image } from 'antd';
 import { fetchData } from '../services/fetchData';
 import { deleteData } from "../services/deleteData";
+import {duplicateData} from "../services/duplicateData.js";
 import { toastNotification } from '.././utils/toastNotification.js';
 import { TsModal } from './controls/tsControls.js';
-import { FilePenLine, Brush, Trash2, AlertTriangle } from 'lucide-react';
+import { FilePenLine, Brush, Copy, Trash2, AlertTriangle } from 'lucide-react';
 import {getTranslations} from "../utils/translations.js";
 
 import commonStore from "../states/commonStore.js";
@@ -22,6 +23,10 @@ function DataTable({ type, title, editor }) {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
 
+  const isPro = window.tsteam_settings?.is_pro || false;
+  const isLicenseInactive = window.tsTeamPro?.is_licence_inactive || false;
+  const canDuplicate = isPro && !isLicenseInactive;
+
   const { saveSettings, updateModal, reloadData } = commonStore((state) => ({
     saveSettings: state.saveSettings,
     updateModal: state.updateModal,
@@ -36,7 +41,7 @@ function DataTable({ type, title, editor }) {
           key: item.post_id,
           ...item,
         }));
-        
+
         const dynamicColumns = Object.keys(showcaseData[0])
         .filter((key) => key !== 'post_id' && key !== 'key')
         .map((key) => ({
@@ -90,6 +95,22 @@ function DataTable({ type, title, editor }) {
                             },
                           ]
                           : []),
+                        {
+                            key: 'duplicate',
+                            label: (
+                                <div className="tsteam__action-dropdown flex items-center w-full space-x-2 p-2 rounded-xl">
+                                    <div style={{ width: '20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Copy size={20} className={canDuplicate ? "tsteam__color--icon" : "text-gray-500"} />
+                                    </div>
+                                    <span className={!canDuplicate ? "text-gray-500" : ""} style={{ flexGrow: 1 }}>{translations.duplicate || 'Duplicate'}</span>
+                                    {!canDuplicate && (
+                                        <span className="bg-amber-500 text-white text-xs px-2 py-0.5 rounded font-medium">PRO</span>
+                                    )}
+                                </div>
+                            ),
+                            onClick: canDuplicate ? () => handleDuplicate(record.key) : () => handleProFeature('duplicate'),
+                            disabled: !canDuplicate,
+                        },
                       {
                         key: 'delete',
                         label: (
@@ -148,6 +169,23 @@ function DataTable({ type, title, editor }) {
             });
     };
 
+    const handleDuplicate = (post_id) => {
+        duplicateData(`tsteam/${type}/duplicate`, post_id)
+            .then((response) => {
+                if (response.success) {
+                    toastNotification('success', `${title} Duplicated`, `The ${title} has been successfully duplicated.`);
+                    // Use saveSettings to update reloadData
+                    saveSettings('reloadData', !reloadData);
+                } else {
+                    toastNotification('error', 'Error', `There was an error duplicating the ${title}.`);
+                }
+            })
+            .catch((error) => {
+                console.error('Duplicate error:', error);
+                toastNotification('error', 'Error', `There was an error duplicating the ${title}.`);
+            });
+    };
+
   const handleEdit = (post_id) => {
     setSelectedPost(post_id);
     saveSettings('updateModal', true);
@@ -176,7 +214,11 @@ function DataTable({ type, title, editor }) {
       dataSource={data}
       loading={loading}
       pagination={{
-          position: ['none', 'bottomCenter'],
+          position: ['bottomCenter'],
+          defaultPageSize: 10,
+          showSizeChanger: true,
+          pageSizeOptions: [10, 20, 50, 100],  // Use numbers instead of strings
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
       }}
       />
 
