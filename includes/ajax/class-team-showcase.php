@@ -21,6 +21,7 @@ class TeamShowcase {
 		add_action( 'wp_ajax_tsteam/team_showcase/create', array( $self, 'create_showcase' ) );
 		add_action( 'wp_ajax_tsteam/team_showcase/update', array( $self, 'update_showcase' ) );
 		add_action( 'wp_ajax_tsteam/team_showcase/update/settings', array( $self, 'update_showcase_settings' ) );
+		add_action( 'wp_ajax_tsteam/team_showcase/duplicate', array( $self, 'duplicate_showcase' ) );
 		add_action( 'wp_ajax_tsteam/team_showcase/delete', array( $self, 'delete_showcase' ) );
 	}
 
@@ -34,6 +35,9 @@ class TeamShowcase {
 
 		$args = array(
 			'post_type' => 'tsteam-showcase',
+			'posts_per_page' => -1,
+            'orderby' => 'date',
+            'order' => 'DESC'
 		);
 
 		$query = new \WP_Query( $args );
@@ -194,6 +198,65 @@ class TeamShowcase {
 		update_post_meta( $post_id, 'tsteam_showcase_settings', $showcase_settings );
 		wp_send_json_success( array( 'post_id' => $post_id ) );
 	}
+
+    public function duplicate_showcase() {
+        check_ajax_referer( 'tsteam_nonce' );
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die();
+        }
+
+        try {
+            $post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
+
+            if ( ! $post_id ) {
+                wp_send_json_error( array( 'message' => 'Invalid ID' ) );
+                return;
+            }
+
+            // Get original post data
+            $post = get_post( $post_id );
+
+            if ( ! $post || $post->post_type !== 'tsteam-showcase' ) {
+                wp_send_json_error( array( 'message' => 'Showcase not found' ) );
+                return;
+            }
+
+            // Get the team member IDs and showcase settings stored as meta data
+            $team_member_ids = get_post_meta( $post_id, 'tsteam_team_members', true );
+            $showcase_settings = get_post_meta( $post_id, 'tsteam_showcase_settings', true );
+
+            // Create new post args
+            $args = array(
+                'post_title'   => $post->post_title . ' (Copy)',
+                'post_content' => $post->post_content,
+                'post_status'  => 'publish',
+                'post_author'  => get_current_user_id(),
+                'post_type'    => 'tsteam-showcase',
+            );
+
+            // Insert the new post
+            $new_post_id = wp_insert_post( $args );
+
+            if ( is_wp_error( $new_post_id ) ) {
+                wp_send_json_error( array( 'message' => 'Failed to duplicate showcase: ' . $new_post_id->get_error_message() ) );
+                return;
+            }
+
+            // Copy over the meta data
+            update_post_meta( $new_post_id, 'tsteam_team_members', $team_member_ids );
+            update_post_meta( $new_post_id, 'tsteam_showcase_settings', $showcase_settings );
+
+            wp_send_json_success(
+                array(
+                    'message' => 'Showcase duplicated successfully',
+                    'post_id' => $new_post_id
+                )
+            );
+        } catch (Exception $e) {
+            wp_send_json_error( array( 'message' => 'Exception occurred: ' . $e->getMessage() ) );
+        }
+    }
 
 	public function delete_showcase() {
 		check_ajax_referer( 'tsteam_nonce' );
