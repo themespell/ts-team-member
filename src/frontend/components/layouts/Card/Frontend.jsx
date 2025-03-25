@@ -5,7 +5,9 @@ import { getAnimationClasses } from "../../helper/motionControl.js";
 import TsMemberName from "../__common/components/TsMemberName.jsx";
 import TsMemberDesignation from "../__common/components/TsMemberDesignation.jsx";
 import TsMemberDescription from "../__common/components/TsMemberDescription.jsx";
-import GenerateCardStyle from "./GenerateStyle.jsx";
+
+import './style.css';
+
 const Card = ({
   settings,
   id,
@@ -30,7 +32,6 @@ const Card = ({
 
   const renderContent = () => (
    <>
-   <GenerateCardStyle settings={settings} />
     <div className="w-full flex flex-col items-center">
       <img
         id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`}
@@ -48,12 +49,8 @@ const Card = ({
 
           {subtitle && <TsMemberDesignation> {subtitle} </TsMemberDesignation>}
 
-          <hr
-            style={{
-              backgroundColor: settings?.tscard?.color?.separator,
-            }}
-            className="h-1 w-16 bg-red-500 mt-2 mb-4 rounded-2xl"
-          ></hr>
+          <hr className="tscard__separator"></hr>
+
 
           {description && (
             <TsMemberDescription> {description} </TsMemberDescription>
