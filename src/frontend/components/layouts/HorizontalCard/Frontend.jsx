@@ -15,9 +15,9 @@ const HorizontalCard = ({
   description,
   socialIcons,
   details,
+  animationConfig
 }) => {
 
-  const animationConfig = getAnimationClasses(settings.hoverAnimation);
   const renderContent = () => (
     <>
     <div className="w-full">

@@ -1,6 +1,6 @@
 import React from "react";
 import SocialIcons from "./SocialIcons.jsx";
-import { getAnimationClasses } from "../../helper/motionControl.js";
+// import { getAnimationClasses } from "../../helper/motionControl.js";
 import TsMemberName from "../__common/components/TsMemberName.jsx";
 import TsMemberDesignation from "../__common/components/TsMemberDesignation.jsx";
 import TsMemberDescription from "../__common/components/TsMemberDescription.jsx";
@@ -16,9 +16,11 @@ const Card = ({
   description,
   socialIcons,
   details,
+  animationConfig
 }) => {
 
-  const animationConfig = getAnimationClasses(settings.hoverAnimation);
+  // const animationConfig = getAnimationClasses(settings.hoverAnimation);
+  console.log("Passing animationConfig to Card:", animationConfig);
 
   const renderContent = () => (
    <>

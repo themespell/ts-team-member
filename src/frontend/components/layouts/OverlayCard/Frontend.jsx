@@ -14,9 +14,8 @@ const OverlayCard = ({
   description,
   socialIcons,
   details,
+  animationConfig
 }) => {
-
-  const animationConfig = getAnimationClasses(settings.hoverAnimation);
 
   const renderContent = () => (
    <>
