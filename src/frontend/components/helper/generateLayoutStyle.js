@@ -176,6 +176,27 @@ const GenerateLayoutStyle = ({ settings = {} }) => {
     cssGenerator.addClassStyles(".tsteam-member__description", getTsTeamMemberDescriptionStyle(settings));
     cssGenerator.addClassStyles(".tsteam-member__image", getTsTeamMemberAvatarStyle(settings));
 
+    // Dynamically generate CSS variables for typography
+    if (settings?.typography) {
+        const { name, designation, description } = settings.typography;
+
+        if (name) {
+            cssGenerator.addClassStyles(":root", {
+                "--team-member-name-font-family": name,
+            });
+        }
+        if (designation) {
+            cssGenerator.addClassStyles(":root", {
+                "--team-member-designation-font-family": designation,
+            });
+        }
+        if (description) {
+            cssGenerator.addClassStyles(":root", {
+                "--team-member-description-font-family": description,
+            });
+        }
+    }
+
     // Generate final CSS
     const generatedCSS = cssGenerator.generateCSS();
 
