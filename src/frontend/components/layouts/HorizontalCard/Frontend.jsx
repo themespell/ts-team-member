@@ -1,5 +1,4 @@
 import SocialIcons from "./SocialIcons.jsx";
-import { loadGoogleFont } from "../../helper/loadGoogleFont.js";
 import { getAnimationClasses } from "../../helper/motionControl.js";
 
 import TsMemberName from "../__common/components/TsMemberName.jsx";
@@ -17,16 +16,6 @@ const HorizontalCard = ({
   socialIcons,
   details,
 }) => {
-  // Load fonts if specified
-  if (settings?.typography?.name) {
-    loadGoogleFont(settings.typography.name);
-  }
-  if (settings?.typography?.designation) {
-    loadGoogleFont(settings.typography.designation);
-  }
-  if (settings?.typography?.description) {
-    loadGoogleFont(settings.typography.description);
-  }
 
   const animationConfig = getAnimationClasses(settings.hoverAnimation);
   const renderContent = () => (
