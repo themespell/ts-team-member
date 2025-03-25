@@ -1,6 +1,5 @@
 import React from "react";
 import SocialIcons from "./SocialIcons.jsx";
-import { loadGoogleFont } from "../../helper/loadGoogleFont.js";
 import { getAnimationClasses } from "../../helper/motionControl.js";
 import TsMemberName from "../__common/components/TsMemberName.jsx";
 import TsMemberDesignation from "../__common/components/TsMemberDesignation.jsx";
@@ -18,15 +17,6 @@ const Card = ({
   socialIcons,
   details,
 }) => {
-  if (settings?.typography?.name) {
-    loadGoogleFont(settings.typography.name);
-  }
-  if (settings?.typography?.designation) {
-    loadGoogleFont(settings.typography.designation);
-  }
-  if (settings?.typography?.description) {
-    loadGoogleFont(settings.typography.description);
-  }
 
   const animationConfig = getAnimationClasses(settings.hoverAnimation);
 
