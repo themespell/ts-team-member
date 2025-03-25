@@ -1,3 +1,6 @@
+/*Layout Styles*/
+@import "layoutStyles.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
