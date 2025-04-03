@@ -1,0 +1,15 @@
+:root {
+    --tshorizontal-borderColor: #ccc; /* Default border color */
+    --tshorizontal-borderColor-hover: blue; /* Default hover border color */
+}
+
+.tshorizontal__border-color {
+    border: 1px solid var(--tshorizontal-borderColor, #ccc); /* Fallback to #ccc if variable is not defined */
+    border-radius: 20px; /* Rounded corners */
+    overflow: hidden; /* Ensures content stays within rounded borders */
+    background-color: white; /* Background color */
+}
+
+.tshorizontal__border-color:hover {
+    border-color: var(--tshorizontal-borderColor-hover, blue); /* Fallback to blue if variable is not defined */
+}
