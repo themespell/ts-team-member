@@ -39,6 +39,10 @@ src
 *.sql
 *.tar.gz
 *.zip
+blocks/src
+blocks/node_modules
+blocks/package.json
+blocks/package-lock.json
 
 !includes/library/
 !includes/library/freemius/

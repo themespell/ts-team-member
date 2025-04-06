@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { hideAdminElements } from './utils/utils.js';
 import { fetchData } from '../common/services/fetchData.js';
 import { TsLoader } from '../common/components/controls/tsControls.js';
+import {getTranslations} from "../common/utils/translations.js";
 
 import editorLocal from "./states/editorLocal.js";
 import editorStore from './states/editorStore.js';
@@ -22,6 +23,7 @@ import TableView from "../frontend/components/TableView.jsx";
 import ConfettiView from "../frontend/components/ConfettiView.jsx";
 
 function Editor() {
+  const translations = getTranslations();
   const isPro = tsteam_settings.is_pro;
   const { isEditor, viewport, setViewport } = editorLocal();
   const { postType } = editorStore();
@@ -76,7 +78,7 @@ function Editor() {
   if (isLoading || postData === null) {
     return (
         <TsLoader
-            label="Loading Editor"
+            label={translations.loadingEditor}
         />
     );
   }

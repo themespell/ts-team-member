@@ -1,8 +1,10 @@
 import TsNotice from "../../common/components/controls/TsNotice.jsx";
 import TsButton from "../../common/components/controls/TsButton.jsx";
+import {getTranslations} from "../../common/utils/translations.js";
 
 function Dashboard() {
     const tsteamImage = tsteam_settings.assets_path;
+    const translations = getTranslations();
     return (
         <div className="min-h-fit flex">
             {/* Main Content */}
@@ -10,7 +12,7 @@ function Dashboard() {
                 <TsNotice
                     heading={'Unlock Ts Team Pro with an Exclusive Discount!'}
                     description={'Take your experience to the next level with Ts Team Pro Version. For a limited time, we’re offering an exclusive early bird discount—don’t miss out!'}
-                    label={'Grab Your Discount'}
+                    label={translations.grabYourDiscount}
                     ctalink={'https://themespell.com/ts-product/ts-team-member/'}
                 />
                 <img src={`${tsteamImage}/img/tsteam_dashboard_cover.png`} className="mt-8 tsteam__global--border w-full"/>
@@ -24,19 +26,19 @@ function Dashboard() {
 
                         <div className="grid grid-cols-3 gap-6 mt-4">
                             <div className="tsteam__dasboard--card tsteam__global--border">
-                                <h4 className="text-xl">Documentations</h4>
+                                <h4 className="text-xl">{translations.documentations}</h4>
                                 <p className="mt-4 mb-4">Dive into detailed guides and tutorials to set up and customize your TS Team Member plugin.</p>
                                 <a href="">Coming Soon</a>
                             </div>
 
                             <div className="tsteam__dasboard--card tsteam__global--border">
-                                <h4 className="text-xl">Help & Support</h4>
+                                <h4 className="text-xl">{translations.helpAndSupport}</h4>
                                 <p className="mt-4 mb-4">Need assistance? Our dedicated support team is here to help you troubleshoot issues.</p>
                                 <a href="">Coming Soon</a>
                             </div>
 
                             <div className="tsteam__dasboard--card tsteam__global--border">
-                                <h4 className="text-xl">Video Guide</h4>
+                                <h4 className="text-xl">{translations.videoGuide}</h4>
                                 <p className="mt-4 mb-4">Watch easy-to-follow video tutorials to master the TS Team Member plugin.</p>
                                 <a href="">Coming Soon</a>
                             </div>
@@ -45,7 +47,7 @@ function Dashboard() {
 
                     <div className="bg-white h-96 tsteam__global--border p-6 flex flex-col justify-center items-center">
                         <img src={`${tsteamImage}/img/tsteam_pro_badge.svg`} className=""/>
-                        <h2 className="mt-4 text-xl">Upgrade to Pro</h2>
+                        <h2 className="mt-4 text-xl">{translations.upgradeToPro}</h2>
                         <p className="mt-4 mb-4 text-center">Exciting new features and updates are on the way! Stay tuned for
                             enhancements that will make your TS Team Member plugin even more powerful.</p>
                         <a className="tsteam-button btn btn-primary" href="https://themespell.com/ts-product/ts-team-member/">Grab Discount</a>
