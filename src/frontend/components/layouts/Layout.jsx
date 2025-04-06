@@ -5,7 +5,6 @@ function Layout({ settings, layoutType, id, imageUrl, title, subtitle, descripti
 
     useEffect(() => {
         if (layoutType) {
-            console.log(layoutType)
             import(`./${layoutType}/Frontend.jsx`)
                 .then((module) => {
                     const LoadedComponent = module.default;

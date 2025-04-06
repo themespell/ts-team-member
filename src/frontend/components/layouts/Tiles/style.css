@@ -1,0 +1,19 @@
+:root {
+    --tiles-hover-color-background: #6F3ED7 ;
+    --tiles-hover-color-memberName: white ;
+    --tiles-hover-color-memberDesignation: white;
+  }
+  
+  .tsteam-tiles-container {
+    @apply  relative  transition-all rounded-lg w-full flex flex-col max-w-sm min-h-[440px] p-6 items-center justify-center gap-2 bg-white;
+  }
+  .tsteam-tiles-container:hover{
+    background: var(--tiles-hover-color-background);
+  }
+
+  .tsteam-tiles-container:hover .tsteam-member__name{
+    color: var(--tiles-hover-color-memberName);
+  }
+  .tsteam-tiles-container:hover .tsteam-member__designation{
+    color: var(--tiles-hover-color-memberDesignation);
+  }

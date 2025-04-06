@@ -1,18 +1,16 @@
-import React from "react";
+import './style.css'
 import SocialIcons from "./SocialIcons.jsx";
 import { loadGoogleFont } from "../../helper/loadGoogleFont.js";
 import { getAnimationClasses } from "../../helper/motionControl.js";
 import TsMemberName from "../__common/components/TsMemberName.jsx";
 import TsMemberDesignation from "../__common/components/TsMemberDesignation.jsx";
-import TsMemberDescription from "../__common/components/TsMemberDescription.jsx";
-import GenerateTilesStyle from "./GenerateStyle.jsx";
+
 const Tiles = ({
   settings,
   id,
   imageUrl,
   title,
   subtitle,
-  description,
   socialIcons,
   details,
 }) => {
@@ -29,19 +27,17 @@ const Tiles = ({
   const animationConfig = getAnimationClasses(settings.hoverAnimation);
 
   const renderContent = () => (
-    <>
-      <GenerateTilesStyle settings={settings} />
 
-      <div className="relative group transition-all rounded-lg w-full flex flex-col max-w-sm min-h-[440px] p-6 items-center justify-center gap-2 bg-white hover:bg-[#6F3ED7] tsteam-tiles-container">
+
+      <div className=" group tsteam-tiles-container ">
         <img
           id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`}
           src={imageUrl}
           alt={title}
-          className={` object-cover w-[216px] h-[216px] block rounded-full tsteam-member__image ${
+          className={` object-cover w-[216px] h-[216px] block rounded-full tsteam-member__image mb-5 bg-white ${
             details ? "cursor-pointer" : ""
           }`}
         />
-        {/* Overlay Content - Hidden by default, visible on hover */}
         {title && (
           <TsMemberName className="group-hover:text-white text-[22px] ">
             {title}
@@ -60,7 +56,6 @@ const Tiles = ({
           <SocialIcons socialIcons={socialIcons} settings={settings} />
         </div>
       </div>
-    </>
   );
 
   // Handle different animation types
