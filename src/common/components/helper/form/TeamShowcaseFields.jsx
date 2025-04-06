@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { Form, Input } from 'antd';
 import { fetchData } from '../../../services/fetchData';
 import { TsInput, TsSelect } from '../../controls/tsControls';
+import {getTranslations} from "../../../utils/translations.js";
 
 function TeamShowcaseFields({ form, post_id }) {
+  const translations = getTranslations();
   const [teamMembers, setTeamMembers] = useState([]);
   // const [form] = Form.useForm(); // Create form instance
 
@@ -44,7 +46,7 @@ function TeamShowcaseFields({ form, post_id }) {
   return (
     <div className="p-6">
       <TsInput
-      label="Showcase Name"
+      label={translations.showcaseName}
       name="title"
       required={true}
       />
@@ -54,7 +56,7 @@ function TeamShowcaseFields({ form, post_id }) {
         rules={[{ required: true, message: 'Please select team members'}]}
       >
         <TsSelect
-          label="Team Members"
+          label={translations.teamMember}
           defaultValue={form.getFieldValue('team_members')}
           options={teamMembers}
           mode="multiple"

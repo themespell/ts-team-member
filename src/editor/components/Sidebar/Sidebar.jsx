@@ -8,7 +8,10 @@ import DetailsTab from "./Tabs/DetailsTab.jsx";
 import MotionTab from "./Tabs/MotionTab.jsx";
 import GlobalTab from "./Tabs/GlobalTab.jsx";
 
+import {getTranslations} from "../../../common/utils/translations.js";
+
 function Sidebar({ isOpen, selectedLayout, layoutType, onToggleSidebar }) {
+    const translations = getTranslations();
     const [activeTab, setActiveTab] = useState("1"); // State to manage active tab
 
     return (
@@ -31,7 +34,7 @@ function Sidebar({ isOpen, selectedLayout, layoutType, onToggleSidebar }) {
                         <button className={`sidebar-button ${activeTab === "1" ? "active" : ""}`}>
                             <LayoutDashboard size={22}/>
                         </button>
-                        <p className="text-xs mt-1">Content</p>
+                        <p className="text-xs mt-1">{translations.content}</p>
                     </div>
 
                     <div className="flex flex-col justify-center items-center"
@@ -39,7 +42,7 @@ function Sidebar({ isOpen, selectedLayout, layoutType, onToggleSidebar }) {
                         <button className={`sidebar-button ${activeTab === "2" ? "active" : ""}`}>
                             <Paintbrush size={22}/>
                         </button>
-                        <p className="text-xs mt-1">Style</p>
+                        <p className="text-xs mt-1">{translations.style}</p>
                     </div>
 
                     <div className="flex flex-col justify-center items-center"
@@ -47,7 +50,7 @@ function Sidebar({ isOpen, selectedLayout, layoutType, onToggleSidebar }) {
                         <button className={`sidebar-button ${activeTab === "3" ? "active" : ""}`}>
                             <Type size={22}/> {/* Icon for Font */}
                         </button>
-                        <p className="text-xs mt-1">Font</p>
+                        <p className="text-xs mt-1">{translations.font}</p>
                     </div>
 
                     <div className="flex flex-col justify-center items-center"
@@ -55,7 +58,7 @@ function Sidebar({ isOpen, selectedLayout, layoutType, onToggleSidebar }) {
                         <button className={`sidebar-button ${activeTab === "4" ? "active" : ""}`}>
                             <Facebook size={22}/> {/* Icon for Social */}
                         </button>
-                        <p className="text-xs mt-1">Social</p>
+                        <p className="text-xs mt-1">{translations.social}</p>
                     </div>
 
                     <div className="flex flex-col justify-center items-center"
@@ -71,7 +74,7 @@ function Sidebar({ isOpen, selectedLayout, layoutType, onToggleSidebar }) {
                         <button className={`sidebar-button ${activeTab === "6" ? "active" : ""}`}>
                             <Play size={22}/> {/* Icon for Advance */}
                         </button>
-                        <p className="text-xs mt-1">Motion</p>
+                        <p className="text-xs mt-1">{translations.motion}</p>
                     </div>
 
                     <div className="flex flex-col justify-center items-center"
@@ -79,7 +82,7 @@ function Sidebar({ isOpen, selectedLayout, layoutType, onToggleSidebar }) {
                         <button className={`sidebar-button ${activeTab === "7" ? "active" : ""}`}>
                             <Settings size={22}/>
                         </button>
-                        <p className="text-xs mt-1">Global</p>
+                        <p className="text-xs mt-1">{translations.global}</p>
                     </div>
 
                 </div>

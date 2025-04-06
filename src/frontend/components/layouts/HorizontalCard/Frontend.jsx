@@ -1,13 +1,10 @@
 import SocialIcons from "./SocialIcons.jsx";
-import { loadGoogleFont } from "../../helper/loadGoogleFont.js";
 import { getAnimationClasses } from "../../helper/motionControl.js";
 
 import TsMemberName from "../__common/components/TsMemberName.jsx";
 import TsMemberDesignation from "../__common/components/TsMemberDesignation.jsx";
 import TsMemberDescription from "../__common/components/TsMemberDescription.jsx";
-
-import GenerateFancyCardStyle from './GenerateStyle'
-import React from "react";
+import './style.css';
 
 const HorizontalCard = ({
   settings,
@@ -18,24 +15,13 @@ const HorizontalCard = ({
   description,
   socialIcons,
   details,
+  animationConfig
 }) => {
-  // Load fonts if specified
-  if (settings?.typography?.name) {
-    loadGoogleFont(settings.typography.name);
-  }
-  if (settings?.typography?.designation) {
-    loadGoogleFont(settings.typography.designation);
-  }
-  if (settings?.typography?.description) {
-    loadGoogleFont(settings.typography.description);
-  }
 
-  const animationConfig = getAnimationClasses(settings.hoverAnimation);
   const renderContent = () => (
     <>
-     <GenerateFancyCardStyle settings={settings} />
     <div className="w-full">
-      <div className="bg-white rounded-[20px] overflow-hidden border border-purple-100 hover:border-purple-500">
+      <div className="tshorizontal__border-color">
         <div
           className="flex items-start p-6 gap-6 tsteam-horizontalcard-container">
           <img

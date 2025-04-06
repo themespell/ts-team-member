@@ -16,6 +16,7 @@ class TeamMember {
 		add_action( 'wp_ajax_tsteam/team_member/fetch/single', array( $self, 'get_team_member_by_id' ) );
 		add_action( 'wp_ajax_tsteam/team_member/create', array( $self, 'create_team_member' ) );
 		add_action( 'wp_ajax_tsteam/team_member/update', array( $self, 'update_team_member' ) );
+		add_action( 'wp_ajax_tsteam/team_member/duplicate', array( $self, 'duplicate_team_member' ) );
 		add_action( 'wp_ajax_tsteam/team_member/delete', array( $self, 'delete_team_member' ) );
 	}
 
@@ -29,6 +30,9 @@ class TeamMember {
 
 		$args = array(
 			'post_type' => 'tsteam-member',
+			'posts_per_page' => -1,
+            'orderby' => 'date',
+            'order' => 'DESC'
 		);
 
 		$query = new \WP_Query( $args );
@@ -146,6 +150,64 @@ class TeamMember {
 		$is_post = wp_update_post( $args );
 		wp_send_json_success( array( 'post_id' => $is_post ) );
 	}
+
+
+	public function duplicate_team_member() {
+        check_ajax_referer( 'tsteam_nonce' );
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_die();
+        }
+
+        try {
+            $post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
+
+            if ( ! $post_id ) {
+                wp_send_json_error( array( 'message' => 'Invalid ID' ) );
+                return;
+            }
+
+            // Get original post data
+            $post = get_post( $post_id );
+
+            if ( ! $post || $post->post_type !== 'tsteam-member' ) {
+                wp_send_json_error( array( 'message' => 'Team member not found' ) );
+                return;
+            }
+
+            // Get the original meta data
+            $member_meta = get_post_meta( $post_id, 'tsteam_member_info', true );
+
+            // Create new post args
+            $args = array(
+                'post_title'   => $post->post_title . ' (Copy)',
+                'post_content' => $post->post_content,
+                'post_status'  => 'publish',
+                'post_author'  => get_current_user_id(),
+                'post_type'    => 'tsteam-member',
+                'meta_input'   => array(
+                    'tsteam_member_info' => $member_meta,
+                ),
+            );
+
+            // Insert the new post
+            $new_post_id = wp_insert_post( $args );
+
+            if ( is_wp_error( $new_post_id ) ) {
+                wp_send_json_error( array( 'message' => 'Failed to duplicate team member: ' . $new_post_id->get_error_message() ) );
+                return;
+            }
+
+            wp_send_json_success(
+                array(
+                    'message' => 'Team member duplicated successfully',
+                    'post_id' => $new_post_id
+                )
+            );
+        } catch (Exception $e) {
+            wp_send_json_error( array( 'message' => 'Exception occurred: ' . $e->getMessage() ) );
+        }
+    }
 
 	public function delete_team_member() {
 		check_ajax_referer( 'tsteam_nonce' );

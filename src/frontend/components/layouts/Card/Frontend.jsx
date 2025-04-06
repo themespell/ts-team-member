@@ -1,11 +1,12 @@
 import React from "react";
 import SocialIcons from "./SocialIcons.jsx";
-import { loadGoogleFont } from "../../helper/loadGoogleFont.js";
-import { getAnimationClasses } from "../../helper/motionControl.js";
+// import { getAnimationClasses } from "../../helper/motionControl.js";
 import TsMemberName from "../__common/components/TsMemberName.jsx";
 import TsMemberDesignation from "../__common/components/TsMemberDesignation.jsx";
 import TsMemberDescription from "../__common/components/TsMemberDescription.jsx";
-import GenerateCardStyle from "./GenerateStyle.jsx";
+
+import './style.css';
+
 const Card = ({
   settings,
   id,
@@ -15,28 +16,20 @@ const Card = ({
   description,
   socialIcons,
   details,
+  animationConfig
 }) => {
-  if (settings?.typography?.name) {
-    loadGoogleFont(settings.typography.name);
-  }
-  if (settings?.typography?.designation) {
-    loadGoogleFont(settings.typography.designation);
-  }
-  if (settings?.typography?.description) {
-    loadGoogleFont(settings.typography.description);
-  }
 
-  const animationConfig = getAnimationClasses(settings.hoverAnimation);
+  // const animationConfig = getAnimationClasses(settings.hoverAnimation);
+  console.log("Passing animationConfig to Card:", animationConfig);
 
   const renderContent = () => (
    <>
-   <GenerateCardStyle settings={settings} />
     <div className="w-full flex flex-col items-center">
       <img
         id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`}
         src={imageUrl}
         alt={title}
-        className={`tsteam-member__image w-32 h-32 rounded-xl -mb-12 z-10 relative shadow-2xl object-cover ${
+        className={`tsteam-member__image w-32 max-h-[8rem] rounded-xl -mb-12 z-10 relative shadow-2xl object-cover ${
           details ? "cursor-pointer" : ""
         }`}
       />
@@ -48,12 +41,8 @@ const Card = ({
 
           {subtitle && <TsMemberDesignation> {subtitle} </TsMemberDesignation>}
 
-          <hr
-            style={{
-              backgroundColor: settings?.tscard?.color?.separator,
-            }}
-            className="h-1 w-16 bg-red-500 mt-2 mb-4 rounded-2xl"
-          ></hr>
+          <hr className="tscard__separator"></hr>
+
 
           {description && (
             <TsMemberDescription> {description} </TsMemberDescription>

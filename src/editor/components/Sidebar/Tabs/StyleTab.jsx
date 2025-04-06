@@ -9,8 +9,10 @@ import * as TsLayouts from "../../../../frontend/components/layouts/layouts.js";
 import proLayouts from "../../../../pro_support/proLayouts.js";
 import editorStore from "../../../states/editorStore";
 import renderControls from "../../../../common/components/controls/tsRenderControls.jsx";
+import {getTranslations} from "../../../../common/utils/translations.js";
 
 function StyleTab({ selectedLayout, layoutType }) {
+  const translations = getTranslations();
   const { common, containerSettings, columnSettings, selectedView } =
     editorStore();
 
@@ -75,50 +77,50 @@ function StyleTab({ selectedLayout, layoutType }) {
       )}
 
       {/*Common Controls For Each Layout*/}
-      <TsDivider label="Common Styles" />
+      <TsDivider label={translations.commonStyles} />
 
-      <TsColor label="Background Color" name="layout.color.background" />
+      <TsColor label={translations.backgroundColor} name="layout.color.background" />
 
-      <TsColor label="Member Name Color" name="layout.color.memberName" />
+      <TsColor label={translations.memberNameColor} name="layout.color.memberName" />
 
       <TsColor
-        label="Member Designation Color"
+        label={translations.memberDesignationColor}
         name="layout.color.designation"
       />
 
       <TsColor
-        label="Member Description Color"
+        label={translations.memberDescriptionColor}
         name="layout.color.description"
       />
 
-      <TsColor label="Border Color" name="layout.color.border" />
-      <TsColor label="Image Border Color" name="layout.color.imageBorder" />
+      <TsColor label={translations.borderColor} name="layout.color.border" />
+      <TsColor label={translations.imageBorderColor} name="layout.color.imageBorder" />
 
       <TsDivider />
 
       <TsSlider
-        label="Border Width"
+        label={translations.borderWidth}
         name="layout.borderWidth"
         range={common.range}
         unit={true}
       />
 
       <TsSlider
-        label="Border Radius"
+        label={translations.borderRadius}
         name="layout.borderRadius"
         range={common.range}
         unit={true}
       />
 
       <TsSlider
-        label="Image Border Width"
+        label={translations.imageBorderWidth}
         name="layout.borderWidth.image"
         range={common.range}
         unit={true}
       />
 
       <TsSlider
-        label="Image Border Radius"
+        label={translations.imageBorderRadius}
         name="layout.borderRadius.image"
         range={common.range}
         unit={true}

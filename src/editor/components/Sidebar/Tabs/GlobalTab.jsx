@@ -1,26 +1,28 @@
 import {TsColor, TsDivider, TsInputGroup} from '../../../../common/components/controls/tsControls';
 import editorStore from "../../../states/editorStore.js";
+import {getTranslations} from "../../../../common/utils/translations.js";
 
 function GlobalTab(){
+    const translations = getTranslations();
     const { containerSettings, columnSettings, selectedView } = editorStore();
     return (
         <div>
             <TsColor
-                label="Container Background Color"
+                label={translations.containerBackgroundColor}
                 name='containerSettings.backgroundColor'
             />
             <TsInputGroup 
-            label='Container Margin'
+            label={translations.containerMargin}
             name='containerSettings.margin'
             unit='px'
             />
             <TsInputGroup 
-            label='Container Padding'
+            label={translations.containerPadding}
             name='containerSettings.padding'
             unit='px'
             />
             <TsInputGroup 
-            label='Container Border Radius'
+            label={translations.containerBorderRadius}
             name='containerSettings.borderRadius'
             unit='px'
             />

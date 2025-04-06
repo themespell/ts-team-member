@@ -13,6 +13,8 @@ class Frontend {
 	public static function init() {
 		$self = new self();
 		add_action( 'wp_enqueue_scripts', array( $self, 'tsteam_scripts' ) );
+		add_action('elementor/editor/before_enqueue_scripts', array($self, 'tsteam_scripts'));
+		add_action( 'enqueue_block_editor_assets', array( $self, 'tsteam_scripts' ) );
 		add_shortcode( 'tsteam_showcase', array( $self, 'tsteam_showcase_shortcode' ) );
 	}
 
@@ -25,7 +27,7 @@ class Frontend {
 		}
 
 			wp_enqueue_style( 'tsteam-member-main', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend/frontend.css' );
-			wp_enqueue_script( 'tsteam-member-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend/frontend.js', $dependency, '2.0.8', true );
+			wp_enqueue_script( 'tsteam-member-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend/frontend.js', $dependency, '2.0.9', true );
 			wp_localize_script(
 				'tsteam-member-script',
 				'tsteam_settings',

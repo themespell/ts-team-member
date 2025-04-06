@@ -1,5 +1,7 @@
-/*Scrollbar Styles*/
+/*Layout Styles*/
+@import url('../../../frontend/assets/layoutStyles.css');
 
+/*Scrollbar Styles*/
 .sidebar,
 .viewport-tablet,
 .viewport-mobile,
