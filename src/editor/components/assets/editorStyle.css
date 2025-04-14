@@ -1,5 +1,7 @@
-/*Scrollbar Styles*/
+/*Layout Styles*/
+@import url('../../../frontend/assets/layoutStyles.css');
 
+/*Scrollbar Styles*/
 .sidebar,
 .viewport-tablet,
 .viewport-mobile,
@@ -88,6 +90,14 @@
 	@apply grid w-full;
 	height: 100vh;
 	align-items: center;
+}
+
+.tsteam-flex-container {
+	@apply flex flex-wrap gap-6 w-full justify-center;
+}
+
+.tsteam-table-container {
+	@apply flex flex-wrap w-full justify-center;
 }
 
 .viewport-desktop {

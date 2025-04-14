@@ -15,4 +15,5 @@ export const getCommonStyles = (settings) => ({
     borderBottomLeftRadius: `${settings?.containerSettings?.borderRadius_bottom || 0}px`,
     borderBottomRightRadius: `${settings?.containerSettings?.borderRadius_left || 0}px`,
     backgroundColor: settings.containerSettings?.backgroundColor,
+    animation: 'tsteam__entrance-fadeIn 1.5s ease-out'
 });

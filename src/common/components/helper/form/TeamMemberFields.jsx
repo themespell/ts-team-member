@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Tabs } from 'antd';
+import { Form, Tabs } from 'antd';
 
 import TeamMemberBasic from './TeamMember/TeamMemberBasic';
 import TeamMemberProfile from './TeamMember/TeamMemberProfile';
@@ -7,11 +7,34 @@ import TeamMemberDetails from './TeamMember/TeamMemberDetails';
 import TeamMemberCustom from './TeamMember/TeamMemberCustom';
 
 import { fetchData } from '../../../services/fetchData';
+import {getTranslations} from "../../../utils/translations.js";
 
 function TeamMemberFields({ form, post_id }) {
+  const translations = getTranslations();
   const [memberImage, setMemberImage] = useState(null);
   const [memberInformation, setMemberInformation] = useState(null);
   const [socialLinks, setSocialLinks] = useState(null);
+  const [skills, setSkills] = useState(null);
+
+  useEffect(() => {
+    if (memberInformation) {
+      form.setFieldsValue({
+        member_information: memberInformation
+      });
+    }
+
+    if (socialLinks) {
+      form.setFieldsValue({
+        social_links: socialLinks
+      });
+    }
+
+    if (skills) {
+      form.setFieldsValue({
+        skills: skills
+      });
+    }
+  }, [memberInformation, socialLinks, skills, form]);
 
   useEffect(() => {
     if (post_id) {
@@ -37,6 +60,7 @@ function TeamMemberFields({ form, post_id }) {
           setMemberImage(response.data.meta_data.image);
           setMemberInformation(response.data.meta_data.information);
           setSocialLinks(response.data.meta_data.socialLinks);
+          setSkills(response.data.meta_data.skills);
         } else {
           console.error('Failed to fetch showcase data.');
         }
@@ -58,7 +82,7 @@ function TeamMemberFields({ form, post_id }) {
     {
       key: '3',
       label: 'Profile Links',
-      children: <TeamMemberProfile form={form} social_links={socialLinks} />,
+      children: <TeamMemberProfile form={form} social_links={socialLinks} skills={skills} />,
     },
     // {
     //   key: '4',
@@ -70,6 +94,15 @@ function TeamMemberFields({ form, post_id }) {
 
   return (
     <>
+      <Form.Item name="member_information" hidden>
+        <input type="hidden" />
+      </Form.Item>
+      <Form.Item name="social_links" hidden>
+        <input type="hidden" />
+      </Form.Item>
+      <Form.Item name="skills" hidden>
+        <input type="hidden" />
+      </Form.Item>
       <Tabs
           defaultActiveKey="1"
           items={items}

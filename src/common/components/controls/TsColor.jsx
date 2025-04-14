@@ -18,7 +18,7 @@ function TsColor({ label, name, onChange }) {
   };
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 flex justify-between items-center">
       {label && (
         <label 
         className="block text-sm font-medium text-gray-700 mb-2"

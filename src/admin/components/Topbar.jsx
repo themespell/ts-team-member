@@ -20,11 +20,13 @@ function Topbar({ title }) {
                                 {item.label}
                             </a>
                         ))}
+                        {proLink && proLink.link ? (
                         <a href={proLink.link} className="">
                             <span className="flex justify-between">
                                 <span className="font-bold">{proLink.label}</span> <ArrowUpRight strokeWidth={1} className="-mt-1" />
                             </span>
                         </a>
+                        ) : null}
                     </div>
                 </div>
 

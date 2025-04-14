@@ -7,6 +7,7 @@ import {getProLayout} from "./helper/getProLayout.js";
 import {getMarqueeStyles} from "./helper/marqueeStyles.js";
 
 import Details from "./details/details.jsx";
+import GenerateLayoutStyle from "./helper/generateLayoutStyle.js";
 
 function MarqueeView({ team_members, settings, viewport, isEditor }) {
     const [ProLayoutComponent, setProLayoutComponent] = useState(null);
@@ -49,8 +50,17 @@ function MarqueeView({ team_members, settings, viewport, isEditor }) {
                 ...responsiveStyles,
             }}
         >
+            <GenerateLayoutStyle settings={settings} />
             <Marquee
-                speed={50}
+                speed={marqueeStyles.speed}
+                autoFill={marqueeStyles.infinite}
+                pauseOnClick={marqueeStyles.pauseOnClick}
+                pauseOnHover={marqueeStyles.pauseOnHover}
+                direction={marqueeStyles.direction}
+                delay={0}
+                style={{
+                    width: '100%'
+                }}
             >
             {team_members && team_members.length > 0 ? (
                 team_members.map((member, index) => (
@@ -77,8 +87,8 @@ function MarqueeView({ team_members, settings, viewport, isEditor }) {
                                 imageUrl={member.meta_data.image}
                                 title={member.title}
                                 subtitle={member.meta_data.designation}
-                                description={member.description}
-                                socialIcons={member.socialIcons || []}
+                                description={member.meta_data.description}
+                                socialIcons={member.meta_data.socialLinks || []}
                                 details={<Details
                                     settings={settings}
                                     member={member}

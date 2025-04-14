@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import { hideAdminElements } from './utils/utils.js';
 import { fetchData } from '../common/services/fetchData.js';
 import { TsLoader } from '../common/components/controls/tsControls.js';
+import {getTranslations} from "../common/utils/translations.js";
 
 import editorLocal from "./states/editorLocal.js";
 import editorStore from './states/editorStore.js';
 import editorFunction from './states/editorFunction.js';
+import {handleCopySettings, handlePasteSettings} from "./utils/copyPasteLayout.js";
 import proLayouts from "../pro_support/proLayouts.js";
 
 import Topbar from './components/Topbar.jsx';
@@ -15,10 +17,13 @@ import './components/assets/editorHover.css';
 
 import CarouselView from '../frontend/components/CarouselView.jsx';
 import StaticView from '../frontend/components/StaticView.jsx';
+import FlexView from "../frontend/components/FlexView.jsx";
 import MarqueeView from "../frontend/components/MarqueeView.jsx";
+import TableView from "../frontend/components/TableView.jsx";
 import ConfettiView from "../frontend/components/ConfettiView.jsx";
 
 function Editor() {
+  const translations = getTranslations();
   const isPro = tsteam_settings.is_pro;
   const { isEditor, viewport, setViewport } = editorLocal();
   const { postType } = editorStore();
@@ -73,7 +78,7 @@ function Editor() {
   if (isLoading || postData === null) {
     return (
         <TsLoader
-            label="Loading Editor"
+            label={translations.loadingEditor}
         />
     );
   }
@@ -84,6 +89,8 @@ function Editor() {
       type={postType}
       viewport={viewport}
       setViewport={setViewport}
+      onCopySettings={() => handleCopySettings(allSettings)}
+      onPasteSettings={() => handlePasteSettings(saveSettings)}
       />
       <div className="layout-container">
         <Sidebar
@@ -97,7 +104,14 @@ function Editor() {
             <div
                 className={`editor-container editor-hover viewport-${viewport}`}
             >
-              {allSettings.selectedView.value === "carousel" ? (
+              {allSettings.selectedView.value === "flex" ? (
+                      <FlexView
+                          team_members={postData.team_members}
+                          settings={allSettings}
+                          viewport={viewport}
+                          isEditor={isEditor}
+                      />
+                  ) : allSettings.selectedView.value === "carousel" ? (
                   <CarouselView
                       team_members={postData.team_members}
                       settings={allSettings}
@@ -111,6 +125,13 @@ function Editor() {
                       viewport={viewport}
                       isEditor={isEditor}
                   />
+              ) : allSettings.selectedView.value === "table" && isPro ? (
+                      <TableView
+                          team_members={postData.team_members}
+                          settings={allSettings}
+                          viewport={viewport}
+                          isEditor={isEditor}
+                      />
               ) : allSettings.selectedView.value === "confetti" && isPro ? (
                   <ConfettiView
                       team_members={postData.team_members}

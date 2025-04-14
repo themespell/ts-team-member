@@ -1,3 +1,5 @@
+import {stringToBoolean} from "../../../editor/utils/stringToBoolean.js";
+
 export const getMarqueeStyles = (settings, viewport, isEditor) => {
     const { marqueeSettings } = settings || {};
 
@@ -27,10 +29,18 @@ export const getMarqueeStyles = (settings, viewport, isEditor) => {
         }
     }
 
-    const draggable = marqueeSettings?.draggable === 'true';
+    const speed = marqueeSettings?.marqueeSpeed.default;
+    const direction = marqueeSettings.direction;
+    const infinite = stringToBoolean(marqueeSettings.infinite);
+    const pauseOnClick = stringToBoolean(marqueeSettings.pauseOnClick);
+    const pauseOnHover = stringToBoolean(marqueeSettings.pauseOnHover);
 
     return {
-        columnGap,
-        draggable,
+        speed,
+        direction,
+        infinite,
+        pauseOnClick,
+        pauseOnHover,
+        columnGap
     };
 };

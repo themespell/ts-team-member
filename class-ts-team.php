@@ -3,20 +3,20 @@
 	/**
 	 *
 	 * @link              https://themespell.com/
-	 * @since             1.0.0
+	 * @since             1.0.3
 	 * @package           Team Member & Showcase Plugin
 	 *
 	 * @wordpress-plugin
 	 * Plugin Name:       TS Team Member Showcase
 	 * Plugin URI:        https://themespell.com/ts-team
 	 * Description:       Team Showcase Plugin
-	 * Version:           1.0.0
+	 * Version:           1.0.3
 	 * Author:            Themespell
 	 * Author URI:        https://themespell.com/
 	 * License:           GPL-2.0+
 	 * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
 	 * Text Domain:       ts-team-member
-	 * Tested up to:      6.7.1
+	 * Tested up to:      6.7.2
 	 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -45,7 +45,7 @@ final class TSTeam {
 	}
 
 	public function define_constants() {
-		define( 'TSTEAM_VERSION', '1.0.0' );
+		define( 'TSTEAM_VERSION', '1.0.3' );
 		define( 'TSTEAM_PLUGIN_FILE', __FILE__ );
 		define( 'TSTEAM_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 		define( 'TSTEAM_ROOT_DIR_PATH', plugin_dir_path( __FILE__ ) );
@@ -71,6 +71,7 @@ final class TSTeam {
 		TSTeam\AJAX::init();
 		TSTeam\Enqueue::init();
 		TSTeam\Frontend::init();
+		TSTeam\Addons::init();
 	}
 
 	public function load_textdomain() {
@@ -96,7 +97,7 @@ final class TSTeam {
     public function check_activation_redirect() {
             if ( get_transient( 'tsteam_plugin_activated' ) ) {
                 delete_transient( 'tsteam_plugin_activated' );
-                wp_redirect( admin_url( 'admin.php?page=tsteam-showcase&path=dashboard' ) );
+                wp_redirect( admin_url( 'admin.php?page=tsteam-admin' ) );
                 exit;
             }
     }

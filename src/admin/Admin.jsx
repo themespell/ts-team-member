@@ -4,7 +4,10 @@ import Dashboard from "./components/Dashboard.jsx";
 import Settings from "./components/Settings.jsx";
 import Topbar from './components/Topbar';
 
+import {getTranslations} from "../common/utils/translations.js";
+
 const currentUrl = window.location.href;
+const translations = getTranslations();
 
 function AdminPanel() {
   const isTeamMemberPage = currentUrl.includes(`&path=team-member`);
@@ -14,7 +17,7 @@ function AdminPanel() {
     if (isDashboardPage) {
         return (
             <>
-                <Topbar title={'Dashboard'}/>
+                <Topbar title={translations.dashboard}/>
                 <div className='tsteam__admin--style overflow-x-auto w-full flex justify-center pt-12 pb-12'>
                     <div className='flex justify-between gap-8 w-4/6'>
                         <div className='w-full'>
@@ -40,7 +43,7 @@ function AdminPanel() {
     } else {
         return (
             <>
-                <Topbar title={isTeamMemberPage ? 'Team Member' : 'Team Showcase'}/>
+                <Topbar title={isTeamMemberPage ? translations.teamMember : translations.teamShowcase}/>
                 <div className='tsteam__admin--style overflow-x-auto w-full flex justify-center pt-12 pb-12'>
                     <div className='flex justify-between gap-8 w-4/6'>
                         <div className='w-full'>

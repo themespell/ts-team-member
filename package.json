@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node build.js",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "watch": "vite build --watch"
+    "watch": "node build-watch.js",
+    "make-pot": "php -d memory_limit=512M $(which wp) i18n make-pot . languages/ts-team-member.pot"
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.30.5",
@@ -16,6 +17,7 @@
     "@editorjs/list": "^1.10.0",
     "@editorjs/paragraph": "^2.11.6",
     "@heroicons/react": "^2.1.5",
+    "@wordpress/i18n": "^5.20.0",
     "antd": "^5.19.4",
     "canvas-confetti": "^1.9.3",
     "lodash": "^4.17.21",

@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { TsInput, TsMedia, TsImage } from '../../../controls/tsControls';
 import { CloudUpload } from 'lucide-react';
+import {getTranslations} from "../../../../utils/translations.js";
 
 function TeamMemberBasic({ form, member_image }) {
+  const translations = getTranslations();
   const [memberImage, setMemberImage] = useState(member_image || null);
 
   useEffect(() => {
@@ -15,23 +17,23 @@ function TeamMemberBasic({ form, member_image }) {
       <div className="p-6 bg-white">
           <div className='grid grid-cols-2 gap-4'>
               <TsInput
-                  label="Member Name"
+                  label={translations.memberName}
                   name="member_name"
                   required={true}
               />
 
               <TsInput
-                  label="Member Designation"
+                  label={translations.memberDesignation}
                   name="member_designation"
               />
 
               <TsInput
-                  label="Member Email"
+                  label={translations.memberEmail}
                   name="member_email"
               />
 
               <TsInput
-                  label="Member Mobile"
+                  label={translations.memberMobile}
                   name="member_phone"
               />
 
@@ -40,14 +42,14 @@ function TeamMemberBasic({ form, member_image }) {
 
           <div className="grid grid-cols-2 gap-4">
               <TsInput
-                  label="Member Description"
+                  label={translations.memberDescription}
                   name="member_description"
                   type="description"
                   maxLength={150}
               />
 
               <div>
-                  <label>Member Image</label>
+                  <label>{translations.memberImage}</label>
                   <div
                       className='tsteam__color--bg-light flex flex-col items-center gap-2 w-full border border-dashed rounded-2xl mt-2'>
                       {memberImage ? (
@@ -60,7 +62,7 @@ function TeamMemberBasic({ form, member_image }) {
                       )}
 
                       <TsMedia
-                          label="Member Image"
+                          label={translations.memberImage}
                           name="member_image"
                           form={form}
                           style="dnd"

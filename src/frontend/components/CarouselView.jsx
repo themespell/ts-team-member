@@ -1,5 +1,5 @@
-import React, {useEffect, useMemo, useState, useRef} from 'react';
-import { Carousel } from 'antd';
+import React, {useEffect, useMemo, useState} from 'react';
+import Carousel from "./library/Carousel/Carousel.jsx";
 import Layout from './layouts/Layout';
 import { getCommonStyles } from './helper/commonStyle.js';
 import { getResponsiveStyles } from './helper/responsiveStyles.js';
@@ -7,10 +7,10 @@ import { getCarouselStyles } from './helper/carouselStyles.js';
 import { getProLayout } from "./helper/getProLayout.js";
 
 import Details from "./details/details.jsx";
+import GenerateLayoutStyle from "./helper/generateLayoutStyle.js";
 
 
 function CarouselView({ team_members, settings, viewport, isEditor }) {
-    const carouselRef = useRef(); // Ref for
     const [ProLayoutComponent, setProLayoutComponent] = useState(null);
     const commonStyles = getCommonStyles(settings);
     const [responsiveStyles, setResponsiveStyles] = useState(
@@ -41,56 +41,34 @@ function CarouselView({ team_members, settings, viewport, isEditor }) {
         }
     }, [settings, viewport, isEditor]);
 
-    const previousSlide = () => {
-        if (carouselRef.current) {
-            carouselRef.current.prev(); // Call Ant Design Carousel prev method
-        } else {
-            console.warn("Carousel ref is not defined");
-        }
-    };
-
-    const nextSlide = () => {
-        if (carouselRef.current) {
-            carouselRef.current.next(); // Call Ant Design Carousel next method
-        } else {
-            console.warn("Carousel ref is not defined");
-        }
-    };
-
     return (
-        <div className='flex items-center justify-center relative w-full' style={{...commonStyles, ...responsiveStyles}}>
-            {/*Previous Button*/}
-            {carouselStyles.arrows && (
-                <button
-                    className="absolute"
-                    style={{
-                        left: '10px',
-                        zIndex: 10,
-                        backgroundColor: '#ddd',
-                        border: 'none',
-                        borderRadius: '50%',
-                        width: '40px',
-                        height: '40px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '16px',
-                        cursor: 'pointer',
-                    }}
-                    onClick={previousSlide}
-                >
-                    ←
-                </button>
-            )}
+        <>
+            <div className='flex items-center justify-center relative w-full' style={{...commonStyles, ...responsiveStyles}}>
             <div className="w-full">
-            <Carousel
-                ref={carouselRef}
-                slidesPerRow={carouselStyles.slidesToShow}
-                slidesToScroll={carouselStyles.slidesToScroll}
-                draggable={carouselStyles.draggable}
-                centerMode={carouselStyles.centerMode}
-                autoplay={carouselStyles.autoplay}
-            >
+                <GenerateLayoutStyle settings={settings} />
+                <Carousel
+                    slidesToShow={carouselStyles.slidesToShow}
+                    slidesToScroll={carouselStyles.slidesToScroll}
+                    infinite={carouselStyles.infinite}
+                    repeat={carouselStyles.repeat}
+                    autoplay={carouselStyles.autoplay}
+                    centerMode={carouselStyles.centerMode}
+                    transition={carouselStyles.transition}
+                    autoplaySpeed={carouselStyles.slideSpeed}
+                    gap={carouselStyles.gap}
+                    dotStyle={{
+                        color: carouselStyles.dotsColor,
+                        inactiveColor: '#9CA3AF',
+                        size: '14px',
+                        gap: '12px',
+                    }}
+                    navigationStyle={{
+                        backgroundColor: carouselStyles.navBgColor,
+                        color: carouselStyles.navColor,
+                    }}
+                    // containerClassName="px-4"
+                    // className="items-center"
+                >
                 {team_members && team_members.length > 0 ? (
                     team_members.map((member, index) => (
                         <div key={index} className="tsteam-carousel"
@@ -126,7 +104,7 @@ function CarouselView({ team_members, settings, viewport, isEditor }) {
                                     title={member.title}
                                     subtitle={member.meta_data.designation}
                                     description={member.description}
-                                    socialIcons={member.socialIcons || []}
+                                    socialIcons={member.meta_data.socialLinks || []}
                                     details={<Details
                                         settings={settings}
                                         member={member}
@@ -138,33 +116,11 @@ function CarouselView({ team_members, settings, viewport, isEditor }) {
                 ) : (
                     <p>No team members found.</p>
                 )}
+            {/*</Carousel>*/}
             </Carousel>
             </div>
-            {/*Next Button*/}
-            {carouselStyles.arrows && (
-                <button
-                    className="custom-next-arrow"
-                    style={{
-                        position: 'relative',
-                        right: '10px',
-                        zIndex: 10,
-                        backgroundColor: '#ddd',
-                        border: 'none',
-                        borderRadius: '50%',
-                        width: '40px',
-                        height: '40px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '16px',
-                        cursor: 'pointer',
-                    }}
-                    onClick={nextSlide}
-                >
-                    →
-                </button>
-            )}
         </div>
+            </>
     );
 }
 

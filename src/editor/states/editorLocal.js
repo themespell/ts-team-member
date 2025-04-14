@@ -6,16 +6,25 @@ import proLayouts from "../../pro_support/proLayouts.js";
 const isPro = tsteam_settings.is_pro
 const isLicenseInactive = !!window.tsTeamPro?.is_licence_inactive ?? null;
 const pro_layouts = proLayouts();
+
+// Split layouts by categories
+const gridLayouts = pro_layouts.filter(layout => layout.category === 'grid');
+const flexLayouts = pro_layouts.filter(layout => layout.category === 'flex');
+const tableLayouts = pro_layouts.filter(layout => layout.category === 'table');
+
 const pro_views = isPro && !isLicenseInactive
     ? [
+        // { label: 'Vertical Carousel', value: 'vertical_carousel', type: 'pro' },
+        { label: 'Flex', value: 'flex', type: 'pro' },
         { label: 'Marquee', value: 'marquee', type: 'pro' },
-        { label: 'Confetti', value: 'confetti', type: 'pro' },
+        { label: 'Table', value: 'table', type: 'pro' },
+        // { label: 'Confetti', value: 'confetti', type: 'pro' },
     ] : [];
 
 const pro_details = isPro && !isLicenseInactive
     ? [
         { label: 'Drawer', value: 'drawer', type: 'pro' },
-        { label: 'Full Screen', value: 'fullscreen', type: 'pro' },
+        // { label: 'Full Screen', value: 'fullscreen', type: 'pro' },
     ] : [];
 
 // States Only For use in Editor
@@ -28,16 +37,33 @@ const editorLocal = create((set) => ({
         { label: 'Card', value: 'Card', type: 'free' },
         { label: 'Horizontal Card', value: 'HorizontalCard', type: 'free' },
         { label: 'Overlay Card', value: 'OverlayCard', type: 'free' },
-        // { label: 'Blur', value: 'Blur', type: 'free' },
-        // { label: 'Avatar', value: 'Avatar', type: 'free' },
-        ...pro_layouts,
+        ...gridLayouts,
+    ],
+    availableFlexLayouts: [
+        ...flexLayouts,
+    ],
+    availableTableLayouts: [
+        ...tableLayouts,
     ],
     availableViews: [
-        { label: 'Static / Grid', value: 'grid', type: 'free' },
+        { label: 'Grid', value: 'grid', type: 'free' },
         { label: 'Carousel', value: 'carousel', type: 'free' },
         ...pro_views
     ],
+    availableTransition: [
+        { label: 'Slide', value: 'slide', type: 'free' },
+        { label: 'Fade', value: 'fade', type: 'free' },
+        { label: 'Zoom', value: 'zoom', type: 'free' },
+        { label: 'Flip', value: 'flip', type: 'free' },
+    ],
+    availableDelay: [
+        { label: 'Left', value: 'left', type: 'pro' },
+        { label: 'Right', value: 'right', type: 'pro' },
+        // { label: 'Up', value: 'up', type: 'pro' },
+        // { label: 'Down', value: 'down', type: 'pro' },
+    ],
     availableDetails: [
+        { label: 'No Details', value: 'none', type: 'free' },
         { label: 'Popup', value: 'popup', type: 'free' },
         ...pro_details
     ],

@@ -1,4 +1,9 @@
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
+import {getTranslations} from "./translations.js";
+
+const isPro = !!tsteam_settings.is_pro ?? false;
+
+const translations = getTranslations();
 
 const globalSettings = {
     token: {
@@ -48,30 +53,34 @@ const globalSettings = {
       menuitems: {
           dashboard:{
               link: '?page=tsteam-showcase&path=dashboard',
-              label: 'Dashboard',
+              label: translations.dashboard,
           },
           teamShowcase:{
               link: '?page=tsteam-showcase',
-              label: 'Team Showcase',
+              label: translations.teamShowcase,
           },
           teamMember:{
               link: '?page=tsteam-showcase&path=team-member',
-              label: 'Team Member',
+              label: translations.teamMember,
           },
-          // account:{
-          //     link: 'admin.php?page=tsteam-pro-account',
-          //     label: 'Account',
-          // },
-          // supportForum:{
-          //     link: 'https://wordpress.org/support/plugin/ts-team-member',
-          //     label: 'Support Forum',
-          // },
+          ...(isPro && {
+              account:{
+                  link: 'admin.php?page=tsteam-pro-account',
+                  label: translations.account,
+              }
+          }),
+          supportForum:{
+              link: 'https://wordpress.org/support/plugin/ts-team-member',
+              label: translations.supportForum,
+          },
       },
-       proLink: {
-        link: 'https://themespell.com/ts-product/ts-team-member/',
-        label: 'Get Pro',
-      },
-      version: '1.0.0'
+        ...(isPro ? {} : {
+            proLink: {
+                link: 'https://themespell.com/ts-product/ts-team-member/',
+                label: translations.getPro,
+            }
+        }),
+      version: '1.0.3',
     }
   };
   

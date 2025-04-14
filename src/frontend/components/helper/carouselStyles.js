@@ -1,4 +1,5 @@
-// carouselStyles.js
+import {stringToBoolean} from "../../../editor/utils/stringToBoolean.js";
+import {TsColor} from "../../../common/components/controls/tsControls.js";
 export const getCarouselStyles = (settings, viewport, isEditor) => {
     const { carouselSettings } = settings || {};
 
@@ -40,18 +41,30 @@ export const getCarouselStyles = (settings, viewport, isEditor) => {
         }
     }
 
-    const draggable = carouselSettings?.draggable === 'true';
-    const centerMode = carouselSettings?.centerSlide === 'true';
-    const autoplay = carouselSettings?.autoPlay === 'true';
-    const arrows = carouselSettings?.arrows === 'true';
+    const slideSpeed = carouselSettings?.slideSpeed?.default;
+    const gap = carouselSettings?.gap?.default;
+    const transition = carouselSettings?.transition;
+    const infinite = stringToBoolean(carouselSettings?.infinite);
+    const repeat = stringToBoolean(carouselSettings?.repeat);
+    const centerMode = stringToBoolean(carouselSettings?.centerSlide);
+    const autoplay = stringToBoolean(carouselSettings?.autoPlay);
+    const dotsColor = carouselSettings.dotsColor || '#703fd6';
+    const navBgColor = carouselSettings.navBgColor;
+    const navColor = carouselSettings.navColor;
 
     return {
         slidesToShow,
         slidesToScroll,
         columnGap,
-        draggable,
+        slideSpeed,
+        gap,
+        transition,
+        infinite,
+        repeat,
         centerMode,
         autoplay,
-        arrows
+        dotsColor,
+        navBgColor,
+        navColor
     };
 };

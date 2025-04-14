@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 
-function Layout({ settings, layoutType, id, imageUrl, title, subtitle, description, socialIcons, details }) {
+function Layout({ settings, layoutType, id, imageUrl, title, subtitle, description, socialIcons, details, animationConfig }) {
     const [Component, setComponent] = useState(null);
 
     useEffect(() => {
         if (layoutType) {
+            console.log(layoutType)
             import(`./${layoutType}/Frontend.jsx`)
                 .then((module) => {
                     const LoadedComponent = module.default;
@@ -31,6 +32,7 @@ function Layout({ settings, layoutType, id, imageUrl, title, subtitle, descripti
                 description={description}
                 socialIcons={socialIcons}
                 details={details}
+                animationConfig={animationConfig}
             />
         </div>
     );

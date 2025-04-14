@@ -2,12 +2,17 @@ import {useState} from "react";
 import { TsButton } from "../../common/components/controls/tsControls";
 import editorFunction from "../states/editorFunction";
 import editorLocal from "../states/editorLocal.js";
-import {Monitor, Tablet, Smartphone, Code, CircleX} from 'lucide-react';
-import {Button} from "antd";
+import {Monitor, Tablet, Smartphone, Code, CircleX, Copy, ClipboardPaste, ClipboardCopy} from 'lucide-react';
+import {Button, Dropdown} from "antd";
 import {TsModal} from "../../common/components/controls/tsControls";
+import {getTranslations} from "../../common/utils/translations.js";
 
-function Topbar({ type }) {
+function Topbar({ type, onCopySettings, onPasteSettings}) {
+    const translations = getTranslations();
     const tsteamLogo = tsteam_settings.assets_path;
+    const isPro = !!tsteam_settings.is_pro ?? null;
+    const isLicenseInactive = !!window.tsTeamPro?.is_licence_inactive ?? null;
+
     const { viewport, setViewport } = editorLocal();
     const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -32,6 +37,35 @@ function Topbar({ type }) {
         console.log('working')
         setIsModalVisible(true);
     };
+
+    const items = [
+        {
+            key: 'copy',
+            label: (
+                <TsButton
+                    label={
+                        <>
+                            <ClipboardCopy /> {translations.copyDesign}
+                        </>
+                    }
+                    onClick={onCopySettings}
+                />
+            ),
+        },
+        {
+            key: 'paste',
+            label: (
+                <TsButton
+                    label={
+                        <>
+                            <ClipboardPaste /> {translations.pasteDesign}
+                        </>
+                    }
+                    onClick={onPasteSettings}
+                />
+            ),
+        },
+    ];
 
     return (
         <>
@@ -71,18 +105,26 @@ function Topbar({ type }) {
 
                 {/* Action Buttons */}
                 <div className="flex gap-2">
+                    {isPro && !isLicenseInactive ? (
+                        <Dropdown menu={{ items }} trigger={['click']}>
+                            <TsButton
+                                label={<Copy />}
+                                className="bg-transparent text-white border-none hover:bg-white hover:text-purple-600"
+                            />
+                        </Dropdown>
+                    ) : null}
                     <TsButton
-                        label={<Code />}
+                        label={<Code/>}
                         className="bg-transparent text-white border-none hover:bg-white hover:text-purple-600"
                         onClick={handleCodeClick}
                     />
                     <TsButton
-                        label="Publish"
+                        label={translations.publish}
                         className="tsteam__editor-button"
                         onClick={handlePublishClick}
                     />
                     <TsButton
-                        label={<CircleX />}
+                        label={<CircleX/>}
                         className="bg-transparent text-white border-none hover:bg-red-500 hover:text-white"
                         onClick={handleBacktoAdmin}
                     />

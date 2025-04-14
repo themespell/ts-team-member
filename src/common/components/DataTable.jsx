@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { Table, Dropdown, Image } from 'antd';
 import { fetchData } from '../services/fetchData';
 import { deleteData } from "../services/deleteData";
+import {duplicateData} from "../services/duplicateData.js";
 import { toastNotification } from '.././utils/toastNotification.js';
 import { TsModal } from './controls/tsControls.js';
-import { FilePenLine, Brush, Trash2, AlertTriangle } from 'lucide-react';
+import { FilePenLine, Brush, Copy, Trash2, AlertTriangle } from 'lucide-react';
+import {getTranslations} from "../utils/translations.js";
 
 import commonStore from "../states/commonStore.js";
 
@@ -13,12 +15,17 @@ import TsButton from "./controls/TsButton.jsx";
 const { Text } = Typography;
 
 function DataTable({ type, title, editor }) {
+  const translations = getTranslations();
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+
+  const isPro = window.tsteam_settings?.is_pro || false;
+  const isLicenseInactive = window.tsTeamPro?.is_licence_inactive || false;
+  const canDuplicate = isPro && !isLicenseInactive;
 
   const { saveSettings, updateModal, reloadData } = commonStore((state) => ({
     saveSettings: state.saveSettings,
@@ -34,7 +41,7 @@ function DataTable({ type, title, editor }) {
           key: item.post_id,
           ...item,
         }));
-        
+
         const dynamicColumns = Object.keys(showcaseData[0])
         .filter((key) => key !== 'post_id' && key !== 'key')
         .map((key) => ({
@@ -45,7 +52,7 @@ function DataTable({ type, title, editor }) {
             switch (key) {
               case 'image':
               case 'profileImage':
-                  return <Image src={text} alt={key} style={{ width: '100px', height: '80px', borderRadius: '100%', objectFit: 'cover' }} />;
+                  return <Image src={text} alt={key} style={{ width: '80px', height: '80px', borderRadius: '100%', objectFit: 'cover' }} />;
               case 'shortcode':
                 return <Text copyable>{text}</Text>;
               case 'snippet':
@@ -69,7 +76,7 @@ function DataTable({ type, title, editor }) {
                         label: (
                             <div className="tsteam__action-dropdown flex items-center w-full space-x-2 p-2 rounded-xl">
                                 <FilePenLine size={20} className="tsteam__color--icon" />
-                                <span>Edit</span>
+                                <span>{translations.edit}</span>
                             </div>
                         ),
                         onClick: () => handleEdit(record.key),
@@ -81,19 +88,35 @@ function DataTable({ type, title, editor }) {
                               label: (
                                   <div className="tsteam__action-dropdown flex items-center w-full space-x-2 p-2 rounded-xl">
                                     <Brush size={20} className="tsteam__color--icon" />
-                                    <span>Edit Design</span>
+                                    <span>{translations.editDesign}</span>
                                   </div>
                               ),
                               onClick: () => handleEditor(record.key, type),
                             },
                           ]
                           : []),
+                        {
+                            key: 'duplicate',
+                            label: (
+                                <div className="tsteam__action-dropdown flex items-center w-full space-x-2 p-2 rounded-xl">
+                                    <div style={{ width: '20px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Copy size={20} className={canDuplicate ? "tsteam__color--icon" : "text-gray-500"} />
+                                    </div>
+                                    <span className={!canDuplicate ? "text-gray-500" : ""} style={{ flexGrow: 1 }}>{translations.duplicate || 'Duplicate'}</span>
+                                    {!canDuplicate && (
+                                        <span className="bg-amber-500 text-white text-xs px-2 py-0.5 rounded font-medium">PRO</span>
+                                    )}
+                                </div>
+                            ),
+                            onClick: canDuplicate ? () => handleDuplicate(record.key) : () => handleProFeature('duplicate'),
+                            disabled: !canDuplicate,
+                        },
                       {
                         key: 'delete',
                         label: (
                             <div className="tsteam__action-dropdown flex items-center space-x-2 w-full p-2 rounded-xl">
                               <Trash2 size={20} className="text-red-500" />
-                              <span>Delete</span>
+                              <span>{translations.delete}</span>
                             </div>
                         ),
                         onClick: () => handleDelete(record.key),
@@ -146,6 +169,23 @@ function DataTable({ type, title, editor }) {
             });
     };
 
+    const handleDuplicate = (post_id) => {
+        duplicateData(`tsteam/${type}/duplicate`, post_id)
+            .then((response) => {
+                if (response.success) {
+                    toastNotification('success', `${title} Duplicated`, `The ${title} has been successfully duplicated.`);
+                    // Use saveSettings to update reloadData
+                    saveSettings('reloadData', !reloadData);
+                } else {
+                    toastNotification('error', 'Error', `There was an error duplicating the ${title}.`);
+                }
+            })
+            .catch((error) => {
+                console.error('Duplicate error:', error);
+                toastNotification('error', 'Error', `There was an error duplicating the ${title}.`);
+            });
+    };
+
   const handleEdit = (post_id) => {
     setSelectedPost(post_id);
     saveSettings('updateModal', true);
@@ -174,7 +214,11 @@ function DataTable({ type, title, editor }) {
       dataSource={data}
       loading={loading}
       pagination={{
-          position: ['none', 'bottomCenter'],
+          position: ['bottomCenter'],
+          defaultPageSize: 10,
+          showSizeChanger: true,
+          pageSizeOptions: [10, 20, 50, 100],  // Use numbers instead of strings
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
       }}
       />
 
@@ -201,20 +245,20 @@ function DataTable({ type, title, editor }) {
                 </div>
 
                 {/* Text Content */}
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Are you sure?</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">{translations.areYouSure}</h3>
                 <p className="text-gray-600 text-center mb-8">
-                    You're going to delete this "{title}". Are you sure?
+                    {translations.deleteConfirmation} "{title}". {translations.areYouSure}
                 </p>
 
                 {/* Buttons */}
                 <div className="flex space-x-4 w-full">
                     <TsButton
-                        label="No, Keep It."
+                        label={translations.noKeepIt}
                         onClick={() => setDeleteModalOpen(false)}
                         className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-lg"
                     />
                     <TsButton
-                        label="Yes, Delete!"
+                        label={translations.yesDelete}
                         onClick={confirmDelete}
                         className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-lg"
                     />
