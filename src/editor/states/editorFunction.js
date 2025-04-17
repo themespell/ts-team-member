@@ -39,7 +39,7 @@ const editorFunction = create((set) => ({
             updateData(action, data, postID)
                 .then((response) => {
                     toastNotification('success', `Successfully Updated`, `The settings have been successfully updated.`);
-                    console.log('Settings updated successfully on the server:', response);
+                    console.log('Tools updated successfully on the server:', response);
 
                     // Optionally, update local state after server update
                     Object.keys(data).forEach((key) => {
