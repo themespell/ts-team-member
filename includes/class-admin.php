@@ -51,6 +51,14 @@ class Admin {
 			'tsteam-showcase&path=team-member',
 			array( $this, 'tsteam_callback' ),
 		);
+		add_submenu_page(
+        	$parent,
+        	__( 'Tools', 'ts-team-member' ),
+        	__( 'Tools', 'ts-team-member' ),
+        	'manage_options',
+        	'tsteam-showcase&path=tools',
+        	array( $this, 'tsteam_callback' ),
+        );
 
 		remove_submenu_page($parent, $parent);
 	}
