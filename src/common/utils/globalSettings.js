@@ -63,6 +63,10 @@ const globalSettings = {
               link: '?page=tsteam-showcase&path=team-member',
               label: translations.teamMember,
           },
+          tools:{
+              link: '?page=tsteam-showcase&path=tools',
+              label: translations.tools,
+          },
           ...(isPro && {
               account:{
                   link: 'admin.php?page=tsteam-pro-account',
