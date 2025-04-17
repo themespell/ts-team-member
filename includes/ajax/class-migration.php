@@ -37,7 +37,7 @@ class Migration {
         $team_members = get_posts($args);
 
         if (empty($team_members)) {
-            wp_send_json_error('No team members found to migrate.');
+            wp_send_json_error('No Team Members Found to Migrate.');
         }
 
         $migrated_count = 0;
@@ -73,34 +73,26 @@ class Migration {
             $new_post_id = wp_insert_post($new_post);
 
             if ($new_post_id) {
-                // Migrate the featured image (post thumbnail)
                 $featured_image_id = get_post_thumbnail_id($team_member->ID);
                 if ($featured_image_id) {
-                    // Set the featured image for the new post
                     set_post_thumbnail($new_post_id, $featured_image_id);
-
-                    // Get the featured image URL
                     $featured_image_url = wp_get_attachment_url($featured_image_id);
                 }
 
-                // Migrate individual meta keys into the tsteam_member_info array
                 $tsteam_member_info = array();
 
                 foreach ($meta_keys as $meta_key) {
                     $meta_value = get_post_meta($team_member->ID, $meta_key, true);
                     if ($meta_value) {
-                        // Remove the leading underscore from the meta key
                         $clean_key = ltrim($meta_key, '_');
                         $tsteam_member_info[$clean_key] = $meta_value;
                     }
                 }
 
-                // Add the featured image URL to the tsteam_member_info array
                 if (!empty($featured_image_url)) {
                     $tsteam_member_info['image'] = $featured_image_url;
                 }
 
-                // Save the tsteam_member_info meta
                 if (!empty($tsteam_member_info)) {
                     update_post_meta($new_post_id, 'tsteam_member_info', $tsteam_member_info);
                 }
@@ -109,18 +101,15 @@ class Migration {
             }
         }
 
-        // Send a success response
-        wp_send_json_success("Successfully migrated $migrated_count team members.");
+        wp_send_json_success("Successfully Migrated $migrated_count Team Members.");
     }
 
     public function migrate_sptp_members_to_tsteam() {
-        // Verify the nonce for security
         check_ajax_referer( 'tsteam_nonce' );
                 if ( ! current_user_can( 'manage_options' ) ) {
                       wp_die();
                 }
 
-        // Get all posts of type 'sptp_member'
         $args = array(
             'post_type' => 'sptp_member',
             'posts_per_page' => -1, // Get all posts
@@ -149,7 +138,6 @@ class Migration {
         );
 
         foreach ($sptp_members as $sptp_member) {
-            // Create a new post of type 'tsteam-member'
             $new_post = array(
                 'post_title'   => $sptp_member->post_title,
                 'post_content' => $sptp_member->post_content,
@@ -157,21 +145,15 @@ class Migration {
                 'post_type'    => 'tsteam-member',
             );
 
-            // Insert the new post
             $new_post_id = wp_insert_post($new_post);
 
             if ($new_post_id) {
-                // Migrate the featured image (post thumbnail)
                 $featured_image_id = get_post_thumbnail_id($sptp_member->ID);
                 if ($featured_image_id) {
-                    // Set the featured image for the new post
                     set_post_thumbnail($new_post_id, $featured_image_id);
-
-                    // Get the featured image URL
                     $featured_image_url = wp_get_attachment_url($featured_image_id);
                 }
 
-                // Migrate individual meta keys into the tsteam_member_info array
                 $tsteam_member_info = array();
 
                 foreach ($meta_keys_mapping as $sptp_key => $tsteam_key) {
