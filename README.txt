@@ -2,9 +2,9 @@
 Contributors: themespell, asadabir
 Tags: team, team members, team showcase, team builder, team plugin
 Requires at least: 3.0.1
-Tested up to: 6.7.2
+Tested up to: 6.8.1
 Requires PHP: 5.4
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,6 +19,8 @@ Whether you are building a corporate website, creative agency, or any kind of sm
 ## 🔗 USEFUL LINKS
 
 [**Official Website**](https://themespell.com/) **||** [**Demo**](https://preview.themespell.com/ts-team-member/) **||** [**Public Roadmap**](https://trello.com/b/maXPCdTB/ts-team-member-roadmap) **|| Documentation**
+
+https://www.youtube.com/watch?v=DCMKZ5AWrPc&ab_channel=themespell
 
 From simple team profiles to advanced team management, member directories, or creative agency showcases, **TS Team Member** can meet virtually all your team display needs with elegance and flexibility.
 
@@ -219,6 +221,13 @@ Yes, the plugin includes a live editing feature, allowing you to see real-time c
 7. Elementor widget for TS Team Member.
 
 == Changelog ==
+
+= 1.0.4 =
+* Added Migration Tool (Beta)
+* Added Settings Panel
+* Compatible & Tested with latest WordPress 6.8.1 support
+* Minor Bug Fixed
+* Readme Updated & Video Added
 
 = 1.0.3 =
 * Improved & Optimized Style Generation
