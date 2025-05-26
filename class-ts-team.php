@@ -4,7 +4,7 @@
 	 *
 	 * @link              https://themespell.com/
 	 * @since             1.0.5
-	 * @package           Team Member & Showcase Plugin
+	 * @package           Team Member & Showcase Plugin For WordPress
 	 *
 	 * @wordpress-plugin
 	 * Plugin Name:       TS Team Member Showcase
