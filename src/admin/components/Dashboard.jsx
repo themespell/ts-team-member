@@ -1,6 +1,7 @@
 import TsNotice from "../../common/components/controls/TsNotice.jsx";
 import TsButton from "../../common/components/controls/TsButton.jsx";
 import {getTranslations} from "../../common/utils/translations.js";
+import ReactPlayer from 'react-player'
 
 function Dashboard() {
     const tsteamImage = tsteam_settings.assets_path;
@@ -15,7 +16,10 @@ function Dashboard() {
                     label={translations.grabYourDiscount}
                     ctalink={'https://themespell.com/ts-product/ts-team-member/'}
                 />
-                <img src={`${tsteamImage}/img/tsteam_dashboard_cover.png`} className="mt-8 tsteam__global--border w-full"/>
+                <div className="mt-8 tsteam__global--border w-full">
+                    <ReactPlayer light="https://img.youtube.com/vi/DCMKZ5AWrPc/maxresdefault.jpg" width="1160px" height="650px" url='https://www.youtube.com/watch?v=DCMKZ5AWrPc' />
+                </div>
+
 
                 <div className="flex justify-between items-center gap-6 mt-8">
                     <div className="bg-white p-12 pt-8 tsteam__global--border h-96">
