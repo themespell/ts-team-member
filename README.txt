@@ -8,6 +8,8 @@ Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
+Team plugin, Team members, and Team showcase in one place – display your Best Team Members with a stunning Team Member slider.
+
 == Description ==
 
 **The Super Flexible, Elegant, and Highly Customizable Team Members Showcase Plugin for WordPress 🚀**
