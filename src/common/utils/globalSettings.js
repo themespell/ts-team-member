@@ -69,7 +69,7 @@ const globalSettings = {
           },
           ...(isPro && {
               account:{
-                  link: 'admin.php?page=tsteam-pro-account',
+                  link: 'admin.php?page=tsteam-admin-account',
                   label: translations.account,
               }
           }),
@@ -84,7 +84,7 @@ const globalSettings = {
                 label: translations.getPro,
             }
         }),
-      version: '1.0.6',
+      version: '1.0.7',
     }
   };
   

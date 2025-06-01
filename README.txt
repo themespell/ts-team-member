@@ -4,11 +4,11 @@ Tags: team, team members, team showcase, team builder, team plugin
 Requires at least: 3.0.1
 Tested up to: 6.8.1
 Requires PHP: 5.4
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Team plugin, Team members, and Team showcase in one place – display your Best Team Members with a stunning Team Member slider.
+Team members, Team showcase and Team plugin in one place – display your Best Team Members Showcase with a stunning Team Member slider.
 
 == Description ==
 
@@ -225,6 +225,11 @@ Yes, the plugin includes a live editing feature, allowing you to see real-time c
 7. Elementor widget for TS Team Member.
 
 == Changelog ==
+
+= 1.0.7 =
+* Fixed Upgrade Issue
+* Improved Pro Compability
+* Readme Updated
 
 = 1.0.6 =
 * Added Video Guide
