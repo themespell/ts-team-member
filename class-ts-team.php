@@ -112,12 +112,13 @@ final class TSTeam {
                         $tsteammember = fs_dynamic_init( array(
                             'id'                  => '17306',
                             'slug'                => 'ts-team-member',
+                            'premium_slug'        => 'tsteam-pro',
                             'type'                => 'plugin',
                             'public_key'          => 'pk_cb7074e85c7a5734ac990c844add0',
                             'is_premium'          => false,
-                            'premium_suffix'      => 'Personal',
+                            'has_premium_version' => true,
                             'has_addons'          => false,
-                            'has_paid_plans'      => false,
+                            'has_paid_plans'      => true,
                             'menu' => array(
                                 'slug'           => 'tsteam-admin',
                                 'first-path'     => 'admin.php?page=tsteam-showcase',

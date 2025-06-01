@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "freemius/wordpress-sdk",
-            "version": "2.9.0",
+            "version": "2.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Freemius/wordpress-sdk.git",
-                "reference": "56696717c5f0b7fb395618e88e1b592d1893e5dc"
+                "reference": "db6f35a2b3d318a53330409dbeab49156ee76dd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Freemius/wordpress-sdk/zipball/56696717c5f0b7fb395618e88e1b592d1893e5dc",
-                "reference": "56696717c5f0b7fb395618e88e1b592d1893e5dc",
+                "url": "https://api.github.com/repos/Freemius/wordpress-sdk/zipball/db6f35a2b3d318a53330409dbeab49156ee76dd8",
+                "reference": "db6f35a2b3d318a53330409dbeab49156ee76dd8",
                 "shasum": ""
             },
             "require": {
@@ -33,6 +33,11 @@
                 "wp-coding-standards/wpcs": "^2.3"
             },
             "type": "library",
+            "autoload": {
+                "files": [
+                    "start.php"
+                ]
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-3.0-only"
@@ -50,18 +55,18 @@
             ],
             "support": {
                 "issues": "https://github.com/Freemius/wordpress-sdk/issues",
-                "source": "https://github.com/Freemius/wordpress-sdk/tree/2.9.0"
+                "source": "https://github.com/Freemius/wordpress-sdk/tree/2.12.0"
             },
-            "time": "2024-10-21T10:21:58+00:00"
+            "time": "2025-05-11T07:07:09+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
+    "platform": {},
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
