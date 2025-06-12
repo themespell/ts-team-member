@@ -26,6 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class TSTeam {
 
 	private function __construct() {
+	    require_once 'freemius.php';
 		$this->define_constants();
 		$this->load_dependency();
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
@@ -60,7 +61,6 @@ final class TSTeam {
 
 	public function init_plugin() {
 		$this->load_textdomain();
-		$this->init_freemius();
 		$this->dispatch_hooks();
 	}
 
@@ -99,37 +99,6 @@ final class TSTeam {
                 delete_transient( 'tsteam_plugin_activated' );
                 wp_redirect( admin_url( 'admin.php?page=tsteam-admin' ) );
                 exit;
-            }
-    }
-
-    public function init_freemius() {
-            if ( ! function_exists( 'tsteammember' ) ) {
-                function tsteammember() {
-                    global $tsteammember;
-
-                    if ( ! isset( $tsteammember ) ) {
-                        require_once TSTEAM_INCLUDES_DIR_PATH . 'library/vendor/freemius/wordpress-sdk/start.php';
-                        $tsteammember = fs_dynamic_init( array(
-                            'id'                  => '17306',
-                            'slug'                => 'ts-team-member',
-                            'premium_slug'        => 'tsteam-pro',
-                            'type'                => 'plugin',
-                            'public_key'          => 'pk_cb7074e85c7a5734ac990c844add0',
-                            'is_premium'          => false,
-                            'has_premium_version' => true,
-                            'has_addons'          => false,
-                            'has_paid_plans'      => true,
-                            'menu' => array(
-                                'slug'           => 'tsteam-admin',
-                                'first-path'     => 'admin.php?page=tsteam-showcase',
-                            ),
-                        ) );
-                    }
-
-                    return $tsteammember;
-                }
-                tsteammember();
-                do_action( 'tsteammember_loaded' );
             }
     }
 }
