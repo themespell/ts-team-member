@@ -23,6 +23,7 @@ if ( function_exists( 'tsteammember' ) ) {
                                     'has_premium_version' => true,
                                     'has_addons'          => false,
                                     'has_paid_plans'      => true,
+                                    'is_org_compliant'    => true,
                                     'menu' => array(
                                         'slug'           => 'tsteam-admin',
                                         'first-path'     => 'admin.php?page=tsteam-showcase',

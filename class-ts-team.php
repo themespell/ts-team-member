@@ -3,14 +3,14 @@
 	/**
 	 *
 	 * @link              https://themespell.com/
-	 * @since             1.0.7
+	 * @since             1.0.8
 	 * @package           Team Member & Showcase Plugin For WordPress
 	 *
 	 * @wordpress-plugin
 	 * Plugin Name:       TS Team Member Showcase
 	 * Plugin URI:        https://themespell.com/ts-team-member/
 	 * Description:       Best Team Members, Team Showcase, Team Member Slider Plugin for WordPress
-	 * Version:           1.0.7
+	 * Version:           1.0.8
 	 * Author:            Themespell
 	 * Author URI:        https://themespell.com/
 	 * License:           GPL-2.0+
@@ -46,7 +46,7 @@ final class TSTeam {
 	}
 
 	public function define_constants() {
-		define( 'TSTEAM_VERSION', '1.0.7' );
+		define( 'TSTEAM_VERSION', '1.0.8' );
 		define( 'TSTEAM_PLUGIN_FILE', __FILE__ );
 		define( 'TSTEAM_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 		define( 'TSTEAM_ROOT_DIR_PATH', plugin_dir_path( __FILE__ ) );
