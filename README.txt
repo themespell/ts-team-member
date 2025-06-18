@@ -2,11 +2,13 @@
 Contributors: themespell, asadabir
 Tags: team, team members, team showcase, team builder, team plugin
 Requires at least: 3.0.1
-Tested up to: 6.7.2
+Tested up to: 6.8.1
 Requires PHP: 5.4
-Stable tag: 1.0.3
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Team members, Team showcase and Team plugin in one place – display your Best Team Members Showcase with a stunning Team Member slider.
 
 == Description ==
 
@@ -18,7 +20,9 @@ Whether you are building a corporate website, creative agency, or any kind of sm
 
 ## 🔗 USEFUL LINKS
 
-[**Official Website**](https://themespell.com/) **||** [**Demo**](https://preview.themespell.com/ts-team-member/) **||** [**Public Roadmap**](https://trello.com/b/maXPCdTB/ts-team-member-roadmap) **|| Documentation**
+[**Official Website**](https://themespell.com/ts-team-member/) **||** [**Demo**](https://preview.themespell.com/ts-team-member/) **||** [**Public Roadmap**](https://trello.com/b/maXPCdTB/ts-team-member-roadmap) **|| Documentation**
+
+https://www.youtube.com/watch?v=DCMKZ5AWrPc&ab_channel=themespell
 
 From simple team profiles to advanced team management, member directories, or creative agency showcases, **TS Team Member** can meet virtually all your team display needs with elegance and flexibility.
 
@@ -48,7 +52,9 @@ From simple team profiles to advanced team management, member directories, or cr
 
 ## 🧐WHO NEEDS TS TEAM MEMBER?
 
-TS Team Member can be the go-to option for any business looking for a reliable tool to manage their team showcase. It’s an extraordinary choice for those needing an efficient and user-friendly **team management solution** in WordPress.✅ **Corporate Websites:** Highlight your executive team, board members, or staff with polished and professional profiles. Build trust and credibility by showcasing the people behind your success. TS Team Member’s customizable layouts and responsive designs ensure your team looks great on any device, making it perfect for corporate websites of all sizes.
+TS Team Member can be the go-to option for any business looking for a reliable tool to manage their team showcase. It’s an extraordinary choice for those needing an efficient and user-friendly **team management solution** in WordPress.
+
+✅ **Corporate Websites:** Highlight your executive team, board members, or staff with polished and professional profiles. Build trust and credibility by showcasing the people behind your success. TS Team Member’s customizable layouts and responsive designs ensure your team looks great on any device, making it perfect for corporate websites of all sizes.
 
 ✅ **Creative Agencies:** Showcase your designers, developers, and creatives with visually stunning profiles that reflect your agency’s unique style. TS Team Member’s elegant layouts and interactive features, like sliders and popups, help you present your team in a way that captivates clients and sets your agency apart.
 
@@ -219,6 +225,27 @@ Yes, the plugin includes a live editing feature, allowing you to see real-time c
 7. Elementor widget for TS Team Member.
 
 == Changelog ==
+
+= 1.0.7 =
+* Fixed Upgrade Issue
+* Improved Pro Compability
+* Readme Updated
+
+= 1.0.6 =
+* Added Video Guide
+* Fixed UI Bugs
+* Readme Updated
+
+= 1.0.5 =
+* Minor Bug Fixed
+* Readme Updated
+
+= 1.0.4 =
+* Added Migration Tool (Beta)
+* Added Settings Panel
+* Compatible & Tested with latest WordPress 6.8.1 support
+* Minor Bug Fixed
+* Readme Updated & Video Added
 
 = 1.0.3 =
 * Improved & Optimized Style Generation

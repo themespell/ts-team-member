@@ -3,20 +3,20 @@
 	/**
 	 *
 	 * @link              https://themespell.com/
-	 * @since             1.0.3
-	 * @package           Team Member & Showcase Plugin
+	 * @since             1.0.8
+	 * @package           Team Member & Showcase Plugin For WordPress
 	 *
 	 * @wordpress-plugin
 	 * Plugin Name:       TS Team Member Showcase
-	 * Plugin URI:        https://themespell.com/ts-team
-	 * Description:       Team Showcase Plugin
-	 * Version:           1.0.3
+	 * Plugin URI:        https://themespell.com/ts-team-member/
+	 * Description:       Best Team Members, Team Showcase, Team Member Slider Plugin for WordPress
+	 * Version:           1.0.8
 	 * Author:            Themespell
 	 * Author URI:        https://themespell.com/
 	 * License:           GPL-2.0+
 	 * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
 	 * Text Domain:       ts-team-member
-	 * Tested up to:      6.7.2
+	 * Tested up to:      6.8.1
 	 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,6 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class TSTeam {
 
 	private function __construct() {
+	    require_once 'freemius.php';
 		$this->define_constants();
 		$this->load_dependency();
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
@@ -45,7 +46,7 @@ final class TSTeam {
 	}
 
 	public function define_constants() {
-		define( 'TSTEAM_VERSION', '1.0.3' );
+		define( 'TSTEAM_VERSION', '1.0.8' );
 		define( 'TSTEAM_PLUGIN_FILE', __FILE__ );
 		define( 'TSTEAM_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 		define( 'TSTEAM_ROOT_DIR_PATH', plugin_dir_path( __FILE__ ) );
@@ -60,7 +61,6 @@ final class TSTeam {
 
 	public function init_plugin() {
 		$this->load_textdomain();
-		$this->init_freemius();
 		$this->dispatch_hooks();
 	}
 
@@ -99,36 +99,6 @@ final class TSTeam {
                 delete_transient( 'tsteam_plugin_activated' );
                 wp_redirect( admin_url( 'admin.php?page=tsteam-admin' ) );
                 exit;
-            }
-    }
-
-    public function init_freemius() {
-            if ( ! function_exists( 'tsteammember' ) ) {
-                function tsteammember() {
-                    global $tsteammember;
-
-                    if ( ! isset( $tsteammember ) ) {
-                        require_once TSTEAM_INCLUDES_DIR_PATH . 'library/vendor/freemius/wordpress-sdk/start.php';
-                        $tsteammember = fs_dynamic_init( array(
-                            'id'                  => '17306',
-                            'slug'                => 'ts-team-member',
-                            'type'                => 'plugin',
-                            'public_key'          => 'pk_cb7074e85c7a5734ac990c844add0',
-                            'is_premium'          => false,
-                            'premium_suffix'      => 'Personal',
-                            'has_addons'          => false,
-                            'has_paid_plans'      => false,
-                            'menu' => array(
-                                'slug'           => 'tsteam-admin',
-                                'first-path'     => 'admin.php?page=tsteam-showcase',
-                            ),
-                        ) );
-                    }
-
-                    return $tsteammember;
-                }
-                tsteammember();
-                do_action( 'tsteammember_loaded' );
             }
     }
 }
