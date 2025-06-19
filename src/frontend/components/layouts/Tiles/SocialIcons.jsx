@@ -58,7 +58,7 @@ const SocialIcons = ({ socialIcons, settings }) => {
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-white hover:text-gray-200 text-sm text-purple-500 hover:bg-purple-600 rounded-full p-2 transition-colors"
+                    className="bg-white hover:text-gray-200 text-sm text-purple-500 hover:bg-white rounded-full p-2 transition-colors"
                     style={{
                         backgroundColor: settings?.layout?.color?.socialIconBg,
                         color: settings?.layout?.color?.socialIcon,
