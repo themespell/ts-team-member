@@ -17,8 +17,8 @@ const pro_views = isPro && !isLicenseInactive
         // { label: 'Vertical Carousel', value: 'vertical_carousel', type: 'pro' },
         { label: 'Flex', value: 'flex', type: 'pro' },
         { label: 'Marquee', value: 'marquee', type: 'pro' },
-        { label: 'Table', value: 'table', type: 'pro' },
-        // { label: 'Confetti', value: 'confetti', type: 'pro' },
+        // { label: 'Table', value: 'table', type: 'free' },
+        { label: 'Confetti', value: 'confetti', type: 'pro' },
     ] : [];
 
 const pro_details = isPro && !isLicenseInactive
@@ -43,11 +43,13 @@ const editorLocal = create((set) => ({
         ...flexLayouts,
     ],
     availableTableLayouts: [
+        { label: 'Standard Table', value: 'StandardTable', type: 'free' },
         ...tableLayouts,
     ],
     availableViews: [
         { label: 'Grid', value: 'grid', type: 'free' },
         { label: 'Carousel', value: 'carousel', type: 'free' },
+        { label: 'Table', value: 'table', type: 'free' },
         ...pro_views
     ],
     availableTransition: [
