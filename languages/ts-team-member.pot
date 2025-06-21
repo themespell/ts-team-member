@@ -127,7 +127,7 @@ msgid "Select"
 msgstr ""
 
 #: includes/class-srtings.php:28
-msgid "Settings"
+msgid "Tools"
 msgstr ""
 
 #: includes/class-srtings.php:29

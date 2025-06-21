@@ -25,7 +25,7 @@ const editorStore = create((set) => ({
         type: 'modal',
     },
 
-    // Container Settings
+    // Container Tools
     containerSettings: {
         width:{
           range: {

@@ -63,9 +63,13 @@ const globalSettings = {
               link: '?page=tsteam-showcase&path=team-member',
               label: translations.teamMember,
           },
+          tools:{
+              link: '?page=tsteam-showcase&path=tools',
+              label: translations.tools,
+          },
           ...(isPro && {
               account:{
-                  link: 'admin.php?page=tsteam-pro-account',
+                  link: 'admin.php?page=tsteam-admin-account',
                   label: translations.account,
               }
           }),
@@ -80,7 +84,7 @@ const globalSettings = {
                 label: translations.getPro,
             }
         }),
-      version: '1.0.3',
+      version: '1.0.8',
     }
   };
   
