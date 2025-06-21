@@ -14,7 +14,7 @@ function Dashboard() {
                     heading={'Unlock Ts Team Pro with an Exclusive Discount!'}
                     description={'Take your experience to the next level with Ts Team Pro Version. For a limited time, we’re offering an exclusive early bird discount—don’t miss out!'}
                     label={translations.grabYourDiscount}
-                    ctalink={'https://themespell.com/ts-product/ts-team-member/'}
+                    ctalink={'https://themespell.com/ts-team-member/'}
                 />
                 <div className="mt-8 tsteam__global--border w-full">
                     <ReactPlayer light="https://img.youtube.com/vi/DCMKZ5AWrPc/maxresdefault.jpg" width="1160px" height="650px" url='https://www.youtube.com/watch?v=DCMKZ5AWrPc' />
@@ -32,19 +32,19 @@ function Dashboard() {
                             <div className="tsteam__dasboard--card tsteam__global--border">
                                 <h4 className="text-xl">{translations.documentations}</h4>
                                 <p className="mt-4 mb-4">Dive into detailed guides and tutorials to set up and customize your TS Team Member plugin.</p>
-                                <a href="">Coming Soon</a>
+                                <a href="https://themespell.com/docs/">Check Here</a>
                             </div>
 
                             <div className="tsteam__dasboard--card tsteam__global--border">
                                 <h4 className="text-xl">{translations.helpAndSupport}</h4>
                                 <p className="mt-4 mb-4">Need assistance? Our dedicated support team is here to help you troubleshoot issues.</p>
-                                <a href="">Coming Soon</a>
+                                <a href="https://wordpress.org/support/plugin/ts-team-member/">Check Here</a>
                             </div>
 
                             <div className="tsteam__dasboard--card tsteam__global--border">
                                 <h4 className="text-xl">{translations.videoGuide}</h4>
                                 <p className="mt-4 mb-4">Watch easy-to-follow video tutorials to master the TS Team Member plugin.</p>
-                                <a href="">Coming Soon</a>
+                                <a href="https://www.youtube.com/watch?v=DCMKZ5AWrPc&list=PLPdGHlpHY56CjRlUbd6vwtF45HC3vl5-D">Check Here</a>
                             </div>
                         </div>
                     </div>
