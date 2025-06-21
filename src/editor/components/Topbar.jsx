@@ -6,6 +6,7 @@ import {Monitor, Tablet, Smartphone, Code, CircleX, Copy, ClipboardPaste, Clipbo
 import {Button, Dropdown} from "antd";
 import {TsModal} from "../../common/components/controls/tsControls";
 import {getTranslations} from "../../common/utils/translations.js";
+import TsProBadge from "../../common/components/controls/TsProBadge.jsx";
 
 function Topbar({ type, onCopySettings, onPasteSettings}) {
     const translations = getTranslations();
@@ -46,9 +47,12 @@ function Topbar({ type, onCopySettings, onPasteSettings}) {
                     label={
                         <>
                             <ClipboardCopy /> {translations.copyDesign}
+                            {(!isPro || isLicenseInactive) && <TsProBadge />}
                         </>
                     }
-                    onClick={onCopySettings}
+                    disabled={!isPro || isLicenseInactive}
+                    className={!isPro || isLicenseInactive ? "opacity-50 cursor-not-allowed" : ""}
+                    onClick={!isPro || isLicenseInactive ? (e) => e.preventDefault() : onCopySettings}
                 />
             ),
         },
@@ -59,9 +63,12 @@ function Topbar({ type, onCopySettings, onPasteSettings}) {
                     label={
                         <>
                             <ClipboardPaste /> {translations.pasteDesign}
+                            {(!isPro || isLicenseInactive) && <TsProBadge />}
                         </>
                     }
-                    onClick={onPasteSettings}
+                    disabled={!isPro || isLicenseInactive}
+                    className={!isPro || isLicenseInactive ? "opacity-50 cursor-not-allowed" : ""}
+                    onClick={!isPro || isLicenseInactive ? (e) => e.preventDefault() : onPasteSettings}
                 />
             ),
         },
@@ -105,14 +112,12 @@ function Topbar({ type, onCopySettings, onPasteSettings}) {
 
                 {/* Action Buttons */}
                 <div className="flex gap-2">
-                    {isPro && !isLicenseInactive ? (
                         <Dropdown menu={{ items }} trigger={['click']}>
                             <TsButton
                                 label={<Copy />}
                                 className="bg-transparent text-white border-none hover:bg-white hover:text-purple-600"
                             />
                         </Dropdown>
-                    ) : null}
                     <TsButton
                         label={<Code/>}
                         className="bg-transparent text-white border-none hover:bg-white hover:text-purple-600"
@@ -164,6 +169,8 @@ function Topbar({ type, onCopySettings, onPasteSettings}) {
                     </div>
                 </div>
             </TsModal>
+
+            {/*Layout Import Modal*/}
         </>
     );
 }
