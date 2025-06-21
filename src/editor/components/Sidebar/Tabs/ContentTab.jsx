@@ -1,6 +1,7 @@
 import { TsSelect, TsSlider, TsDivider, TsSwitch } from '../../../../common/components/controls/tsControls';
 import editorStore from '../../../states/editorStore';
 import editorLocal from "../../../states/editorLocal.js";
+import TsProBadge from "../../../../common/components/controls/TsProBadge.jsx";
 import {getTranslations} from "../../../../common/utils/translations.js";
 
 
@@ -16,6 +17,7 @@ function ContentTab() {
             name="selectedView"
             options={availableViews}
             output="object"
+            showProBadge={true}
         />
         {(selectedView.value === 'grid' || selectedView.value === 'carousel' || selectedView.value === 'marquee') && (
             <TsSelect
@@ -23,6 +25,7 @@ function ContentTab() {
                 name="selectedLayout"
                 options={availableLayouts}
                 output="object"
+                showProBadge={true}
             />
         )}
 
@@ -55,6 +58,7 @@ function ContentTab() {
             options={availableDetails}
             defaultValue="none"
             output="object"
+            showProBadge={true}
      />
 
       {selectedView.value === 'grid' && (
