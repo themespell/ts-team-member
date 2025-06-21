@@ -1,17 +1,34 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import Layout from './layouts/Layout';
+import React, { useState, useEffect, useMemo } from "react";
+import Layout from "./layouts/Layout";
 import { getCommonStyles } from "./helper/commonStyle.js";
 import { getResponsiveStyles } from "./helper/responsiveStyles.js";
 import { getProLayout } from "./helper/getProLayout.js";
+import {loadGoogleFont} from "./helper/loadGoogleFont.js";
+import {getAnimationClasses} from "./helper/motionControl.js";
 
 import Details from "./details/details.jsx";
+import GenerateLayoutStyle from "./helper/generateLayoutStyle.js";
 
-function TableView({ team_members, settings, viewport, isEditor, Details }) {
+function TableView({ team_members, settings, viewport, isEditor }) {
     const [ProLayoutComponent, setProLayoutComponent] = useState(null);
     const commonStyles = getCommonStyles(settings);
     const [responsiveStyles, setResponsiveStyles] = useState(
-        getResponsiveStyles(settings, viewport, isEditor)
+        getResponsiveStyles(settings, viewport, isEditor),
     );
+
+    // Load Google Fonts dynamically based on settings.typography
+    useEffect(() => {
+        if (settings?.typography) {
+            const typographyKeys = ["name", "designation", "description"];
+
+            typographyKeys.forEach((key) => {
+                const fontFamily = settings.typography[key];
+                if (fontFamily) {
+                    loadGoogleFont(fontFamily);
+                }
+            });
+        }
+    }, [settings?.typography]);
 
     useMemo(() => {
         setProLayoutComponent(() => getProLayout(settings));
@@ -26,18 +43,19 @@ function TableView({ team_members, settings, viewport, isEditor, Details }) {
             updateResponsiveStyles();
         } else {
             updateResponsiveStyles();
-            window.addEventListener('resize', updateResponsiveStyles);
+            window.addEventListener("resize", updateResponsiveStyles);
+
             return () => {
-                window.removeEventListener('resize', updateResponsiveStyles);
+                window.removeEventListener("resize", updateResponsiveStyles);
             };
         }
     }, [settings, isEditor, viewport]);
 
-    // Create a render function that will be passed to layout components
-    // const renderDetails = (member, settings) => {
-    //     return <Details settings={settings} member={member} />;
-    // };
-
+    const animationConfig = useMemo(() => {
+        const hoverAnimation = settings?.hoverAnimation || "none";
+        const config = getAnimationClasses(hoverAnimation);
+        return config;
+    }, [settings?.hoverAnimation]);
 
     return (
         <div
@@ -47,29 +65,24 @@ function TableView({ team_members, settings, viewport, isEditor, Details }) {
                 ...responsiveStyles,
             }}
         >
-            {ProLayoutComponent ? (
-                <ProLayoutComponent
-                    settings={settings}
-                    team_members={team_members}
-                    details={<Details
+            <GenerateLayoutStyle settings={settings} />
+            {team_members && team_members.length > 0 ? (
+                ProLayoutComponent ? (
+                    <ProLayoutComponent
                         settings={settings}
-                        member={team_members}  // Pass all team members instead of a single member
-                    />}
-                />
+                        team_members={team_members}
+                        Details={Details}
+                    />
+                ) : (
+                    <Layout
+                        settings={settings}
+                        layoutType={settings.selectedLayout.value}
+                        team_members={team_members}
+                        Details={Details}
+                    />
+                )
             ) : (
-                <Layout
-                    settings={settings}
-                    layoutType={settings.selectedLayout.value}
-                    team_members={team_members}
-                    details={<Details
-                        settings={settings}
-                        member={team_members}  // Pass all team members instead of a single member
-                    />}
-                    // details={<Details
-                    //     settings={settings}
-                    //     member={member}
-                    // />}
-                />
+                <p>No team members found.</p>
             )}
         </div>
     );

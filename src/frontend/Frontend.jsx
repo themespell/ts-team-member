@@ -96,14 +96,14 @@ function Frontend({ id }) {
   };
 
 
-  const renderViewComponent = () => {
+const renderViewComponent = () => {
     if (settings?.selectedView?.value === "flex") {
       return <FlexView team_members={teamMembers} settings={settings} />;
     } else if (settings?.selectedView?.value === "carousel") {
       return <CarouselView team_members={teamMembers} settings={settings} />;
     } else if (settings?.selectedView?.value === "marquee" && isPro) {
       return <MarqueeView team_members={teamMembers} settings={settings} />;
-    } else if (settings?.selectedView?.value === "table" && isPro) {
+    } else if (settings?.selectedView?.value === "table") {
       return <TableView team_members={teamMembers} settings={settings} />;
     } else if (settings?.selectedView?.value === "confetti" && isPro) {
       return <ConfettiView team_members={teamMembers} settings={settings} />;

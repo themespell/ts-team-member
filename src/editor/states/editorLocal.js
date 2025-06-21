@@ -18,7 +18,7 @@ const pro_views = isPro && !isLicenseInactive
         { label: 'Flex', value: 'flex', type: 'pro' },
         { label: 'Marquee', value: 'marquee', type: 'pro' },
         { label: 'Table', value: 'table', type: 'pro' },
-        // { label: 'Confetti', value: 'confetti', type: 'pro' },
+        { label: 'Confetti', value: 'confetti', type: 'pro' },
     ] : [];
 
 const pro_details = isPro && !isLicenseInactive
