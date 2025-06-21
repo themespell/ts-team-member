@@ -103,7 +103,7 @@ const renderViewComponent = () => {
       return <CarouselView team_members={teamMembers} settings={settings} />;
     } else if (settings?.selectedView?.value === "marquee" && isPro) {
       return <MarqueeView team_members={teamMembers} settings={settings} />;
-    } else if (settings?.selectedView?.value === "table") {
+    } else if (settings?.selectedView?.value === "table" && isPro) {
       return <TableView team_members={teamMembers} settings={settings} />;
     } else if (settings?.selectedView?.value === "confetti" && isPro) {
       return <ConfettiView team_members={teamMembers} settings={settings} />;
