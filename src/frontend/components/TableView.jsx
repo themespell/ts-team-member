@@ -72,6 +72,7 @@ function TableView({ team_members, settings, viewport, isEditor }) {
                         settings={settings}
                         team_members={team_members}
                         Details={Details}
+                        animationConfig={animationConfig}
                     />
                 ) : (
                     <Layout
@@ -79,6 +80,7 @@ function TableView({ team_members, settings, viewport, isEditor }) {
                         layoutType={settings.selectedLayout.value}
                         team_members={team_members}
                         Details={Details}
+                        animationConfig={animationConfig}
                     />
                 )
             ) : (
