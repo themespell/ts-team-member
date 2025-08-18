@@ -14,6 +14,14 @@ function Tools() {
         },
         {
             id: 2,
+            title: 'Team Member Generator',
+            description: 'Generate dummy team member profiles effortlessly for your projects.',
+            icon: <Users size={40} />,
+            cta: 'Access Now',
+            link: 'admin.php?page=tsteam-showcase&path=team-member-generator',
+        },
+        {
+            id: 3,
             title: 'Import / Export',
             description: 'Seamlessly import and export data for better workflow management.',
             icon: <Folder size={40} />,
@@ -21,7 +29,7 @@ function Tools() {
             link: '#',
         },
         {
-            id: 3,
+            id: 4,
             title: 'Custom Field',
             description: 'Add custom fields to tailor your data collection needs.',
             icon: <BookOpen size={40} />,
@@ -29,18 +37,10 @@ function Tools() {
             link: '#',
         },
         {
-            id: 4,
+            id: 5,
             title: 'Custom Font',
             description: 'Personalize your design with custom fonts for a unique look.',
             icon: <BarChart2 size={40} />,
-            cta: 'Coming Soon',
-            link: '#',
-        },
-        {
-            id: 5,
-            title: 'Team Member Generator',
-            description: 'Generate team member profiles effortlessly for your projects.',
-            icon: <Users size={40} />,
             cta: 'Coming Soon',
             link: '#',
         },
