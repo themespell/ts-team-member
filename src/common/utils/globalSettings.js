@@ -84,7 +84,7 @@ const globalSettings = {
                 label: translations.getPro,
             }
         }),
-      version: '1.1',
+      version: '1.1.1',
     }
   };
   
