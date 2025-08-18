@@ -3,6 +3,7 @@ import TeamMember from './components/TeamMember';
 import Dashboard from "./components/Dashboard.jsx";
 import Tools from "./components/Tools.jsx";
 import Migration from "./components/tools/migration/Migration.jsx";
+import TeamMemberGenerator from "./components/tools/TeamMemberGenerator/TeamMemberGenerator.jsx";
 import Topbar from './components/Topbar';
 
 import {getTranslations} from "../common/utils/translations.js";
@@ -15,6 +16,7 @@ function AdminPanel() {
   const isDashboardPage = currentUrl.includes(`&path=dashboard`);
   const isToolsPage = currentUrl.includes(`&path=tools`);
   const isMigrationPage = currentUrl.includes(`&path=migration`);
+  const isTeamMemberGenerator = currentUrl.includes(`&path=team-member-generator`);
 
     if (isDashboardPage) {
         return (
@@ -50,6 +52,19 @@ function AdminPanel() {
                     <div className='flex justify-between gap-8 w-4/6'>
                         <div className='w-full'>
                             <Migration/>
+                        </div>
+                    </div>
+                </div>
+            </>
+        );
+    } else if (isTeamMemberGenerator) {
+        return (
+            <>
+                <Topbar title={'Team Member Generator'}/>
+                <div className='tsteam__admin--style overflow-x-auto w-full flex justify-center pt-12 pb-12'>
+                    <div className='flex justify-between gap-8 w-4/6'>
+                        <div className='w-full'>
+                            <TeamMemberGenerator/>
                         </div>
                     </div>
                 </div>
