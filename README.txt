@@ -1,20 +1,20 @@
-=== Team Members - Best Team Members, Team Showcase, Team Member Slider Plugin for WordPress ===
+=== TS Team Member Showcase - Team Members, Team Showcase, Team Member Slider Plugin ===
 Contributors: themespell, asadabir
 Tags: team, team members, team showcase, team builder, team plugin
 Requires at least: 3.0.1
 Tested up to: 6.8.2
 Requires PHP: 5.4
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Team members, Team showcase and Team plugin in one place – display your Best Team Members Showcase with a stunning Team Member slider.
+Team members, Team showcase and Team plugin in one place – display your Team Members Showcase with a stunning Team Member slider.
 
 == Description ==
 
-**The Super Flexible, Elegant, and Highly Customizable Team Members Showcase Plugin for WordPress 🚀**
+**TS Team Member - Elegant and Highly Customizable Team Showcase Plugin**
 
-Showcase your team members in style with **TS Team Member**, the super flexible, elegant, and all-in-one WordPress plugin for creating beautiful and responsive team member profiles. 
+Showcase your team members in style with **TS Team Member**, the highly flexible, elegant, and comprehensive WordPress plugin for creating beautiful and responsive team member profiles. 
 
 Whether you are building a corporate website, creative agency, or any kind of small business portfolio, this plugin makes it effortless to display your team with full professionalism, customization, and elegance **all in one place**. 
 
@@ -26,7 +26,7 @@ https://www.youtube.com/watch?v=DCMKZ5AWrPc&ab_channel=themespell
 
 From simple team profiles to advanced team management, member directories, or creative agency showcases, **TS Team Member** can meet virtually all your team display needs with elegance and flexibility.
 
-## 🥇 10+ REASONS WHY TS TEAM MEMBER IS A GAME-CHANGER?
+## 🔧 KEY FEATURES
 
 🔥 **Real-Time Live Builder:** The **Live Builder** allows you to design and customize your team showcase in real-time. As you adjust views, layouts, typography control, styles, and any kind of settings, you will see the changes instantly. This feature eliminates guesswork, saves time, and ensures your team profiles look exactly the way you want, all without touching a single line of code.
 
@@ -42,11 +42,11 @@ From simple team profiles to advanced team management, member directories, or cr
 
 🔥 **Universal Compatibility:** TS Team Member is designed to work seamlessly with **all popular WordPress themes and plugins**. Whether you are using a page builder like Elementor, Divi, or a custom theme, you can trust TS Team Member to integrate smoothly without conflicts. It is the perfect addition to any WordPress website.
 
-**🔥 Built for Speed:** Built with performance in mind, TS Team Member is **lightweight and fast**. It won’t slow down your website, ensuring a smooth experience for both you and your visitors. Your team profiles will load quickly, even on slower connections, keeping your audience engaged.
+**🔥 Performance-optimized:** Built with performance in mind, TS Team Member is **lightweight and fast**. It won’t slow down your website, ensuring a smooth experience for both you and your visitors. Your team profiles will load quickly, even on slower connections, keeping your audience engaged.
 
 🔥 **SEO-Ready Profiles:** Our TS Team Member is **SEO-optimized** to help your team page rank higher in search engine results. Each team member profile is structured for maximum visibility, ensuring that your team showcases are search-engine friendly. This feature helps you attract more visitors and grow your online presence.
 
-🔥 **Free & Beginner-Friendly:** TS Team Member is **100% free** and designed for users of all skill levels. With its intuitive interface and **90% powerful features in the free version**, you can create professional team profiles without any coding knowledge. It’s the perfect tool for beginners and experts alike.
+🔥 **Free & Beginner-Friendly:** TS Team Member is **Free** and designed for users of all skill levels. With its intuitive interface and **90% powerful features in the free version**, you can create professional team profiles without any coding knowledge. It’s the perfect tool for beginners and experts alike.
 
 🔥**Responsive & Mobile-Friendly:** Your team profiles will look stunning on any device. The TS Team Member is fully responsive and mobile-friendly, ensuring a seamless experience for visitors on **desktops**, **tablets**, and **smartphones**. No matter how your audience accesses your site, your team showcase will always look perfect.
 
@@ -154,22 +154,6 @@ More features Coming Soon! 😎
 
 **📑 Table View \[PRO\]:** Organize your team profiles in a structured and professional format with the Table View. This layout is perfect for displaying detailed information like names, roles, and contact details in a clean, tabular format. Customize column widths, row heights, and hover effects to create a polished and functional team showcase. It’s ideal for corporate websites and organizations that need to present large teams in an easy-to-read format.
 
-## 👉 Explore Layouts 👈
-
-🃏 **Card Layout:** The Card Layout is a versatile and professional way to showcase your team. Each card includes a header, an image, and a bio panel that appears on hover. Customize card dimensions, box shadows, and hover animations like tilt, fade, or slide-up. Perfect for agencies, it also supports **team badges** (e.g., "Lead Designer" or "Co-Founder") with colored ribbons or corner flags.
-
-**➡️ Horizontal Card Layout:** A fresh take on team displays, the Horizontal Card Layout features scrollable cards in a single row. Ideal for minimalist designs or sidebars, this layout offers options like fixed or flexible card widths, sticky headers, and subtle parallax effects for a cinematic browsing experience.
-
-**🌌 Overlay Card Layout:** Add a touch of elegance with the Overlay Card Layout. Team member details appear beautifully over their images, creating a modern and visually stunning showcase. Customize overlay colors, transparency, and animations to match your brand’s style.
-
-**🧿 Circle Mask Layout \[PRO\]:** The Circle Mask Layout adds a modern and artistic touch to your team profiles. Team member images are displayed within circular masks, creating a sleek and visually appealing design. Customize the size, spacing, and hover effects to match your brand’s style. This layout is perfect for creative agencies, photographers, and businesses that want to showcase their team in a unique and memorable way.
-
-**✨ Fancy Card Layout \[PRO\]:** Elevate your team profiles with the Fancy Card Layout. This layout features stylish card designs with advanced hover effects, gradients, and animations. Customize card dimensions, shadows, and content placement to create a visually stunning showcase. Whether you’re highlighting executives or creatives, the Fancy Card Layout adds a touch of elegance and sophistication to your team profiles.
-
-**💎 Glass Layout \[PRO\]:** Create a modern, translucent look with the Glass Layout. This layout uses frosted glass effects and subtle shadows to give your team profiles a sleek, contemporary feel. Customize the transparency, blur intensity, and hover effects to create a visually striking showcase. Perfect for tech startups and creative agencies, the Glass Layout adds a touch of sophistication to your website.
-
-**💊 Capsule Card Layout \[PRO\]:** The Capsule Card Layout offers a unique and compact way to showcase your team. Team member profiles are displayed in capsule-shaped cards, creating a clean and modern design. Customize the capsule size, spacing, and hover effects to match your brand’s style. This layout is ideal for businesses that want to present their team in a concise and visually appealing format.
-
 ## 👉 Details Style 👈
 
 **🪟 Modal / Popup Details Style:** Keep your pages clean while offering deep dives into team details. The Modal/Popup Details Style can be triggered by a click, hover, or a "Learn More" button. Customize dimensions, background overlays (color, blur, or gradient), and exit animations like zoom-out or slide-down. This feature ensures a seamless and engaging user experience.
@@ -198,8 +182,6 @@ At **TS Team Member**, we are not just building a plugin. We are creating a tool
 
 **📊 Parallax View \[PRO\]:** Add depth and interactivity to your team showcase with the Parallax View. This visually stunning effect will create a sense of movement as visitors scroll, making your team profiles truly stand out.
 
-**🎴 Flipbox Layout \[PRO\]:** The Flipbox Layout will let you showcase your team in a fun, interactive way. Each team member’s profile will flip to reveal additional details, adding a dynamic element to your website.
-
 == Frequently Asked Questions ==
 
 = How do I add a team showcase to my page? =
@@ -225,6 +207,10 @@ Yes, the plugin includes a live editing feature, allowing you to see real-time c
 7. Elementor widget for TS Team Member.
 
 == Changelog ==
+
+1.1.2
+* Fixed Some Minor Core Bugs
+* Readme Updated
 
 1.1.1
 * Added Team Member Generator (Beta)
