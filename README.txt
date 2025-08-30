@@ -208,6 +208,10 @@ Yes, the plugin includes a live editing feature, allowing you to see real-time c
 
 == Changelog ==
 
+1.1.3
+* Fixed Version Mismatch Issue
+* Readme Updated
+
 1.1.2
 * Fixed Some Minor Core Bugs
 * Readme Updated
