@@ -1,4 +1,4 @@
-=== TS Team Member Showcase - Team Members, Team Showcase, Team Member Slider Plugin ===
+=== TS Team Member Showcase ===
 Contributors: themespell, asadabir
 Tags: team, team members, team showcase, team builder, team plugin
 Requires at least: 3.0.1
