@@ -2,9 +2,9 @@
 Contributors: themespell, asadabir
 Tags: team, team members, team showcase, team builder, team plugin
 Requires at least: 3.0.1
-Tested up to: 6.8.2
+Tested up to: 6.8
 Requires PHP: 5.4
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -207,6 +207,10 @@ Yes, the plugin includes a live editing feature, allowing you to see real-time c
 7. Elementor widget for TS Team Member.
 
 == Changelog ==
+
+1.1.3
+* Compatible with latest WordPress version.
+* Readme Updated
 
 1.1.3
 * Fixed Version Mismatch Issue
