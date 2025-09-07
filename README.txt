@@ -4,7 +4,7 @@ Tags: team, team members, team showcase, team builder, team plugin
 Requires at least: 3.0.1
 Tested up to: 6.8
 Requires PHP: 5.4
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -229,7 +229,7 @@ If the user does **not** opt in, only essential data may be sent for license val
 
 == Changelog ==
 
-1.1.3
+1.1.4
 * Compatible with latest WordPress version.
 * Readme Updated
 
