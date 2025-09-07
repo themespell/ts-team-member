@@ -14,7 +14,7 @@ class TSTeam_Showcase extends Widget_Base {
     }
 
     public function get_title() {
-        return esc_html__( 'TS Team', 'tsteam' );
+        return esc_html__( 'TS Team', 'ts-team-member' );
     }
 
     public function get_icon() {
@@ -33,7 +33,7 @@ class TSTeam_Showcase extends Widget_Base {
         $this->start_controls_section(
             'section_content',
             [
-                'label' => esc_html__( 'Content', 'tsteam' ),
+                'label' => esc_html__( 'Content', 'ts-team-member' ),
             ]
         );
 
@@ -46,9 +46,9 @@ class TSTeam_Showcase extends Widget_Base {
         ]);
 
         // Prepare options
-        $options = ['' => esc_html__('Select a Team Showcase', 'tsteam')];
+        $options = ['' => esc_html__('Select a Team Showcase', 'ts-team-member')];
         foreach ( $team_posts as $post ) {
-            $options[$post->ID] = !empty($post->post_title) ? $post->post_title : sprintf(__('#%d (No title)', 'tsteam'), $post->ID);
+            $options[$post->ID] = !empty($post->post_title) ? $post->post_title : sprintf(__('#%d (No title)', 'ts-team-member'), $post->ID);
         }
 
         // Team post selector
@@ -71,7 +71,7 @@ class TSTeam_Showcase extends Widget_Base {
 
         if ( empty( $settings['team_id'] ) ) {
             echo '<div class="tsteam-placeholder">';
-            echo esc_html__( 'Please select a team showcase to display', 'tsteam' );
+            echo esc_html__( 'Please select a team showcase to display', 'ts-team-member' );
             echo '</div>';
             return;
         }

@@ -160,28 +160,6 @@ More features Coming Soon! 😎
 
 **🚪 Drawer Details Style \[PRO\]:** Keep your pages clean and organized with the Drawer Details Style. This feature displays team member details in a sliding drawer that can be triggered by click or hover. Customize the drawer’s position, size, and animation to create a seamless and engaging user experience. It’s perfect for providing additional information without cluttering your page, ensuring a polished and professional look.
 
-## 🤔WHAT’S NEXT
-
-At **TS Team Member**, we are not just building a plugin. We are creating a tool that evolves with your needs. Our team is constantly working on new features, integrations, improvements, and innovations to make your team showcases more dynamic, professional, and visually stunning than ever before.
-
-**📜 List Layout:** The List Layout will offer a clean, minimalist way to display your team members. Ideal for corporate websites or professional portfolios, this layout will let you showcase your team in a structured, easy-to-read format. Customize it to match your brand’s style and make your team profiles stand out.
-
-**🗂️ Member Category (Pro):** Organize your team members like never before with the Member Category feature. Group your team by department, role, or expertise, and let visitors filter profiles based on their interests. This feature will make it easier for users to find the right person, whether they’re looking for a manager, designer, or developer.
-
-**Entrance Animation \[PRO\]:** Make your team profiles come to life with Entrance Animations. Choose from a variety of effects to add movement and interactivity to your team showcase. Whether it’s a subtle fade or a dynamic slide, these animations will captivate your audience from the moment they land on your page.
-
-**📝 Details Typography Control \[PRO\]:** Take full control of your team profiles with Details Typography Control. Customize fonts, sizes, colors, and spacing for every detail, from names to job titles. This feature ensures your team showcase matches your brand’s unique style perfectly.
-
-**🖥️ Full Screen View \[PRO\]:** Go big with the Full Screen View! This feature will let you display team member details in a stunning, immersive format. Perfect for creating impactful profiles that leave a lasting impression on your visitors.
-
-**🎉 Confetti View \[PRO\]:** Celebrate your team with the Confetti View! Add a fun, festive touch to your team showcase with animated confetti effects. It’s a great way to highlight achievements or add a playful element to your website.
-
-**⬇️ Vertical Carousel View \[PRO\]:** Switch things up with the Vertical Carousel View. This unique layout will let you showcase your team in a vertical sliding format, perfect for adding variety and visual interest to your website.
-
-**🔍 Filterable View \[PRO\]:** Make it easy for visitors to find the right team member with the Filterable View. Let users filter profiles by category, role, or expertise, ensuring they can quickly connect with the person they need.
-
-**📊 Parallax View \[PRO\]:** Add depth and interactivity to your team showcase with the Parallax View. This visually stunning effect will create a sense of movement as visitors scroll, making your team profiles truly stand out.
-
 == Frequently Asked Questions ==
 
 = How do I add a team showcase to my page? =
@@ -195,6 +173,49 @@ Yes, the plugin offers multiple layout options and styling controls, allowing yo
 = Does the plugin support live editing? =
 
 Yes, the plugin includes a live editing feature, allowing you to see real-time changes as you customize your team showcase.
+
+== External Services ==
+
+This plugin uses the [Freemius SDK](https://freemius.com/) to manage licensing, user opt-in, and plugin updates.
+
+### What the service is and what it is used for
+
+Freemius is a service that helps WordPress plugin developers manage licenses, provide updates, and optionally collect anonymized usage data. This plugin uses Freemius to:
+
+- Manage license activation and validation (if applicable)
+- Deliver plugin updates
+- Offer premium feature controls (if applicable)
+- Collect optional usage data to improve the plugin (only with user consent)
+
+### What data is sent and when
+
+**No data is collected or sent unless the user explicitly opts in** via the admin opt-in screen provided by Freemius.
+
+If the user chooses to opt in, the following data may be sent to Freemius:
+
+- Website URL
+- WordPress version
+- PHP version
+- Plugin version
+- Admin email address
+- IP address
+- Site language and locale
+- Anonymous plugin usage data (e.g., feature usage, settings)
+
+This data is used to improve the plugin, support user needs, and manage licensing.
+
+If the user does **not** opt in, only essential data may be sent for license validation or update checks, and **no personal or usage data** is collected.
+
+### External endpoints used
+
+- `https://api.freemius.com/` – Used for plugin updates, license validation, and (if opted in) usage analytics.
+- `https://wordpress.org/` – Used to fetch plugin data and contributor avatars.
+  - For example: `https://wordpress.org/grav-redirect.php`
+
+### Privacy and Terms
+
+- [Freemius Privacy Policy](https://freemius.com/privacy/)
+- [Freemius Terms of Service](https://freemius.com/terms/)
 
 == Screenshots ==
 
