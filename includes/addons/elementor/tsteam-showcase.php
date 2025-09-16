@@ -48,6 +48,7 @@ class TSTeam_Showcase extends Widget_Base {
         // Prepare options
         $options = ['' => esc_html__('Select a Team Showcase', 'ts-team-member')];
         foreach ( $team_posts as $post ) {
+            // translators: %d is the post ID number
             $options[$post->ID] = !empty($post->post_title) ? $post->post_title : sprintf(__('#%d (No title)', 'ts-team-member'), $post->ID);
         }
 
