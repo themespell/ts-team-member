@@ -1,5 +1,8 @@
 <?php
 
+// Load Composer autoloader
+require_once plugin_dir_path( __FILE__ ) . 'includes/library/vendor/autoload.php';
+
 if ( function_exists( 'tsteammember' ) ) {
         tsteammember()->set_basename( true, __FILE__ );
     } else {
@@ -12,7 +15,6 @@ if ( function_exists( 'tsteammember' ) ) {
                             global $tsteammember;
 
                             if ( ! isset( $tsteammember ) ) {
-                                require_once plugin_dir_path( __FILE__ ) . 'includes/library/wordpress-sdk/start.php';
                                 $tsteammember = fs_dynamic_init( array(
                                     'id'                  => '17306',
                                     'slug'                => 'ts-team-member',
