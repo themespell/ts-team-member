@@ -45,4 +45,89 @@ class Common {
 
 		return wp_json_encode( $showcase_settings );
 	}
+
+
+    public static function sanitize_array_data( $data ) {
+            if ( ! is_array( $data ) ) {
+                return array();
+            }
+
+            $sanitized = array();
+
+            foreach ( $data as $key => $value ) {
+                 if ( is_array( $value ) ) {
+                      $sanitized[ $key ] = self::sanitize_array_data( $value );
+                 } else {
+                      $sanitized[ $key ] = self::sanitize_single_value( $value );
+                 }
+            }
+
+            return $sanitized;
+    }
+
+
+    private static function sanitize_single_value( $value ) {
+            $value = (string) $value;
+
+            if ( filter_var( $value, FILTER_VALIDATE_URL ) ) {
+                return esc_url_raw( $value );
+            }
+
+            if ( filter_var( $value, FILTER_VALIDATE_EMAIL ) ) {
+                return sanitize_email( $value );
+            }
+
+
+            if ( is_numeric( $value ) && (int) $value == $value ) {
+                return absint( $value );
+            }
+
+
+            if ( is_numeric( $value ) ) {
+                return floatval( $value );
+            }
+
+            return sanitize_text_field( $value );
+    }
+
+    public static function sanitize_json_data($data) {
+        if (empty($data)) {
+            return wp_json_encode(array());
+        }
+
+        $data = wp_unslash($data);
+
+        // If it's a JSON string, decode it first
+        if (is_string($data)) {
+            $decoded = json_decode($data, true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                return wp_json_encode(self::sanitize_array_data($decoded));
+            }
+            return wp_json_encode(array());
+        }
+
+        // If it's already an array
+        if (is_array($data)) {
+            return wp_json_encode(self::sanitize_array_data($data));
+        }
+
+        return wp_json_encode(array());
+    }
+
+    private static function is_json_string($string) {
+        if (!is_string($string) || empty($string)) {
+            return false;
+        }
+
+        $string = trim($string);
+
+        // Must start with { or [
+        if (!in_array($string[0], ['{', '['])) {
+            return false;
+        }
+
+        // Try to decode
+        json_decode($string);
+        return json_last_error() === JSON_ERROR_NONE;
+    }
 }
