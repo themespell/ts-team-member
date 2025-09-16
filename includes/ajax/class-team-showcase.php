@@ -124,7 +124,7 @@ class TeamShowcase {
 
 		$showcase_title    = isset( $_POST['title'] ) ? sanitize_text_field( wp_unslash( $_POST['title'] ) ) : '';
 		$team_members      = isset( $_POST['team_members'] ) ? array_map( 'intval', (array) $_POST['team_members'] ) : array();
-		$showcase_settings = isset( $_POST['data'] ) ? wp_json_encode( wp_unslash( $_POST['data'] ), true ) : array();
+		$showcase_settings = isset($_POST['data']) ? Common::sanitize_json_data($_POST['data']) : wp_json_encode(array());
 
 		$args = array(
 			'post_title'  => $showcase_title,
@@ -180,7 +180,7 @@ class TeamShowcase {
 		}
 
 		$post_id           = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
-		$showcase_settings = isset( $_POST['data'] ) ? wp_json_encode( wp_unslash( $_POST['data'] ), true ) : array();
+		$showcase_settings = isset($_POST['data']) ? Common::sanitize_json_data($_POST['data']) : wp_json_encode(array());
 
 		$args = array(
 			'ID'        => $post_id,

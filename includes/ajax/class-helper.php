@@ -1,5 +1,6 @@
 <?php
 namespace TSTeam;
+use TSTeam\Common;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -72,13 +73,13 @@ class Helper {
 			'experience'   => isset( $post_data['member_experience'] ) ? sanitize_text_field( wp_unslash( $post_data['member_experience'] ) ) : '',
 			'company'      => isset( $post_data['member_company'] ) ? sanitize_text_field( wp_unslash( $post_data['member_company'] ) ) : '',
 			'location'     => isset( $post_data['member_location'] ) ? sanitize_text_field( wp_unslash( $post_data['member_location'] ) ) : '',
-			'information'  => isset( $post_data['member_information'] ) ? $post_data['member_information'] : '',
+			'information'  => isset( $post_data['member_information'] ) ? sanitize_text_field( wp_unslash( $post_data['member_information'] ) ) : '',
 			'website'      => isset( $post_data['member_website'] ) ? sanitize_text_field( wp_unslash( $post_data['member_website'] ) ) : '',
 			'resume'       => isset( $post_data['member_resume'] ) ? sanitize_text_field( wp_unslash( $post_data['member_resume'] ) ) : '',
 			'hireLink'     => isset( $post_data['member_hire'] ) ? sanitize_text_field( wp_unslash( $post_data['member_hire'] ) ) : '',
 			'donationLink' => isset( $post_data['member_donation'] ) ? sanitize_text_field( wp_unslash( $post_data['member_donation'] ) ) : '',
-			'socialLinks'  => isset( $post_data['member_social'] ) ? wp_json_encode( wp_unslash( $post_data['member_social'] ), true ) : array(),
-			'skills'       => isset( $post_data['member_skills'] ) ? wp_json_encode( wp_unslash( $post_data['member_skills'] ), true ) : array()
+			'socialLinks'  => isset( $post_data['member_social'] ) ? wp_json_encode( Common::sanitize_array_data( wp_unslash( $post_data['member_social'] ) ) ) : wp_json_encode( array() ),
+            'skills'       => isset( $post_data['member_skills'] ) ? wp_json_encode( Common::sanitize_array_data( wp_unslash( $post_data['member_skills'] ) ) ) : wp_json_encode( array() )
 		);
 	}	
 	
