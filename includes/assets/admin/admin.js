@@ -28,30 +28,6 @@ var require_admin = __commonJS({
     function getDefaultExportFromCjs(x2) {
       return x2 && x2.__esModule && Object.prototype.hasOwnProperty.call(x2, "default") ? x2["default"] : x2;
     }
-    function getAugmentedNamespace(n2) {
-      if (n2.__esModule) return n2;
-      var f2 = n2.default;
-      if (typeof f2 == "function") {
-        var a2 = function a3() {
-          if (this instanceof a3) {
-            return Reflect.construct(f2, arguments, this.constructor);
-          }
-          return f2.apply(this, arguments);
-        };
-        a2.prototype = f2.prototype;
-      } else a2 = {};
-      Object.defineProperty(a2, "__esModule", { value: true });
-      Object.keys(n2).forEach(function(k2) {
-        var d2 = Object.getOwnPropertyDescriptor(n2, k2);
-        Object.defineProperty(a2, k2, d2.get ? d2 : {
-          enumerable: true,
-          get: function() {
-            return n2[k2];
-          }
-        });
-      });
-      return a2;
-    }
     var jsxRuntime = { exports: {} };
     var reactJsxRuntime_production_min = {};
     var react = { exports: {} };
@@ -7367,16 +7343,16 @@ var require_admin = __commonJS({
       }
       return true;
     };
-    function isReactElement$1(node2) {
+    function isReactElement(node2) {
       return /* @__PURE__ */ reactExports.isValidElement(node2) && !reactIsExports.isFragment(node2);
     }
     var supportNodeRef = function supportNodeRef2(node2) {
-      return isReactElement$1(node2) && supportRef(node2);
+      return isReactElement(node2) && supportRef(node2);
     };
     Number(reactExports.version.split(".")[0]) >= 19 ? (
       // >= React 19
       function(node2) {
-        if (isReactElement$1(node2)) {
+        if (isReactElement(node2)) {
           return node2.props.ref;
         }
         return null;
@@ -7384,7 +7360,7 @@ var require_admin = __commonJS({
     ) : (
       // < React 19
       function(node2) {
-        if (isReactElement$1(node2)) {
+        if (isReactElement(node2)) {
           return node2.ref;
         }
         return null;
@@ -7642,11 +7618,11 @@ var require_admin = __commonJS({
         return ResizeObserverController2;
       }()
     );
-    var defineConfigurable = function(target, props2) {
-      for (var _i2 = 0, _a2 = Object.keys(props2); _i2 < _a2.length; _i2++) {
+    var defineConfigurable = function(target, props) {
+      for (var _i2 = 0, _a2 = Object.keys(props); _i2 < _a2.length; _i2++) {
         var key = _a2[_i2];
         Object.defineProperty(target, key, {
-          value: props2[key],
+          value: props[key],
           enumerable: false,
           writable: false,
           configurable: true
@@ -8016,8 +7992,8 @@ var require_admin = __commonJS({
       }]);
       return DomWrapper2;
     }(reactExports.Component);
-    function SingleObserver(props2, ref) {
-      var children = props2.children, disabled = props2.disabled;
+    function SingleObserver(props, ref) {
+      var children = props.children, disabled = props.disabled;
       var elementRef = reactExports.useRef(null);
       var wrapperRef = reactExports.useRef(null);
       var onCollectionResize = reactExports.useContext(CollectionContext);
@@ -8040,8 +8016,8 @@ var require_admin = __commonJS({
       reactExports.useImperativeHandle(ref, function() {
         return getDom();
       });
-      var propsRef = reactExports.useRef(props2);
-      propsRef.current = props2;
+      var propsRef = reactExports.useRef(props);
+      propsRef.current = props;
       var onInternalResize = reactExports.useCallback(function(target) {
         var _propsRef$current = propsRef.current, onResize2 = _propsRef$current.onResize, data = _propsRef$current.data;
         var _target$getBoundingCl = target.getBoundingClientRect(), width = _target$getBoundingCl.width, height = _target$getBoundingCl.height;
@@ -8087,12 +8063,12 @@ var require_admin = __commonJS({
     }
     var RefSingleObserver = /* @__PURE__ */ reactExports.forwardRef(SingleObserver);
     var INTERNAL_PREFIX_KEY = "rc-observer-key";
-    function ResizeObserver$1(props2, ref) {
-      var children = props2.children;
+    function ResizeObserver$1(props, ref) {
+      var children = props.children;
       var childNodes = typeof children === "function" ? [children] : toArray$5(children);
       return childNodes.map(function(child, index2) {
         var key = (child === null || child === void 0 ? void 0 : child.key) || "".concat(INTERNAL_PREFIX_KEY, "-").concat(index2);
-        return /* @__PURE__ */ reactExports.createElement(RefSingleObserver, _extends({}, props2, {
+        return /* @__PURE__ */ reactExports.createElement(RefSingleObserver, _extends({}, props, {
           key,
           ref: index2 === 0 ? ref : void 0
         }), child);
@@ -8100,7 +8076,7 @@ var require_admin = __commonJS({
     }
     var RefResizeObserver = /* @__PURE__ */ reactExports.forwardRef(ResizeObserver$1);
     RefResizeObserver.Collection = Collection;
-    function omit$1(obj, fields) {
+    function omit(obj, fields) {
       var clone = Object.assign({}, obj);
       if (Array.isArray(fields)) {
         fields.forEach(function(key) {
@@ -8386,7 +8362,7 @@ var require_admin = __commonJS({
       }
       return i;
     }
-    function isEqual$1(obj1, obj2) {
+    function isEqual(obj1, obj2) {
       var shallow = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : false;
       var refSet = /* @__PURE__ */ new Set();
       function deepEqual(a2, b2) {
@@ -8535,21 +8511,21 @@ var require_admin = __commonJS({
         value: function internalGet(derivativeOption) {
           var _cache2, _cache3;
           var updateCallTimes = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
-          var cache2 = {
+          var cache = {
             map: this.cache
           };
           derivativeOption.forEach(function(derivative2) {
-            if (!cache2) {
-              cache2 = void 0;
+            if (!cache) {
+              cache = void 0;
             } else {
               var _cache;
-              cache2 = (_cache = cache2) === null || _cache === void 0 || (_cache = _cache.map) === null || _cache === void 0 ? void 0 : _cache.get(derivative2);
+              cache = (_cache = cache) === null || _cache === void 0 || (_cache = _cache.map) === null || _cache === void 0 ? void 0 : _cache.get(derivative2);
             }
           });
-          if ((_cache2 = cache2) !== null && _cache2 !== void 0 && _cache2.value && updateCallTimes) {
-            cache2.value[1] = this.cacheCallTimes++;
+          if ((_cache2 = cache) !== null && _cache2 !== void 0 && _cache2.value && updateCallTimes) {
+            cache.value[1] = this.cacheCallTimes++;
           }
-          return (_cache3 = cache2) === null || _cache3 === void 0 ? void 0 : _cache3.value;
+          return (_cache3 = cache) === null || _cache3 === void 0 ? void 0 : _cache3.value;
         }
       }, {
         key: "get",
@@ -8579,42 +8555,42 @@ var require_admin = __commonJS({
             }
             this.keys.push(derivativeOption);
           }
-          var cache2 = this.cache;
+          var cache = this.cache;
           derivativeOption.forEach(function(derivative2, index2) {
             if (index2 === derivativeOption.length - 1) {
-              cache2.set(derivative2, {
+              cache.set(derivative2, {
                 value: [value, _this.cacheCallTimes++]
               });
             } else {
-              var cacheValue = cache2.get(derivative2);
+              var cacheValue = cache.get(derivative2);
               if (!cacheValue) {
-                cache2.set(derivative2, {
+                cache.set(derivative2, {
                   map: /* @__PURE__ */ new Map()
                 });
               } else if (!cacheValue.map) {
                 cacheValue.map = /* @__PURE__ */ new Map();
               }
-              cache2 = cache2.get(derivative2).map;
+              cache = cache.get(derivative2).map;
             }
           });
         }
       }, {
         key: "deleteByPath",
         value: function deleteByPath(currentCache, derivatives) {
-          var cache2 = currentCache.get(derivatives[0]);
+          var cache = currentCache.get(derivatives[0]);
           if (derivatives.length === 1) {
             var _cache$value;
-            if (!cache2.map) {
+            if (!cache.map) {
               currentCache.delete(derivatives[0]);
             } else {
               currentCache.set(derivatives[0], {
-                map: cache2.map
+                map: cache.map
               });
             }
-            return (_cache$value = cache2.value) === null || _cache$value === void 0 ? void 0 : _cache$value[0];
+            return (_cache$value = cache.value) === null || _cache$value === void 0 ? void 0 : _cache$value[0];
           }
-          var result = this.deleteByPath(cache2.map, derivatives.slice(1));
-          if ((!cache2.map || cache2.map.size === 0) && !cache2.value) {
+          var result = this.deleteByPath(cache.map, derivatives.slice(1));
+          if ((!cache.map || cache.map.size === 0) && !cache.value) {
             currentCache.delete(derivatives[0]);
           }
           return result;
@@ -8833,8 +8809,8 @@ var require_admin = __commonJS({
       var register = useEffectCleanupRegister([fullPathStr]);
       var buildCache = function buildCache2(updater) {
         globalCache.opUpdate(fullPathStr, function(prevCache) {
-          var _ref = prevCache || [void 0, void 0], _ref2 = _slicedToArray(_ref, 2), _ref2$ = _ref2[0], times = _ref2$ === void 0 ? 0 : _ref2$, cache2 = _ref2[1];
-          var tmpCache = cache2;
+          var _ref = prevCache || [void 0, void 0], _ref2 = _slicedToArray(_ref, 2), _ref2$ = _ref2[0], times = _ref2$ === void 0 ? 0 : _ref2$, cache = _ref2[1];
+          var tmpCache = cache;
           var mergedCache = tmpCache || cacheFn();
           var data = [times, mergedCache];
           return updater ? updater(data) : data;
@@ -8854,25 +8830,25 @@ var require_admin = __commonJS({
         onCacheEffect === null || onCacheEffect === void 0 || onCacheEffect(cacheContent);
       }, function(polyfill) {
         buildCache(function(_ref3) {
-          var _ref4 = _slicedToArray(_ref3, 2), times = _ref4[0], cache2 = _ref4[1];
+          var _ref4 = _slicedToArray(_ref3, 2), times = _ref4[0], cache = _ref4[1];
           if (polyfill && times === 0) {
             onCacheEffect === null || onCacheEffect === void 0 || onCacheEffect(cacheContent);
           }
-          return [times + 1, cache2];
+          return [times + 1, cache];
         });
         return function() {
           globalCache.opUpdate(fullPathStr, function(prevCache) {
-            var _ref5 = prevCache || [], _ref6 = _slicedToArray(_ref5, 2), _ref6$ = _ref6[0], times = _ref6$ === void 0 ? 0 : _ref6$, cache2 = _ref6[1];
+            var _ref5 = prevCache || [], _ref6 = _slicedToArray(_ref5, 2), _ref6$ = _ref6[0], times = _ref6$ === void 0 ? 0 : _ref6$, cache = _ref6[1];
             var nextCount = times - 1;
             if (nextCount === 0) {
               register(function() {
                 if (polyfill || !globalCache.opGet(fullPathStr)) {
-                  onCacheRemove === null || onCacheRemove === void 0 || onCacheRemove(cache2, false);
+                  onCacheRemove === null || onCacheRemove === void 0 || onCacheRemove(cache, false);
                 }
               });
               return null;
             }
-            return [times - 1, cache2];
+            return [times - 1, cache];
           });
         };
       }, [fullPathStr]);
@@ -8954,8 +8930,8 @@ var require_admin = __commonJS({
         var hashId = "".concat(hashPrefix, "-").concat(murmur2(tokenKey));
         mergedDerivativeToken._hashId = hashId;
         return [mergedDerivativeToken, hashId, actualToken, cssVarsStr, (cssVar === null || cssVar === void 0 ? void 0 : cssVar.key) || ""];
-      }, function(cache2) {
-        cleanTokenStyle(cache2[0]._themeKey, instanceId);
+      }, function(cache) {
+        cleanTokenStyle(cache[0]._themeKey, instanceId);
       }, function(_ref) {
         var _ref2 = _slicedToArray(_ref, 4), token2 = _ref2[0], cssVarsStr = _ref2[3];
         if (cssVar && cssVarsStr) {
@@ -8971,8 +8947,8 @@ var require_admin = __commonJS({
       });
       return cachedToken;
     }
-    var extract$2 = function extract2(cache2, effectStyles, options) {
-      var _cache = _slicedToArray(cache2, 5), realToken = _cache[2], styleStr = _cache[3], cssVarKey = _cache[4];
+    var extract$2 = function extract2(cache, effectStyles, options) {
+      var _cache = _slicedToArray(cache, 5), realToken = _cache[2], styleStr = _cache[3], cssVarKey = _cache[4];
       var _ref3 = options || {}, plain = _ref3.plain;
       if (!styleStr) {
         return null;
@@ -9072,8 +9048,8 @@ var require_admin = __commonJS({
     var position$1 = 0;
     var character = 0;
     var characters = "";
-    function node$1(value, root2, parent, type2, props2, children, length2, siblings) {
-      return { value, root: root2, parent, type: type2, props: props2, children, line, column, length: length2, return: "", siblings };
+    function node(value, root2, parent, type2, props, children, length2, siblings) {
+      return { value, root: root2, parent, type: type2, props, children, line, column, length: length2, return: "", siblings };
     }
     function char() {
       return character;
@@ -9202,7 +9178,7 @@ var require_admin = __commonJS({
       var ampersand = 1;
       var character2 = 0;
       var type2 = "";
-      var props2 = rules2;
+      var props = rules2;
       var children = rulesets;
       var reference = rule;
       var characters2 = type2;
@@ -9256,17 +9232,17 @@ var require_admin = __commonJS({
               case 59:
                 characters2 += ";";
               default:
-                append(reference = ruleset(characters2, root2, parent, index2, offset2, rules2, points, type2, props2 = [], children = [], length2, rulesets), rulesets);
+                append(reference = ruleset(characters2, root2, parent, index2, offset2, rules2, points, type2, props = [], children = [], length2, rulesets), rulesets);
                 if (character2 === 123)
                   if (offset2 === 0)
-                    parse(characters2, root2, reference, reference, props2, rulesets, length2, points, children);
+                    parse(characters2, root2, reference, reference, props, rulesets, length2, points, children);
                   else
                     switch (atrule === 99 && charat(characters2, 3) === 110 ? 100 : atrule) {
                       case 100:
                       case 108:
                       case 109:
                       case 115:
-                        parse(value, reference, reference, rule && append(ruleset(value, reference, reference, 0, 0, rules2, points, type2, rules2, props2 = [], length2, children), children), rules2, children, length2, points, rule ? props2 : children);
+                        parse(value, reference, reference, rule && append(ruleset(value, reference, reference, 0, 0, rules2, points, type2, rules2, props = [], length2, children), children), rules2, children, length2, points, rule ? props : children);
                         break;
                       default:
                         parse(characters2, reference, reference, reference, [""], children, 0, points, children);
@@ -9302,21 +9278,21 @@ var require_admin = __commonJS({
         }
       return rulesets;
     }
-    function ruleset(value, root2, parent, index2, offset2, rules2, points, type2, props2, children, length2, siblings) {
+    function ruleset(value, root2, parent, index2, offset2, rules2, points, type2, props, children, length2, siblings) {
       var post = offset2 - 1;
       var rule = offset2 === 0 ? rules2 : [""];
       var size = sizeof(rule);
       for (var i = 0, j = 0, k2 = 0; i < index2; ++i)
         for (var x2 = 0, y2 = substr(value, post + 1, post = abs(j = points[i])), z2 = value; x2 < size; ++x2)
           if (z2 = trim(j > 0 ? rule[x2] + " " + y2 : replace(y2, /&\f/g, rule[x2])))
-            props2[k2++] = z2;
-      return node$1(value, root2, parent, offset2 === 0 ? RULESET : type2, props2, children, length2, siblings);
+            props[k2++] = z2;
+      return node(value, root2, parent, offset2 === 0 ? RULESET : type2, props, children, length2, siblings);
     }
     function comment(value, root2, parent, siblings) {
-      return node$1(value, root2, parent, COMMENT, from(char()), substr(value, 2, -2), 0, siblings);
+      return node(value, root2, parent, COMMENT, from(char()), substr(value, 2, -2), 0, siblings);
     }
     function declaration(value, root2, parent, length2, siblings) {
-      return node$1(value, root2, parent, DECLARATION, substr(value, 0, length2), substr(value, length2 + 1, -1), length2, siblings);
+      return node(value, root2, parent, DECLARATION, substr(value, 0, length2), substr(value, length2 + 1, -1), length2, siblings);
     }
     function serialize(children, callback) {
       var output = "";
@@ -9537,7 +9513,7 @@ var require_admin = __commonJS({
       var token2 = info.token, path2 = info.path, hashId = info.hashId, layer = info.layer, nonce = info.nonce, clientOnly = info.clientOnly, _info$order = info.order, order = _info$order === void 0 ? 0 : _info$order;
       var _React$useContext = reactExports.useContext(StyleContext), autoClear = _React$useContext.autoClear;
       _React$useContext.mock;
-      var defaultCache = _React$useContext.defaultCache, hashPriority = _React$useContext.hashPriority, container = _React$useContext.container, ssrInline = _React$useContext.ssrInline, transformers = _React$useContext.transformers, linters = _React$useContext.linters, cache2 = _React$useContext.cache, enableLayer = _React$useContext.layer;
+      var defaultCache = _React$useContext.defaultCache, hashPriority = _React$useContext.hashPriority, container = _React$useContext.container, ssrInline = _React$useContext.ssrInline, transformers = _React$useContext.transformers, linters = _React$useContext.linters, cache = _React$useContext.cache, enableLayer = _React$useContext.layer;
       var tokenKey = token2._tokenKey;
       var fullPath = [tokenKey];
       if (enableLayer) {
@@ -9612,7 +9588,7 @@ var require_admin = __commonJS({
               }));
             });
             var style2 = updateCSS(styleStr, styleId, mergedCSSConfig);
-            style2[CSS_IN_JS_INSTANCE] = cache2.instanceId;
+            style2[CSS_IN_JS_INSTANCE] = cache.instanceId;
             style2.setAttribute(ATTR_TOKEN, tokenKey);
             effectRestKeys.forEach(function(effectKey) {
               updateCSS(normalizeStyle(effectStyle[effectKey]), "_effect-".concat(effectKey), mergedCSSConfig);
@@ -9634,8 +9610,8 @@ var require_admin = __commonJS({
         return /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, styleNode, node2);
       };
     }
-    var extract$1 = function extract2(cache2, effectStyles, options) {
-      var _cache = _slicedToArray(cache2, 6), styleStr = _cache[0], tokenKey = _cache[1], styleId = _cache[2], effectStyle = _cache[3], clientOnly = _cache[4], order = _cache[5];
+    var extract$1 = function extract2(cache, effectStyles, options) {
+      var _cache = _slicedToArray(cache, 6), styleStr = _cache[0], tokenKey = _cache[1], styleId = _cache[2], effectStyle = _cache[3], clientOnly = _cache[4], order = _cache[5];
       var _ref7 = options || {}, plain = _ref7.plain;
       if (clientOnly) {
         return null;
@@ -9668,7 +9644,7 @@ var require_admin = __commonJS({
       var _useContext = reactExports.useContext(StyleContext), instanceId = _useContext.cache.instanceId, container = _useContext.container;
       var tokenKey = token2._tokenKey;
       var stylePath = [].concat(_toConsumableArray(config.path), [key, scope, tokenKey]);
-      var cache2 = useGlobalCache(CSS_VAR_PREFIX, stylePath, function() {
+      var cache = useGlobalCache(CSS_VAR_PREFIX, stylePath, function() {
         var originToken = fn();
         var _transformToken = transformToken(originToken, key, {
           prefix,
@@ -9699,10 +9675,10 @@ var require_admin = __commonJS({
         style2[CSS_IN_JS_INSTANCE] = instanceId;
         style2.setAttribute(ATTR_TOKEN, key);
       });
-      return cache2;
+      return cache;
     };
-    var extract = function extract2(cache2, effectStyles, options) {
-      var _cache = _slicedToArray(cache2, 4), styleStr = _cache[1], styleId = _cache[2], cssVarKey = _cache[3];
+    var extract = function extract2(cache, effectStyles, options) {
+      var _cache = _slicedToArray(cache, 4), styleStr = _cache[1], styleId = _cache[2], cssVarKey = _cache[3];
       var _ref5 = options || {}, plain = _ref5.plain;
       if (!styleStr) {
         return null;
@@ -9874,13 +9850,13 @@ var require_admin = __commonJS({
       });
       return clone;
     }
-    function noop$4() {
+    function noop$3() {
     }
     const WarningContext = /* @__PURE__ */ reactExports.createContext({});
     const devUseWarning = () => {
       const noopWarning = () => {
       };
-      noopWarning.deprecated = noop$4;
+      noopWarning.deprecated = noop$3;
       return noopWarning;
     };
     const ValidateMessagesContext = /* @__PURE__ */ reactExports.createContext(void 0);
@@ -10128,12 +10104,12 @@ var require_admin = __commonJS({
       return [getLocale, getLocaleCode];
     };
     const ANT_MARK = "internalMark";
-    const LocaleProvider = (props2) => {
+    const LocaleProvider = (props) => {
       const {
         locale: locale2 = {},
         children,
         _ANT_MARK__
-      } = props2;
+      } = props;
       reactExports.useEffect(() => {
         const clearLocale = changeConfirmLocale(locale2 === null || locale2 === void 0 ? void 0 : locale2.Modal);
         return clearLocale;
@@ -11139,7 +11115,7 @@ var require_admin = __commonJS({
     }
     function generate$1(color) {
       var opts = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
-      var patterns2 = [];
+      var patterns = [];
       var pColor = inputToRGB(color);
       for (var i = lightColorCount; i > 0; i -= 1) {
         var hsv = toHsv(pColor);
@@ -11148,9 +11124,9 @@ var require_admin = __commonJS({
           s: getSaturation(hsv, i, true),
           v: getValue$3(hsv, i, true)
         }));
-        patterns2.push(colorString);
+        patterns.push(colorString);
       }
-      patterns2.push(toHex(pColor));
+      patterns.push(toHex(pColor));
       for (var _i2 = 1; _i2 <= darkColorCount; _i2 += 1) {
         var _hsv = toHsv(pColor);
         var _colorString = toHex(inputToRGB({
@@ -11158,16 +11134,16 @@ var require_admin = __commonJS({
           s: getSaturation(_hsv, _i2),
           v: getValue$3(_hsv, _i2)
         }));
-        patterns2.push(_colorString);
+        patterns.push(_colorString);
       }
       if (opts.theme === "dark") {
         return darkColorMap.map(function(_ref3) {
           var index2 = _ref3.index, opacity = _ref3.opacity;
-          var darkColorString = toHex(mix(inputToRGB(opts.backgroundColor || "#141414"), inputToRGB(patterns2[index2]), opacity * 100));
+          var darkColorString = toHex(mix(inputToRGB(opts.backgroundColor || "#141414"), inputToRGB(patterns[index2]), opacity * 100));
           return darkColorString;
         });
       }
-      return patterns2;
+      return patterns;
     }
     var presetPrimaryColors = {
       "red": "#F5222D",
@@ -11786,7 +11762,7 @@ var require_admin = __commonJS({
         }
       }, {
         key: "equal",
-        value: function equal2(options) {
+        value: function equal(options) {
           var _this2 = this;
           var _ref = options || {}, cssUnit = _ref.unit;
           var mergedUnit = true;
@@ -11863,7 +11839,7 @@ var require_admin = __commonJS({
         }
       }, {
         key: "equal",
-        value: function equal2() {
+        value: function equal() {
           return this.result;
         }
       }]);
@@ -11992,12 +11968,12 @@ var require_admin = __commonJS({
       return ret;
     }
     var statistic = {};
-    function noop$3() {
+    function noop$2() {
     }
     var statisticToken = function statisticToken2(token2) {
       var tokenKeys2;
       var proxy = token2;
-      var flush = noop$3;
+      var flush = noop$2;
       if (enableStatistic && typeof Proxy !== "undefined") {
         tokenKeys2 = /* @__PURE__ */ new Set();
         proxy = new Proxy(token2, {
@@ -12078,10 +12054,10 @@ var require_admin = __commonJS({
         key: "get",
         value: function get2(keys2) {
           var compositeKey = this.getCompositeKey(keys2);
-          var cache2 = this.map.get(compositeKey);
+          var cache = this.map.get(compositeKey);
           this.lastAccessBeat.set(compositeKey, Date.now());
           this.accessBeat += 1;
-          return cache2;
+          return cache;
         }
       }, {
         key: "getCompositeKey",
@@ -12867,15 +12843,15 @@ var require_admin = __commonJS({
         });
       }, [themeConfig, parentThemeConfig], (prev2, next2) => prev2.some((prevTheme, index2) => {
         const nextTheme = next2[index2];
-        return !isEqual$1(prevTheme, nextTheme, true);
+        return !isEqual(prevTheme, nextTheme, true);
       }));
     }
     var _excluded$V = ["children"];
     var Context$1 = /* @__PURE__ */ reactExports.createContext({});
     function MotionProvider(_ref) {
-      var children = _ref.children, props2 = _objectWithoutProperties(_ref, _excluded$V);
+      var children = _ref.children, props = _objectWithoutProperties(_ref, _excluded$V);
       return /* @__PURE__ */ reactExports.createElement(Context$1.Provider, {
-        value: props2
+        value: props
       }, children);
     }
     var DomWrapper = /* @__PURE__ */ function(_React$Component) {
@@ -13225,13 +13201,13 @@ var require_admin = __commonJS({
       if (_typeof(config) === "object") {
         transitionSupport = config.transitionSupport;
       }
-      function isSupportTransition(props2, contextMotion) {
-        return !!(props2.motionName && transitionSupport && contextMotion !== false);
+      function isSupportTransition(props, contextMotion) {
+        return !!(props.motionName && transitionSupport && contextMotion !== false);
       }
-      var CSSMotion2 = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-        var _props$visible = props2.visible, visible = _props$visible === void 0 ? true : _props$visible, _props$removeOnLeave = props2.removeOnLeave, removeOnLeave = _props$removeOnLeave === void 0 ? true : _props$removeOnLeave, forceRender = props2.forceRender, children = props2.children, motionName = props2.motionName, leavedClassName = props2.leavedClassName, eventProps = props2.eventProps;
+      var CSSMotion2 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+        var _props$visible = props.visible, visible = _props$visible === void 0 ? true : _props$visible, _props$removeOnLeave = props.removeOnLeave, removeOnLeave = _props$removeOnLeave === void 0 ? true : _props$removeOnLeave, forceRender = props.forceRender, children = props.children, motionName = props.motionName, leavedClassName = props.leavedClassName, eventProps = props.eventProps;
         var _React$useContext = reactExports.useContext(Context$1), contextMotion = _React$useContext.motion;
-        var supportMotion = isSupportTransition(props2, contextMotion);
+        var supportMotion = isSupportTransition(props, contextMotion);
         var nodeRef = reactExports.useRef();
         var wrapperNodeRef = reactExports.useRef();
         function getDomElement() {
@@ -13241,7 +13217,7 @@ var require_admin = __commonJS({
             return null;
           }
         }
-        var _useStatus = useStatus$1(supportMotion, visible, getDomElement, props2), _useStatus2 = _slicedToArray(_useStatus, 4), status = _useStatus2[0], statusStep = _useStatus2[1], statusStyle = _useStatus2[2], mergedVisible = _useStatus2[3];
+        var _useStatus = useStatus$1(supportMotion, visible, getDomElement, props), _useStatus2 = _slicedToArray(_useStatus, 4), status = _useStatus2[0], statusStep = _useStatus2[1], statusStyle = _useStatus2[2], mergedVisible = _useStatus2[3];
         var renderedRef = reactExports.useRef(mergedVisible);
         if (mergedVisible) {
           renderedRef.current = true;
@@ -13458,8 +13434,8 @@ var require_admin = __commonJS({
                     _this2.removeKey(eventProps.key);
                   }
                 }
-              }), function(props2, ref) {
-                return children(_objectSpread2(_objectSpread2({}, props2), {}, {
+              }), function(props, ref) {
+                return children(_objectSpread2(_objectSpread2({}, props), {}, {
                   index: index2
                 }), ref);
               });
@@ -13494,10 +13470,10 @@ var require_admin = __commonJS({
       return CSSMotionList2;
     }
     const CSSMotionList = genCSSMotionList(supportTransition);
-    function MotionWrapper(props2) {
+    function MotionWrapper(props) {
       const {
         children
-      } = props2;
+      } = props;
       const [, token2] = useToken();
       const {
         motion: motion2
@@ -13534,20 +13510,20 @@ var require_admin = __commonJS({
     function isLegacyTheme(theme) {
       return Object.keys(theme).some((key) => key.endsWith("Color"));
     }
-    const setGlobalConfig = (props2) => {
+    const setGlobalConfig = (props) => {
       const {
         prefixCls,
         iconPrefixCls,
         theme,
         holderRender
-      } = props2;
+      } = props;
       if (prefixCls !== void 0) {
         globalPrefixCls = prefixCls;
       }
       if (iconPrefixCls !== void 0) {
         globalIconPrefixCls = iconPrefixCls;
       }
-      if ("holderRender" in props2) {
+      if ("holderRender" in props) {
         globalHolderRender = holderRender;
       }
       if (theme) {
@@ -13575,7 +13551,7 @@ var require_admin = __commonJS({
       getTheme: () => globalTheme,
       holderRender: globalHolderRender
     });
-    const ProviderChildren = (props2) => {
+    const ProviderChildren = (props) => {
       const {
         children,
         csp: customCsp,
@@ -13653,17 +13629,17 @@ var require_admin = __commonJS({
         variant,
         inputNumber,
         treeSelect
-      } = props2;
+      } = props;
       const getPrefixCls = reactExports.useCallback((suffixCls, customizePrefixCls) => {
         const {
           prefixCls
-        } = props2;
+        } = props;
         if (customizePrefixCls) {
           return customizePrefixCls;
         }
         const mergedPrefixCls = prefixCls || parentContext.getPrefixCls("");
         return suffixCls ? `${mergedPrefixCls}-${suffixCls}` : mergedPrefixCls;
-      }, [parentContext.getPrefixCls, props2.prefixCls]);
+      }, [parentContext.getPrefixCls, props.prefixCls]);
       const iconPrefixCls = customIconPrefixCls || parentContext.iconPrefixCls || defaultIconPrefixCls;
       const csp = customCsp || parentContext.csp;
       useResetIconStyle(iconPrefixCls, csp);
@@ -13749,7 +13725,7 @@ var require_admin = __commonJS({
         }
       });
       PASSED_PROPS.forEach((propName) => {
-        const propValue = props2[propName];
+        const propValue = props[propName];
         if (propValue) {
           config[propName] = propValue;
         }
@@ -13849,13 +13825,13 @@ var require_admin = __commonJS({
         value: memoedConfig
       }, childNode);
     };
-    const ConfigProvider = (props2) => {
+    const ConfigProvider = (props) => {
       const context = reactExports.useContext(ConfigContext);
       const antLocale = reactExports.useContext(LocaleContext);
       return /* @__PURE__ */ reactExports.createElement(ProviderChildren, Object.assign({
         parentContext: context,
         legacyLocale: antLocale
-      }, props2));
+      }, props));
     };
     ConfigProvider.ConfigContext = ConfigContext;
     ConfigProvider.SizeContext = SizeContext;
@@ -13959,8 +13935,8 @@ var require_admin = __commonJS({
     function getTwoToneColors() {
       return _objectSpread2({}, twoToneColorPalette);
     }
-    var IconBase = function IconBase2(props2) {
-      var icon = props2.icon, className = props2.className, onClick = props2.onClick, style2 = props2.style, primaryColor = props2.primaryColor, secondaryColor = props2.secondaryColor, restProps = _objectWithoutProperties(props2, _excluded$T);
+    var IconBase = function IconBase2(props) {
+      var icon = props.icon, className = props.className, onClick = props.onClick, style2 = props.style, primaryColor = props.primaryColor, secondaryColor = props.secondaryColor, restProps = _objectWithoutProperties(props, _excluded$T);
       var svgRef = reactExports.useRef();
       var colors = twoToneColorPalette;
       if (primaryColor) {
@@ -14012,8 +13988,8 @@ var require_admin = __commonJS({
     }
     var _excluded$S = ["className", "icon", "spin", "rotate", "tabIndex", "onClick", "twoToneColor"];
     setTwoToneColor(blue.primary);
-    var Icon$2 = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var className = props2.className, icon = props2.icon, spin = props2.spin, rotate = props2.rotate, tabIndex = props2.tabIndex, onClick = props2.onClick, twoToneColor = props2.twoToneColor, restProps = _objectWithoutProperties(props2, _excluded$S);
+    var Icon$2 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var className = props.className, icon = props.icon, spin = props.spin, rotate = props.rotate, tabIndex = props.tabIndex, onClick = props.onClick, twoToneColor = props.twoToneColor, restProps = _objectWithoutProperties(props, _excluded$S);
       var _React$useContext = reactExports.useContext(IconContext), _React$useContext$pre = _React$useContext.prefixCls, prefixCls = _React$useContext$pre === void 0 ? "anticon" : _React$useContext$pre, rootClassName = _React$useContext.rootClassName;
       var classString = classNames(rootClassName, prefixCls, _defineProperty(_defineProperty({}, "".concat(prefixCls, "-").concat(icon.name), !!icon.name), "".concat(prefixCls, "-spin"), !!spin || icon.name === "loading"), className);
       var iconTabIndex = tabIndex;
@@ -14043,40 +14019,40 @@ var require_admin = __commonJS({
     Icon$2.displayName = "AntdIcon";
     Icon$2.getTwoToneColor = getTwoToneColor;
     Icon$2.setTwoToneColor = setTwoToneColor;
-    var CheckCircleFilled = function CheckCircleFilled2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var CheckCircleFilled = function CheckCircleFilled2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: CheckCircleFilled$1
       }));
     };
     var RefIcon$E = /* @__PURE__ */ reactExports.forwardRef(CheckCircleFilled);
     var CloseCircleFilled$1 = { "icon": { "tag": "svg", "attrs": { "fill-rule": "evenodd", "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M512 64c247.4 0 448 200.6 448 448S759.4 960 512 960 64 759.4 64 512 264.6 64 512 64zm127.98 274.82h-.04l-.08.06L512 466.75 384.14 338.88c-.04-.05-.06-.06-.08-.06a.12.12 0 00-.07 0c-.03 0-.05.01-.09.05l-45.02 45.02a.2.2 0 00-.05.09.12.12 0 000 .07v.02a.27.27 0 00.06.06L466.75 512 338.88 639.86c-.05.04-.06.06-.06.08a.12.12 0 000 .07c0 .03.01.05.05.09l45.02 45.02a.2.2 0 00.09.05.12.12 0 00.07 0c.02 0 .04-.01.08-.05L512 557.25l127.86 127.87c.04.04.06.05.08.05a.12.12 0 00.07 0c.03 0 .05-.01.09-.05l45.02-45.02a.2.2 0 00.05-.09.12.12 0 000-.07v-.02a.27.27 0 00-.05-.06L557.25 512l127.87-127.86c.04-.04.05-.06.05-.08a.12.12 0 000-.07c0-.03-.01-.05-.05-.09l-45.02-45.02a.2.2 0 00-.09-.05.12.12 0 00-.07 0z" } }] }, "name": "close-circle", "theme": "filled" };
-    var CloseCircleFilled = function CloseCircleFilled2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var CloseCircleFilled = function CloseCircleFilled2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: CloseCircleFilled$1
       }));
     };
     var RefIcon$D = /* @__PURE__ */ reactExports.forwardRef(CloseCircleFilled);
     var CloseOutlined$1 = { "icon": { "tag": "svg", "attrs": { "fill-rule": "evenodd", "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M799.86 166.31c.02 0 .04.02.08.06l57.69 57.7c.04.03.05.05.06.08a.12.12 0 010 .06c0 .03-.02.05-.06.09L569.93 512l287.7 287.7c.04.04.05.06.06.09a.12.12 0 010 .07c0 .02-.02.04-.06.08l-57.7 57.69c-.03.04-.05.05-.07.06a.12.12 0 01-.07 0c-.03 0-.05-.02-.09-.06L512 569.93l-287.7 287.7c-.04.04-.06.05-.09.06a.12.12 0 01-.07 0c-.02 0-.04-.02-.08-.06l-57.69-57.7c-.04-.03-.05-.05-.06-.07a.12.12 0 010-.07c0-.03.02-.05.06-.09L454.07 512l-287.7-287.7c-.04-.04-.05-.06-.06-.09a.12.12 0 010-.07c0-.02.02-.04.06-.08l57.7-57.69c.03-.04.05-.05.07-.06a.12.12 0 01.07 0c.03 0 .05.02.09.06L512 454.07l287.7-287.7c.04-.04.06-.05.09-.06a.12.12 0 01.07 0z" } }] }, "name": "close", "theme": "outlined" };
-    var CloseOutlined = function CloseOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var CloseOutlined = function CloseOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: CloseOutlined$1
       }));
     };
     var RefIcon$C = /* @__PURE__ */ reactExports.forwardRef(CloseOutlined);
     var ExclamationCircleFilled$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm-32 232c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v272c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V296zm32 440a48.01 48.01 0 010-96 48.01 48.01 0 010 96z" } }] }, "name": "exclamation-circle", "theme": "filled" };
-    var ExclamationCircleFilled = function ExclamationCircleFilled2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var ExclamationCircleFilled = function ExclamationCircleFilled2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: ExclamationCircleFilled$1
       }));
     };
     var RefIcon$B = /* @__PURE__ */ reactExports.forwardRef(ExclamationCircleFilled);
     var InfoCircleFilled$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm32 664c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V456c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v272zm-32-344a48.01 48.01 0 010-96 48.01 48.01 0 010 96z" } }] }, "name": "info-circle", "theme": "filled" };
-    var InfoCircleFilled = function InfoCircleFilled2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var InfoCircleFilled = function InfoCircleFilled2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: InfoCircleFilled$1
       }));
@@ -14090,7 +14066,7 @@ var require_admin = __commonJS({
     function match(key, prefix) {
       return key.indexOf(prefix) === 0;
     }
-    function pickAttrs(props2) {
+    function pickAttrs(props) {
       var ariaOnly = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
       var mergedConfig;
       if (ariaOnly === false) {
@@ -14107,14 +14083,14 @@ var require_admin = __commonJS({
         mergedConfig = _objectSpread2({}, ariaOnly);
       }
       var attrs = {};
-      Object.keys(props2).forEach(function(key) {
+      Object.keys(props).forEach(function(key) {
         if (
           // Aria
           mergedConfig.aria && (key === "role" || match(key, ariaPrefix)) || // Data
           mergedConfig.data && match(key, dataPrefix) || // Attr
           mergedConfig.attr && propList.includes(key)
         ) {
-          attrs[key] = props2[key];
+          attrs[key] = props[key];
         }
       });
       return attrs;
@@ -14122,14 +14098,14 @@ var require_admin = __commonJS({
     function isFragment(child) {
       return child && /* @__PURE__ */ React$1.isValidElement(child) && child.type === React$1.Fragment;
     }
-    const replaceElement = (element, replacement, props2) => {
+    const replaceElement = (element, replacement, props) => {
       if (!/* @__PURE__ */ React$1.isValidElement(element)) {
         return replacement;
       }
-      return /* @__PURE__ */ React$1.cloneElement(element, typeof props2 === "function" ? props2(element.props || {}) : props2);
+      return /* @__PURE__ */ React$1.cloneElement(element, typeof props === "function" ? props(element.props || {}) : props);
     };
-    function cloneElement(element, props2) {
-      return replaceElement(element, element, props2);
+    function cloneElement(element, props) {
+      return replaceElement(element, element, props);
     }
     const genAlertTypeStyle = (bgColor, borderColor, iconColor, token2, alertCls) => ({
       background: bgColor,
@@ -14319,12 +14295,12 @@ var require_admin = __commonJS({
       error: RefIcon$D,
       warning: RefIcon$B
     };
-    const IconNode = (props2) => {
+    const IconNode = (props) => {
       const {
         icon,
         prefixCls,
         type: type2
-      } = props2;
+      } = props;
       const iconType = iconMapFilled[type2] || null;
       if (icon) {
         return replaceElement(icon, /* @__PURE__ */ reactExports.createElement("span", {
@@ -14339,14 +14315,14 @@ var require_admin = __commonJS({
         className: `${prefixCls}-icon`
       });
     };
-    const CloseIconNode = (props2) => {
+    const CloseIconNode = (props) => {
       const {
         isClosable,
         prefixCls,
         closeIcon,
         handleClose,
         ariaProps
-      } = props2;
+      } = props;
       const mergedCloseIcon = closeIcon === true || closeIcon === void 0 ? /* @__PURE__ */ reactExports.createElement(RefIcon$C, null) : closeIcon;
       return isClosable ? /* @__PURE__ */ reactExports.createElement("button", Object.assign({
         type: "button",
@@ -14355,7 +14331,7 @@ var require_admin = __commonJS({
         tabIndex: 0
       }, ariaProps), mergedCloseIcon) : null;
     };
-    const Alert$1 = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const Alert$1 = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         description,
         prefixCls: customizePrefixCls,
@@ -14374,7 +14350,7 @@ var require_admin = __commonJS({
         closeIcon,
         action,
         id: id2
-      } = props2, otherProps = __rest$V(props2, ["description", "prefixCls", "message", "banner", "className", "rootClassName", "style", "onMouseEnter", "onMouseLeave", "onClick", "afterClose", "showIcon", "closable", "closeText", "closeIcon", "action", "id"]);
+      } = props, otherProps = __rest$V(props, ["description", "prefixCls", "message", "banner", "className", "rootClassName", "style", "onMouseEnter", "onMouseLeave", "onClick", "afterClose", "showIcon", "closable", "closeText", "closeIcon", "action", "id"]);
       const [closed, setClosed] = reactExports.useState(false);
       const internalRef = reactExports.useRef(null);
       reactExports.useImperativeHandle(ref, () => ({
@@ -14390,14 +14366,14 @@ var require_admin = __commonJS({
       const handleClose = (e2) => {
         var _a2;
         setClosed(true);
-        (_a2 = props2.onClose) === null || _a2 === void 0 ? void 0 : _a2.call(props2, e2);
+        (_a2 = props.onClose) === null || _a2 === void 0 ? void 0 : _a2.call(props, e2);
       };
       const type2 = reactExports.useMemo(() => {
-        if (props2.type !== void 0) {
-          return props2.type;
+        if (props.type !== void 0) {
+          return props.type;
         }
         return banner ? "warning" : "info";
-      }, [props2.type, banner]);
+      }, [props.type, banner]);
       const isClosable = reactExports.useMemo(() => {
         if (typeof closable === "object" && closable.closeIcon) return true;
         if (closeText) {
@@ -14472,7 +14448,7 @@ var require_admin = __commonJS({
           role: "alert"
         }, restProps), isShowIcon ? /* @__PURE__ */ reactExports.createElement(IconNode, {
           description,
-          icon: props2.icon,
+          icon: props.icon,
           prefixCls,
           type: type2
         }) : null, /* @__PURE__ */ reactExports.createElement("div", {
@@ -15217,8 +15193,8 @@ var require_admin = __commonJS({
         }
       }
     };
-    var Notify = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var prefixCls = props2.prefixCls, style2 = props2.style, className = props2.className, _props$duration = props2.duration, duration = _props$duration === void 0 ? 4.5 : _props$duration, showProgress = props2.showProgress, _props$pauseOnHover = props2.pauseOnHover, pauseOnHover = _props$pauseOnHover === void 0 ? true : _props$pauseOnHover, eventKey = props2.eventKey, content = props2.content, closable = props2.closable, _props$closeIcon = props2.closeIcon, closeIcon = _props$closeIcon === void 0 ? "x" : _props$closeIcon, divProps = props2.props, onClick = props2.onClick, onNoticeClose = props2.onNoticeClose, times = props2.times, forcedHovering = props2.hovering;
+    var Notify = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var prefixCls = props.prefixCls, style2 = props.style, className = props.className, _props$duration = props.duration, duration = _props$duration === void 0 ? 4.5 : _props$duration, showProgress = props.showProgress, _props$pauseOnHover = props.pauseOnHover, pauseOnHover = _props$pauseOnHover === void 0 ? true : _props$pauseOnHover, eventKey = props.eventKey, content = props.content, closable = props.closable, _props$closeIcon = props.closeIcon, closeIcon = _props$closeIcon === void 0 ? "x" : _props$closeIcon, divProps = props.props, onClick = props.onClick, onNoticeClose = props.onNoticeClose, times = props.times, forcedHovering = props.hovering;
       var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), hovering = _React$useState2[0], setHovering = _React$useState2[1];
       var _React$useState3 = reactExports.useState(0), _React$useState4 = _slicedToArray(_React$useState3, 2), percent = _React$useState4[0], setPercent = _React$useState4[1];
       var _React$useState5 = reactExports.useState(0), _React$useState6 = _slicedToArray(_React$useState5, 2), spentTime = _React$useState6[0], setSpentTime = _React$useState6[1];
@@ -15344,8 +15320,8 @@ var require_admin = __commonJS({
       return [!!config, result];
     };
     var _excluded$R = ["className", "style", "classNames", "styles"];
-    var NoticeList = function NoticeList2(props2) {
-      var configList = props2.configList, placement = props2.placement, prefixCls = props2.prefixCls, className = props2.className, style2 = props2.style, motion2 = props2.motion, onAllNoticeRemoved = props2.onAllNoticeRemoved, onNoticeClose = props2.onNoticeClose, stackConfig = props2.stack;
+    var NoticeList = function NoticeList2(props) {
+      var configList = props.configList, placement = props.placement, prefixCls = props.prefixCls, className = props.className, style2 = props.style, motion2 = props.motion, onAllNoticeRemoved = props.onAllNoticeRemoved, onNoticeClose = props.onNoticeClose, stackConfig = props.stack;
       var _useContext = reactExports.useContext(NotificationContext), ctxCls = _useContext.classNames;
       var dictRef = reactExports.useRef({});
       var _useState = reactExports.useState(null), _useState2 = _slicedToArray(_useState, 2), latestNotice = _useState2[0], setLatestNotice = _useState2[1];
@@ -15452,8 +15428,8 @@ var require_admin = __commonJS({
         })));
       });
     };
-    var Notifications = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-notification" : _props$prefixCls, container = props2.container, motion2 = props2.motion, maxCount = props2.maxCount, className = props2.className, style2 = props2.style, onAllRemoved = props2.onAllRemoved, stack = props2.stack, renderNotifications2 = props2.renderNotifications;
+    var Notifications = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-notification" : _props$prefixCls, container = props.container, motion2 = props.motion, maxCount = props.maxCount, className = props.className, style2 = props.style, onAllRemoved = props.onAllRemoved, stack = props.stack, renderNotifications2 = props.renderNotifications;
       var _React$useState = reactExports.useState([]), _React$useState2 = _slicedToArray(_React$useState, 2), configList = _React$useState2[0], setConfigList = _React$useState2[1];
       var onNoticeClose = function onNoticeClose2(key) {
         var _config$onClose;
@@ -15656,8 +15632,8 @@ var require_admin = __commonJS({
       return [api, contextHolder];
     }
     var LoadingOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "0 0 1024 1024", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z" } }] }, "name": "loading", "theme": "outlined" };
-    var LoadingOutlined = function LoadingOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var LoadingOutlined = function LoadingOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: LoadingOutlined$1
       }));
@@ -16220,12 +16196,12 @@ var require_admin = __commonJS({
     function validateNum(value) {
       return Number.isNaN(value) ? 0 : value;
     }
-    const WaveEffect = (props2) => {
+    const WaveEffect = (props) => {
       const {
         className,
         target,
         component
-      } = props2;
+      } = props;
       const divRef = reactExports.useRef(null);
       const [color, setWaveColor] = reactExports.useState(null);
       const [borderRadius, setBorderRadius] = reactExports.useState([]);
@@ -16361,12 +16337,12 @@ var require_admin = __commonJS({
       };
       return showDebounceWave;
     };
-    const Wave = (props2) => {
+    const Wave = (props) => {
       const {
         children,
         disabled,
         component
-      } = props2;
+      } = props;
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
@@ -16558,7 +16534,7 @@ var require_admin = __commonJS({
         value: otherProps
       }, children);
     };
-    const Compact = (props2) => {
+    const Compact = (props) => {
       const {
         getPrefixCls,
         direction: directionConfig
@@ -16571,7 +16547,7 @@ var require_admin = __commonJS({
         className,
         rootClassName,
         children
-      } = props2, restProps = __rest$U(props2, ["size", "direction", "block", "prefixCls", "className", "rootClassName", "children"]);
+      } = props, restProps = __rest$U(props, ["size", "direction", "block", "prefixCls", "className", "rootClassName", "children"]);
       const mergedSize = useSize((ctx) => size !== null && size !== void 0 ? size : ctx);
       const prefixCls = getPrefixCls("space-compact", customizePrefixCls);
       const [wrapCSSVar, hashId] = useStyle$s(prefixCls);
@@ -16608,7 +16584,7 @@ var require_admin = __commonJS({
       return t2;
     };
     const GroupSizeContext = /* @__PURE__ */ reactExports.createContext(void 0);
-    const ButtonGroup = (props2) => {
+    const ButtonGroup = (props) => {
       const {
         getPrefixCls,
         direction
@@ -16617,7 +16593,7 @@ var require_admin = __commonJS({
         prefixCls: customizePrefixCls,
         size,
         className
-      } = props2, others = __rest$T(props2, ["prefixCls", "size", "className"]);
+      } = props, others = __rest$T(props, ["prefixCls", "size", "className"]);
       const prefixCls = getPrefixCls("btn-group", customizePrefixCls);
       const [, , hashId] = useToken();
       let sizeCls = "";
@@ -16692,13 +16668,13 @@ var require_admin = __commonJS({
       });
       return React$1.Children.map(childList, (child) => splitCNCharsBySpace(child, needInserted));
     }
-    const IconWrapper = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const IconWrapper = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         className,
         style: style2,
         children,
         prefixCls
-      } = props2;
+      } = props;
       const iconWrapperCls = classNames(`${prefixCls}-icon`, className);
       return /* @__PURE__ */ React$1.createElement("span", {
         ref,
@@ -16706,13 +16682,13 @@ var require_admin = __commonJS({
         style: style2
       }, children);
     });
-    const InnerLoadingIcon = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const InnerLoadingIcon = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         prefixCls,
         className,
         style: style2,
         iconClassName
-      } = props2;
+      } = props;
       const mergedIconCls = classNames(`${prefixCls}-loading-icon`, className);
       return /* @__PURE__ */ React$1.createElement(IconWrapper, {
         prefixCls,
@@ -16733,14 +16709,14 @@ var require_admin = __commonJS({
       opacity: 1,
       transform: "scale(1)"
     });
-    const LoadingIcon = (props2) => {
+    const LoadingIcon = (props) => {
       const {
         prefixCls,
         loading,
         existIcon,
         className,
         style: style2
-      } = props2;
+      } = props;
       const visible = !!loading;
       if (existIcon) {
         return /* @__PURE__ */ React$1.createElement(InnerLoadingIcon, {
@@ -17372,8 +17348,8 @@ var require_admin = __commonJS({
       return new Color(color);
     };
     var defaultColor = generateColor$1("#1677ff");
-    var calculateColor = function calculateColor2(props2) {
-      var offset2 = props2.offset, targetRef = props2.targetRef, containerRef = props2.containerRef, color = props2.color, type2 = props2.type;
+    var calculateColor = function calculateColor2(props) {
+      var offset2 = props.offset, targetRef = props.targetRef, containerRef = props.containerRef, color = props.color, type2 = props.type;
       var _containerRef$current = containerRef.current.getBoundingClientRect(), width = _containerRef$current.width, height = _containerRef$current.height;
       var _targetRef$current$ge = targetRef.current.getBoundingClientRect(), targetWidth = _targetRef$current$ge.width, targetHeight = _targetRef$current$ge.height;
       var centerOffsetX = targetWidth / 2;
@@ -17445,8 +17421,8 @@ var require_admin = __commonJS({
         pageY: obj.pageY - scrollYOffset
       };
     }
-    function useColorDrag(props2) {
-      var targetRef = props2.targetRef, containerRef = props2.containerRef, direction = props2.direction, onDragChange = props2.onDragChange, onDragChangeComplete = props2.onDragChangeComplete, calculate = props2.calculate, color = props2.color, disabledDrag = props2.disabledDrag;
+    function useColorDrag(props) {
+      var targetRef = props.targetRef, containerRef = props.containerRef, direction = props.direction, onDragChange = props.onDragChange, onDragChangeComplete = props.onDragChangeComplete, calculate = props.calculate, color = props.color, disabledDrag = props.disabledDrag;
       var _useState = reactExports.useState({
         x: 0,
         y: 0
@@ -17531,8 +17507,8 @@ var require_admin = __commonJS({
         }, style2)
       }, children);
     };
-    var Transform = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var children = props2.children, x2 = props2.x, y2 = props2.y;
+    var Transform = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var children = props.children, x2 = props.x, y2 = props.y;
       return /* @__PURE__ */ React$1.createElement("div", {
         ref,
         style: {
@@ -17623,8 +17599,8 @@ var require_admin = __commonJS({
         }
       }, children);
     };
-    var Slider$2 = function Slider2(props2) {
-      var prefixCls = props2.prefixCls, colors = props2.colors, disabled = props2.disabled, onChange = props2.onChange, onChangeComplete = props2.onChangeComplete, color = props2.color, type2 = props2.type;
+    var Slider$2 = function Slider2(props) {
+      var prefixCls = props.prefixCls, colors = props.colors, disabled = props.disabled, onChange = props.onChange, onChangeComplete = props.onChangeComplete, color = props.color, type2 = props.type;
       var sliderRef = reactExports.useRef();
       var transformRef = reactExports.useRef();
       var colorRef = reactExports.useRef(color);
@@ -17721,8 +17697,8 @@ var require_admin = __commonJS({
       color: "rgb(255, 0, 0)",
       percent: 100
     }];
-    var ColorPicker$1 = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var value = props2.value, defaultValue = props2.defaultValue, _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? ColorPickerPrefixCls : _props$prefixCls, onChange = props2.onChange, onChangeComplete = props2.onChangeComplete, className = props2.className, style2 = props2.style, panelRender = props2.panelRender, _props$disabledAlpha = props2.disabledAlpha, disabledAlpha = _props$disabledAlpha === void 0 ? false : _props$disabledAlpha, _props$disabled = props2.disabled, disabled = _props$disabled === void 0 ? false : _props$disabled, components2 = props2.components;
+    var ColorPicker$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var value = props.value, defaultValue = props.defaultValue, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? ColorPickerPrefixCls : _props$prefixCls, onChange = props.onChange, onChangeComplete = props.onChangeComplete, className = props.className, style2 = props.style, panelRender = props.panelRender, _props$disabledAlpha = props.disabledAlpha, disabledAlpha = _props$disabledAlpha === void 0 ? false : _props$disabledAlpha, _props$disabled = props.disabled, disabled = _props$disabled === void 0 ? false : _props$disabled, components2 = props.components;
       var _useComponent = useComponent(components2), _useComponent2 = _slicedToArray(_useComponent, 1), Slider2 = _useComponent2[0];
       var _useColorState = useColorState(defaultValue || defaultColor, value), _useColorState2 = _slicedToArray(_useColorState, 2), colorValue = _useColorState2[0], setColorValue = _useColorState2[1];
       var alphaColor = reactExports.useMemo(function() {
@@ -17917,15 +17893,15 @@ var require_admin = __commonJS({
       }]);
     }();
     var RightOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z" } }] }, "name": "right", "theme": "outlined" };
-    var RightOutlined = function RightOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var RightOutlined = function RightOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: RightOutlined$1
       }));
     };
     var RefIcon$y = /* @__PURE__ */ reactExports.forwardRef(RightOutlined);
-    var PanelContent = /* @__PURE__ */ React$1.forwardRef(function(props2, ref) {
-      var prefixCls = props2.prefixCls, forceRender = props2.forceRender, className = props2.className, style2 = props2.style, children = props2.children, isActive2 = props2.isActive, role = props2.role, customizeClassNames = props2.classNames, styles = props2.styles;
+    var PanelContent = /* @__PURE__ */ React$1.forwardRef(function(props, ref) {
+      var prefixCls = props.prefixCls, forceRender = props.forceRender, className = props.className, style2 = props.style, children = props.children, isActive2 = props.isActive, role = props.role, customizeClassNames = props.classNames, styles = props.styles;
       var _React$useState = React$1.useState(isActive2 || forceRender), _React$useState2 = _slicedToArray(_React$useState, 2), rendered = _React$useState2[0], setRendered = _React$useState2[1];
       React$1.useEffect(function() {
         if (forceRender || isActive2) {
@@ -17947,8 +17923,8 @@ var require_admin = __commonJS({
     });
     PanelContent.displayName = "PanelContent";
     var _excluded$O = ["showArrow", "headerClass", "isActive", "onItemClick", "forceRender", "className", "classNames", "styles", "prefixCls", "collapsible", "accordion", "panelKey", "extra", "header", "expandIcon", "openMotion", "destroyInactivePanel", "children"];
-    var CollapsePanel$1 = /* @__PURE__ */ React$1.forwardRef(function(props2, ref) {
-      var _props$showArrow = props2.showArrow, showArrow = _props$showArrow === void 0 ? true : _props$showArrow, headerClass = props2.headerClass, isActive2 = props2.isActive, onItemClick = props2.onItemClick, forceRender = props2.forceRender, className = props2.className, _props$classNames = props2.classNames, customizeClassNames = _props$classNames === void 0 ? {} : _props$classNames, _props$styles = props2.styles, styles = _props$styles === void 0 ? {} : _props$styles, prefixCls = props2.prefixCls, collapsible = props2.collapsible, accordion = props2.accordion, panelKey = props2.panelKey, extra = props2.extra, header = props2.header, expandIcon = props2.expandIcon, openMotion = props2.openMotion, destroyInactivePanel = props2.destroyInactivePanel, children = props2.children, resetProps = _objectWithoutProperties(props2, _excluded$O);
+    var CollapsePanel$1 = /* @__PURE__ */ React$1.forwardRef(function(props, ref) {
+      var _props$showArrow = props.showArrow, showArrow = _props$showArrow === void 0 ? true : _props$showArrow, headerClass = props.headerClass, isActive2 = props.isActive, onItemClick = props.onItemClick, forceRender = props.forceRender, className = props.className, _props$classNames = props.classNames, customizeClassNames = _props$classNames === void 0 ? {} : _props$classNames, _props$styles = props.styles, styles = _props$styles === void 0 ? {} : _props$styles, prefixCls = props.prefixCls, collapsible = props.collapsible, accordion = props.accordion, panelKey = props.panelKey, extra = props.extra, header = props.header, expandIcon = props.expandIcon, openMotion = props.openMotion, destroyInactivePanel = props.destroyInactivePanel, children = props.children, resetProps = _objectWithoutProperties(props, _excluded$O);
       var disabled = collapsible === "disabled";
       var collapsibleHeader = collapsible === "header";
       var collapsibleIcon = collapsible === "icon";
@@ -17961,7 +17937,7 @@ var require_admin = __commonJS({
           handleItemClick();
         }
       };
-      var iconNode = typeof expandIcon === "function" ? expandIcon(props2) : /* @__PURE__ */ React$1.createElement("i", {
+      var iconNode = typeof expandIcon === "function" ? expandIcon(props) : /* @__PURE__ */ React$1.createElement("i", {
         className: "arrow"
       });
       if (iconNode) {
@@ -18014,8 +17990,8 @@ var require_admin = __commonJS({
       }));
     });
     var _excluded$N = ["children", "label", "key", "collapsible", "onItemClick", "destroyInactivePanel"];
-    var convertItemsToNodes$1 = function convertItemsToNodes2(items2, props2) {
-      var prefixCls = props2.prefixCls, accordion = props2.accordion, collapsible = props2.collapsible, destroyInactivePanel = props2.destroyInactivePanel, onItemClick = props2.onItemClick, activeKey = props2.activeKey, openMotion = props2.openMotion, expandIcon = props2.expandIcon;
+    var convertItemsToNodes$1 = function convertItemsToNodes2(items2, props) {
+      var prefixCls = props.prefixCls, accordion = props.accordion, collapsible = props.collapsible, destroyInactivePanel = props.destroyInactivePanel, onItemClick = props.onItemClick, activeKey = props.activeKey, openMotion = props.openMotion, expandIcon = props.expandIcon;
       return items2.map(function(item, index2) {
         var children = item.children, label = item.label, rawKey = item.key, rawCollapsible = item.collapsible, rawOnItemClick = item.onItemClick, rawDestroyInactivePanel = item.destroyInactivePanel, restProps = _objectWithoutProperties(item, _excluded$N);
         var key = String(rawKey !== null && rawKey !== void 0 ? rawKey : index2);
@@ -18047,9 +18023,9 @@ var require_admin = __commonJS({
         }), children);
       });
     };
-    var getNewChild = function getNewChild2(child, index2, props2) {
+    var getNewChild = function getNewChild2(child, index2, props) {
       if (!child) return null;
-      var prefixCls = props2.prefixCls, accordion = props2.accordion, collapsible = props2.collapsible, destroyInactivePanel = props2.destroyInactivePanel, onItemClick = props2.onItemClick, activeKey = props2.activeKey, openMotion = props2.openMotion, expandIcon = props2.expandIcon;
+      var prefixCls = props.prefixCls, accordion = props.accordion, collapsible = props.collapsible, destroyInactivePanel = props.destroyInactivePanel, onItemClick = props.onItemClick, activeKey = props.activeKey, openMotion = props.openMotion, expandIcon = props.expandIcon;
       var key = child.key || String(index2);
       var _child$props = child.props, header = _child$props.header, headerClass = _child$props.headerClass, childDestroyInactivePanel = _child$props.destroyInactivePanel, childCollapsible = _child$props.collapsible, childOnItemClick = _child$props.onItemClick;
       var isActive2 = false;
@@ -18089,12 +18065,12 @@ var require_admin = __commonJS({
       });
       return /* @__PURE__ */ React$1.cloneElement(child, childProps);
     };
-    function useItems(items2, rawChildren, props2) {
+    function useItems(items2, rawChildren, props) {
       if (Array.isArray(items2)) {
-        return convertItemsToNodes$1(items2, props2);
+        return convertItemsToNodes$1(items2, props);
       }
       return toArray$5(rawChildren).map(function(child, index2) {
-        return getNewChild(child, index2, props2);
+        return getNewChild(child, index2, props);
       });
     }
     function getActiveKeysArray(activeKey) {
@@ -18107,8 +18083,8 @@ var require_admin = __commonJS({
         return String(key);
       });
     }
-    var Collapse$2 = /* @__PURE__ */ React$1.forwardRef(function(props2, ref) {
-      var _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-collapse" : _props$prefixCls, _props$destroyInactiv = props2.destroyInactivePanel, destroyInactivePanel = _props$destroyInactiv === void 0 ? false : _props$destroyInactiv, style2 = props2.style, accordion = props2.accordion, className = props2.className, children = props2.children, collapsible = props2.collapsible, openMotion = props2.openMotion, expandIcon = props2.expandIcon, rawActiveKey = props2.activeKey, defaultActiveKey = props2.defaultActiveKey, _onChange = props2.onChange, items2 = props2.items;
+    var Collapse$2 = /* @__PURE__ */ React$1.forwardRef(function(props, ref) {
+      var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-collapse" : _props$prefixCls, _props$destroyInactiv = props.destroyInactivePanel, destroyInactivePanel = _props$destroyInactiv === void 0 ? false : _props$destroyInactiv, style2 = props.style, accordion = props.accordion, className = props.className, children = props.children, collapsible = props.collapsible, openMotion = props.openMotion, expandIcon = props.expandIcon, rawActiveKey = props.activeKey, defaultActiveKey = props.defaultActiveKey, _onChange = props.onChange, items2 = props.items;
       var collapseClassName = classNames(prefixCls, className);
       var _useMergedState = useMergedState([], {
         value: rawActiveKey,
@@ -18149,7 +18125,7 @@ var require_admin = __commonJS({
         className: collapseClassName,
         style: style2,
         role: accordion ? "tablist" : void 0
-      }, pickAttrs(props2, {
+      }, pickAttrs(props, {
         aria: true,
         data: true
       })), mergedChildren);
@@ -18161,7 +18137,7 @@ var require_admin = __commonJS({
       Panel: CollapsePanel$1
     });
     Collapse$3.Panel;
-    const CollapsePanel = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const CollapsePanel = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
@@ -18169,14 +18145,14 @@ var require_admin = __commonJS({
         prefixCls: customizePrefixCls,
         className,
         showArrow = true
-      } = props2;
+      } = props;
       const prefixCls = getPrefixCls("collapse", customizePrefixCls);
       const collapsePanelClassName = classNames({
         [`${prefixCls}-no-arrow`]: !showArrow
       }, className);
       return /* @__PURE__ */ reactExports.createElement(Collapse$3.Panel, Object.assign({
         ref
-      }, props2, {
+      }, props, {
         prefixCls,
         className: collapsePanelClassName
       }));
@@ -18977,7 +18953,7 @@ var require_admin = __commonJS({
       });
       return [genBaseStyle$6(collapseToken), genBorderlessStyle$2(collapseToken), genGhostStyle(collapseToken), genArrowStyle(collapseToken), genCollapseMotion(collapseToken)];
     }, prepareComponentToken$n);
-    const Collapse = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const Collapse = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         getPrefixCls,
         direction,
@@ -18994,7 +18970,7 @@ var require_admin = __commonJS({
         expandIconPosition = "start",
         children,
         expandIcon
-      } = props2;
+      } = props;
       const mergedSize = useSize((ctx) => {
         var _a2;
         return (_a2 = customizeSize !== null && customizeSize !== void 0 ? customizeSize : ctx) !== null && _a2 !== void 0 ? _a2 : "middle";
@@ -19040,7 +19016,7 @@ var require_admin = __commonJS({
             disabled,
             collapsible
           } = child.props;
-          const childProps = Object.assign(Object.assign({}, omit$1(child.props, ["disabled"])), {
+          const childProps = Object.assign(Object.assign({}, omit(child.props, ["disabled"])), {
             key,
             collapsible: collapsible !== null && collapsible !== void 0 ? collapsible : disabled ? "disabled" : void 0
           });
@@ -19053,7 +19029,7 @@ var require_admin = __commonJS({
         /* @__PURE__ */ reactExports.createElement(Collapse$3, Object.assign({
           ref,
           openMotion
-        }, omit$1(props2, ["rootClassName"]), {
+        }, omit(props, ["rootClassName"]), {
           expandIcon: renderExpandIcon2,
           prefixCls,
           className: collapseClassName,
@@ -19818,7 +19794,7 @@ var require_admin = __commonJS({
       link: ["primary", "link"],
       text: ["default", "text"]
     };
-    const InternalCompoundedButton = /* @__PURE__ */ React$1.forwardRef((props2, ref) => {
+    const InternalCompoundedButton = /* @__PURE__ */ React$1.forwardRef((props, ref) => {
       var _a2, _b, _c;
       const {
         loading = false,
@@ -19827,7 +19803,7 @@ var require_admin = __commonJS({
         variant,
         type: type2,
         danger = false,
-        shape: shape2 = "default",
+        shape = "default",
         size: customizeSize,
         styles,
         disabled: customDisabled,
@@ -19843,7 +19819,7 @@ var require_admin = __commonJS({
         classNames: customClassNames,
         style: customStyle = {},
         autoInsertSpace
-      } = props2, rest = __rest$S(props2, ["loading", "prefixCls", "color", "variant", "type", "danger", "shape", "size", "styles", "disabled", "className", "rootClassName", "children", "icon", "iconPosition", "ghost", "block", "htmlType", "classNames", "style", "autoInsertSpace"]);
+      } = props, rest = __rest$S(props, ["loading", "prefixCls", "color", "variant", "type", "danger", "shape", "size", "styles", "disabled", "className", "rootClassName", "children", "icon", "iconPosition", "ghost", "block", "htmlType", "classNames", "style", "autoInsertSpace"]);
       const mergedType = type2 || "default";
       const [mergedColor, mergedVariant] = reactExports.useMemo(() => {
         if (color && variant) {
@@ -19908,7 +19884,7 @@ var require_admin = __commonJS({
       const handleClick = (e2) => {
         const {
           onClick
-        } = props2;
+        } = props;
         if (innerLoading || mergedDisabled) {
           e2.preventDefault();
           return;
@@ -19930,9 +19906,9 @@ var require_admin = __commonJS({
       });
       const sizeCls = sizeFullName ? sizeClassNameMap[sizeFullName] || "" : "";
       const iconType = innerLoading ? "loading" : icon;
-      const linkButtonRestProps = omit$1(rest, ["navigate"]);
+      const linkButtonRestProps = omit(rest, ["navigate"]);
       const classes = classNames(prefixCls, hashId, cssVarCls, {
-        [`${prefixCls}-${shape2}`]: shape2 !== "default" && shape2,
+        [`${prefixCls}-${shape}`]: shape !== "default" && shape,
         // line(253 - 254): Compatible with versions earlier than 5.21.0
         [`${prefixCls}-${mergedType}`]: mergedType,
         [`${prefixCls}-dangerous`]: danger,
@@ -19997,7 +19973,7 @@ var require_admin = __commonJS({
     function isThenable(thing) {
       return !!(thing === null || thing === void 0 ? void 0 : thing.then);
     }
-    const ActionButton = (props2) => {
+    const ActionButton = (props) => {
       const {
         type: type2,
         children,
@@ -20009,7 +19985,7 @@ var require_admin = __commonJS({
         isSilent,
         quitOnNullishReturnValue,
         actionFn
-      } = props2;
+      } = props;
       const clickedRef = reactExports.useRef(false);
       const buttonRef = reactExports.useRef(null);
       const [loading, setLoading] = useSafeState(false);
@@ -20292,10 +20268,10 @@ var require_admin = __commonJS({
       }
       return getContainer2;
     };
-    var Portal = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var open2 = props2.open, autoLock = props2.autoLock, getContainer2 = props2.getContainer;
-      props2.debug;
-      var _props$autoDestroy = props2.autoDestroy, autoDestroy = _props$autoDestroy === void 0 ? true : _props$autoDestroy, children = props2.children;
+    var Portal = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var open2 = props.open, autoLock = props.autoLock, getContainer2 = props.getContainer;
+      props.debug;
+      var _props$autoDestroy = props.autoDestroy, autoDestroy = _props$autoDestroy === void 0 ? true : _props$autoDestroy, children = props.children;
       var _React$useState = reactExports.useState(open2), _React$useState2 = _slicedToArray(_React$useState, 2), shouldRender = _React$useState2[0], setShouldRender = _React$useState2[1];
       var mergedRender = shouldRender || open2;
       reactExports.useEffect(function() {
@@ -20411,8 +20387,8 @@ var require_admin = __commonJS({
     var entityStyle = {
       outline: "none"
     };
-    var Panel$1 = /* @__PURE__ */ React$1.forwardRef(function(props2, ref) {
-      var prefixCls = props2.prefixCls, className = props2.className, style2 = props2.style, title = props2.title, ariaId = props2.ariaId, footer = props2.footer, closable = props2.closable, closeIcon = props2.closeIcon, onClose = props2.onClose, children = props2.children, bodyStyle = props2.bodyStyle, bodyProps = props2.bodyProps, modalRender = props2.modalRender, onMouseDown = props2.onMouseDown, onMouseUp = props2.onMouseUp, holderRef = props2.holderRef, visible = props2.visible, forceRender = props2.forceRender, width = props2.width, height = props2.height, modalClassNames = props2.classNames, modalStyles = props2.styles;
+    var Panel$1 = /* @__PURE__ */ React$1.forwardRef(function(props, ref) {
+      var prefixCls = props.prefixCls, className = props.className, style2 = props.style, title = props.title, ariaId = props.ariaId, footer = props.footer, closable = props.closable, closeIcon = props.closeIcon, onClose = props.onClose, children = props.children, bodyStyle = props.bodyStyle, bodyProps = props.bodyProps, modalRender = props.modalRender, onMouseDown = props.onMouseDown, onMouseUp = props.onMouseUp, holderRef = props.holderRef, visible = props.visible, forceRender = props.forceRender, width = props.width, height = props.height, modalClassNames = props.classNames, modalStyles = props.styles;
       var _React$useContext = React$1.useContext(RefContext), panelRef = _React$useContext.panel;
       var mergedRef = useComposeRef(holderRef, panelRef);
       var sentinelStartRef = reactExports.useRef();
@@ -20509,8 +20485,8 @@ var require_admin = __commonJS({
         style: sentinelStyle
       }));
     });
-    var Content = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var prefixCls = props2.prefixCls, title = props2.title, style2 = props2.style, className = props2.className, visible = props2.visible, forceRender = props2.forceRender, destroyOnClose = props2.destroyOnClose, motionName = props2.motionName, ariaId = props2.ariaId, onVisibleChanged = props2.onVisibleChanged, mousePosition2 = props2.mousePosition;
+    var Content = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var prefixCls = props.prefixCls, title = props.title, style2 = props.style, className = props.className, visible = props.visible, forceRender = props.forceRender, destroyOnClose = props.destroyOnClose, motionName = props.motionName, ariaId = props.ariaId, onVisibleChanged = props.onVisibleChanged, mousePosition2 = props.mousePosition;
       var dialogRef = reactExports.useRef();
       var _React$useState = reactExports.useState(), _React$useState2 = _slicedToArray(_React$useState, 2), transformOrigin = _React$useState2[0], setTransformOrigin = _React$useState2[1];
       var contentStyle = {};
@@ -20532,7 +20508,7 @@ var require_admin = __commonJS({
         ref: dialogRef
       }, function(_ref, motionRef) {
         var motionClassName = _ref.className, motionStyle = _ref.style;
-        return /* @__PURE__ */ reactExports.createElement(Panel$1, _extends({}, props2, {
+        return /* @__PURE__ */ reactExports.createElement(Panel$1, _extends({}, props, {
           ref,
           title,
           ariaId,
@@ -20544,8 +20520,8 @@ var require_admin = __commonJS({
       });
     });
     Content.displayName = "Content";
-    var Mask$1 = function Mask2(props2) {
-      var prefixCls = props2.prefixCls, style2 = props2.style, visible = props2.visible, maskProps = props2.maskProps, motionName = props2.motionName, className = props2.className;
+    var Mask$1 = function Mask2(props) {
+      var prefixCls = props.prefixCls, style2 = props.style, visible = props.visible, maskProps = props.maskProps, motionName = props.motionName, className = props.className;
       return /* @__PURE__ */ reactExports.createElement(CSSMotion, {
         key: "mask",
         visible,
@@ -20560,8 +20536,8 @@ var require_admin = __commonJS({
         }, maskProps));
       });
     };
-    var Dialog = function Dialog2(props2) {
-      var _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-dialog" : _props$prefixCls, zIndex = props2.zIndex, _props$visible = props2.visible, visible = _props$visible === void 0 ? false : _props$visible, _props$keyboard = props2.keyboard, keyboard = _props$keyboard === void 0 ? true : _props$keyboard, _props$focusTriggerAf = props2.focusTriggerAfterClose, focusTriggerAfterClose = _props$focusTriggerAf === void 0 ? true : _props$focusTriggerAf, wrapStyle = props2.wrapStyle, wrapClassName = props2.wrapClassName, wrapProps = props2.wrapProps, onClose = props2.onClose, afterOpenChange = props2.afterOpenChange, afterClose = props2.afterClose, transitionName = props2.transitionName, animation = props2.animation, _props$closable = props2.closable, closable = _props$closable === void 0 ? true : _props$closable, _props$mask = props2.mask, mask = _props$mask === void 0 ? true : _props$mask, maskTransitionName = props2.maskTransitionName, maskAnimation = props2.maskAnimation, _props$maskClosable = props2.maskClosable, maskClosable = _props$maskClosable === void 0 ? true : _props$maskClosable, maskStyle = props2.maskStyle, maskProps = props2.maskProps, rootClassName = props2.rootClassName, modalClassNames = props2.classNames, modalStyles = props2.styles;
+    var Dialog = function Dialog2(props) {
+      var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-dialog" : _props$prefixCls, zIndex = props.zIndex, _props$visible = props.visible, visible = _props$visible === void 0 ? false : _props$visible, _props$keyboard = props.keyboard, keyboard = _props$keyboard === void 0 ? true : _props$keyboard, _props$focusTriggerAf = props.focusTriggerAfterClose, focusTriggerAfterClose = _props$focusTriggerAf === void 0 ? true : _props$focusTriggerAf, wrapStyle = props.wrapStyle, wrapClassName = props.wrapClassName, wrapProps = props.wrapProps, onClose = props.onClose, afterOpenChange = props.afterOpenChange, afterClose = props.afterClose, transitionName = props.transitionName, animation = props.animation, _props$closable = props.closable, closable = _props$closable === void 0 ? true : _props$closable, _props$mask = props.mask, mask = _props$mask === void 0 ? true : _props$mask, maskTransitionName = props.maskTransitionName, maskAnimation = props.maskAnimation, _props$maskClosable = props.maskClosable, maskClosable = _props$maskClosable === void 0 ? true : _props$maskClosable, maskStyle = props.maskStyle, maskProps = props.maskProps, rootClassName = props.rootClassName, modalClassNames = props.classNames, modalStyles = props.styles;
       var lastOutSideActiveElementRef = reactExports.useRef();
       var wrapperRef = reactExports.useRef();
       var contentRef = reactExports.useRef();
@@ -20650,7 +20626,7 @@ var require_admin = __commonJS({
       });
       return /* @__PURE__ */ reactExports.createElement("div", _extends({
         className: classNames("".concat(prefixCls, "-root"), rootClassName)
-      }, pickAttrs(props2, {
+      }, pickAttrs(props, {
         data: true
       })), /* @__PURE__ */ reactExports.createElement(Mask$1, {
         prefixCls,
@@ -20668,7 +20644,7 @@ var require_admin = __commonJS({
         ref: wrapperRef,
         onClick: onWrapperClick,
         style: mergedStyle
-      }, wrapProps), /* @__PURE__ */ reactExports.createElement(Content, _extends({}, props2, {
+      }, wrapProps), /* @__PURE__ */ reactExports.createElement(Content, _extends({}, props, {
         onMouseDown: onContentMouseDown,
         onMouseUp: onContentMouseUp,
         ref: contentRef,
@@ -20681,8 +20657,8 @@ var require_admin = __commonJS({
         motionName: getMotionName(prefixCls, transitionName, animation)
       }))));
     };
-    var DialogWrap = function DialogWrap2(props2) {
-      var visible = props2.visible, getContainer2 = props2.getContainer, forceRender = props2.forceRender, _props$destroyOnClose = props2.destroyOnClose, destroyOnClose = _props$destroyOnClose === void 0 ? false : _props$destroyOnClose, _afterClose = props2.afterClose, panelRef = props2.panelRef;
+    var DialogWrap = function DialogWrap2(props) {
+      var visible = props.visible, getContainer2 = props.getContainer, forceRender = props.forceRender, _props$destroyOnClose = props.destroyOnClose, destroyOnClose = _props$destroyOnClose === void 0 ? false : _props$destroyOnClose, _afterClose = props.afterClose, panelRef = props.panelRef;
       var _React$useState = reactExports.useState(visible), _React$useState2 = _slicedToArray(_React$useState, 2), animatedVisible = _React$useState2[0], setAnimatedVisible = _React$useState2[1];
       var refContext = reactExports.useMemo(function() {
         return {
@@ -20704,7 +20680,7 @@ var require_admin = __commonJS({
         autoDestroy: false,
         getContainer: getContainer2,
         autoLock: visible || animatedVisible
-      }, /* @__PURE__ */ reactExports.createElement(Dialog, _extends({}, props2, {
+      }, /* @__PURE__ */ reactExports.createElement(Dialog, _extends({}, props, {
         destroyOnClose,
         afterClose: function afterClose() {
           _afterClose === null || _afterClose === void 0 || _afterClose();
@@ -20929,7 +20905,7 @@ var require_admin = __commonJS({
       }
       return false;
     }
-    function asyncParallelArray(arr, func2, callback) {
+    function asyncParallelArray(arr, func, callback) {
       var results = [];
       var total = 0;
       var arrLength = arr.length;
@@ -20941,10 +20917,10 @@ var require_admin = __commonJS({
         }
       }
       arr.forEach(function(a2) {
-        func2(a2, count);
+        func(a2, count);
       });
     }
-    function asyncSerialArray(arr, func2, callback) {
+    function asyncSerialArray(arr, func, callback) {
       var index2 = 0;
       var arrLength = arr.length;
       function next2(errors) {
@@ -20955,7 +20931,7 @@ var require_admin = __commonJS({
         var original = index2;
         index2 = index2 + 1;
         if (original < arrLength) {
-          func2(arr[original], next2);
+          func(arr[original], next2);
         } else {
           callback([]);
         }
@@ -20984,7 +20960,7 @@ var require_admin = __commonJS({
       }
       return _createClass(AsyncValidationError2);
     }(/* @__PURE__ */ _wrapNativeSuper(Error));
-    function asyncMap(objArr, option, func2, callback, source) {
+    function asyncMap(objArr, option, func, callback, source) {
       if (option.first) {
         var _pending = new Promise(function(resolve, reject) {
           var next2 = function next22(errors) {
@@ -20992,7 +20968,7 @@ var require_admin = __commonJS({
             return errors.length ? reject(new AsyncValidationError(errors, convertFieldsError(errors))) : resolve(source);
           };
           var flattenArr = flattenObjArr(objArr);
-          asyncSerialArray(flattenArr, func2, next2);
+          asyncSerialArray(flattenArr, func, next2);
         });
         _pending.catch(function(e2) {
           return e2;
@@ -21020,9 +20996,9 @@ var require_admin = __commonJS({
         objArrKeys.forEach(function(key) {
           var arr = objArr[key];
           if (firstFields.indexOf(key) !== -1) {
-            asyncSerialArray(arr, func2, next2);
+            asyncSerialArray(arr, func, next2);
           } else {
-            asyncParallelArray(arr, func2, next2);
+            asyncParallelArray(arr, func, next2);
           }
         });
       });
@@ -21293,7 +21269,7 @@ var require_admin = __commonJS({
       }
       callback(errors);
     };
-    var array$1 = function array2(rule, value, callback, source, options) {
+    var array = function array2(rule, value, callback, source, options) {
       var errors = [];
       var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
       if (validate) {
@@ -21404,7 +21380,7 @@ var require_admin = __commonJS({
       }
       callback(errors);
     };
-    var number$1 = function number2(rule, value, callback, source, options) {
+    var number = function number2(rule, value, callback, source, options) {
       var errors = [];
       var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
       if (validate) {
@@ -21422,7 +21398,7 @@ var require_admin = __commonJS({
       }
       callback(errors);
     };
-    var object$1 = function object2(rule, value, callback, source, options) {
+    var object = function object2(rule, value, callback, source, options) {
       var errors = [];
       var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
       if (validate) {
@@ -21470,7 +21446,7 @@ var require_admin = __commonJS({
       rules.required(rule, value, source, errors, options, type2);
       callback(errors);
     };
-    var string$1 = function string2(rule, value, callback, source, options) {
+    var string = function string2(rule, value, callback, source, options) {
       var errors = [];
       var validate = rule.required || !rule.required && source.hasOwnProperty(rule.field);
       if (validate) {
@@ -21505,15 +21481,15 @@ var require_admin = __commonJS({
       callback(errors);
     };
     const validators = {
-      string: string$1,
+      string,
       method,
-      number: number$1,
+      number,
       boolean,
       regexp,
       integer,
       float: floatFn,
-      array: array$1,
-      object: object$1,
+      array,
+      object,
       enum: enumerable,
       pattern,
       date,
@@ -22181,10 +22157,10 @@ var require_admin = __commonJS({
     var Field = /* @__PURE__ */ function(_React$Component) {
       _inherits(Field2, _React$Component);
       var _super = _createSuper(Field2);
-      function Field2(props2) {
+      function Field2(props) {
         var _this;
         _classCallCheck(this, Field2);
-        _this = _super.call(this, props2);
+        _this = _super.call(this, props);
         _defineProperty(_assertThisInitialized(_this), "state", {
           resetCount: 0
         });
@@ -22233,7 +22209,7 @@ var require_admin = __commonJS({
             var _meta = _objectSpread2(_objectSpread2({}, _this.getMeta()), {}, {
               destroy: destroy2
             });
-            if (!isEqual$1(_this.metaCache, _meta)) {
+            if (!isEqual(_this.metaCache, _meta)) {
               onMetaChange(_meta);
             }
             _this.metaCache = _meta;
@@ -22248,7 +22224,7 @@ var require_admin = __commonJS({
           var prevValue = _this.getValue(prevStore);
           var curValue = _this.getValue(store);
           var namePathMatch = namePathList && containsNamePath(namePathList, namePath);
-          if (info.type === "valueUpdate" && info.source === "external" && !isEqual$1(prevValue, curValue)) {
+          if (info.type === "valueUpdate" && info.source === "external" && !isEqual(prevValue, curValue)) {
             _this.touched = true;
             _this.dirty = true;
             _this.validatePromise = null;
@@ -22539,8 +22515,8 @@ var require_admin = __commonJS({
           });
           return control;
         });
-        if (props2.fieldContext) {
-          var getInternalHooks = props2.fieldContext.getInternalHooks;
+        if (props.fieldContext) {
+          var getInternalHooks = props.fieldContext.getInternalHooks;
           var _getInternalHooks2 = getInternalHooks(HOOK_MARK), initEntityValue = _getInternalHooks2.initEntityValue;
           initEntityValue(_assertThisInitialized(_this));
         }
@@ -22958,21 +22934,21 @@ var require_admin = __commonJS({
       });
       _defineProperty(this, "getFieldsMap", function() {
         var pure = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : false;
-        var cache2 = new NameMap();
+        var cache = new NameMap();
         _this.getFieldEntities(pure).forEach(function(field) {
           var namePath = field.getNamePath();
-          cache2.set(namePath, field);
+          cache.set(namePath, field);
         });
-        return cache2;
+        return cache;
       });
       _defineProperty(this, "getFieldEntitiesForNamePathList", function(nameList) {
         if (!nameList) {
           return _this.getFieldEntities(true);
         }
-        var cache2 = _this.getFieldsMap(true);
+        var cache = _this.getFieldsMap(true);
         return nameList.map(function(name) {
           var namePath = getNamePath(name);
-          return cache2.get(namePath) || {
+          return cache.get(namePath) || {
             INVALIDATE_NAME_PATH: getNamePath(name)
           };
         });
@@ -23131,18 +23107,18 @@ var require_admin = __commonJS({
       });
       _defineProperty(this, "resetWithFieldInitialValue", function() {
         var info = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
-        var cache2 = new NameMap();
+        var cache = new NameMap();
         var fieldEntities = _this.getFieldEntities(true);
         fieldEntities.forEach(function(field) {
           var initialValue = field.props.initialValue;
           var namePath = field.getNamePath();
           if (initialValue !== void 0) {
-            var records = cache2.get(namePath) || /* @__PURE__ */ new Set();
+            var records = cache.get(namePath) || /* @__PURE__ */ new Set();
             records.add({
               entity: field,
               value: initialValue
             });
-            cache2.set(namePath, records);
+            cache.set(namePath, records);
           }
         });
         var resetWithFields = function resetWithFields2(entities) {
@@ -23154,7 +23130,7 @@ var require_admin = __commonJS({
               if (formInitialValue !== void 0) {
                 warningOnce(false, "Form already set 'initialValues' with path '".concat(namePath.join("."), "'. Field can not overwrite it."));
               } else {
-                var records = cache2.get(namePath);
+                var records = cache.get(namePath);
                 if (records && records.size > 1) {
                   warningOnce(false, "Multiple Field with path '".concat(namePath.join("."), "' set 'initialValue'. Can not decide which one to pick."));
                 } else if (records) {
@@ -23174,7 +23150,7 @@ var require_admin = __commonJS({
         } else if (info.namePathList) {
           requiredFieldEntities = [];
           info.namePathList.forEach(function(namePath) {
-            var records = cache2.get(namePath);
+            var records = cache.get(namePath);
             if (records) {
               var _requiredFieldEntitie;
               (_requiredFieldEntitie = requiredFieldEntities).push.apply(_requiredFieldEntitie, _toConsumableArray(_toConsumableArray(records).map(function(r2) {
@@ -23411,13 +23387,13 @@ var require_admin = __commonJS({
         if (onFieldsChange) {
           var fields = _this.getFields();
           if (filedErrors) {
-            var cache2 = new NameMap();
+            var cache = new NameMap();
             filedErrors.forEach(function(_ref6) {
               var name = _ref6.name, errors = _ref6.errors;
-              cache2.set(name, errors);
+              cache.set(name, errors);
             });
             fields.forEach(function(field) {
-              field.errors = cache2.get(field.name) || field.errors;
+              field.errors = cache.get(field.name) || field.errors;
             });
           }
           var changedFields = fields.filter(function(_ref7) {
@@ -23791,8 +23767,8 @@ var require_admin = __commonJS({
       }
     });
     const NoStyleItemContext = /* @__PURE__ */ reactExports.createContext(null);
-    const FormProvider = (props2) => {
-      const providerProps = omit$1(props2, ["prefixCls"]);
+    const FormProvider = (props) => {
+      const providerProps = omit(props, ["prefixCls"]);
       return /* @__PURE__ */ reactExports.createElement(FormProvider$1, Object.assign({}, providerProps));
     };
     const FormItemPrefixContext = /* @__PURE__ */ reactExports.createContext({
@@ -23823,12 +23799,12 @@ var require_admin = __commonJS({
       }, children);
     };
     const VariantContext = /* @__PURE__ */ reactExports.createContext(void 0);
-    const ContextIsolator = (props2) => {
+    const ContextIsolator = (props) => {
       const {
         space,
         form,
         children
-      } = props2;
+      } = props;
       if (children === void 0 || children === null) {
         return null;
       }
@@ -23966,22 +23942,22 @@ var require_admin = __commonJS({
       return isStyleNameSupport(styleName);
     }
     const canUseDocElement = () => canUseDom() && window.document.documentElement;
-    const Element$1 = (props2) => {
+    const Element$1 = (props) => {
       const {
         prefixCls,
         className,
         style: style2,
         size,
-        shape: shape2
-      } = props2;
+        shape
+      } = props;
       const sizeCls = classNames({
         [`${prefixCls}-lg`]: size === "large",
         [`${prefixCls}-sm`]: size === "small"
       });
       const shapeCls = classNames({
-        [`${prefixCls}-circle`]: shape2 === "circle",
-        [`${prefixCls}-square`]: shape2 === "square",
-        [`${prefixCls}-round`]: shape2 === "round"
+        [`${prefixCls}-circle`]: shape === "circle",
+        [`${prefixCls}-square`]: shape === "square",
+        [`${prefixCls}-round`]: shape === "round"
       });
       const sizeStyle = reactExports.useMemo(() => typeof size === "number" ? {
         width: size,
@@ -24299,21 +24275,21 @@ var require_admin = __commonJS({
     }, prepareComponentToken$l, {
       deprecatedTokens: [["color", "gradientFromColor"], ["colorGradientEnd", "gradientToColor"]]
     });
-    const SkeletonAvatar = (props2) => {
+    const SkeletonAvatar = (props) => {
       const {
         prefixCls: customizePrefixCls,
         className,
         rootClassName,
         active,
-        shape: shape2 = "circle",
+        shape = "circle",
         size = "default"
-      } = props2;
+      } = props;
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
       const prefixCls = getPrefixCls("skeleton", customizePrefixCls);
       const [wrapCSSVar, hashId, cssVarCls] = useStyle$p(prefixCls);
-      const otherProps = omit$1(props2, ["prefixCls", "className"]);
+      const otherProps = omit(props, ["prefixCls", "className"]);
       const cls = classNames(prefixCls, `${prefixCls}-element`, {
         [`${prefixCls}-active`]: active
       }, className, rootClassName, hashId, cssVarCls);
@@ -24321,11 +24297,11 @@ var require_admin = __commonJS({
         className: cls
       }, /* @__PURE__ */ reactExports.createElement(Element$1, Object.assign({
         prefixCls: `${prefixCls}-avatar`,
-        shape: shape2,
+        shape,
         size
       }, otherProps))));
     };
-    const SkeletonButton = (props2) => {
+    const SkeletonButton = (props) => {
       const {
         prefixCls: customizePrefixCls,
         className,
@@ -24333,13 +24309,13 @@ var require_admin = __commonJS({
         active,
         block = false,
         size = "default"
-      } = props2;
+      } = props;
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
       const prefixCls = getPrefixCls("skeleton", customizePrefixCls);
       const [wrapCSSVar, hashId, cssVarCls] = useStyle$p(prefixCls);
-      const otherProps = omit$1(props2, ["prefixCls"]);
+      const otherProps = omit(props, ["prefixCls"]);
       const cls = classNames(prefixCls, `${prefixCls}-element`, {
         [`${prefixCls}-active`]: active,
         [`${prefixCls}-block`]: block
@@ -24352,14 +24328,14 @@ var require_admin = __commonJS({
       }, otherProps))));
     };
     const path = "M365.714286 329.142857q0 45.714286-32.036571 77.677714t-77.677714 32.036571-77.677714-32.036571-32.036571-77.677714 32.036571-77.677714 77.677714-32.036571 77.677714 32.036571 32.036571 77.677714zM950.857143 548.571429l0 256-804.571429 0 0-109.714286 182.857143-182.857143 91.428571 91.428571 292.571429-292.571429zM1005.714286 146.285714l-914.285714 0q-7.460571 0-12.873143 5.412571t-5.412571 12.873143l0 694.857143q0 7.460571 5.412571 12.873143t12.873143 5.412571l914.285714 0q7.460571 0 12.873143-5.412571t5.412571-12.873143l0-694.857143q0-7.460571-5.412571-12.873143t-12.873143-5.412571zM1097.142857 164.571429l0 694.857143q0 37.741714-26.843429 64.585143t-64.585143 26.843429l-914.285714 0q-37.741714 0-64.585143-26.843429t-26.843429-64.585143l0-694.857143q0-37.741714 26.843429-64.585143t64.585143-26.843429l914.285714 0q37.741714 0 64.585143 26.843429t26.843429 64.585143z";
-    const SkeletonImage = (props2) => {
+    const SkeletonImage = (props) => {
       const {
         prefixCls: customizePrefixCls,
         className,
         rootClassName,
         style: style2,
         active
-      } = props2;
+      } = props;
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
@@ -24382,7 +24358,7 @@ var require_admin = __commonJS({
         className: `${prefixCls}-image-path`
       })))));
     };
-    const SkeletonInput = (props2) => {
+    const SkeletonInput = (props) => {
       const {
         prefixCls: customizePrefixCls,
         className,
@@ -24390,13 +24366,13 @@ var require_admin = __commonJS({
         active,
         block,
         size = "default"
-      } = props2;
+      } = props;
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
       const prefixCls = getPrefixCls("skeleton", customizePrefixCls);
       const [wrapCSSVar, hashId, cssVarCls] = useStyle$p(prefixCls);
-      const otherProps = omit$1(props2, ["prefixCls"]);
+      const otherProps = omit(props, ["prefixCls"]);
       const cls = classNames(prefixCls, `${prefixCls}-element`, {
         [`${prefixCls}-active`]: active,
         [`${prefixCls}-block`]: block
@@ -24408,7 +24384,7 @@ var require_admin = __commonJS({
         size
       }, otherProps))));
     };
-    const SkeletonNode = (props2) => {
+    const SkeletonNode = (props) => {
       const {
         prefixCls: customizePrefixCls,
         className,
@@ -24416,7 +24392,7 @@ var require_admin = __commonJS({
         style: style2,
         active,
         children
-      } = props2;
+      } = props;
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
@@ -24432,11 +24408,11 @@ var require_admin = __commonJS({
         style: style2
       }, children)));
     };
-    const getWidth = (index2, props2) => {
+    const getWidth = (index2, props) => {
       const {
         width,
         rows = 2
-      } = props2;
+      } = props;
       if (Array.isArray(width)) {
         return width[index2];
       }
@@ -24445,19 +24421,19 @@ var require_admin = __commonJS({
       }
       return void 0;
     };
-    const Paragraph$1 = (props2) => {
+    const Paragraph$1 = (props) => {
       const {
         prefixCls,
         className,
         style: style2,
         rows
-      } = props2;
+      } = props;
       const rowList = _toConsumableArray(new Array(rows)).map((_, index2) => (
         // eslint-disable-next-line react/no-array-index-key
         /* @__PURE__ */ reactExports.createElement("li", {
           key: index2,
           style: {
-            width: getWidth(index2, props2)
+            width: getWidth(index2, props)
           }
         })
       ));
@@ -24526,7 +24502,7 @@ var require_admin = __commonJS({
       }
       return basicProps;
     }
-    const Skeleton = (props2) => {
+    const Skeleton = (props) => {
       const {
         prefixCls: customizePrefixCls,
         loading,
@@ -24539,7 +24515,7 @@ var require_admin = __commonJS({
         paragraph = true,
         active,
         round: round2
-      } = props2;
+      } = props;
       const {
         getPrefixCls,
         direction,
@@ -24547,7 +24523,7 @@ var require_admin = __commonJS({
       } = reactExports.useContext(ConfigContext);
       const prefixCls = getPrefixCls("skeleton", customizePrefixCls);
       const [wrapCSSVar, hashId, cssVarCls] = useStyle$p(prefixCls);
-      if (loading || !("loading" in props2)) {
+      if (loading || !("loading" in props)) {
         const hasAvatar = !!avatar;
         const hasTitle = !!title;
         const hasParagraph = !!paragraph;
@@ -24648,7 +24624,7 @@ var require_admin = __commonJS({
         className: `${prefixCls}-close-icon`
       }));
     }
-    const Footer$2 = (props2) => {
+    const Footer$2 = (props) => {
       const {
         okText,
         okType = "primary",
@@ -24659,7 +24635,7 @@ var require_admin = __commonJS({
         okButtonProps,
         cancelButtonProps,
         footer
-      } = props2;
+      } = props;
       const [locale2] = useLocale("Modal", getConfirmLocale());
       const okTextLocale = okText || (locale2 === null || locale2 === void 0 ? void 0 : locale2.okText);
       const cancelTextLocale = cancelText || (locale2 === null || locale2 === void 0 ? void 0 : locale2.cancelText);
@@ -24988,7 +24964,7 @@ var require_admin = __commonJS({
     if (canUseDocElement()) {
       document.documentElement.addEventListener("click", getClickPosition, true);
     }
-    const Modal$1 = (props2) => {
+    const Modal$1 = (props) => {
       var _a2;
       const {
         getPopupContainer: getContextPopupContainer,
@@ -24999,13 +24975,13 @@ var require_admin = __commonJS({
       const handleCancel = (e2) => {
         const {
           onCancel
-        } = props2;
+        } = props;
         onCancel === null || onCancel === void 0 ? void 0 : onCancel(e2);
       };
       const handleOk = (e2) => {
         const {
           onOk
-        } = props2;
+        } = props;
         onOk === null || onOk === void 0 ? void 0 : onOk(e2);
       };
       const {
@@ -25026,7 +25002,7 @@ var require_admin = __commonJS({
         styles: modalStyles,
         children,
         loading
-      } = props2, restProps = __rest$R(props2, ["prefixCls", "className", "rootClassName", "open", "wrapClassName", "centered", "getContainer", "focusTriggerAfterClose", "style", "visible", "width", "footer", "classNames", "styles", "children", "loading"]);
+      } = props, restProps = __rest$R(props, ["prefixCls", "className", "rootClassName", "open", "wrapClassName", "centered", "getContainer", "focusTriggerAfterClose", "style", "visible", "width", "footer", "classNames", "styles", "children", "loading"]);
       const prefixCls = getPrefixCls("modal", customizePrefixCls);
       const rootPrefixCls = getPrefixCls();
       const rootCls = useCSSVarCls(prefixCls);
@@ -25035,11 +25011,11 @@ var require_admin = __commonJS({
         [`${prefixCls}-centered`]: !!centered,
         [`${prefixCls}-wrap-rtl`]: direction === "rtl"
       });
-      const dialogFooter = footer !== null && !loading ? /* @__PURE__ */ reactExports.createElement(Footer$2, Object.assign({}, props2, {
+      const dialogFooter = footer !== null && !loading ? /* @__PURE__ */ reactExports.createElement(Footer$2, Object.assign({}, props, {
         onOk: handleOk,
         onCancel: handleCancel
       })) : null;
-      const [mergedClosable, mergedCloseIcon, closeBtnIsDisabled] = useClosable(pickClosable(props2), pickClosable(modalContext), {
+      const [mergedClosable, mergedCloseIcon, closeBtnIsDisabled] = useClosable(pickClosable(props), pickClosable(modalContext), {
         closable: true,
         closeIcon: /* @__PURE__ */ reactExports.createElement(RefIcon$C, {
           className: `${prefixCls}-close-icon`
@@ -25070,8 +25046,8 @@ var require_admin = __commonJS({
         } : mergedClosable,
         closeIcon: mergedCloseIcon,
         focusTriggerAfterClose,
-        transitionName: getTransitionName(rootPrefixCls, "zoom", props2.transitionName),
-        maskTransitionName: getTransitionName(rootPrefixCls, "fade", props2.maskTransitionName),
+        transitionName: getTransitionName(rootPrefixCls, "zoom", props.transitionName),
+        maskTransitionName: getTransitionName(rootPrefixCls, "fade", props.maskTransitionName),
         className: classNames(hashId, className, modalContext === null || modalContext === void 0 ? void 0 : modalContext.className),
         style: Object.assign(Object.assign({}, modalContext === null || modalContext === void 0 ? void 0 : modalContext.style), style2),
         classNames: Object.assign(Object.assign(Object.assign({}, modalContext === null || modalContext === void 0 ? void 0 : modalContext.classNames), modalClassNames), {
@@ -25189,7 +25165,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    function ConfirmContent(props2) {
+    function ConfirmContent(props) {
       const {
         prefixCls,
         icon,
@@ -25201,7 +25177,7 @@ var require_admin = __commonJS({
         footer,
         // Legacy for static function usage
         locale: staticLocale
-      } = props2, resetProps = __rest$Q(props2, ["prefixCls", "icon", "okText", "cancelText", "confirmPrefixCls", "type", "okCancel", "footer", "locale"]);
+      } = props, resetProps = __rest$Q(props, ["prefixCls", "icon", "okText", "cancelText", "confirmPrefixCls", "type", "okCancel", "footer", "locale"]);
       let mergedIcon = icon;
       if (!icon && icon !== null) {
         switch (type2) {
@@ -25219,7 +25195,7 @@ var require_admin = __commonJS({
         }
       }
       const mergedOkCancel = okCancel !== null && okCancel !== void 0 ? okCancel : type2 === "confirm";
-      const autoFocusButton = props2.autoFocusButton === null ? false : props2.autoFocusButton || "ok";
+      const autoFocusButton = props.autoFocusButton === null ? false : props.autoFocusButton || "ok";
       const [locale2] = useLocale("Modal");
       const mergedLocale = staticLocale || locale2;
       const okTextLocale = okText || (mergedOkCancel ? mergedLocale === null || mergedLocale === void 0 ? void 0 : mergedLocale.okText : mergedLocale === null || mergedLocale === void 0 ? void 0 : mergedLocale.justOkText);
@@ -25232,7 +25208,7 @@ var require_admin = __commonJS({
       }, resetProps);
       const btnCtxValueMemo = reactExports.useMemo(() => btnCtxValue, _toConsumableArray(Object.values(btnCtxValue)));
       const footerOriginNode = /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, /* @__PURE__ */ reactExports.createElement(ConfirmCancelBtn, null), /* @__PURE__ */ reactExports.createElement(ConfirmOkBtn, null));
-      const hasTitle = props2.title !== void 0 && props2.title !== null;
+      const hasTitle = props.title !== void 0 && props.title !== null;
       const bodyCls = `${confirmPrefixCls}-body`;
       return /* @__PURE__ */ reactExports.createElement("div", {
         className: `${confirmPrefixCls}-body-wrapper`
@@ -25244,9 +25220,9 @@ var require_admin = __commonJS({
         className: `${confirmPrefixCls}-paragraph`
       }, hasTitle && /* @__PURE__ */ reactExports.createElement("span", {
         className: `${confirmPrefixCls}-title`
-      }, props2.title), /* @__PURE__ */ reactExports.createElement("div", {
+      }, props.title), /* @__PURE__ */ reactExports.createElement("div", {
         className: `${confirmPrefixCls}-content`
-      }, props2.content))), footer === void 0 || typeof footer === "function" ? /* @__PURE__ */ reactExports.createElement(ModalContextProvider, {
+      }, props.content))), footer === void 0 || typeof footer === "function" ? /* @__PURE__ */ reactExports.createElement(ModalContextProvider, {
         value: btnCtxValueMemo
       }, /* @__PURE__ */ reactExports.createElement("div", {
         className: `${confirmPrefixCls}-btns`
@@ -25257,7 +25233,7 @@ var require_admin = __commonJS({
         prefixCls
       }));
     }
-    const ConfirmDialog = (props2) => {
+    const ConfirmDialog = (props) => {
       const {
         close,
         zIndex,
@@ -25278,15 +25254,15 @@ var require_admin = __commonJS({
         focusTriggerAfterClose,
         onConfirm,
         styles
-      } = props2;
+      } = props;
       const confirmPrefixCls = `${prefixCls}-confirm`;
-      const width = props2.width || 416;
-      const style2 = props2.style || {};
-      const mask = props2.mask === void 0 ? true : props2.mask;
-      const maskClosable = props2.maskClosable === void 0 ? false : props2.maskClosable;
-      const classString = classNames(confirmPrefixCls, `${confirmPrefixCls}-${props2.type}`, {
+      const width = props.width || 416;
+      const style2 = props.style || {};
+      const mask = props.mask === void 0 ? true : props.mask;
+      const maskClosable = props.maskClosable === void 0 ? false : props.maskClosable;
+      const classString = classNames(confirmPrefixCls, `${confirmPrefixCls}-${props.type}`, {
         [`${confirmPrefixCls}-rtl`]: direction === "rtl"
-      }, props2.className);
+      }, props.className);
       const [, token2] = useToken();
       const mergedZIndex = reactExports.useMemo(() => {
         if (zIndex !== void 0) {
@@ -25298,7 +25274,7 @@ var require_admin = __commonJS({
         prefixCls,
         className: classString,
         wrapClassName: classNames({
-          [`${confirmPrefixCls}-centered`]: !!props2.centered
+          [`${confirmPrefixCls}-centered`]: !!props.centered
         }, wrapClassName),
         onCancel: () => {
           close === null || close === void 0 ? void 0 : close({
@@ -25309,8 +25285,8 @@ var require_admin = __commonJS({
         open: open2,
         title: "",
         footer: null,
-        transitionName: getTransitionName(rootPrefixCls || "", "zoom", props2.transitionName),
-        maskTransitionName: getTransitionName(rootPrefixCls || "", "fade", props2.maskTransitionName),
+        transitionName: getTransitionName(rootPrefixCls || "", "zoom", props.transitionName),
+        maskTransitionName: getTransitionName(rootPrefixCls || "", "fade", props.maskTransitionName),
         mask,
         maskClosable,
         style: style2,
@@ -25328,36 +25304,36 @@ var require_admin = __commonJS({
         closeIcon,
         modalRender,
         focusTriggerAfterClose
-      }, /* @__PURE__ */ reactExports.createElement(ConfirmContent, Object.assign({}, props2, {
+      }, /* @__PURE__ */ reactExports.createElement(ConfirmContent, Object.assign({}, props, {
         confirmPrefixCls
       })));
     };
-    const ConfirmDialogWrapper$1 = (props2) => {
+    const ConfirmDialogWrapper$1 = (props) => {
       const {
         rootPrefixCls,
         iconPrefixCls,
         direction,
         theme
-      } = props2;
+      } = props;
       return /* @__PURE__ */ reactExports.createElement(ConfigProvider, {
         prefixCls: rootPrefixCls,
         iconPrefixCls,
         direction,
         theme
-      }, /* @__PURE__ */ reactExports.createElement(ConfirmDialog, Object.assign({}, props2)));
+      }, /* @__PURE__ */ reactExports.createElement(ConfirmDialog, Object.assign({}, props)));
     };
     const destroyFns = [];
     let defaultRootPrefixCls = "";
     function getRootPrefixCls() {
       return defaultRootPrefixCls;
     }
-    const ConfirmDialogWrapper = (props2) => {
+    const ConfirmDialogWrapper = (props) => {
       var _a2, _b;
       const {
         prefixCls: customizePrefixCls,
         getContainer: getContainer2,
         direction
-      } = props2;
+      } = props;
       const runtimeLocale2 = getConfirmLocale();
       const config = reactExports.useContext(ConfigContext);
       const rootPrefixCls = getRootPrefixCls() || config.getPrefixCls();
@@ -25366,7 +25342,7 @@ var require_admin = __commonJS({
       if (mergedGetContainer === false) {
         mergedGetContainer = void 0;
       }
-      return /* @__PURE__ */ React$1.createElement(ConfirmDialogWrapper$1, Object.assign({}, props2, {
+      return /* @__PURE__ */ React$1.createElement(ConfirmDialogWrapper$1, Object.assign({}, props, {
         rootPrefixCls,
         prefixCls,
         iconPrefixCls: config.iconPrefixCls,
@@ -25404,13 +25380,13 @@ var require_admin = __commonJS({
         }
         unmount(container);
       }
-      function render$1(props2) {
+      function render$1(props) {
         clearTimeout(timeoutId);
         timeoutId = setTimeout(() => {
           const rootPrefixCls = global2.getPrefixCls(void 0, getRootPrefixCls());
           const iconPrefixCls = global2.getIconPrefixCls();
           const theme = global2.getTheme();
-          const dom = /* @__PURE__ */ React$1.createElement(ConfirmDialogWrapper, Object.assign({}, props2));
+          const dom = /* @__PURE__ */ React$1.createElement(ConfirmDialogWrapper, Object.assign({}, props));
           render(/* @__PURE__ */ React$1.createElement(ConfigProvider, {
             prefixCls: rootPrefixCls,
             iconPrefixCls,
@@ -25451,28 +25427,28 @@ var require_admin = __commonJS({
         update
       };
     }
-    function withWarn(props2) {
-      return Object.assign(Object.assign({}, props2), {
+    function withWarn(props) {
+      return Object.assign(Object.assign({}, props), {
         type: "warning"
       });
     }
-    function withInfo(props2) {
-      return Object.assign(Object.assign({}, props2), {
+    function withInfo(props) {
+      return Object.assign(Object.assign({}, props), {
         type: "info"
       });
     }
-    function withSuccess(props2) {
-      return Object.assign(Object.assign({}, props2), {
+    function withSuccess(props) {
+      return Object.assign(Object.assign({}, props), {
         type: "success"
       });
     }
-    function withError(props2) {
-      return Object.assign(Object.assign({}, props2), {
+    function withError(props) {
+      return Object.assign(Object.assign({}, props), {
         type: "error"
       });
     }
-    function withConfirm(props2) {
-      return Object.assign(Object.assign({}, props2), {
+    function withConfirm(props) {
+      return Object.assign(Object.assign({}, props), {
         type: "confirm"
       });
     }
@@ -26093,7 +26069,7 @@ var require_admin = __commonJS({
       error: RefIcon$D,
       warning: RefIcon$B
     };
-    const PureContent = (props2) => {
+    const PureContent = (props) => {
       const {
         prefixCls,
         icon,
@@ -26102,7 +26078,7 @@ var require_admin = __commonJS({
         description,
         btn,
         role = "alert"
-      } = props2;
+      } = props;
       let iconNode = null;
       if (icon) {
         iconNode = /* @__PURE__ */ reactExports.createElement("span", {
@@ -26126,7 +26102,7 @@ var require_admin = __commonJS({
         className: `${prefixCls}-btn`
       }, btn));
     };
-    const PurePanel$7 = (props2) => {
+    const PurePanel$7 = (props) => {
       const {
         prefixCls: staticPrefixCls,
         className,
@@ -26138,7 +26114,7 @@ var require_admin = __commonJS({
         closable = true,
         closeIcon,
         className: notificationClassName
-      } = props2, restProps = __rest$O(props2, ["prefixCls", "className", "icon", "type", "message", "description", "btn", "closable", "closeIcon", "className"]);
+      } = props, restProps = __rest$O(props, ["prefixCls", "className", "icon", "type", "message", "description", "btn", "closable", "closeIcon", "className"]);
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
@@ -26260,7 +26236,7 @@ var require_admin = __commonJS({
         key
       }, node2);
     };
-    const Holder = /* @__PURE__ */ React$1.forwardRef((props2, ref) => {
+    const Holder = /* @__PURE__ */ React$1.forwardRef((props, ref) => {
       const {
         top,
         bottom,
@@ -26273,7 +26249,7 @@ var require_admin = __commonJS({
         duration,
         pauseOnHover = true,
         showProgress
-      } = props2;
+      } = props;
       const {
         getPrefixCls,
         getPopupContainer,
@@ -26391,26 +26367,26 @@ var require_admin = __commonJS({
     }
     const AppConfigContext = /* @__PURE__ */ React$1.createContext({});
     function withPureRenderTheme(Component) {
-      return (props2) => /* @__PURE__ */ reactExports.createElement(ConfigProvider, {
+      return (props) => /* @__PURE__ */ reactExports.createElement(ConfigProvider, {
         theme: {
           token: {
             motion: false,
             zIndexPopupBase: 0
           }
         }
-      }, /* @__PURE__ */ reactExports.createElement(Component, Object.assign({}, props2)));
+      }, /* @__PURE__ */ reactExports.createElement(Component, Object.assign({}, props)));
     }
     const genPurePanel = (Component, defaultPrefixCls2, getDropdownCls, postProps) => {
-      const PurePanel2 = (props2) => {
+      const PurePanel2 = (props) => {
         const {
           prefixCls: customizePrefixCls,
           style: style2
-        } = props2;
+        } = props;
         const holderRef = reactExports.useRef(null);
         const [popupHeight, setPopupHeight] = reactExports.useState(0);
         const [popupWidth, setPopupWidth] = reactExports.useState(0);
         const [open2, setOpen] = useMergedState(false, {
-          value: props2.open
+          value: props.open
         });
         const {
           getPrefixCls
@@ -26439,7 +26415,7 @@ var require_admin = __commonJS({
             };
           }
         }, []);
-        let mergedProps = Object.assign(Object.assign({}, props2), {
+        let mergedProps = Object.assign(Object.assign({}, props), {
           style: Object.assign(Object.assign({}, style2), {
             margin: 0
           }),
@@ -26469,8 +26445,8 @@ var require_admin = __commonJS({
       var agent = navigator.userAgent || navigator.vendor || window.opera;
       return /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(agent) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw-(n|u)|c55\/|capi|ccwa|cdm-|cell|chtm|cldc|cmd-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc-s|devi|dica|dmob|do(c|p)o|ds(12|-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(-|_)|g1 u|g560|gene|gf-5|g-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd-(m|p|t)|hei-|hi(pt|ta)|hp( i|ip)|hs-c|ht(c(-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i-(20|go|ma)|i230|iac( |-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|-[a-w])|libw|lynx|m1-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|-([1-8]|c))|phil|pire|pl(ay|uc)|pn-2|po(ck|rt|se)|prox|psio|pt-g|qa-a|qc(07|12|21|32|60|-[2-7]|i-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h-|oo|p-)|sdk\/|se(c(-|0|1)|47|mc|nd|ri)|sgh-|shar|sie(-|m)|sk-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h-|v-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl-|tdg-|tel(i|m)|tim-|t-mo|to(pl|sh)|ts(70|m-|m3|m5)|tx-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas-|your|zeto|zte-/i.test(agent === null || agent === void 0 ? void 0 : agent.substr(0, 4));
     };
-    var TransBtn = function TransBtn2(props2) {
-      var className = props2.className, customizeIcon = props2.customizeIcon, customizeIconProps = props2.customizeIconProps, children = props2.children, _onMouseDown = props2.onMouseDown, onClick = props2.onClick;
+    var TransBtn = function TransBtn2(props) {
+      var className = props.className, customizeIcon = props.customizeIcon, customizeIconProps = props.customizeIconProps, children = props.children, _onMouseDown = props.onMouseDown, onClick = props.onClick;
       var icon = typeof customizeIcon === "function" ? customizeIcon(customizeIconProps) : customizeIcon;
       return /* @__PURE__ */ reactExports.createElement("span", {
         className,
@@ -26524,7 +26500,7 @@ var require_admin = __commonJS({
     }
     function useDelayReset() {
       var timeout = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : 10;
-      var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), bool2 = _React$useState2[0], setBool = _React$useState2[1];
+      var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), bool = _React$useState2[0], setBool = _React$useState2[1];
       var delayRef = reactExports.useRef(null);
       var cancelLatest = function cancelLatest2() {
         window.clearTimeout(delayRef.current);
@@ -26541,7 +26517,7 @@ var require_admin = __commonJS({
           }
         }, timeout);
       };
-      return [bool2, delaySetBool, cancelLatest];
+      return [bool, delaySetBool, cancelLatest];
     }
     function useLock() {
       var duration = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : 250;
@@ -26629,8 +26605,8 @@ var require_admin = __commonJS({
     }
     var _excluded$J = ["prefixCls", "invalidate", "item", "renderItem", "responsive", "responsiveDisabled", "registerSize", "itemKey", "className", "style", "children", "display", "order", "component"];
     var UNDEFINED = void 0;
-    function InternalItem(props2, ref) {
-      var prefixCls = props2.prefixCls, invalidate = props2.invalidate, item = props2.item, renderItem = props2.renderItem, responsive = props2.responsive, responsiveDisabled = props2.responsiveDisabled, registerSize = props2.registerSize, itemKey2 = props2.itemKey, className = props2.className, style2 = props2.style, children = props2.children, display = props2.display, order = props2.order, _props$component = props2.component, Component = _props$component === void 0 ? "div" : _props$component, restProps = _objectWithoutProperties(props2, _excluded$J);
+    function InternalItem(props, ref) {
+      var prefixCls = props.prefixCls, invalidate = props.invalidate, item = props.item, renderItem = props.renderItem, responsive = props.responsive, responsiveDisabled = props.responsiveDisabled, registerSize = props.registerSize, itemKey2 = props.itemKey, className = props.className, style2 = props.style, children = props.children, display = props.display, order = props.order, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, restProps = _objectWithoutProperties(props, _excluded$J);
       var mergedHidden = responsive && !display;
       function internalRegisterSize(width) {
         registerSize(itemKey2, width);
@@ -26715,16 +26691,16 @@ var require_admin = __commonJS({
     }
     var OverflowContext = /* @__PURE__ */ React$1.createContext(null);
     var _excluded$I = ["component"], _excluded2$9 = ["className"], _excluded3$1 = ["className"];
-    var InternalRawItem = function InternalRawItem2(props2, ref) {
+    var InternalRawItem = function InternalRawItem2(props, ref) {
       var context = reactExports.useContext(OverflowContext);
       if (!context) {
-        var _props$component = props2.component, Component = _props$component === void 0 ? "div" : _props$component, _restProps = _objectWithoutProperties(props2, _excluded$I);
+        var _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, _restProps = _objectWithoutProperties(props, _excluded$I);
         return /* @__PURE__ */ reactExports.createElement(Component, _extends({}, _restProps, {
           ref
         }));
       }
       var contextClassName = context.className, restContext = _objectWithoutProperties(context, _excluded2$9);
-      var className = props2.className, restProps = _objectWithoutProperties(props2, _excluded3$1);
+      var className = props.className, restProps = _objectWithoutProperties(props, _excluded3$1);
       return /* @__PURE__ */ reactExports.createElement(OverflowContext.Provider, {
         value: null
       }, /* @__PURE__ */ reactExports.createElement(Item$2, _extends({
@@ -26740,8 +26716,8 @@ var require_admin = __commonJS({
     function defaultRenderRest(omittedItems) {
       return "+ ".concat(omittedItems.length, " ...");
     }
-    function Overflow(props2, ref) {
-      var _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-overflow" : _props$prefixCls, _props$data = props2.data, data = _props$data === void 0 ? [] : _props$data, renderItem = props2.renderItem, renderRawItem = props2.renderRawItem, itemKey2 = props2.itemKey, _props$itemWidth = props2.itemWidth, itemWidth = _props$itemWidth === void 0 ? 10 : _props$itemWidth, ssr = props2.ssr, style2 = props2.style, className = props2.className, maxCount = props2.maxCount, renderRest = props2.renderRest, renderRawRest = props2.renderRawRest, suffix = props2.suffix, _props$component = props2.component, Component = _props$component === void 0 ? "div" : _props$component, itemComponent = props2.itemComponent, onVisibleChange = props2.onVisibleChange, restProps = _objectWithoutProperties(props2, _excluded$H);
+    function Overflow(props, ref) {
+      var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-overflow" : _props$prefixCls, _props$data = props.data, data = _props$data === void 0 ? [] : _props$data, renderItem = props.renderItem, renderRawItem = props.renderRawItem, itemKey2 = props.itemKey, _props$itemWidth = props.itemWidth, itemWidth = _props$itemWidth === void 0 ? 10 : _props$itemWidth, ssr = props.ssr, style2 = props.style, className = props.className, maxCount = props.maxCount, renderRest = props.renderRest, renderRawRest = props.renderRawRest, suffix = props.suffix, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, itemComponent = props.itemComponent, onVisibleChange = props.onVisibleChange, restProps = _objectWithoutProperties(props, _excluded$H);
       var fullySSR = ssr === "full";
       var notifyEffectUpdate = useBatcher();
       var _useEffectState = useEffectState(notifyEffectUpdate, null), _useEffectState2 = _slicedToArray(_useEffectState, 2), containerWidth = _useEffectState2[0], setContainerWidth = _useEffectState2[1];
@@ -26947,9 +26923,9 @@ var require_admin = __commonJS({
     ForwardOverflow.Item = RawItem;
     ForwardOverflow.RESPONSIVE = RESPONSIVE;
     ForwardOverflow.INVALIDATE = INVALIDATE;
-    var Input$3 = function Input2(props2, ref) {
+    var Input$3 = function Input2(props, ref) {
       var _inputNode2;
-      var prefixCls = props2.prefixCls, id2 = props2.id, inputElement = props2.inputElement, disabled = props2.disabled, tabIndex = props2.tabIndex, autoFocus = props2.autoFocus, autoComplete = props2.autoComplete, editable = props2.editable, activeDescendantId = props2.activeDescendantId, value = props2.value, maxLength = props2.maxLength, _onKeyDown = props2.onKeyDown, _onMouseDown = props2.onMouseDown, _onChange = props2.onChange, onPaste = props2.onPaste, _onCompositionStart = props2.onCompositionStart, _onCompositionEnd = props2.onCompositionEnd, open2 = props2.open, attrs = props2.attrs;
+      var prefixCls = props.prefixCls, id2 = props.id, inputElement = props.inputElement, disabled = props.disabled, tabIndex = props.tabIndex, autoFocus = props.autoFocus, autoComplete = props.autoComplete, editable = props.editable, activeDescendantId = props.activeDescendantId, value = props.value, maxLength = props.maxLength, _onKeyDown = props.onKeyDown, _onMouseDown = props.onMouseDown, _onChange = props.onChange, onPaste = props.onPaste, _onCompositionStart = props.onCompositionStart, _onCompositionEnd = props.onCompositionEnd, open2 = props.open, attrs = props.attrs;
       var inputNode = inputElement || /* @__PURE__ */ reactExports.createElement("input", null);
       var _inputNode = inputNode, originRef = _inputNode.ref, originProps = _inputNode.props;
       var onOriginKeyDown = originProps.onKeyDown, onOriginChange = originProps.onChange, onOriginMouseDown = originProps.onMouseDown, onOriginCompositionStart = originProps.onCompositionStart, onOriginCompositionEnd = originProps.onCompositionEnd, style2 = originProps.style;
@@ -27058,10 +27034,10 @@ var require_admin = __commonJS({
       event.preventDefault();
       event.stopPropagation();
     };
-    var SelectSelector = function SelectSelector2(props2) {
-      var id2 = props2.id, prefixCls = props2.prefixCls, values = props2.values, open2 = props2.open, searchValue = props2.searchValue, autoClearSearchValue = props2.autoClearSearchValue, inputRef = props2.inputRef, placeholder = props2.placeholder, disabled = props2.disabled, mode = props2.mode, showSearch = props2.showSearch, autoFocus = props2.autoFocus, autoComplete = props2.autoComplete, activeDescendantId = props2.activeDescendantId, tabIndex = props2.tabIndex, removeIcon = props2.removeIcon, maxTagCount = props2.maxTagCount, maxTagTextLength = props2.maxTagTextLength, _props$maxTagPlacehol = props2.maxTagPlaceholder, maxTagPlaceholder = _props$maxTagPlacehol === void 0 ? function(omittedValues) {
+    var SelectSelector = function SelectSelector2(props) {
+      var id2 = props.id, prefixCls = props.prefixCls, values = props.values, open2 = props.open, searchValue = props.searchValue, autoClearSearchValue = props.autoClearSearchValue, inputRef = props.inputRef, placeholder = props.placeholder, disabled = props.disabled, mode = props.mode, showSearch = props.showSearch, autoFocus = props.autoFocus, autoComplete = props.autoComplete, activeDescendantId = props.activeDescendantId, tabIndex = props.tabIndex, removeIcon = props.removeIcon, maxTagCount = props.maxTagCount, maxTagTextLength = props.maxTagTextLength, _props$maxTagPlacehol = props.maxTagPlaceholder, maxTagPlaceholder = _props$maxTagPlacehol === void 0 ? function(omittedValues) {
         return "+ ".concat(omittedValues.length, " ...");
-      } : _props$maxTagPlacehol, tagRender = props2.tagRender, onToggleOpen = props2.onToggleOpen, onRemove = props2.onRemove, onInputChange = props2.onInputChange, onInputPaste = props2.onInputPaste, onInputKeyDown = props2.onInputKeyDown, onInputMouseDown = props2.onInputMouseDown, onInputCompositionStart = props2.onInputCompositionStart, onInputCompositionEnd = props2.onInputCompositionEnd;
+      } : _props$maxTagPlacehol, tagRender = props.tagRender, onToggleOpen = props.onToggleOpen, onRemove = props.onRemove, onInputChange = props.onInputChange, onInputPaste = props.onInputPaste, onInputKeyDown = props.onInputKeyDown, onInputMouseDown = props.onInputMouseDown, onInputCompositionStart = props.onInputCompositionStart, onInputCompositionEnd = props.onInputCompositionEnd;
       var measureRef = reactExports.useRef(null);
       var _useState = reactExports.useState(0), _useState2 = _slicedToArray(_useState, 2), inputWidth = _useState2[0], setInputWidth = _useState2[1];
       var _useState3 = reactExports.useState(false), _useState4 = _slicedToArray(_useState3, 2), focused = _useState4[0], setFocused = _useState4[1];
@@ -27156,7 +27132,7 @@ var require_admin = __commonJS({
         onCompositionStart: onInputCompositionStart,
         onCompositionEnd: onInputCompositionEnd,
         tabIndex,
-        attrs: pickAttrs(props2, true)
+        attrs: pickAttrs(props, true)
       }), /* @__PURE__ */ reactExports.createElement("span", {
         ref: measureRef,
         className: "".concat(selectionPrefixCls, "-search-mirror"),
@@ -27175,8 +27151,8 @@ var require_admin = __commonJS({
         className: "".concat(selectionPrefixCls, "-placeholder")
       }, placeholder));
     };
-    var SingleSelector = function SingleSelector2(props2) {
-      var inputElement = props2.inputElement, prefixCls = props2.prefixCls, id2 = props2.id, inputRef = props2.inputRef, disabled = props2.disabled, autoFocus = props2.autoFocus, autoComplete = props2.autoComplete, activeDescendantId = props2.activeDescendantId, mode = props2.mode, open2 = props2.open, values = props2.values, placeholder = props2.placeholder, tabIndex = props2.tabIndex, showSearch = props2.showSearch, searchValue = props2.searchValue, activeValue = props2.activeValue, maxLength = props2.maxLength, onInputKeyDown = props2.onInputKeyDown, onInputMouseDown = props2.onInputMouseDown, onInputChange = props2.onInputChange, onInputPaste = props2.onInputPaste, onInputCompositionStart = props2.onInputCompositionStart, onInputCompositionEnd = props2.onInputCompositionEnd, title = props2.title;
+    var SingleSelector = function SingleSelector2(props) {
+      var inputElement = props.inputElement, prefixCls = props.prefixCls, id2 = props.id, inputRef = props.inputRef, disabled = props.disabled, autoFocus = props.autoFocus, autoComplete = props.autoComplete, activeDescendantId = props.activeDescendantId, mode = props.mode, open2 = props.open, values = props.values, placeholder = props.placeholder, tabIndex = props.tabIndex, showSearch = props.showSearch, searchValue = props.searchValue, activeValue = props.activeValue, maxLength = props.maxLength, onInputKeyDown = props.onInputKeyDown, onInputMouseDown = props.onInputMouseDown, onInputChange = props.onInputChange, onInputPaste = props.onInputPaste, onInputCompositionStart = props.onInputCompositionStart, onInputCompositionEnd = props.onInputCompositionEnd, title = props.title;
       var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), inputChanged = _React$useState2[0], setInputChanged = _React$useState2[1];
       var combobox = mode === "combobox";
       var inputEditable = combobox || showSearch;
@@ -27227,7 +27203,7 @@ var require_admin = __commonJS({
         onCompositionStart: onInputCompositionStart,
         onCompositionEnd: onInputCompositionEnd,
         tabIndex,
-        attrs: pickAttrs(props2, true),
+        attrs: pickAttrs(props, true),
         maxLength: combobox ? maxLength : void 0
       })), !combobox && item ? /* @__PURE__ */ reactExports.createElement("span", {
         className: "".concat(prefixCls, "-selection-item"),
@@ -27237,10 +27213,10 @@ var require_admin = __commonJS({
         } : void 0
       }, item.label) : null, placeholderNode);
     };
-    var Selector = function Selector2(props2, ref) {
+    var Selector = function Selector2(props, ref) {
       var inputRef = reactExports.useRef(null);
       var compositionStatusRef = reactExports.useRef(false);
-      var prefixCls = props2.prefixCls, open2 = props2.open, mode = props2.mode, showSearch = props2.showSearch, tokenWithEnter = props2.tokenWithEnter, disabled = props2.disabled, autoClearSearchValue = props2.autoClearSearchValue, onSearch = props2.onSearch, onSearchSubmit = props2.onSearchSubmit, onToggleOpen = props2.onToggleOpen, onInputKeyDown = props2.onInputKeyDown, domRef = props2.domRef;
+      var prefixCls = props.prefixCls, open2 = props.open, mode = props.mode, showSearch = props.showSearch, tokenWithEnter = props.tokenWithEnter, disabled = props.disabled, autoClearSearchValue = props.autoClearSearchValue, onSearch = props.onSearch, onSearchSubmit = props.onSearchSubmit, onToggleOpen = props.onToggleOpen, onInputKeyDown = props.onInputKeyDown, domRef = props.domRef;
       reactExports.useImperativeHandle(ref, function() {
         return {
           focus: function focus(options) {
@@ -27333,7 +27309,7 @@ var require_admin = __commonJS({
         onInputCompositionStart,
         onInputCompositionEnd
       };
-      var selectNode = mode === "multiple" || mode === "tags" ? /* @__PURE__ */ reactExports.createElement(SelectSelector, _extends({}, props2, sharedProps)) : /* @__PURE__ */ reactExports.createElement(SingleSelector, _extends({}, props2, sharedProps));
+      var selectNode = mode === "multiple" || mode === "tags" ? /* @__PURE__ */ reactExports.createElement(SelectSelector, _extends({}, props, sharedProps)) : /* @__PURE__ */ reactExports.createElement(SingleSelector, _extends({}, props, sharedProps));
       return /* @__PURE__ */ reactExports.createElement("div", {
         ref: domRef,
         className: "".concat(prefixCls, "-selector"),
@@ -27342,8 +27318,8 @@ var require_admin = __commonJS({
       }, selectNode);
     };
     var ForwardSelector = /* @__PURE__ */ reactExports.forwardRef(Selector);
-    function Arrow(props2) {
-      var prefixCls = props2.prefixCls, align = props2.align, arrow = props2.arrow, arrowPos = props2.arrowPos;
+    function Arrow(props) {
+      var prefixCls = props.prefixCls, align = props.align, arrow = props.arrow, arrowPos = props.arrowPos;
       var _ref = arrow || {}, className = _ref.className, content = _ref.content;
       var _arrowPos$x = arrowPos.x, x2 = _arrowPos$x === void 0 ? 0 : _arrowPos$x, _arrowPos$y = arrowPos.y, y2 = _arrowPos$y === void 0 ? 0 : _arrowPos$y;
       var arrowRef = reactExports.useRef();
@@ -27381,8 +27357,8 @@ var require_admin = __commonJS({
         style: alignStyle
       }, content);
     }
-    function Mask(props2) {
-      var prefixCls = props2.prefixCls, open2 = props2.open, zIndex = props2.zIndex, mask = props2.mask, motion2 = props2.motion;
+    function Mask(props) {
+      var prefixCls = props.prefixCls, open2 = props.open, zIndex = props.zIndex, mask = props.mask, motion2 = props.motion;
       if (!mask) {
         return null;
       }
@@ -27406,8 +27382,8 @@ var require_admin = __commonJS({
     }, function(_, next2) {
       return next2.cache;
     });
-    var Popup$1 = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var popup = props2.popup, className = props2.className, prefixCls = props2.prefixCls, style2 = props2.style, target = props2.target, _onVisibleChanged = props2.onVisibleChanged, open2 = props2.open, keepDom = props2.keepDom, fresh = props2.fresh, onClick = props2.onClick, mask = props2.mask, arrow = props2.arrow, arrowPos = props2.arrowPos, align = props2.align, motion2 = props2.motion, maskMotion = props2.maskMotion, forceRender = props2.forceRender, getPopupContainer = props2.getPopupContainer, autoDestroy = props2.autoDestroy, Portal2 = props2.portal, zIndex = props2.zIndex, onMouseEnter = props2.onMouseEnter, onMouseLeave = props2.onMouseLeave, onPointerEnter = props2.onPointerEnter, ready = props2.ready, offsetX = props2.offsetX, offsetY = props2.offsetY, offsetR = props2.offsetR, offsetB = props2.offsetB, onAlign = props2.onAlign, onPrepare = props2.onPrepare, stretch = props2.stretch, targetWidth = props2.targetWidth, targetHeight = props2.targetHeight;
+    var Popup$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var popup = props.popup, className = props.className, prefixCls = props.prefixCls, style2 = props.style, target = props.target, _onVisibleChanged = props.onVisibleChanged, open2 = props.open, keepDom = props.keepDom, fresh = props.fresh, onClick = props.onClick, mask = props.mask, arrow = props.arrow, arrowPos = props.arrowPos, align = props.align, motion2 = props.motion, maskMotion = props.maskMotion, forceRender = props.forceRender, getPopupContainer = props.getPopupContainer, autoDestroy = props.autoDestroy, Portal2 = props.portal, zIndex = props.zIndex, onMouseEnter = props.onMouseEnter, onMouseLeave = props.onMouseLeave, onPointerEnter = props.onPointerEnter, ready = props.ready, offsetX = props.offsetX, offsetY = props.offsetY, offsetR = props.offsetR, offsetB = props.offsetB, onAlign = props.onAlign, onPrepare = props.onPrepare, stretch = props.stretch, targetWidth = props.targetWidth, targetHeight = props.targetHeight;
       var childNode = typeof popup === "function" ? popup() : popup;
       var isNodeVisible = open2 || keepDom;
       var getPopupContainerNeedParams = (getPopupContainer === null || getPopupContainer === void 0 ? void 0 : getPopupContainer.length) > 0;
@@ -27524,8 +27500,8 @@ var require_admin = __commonJS({
         });
       }));
     });
-    var TriggerWrapper = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var children = props2.children, getTriggerDOMNode = props2.getTriggerDOMNode;
+    var TriggerWrapper = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var children = props.children, getTriggerDOMNode = props.getTriggerDOMNode;
       var canUseRef = supportRef(children);
       var setRef = reactExports.useCallback(function(node2) {
         fillRef(ref, getTriggerDOMNode ? getTriggerDOMNode(node2) : node2);
@@ -28137,8 +28113,8 @@ var require_admin = __commonJS({
     var _excluded$G = ["prefixCls", "children", "action", "showAction", "hideAction", "popupVisible", "defaultPopupVisible", "onPopupVisibleChange", "afterPopupVisibleChange", "mouseEnterDelay", "mouseLeaveDelay", "focusDelay", "blurDelay", "mask", "maskClosable", "getPopupContainer", "forceRender", "autoDestroy", "destroyPopupOnHide", "popup", "popupClassName", "popupStyle", "popupPlacement", "builtinPlacements", "popupAlign", "zIndex", "stretch", "getPopupClassNameFromAlign", "fresh", "alignPoint", "onPopupClick", "onPopupAlign", "arrow", "popupMotion", "maskMotion", "popupTransitionName", "popupAnimation", "maskTransitionName", "maskAnimation", "className", "getTriggerDOMNode"];
     function generateTrigger() {
       var PortalComponent = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : Portal;
-      var Trigger2 = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-        var _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-trigger-popup" : _props$prefixCls, children = props2.children, _props$action = props2.action, action = _props$action === void 0 ? "hover" : _props$action, showAction = props2.showAction, hideAction = props2.hideAction, popupVisible = props2.popupVisible, defaultPopupVisible = props2.defaultPopupVisible, onPopupVisibleChange = props2.onPopupVisibleChange, afterPopupVisibleChange = props2.afterPopupVisibleChange, mouseEnterDelay = props2.mouseEnterDelay, _props$mouseLeaveDela = props2.mouseLeaveDelay, mouseLeaveDelay = _props$mouseLeaveDela === void 0 ? 0.1 : _props$mouseLeaveDela, focusDelay = props2.focusDelay, blurDelay = props2.blurDelay, mask = props2.mask, _props$maskClosable = props2.maskClosable, maskClosable = _props$maskClosable === void 0 ? true : _props$maskClosable, getPopupContainer = props2.getPopupContainer, forceRender = props2.forceRender, autoDestroy = props2.autoDestroy, destroyPopupOnHide = props2.destroyPopupOnHide, popup = props2.popup, popupClassName = props2.popupClassName, popupStyle = props2.popupStyle, popupPlacement = props2.popupPlacement, _props$builtinPlaceme = props2.builtinPlacements, builtinPlacements = _props$builtinPlaceme === void 0 ? {} : _props$builtinPlaceme, popupAlign = props2.popupAlign, zIndex = props2.zIndex, stretch = props2.stretch, getPopupClassNameFromAlign = props2.getPopupClassNameFromAlign, fresh = props2.fresh, alignPoint = props2.alignPoint, onPopupClick = props2.onPopupClick, onPopupAlign = props2.onPopupAlign, arrow = props2.arrow, popupMotion = props2.popupMotion, maskMotion = props2.maskMotion, popupTransitionName = props2.popupTransitionName, popupAnimation = props2.popupAnimation, maskTransitionName = props2.maskTransitionName, maskAnimation = props2.maskAnimation, className = props2.className, getTriggerDOMNode = props2.getTriggerDOMNode, restProps = _objectWithoutProperties(props2, _excluded$G);
+      var Trigger2 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+        var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-trigger-popup" : _props$prefixCls, children = props.children, _props$action = props.action, action = _props$action === void 0 ? "hover" : _props$action, showAction = props.showAction, hideAction = props.hideAction, popupVisible = props.popupVisible, defaultPopupVisible = props.defaultPopupVisible, onPopupVisibleChange = props.onPopupVisibleChange, afterPopupVisibleChange = props.afterPopupVisibleChange, mouseEnterDelay = props.mouseEnterDelay, _props$mouseLeaveDela = props.mouseLeaveDelay, mouseLeaveDelay = _props$mouseLeaveDela === void 0 ? 0.1 : _props$mouseLeaveDela, focusDelay = props.focusDelay, blurDelay = props.blurDelay, mask = props.mask, _props$maskClosable = props.maskClosable, maskClosable = _props$maskClosable === void 0 ? true : _props$maskClosable, getPopupContainer = props.getPopupContainer, forceRender = props.forceRender, autoDestroy = props.autoDestroy, destroyPopupOnHide = props.destroyPopupOnHide, popup = props.popup, popupClassName = props.popupClassName, popupStyle = props.popupStyle, popupPlacement = props.popupPlacement, _props$builtinPlaceme = props.builtinPlacements, builtinPlacements = _props$builtinPlaceme === void 0 ? {} : _props$builtinPlaceme, popupAlign = props.popupAlign, zIndex = props.zIndex, stretch = props.stretch, getPopupClassNameFromAlign = props.getPopupClassNameFromAlign, fresh = props.fresh, alignPoint = props.alignPoint, onPopupClick = props.onPopupClick, onPopupAlign = props.onPopupAlign, arrow = props.arrow, popupMotion = props.popupMotion, maskMotion = props.maskMotion, popupTransitionName = props.popupTransitionName, popupAnimation = props.popupAnimation, maskTransitionName = props.maskTransitionName, maskAnimation = props.maskAnimation, className = props.className, getTriggerDOMNode = props.getTriggerDOMNode, restProps = _objectWithoutProperties(props, _excluded$G);
         var mergedAutoDestroy = autoDestroy || destroyPopupOnHide || false;
         var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), mobile = _React$useState2[0], setMobile = _React$useState2[1];
         useLayoutEffect$1(function() {
@@ -28496,10 +28472,10 @@ var require_admin = __commonJS({
         }
       };
     };
-    var SelectTrigger = function SelectTrigger2(props2, ref) {
-      var prefixCls = props2.prefixCls;
-      props2.disabled;
-      var visible = props2.visible, children = props2.children, popupElement = props2.popupElement, animation = props2.animation, transitionName = props2.transitionName, dropdownStyle = props2.dropdownStyle, dropdownClassName = props2.dropdownClassName, _props$direction = props2.direction, direction = _props$direction === void 0 ? "ltr" : _props$direction, placement = props2.placement, builtinPlacements = props2.builtinPlacements, dropdownMatchSelectWidth = props2.dropdownMatchSelectWidth, dropdownRender = props2.dropdownRender, dropdownAlign = props2.dropdownAlign, getPopupContainer = props2.getPopupContainer, empty = props2.empty, getTriggerDOMNode = props2.getTriggerDOMNode, onPopupVisibleChange = props2.onPopupVisibleChange, onPopupMouseEnter = props2.onPopupMouseEnter, restProps = _objectWithoutProperties(props2, _excluded$F);
+    var SelectTrigger = function SelectTrigger2(props, ref) {
+      var prefixCls = props.prefixCls;
+      props.disabled;
+      var visible = props.visible, children = props.children, popupElement = props.popupElement, animation = props.animation, transitionName = props.transitionName, dropdownStyle = props.dropdownStyle, dropdownClassName = props.dropdownClassName, _props$direction = props.direction, direction = _props$direction === void 0 ? "ltr" : _props$direction, placement = props.placement, builtinPlacements = props.builtinPlacements, dropdownMatchSelectWidth = props.dropdownMatchSelectWidth, dropdownRender = props.dropdownRender, dropdownAlign = props.dropdownAlign, getPopupContainer = props.getPopupContainer, empty = props.empty, getTriggerDOMNode = props.getTriggerDOMNode, onPopupVisibleChange = props.onPopupVisibleChange, onPopupMouseEnter = props.onPopupMouseEnter, restProps = _objectWithoutProperties(props, _excluded$F);
       var dropdownPrefixCls = "".concat(prefixCls, "-dropdown");
       var popupNode = popupElement;
       if (dropdownRender) {
@@ -28652,8 +28628,8 @@ var require_admin = __commonJS({
       }
     };
     var SelectContext = /* @__PURE__ */ reactExports.createContext(null);
-    function Polite(props2) {
-      var visible = props2.visible, values = props2.values;
+    function Polite(props) {
+      var visible = props.visible, values = props.values;
       if (!visible) {
         return null;
       }
@@ -28677,9 +28653,9 @@ var require_admin = __commonJS({
     var isMultiple = function isMultiple2(mode) {
       return mode === "tags" || mode === "multiple";
     };
-    var BaseSelect = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
+    var BaseSelect = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
       var _customizeRawInputEle;
-      var id2 = props2.id, prefixCls = props2.prefixCls, className = props2.className, showSearch = props2.showSearch, tagRender = props2.tagRender, direction = props2.direction, omitDomProps = props2.omitDomProps, displayValues = props2.displayValues, onDisplayValuesChange = props2.onDisplayValuesChange, emptyOptions = props2.emptyOptions, _props$notFoundConten = props2.notFoundContent, notFoundContent = _props$notFoundConten === void 0 ? "Not Found" : _props$notFoundConten, onClear = props2.onClear, mode = props2.mode, disabled = props2.disabled, loading = props2.loading, getInputElement = props2.getInputElement, getRawInputElement = props2.getRawInputElement, open2 = props2.open, defaultOpen = props2.defaultOpen, onDropdownVisibleChange = props2.onDropdownVisibleChange, activeValue = props2.activeValue, onActiveValueChange = props2.onActiveValueChange, activeDescendantId = props2.activeDescendantId, searchValue = props2.searchValue, autoClearSearchValue = props2.autoClearSearchValue, onSearch = props2.onSearch, onSearchSplit = props2.onSearchSplit, tokenSeparators = props2.tokenSeparators, allowClear = props2.allowClear, suffixIcon = props2.suffixIcon, clearIcon = props2.clearIcon, OptionList2 = props2.OptionList, animation = props2.animation, transitionName = props2.transitionName, dropdownStyle = props2.dropdownStyle, dropdownClassName = props2.dropdownClassName, dropdownMatchSelectWidth = props2.dropdownMatchSelectWidth, dropdownRender = props2.dropdownRender, dropdownAlign = props2.dropdownAlign, placement = props2.placement, builtinPlacements = props2.builtinPlacements, getPopupContainer = props2.getPopupContainer, _props$showAction = props2.showAction, showAction = _props$showAction === void 0 ? [] : _props$showAction, onFocus = props2.onFocus, onBlur = props2.onBlur, onKeyUp = props2.onKeyUp, onKeyDown2 = props2.onKeyDown, onMouseDown = props2.onMouseDown, restProps = _objectWithoutProperties(props2, _excluded$E);
+      var id2 = props.id, prefixCls = props.prefixCls, className = props.className, showSearch = props.showSearch, tagRender = props.tagRender, direction = props.direction, omitDomProps = props.omitDomProps, displayValues = props.displayValues, onDisplayValuesChange = props.onDisplayValuesChange, emptyOptions = props.emptyOptions, _props$notFoundConten = props.notFoundContent, notFoundContent = _props$notFoundConten === void 0 ? "Not Found" : _props$notFoundConten, onClear = props.onClear, mode = props.mode, disabled = props.disabled, loading = props.loading, getInputElement = props.getInputElement, getRawInputElement = props.getRawInputElement, open2 = props.open, defaultOpen = props.defaultOpen, onDropdownVisibleChange = props.onDropdownVisibleChange, activeValue = props.activeValue, onActiveValueChange = props.onActiveValueChange, activeDescendantId = props.activeDescendantId, searchValue = props.searchValue, autoClearSearchValue = props.autoClearSearchValue, onSearch = props.onSearch, onSearchSplit = props.onSearchSplit, tokenSeparators = props.tokenSeparators, allowClear = props.allowClear, suffixIcon = props.suffixIcon, clearIcon = props.clearIcon, OptionList2 = props.OptionList, animation = props.animation, transitionName = props.transitionName, dropdownStyle = props.dropdownStyle, dropdownClassName = props.dropdownClassName, dropdownMatchSelectWidth = props.dropdownMatchSelectWidth, dropdownRender = props.dropdownRender, dropdownAlign = props.dropdownAlign, placement = props.placement, builtinPlacements = props.builtinPlacements, getPopupContainer = props.getPopupContainer, _props$showAction = props.showAction, showAction = _props$showAction === void 0 ? [] : _props$showAction, onFocus = props.onFocus, onBlur = props.onBlur, onKeyUp = props.onKeyUp, onKeyDown2 = props.onKeyDown, onMouseDown = props.onMouseDown, restProps = _objectWithoutProperties(props, _excluded$E);
       var multiple = isMultiple(mode);
       var mergedShowSearch = (showSearch !== void 0 ? showSearch : multiple) || mode === "combobox";
       var domProps = _objectSpread2({}, restProps);
@@ -28947,7 +28923,7 @@ var require_admin = __commonJS({
         return [containerRef.current, (_triggerRef$current2 = triggerRef.current) === null || _triggerRef$current2 === void 0 ? void 0 : _triggerRef$current2.getPopupElement()];
       }, triggerOpen, onToggleOpen, !!customizeRawInputElement);
       var baseSelectContext = reactExports.useMemo(function() {
-        return _objectSpread2(_objectSpread2({}, props2), {}, {
+        return _objectSpread2(_objectSpread2({}, props), {}, {
           notFoundContent,
           open: mergedOpen,
           triggerOpen,
@@ -28956,7 +28932,7 @@ var require_admin = __commonJS({
           multiple,
           toggleOpen: onToggleOpen
         });
-      }, [props2, notFoundContent, triggerOpen, mergedOpen, id2, mergedShowSearch, multiple, onToggleOpen]);
+      }, [props, notFoundContent, triggerOpen, mergedOpen, id2, mergedShowSearch, multiple, onToggleOpen]);
       var showSuffixIcon = !!suffixIcon || loading;
       var arrowNode;
       if (showSuffixIcon) {
@@ -29017,7 +28993,7 @@ var require_admin = __commonJS({
         onPopupMouseEnter
       }, customizeRawInputElement ? /* @__PURE__ */ reactExports.cloneElement(customizeRawInputElement, {
         ref: customizeRawInputRef
-      }) : /* @__PURE__ */ reactExports.createElement(ForwardSelector, _extends({}, props2, {
+      }) : /* @__PURE__ */ reactExports.createElement(ForwardSelector, _extends({}, props, {
         domRef: selectorDomRef,
         prefixCls,
         inputElement: customizeInputElement,
@@ -29574,8 +29550,8 @@ var require_admin = __commonJS({
       var obj = "touches" in e2 ? e2.touches[0] : e2;
       return obj[horizontal ? "pageX" : "pageY"];
     }
-    var ScrollBar = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var prefixCls = props2.prefixCls, rtl = props2.rtl, scrollOffset = props2.scrollOffset, scrollRange = props2.scrollRange, onStartMove = props2.onStartMove, onStopMove = props2.onStopMove, onScroll = props2.onScroll, horizontal = props2.horizontal, spinSize = props2.spinSize, containerSize = props2.containerSize, style2 = props2.style, propsThumbStyle = props2.thumbStyle;
+    var ScrollBar = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var prefixCls = props.prefixCls, rtl = props.rtl, scrollOffset = props.scrollOffset, scrollRange = props.scrollRange, onStartMove = props.onStartMove, onStopMove = props.onStopMove, onScroll = props.onScroll, horizontal = props.horizontal, spinSize = props.spinSize, containerSize = props.containerSize, style2 = props.style, propsThumbStyle = props.thumbStyle;
       var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), dragging = _React$useState2[0], setDragging = _React$useState2[1];
       var _React$useState3 = reactExports.useState(null), _React$useState4 = _slicedToArray(_React$useState3, 2), pageXY = _React$useState4[0], setPageXY = _React$useState4[1];
       var _React$useState5 = reactExports.useState(null), _React$useState6 = _slicedToArray(_React$useState5, 2), startTop = _React$useState6[0], setStartTop = _React$useState6[1];
@@ -29775,8 +29751,8 @@ var require_admin = __commonJS({
       overflowY: "auto",
       overflowAnchor: "none"
     };
-    function RawList(props2, ref) {
-      var _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-virtual-list" : _props$prefixCls, className = props2.className, height = props2.height, itemHeight = props2.itemHeight, _props$fullHeight = props2.fullHeight, fullHeight = _props$fullHeight === void 0 ? true : _props$fullHeight, style2 = props2.style, data = props2.data, children = props2.children, itemKey2 = props2.itemKey, virtual = props2.virtual, direction = props2.direction, scrollWidth = props2.scrollWidth, _props$component = props2.component, Component = _props$component === void 0 ? "div" : _props$component, onScroll = props2.onScroll, onVirtualScroll = props2.onVirtualScroll, onVisibleChange = props2.onVisibleChange, innerProps = props2.innerProps, extraRender = props2.extraRender, styles = props2.styles, restProps = _objectWithoutProperties(props2, _excluded$D);
+    function RawList(props, ref) {
+      var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-virtual-list" : _props$prefixCls, className = props.className, height = props.height, itemHeight = props.itemHeight, _props$fullHeight = props.fullHeight, fullHeight = _props$fullHeight === void 0 ? true : _props$fullHeight, style2 = props.style, data = props.data, children = props.children, itemKey2 = props.itemKey, virtual = props.virtual, direction = props.direction, scrollWidth = props.scrollWidth, _props$component = props.component, Component = _props$component === void 0 ? "div" : _props$component, onScroll = props.onScroll, onVirtualScroll = props.onVirtualScroll, onVisibleChange = props.onVisibleChange, innerProps = props.innerProps, extraRender = props.extraRender, styles = props.styles, restProps = _objectWithoutProperties(props, _excluded$D);
       var getKey2 = reactExports.useCallback(function(item) {
         if (typeof itemKey2 === "function") {
           return itemKey2(item);
@@ -30372,7 +30348,7 @@ var require_admin = __commonJS({
         var disabled = data.disabled, title = data.title;
         data.children;
         var style2 = data.style, className = data.className, otherProps = _objectWithoutProperties(data, _excluded$C);
-        var passedProps = omit$1(otherProps, omitFieldNameList);
+        var passedProps = omit(otherProps, omitFieldNameList);
         var selected = isSelected(value);
         var mergedDisabled = disabled || !selected && overMaxCount;
         var optionPrefixCls = "".concat(itemPrefixCls, "-option");
@@ -30592,8 +30568,8 @@ var require_admin = __commonJS({
     function isRawValue(value) {
       return !value || _typeof(value) !== "object";
     }
-    var Select$1 = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var id2 = props2.id, mode = props2.mode, _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-select" : _props$prefixCls, backfill = props2.backfill, fieldNames = props2.fieldNames, inputValue = props2.inputValue, searchValue = props2.searchValue, onSearch = props2.onSearch, _props$autoClearSearc = props2.autoClearSearchValue, autoClearSearchValue = _props$autoClearSearc === void 0 ? true : _props$autoClearSearc, onSelect = props2.onSelect, onDeselect = props2.onDeselect, _props$dropdownMatchS = props2.dropdownMatchSelectWidth, dropdownMatchSelectWidth = _props$dropdownMatchS === void 0 ? true : _props$dropdownMatchS, filterOption = props2.filterOption, filterSort = props2.filterSort, optionFilterProp = props2.optionFilterProp, optionLabelProp = props2.optionLabelProp, options = props2.options, optionRender = props2.optionRender, children = props2.children, defaultActiveFirstOption = props2.defaultActiveFirstOption, menuItemSelectedIcon = props2.menuItemSelectedIcon, virtual = props2.virtual, direction = props2.direction, _props$listHeight = props2.listHeight, listHeight = _props$listHeight === void 0 ? 200 : _props$listHeight, _props$listItemHeight = props2.listItemHeight, listItemHeight = _props$listItemHeight === void 0 ? 20 : _props$listItemHeight, labelRender = props2.labelRender, value = props2.value, defaultValue = props2.defaultValue, labelInValue = props2.labelInValue, onChange = props2.onChange, maxCount = props2.maxCount, restProps = _objectWithoutProperties(props2, _excluded$A);
+    var Select$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var id2 = props.id, mode = props.mode, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-select" : _props$prefixCls, backfill = props.backfill, fieldNames = props.fieldNames, inputValue = props.inputValue, searchValue = props.searchValue, onSearch = props.onSearch, _props$autoClearSearc = props.autoClearSearchValue, autoClearSearchValue = _props$autoClearSearc === void 0 ? true : _props$autoClearSearc, onSelect = props.onSelect, onDeselect = props.onDeselect, _props$dropdownMatchS = props.dropdownMatchSelectWidth, dropdownMatchSelectWidth = _props$dropdownMatchS === void 0 ? true : _props$dropdownMatchS, filterOption = props.filterOption, filterSort = props.filterSort, optionFilterProp = props.optionFilterProp, optionLabelProp = props.optionLabelProp, options = props.options, optionRender = props.optionRender, children = props.children, defaultActiveFirstOption = props.defaultActiveFirstOption, menuItemSelectedIcon = props.menuItemSelectedIcon, virtual = props.virtual, direction = props.direction, _props$listHeight = props.listHeight, listHeight = _props$listHeight === void 0 ? 200 : _props$listHeight, _props$listItemHeight = props.listItemHeight, listItemHeight = _props$listItemHeight === void 0 ? 20 : _props$listItemHeight, labelRender = props.labelRender, value = props.value, defaultValue = props.defaultValue, labelInValue = props.labelInValue, onChange = props.onChange, maxCount = props.maxCount, restProps = _objectWithoutProperties(props, _excluded$A);
       var mergedId = useId(id2);
       var multiple = isMultiple(mode);
       var childrenAsData = !!(!options && children);
@@ -31148,10 +31124,10 @@ var require_admin = __commonJS({
     };
     Empty.PRESENTED_IMAGE_DEFAULT = defaultEmptyImg;
     Empty.PRESENTED_IMAGE_SIMPLE = simpleEmptyImg;
-    const DefaultRenderEmpty = (props2) => {
+    const DefaultRenderEmpty = (props) => {
       const {
         componentName
-      } = props2;
+      } = props;
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
@@ -32195,24 +32171,24 @@ var require_admin = __commonJS({
       }
     });
     var CheckOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M912 190h-69.9c-9.8 0-19.1 4.5-25.1 12.2L404.7 724.5 207 474a32 32 0 00-25.1-12.2H112c-6.7 0-10.4 7.7-6.3 12.9l273.9 347c12.8 16.2 37.4 16.2 50.3 0l488.4-618.9c4.1-5.1.4-12.8-6.3-12.8z" } }] }, "name": "check", "theme": "outlined" };
-    var CheckOutlined = function CheckOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var CheckOutlined = function CheckOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: CheckOutlined$1
       }));
     };
     var RefIcon$x = /* @__PURE__ */ reactExports.forwardRef(CheckOutlined);
     var DownOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z" } }] }, "name": "down", "theme": "outlined" };
-    var DownOutlined = function DownOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var DownOutlined = function DownOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: DownOutlined$1
       }));
     };
     var RefIcon$w = /* @__PURE__ */ reactExports.forwardRef(DownOutlined);
     var SearchOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z" } }] }, "name": "search", "theme": "outlined" };
-    var SearchOutlined = function SearchOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var SearchOutlined = function SearchOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: SearchOutlined$1
       }));
@@ -32297,7 +32273,7 @@ var require_admin = __commonJS({
       return t2;
     };
     const SECRET_COMBOBOX_MODE_DO_NOT_USE = "SECRET_COMBOBOX_MODE_DO_NOT_USE";
-    const InternalSelect = (props2, ref) => {
+    const InternalSelect = (props, ref) => {
       var _a2;
       const {
         prefixCls: customizePrefixCls,
@@ -32325,7 +32301,7 @@ var require_admin = __commonJS({
         transitionName,
         tagRender,
         maxCount
-      } = props2, rest = __rest$L(props2, ["prefixCls", "bordered", "className", "rootClassName", "getPopupContainer", "popupClassName", "dropdownClassName", "listHeight", "placement", "listItemHeight", "size", "disabled", "notFoundContent", "status", "builtinPlacements", "dropdownMatchSelectWidth", "popupMatchSelectWidth", "direction", "style", "allowClear", "variant", "dropdownStyle", "transitionName", "tagRender", "maxCount"]);
+      } = props, rest = __rest$L(props, ["prefixCls", "bordered", "className", "rootClassName", "getPopupContainer", "popupClassName", "dropdownClassName", "listHeight", "placement", "listItemHeight", "size", "disabled", "notFoundContent", "status", "builtinPlacements", "dropdownMatchSelectWidth", "popupMatchSelectWidth", "direction", "style", "allowClear", "variant", "dropdownStyle", "transitionName", "tagRender", "maxCount"]);
       const {
         getPopupContainer: getContextPopupContainer,
         getPrefixCls,
@@ -32351,7 +32327,7 @@ var require_admin = __commonJS({
       const mode = reactExports.useMemo(() => {
         const {
           mode: m2
-        } = props2;
+        } = props;
         if (m2 === "combobox") {
           return void 0;
         }
@@ -32359,9 +32335,9 @@ var require_admin = __commonJS({
           return "combobox";
         }
         return m2;
-      }, [props2.mode]);
+      }, [props.mode]);
       const isMultiple2 = mode === "multiple" || mode === "tags";
-      const showSuffixIcon = useShowArrow(props2.suffixIcon, props2.showArrow);
+      const showSuffixIcon = useShowArrow(props.suffixIcon, props.showArrow);
       const mergedPopupMatchSelectWidth = (_a2 = popupMatchSelectWidth !== null && popupMatchSelectWidth !== void 0 ? popupMatchSelectWidth : dropdownMatchSelectWidth) !== null && _a2 !== void 0 ? _a2 : contextPopupMatchSelectWidth;
       const {
         status: contextStatus,
@@ -32396,7 +32372,7 @@ var require_admin = __commonJS({
       const mergedAllowClear = allowClear === true ? {
         clearIcon
       } : allowClear;
-      const selectProps = omit$1(rest, ["suffixIcon", "itemIcon"]);
+      const selectProps = omit(rest, ["suffixIcon", "itemIcon"]);
       const mergedPopupClassName = classNames(popupClassName || dropdownClassName, {
         [`${prefixCls}-dropdown-${direction}`]: direction === "rtl"
       }, rootClassName, cssVarCls, rootCls, hashId);
@@ -32501,14 +32477,14 @@ var require_admin = __commonJS({
           matchHandlers: {},
           dispatch(pointMap) {
             screens = pointMap;
-            subscribers.forEach((func2) => func2(screens));
+            subscribers.forEach((func) => func(screens));
             return subscribers.size >= 1;
           },
-          subscribe(func2) {
+          subscribe(func) {
             if (!subscribers.size) this.register();
             subUid += 1;
-            subscribers.set(subUid, func2);
-            func2(screens);
+            subscribers.set(subUid, func);
+            func(screens);
             return subUid;
           },
           unsubscribe(paramToken) {
@@ -32573,8 +32549,8 @@ var require_admin = __commonJS({
       }
       return typeof propValue === "function" ? propValue() : propValue;
     };
-    function Popup(props2) {
-      var children = props2.children, prefixCls = props2.prefixCls, id2 = props2.id, overlayInnerStyle = props2.overlayInnerStyle, className = props2.className, style2 = props2.style;
+    function Popup(props) {
+      var children = props.children, prefixCls = props.prefixCls, id2 = props.id, overlayInnerStyle = props.overlayInnerStyle, className = props.className, style2 = props.style;
       return /* @__PURE__ */ reactExports.createElement("div", {
         className: classNames("".concat(prefixCls, "-content"), className),
         style: style2
@@ -32669,17 +32645,17 @@ var require_admin = __commonJS({
       }
     };
     var _excluded$z = ["overlayClassName", "trigger", "mouseEnterDelay", "mouseLeaveDelay", "overlayStyle", "prefixCls", "children", "onVisibleChange", "afterVisibleChange", "transitionName", "animation", "motion", "placement", "align", "destroyTooltipOnHide", "defaultVisible", "getTooltipContainer", "overlayInnerStyle", "arrowContent", "overlay", "id", "showArrow"];
-    var Tooltip$1 = function Tooltip2(props2, ref) {
-      var overlayClassName = props2.overlayClassName, _props$trigger = props2.trigger, trigger = _props$trigger === void 0 ? ["hover"] : _props$trigger, _props$mouseEnterDela = props2.mouseEnterDelay, mouseEnterDelay = _props$mouseEnterDela === void 0 ? 0 : _props$mouseEnterDela, _props$mouseLeaveDela = props2.mouseLeaveDelay, mouseLeaveDelay = _props$mouseLeaveDela === void 0 ? 0.1 : _props$mouseLeaveDela, overlayStyle = props2.overlayStyle, _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-tooltip" : _props$prefixCls, children = props2.children, onVisibleChange = props2.onVisibleChange, afterVisibleChange = props2.afterVisibleChange, transitionName = props2.transitionName, animation = props2.animation, motion2 = props2.motion, _props$placement = props2.placement, placement = _props$placement === void 0 ? "right" : _props$placement, _props$align = props2.align, align = _props$align === void 0 ? {} : _props$align, _props$destroyTooltip = props2.destroyTooltipOnHide, destroyTooltipOnHide = _props$destroyTooltip === void 0 ? false : _props$destroyTooltip, defaultVisible = props2.defaultVisible, getTooltipContainer = props2.getTooltipContainer, overlayInnerStyle = props2.overlayInnerStyle;
-      props2.arrowContent;
-      var overlay = props2.overlay, id2 = props2.id, _props$showArrow = props2.showArrow, showArrow = _props$showArrow === void 0 ? true : _props$showArrow, restProps = _objectWithoutProperties(props2, _excluded$z);
+    var Tooltip$1 = function Tooltip2(props, ref) {
+      var overlayClassName = props.overlayClassName, _props$trigger = props.trigger, trigger = _props$trigger === void 0 ? ["hover"] : _props$trigger, _props$mouseEnterDela = props.mouseEnterDelay, mouseEnterDelay = _props$mouseEnterDela === void 0 ? 0 : _props$mouseEnterDela, _props$mouseLeaveDela = props.mouseLeaveDelay, mouseLeaveDelay = _props$mouseLeaveDela === void 0 ? 0.1 : _props$mouseLeaveDela, overlayStyle = props.overlayStyle, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-tooltip" : _props$prefixCls, children = props.children, onVisibleChange = props.onVisibleChange, afterVisibleChange = props.afterVisibleChange, transitionName = props.transitionName, animation = props.animation, motion2 = props.motion, _props$placement = props.placement, placement = _props$placement === void 0 ? "right" : _props$placement, _props$align = props.align, align = _props$align === void 0 ? {} : _props$align, _props$destroyTooltip = props.destroyTooltipOnHide, destroyTooltipOnHide = _props$destroyTooltip === void 0 ? false : _props$destroyTooltip, defaultVisible = props.defaultVisible, getTooltipContainer = props.getTooltipContainer, overlayInnerStyle = props.overlayInnerStyle;
+      props.arrowContent;
+      var overlay = props.overlay, id2 = props.id, _props$showArrow = props.showArrow, showArrow = _props$showArrow === void 0 ? true : _props$showArrow, restProps = _objectWithoutProperties(props, _excluded$z);
       var triggerRef = reactExports.useRef(null);
       reactExports.useImperativeHandle(ref, function() {
         return triggerRef.current;
       });
       var extraProps = _objectSpread2({}, restProps);
-      if ("visible" in props2) {
-        extraProps.popupVisible = props2.visible;
+      if ("visible" in props) {
+        extraProps.popupVisible = props.visible;
       }
       var getPopupElement = function getPopupElement2() {
         return /* @__PURE__ */ reactExports.createElement(Popup, {
@@ -33253,7 +33229,7 @@ var require_admin = __commonJS({
         arrowStyle
       };
     }
-    const PurePanel$5 = (props2) => {
+    const PurePanel$5 = (props) => {
       const {
         prefixCls: customizePrefixCls,
         className,
@@ -33261,7 +33237,7 @@ var require_admin = __commonJS({
         title,
         color,
         overlayInnerStyle
-      } = props2;
+      } = props;
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
@@ -33276,7 +33252,7 @@ var require_admin = __commonJS({
         style: arrowContentStyle
       }, /* @__PURE__ */ reactExports.createElement("div", {
         className: `${prefixCls}-arrow`
-      }), /* @__PURE__ */ reactExports.createElement(Popup, Object.assign({}, props2, {
+      }), /* @__PURE__ */ reactExports.createElement(Popup, Object.assign({}, props, {
         className: hashId,
         prefixCls,
         overlayInnerStyle: formattedOverlayInnerStyle
@@ -33290,7 +33266,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const InternalTooltip = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const InternalTooltip = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       var _a2, _b;
       const {
         prefixCls: customizePrefixCls,
@@ -33309,7 +33285,7 @@ var require_admin = __commonJS({
         builtinPlacements,
         arrowPointAtCenter = false,
         autoAdjustOverflow: autoAdjustOverflow2 = true
-      } = props2;
+      } = props;
       const mergedShowArrow = !!arrow;
       const [, token2] = useToken();
       const {
@@ -33335,16 +33311,16 @@ var require_admin = __commonJS({
         };
       });
       const [open2, setOpen] = useMergedState(false, {
-        value: (_a2 = props2.open) !== null && _a2 !== void 0 ? _a2 : props2.visible,
-        defaultValue: (_b = props2.defaultOpen) !== null && _b !== void 0 ? _b : props2.defaultVisible
+        value: (_a2 = props.open) !== null && _a2 !== void 0 ? _a2 : props.visible,
+        defaultValue: (_b = props.defaultOpen) !== null && _b !== void 0 ? _b : props.defaultVisible
       });
       const noTitle = !title && !overlay && title !== 0;
       const onOpenChange = (vis) => {
         var _a22, _b2;
         setOpen(noTitle ? false : vis);
         if (!noTitle) {
-          (_a22 = props2.onOpenChange) === null || _a22 === void 0 ? void 0 : _a22.call(props2, vis);
-          (_b2 = props2.onVisibleChange) === null || _b2 === void 0 ? void 0 : _b2.call(props2, vis);
+          (_a22 = props.onOpenChange) === null || _a22 === void 0 ? void 0 : _a22.call(props, vis);
+          (_b2 = props.onVisibleChange) === null || _b2 === void 0 ? void 0 : _b2.call(props, vis);
         }
       };
       const tooltipPlacements = reactExports.useMemo(() => {
@@ -33378,12 +33354,12 @@ var require_admin = __commonJS({
         mouseLeaveDelay = 0.1,
         overlayStyle,
         rootClassName
-      } = props2, otherProps = __rest$K(props2, ["getPopupContainer", "placement", "mouseEnterDelay", "mouseLeaveDelay", "overlayStyle", "rootClassName"]);
+      } = props, otherProps = __rest$K(props, ["getPopupContainer", "placement", "mouseEnterDelay", "mouseLeaveDelay", "overlayStyle", "rootClassName"]);
       const prefixCls = getPrefixCls("tooltip", customizePrefixCls);
       const rootPrefixCls = getPrefixCls();
-      const injectFromPopover = props2["data-popover-inject"];
+      const injectFromPopover = props["data-popover-inject"];
       let tempOpen = open2;
-      if (!("open" in props2) && !("visible" in props2) && noTitle) {
+      if (!("open" in props) && !("visible" in props) && noTitle) {
         tempOpen = false;
       }
       const child = /* @__PURE__ */ reactExports.isValidElement(children) && !isFragment(children) ? children : /* @__PURE__ */ reactExports.createElement("span", null, children);
@@ -33418,7 +33394,7 @@ var require_admin = __commonJS({
           className: `${prefixCls}-arrow-content`
         }),
         motion: {
-          motionName: getTransitionName(rootPrefixCls, "zoom-big-fast", props2.transitionName),
+          motionName: getTransitionName(rootPrefixCls, "zoom-big-fast", props.transitionName),
           motionDeadline: 1e3
         },
         destroyTooltipOnHide: !!destroyTooltipOnHide
@@ -33608,7 +33584,7 @@ var require_admin = __commonJS({
         className: `${prefixCls}-inner-content`
       }, content));
     };
-    const RawPurePanel = (props2) => {
+    const RawPurePanel = (props) => {
       const {
         hashId,
         prefixCls,
@@ -33618,7 +33594,7 @@ var require_admin = __commonJS({
         title,
         content,
         children
-      } = props2;
+      } = props;
       const titleNode = getRenderPropValue(title);
       const contentNode = getRenderPropValue(content);
       const cls = classNames(hashId, prefixCls, `${prefixCls}-pure`, `${prefixCls}-placement-${placement}`, className);
@@ -33627,7 +33603,7 @@ var require_admin = __commonJS({
         style: style2
       }, /* @__PURE__ */ reactExports.createElement("div", {
         className: `${prefixCls}-arrow`
-      }), /* @__PURE__ */ reactExports.createElement(Popup, Object.assign({}, props2, {
+      }), /* @__PURE__ */ reactExports.createElement(Popup, Object.assign({}, props, {
         className: hashId,
         prefixCls
       }), children || /* @__PURE__ */ reactExports.createElement(Overlay$1, {
@@ -33636,11 +33612,11 @@ var require_admin = __commonJS({
         content: contentNode
       })));
     };
-    const PurePanel$4 = (props2) => {
+    const PurePanel$4 = (props) => {
       const {
         prefixCls: customizePrefixCls,
         className
-      } = props2, restProps = __rest$J(props2, ["prefixCls", "className"]);
+      } = props, restProps = __rest$J(props, ["prefixCls", "className"]);
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
@@ -33660,7 +33636,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const InternalPopover = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const InternalPopover = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       var _a2, _b;
       const {
         prefixCls: customizePrefixCls,
@@ -33674,7 +33650,7 @@ var require_admin = __commonJS({
         mouseLeaveDelay = 0.1,
         onOpenChange,
         overlayStyle = {}
-      } = props2, otherProps = __rest$I(props2, ["prefixCls", "title", "content", "overlayClassName", "placement", "trigger", "children", "mouseEnterDelay", "mouseLeaveDelay", "onOpenChange", "overlayStyle"]);
+      } = props, otherProps = __rest$I(props, ["prefixCls", "title", "content", "overlayClassName", "placement", "trigger", "children", "mouseEnterDelay", "mouseLeaveDelay", "onOpenChange", "overlayStyle"]);
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
@@ -33683,8 +33659,8 @@ var require_admin = __commonJS({
       const rootPrefixCls = getPrefixCls();
       const overlayCls = classNames(overlayClassName, hashId, cssVarCls);
       const [open2, setOpen] = useMergedState(false, {
-        value: (_a2 = props2.open) !== null && _a2 !== void 0 ? _a2 : props2.visible,
-        defaultValue: (_b = props2.defaultOpen) !== null && _b !== void 0 ? _b : props2.defaultVisible
+        value: (_a2 = props.open) !== null && _a2 !== void 0 ? _a2 : props.visible,
+        defaultValue: (_b = props.defaultOpen) !== null && _b !== void 0 ? _b : props.defaultVisible
       });
       const settingOpen = (value, e2) => {
         setOpen(value, true);
@@ -33786,8 +33762,8 @@ var require_admin = __commonJS({
         };
       }, [visible]);
     }
-    var Overlay = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var overlay = props2.overlay, arrow = props2.arrow, prefixCls = props2.prefixCls;
+    var Overlay = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var overlay = props.overlay, arrow = props.arrow, prefixCls = props.prefixCls;
       var overlayNode = reactExports.useMemo(function() {
         var overlayElement;
         if (typeof overlay === "function") {
@@ -33848,11 +33824,11 @@ var require_admin = __commonJS({
       }
     };
     var _excluded$y = ["arrow", "prefixCls", "transitionName", "animation", "align", "placement", "placements", "getPopupContainer", "showAction", "hideAction", "overlayClassName", "overlayStyle", "visible", "trigger", "autoFocus", "overlay", "children", "onVisibleChange"];
-    function Dropdown$2(props2, ref) {
+    function Dropdown$2(props, ref) {
       var _children$props;
-      var _props$arrow = props2.arrow, arrow = _props$arrow === void 0 ? false : _props$arrow, _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-dropdown" : _props$prefixCls, transitionName = props2.transitionName, animation = props2.animation, align = props2.align, _props$placement = props2.placement, placement = _props$placement === void 0 ? "bottomLeft" : _props$placement, _props$placements = props2.placements, placements2 = _props$placements === void 0 ? placements$1 : _props$placements, getPopupContainer = props2.getPopupContainer, showAction = props2.showAction, hideAction = props2.hideAction, overlayClassName = props2.overlayClassName, overlayStyle = props2.overlayStyle, visible = props2.visible, _props$trigger = props2.trigger, trigger = _props$trigger === void 0 ? ["hover"] : _props$trigger, autoFocus = props2.autoFocus, overlay = props2.overlay, children = props2.children, onVisibleChange = props2.onVisibleChange, otherProps = _objectWithoutProperties(props2, _excluded$y);
+      var _props$arrow = props.arrow, arrow = _props$arrow === void 0 ? false : _props$arrow, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-dropdown" : _props$prefixCls, transitionName = props.transitionName, animation = props.animation, align = props.align, _props$placement = props.placement, placement = _props$placement === void 0 ? "bottomLeft" : _props$placement, _props$placements = props.placements, placements2 = _props$placements === void 0 ? placements$1 : _props$placements, getPopupContainer = props.getPopupContainer, showAction = props.showAction, hideAction = props.hideAction, overlayClassName = props.overlayClassName, overlayStyle = props.overlayStyle, visible = props.visible, _props$trigger = props.trigger, trigger = _props$trigger === void 0 ? ["hover"] : _props$trigger, autoFocus = props.autoFocus, overlay = props.overlay, children = props.children, onVisibleChange = props.onVisibleChange, otherProps = _objectWithoutProperties(props, _excluded$y);
       var _React$useState = React$1.useState(), _React$useState2 = _slicedToArray(_React$useState, 2), triggerVisible = _React$useState2[0], setTriggerVisible = _React$useState2[1];
-      var mergedVisible = "visible" in props2 ? visible : triggerVisible;
+      var mergedVisible = "visible" in props ? visible : triggerVisible;
       var triggerRef = React$1.useRef(null);
       var overlayRef = React$1.useRef(null);
       var childRef = React$1.useRef(null);
@@ -33871,7 +33847,7 @@ var require_admin = __commonJS({
         overlayRef
       });
       var onClick = function onClick2(e2) {
-        var onOverlayClick = props2.onOverlayClick;
+        var onOverlayClick = props.onOverlayClick;
         setTriggerVisible(false);
         if (onOverlayClick) {
           onOverlayClick(e2);
@@ -33892,14 +33868,14 @@ var require_admin = __commonJS({
         return getMenuElement();
       };
       var getMinOverlayWidthMatchTrigger = function getMinOverlayWidthMatchTrigger2() {
-        var minOverlayWidthMatchTrigger = props2.minOverlayWidthMatchTrigger, alignPoint = props2.alignPoint;
-        if ("minOverlayWidthMatchTrigger" in props2) {
+        var minOverlayWidthMatchTrigger = props.minOverlayWidthMatchTrigger, alignPoint = props.alignPoint;
+        if ("minOverlayWidthMatchTrigger" in props) {
           return minOverlayWidthMatchTrigger;
         }
         return !alignPoint;
       };
       var getOpenClassName = function getOpenClassName2() {
-        var openClassName = props2.openClassName;
+        var openClassName = props.openClassName;
         if (openClassName !== void 0) {
           return openClassName;
         }
@@ -33965,7 +33941,7 @@ var require_admin = __commonJS({
       var inheritableContext = useMemo(function() {
         return mergeProps(context, restProps);
       }, [context, restProps], function(prev2, next2) {
-        return !locked && (prev2[0] !== next2[0] || !isEqual$1(prev2[1], next2[1], true));
+        return !locked && (prev2[0] !== next2[0] || !isEqual(prev2[1], next2[1], true));
       });
       return /* @__PURE__ */ reactExports.createElement(MenuContext$1.Provider, {
         value: inheritableContext
@@ -34136,7 +34112,7 @@ var require_admin = __commonJS({
         element2key
       };
     };
-    function useAccessibility(mode, activeKey, isRtl, id2, containerRef, getKeys2, getKeyPath, triggerActiveKey, triggerAccessibilityOpen, originOnKeyDown) {
+    function useAccessibility(mode, activeKey, isRtl, id2, containerRef, getKeys, getKeyPath, triggerActiveKey, triggerAccessibilityOpen, originOnKeyDown) {
       var rafRef = reactExports.useRef();
       var activeRef = reactExports.useRef();
       activeRef.current = activeKey;
@@ -34151,7 +34127,7 @@ var require_admin = __commonJS({
       return function(e2) {
         var which = e2.which;
         if ([].concat(ArrowKeys, [ENTER, ESC, HOME, END]).includes(which)) {
-          var keys2 = getKeys2();
+          var keys2 = getKeys();
           var refreshedElements = refreshElements(keys2, id2);
           var _refreshedElements = refreshedElements, elements = _refreshedElements.elements, key2element = _refreshedElements.key2element, element2key = _refreshedElements.element2key;
           var activeElement = key2element.get(activeKey);
@@ -34280,7 +34256,7 @@ var require_admin = __commonJS({
           return pathKeyList.includes(eventKey);
         });
       }, [getKeyPath]);
-      var getKeys2 = function getKeys22() {
+      var getKeys = function getKeys2() {
         var keys2 = _toConsumableArray(key2pathRef.current.keys());
         if (overflowKeys.length) {
           keys2.push(OVERFLOW_KEY);
@@ -34310,13 +34286,13 @@ var require_admin = __commonJS({
         // Util
         isSubPathKey,
         getKeyPath,
-        getKeys: getKeys2,
+        getKeys,
         getSubPathKeys
       };
     }
-    function useMemoCallback(func2) {
-      var funRef = reactExports.useRef(func2);
-      funRef.current = func2;
+    function useMemoCallback(func) {
+      var funRef = reactExports.useRef(func);
+      funRef.current = func;
       var callback = reactExports.useCallback(function() {
         var _funRef$current;
         for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -34324,7 +34300,7 @@ var require_admin = __commonJS({
         }
         return (_funRef$current = funRef.current) === null || _funRef$current === void 0 ? void 0 : _funRef$current.call.apply(_funRef$current, [funRef].concat(args));
       }, []);
-      return func2 ? callback : void 0;
+      return func ? callback : void 0;
     }
     var uniquePrefix = Math.random().toFixed(5).toString().slice(2);
     var internalId = 0;
@@ -34375,13 +34351,13 @@ var require_admin = __commonJS({
       };
     }
     function Icon$1(_ref) {
-      var icon = _ref.icon, props2 = _ref.props, children = _ref.children;
+      var icon = _ref.icon, props = _ref.props, children = _ref.children;
       var iconNode;
       if (icon === null || icon === false) {
         return null;
       }
       if (typeof icon === "function") {
-        iconNode = /* @__PURE__ */ reactExports.createElement(icon, _objectSpread2({}, props2));
+        iconNode = /* @__PURE__ */ reactExports.createElement(icon, _objectSpread2({}, props));
       } else if (typeof icon !== "boolean") {
         iconNode = icon;
       }
@@ -34410,7 +34386,7 @@ var require_admin = __commonJS({
         key: "render",
         value: function render2() {
           var _this$props = this.props, title = _this$props.title, attribute = _this$props.attribute, elementRef = _this$props.elementRef, restProps = _objectWithoutProperties(_this$props, _excluded$v);
-          var passedProps = omit$1(restProps, ["eventKey", "popupClassName", "popupOffset", "onTitleClick"]);
+          var passedProps = omit(restProps, ["eventKey", "popupClassName", "popupOffset", "onTitleClick"]);
           warningOnce(!attribute, "`attribute` of Menu.Item is deprecated. Please pass attribute directly.");
           return /* @__PURE__ */ reactExports.createElement(ForwardOverflow.Item, _extends({}, attribute, {
             title: typeof title === "string" ? title : void 0
@@ -34421,10 +34397,10 @@ var require_admin = __commonJS({
       }]);
       return LegacyMenuItem2;
     }(reactExports.Component);
-    var InternalMenuItem = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var style2 = props2.style, className = props2.className, eventKey = props2.eventKey;
-      props2.warnKey;
-      var disabled = props2.disabled, itemIcon = props2.itemIcon, children = props2.children, role = props2.role, onMouseEnter = props2.onMouseEnter, onMouseLeave = props2.onMouseLeave, onClick = props2.onClick, onKeyDown2 = props2.onKeyDown, onFocus = props2.onFocus, restProps = _objectWithoutProperties(props2, _excluded2$7);
+    var InternalMenuItem = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var style2 = props.style, className = props.className, eventKey = props.eventKey;
+      props.warnKey;
+      var disabled = props.disabled, itemIcon = props.itemIcon, children = props.children, role = props.role, onMouseEnter = props.onMouseEnter, onMouseLeave = props.onMouseLeave, onClick = props.onClick, onKeyDown2 = props.onKeyDown, onFocus = props.onFocus, restProps = _objectWithoutProperties(props, _excluded2$7);
       var domDataId = useMenuId(eventKey);
       var _React$useContext = reactExports.useContext(MenuContext$1), prefixCls = _React$useContext.prefixCls, onItemClick = _React$useContext.onItemClick, contextDisabled = _React$useContext.disabled, overflowDisabled = _React$useContext.overflowDisabled, contextItemIcon = _React$useContext.itemIcon, selectedKeys = _React$useContext.selectedKeys, onActive = _React$useContext.onActive;
       var _React$useContext2 = reactExports.useContext(PrivateContext), _internalRenderMenuItem = _React$useContext2._internalRenderMenuItem;
@@ -34468,7 +34444,7 @@ var require_admin = __commonJS({
         onFocus === null || onFocus === void 0 || onFocus(e2);
       };
       var optionRoleProps = {};
-      if (props2.role === "option") {
+      if (props.role === "option") {
         optionRoleProps["aria-selected"] = selected;
       }
       var renderNode = /* @__PURE__ */ reactExports.createElement(LegacyMenuItem, _extends({
@@ -34486,20 +34462,20 @@ var require_admin = __commonJS({
         onKeyDown: onInternalKeyDown,
         onFocus: onInternalFocus
       }), children, /* @__PURE__ */ reactExports.createElement(Icon$1, {
-        props: _objectSpread2(_objectSpread2({}, props2), {}, {
+        props: _objectSpread2(_objectSpread2({}, props), {}, {
           isSelected: selected
         }),
         icon: mergedItemIcon
       }));
       if (_internalRenderMenuItem) {
-        renderNode = _internalRenderMenuItem(renderNode, props2, {
+        renderNode = _internalRenderMenuItem(renderNode, props, {
           selected
         });
       }
       return renderNode;
     });
-    function MenuItem$1(props2, ref) {
-      var eventKey = props2.eventKey;
+    function MenuItem$1(props, ref) {
+      var eventKey = props.eventKey;
       var measure = useMeasure();
       var connectedKeyPath = useFullPath(eventKey);
       reactExports.useEffect(function() {
@@ -34513,7 +34489,7 @@ var require_admin = __commonJS({
       if (measure) {
         return null;
       }
-      return /* @__PURE__ */ reactExports.createElement(InternalMenuItem, _extends({}, props2, {
+      return /* @__PURE__ */ reactExports.createElement(InternalMenuItem, _extends({}, props, {
         ref
       }));
     }
@@ -34731,10 +34707,10 @@ var require_admin = __commonJS({
       }));
     }
     var _excluded$t = ["style", "className", "title", "eventKey", "warnKey", "disabled", "internalPopupClose", "children", "itemIcon", "expandIcon", "popupClassName", "popupOffset", "popupStyle", "onClick", "onMouseEnter", "onMouseLeave", "onTitleClick", "onTitleMouseEnter", "onTitleMouseLeave"], _excluded2$6 = ["active"];
-    var InternalSubMenu = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var style2 = props2.style, className = props2.className, title = props2.title, eventKey = props2.eventKey;
-      props2.warnKey;
-      var disabled = props2.disabled, internalPopupClose = props2.internalPopupClose, children = props2.children, itemIcon = props2.itemIcon, expandIcon = props2.expandIcon, popupClassName = props2.popupClassName, popupOffset = props2.popupOffset, popupStyle = props2.popupStyle, onClick = props2.onClick, onMouseEnter = props2.onMouseEnter, onMouseLeave = props2.onMouseLeave, onTitleClick = props2.onTitleClick, onTitleMouseEnter = props2.onTitleMouseEnter, onTitleMouseLeave = props2.onTitleMouseLeave, restProps = _objectWithoutProperties(props2, _excluded$t);
+    var InternalSubMenu = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var style2 = props.style, className = props.className, title = props.title, eventKey = props.eventKey;
+      props.warnKey;
+      var disabled = props.disabled, internalPopupClose = props.internalPopupClose, children = props.children, itemIcon = props.itemIcon, expandIcon = props.expandIcon, popupClassName = props.popupClassName, popupOffset = props.popupOffset, popupStyle = props.popupStyle, onClick = props.onClick, onMouseEnter = props.onMouseEnter, onMouseLeave = props.onMouseLeave, onTitleClick = props.onTitleClick, onTitleMouseEnter = props.onTitleMouseEnter, onTitleMouseLeave = props.onTitleMouseLeave, restProps = _objectWithoutProperties(props, _excluded$t);
       var domDataId = useMenuId(eventKey);
       var _React$useContext = reactExports.useContext(MenuContext$1), prefixCls = _React$useContext.prefixCls, mode = _React$useContext.mode, openKeys = _React$useContext.openKeys, contextDisabled = _React$useContext.disabled, overflowDisabled = _React$useContext.overflowDisabled, activeKey = _React$useContext.activeKey, selectedKeys = _React$useContext.selectedKeys, contextItemIcon = _React$useContext.itemIcon, contextExpandIcon = _React$useContext.expandIcon, onItemClick = _React$useContext.onItemClick, onOpenChange = _React$useContext.onOpenChange, onActive = _React$useContext.onActive;
       var _React$useContext2 = reactExports.useContext(PrivateContext), _internalRenderSubMenuItem = _React$useContext2._internalRenderSubMenuItem;
@@ -34821,7 +34797,7 @@ var require_admin = __commonJS({
         onFocus: onInternalFocus
       }, activeProps), title, /* @__PURE__ */ reactExports.createElement(Icon$1, {
         icon: mode !== "horizontal" ? mergedExpandIcon : void 0,
-        props: _objectSpread2(_objectSpread2({}, props2), {}, {
+        props: _objectSpread2(_objectSpread2({}, props), {}, {
           isOpen: open2,
           // [Legacy] Not sure why need this mark
           isSubMenu: true
@@ -34873,7 +34849,7 @@ var require_admin = __commonJS({
         keyPath: connectedPath
       }, children));
       if (_internalRenderSubMenuItem) {
-        listNode = _internalRenderSubMenuItem(listNode, props2, {
+        listNode = _internalRenderSubMenuItem(listNode, props, {
           selected: childrenSelected,
           active: mergedActive,
           open: open2,
@@ -34887,8 +34863,8 @@ var require_admin = __commonJS({
         expandIcon: mergedExpandIcon
       }, listNode);
     });
-    var SubMenu$1 = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var eventKey = props2.eventKey, children = props2.children;
+    var SubMenu$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var eventKey = props.eventKey, children = props.children;
       var connectedKeyPath = useFullPath(eventKey);
       var childList = parseChildren(children, connectedKeyPath);
       var measure = useMeasure();
@@ -34906,7 +34882,7 @@ var require_admin = __commonJS({
       } else {
         renderNode = /* @__PURE__ */ reactExports.createElement(InternalSubMenu, _extends({
           ref
-        }, props2), childList);
+        }, props), childList);
       }
       return /* @__PURE__ */ reactExports.createElement(PathTrackerContext.Provider, {
         value: connectedKeyPath
@@ -34926,10 +34902,10 @@ var require_admin = __commonJS({
       });
     }
     var _excluded$s = ["className", "title", "eventKey", "children"];
-    var InternalMenuItemGroup = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var className = props2.className, title = props2.title;
-      props2.eventKey;
-      var children = props2.children, restProps = _objectWithoutProperties(props2, _excluded$s);
+    var InternalMenuItemGroup = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var className = props.className, title = props.title;
+      props.eventKey;
+      var children = props.children, restProps = _objectWithoutProperties(props, _excluded$s);
       var _React$useContext = reactExports.useContext(MenuContext$1), prefixCls = _React$useContext.prefixCls;
       var groupPrefixCls = "".concat(prefixCls, "-item-group");
       return /* @__PURE__ */ reactExports.createElement("li", _extends({
@@ -34949,8 +34925,8 @@ var require_admin = __commonJS({
         className: "".concat(groupPrefixCls, "-list")
       }, children));
     });
-    var MenuItemGroup = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var eventKey = props2.eventKey, children = props2.children;
+    var MenuItemGroup = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var eventKey = props.eventKey, children = props.children;
       var connectedKeyPath = useFullPath(eventKey);
       var childList = parseChildren(children, connectedKeyPath);
       var measure = useMeasure();
@@ -34959,7 +34935,7 @@ var require_admin = __commonJS({
       }
       return /* @__PURE__ */ reactExports.createElement(InternalMenuItemGroup, _extends({
         ref
-      }, omit$1(props2, ["warnKey"])), childList);
+      }, omit(props, ["warnKey"])), childList);
     });
     var _excluded$r = ["label", "children", "key", "type", "extra"];
     function convertItemsToNodes(list, components2, prefixCls) {
@@ -35013,9 +34989,9 @@ var require_admin = __commonJS({
     }
     var _excluded$q = ["prefixCls", "rootClassName", "style", "className", "tabIndex", "items", "children", "direction", "id", "mode", "inlineCollapsed", "disabled", "disabledOverflow", "subMenuOpenDelay", "subMenuCloseDelay", "forceSubMenuRender", "defaultOpenKeys", "openKeys", "activeKey", "defaultActiveFirst", "selectable", "multiple", "defaultSelectedKeys", "selectedKeys", "onSelect", "onDeselect", "inlineIndent", "motion", "defaultMotions", "triggerSubMenuAction", "builtinPlacements", "itemIcon", "expandIcon", "overflowedIndicator", "overflowedIndicatorPopupClassName", "getPopupContainer", "onClick", "onOpenChange", "onKeyDown", "openAnimation", "openTransitionName", "_internalRenderMenuItem", "_internalRenderSubMenuItem", "_internalComponents"];
     var EMPTY_LIST$3 = [];
-    var Menu$1 = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
+    var Menu$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
       var _childList$;
-      var _ref = props2, _ref$prefixCls = _ref.prefixCls, prefixCls = _ref$prefixCls === void 0 ? "rc-menu" : _ref$prefixCls, rootClassName = _ref.rootClassName, style2 = _ref.style, className = _ref.className, _ref$tabIndex = _ref.tabIndex, tabIndex = _ref$tabIndex === void 0 ? 0 : _ref$tabIndex, items2 = _ref.items, children = _ref.children, direction = _ref.direction, id2 = _ref.id, _ref$mode = _ref.mode, mode = _ref$mode === void 0 ? "vertical" : _ref$mode, inlineCollapsed = _ref.inlineCollapsed, disabled = _ref.disabled, disabledOverflow = _ref.disabledOverflow, _ref$subMenuOpenDelay = _ref.subMenuOpenDelay, subMenuOpenDelay = _ref$subMenuOpenDelay === void 0 ? 0.1 : _ref$subMenuOpenDelay, _ref$subMenuCloseDela = _ref.subMenuCloseDelay, subMenuCloseDelay = _ref$subMenuCloseDela === void 0 ? 0.1 : _ref$subMenuCloseDela, forceSubMenuRender = _ref.forceSubMenuRender, defaultOpenKeys = _ref.defaultOpenKeys, openKeys = _ref.openKeys, activeKey = _ref.activeKey, defaultActiveFirst = _ref.defaultActiveFirst, _ref$selectable = _ref.selectable, selectable = _ref$selectable === void 0 ? true : _ref$selectable, _ref$multiple = _ref.multiple, multiple = _ref$multiple === void 0 ? false : _ref$multiple, defaultSelectedKeys = _ref.defaultSelectedKeys, selectedKeys = _ref.selectedKeys, onSelect = _ref.onSelect, onDeselect = _ref.onDeselect, _ref$inlineIndent = _ref.inlineIndent, inlineIndent = _ref$inlineIndent === void 0 ? 24 : _ref$inlineIndent, motion2 = _ref.motion, defaultMotions = _ref.defaultMotions, _ref$triggerSubMenuAc = _ref.triggerSubMenuAction, triggerSubMenuAction = _ref$triggerSubMenuAc === void 0 ? "hover" : _ref$triggerSubMenuAc, builtinPlacements = _ref.builtinPlacements, itemIcon = _ref.itemIcon, expandIcon = _ref.expandIcon, _ref$overflowedIndica = _ref.overflowedIndicator, overflowedIndicator = _ref$overflowedIndica === void 0 ? "..." : _ref$overflowedIndica, overflowedIndicatorPopupClassName = _ref.overflowedIndicatorPopupClassName, getPopupContainer = _ref.getPopupContainer, onClick = _ref.onClick, onOpenChange = _ref.onOpenChange, onKeyDown2 = _ref.onKeyDown;
+      var _ref = props, _ref$prefixCls = _ref.prefixCls, prefixCls = _ref$prefixCls === void 0 ? "rc-menu" : _ref$prefixCls, rootClassName = _ref.rootClassName, style2 = _ref.style, className = _ref.className, _ref$tabIndex = _ref.tabIndex, tabIndex = _ref$tabIndex === void 0 ? 0 : _ref$tabIndex, items2 = _ref.items, children = _ref.children, direction = _ref.direction, id2 = _ref.id, _ref$mode = _ref.mode, mode = _ref$mode === void 0 ? "vertical" : _ref$mode, inlineCollapsed = _ref.inlineCollapsed, disabled = _ref.disabled, disabledOverflow = _ref.disabledOverflow, _ref$subMenuOpenDelay = _ref.subMenuOpenDelay, subMenuOpenDelay = _ref$subMenuOpenDelay === void 0 ? 0.1 : _ref$subMenuOpenDelay, _ref$subMenuCloseDela = _ref.subMenuCloseDelay, subMenuCloseDelay = _ref$subMenuCloseDela === void 0 ? 0.1 : _ref$subMenuCloseDela, forceSubMenuRender = _ref.forceSubMenuRender, defaultOpenKeys = _ref.defaultOpenKeys, openKeys = _ref.openKeys, activeKey = _ref.activeKey, defaultActiveFirst = _ref.defaultActiveFirst, _ref$selectable = _ref.selectable, selectable = _ref$selectable === void 0 ? true : _ref$selectable, _ref$multiple = _ref.multiple, multiple = _ref$multiple === void 0 ? false : _ref$multiple, defaultSelectedKeys = _ref.defaultSelectedKeys, selectedKeys = _ref.selectedKeys, onSelect = _ref.onSelect, onDeselect = _ref.onDeselect, _ref$inlineIndent = _ref.inlineIndent, inlineIndent = _ref$inlineIndent === void 0 ? 24 : _ref$inlineIndent, motion2 = _ref.motion, defaultMotions = _ref.defaultMotions, _ref$triggerSubMenuAc = _ref.triggerSubMenuAction, triggerSubMenuAction = _ref$triggerSubMenuAc === void 0 ? "hover" : _ref$triggerSubMenuAc, builtinPlacements = _ref.builtinPlacements, itemIcon = _ref.itemIcon, expandIcon = _ref.expandIcon, _ref$overflowedIndica = _ref.overflowedIndicator, overflowedIndicator = _ref$overflowedIndica === void 0 ? "..." : _ref$overflowedIndica, overflowedIndicatorPopupClassName = _ref.overflowedIndicatorPopupClassName, getPopupContainer = _ref.getPopupContainer, onClick = _ref.onClick, onOpenChange = _ref.onOpenChange, onKeyDown2 = _ref.onKeyDown;
       _ref.openAnimation;
       _ref.openTransitionName;
       var _internalRenderMenuItem = _ref._internalRenderMenuItem, _internalRenderSubMenuItem = _ref._internalRenderSubMenuItem, _internalComponents = _ref._internalComponents, restProps = _objectWithoutProperties(_ref, _excluded$q);
@@ -35080,7 +35056,7 @@ var require_admin = __commonJS({
           mountRef.current = false;
         };
       }, []);
-      var _useKeyRecords = useKeyRecords(), registerPath = _useKeyRecords.registerPath, unregisterPath = _useKeyRecords.unregisterPath, refreshOverflowKeys = _useKeyRecords.refreshOverflowKeys, isSubPathKey = _useKeyRecords.isSubPathKey, getKeyPath = _useKeyRecords.getKeyPath, getKeys2 = _useKeyRecords.getKeys, getSubPathKeys = _useKeyRecords.getSubPathKeys;
+      var _useKeyRecords = useKeyRecords(), registerPath = _useKeyRecords.registerPath, unregisterPath = _useKeyRecords.unregisterPath, refreshOverflowKeys = _useKeyRecords.refreshOverflowKeys, isSubPathKey = _useKeyRecords.isSubPathKey, getKeyPath = _useKeyRecords.getKeyPath, getKeys = _useKeyRecords.getKeys, getSubPathKeys = _useKeyRecords.getSubPathKeys;
       var registerPathContext = reactExports.useMemo(function() {
         return {
           registerPath,
@@ -35111,7 +35087,7 @@ var require_admin = __commonJS({
           list: containerRef.current,
           focus: function focus(options) {
             var _childList$find;
-            var keys2 = getKeys2();
+            var keys2 = getKeys();
             var _refreshElements = refreshElements(keys2, uuid2), elements = _refreshElements.elements, key2element = _refreshElements.key2element, element2key = _refreshElements.element2key;
             var focusableElements = getFocusableElements(containerRef.current, elements);
             var shouldFocusKey = mergedActiveKey !== null && mergedActiveKey !== void 0 ? mergedActiveKey : focusableElements[0] ? element2key.get(focusableElements[0]) : (_childList$find = childList.find(function(node2) {
@@ -35184,7 +35160,7 @@ var require_admin = __commonJS({
             return !subPathKeys.has(k2);
           });
         }
-        if (!isEqual$1(mergedOpenKeys, newOpenKeys, true)) {
+        if (!isEqual(mergedOpenKeys, newOpenKeys, true)) {
           triggerOpenKeys(newOpenKeys, true);
         }
       });
@@ -35192,7 +35168,7 @@ var require_admin = __commonJS({
         var nextOpen = open2 !== null && open2 !== void 0 ? open2 : !mergedOpenKeys.includes(key);
         onInternalOpenChange(key, nextOpen);
       };
-      var onInternalKeyDown = useAccessibility(internalMode, mergedActiveKey, isRtl, uuid2, containerRef, getKeys2, getKeyPath, setMergedActiveKey, triggerAccessibilityOpen, onKeyDown2);
+      var onInternalKeyDown = useAccessibility(internalMode, mergedActiveKey, isRtl, uuid2, containerRef, getKeys, getKeyPath, setMergedActiveKey, triggerAccessibilityOpen, onKeyDown2);
       reactExports.useEffect(function() {
         setMounted(true);
       }, []);
@@ -35293,8 +35269,8 @@ var require_admin = __commonJS({
     ExportMenu.ItemGroup = MenuItemGroup;
     ExportMenu.Divider = Divider$1;
     var LeftOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z" } }] }, "name": "left", "theme": "outlined" };
-    var LeftOutlined = function LeftOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var LeftOutlined = function LeftOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: LeftOutlined$1
       }));
@@ -35302,8 +35278,8 @@ var require_admin = __commonJS({
     var RefIcon$u = /* @__PURE__ */ reactExports.forwardRef(LeftOutlined);
     const SiderContext = /* @__PURE__ */ reactExports.createContext({});
     var EllipsisOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M176 511a56 56 0 10112 0 56 56 0 10-112 0zm280 0a56 56 0 10112 0 56 56 0 10-112 0zm280 0a56 56 0 10112 0 56 56 0 10-112 0z" } }] }, "name": "ellipsis", "theme": "outlined" };
-    var EllipsisOutlined = function EllipsisOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var EllipsisOutlined = function EllipsisOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: EllipsisOutlined$1
       }));
@@ -35322,12 +35298,12 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const MenuDivider = (props2) => {
+    const MenuDivider = (props) => {
       const {
         prefixCls: customizePrefixCls,
         className,
         dashed
-      } = props2, restProps = __rest$H(props2, ["prefixCls", "className", "dashed"]);
+      } = props, restProps = __rest$H(props, ["prefixCls", "className", "dashed"]);
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
@@ -35339,7 +35315,7 @@ var require_admin = __commonJS({
         className: classString
       }, restProps));
     };
-    const MenuItem = (props2) => {
+    const MenuItem = (props) => {
       var _a2;
       const {
         className,
@@ -35347,7 +35323,7 @@ var require_admin = __commonJS({
         icon,
         title,
         danger
-      } = props2;
+      } = props;
       const {
         prefixCls,
         firstLevel,
@@ -35386,7 +35362,7 @@ var require_admin = __commonJS({
         tooltipProps.open = false;
       }
       const childrenLength = toArray$5(children).length;
-      let returnNode = /* @__PURE__ */ reactExports.createElement(MenuItem$2, Object.assign({}, omit$1(props2, ["title", "icon", "danger"]), {
+      let returnNode = /* @__PURE__ */ reactExports.createElement(MenuItem$2, Object.assign({}, omit(props, ["title", "icon", "danger"]), {
         className: classNames({
           [`${prefixCls}-item-danger`]: danger,
           [`${prefixCls}-item-only-child`]: (icon ? childrenLength + 1 : childrenLength) === 1
@@ -35412,10 +35388,10 @@ var require_admin = __commonJS({
       return t2;
     };
     const OverrideContext = /* @__PURE__ */ reactExports.createContext(null);
-    const OverrideProvider = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const OverrideProvider = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         children
-      } = props2, restProps = __rest$G(props2, ["children"]);
+      } = props, restProps = __rest$G(props, ["children"]);
       const override = reactExports.useContext(OverrideContext);
       const context = reactExports.useMemo(() => Object.assign(Object.assign({}, override), restProps), [
         override,
@@ -36451,14 +36427,14 @@ var require_admin = __commonJS({
       });
       return useStyle2(prefixCls, rootCls);
     };
-    const SubMenu = (props2) => {
+    const SubMenu = (props) => {
       var _a2;
       const {
         popupClassName,
         icon,
         title,
         theme: customTheme
-      } = props2;
+      } = props;
       const context = reactExports.useContext(MenuContext);
       const {
         prefixCls,
@@ -36487,12 +36463,12 @@ var require_admin = __commonJS({
       const [zIndex] = useZIndex("Menu");
       return /* @__PURE__ */ reactExports.createElement(MenuContext.Provider, {
         value: contextValue
-      }, /* @__PURE__ */ reactExports.createElement(SubMenu$1, Object.assign({}, omit$1(props2, ["icon"]), {
+      }, /* @__PURE__ */ reactExports.createElement(SubMenu$1, Object.assign({}, omit(props, ["icon"]), {
         title: titleNode,
         popupClassName: classNames(prefixCls, popupClassName, `${prefixCls}-${customTheme || contextTheme}`),
         popupStyle: Object.assign({
           zIndex
-        }, props2.popupStyle)
+        }, props.popupStyle)
       })));
     };
     var __rest$F = function(s, e2) {
@@ -36511,7 +36487,7 @@ var require_admin = __commonJS({
       submenu: SubMenu,
       divider: MenuDivider
     };
-    const InternalMenu = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const InternalMenu = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       var _a2;
       const override = reactExports.useContext(OverrideContext);
       const overrideObj = override || {};
@@ -36536,8 +36512,8 @@ var require_admin = __commonJS({
         selectable,
         onClick,
         overflowedIndicatorPopupClassName
-      } = props2, restProps = __rest$F(props2, ["prefixCls", "className", "style", "theme", "expandIcon", "_internalDisableMenuItemTitleTooltip", "inlineCollapsed", "siderCollapsed", "rootClassName", "mode", "selectable", "onClick", "overflowedIndicatorPopupClassName"]);
-      const passedProps = omit$1(restProps, ["collapsedWidth"]);
+      } = props, restProps = __rest$F(props, ["prefixCls", "className", "style", "theme", "expandIcon", "_internalDisableMenuItemTitleTooltip", "inlineCollapsed", "siderCollapsed", "rootClassName", "mode", "selectable", "onClick", "overflowedIndicatorPopupClassName"]);
+      const passedProps = omit(restProps, ["collapsedWidth"]);
       (_a2 = overrideObj.validator) === null || _a2 === void 0 ? void 0 : _a2.call(overrideObj, {
         mode
       });
@@ -36616,7 +36592,7 @@ var require_admin = __commonJS({
         _internalComponents: MENU_COMPONENTS
       })))));
     });
-    const Menu = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const Menu = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const menuRef = reactExports.useRef(null);
       const context = reactExports.useContext(SiderContext);
       reactExports.useImperativeHandle(ref, () => ({
@@ -36628,7 +36604,7 @@ var require_admin = __commonJS({
       }));
       return /* @__PURE__ */ reactExports.createElement(InternalMenu, Object.assign({
         ref: menuRef
-      }, props2, context));
+      }, props, context));
     });
     Menu.Item = MenuItem;
     Menu.SubMenu = SubMenu;
@@ -36940,7 +36916,7 @@ var require_admin = __commonJS({
     }, prepareComponentToken$e, {
       resetStyle: false
     });
-    const Dropdown$1 = (props2) => {
+    const Dropdown$1 = (props) => {
       var _a2;
       const {
         menu,
@@ -36965,7 +36941,7 @@ var require_admin = __commonJS({
         placement = "",
         overlay,
         transitionName
-      } = props2;
+      } = props;
       const {
         getPopupContainer: getContextPopupContainer,
         getPrefixCls,
@@ -37065,7 +37041,7 @@ var require_admin = __commonJS({
       const [zIndex, contextZIndex] = useZIndex("Dropdown", overlayStyle === null || overlayStyle === void 0 ? void 0 : overlayStyle.zIndex);
       let renderNode = /* @__PURE__ */ reactExports.createElement(Dropdown$3, Object.assign({
         alignPoint
-      }, omit$1(props2, ["rootClassName"]), {
+      }, omit(props, ["rootClassName"]), {
         mouseEnterDelay,
         mouseLeaveDelay,
         visible: mergedOpen,
@@ -37090,8 +37066,8 @@ var require_admin = __commonJS({
       }
       return wrapCSSVar(renderNode);
     };
-    function postPureProps(props2) {
-      return Object.assign(Object.assign({}, props2), {
+    function postPureProps(props) {
+      return Object.assign(Object.assign({}, props), {
         align: {
           overflow: {
             adjustX: false,
@@ -37101,15 +37077,15 @@ var require_admin = __commonJS({
       });
     }
     const PurePanel$3 = genPurePanel(Dropdown$1, "dropdown", (prefixCls) => prefixCls, postPureProps);
-    const WrapPurePanel = (props2) => /* @__PURE__ */ reactExports.createElement(PurePanel$3, Object.assign({}, props2), /* @__PURE__ */ reactExports.createElement("span", null));
+    const WrapPurePanel = (props) => /* @__PURE__ */ reactExports.createElement(PurePanel$3, Object.assign({}, props), /* @__PURE__ */ reactExports.createElement("span", null));
     Dropdown$1._InternalPanelDoNotUseOrYouWillBeFired = WrapPurePanel;
     const RadioGroupContext = /* @__PURE__ */ reactExports.createContext(null);
     const RadioGroupContextProvider = RadioGroupContext.Provider;
     const RadioOptionTypeContext = /* @__PURE__ */ reactExports.createContext(null);
     const RadioOptionTypeContextProvider = RadioOptionTypeContext.Provider;
     var _excluded$p = ["prefixCls", "className", "style", "checked", "disabled", "defaultChecked", "type", "title", "onChange"];
-    var Checkbox$2 = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-checkbox" : _props$prefixCls, className = props2.className, style2 = props2.style, checked = props2.checked, disabled = props2.disabled, _props$defaultChecked = props2.defaultChecked, defaultChecked = _props$defaultChecked === void 0 ? false : _props$defaultChecked, _props$type = props2.type, type2 = _props$type === void 0 ? "checkbox" : _props$type, title = props2.title, onChange = props2.onChange, inputProps = _objectWithoutProperties(props2, _excluded$p);
+    var Checkbox$2 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-checkbox" : _props$prefixCls, className = props.className, style2 = props.style, checked = props.checked, disabled = props.disabled, _props$defaultChecked = props.defaultChecked, defaultChecked = _props$defaultChecked === void 0 ? false : _props$defaultChecked, _props$type = props.type, type2 = _props$type === void 0 ? "checkbox" : _props$type, title = props.title, onChange = props.onChange, inputProps = _objectWithoutProperties(props, _excluded$p);
       var inputRef = reactExports.useRef(null);
       var holderRef = reactExports.useRef(null);
       var _useMergedState = useMergedState(defaultChecked, {
@@ -37134,11 +37110,11 @@ var require_admin = __commonJS({
         if (disabled) {
           return;
         }
-        if (!("checked" in props2)) {
+        if (!("checked" in props)) {
           setRawValue(e2.target.checked);
         }
         onChange === null || onChange === void 0 || onChange({
-          target: _objectSpread2(_objectSpread2({}, props2), {}, {
+          target: _objectSpread2(_objectSpread2({}, props), {}, {
             type: type2,
             checked: e2.target.checked
           }),
@@ -37627,7 +37603,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const InternalRadio = (props2, ref) => {
+    const InternalRadio = (props, ref) => {
       var _a2, _b;
       const groupContext = reactExports.useContext(RadioGroupContext);
       const radioOptionTypeContext = reactExports.useContext(RadioOptionTypeContext);
@@ -37643,7 +37619,7 @@ var require_admin = __commonJS({
       } = reactExports.useContext(FormItemInputContext);
       const onChange = (e2) => {
         var _a22, _b2;
-        (_a22 = props2.onChange) === null || _a22 === void 0 ? void 0 : _a22.call(props2, e2);
+        (_a22 = props.onChange) === null || _a22 === void 0 ? void 0 : _a22.call(props, e2);
         (_b2 = groupContext === null || groupContext === void 0 ? void 0 : groupContext.onChange) === null || _b2 === void 0 ? void 0 : _b2.call(groupContext, e2);
       };
       const {
@@ -37653,7 +37629,7 @@ var require_admin = __commonJS({
         children,
         style: style2,
         title
-      } = props2, restProps = __rest$E(props2, ["prefixCls", "className", "rootClassName", "children", "style", "title"]);
+      } = props, restProps = __rest$E(props, ["prefixCls", "className", "rootClassName", "children", "style", "title"]);
       const radioPrefixCls = getPrefixCls("radio", customizePrefixCls);
       const isButtonType = ((groupContext === null || groupContext === void 0 ? void 0 : groupContext.optionType) || radioOptionTypeContext) === "button";
       const prefixCls = isButtonType ? `${radioPrefixCls}-button` : radioPrefixCls;
@@ -37664,7 +37640,7 @@ var require_admin = __commonJS({
       if (groupContext) {
         radioProps.name = groupContext.name;
         radioProps.onChange = onChange;
-        radioProps.checked = props2.value === groupContext.value;
+        radioProps.checked = props.value === groupContext.value;
         radioProps.disabled = (_a2 = radioProps.disabled) !== null && _a2 !== void 0 ? _a2 : groupContext.disabled;
       }
       radioProps.disabled = (_b = radioProps.disabled) !== null && _b !== void 0 ? _b : disabled;
@@ -37681,8 +37657,8 @@ var require_admin = __commonJS({
       }, /* @__PURE__ */ reactExports.createElement("label", {
         className: wrapperClassString,
         style: Object.assign(Object.assign({}, radio === null || radio === void 0 ? void 0 : radio.style), style2),
-        onMouseEnter: props2.onMouseEnter,
-        onMouseLeave: props2.onMouseLeave,
+        onMouseEnter: props.onMouseEnter,
+        onMouseLeave: props.onMouseLeave,
         title
       }, /* @__PURE__ */ reactExports.createElement(Checkbox$2, Object.assign({}, radioProps, {
         className: classNames(radioProps.className, {
@@ -37694,7 +37670,7 @@ var require_admin = __commonJS({
       })), children !== void 0 ? /* @__PURE__ */ reactExports.createElement("span", null, children) : null)));
     };
     const Radio$1 = /* @__PURE__ */ reactExports.forwardRef(InternalRadio);
-    const RadioGroup = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const RadioGroup = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         getPrefixCls,
         direction
@@ -37720,14 +37696,14 @@ var require_admin = __commonJS({
         onMouseLeave,
         onFocus,
         onBlur
-      } = props2;
+      } = props;
       const [value, setValue] = useMergedState(defaultValue, {
         value: customizedValue
       });
       const onRadioChange = reactExports.useCallback((event) => {
         const lastValue = value;
         const val = event.target.value;
-        if (!("value" in props2)) {
+        if (!("value" in props)) {
           setValue(val);
         }
         if (val !== lastValue) {
@@ -37777,7 +37753,7 @@ var require_admin = __commonJS({
         optionType,
         block
       }), [onRadioChange, value, disabled, name, optionType, block]);
-      return wrapCSSVar(/* @__PURE__ */ reactExports.createElement("div", Object.assign({}, pickAttrs(props2, {
+      return wrapCSSVar(/* @__PURE__ */ reactExports.createElement("div", Object.assign({}, pickAttrs(props, {
         aria: true,
         data: true
       }), {
@@ -37802,13 +37778,13 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const RadioButton = (props2, ref) => {
+    const RadioButton = (props, ref) => {
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
       const {
         prefixCls: customizePrefixCls
-      } = props2, radioProps = __rest$D(props2, ["prefixCls"]);
+      } = props, radioProps = __rest$D(props, ["prefixCls"]);
       const prefixCls = getPrefixCls("radio", customizePrefixCls);
       return /* @__PURE__ */ reactExports.createElement(RadioOptionTypeContextProvider, {
         value: "button"
@@ -38828,8 +38804,8 @@ var require_admin = __commonJS({
       resetFont: false
     });
     var PlusOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z" } }, { "tag": "path", "attrs": { "d": "M192 474h672q8 0 8 8v60q0 8-8 8H160q-8 0-8-8v-60q0-8 8-8z" } }] }, "name": "plus", "theme": "outlined" };
-    var PlusOutlined = function PlusOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var PlusOutlined = function PlusOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: PlusOutlined$1
       }));
@@ -39163,8 +39139,8 @@ var require_admin = __commonJS({
       }
       return true;
     }
-    var AddButton = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var prefixCls = props2.prefixCls, editable = props2.editable, locale2 = props2.locale, style2 = props2.style;
+    var AddButton = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var prefixCls = props.prefixCls, editable = props.editable, locale2 = props.locale, style2 = props.style;
       if (!editable || editable.showAdd === false) {
         return null;
       }
@@ -39181,8 +39157,8 @@ var require_admin = __commonJS({
         }
       }, editable.addIcon || "+");
     });
-    var ExtraContent = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var position2 = props2.position, prefixCls = props2.prefixCls, extra = props2.extra;
+    var ExtraContent = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var position2 = props.position, prefixCls = props.prefixCls, extra = props.extra;
       if (!extra) {
         return null;
       }
@@ -39204,8 +39180,8 @@ var require_admin = __commonJS({
         ref
       }, content) : null;
     });
-    var OperationNode = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var prefixCls = props2.prefixCls, id2 = props2.id, tabs = props2.tabs, locale2 = props2.locale, mobile = props2.mobile, _props$more = props2.more, moreProps = _props$more === void 0 ? {} : _props$more, style2 = props2.style, className = props2.className, editable = props2.editable, tabBarGutter = props2.tabBarGutter, rtl = props2.rtl, removeAriaLabel = props2.removeAriaLabel, onTabClick = props2.onTabClick, getPopupContainer = props2.getPopupContainer, popupClassName = props2.popupClassName;
+    var OperationNode = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var prefixCls = props.prefixCls, id2 = props.id, tabs = props.tabs, locale2 = props.locale, mobile = props.mobile, _props$more = props.more, moreProps = _props$more === void 0 ? {} : _props$more, style2 = props.style, className = props.className, editable = props.editable, tabBarGutter = props.tabBarGutter, rtl = props.rtl, removeAriaLabel = props.removeAriaLabel, onTabClick = props.onTabClick, getPopupContainer = props.getPopupContainer, popupClassName = props.popupClassName;
       var _useState = reactExports.useState(false), _useState2 = _slicedToArray(_useState, 2), open2 = _useState2[0], setOpen = _useState2[1];
       var _useState3 = reactExports.useState(null), _useState4 = _slicedToArray(_useState3, 2), selectedKey = _useState4[0], setSelectedKey = _useState4[1];
       var _moreProps$icon = moreProps.icon, moreIcon = _moreProps$icon === void 0 ? "More" : _moreProps$icon;
@@ -39355,8 +39331,8 @@ var require_admin = __commonJS({
         next2.tabMoving
       );
     });
-    var TabNode = function TabNode2(props2) {
-      var prefixCls = props2.prefixCls, id2 = props2.id, active = props2.active, _props$tab = props2.tab, key = _props$tab.key, label = _props$tab.label, disabled = _props$tab.disabled, closeIcon = _props$tab.closeIcon, icon = _props$tab.icon, closable = props2.closable, renderWrapper = props2.renderWrapper, removeAriaLabel = props2.removeAriaLabel, editable = props2.editable, onClick = props2.onClick, onFocus = props2.onFocus, style2 = props2.style;
+    var TabNode = function TabNode2(props) {
+      var prefixCls = props.prefixCls, id2 = props.id, active = props.active, _props$tab = props.tab, key = _props$tab.key, label = _props$tab.label, disabled = _props$tab.disabled, closeIcon = _props$tab.closeIcon, icon = _props$tab.icon, closable = props.closable, renderWrapper = props.renderWrapper, removeAriaLabel = props.removeAriaLabel, editable = props.editable, onClick = props.onClick, onFocus = props.onFocus, style2 = props.style;
       var tabPrefix = "".concat(prefixCls, "-tab");
       var removable = getRemovable(closable, closeIcon, editable, disabled);
       function onInternalClick(e2) {
@@ -39436,8 +39412,8 @@ var require_admin = __commonJS({
     var getUnitValue = function getUnitValue2(size, tabPositionTopOrBottom) {
       return size[tabPositionTopOrBottom ? 0 : 1];
     };
-    var TabNavList = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var className = props2.className, style2 = props2.style, id2 = props2.id, animated = props2.animated, activeKey = props2.activeKey, rtl = props2.rtl, extra = props2.extra, editable = props2.editable, locale2 = props2.locale, tabPosition = props2.tabPosition, tabBarGutter = props2.tabBarGutter, children = props2.children, onTabClick = props2.onTabClick, onTabScroll = props2.onTabScroll, indicator = props2.indicator;
+    var TabNavList = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var className = props.className, style2 = props.style, id2 = props.id, animated = props.animated, activeKey = props.activeKey, rtl = props.rtl, extra = props.extra, editable = props.editable, locale2 = props.locale, tabPosition = props.tabPosition, tabBarGutter = props.tabBarGutter, children = props.children, onTabClick = props.onTabClick, onTabScroll = props.onTabScroll, indicator = props.indicator;
       var _React$useContext = reactExports.useContext(TabContext), prefixCls = _React$useContext.prefixCls, tabs = _React$useContext.tabs;
       var containerRef = reactExports.useRef(null);
       var extraLeftRef = reactExports.useRef(null);
@@ -39545,7 +39521,7 @@ var require_admin = __commonJS({
         addSizeValue,
         // Operation
         operationSizeValue,
-        _objectSpread2(_objectSpread2({}, props2), {}, {
+        _objectSpread2(_objectSpread2({}, props), {}, {
           tabs
         })
       ), _useVisibleRange2 = _slicedToArray(_useVisibleRange, 2), visibleStart = _useVisibleRange2[0], visibleEnd = _useVisibleRange2[1];
@@ -39733,7 +39709,7 @@ var require_admin = __commonJS({
       }), /* @__PURE__ */ reactExports.createElement("div", {
         className: classNames("".concat(prefixCls, "-ink-bar"), _defineProperty({}, "".concat(prefixCls, "-ink-bar-animated"), animated.inkBar)),
         style: indicatorStyle
-      }))))), /* @__PURE__ */ reactExports.createElement(OperationNode$1, _extends({}, props2, {
+      }))))), /* @__PURE__ */ reactExports.createElement(OperationNode$1, _extends({}, props, {
         removeAriaLabel: locale2 === null || locale2 === void 0 ? void 0 : locale2.removeAriaLabel,
         ref: operationsRef,
         prefixCls,
@@ -39747,8 +39723,8 @@ var require_admin = __commonJS({
         prefixCls
       })));
     });
-    var TabPane$1 = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var prefixCls = props2.prefixCls, className = props2.className, style2 = props2.style, id2 = props2.id, active = props2.active, tabKey = props2.tabKey, children = props2.children;
+    var TabPane$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var prefixCls = props.prefixCls, className = props.className, style2 = props.style, id2 = props.id, active = props.active, tabKey = props.tabKey, children = props.children;
       return /* @__PURE__ */ reactExports.createElement("div", {
         id: id2 && "".concat(id2, "-panel-").concat(tabKey),
         role: "tabpanel",
@@ -39781,8 +39757,8 @@ var require_admin = __commonJS({
       return /* @__PURE__ */ reactExports.createElement(TabNavList, restProps);
     };
     var _excluded$n = ["key", "forceRender", "style", "className", "destroyInactiveTabPane"];
-    var TabPanelList = function TabPanelList2(props2) {
-      var id2 = props2.id, activeKey = props2.activeKey, animated = props2.animated, tabPosition = props2.tabPosition, destroyInactiveTabPane = props2.destroyInactiveTabPane;
+    var TabPanelList = function TabPanelList2(props) {
+      var id2 = props.id, activeKey = props.activeKey, animated = props.animated, tabPosition = props.tabPosition, destroyInactiveTabPane = props.destroyInactiveTabPane;
       var _React$useContext = reactExports.useContext(TabContext), prefixCls = _React$useContext.prefixCls, tabs = _React$useContext.tabs;
       var tabPaneAnimated = animated.tabPane;
       var tabPanePrefixCls = "".concat(prefixCls, "-tabpane");
@@ -39845,8 +39821,8 @@ var require_admin = __commonJS({
     }
     var _excluded$m = ["id", "prefixCls", "className", "items", "direction", "activeKey", "defaultActiveKey", "editable", "animated", "tabPosition", "tabBarGutter", "tabBarStyle", "tabBarExtraContent", "locale", "more", "destroyInactiveTabPane", "renderTabBar", "onChange", "onTabClick", "onTabScroll", "getPopupContainer", "popupClassName", "indicator"];
     var uuid = 0;
-    var Tabs$1 = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var id2 = props2.id, _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-tabs" : _props$prefixCls, className = props2.className, items2 = props2.items, direction = props2.direction, activeKey = props2.activeKey, defaultActiveKey = props2.defaultActiveKey, editable = props2.editable, animated = props2.animated, _props$tabPosition = props2.tabPosition, tabPosition = _props$tabPosition === void 0 ? "top" : _props$tabPosition, tabBarGutter = props2.tabBarGutter, tabBarStyle = props2.tabBarStyle, tabBarExtraContent = props2.tabBarExtraContent, locale2 = props2.locale, more = props2.more, destroyInactiveTabPane = props2.destroyInactiveTabPane, renderTabBar = props2.renderTabBar, onChange = props2.onChange, onTabClick = props2.onTabClick, onTabScroll = props2.onTabScroll, getPopupContainer = props2.getPopupContainer, popupClassName = props2.popupClassName, indicator = props2.indicator, restProps = _objectWithoutProperties(props2, _excluded$m);
+    var Tabs$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var id2 = props.id, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-tabs" : _props$prefixCls, className = props.className, items2 = props.items, direction = props.direction, activeKey = props.activeKey, defaultActiveKey = props.defaultActiveKey, editable = props.editable, animated = props.animated, _props$tabPosition = props.tabPosition, tabPosition = _props$tabPosition === void 0 ? "top" : _props$tabPosition, tabBarGutter = props.tabBarGutter, tabBarStyle = props.tabBarStyle, tabBarExtraContent = props.tabBarExtraContent, locale2 = props.locale, more = props.more, destroyInactiveTabPane = props.destroyInactiveTabPane, renderTabBar = props.renderTabBar, onChange = props.onChange, onTabClick = props.onTabClick, onTabScroll = props.onTabScroll, getPopupContainer = props.getPopupContainer, popupClassName = props.popupClassName, indicator = props.indicator, restProps = _objectWithoutProperties(props, _excluded$m);
       var tabs = reactExports.useMemo(function() {
         return (items2 || []).filter(function(item) {
           return item && _typeof(item) === "object" && "key" in item;
@@ -39991,9 +39967,9 @@ var require_admin = __commonJS({
         if (/* @__PURE__ */ reactExports.isValidElement(node2)) {
           const {
             key,
-            props: props2
+            props
           } = node2;
-          const _a2 = props2 || {}, {
+          const _a2 = props || {}, {
             tab
           } = _a2, restProps = __rest$C(_a2, ["tab"]);
           const item = Object.assign(Object.assign({
@@ -40879,7 +40855,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const Tabs = (props2) => {
+    const Tabs = (props) => {
       var _a2, _b, _c, _d, _e2, _f, _g, _h, _j, _k, _l;
       const {
         type: type2,
@@ -40900,7 +40876,7 @@ var require_admin = __commonJS({
         style: style2,
         indicatorSize,
         indicator
-      } = props2, otherProps = __rest$B(props2, ["type", "className", "rootClassName", "size", "onEdit", "hideAdd", "centered", "addIcon", "removeIcon", "moreIcon", "more", "popupClassName", "children", "items", "animated", "style", "indicatorSize", "indicator"]);
+      } = props, otherProps = __rest$B(props, ["type", "className", "rootClassName", "size", "onEdit", "hideAdd", "centered", "addIcon", "removeIcon", "moreIcon", "more", "popupClassName", "children", "items", "animated", "style", "indicatorSize", "indicator"]);
       const {
         prefixCls: customizePrefixCls
       } = otherProps;
@@ -41085,7 +41061,7 @@ var require_admin = __commonJS({
               break;
             }
           }
-          var flattenNode = Object.assign(omit$1(treeNode, [].concat(_toConsumableArray(fieldTitles), [fieldKey, fieldChildren])), {
+          var flattenNode = Object.assign(omit(treeNode, [].concat(_toConsumableArray(fieldTitles), [fieldKey, fieldChildren])), {
             title: mergedTitle,
             key: mergedKey,
             parent,
@@ -41230,8 +41206,8 @@ var require_admin = __commonJS({
       };
       return treeNodeProps;
     }
-    function convertNodePropsToEventData(props2) {
-      var data = props2.data, expanded = props2.expanded, selected = props2.selected, checked = props2.checked, loaded = props2.loaded, loading = props2.loading, halfChecked = props2.halfChecked, dragOver = props2.dragOver, dragOverGapTop = props2.dragOverGapTop, dragOverGapBottom = props2.dragOverGapBottom, pos = props2.pos, active = props2.active, eventKey = props2.eventKey;
+    function convertNodePropsToEventData(props) {
+      var data = props.data, expanded = props.expanded, selected = props.selected, checked = props.checked, loaded = props.loaded, loading = props.loading, halfChecked = props.halfChecked, dragOver = props.dragOver, dragOverGapTop = props.dragOverGapTop, dragOverGapBottom = props.dragOverGapBottom, pos = props.pos, active = props.active, eventKey = props.eventKey;
       var eventData = _objectSpread2(_objectSpread2({}, data), {}, {
         expanded,
         selected,
@@ -41250,7 +41226,7 @@ var require_admin = __commonJS({
         Object.defineProperty(eventData, "props", {
           get: function get2() {
             warningOnce(false, "Second param return from event is node data instead of TreeNode instance. Please read value directly instead of reading from `props`.");
-            return props2;
+            return props;
           }
         });
       }
@@ -41654,7 +41630,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const InternalCheckbox = (props2, ref) => {
+    const InternalCheckbox = (props, ref) => {
       var _a2;
       const {
         prefixCls: customizePrefixCls,
@@ -41667,7 +41643,7 @@ var require_admin = __commonJS({
         onMouseLeave,
         skipGroup = false,
         disabled
-      } = props2, restProps = __rest$A(props2, ["prefixCls", "className", "rootClassName", "children", "indeterminate", "style", "onMouseEnter", "onMouseLeave", "skipGroup", "disabled"]);
+      } = props, restProps = __rest$A(props, ["prefixCls", "className", "rootClassName", "children", "indeterminate", "style", "onMouseEnter", "onMouseLeave", "skipGroup", "disabled"]);
       const {
         getPrefixCls,
         direction,
@@ -41749,7 +41725,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const CheckboxGroup = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const CheckboxGroup = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         defaultValue,
         children,
@@ -41759,7 +41735,7 @@ var require_admin = __commonJS({
         rootClassName,
         style: style2,
         onChange
-      } = props2, restProps = __rest$z(props2, ["defaultValue", "children", "options", "prefixCls", "className", "rootClassName", "style", "onChange"]);
+      } = props, restProps = __rest$z(props, ["defaultValue", "children", "options", "prefixCls", "className", "rootClassName", "style", "onChange"]);
       const {
         getPrefixCls,
         direction
@@ -41807,7 +41783,7 @@ var require_admin = __commonJS({
       const groupPrefixCls = `${prefixCls}-group`;
       const rootCls = useCSSVarCls(prefixCls);
       const [wrapCSSVar, hashId, cssVarCls] = useStyle$e(prefixCls, rootCls);
-      const domProps = omit$1(restProps, ["value", "disabled"]);
+      const domProps = omit(restProps, ["value", "disabled"]);
       const childrenNode = options.length ? memoOptions.map((option) => /* @__PURE__ */ reactExports.createElement(Checkbox$1, {
         prefixCls,
         key: option.value.toString(),
@@ -42015,7 +41991,7 @@ var require_admin = __commonJS({
       return flex;
     }
     const sizes = ["xs", "sm", "md", "lg", "xl", "xxl"];
-    const Col = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const Col = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         getPrefixCls,
         direction
@@ -42035,14 +42011,14 @@ var require_admin = __commonJS({
         children,
         flex,
         style: style2
-      } = props2, others = __rest$y(props2, ["prefixCls", "span", "order", "offset", "push", "pull", "className", "children", "flex", "style"]);
+      } = props, others = __rest$y(props, ["prefixCls", "span", "order", "offset", "push", "pull", "className", "children", "flex", "style"]);
       const prefixCls = getPrefixCls("col", customizePrefixCls);
       const [wrapCSSVar, hashId, cssVarCls] = useColStyle(prefixCls);
       const sizeStyle = {};
       let sizeClassObj = {};
       sizes.forEach((size) => {
         let sizeProps = {};
-        const propSize = props2[size];
+        const propSize = props[size];
         if (typeof propSize === "number") {
           sizeProps.span = propSize;
         } else if (typeof propSize === "object") {
@@ -42121,7 +42097,7 @@ var require_admin = __commonJS({
       }, [JSON.stringify(oriProp), screen]);
       return prop;
     }
-    const Row = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const Row = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         prefixCls: customizePrefixCls,
         justify,
@@ -42131,7 +42107,7 @@ var require_admin = __commonJS({
         children,
         gutter = 0,
         wrap
-      } = props2, others = __rest$x(props2, ["prefixCls", "justify", "align", "className", "style", "children", "gutter", "wrap"]);
+      } = props, others = __rest$x(props, ["prefixCls", "justify", "align", "className", "style", "children", "gutter", "wrap"]);
       const {
         getPrefixCls,
         direction
@@ -42377,7 +42353,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const Divider = (props2) => {
+    const Divider = (props) => {
       const {
         getPrefixCls,
         direction,
@@ -42395,7 +42371,7 @@ var require_admin = __commonJS({
         variant = "solid",
         plain,
         style: style2
-      } = props2, restProps = __rest$w(props2, ["prefixCls", "type", "orientation", "orientationMargin", "className", "rootClassName", "children", "dashed", "variant", "plain", "style"]);
+      } = props, restProps = __rest$w(props, ["prefixCls", "type", "orientation", "orientationMargin", "className", "rootClassName", "children", "dashed", "variant", "plain", "style"]);
       const prefixCls = getPrefixCls("divider", customizePrefixCls);
       const [wrapCSSVar, hashId, cssVarCls] = useStyle$d(prefixCls);
       const hasChildren = !!children;
@@ -42467,8 +42443,8 @@ var require_admin = __commonJS({
     var toPX = function toPX2(value) {
       return value !== void 0 ? "".concat(value, "px") : void 0;
     };
-    function MotionThumb(props2) {
-      var prefixCls = props2.prefixCls, containerRef = props2.containerRef, value = props2.value, getValueIndex = props2.getValueIndex, motionName = props2.motionName, onMotionStart = props2.onMotionStart, onMotionEnd = props2.onMotionEnd, direction = props2.direction, _props$vertical = props2.vertical, vertical = _props$vertical === void 0 ? false : _props$vertical;
+    function MotionThumb(props) {
+      var prefixCls = props.prefixCls, containerRef = props.containerRef, value = props.value, getValueIndex = props.getValueIndex, motionName = props.motionName, onMotionStart = props.onMotionStart, onMotionEnd = props.onMotionEnd, direction = props.direction, _props$vertical = props.vertical, vertical = _props$vertical === void 0 ? false : _props$vertical;
       var thumbRef = reactExports.useRef(null);
       var _React$useState = reactExports.useState(value), _React$useState2 = _slicedToArray(_React$useState, 2), prevValue = _React$useState2[0], setPrevValue = _React$useState2[1];
       var findValueElement = function findValueElement2(val) {
@@ -42622,9 +42598,9 @@ var require_admin = __commonJS({
         "aria-selected": checked
       }, label));
     };
-    var Segmented$1 = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
+    var Segmented$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
       var _segmentedOptions$, _classNames2;
-      var _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-segmented" : _props$prefixCls, direction = props2.direction, vertical = props2.vertical, _props$options = props2.options, options = _props$options === void 0 ? [] : _props$options, disabled = props2.disabled, defaultValue = props2.defaultValue, value = props2.value, onChange = props2.onChange, _props$className = props2.className, className = _props$className === void 0 ? "" : _props$className, _props$motionName = props2.motionName, motionName = _props$motionName === void 0 ? "thumb-motion" : _props$motionName, restProps = _objectWithoutProperties(props2, _excluded$k);
+      var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-segmented" : _props$prefixCls, direction = props.direction, vertical = props.vertical, _props$options = props.options, options = _props$options === void 0 ? [] : _props$options, disabled = props.disabled, defaultValue = props.defaultValue, value = props.value, onChange = props.onChange, _props$className = props.className, className = _props$className === void 0 ? "" : _props$className, _props$motionName = props.motionName, motionName = _props$motionName === void 0 ? "thumb-motion" : _props$motionName, restProps = _objectWithoutProperties(props, _excluded$k);
       var containerRef = reactExports.useRef(null);
       var mergedRef = reactExports.useMemo(function() {
         return composeRef(containerRef, ref);
@@ -42644,7 +42620,7 @@ var require_admin = __commonJS({
         setRawValue(val);
         onChange === null || onChange === void 0 || onChange(val);
       };
-      var divProps = omit$1(restProps, ["children"]);
+      var divProps = omit(restProps, ["children"]);
       return /* @__PURE__ */ reactExports.createElement("div", _extends({
         role: "listbox",
         "aria-label": "segmented control"
@@ -42893,7 +42869,7 @@ var require_admin = __commonJS({
     function isSegmentedLabeledOptionWithIcon(option) {
       return typeof option === "object" && !!(option === null || option === void 0 ? void 0 : option.icon);
     }
-    const InternalSegmented = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const InternalSegmented = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         prefixCls: customizePrefixCls,
         className,
@@ -42903,7 +42879,7 @@ var require_admin = __commonJS({
         size: customSize = "middle",
         style: style2,
         vertical
-      } = props2, restProps = __rest$v(props2, ["prefixCls", "className", "rootClassName", "block", "options", "size", "style", "vertical"]);
+      } = props, restProps = __rest$v(props, ["prefixCls", "className", "rootClassName", "block", "options", "size", "style", "vertical"]);
       const {
         getPrefixCls,
         direction,
@@ -42973,8 +42949,8 @@ var require_admin = __commonJS({
       ColorFormat2["hsb"] = "hsb";
     })(ColorFormat || (ColorFormat = {}));
     var UpOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z" } }] }, "name": "up", "theme": "outlined" };
-    var UpOutlined = function UpOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var UpOutlined = function UpOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: UpOutlined$1
       }));
@@ -43346,11 +43322,11 @@ var require_admin = __commonJS({
       }
       return "".concat(numberWithoutDecimal).concat(precisionDecimalStr);
     }
-    function hasAddon(props2) {
-      return !!(props2.addonBefore || props2.addonAfter);
+    function hasAddon(props) {
+      return !!(props.addonBefore || props.addonAfter);
     }
-    function hasPrefixSuffix$1(props2) {
-      return !!(props2.prefix || props2.suffix || props2.allowClear);
+    function hasPrefixSuffix$1(props) {
+      return !!(props.prefix || props.suffix || props.allowClear);
     }
     function cloneEvent(event, target, value) {
       var currentTarget = target.cloneNode(true);
@@ -43407,9 +43383,9 @@ var require_admin = __commonJS({
         }
       }
     }
-    var BaseInput = /* @__PURE__ */ React$1.forwardRef(function(props2, ref) {
+    var BaseInput = /* @__PURE__ */ React$1.forwardRef(function(props, ref) {
       var _element$props, _element$props2;
-      var inputEl = props2.inputElement, children = props2.children, prefixCls = props2.prefixCls, prefix = props2.prefix, suffix = props2.suffix, addonBefore = props2.addonBefore, addonAfter = props2.addonAfter, className = props2.className, style2 = props2.style, disabled = props2.disabled, readOnly = props2.readOnly, focused = props2.focused, triggerFocus2 = props2.triggerFocus, allowClear = props2.allowClear, value = props2.value, handleReset = props2.handleReset, hidden = props2.hidden, classes = props2.classes, classNames$1 = props2.classNames, dataAttrs = props2.dataAttrs, styles = props2.styles, components2 = props2.components, onClear = props2.onClear;
+      var inputEl = props.inputElement, children = props.children, prefixCls = props.prefixCls, prefix = props.prefix, suffix = props.suffix, addonBefore = props.addonBefore, addonAfter = props.addonAfter, className = props.className, style2 = props.style, disabled = props.disabled, readOnly = props.readOnly, focused = props.focused, triggerFocus2 = props.triggerFocus, allowClear = props.allowClear, value = props.value, handleReset = props.handleReset, hidden = props.hidden, classes = props.classes, classNames$1 = props.classNames, dataAttrs = props.dataAttrs, styles = props.styles, components2 = props.components, onClear = props.onClear;
       var inputElement = children !== null && children !== void 0 ? children : inputEl;
       var AffixWrapperComponent = (components2 === null || components2 === void 0 ? void 0 : components2.affixWrapper) || "span";
       var GroupWrapperComponent = (components2 === null || components2 === void 0 ? void 0 : components2.groupWrapper) || "span";
@@ -43422,7 +43398,7 @@ var require_admin = __commonJS({
           triggerFocus2 === null || triggerFocus2 === void 0 || triggerFocus2();
         }
       };
-      var hasAffix = hasPrefixSuffix$1(props2);
+      var hasAffix = hasPrefixSuffix$1(props);
       var element = /* @__PURE__ */ reactExports.cloneElement(inputElement, {
         value,
         className: classNames(inputElement.props.className, !hasAffix && (classNames$1 === null || classNames$1 === void 0 ? void 0 : classNames$1.variant)) || null
@@ -43469,7 +43445,7 @@ var require_admin = __commonJS({
           style: styles === null || styles === void 0 ? void 0 : styles.prefix
         }, prefix), element, suffixNode);
       }
-      if (hasAddon(props2)) {
+      if (hasAddon(props)) {
         var wrapperCls = "".concat(prefixCls, "-group");
         var addonCls = "".concat(wrapperCls, "-addon");
         var groupWrapperCls = "".concat(wrapperCls, "-wrapper");
@@ -43511,8 +43487,8 @@ var require_admin = __commonJS({
       }, [count, showCount]);
     }
     var _excluded$i = ["autoComplete", "onChange", "onFocus", "onBlur", "onPressEnter", "onKeyDown", "onKeyUp", "prefixCls", "disabled", "htmlSize", "className", "maxLength", "suffix", "showCount", "count", "type", "classes", "classNames", "styles", "onCompositionStart", "onCompositionEnd"];
-    var Input$2 = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var autoComplete = props2.autoComplete, onChange = props2.onChange, onFocus = props2.onFocus, onBlur = props2.onBlur, onPressEnter = props2.onPressEnter, onKeyDown2 = props2.onKeyDown, onKeyUp = props2.onKeyUp, _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-input" : _props$prefixCls, disabled = props2.disabled, htmlSize = props2.htmlSize, className = props2.className, maxLength = props2.maxLength, suffix = props2.suffix, showCount = props2.showCount, count = props2.count, _props$type = props2.type, type2 = _props$type === void 0 ? "text" : _props$type, classes = props2.classes, classNames$1 = props2.classNames, styles = props2.styles, _onCompositionStart = props2.onCompositionStart, onCompositionEnd = props2.onCompositionEnd, rest = _objectWithoutProperties(props2, _excluded$i);
+    var Input$2 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var autoComplete = props.autoComplete, onChange = props.onChange, onFocus = props.onFocus, onBlur = props.onBlur, onPressEnter = props.onPressEnter, onKeyDown2 = props.onKeyDown, onKeyUp = props.onKeyUp, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-input" : _props$prefixCls, disabled = props.disabled, htmlSize = props.htmlSize, className = props.className, maxLength = props.maxLength, suffix = props.suffix, showCount = props.showCount, count = props.count, _props$type = props.type, type2 = _props$type === void 0 ? "text" : _props$type, classes = props.classes, classNames$1 = props.classNames, styles = props.styles, _onCompositionStart = props.onCompositionStart, onCompositionEnd = props.onCompositionEnd, rest = _objectWithoutProperties(props, _excluded$i);
       var _useState = reactExports.useState(false), _useState2 = _slicedToArray(_useState, 2), focused = _useState2[0], setFocused = _useState2[1];
       var compositionRef = reactExports.useRef(false);
       var keyLockRef = reactExports.useRef(false);
@@ -43523,8 +43499,8 @@ var require_admin = __commonJS({
           triggerFocus$1(inputRef.current, option);
         }
       };
-      var _useMergedState = useMergedState(props2.defaultValue, {
-        value: props2.value
+      var _useMergedState = useMergedState(props.defaultValue, {
+        value: props.value
       }), _useMergedState2 = _slicedToArray(_useMergedState, 2), value = _useMergedState2[0], setValue = _useMergedState2[1];
       var formatValue = value === void 0 || value === null ? "" : String(value);
       var _useState3 = reactExports.useState(null), _useState4 = _slicedToArray(_useState3, 2), selection = _useState4[0], setSelection = _useState4[1];
@@ -43623,7 +43599,7 @@ var require_admin = __commonJS({
       };
       var outOfRangeCls = isOutOfRange && "".concat(prefixCls, "-out-of-range");
       var getInputElement = function getInputElement2() {
-        var otherProps = omit$1(props2, [
+        var otherProps = omit(props, [
           "prefixCls",
           "onPressEnter",
           "addonBefore",
@@ -43857,10 +43833,10 @@ var require_admin = __commonJS({
       var decimal = getMiniDecimal(value);
       return decimal.isInvalidate() ? null : decimal;
     };
-    var InternalInputNumber = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var prefixCls = props2.prefixCls, className = props2.className, style2 = props2.style, min = props2.min, max = props2.max, _props$step = props2.step, step = _props$step === void 0 ? 1 : _props$step, defaultValue = props2.defaultValue, value = props2.value, disabled = props2.disabled, readOnly = props2.readOnly, upHandler = props2.upHandler, downHandler = props2.downHandler, keyboard = props2.keyboard, _props$changeOnWheel = props2.changeOnWheel, changeOnWheel = _props$changeOnWheel === void 0 ? false : _props$changeOnWheel, _props$controls = props2.controls, controls = _props$controls === void 0 ? true : _props$controls;
-      props2.classNames;
-      var stringMode = props2.stringMode, parser = props2.parser, formatter = props2.formatter, precision = props2.precision, decimalSeparator = props2.decimalSeparator, onChange = props2.onChange, onInput = props2.onInput, onPressEnter = props2.onPressEnter, onStep = props2.onStep, _props$changeOnBlur = props2.changeOnBlur, changeOnBlur = _props$changeOnBlur === void 0 ? true : _props$changeOnBlur, domRef = props2.domRef, inputProps = _objectWithoutProperties(props2, _excluded$h);
+    var InternalInputNumber = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var prefixCls = props.prefixCls, className = props.className, style2 = props.style, min = props.min, max = props.max, _props$step = props.step, step = _props$step === void 0 ? 1 : _props$step, defaultValue = props.defaultValue, value = props.value, disabled = props.disabled, readOnly = props.readOnly, upHandler = props.upHandler, downHandler = props.downHandler, keyboard = props.keyboard, _props$changeOnWheel = props.changeOnWheel, changeOnWheel = _props$changeOnWheel === void 0 ? false : _props$changeOnWheel, _props$controls = props.controls, controls = _props$controls === void 0 ? true : _props$controls;
+      props.classNames;
+      var stringMode = props.stringMode, parser = props.parser, formatter = props.formatter, precision = props.precision, decimalSeparator = props.decimalSeparator, onChange = props.onChange, onInput = props.onInput, onPressEnter = props.onPressEnter, onStep = props.onStep, _props$changeOnBlur = props.changeOnBlur, changeOnBlur = _props$changeOnBlur === void 0 ? true : _props$changeOnBlur, domRef = props.domRef, inputProps = _objectWithoutProperties(props, _excluded$h);
       var inputClassName = "".concat(prefixCls, "-input");
       var inputRef = reactExports.useRef(null);
       var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), focus = _React$useState2[0], setFocus = _React$useState2[1];
@@ -44159,8 +44135,8 @@ var require_admin = __commonJS({
         readOnly
       }))));
     });
-    var InputNumber$1 = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var disabled = props2.disabled, style2 = props2.style, _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-input-number" : _props$prefixCls, value = props2.value, prefix = props2.prefix, suffix = props2.suffix, addonBefore = props2.addonBefore, addonAfter = props2.addonAfter, className = props2.className, classNames2 = props2.classNames, rest = _objectWithoutProperties(props2, _excluded2$4);
+    var InputNumber$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var disabled = props.disabled, style2 = props.style, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-input-number" : _props$prefixCls, value = props.value, prefix = props.prefix, suffix = props.suffix, addonBefore = props.addonBefore, addonAfter = props.addonAfter, className = props.className, classNames2 = props.classNames, rest = _objectWithoutProperties(props, _excluded2$4);
       var holderRef = reactExports.useRef(null);
       var inputNumberDomRef = reactExports.useRef(null);
       var inputFocusRef = reactExports.useRef(null);
@@ -44624,7 +44600,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const InputNumber = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const InputNumber = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         getPrefixCls,
         direction
@@ -44646,7 +44622,7 @@ var require_admin = __commonJS({
         status: customStatus,
         controls,
         variant: customVariant
-      } = props2, others = __rest$u(props2, ["className", "rootClassName", "size", "disabled", "prefixCls", "addonBefore", "addonAfter", "prefix", "suffix", "bordered", "readOnly", "status", "controls", "variant"]);
+      } = props, others = __rest$u(props, ["className", "rootClassName", "size", "disabled", "prefixCls", "addonBefore", "addonAfter", "prefix", "suffix", "bordered", "readOnly", "status", "controls", "variant"]);
       const prefixCls = getPrefixCls("input-number", customizePrefixCls);
       const rootCls = useCSSVarCls(prefixCls);
       const [wrapCSSVar, hashId, cssVarCls] = useStyle$b(prefixCls, rootCls);
@@ -44735,7 +44711,7 @@ var require_admin = __commonJS({
       return wrapCSSVar(element);
     });
     const TypedInputNumber = InputNumber;
-    const PureInputNumber = (props2) => /* @__PURE__ */ reactExports.createElement(ConfigProvider, {
+    const PureInputNumber = (props) => /* @__PURE__ */ reactExports.createElement(ConfigProvider, {
       theme: {
         components: {
           InputNumber: {
@@ -44743,7 +44719,7 @@ var require_admin = __commonJS({
           }
         }
       }
-    }, /* @__PURE__ */ reactExports.createElement(InputNumber, Object.assign({}, props2)));
+    }, /* @__PURE__ */ reactExports.createElement(InputNumber, Object.assign({}, props)));
     TypedInputNumber._InternalPanelDoNotUseOrYouWillBeFired = PureInputNumber;
     const ColorSteppers = (_ref) => {
       let {
@@ -44807,7 +44783,7 @@ var require_admin = __commonJS({
         onChange: handleAlphaChange
       });
     };
-    const Group$1 = (props2) => {
+    const Group$1 = (props) => {
       const {
         getPrefixCls,
         direction
@@ -44815,14 +44791,14 @@ var require_admin = __commonJS({
       const {
         prefixCls: customizePrefixCls,
         className
-      } = props2;
+      } = props;
       const prefixCls = getPrefixCls("input-group", customizePrefixCls);
       const inputPrefixCls = getPrefixCls("input");
       const [wrapCSSVar, hashId] = useStyle$g(inputPrefixCls);
       const cls = classNames(prefixCls, {
-        [`${prefixCls}-lg`]: props2.size === "large",
-        [`${prefixCls}-sm`]: props2.size === "small",
-        [`${prefixCls}-compact`]: props2.compact,
+        [`${prefixCls}-lg`]: props.size === "large",
+        [`${prefixCls}-sm`]: props.size === "small",
+        [`${prefixCls}-compact`]: props.compact,
         [`${prefixCls}-rtl`]: direction === "rtl"
       }, hashId, className);
       const formItemContext = reactExports.useContext(FormItemInputContext);
@@ -44831,14 +44807,14 @@ var require_admin = __commonJS({
       }), [formItemContext]);
       return wrapCSSVar(/* @__PURE__ */ reactExports.createElement("span", {
         className: cls,
-        style: props2.style,
-        onMouseEnter: props2.onMouseEnter,
-        onMouseLeave: props2.onMouseLeave,
-        onFocus: props2.onFocus,
-        onBlur: props2.onBlur
+        style: props.style,
+        onMouseEnter: props.onMouseEnter,
+        onMouseLeave: props.onMouseLeave,
+        onFocus: props.onFocus,
+        onBlur: props.onBlur
       }, /* @__PURE__ */ reactExports.createElement(FormItemInputContext.Provider, {
         value: groupFormItemContext
-      }, props2.children)));
+      }, props.children)));
     };
     const getAllowClear = (allowClear) => {
       let mergedAllowClear;
@@ -44873,8 +44849,8 @@ var require_admin = __commonJS({
       }, []);
       return removePasswordTimeout;
     }
-    function hasPrefixSuffix(props2) {
-      return !!(props2.prefix || props2.suffix || props2.allowClear || props2.showCount);
+    function hasPrefixSuffix(props) {
+      return !!(props.prefix || props.suffix || props.allowClear || props.showCount);
     }
     var __rest$t = function(s, e2) {
       var t2 = {};
@@ -44906,7 +44882,7 @@ var require_admin = __commonJS({
         }
       }
     }
-    const Input$1 = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const Input$1 = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       var _a2;
       const {
         prefixCls: customizePrefixCls,
@@ -44927,7 +44903,7 @@ var require_admin = __commonJS({
         onChange,
         classNames: classes,
         variant: customVariant
-      } = props2, rest = __rest$t(props2, ["prefixCls", "bordered", "status", "size", "disabled", "onBlur", "onFocus", "suffix", "allowClear", "addonAfter", "addonBefore", "className", "style", "styles", "rootClassName", "onChange", "classNames", "variant"]);
+      } = props, rest = __rest$t(props, ["prefixCls", "bordered", "status", "size", "disabled", "onBlur", "onFocus", "suffix", "allowClear", "addonAfter", "addonBefore", "className", "style", "styles", "rootClassName", "onChange", "classNames", "variant"]);
       const {
         getPrefixCls,
         direction,
@@ -44953,7 +44929,7 @@ var require_admin = __commonJS({
         feedbackIcon
       } = reactExports.useContext(FormItemInputContext);
       const mergedStatus = getMergedStatus(contextStatus, customStatus);
-      const inputHasPrefixSuffix = hasPrefixSuffix(props2) || !!hasFeedback;
+      const inputHasPrefixSuffix = hasPrefixSuffix(props) || !!hasFeedback;
       reactExports.useRef(inputHasPrefixSuffix);
       const removePasswordTimeout = useRemovePasswordTimeout(inputRef, true);
       const handleBlur = (e2) => {
@@ -45059,14 +45035,14 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const OTPInput = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const OTPInput = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         value,
         onChange,
         onActiveChange,
         index: index2,
         mask
-      } = props2, restProps = __rest$s(props2, ["value", "onChange", "onActiveChange", "index", "mask"]);
+      } = props, restProps = __rest$s(props, ["value", "onChange", "onActiveChange", "index", "mask"]);
       const internalValue = value && typeof mask === "string" ? mask : value;
       const onInternalChange = (e2) => {
         onChange(index2, e2.target.value);
@@ -45123,7 +45099,7 @@ var require_admin = __commonJS({
     function strToArr(str) {
       return (str || "").split("");
     }
-    const OTP = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const OTP = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         prefixCls: customizePrefixCls,
         length: length2 = 6,
@@ -45138,7 +45114,7 @@ var require_admin = __commonJS({
         autoFocus,
         mask,
         type: type2
-      } = props2, restProps = __rest$r(props2, ["prefixCls", "length", "size", "defaultValue", "value", "onChange", "formatter", "variant", "disabled", "status", "autoFocus", "mask", "type"]);
+      } = props, restProps = __rest$r(props, ["prefixCls", "length", "size", "defaultValue", "value", "onChange", "formatter", "variant", "disabled", "status", "autoFocus", "mask", "type"]);
       const {
         getPrefixCls,
         direction
@@ -45266,16 +45242,16 @@ var require_admin = __commonJS({
       }))));
     });
     var EyeInvisibleOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M942.2 486.2Q889.47 375.11 816.7 305l-50.88 50.88C807.31 395.53 843.45 447.4 874.7 512 791.5 684.2 673.4 766 512 766q-72.67 0-133.87-22.38L323 798.75Q408 838 512 838q288.3 0 430.2-300.3a60.29 60.29 0 000-51.5zm-63.57-320.64L836 122.88a8 8 0 00-11.32 0L715.31 232.2Q624.86 186 512 186q-288.3 0-430.2 300.3a60.3 60.3 0 000 51.5q56.69 119.4 136.5 191.41L112.48 835a8 8 0 000 11.31L155.17 889a8 8 0 0011.31 0l712.15-712.12a8 8 0 000-11.32zM149.3 512C232.6 339.8 350.7 258 512 258c54.54 0 104.13 9.36 149.12 28.39l-70.3 70.3a176 176 0 00-238.13 238.13l-83.42 83.42C223.1 637.49 183.3 582.28 149.3 512zm246.7 0a112.11 112.11 0 01146.2-106.69L401.31 546.2A112 112 0 01396 512z" } }, { "tag": "path", "attrs": { "d": "M508 624c-3.46 0-6.87-.16-10.25-.47l-52.82 52.82a176.09 176.09 0 00227.42-227.42l-52.82 52.82c.31 3.38.47 6.79.47 10.25a111.94 111.94 0 01-112 112z" } }] }, "name": "eye-invisible", "theme": "outlined" };
-    var EyeInvisibleOutlined = function EyeInvisibleOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var EyeInvisibleOutlined = function EyeInvisibleOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: EyeInvisibleOutlined$1
       }));
     };
     var RefIcon$q = /* @__PURE__ */ reactExports.forwardRef(EyeInvisibleOutlined);
     var EyeOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z" } }] }, "name": "eye", "theme": "outlined" };
-    var EyeOutlined = function EyeOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var EyeOutlined = function EyeOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: EyeOutlined$1
       }));
@@ -45294,13 +45270,13 @@ var require_admin = __commonJS({
       click: "onClick",
       hover: "onMouseOver"
     };
-    const Password = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const Password = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         disabled: customDisabled,
         action = "click",
         visibilityToggle = true,
         iconRender = defaultIconRender
-      } = props2;
+      } = props;
       const disabled = reactExports.useContext(DisabledContext);
       const mergedDisabled = customDisabled !== null && customDisabled !== void 0 ? customDisabled : disabled;
       const visibilityControlled = typeof visibilityToggle === "object" && visibilityToggle.visible !== void 0;
@@ -45349,7 +45325,7 @@ var require_admin = __commonJS({
         prefixCls: customizePrefixCls,
         inputPrefixCls: customizeInputPrefixCls,
         size
-      } = props2, restProps = __rest$q(props2, ["className", "prefixCls", "inputPrefixCls", "size"]);
+      } = props, restProps = __rest$q(props, ["className", "prefixCls", "inputPrefixCls", "size"]);
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
@@ -45359,7 +45335,7 @@ var require_admin = __commonJS({
       const inputClassName = classNames(prefixCls, className, {
         [`${prefixCls}-${size}`]: !!size
       });
-      const omittedProps = Object.assign(Object.assign({}, omit$1(restProps, ["suffix", "iconRender", "visibilityToggle"])), {
+      const omittedProps = Object.assign(Object.assign({}, omit(restProps, ["suffix", "iconRender", "visibilityToggle"])), {
         type: visible ? "text" : "password",
         className: inputClassName,
         prefixCls: inputPrefixCls,
@@ -45380,7 +45356,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const Search = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const Search = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         prefixCls: customizePrefixCls,
         inputPrefixCls: customizeInputPrefixCls,
@@ -45395,7 +45371,7 @@ var require_admin = __commonJS({
         onChange: customOnChange,
         onCompositionStart,
         onCompositionEnd
-      } = props2, restProps = __rest$p(props2, ["prefixCls", "inputPrefixCls", "className", "size", "suffix", "enterButton", "addonAfter", "loading", "disabled", "onSearch", "onChange", "onCompositionStart", "onCompositionEnd"]);
+      } = props, restProps = __rest$p(props, ["prefixCls", "inputPrefixCls", "className", "size", "suffix", "enterButton", "addonAfter", "loading", "disabled", "onSearch", "onChange", "onCompositionStart", "onCompositionEnd"]);
       const {
         getPrefixCls,
         direction
@@ -45595,8 +45571,8 @@ var require_admin = __commonJS({
     var RESIZE_START = 0;
     var RESIZE_MEASURING = 1;
     var RESIZE_STABLE = 2;
-    var ResizableTextArea = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var _ref = props2, prefixCls = _ref.prefixCls, defaultValue = _ref.defaultValue, value = _ref.value, autoSize = _ref.autoSize, onResize2 = _ref.onResize, className = _ref.className, style2 = _ref.style, disabled = _ref.disabled, onChange = _ref.onChange;
+    var ResizableTextArea = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var _ref = props, prefixCls = _ref.prefixCls, defaultValue = _ref.defaultValue, value = _ref.value, autoSize = _ref.autoSize, onResize2 = _ref.onResize, className = _ref.className, style2 = _ref.style, disabled = _ref.disabled, onChange = _ref.onChange;
       _ref.onInternalAutoSize;
       var restProps = _objectWithoutProperties(_ref, _excluded$g);
       var _useMergedState = useMergedState(defaultValue, {
@@ -45859,7 +45835,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const TextArea = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const TextArea = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       var _a2, _b;
       const {
         prefixCls: customizePrefixCls,
@@ -45874,7 +45850,7 @@ var require_admin = __commonJS({
         style: style2,
         styles,
         variant: customVariant
-      } = props2, rest = __rest$o(props2, ["prefixCls", "bordered", "size", "disabled", "status", "allowClear", "classNames", "rootClassName", "className", "style", "styles", "variant"]);
+      } = props, rest = __rest$o(props, ["prefixCls", "bordered", "size", "disabled", "status", "allowClear", "classNames", "rootClassName", "className", "style", "styles", "variant"]);
       const {
         getPrefixCls,
         direction,
@@ -45929,7 +45905,7 @@ var require_admin = __commonJS({
             [`${prefixCls}-affix-wrapper-rtl`]: direction === "rtl",
             [`${prefixCls}-affix-wrapper-sm`]: mergedSize === "small",
             [`${prefixCls}-affix-wrapper-lg`]: mergedSize === "large",
-            [`${prefixCls}-textarea-show-count`]: props2.showCount || ((_b = props2.count) === null || _b === void 0 ? void 0 : _b.show)
+            [`${prefixCls}-textarea-show-count`]: props.showCount || ((_b = props.count) === null || _b === void 0 ? void 0 : _b.show)
           }, hashId)
         }),
         prefixCls,
@@ -46076,7 +46052,7 @@ var require_admin = __commonJS({
       value: format2,
       label: format2.toLocaleUpperCase()
     }));
-    const ColorInput = (props2) => {
+    const ColorInput = (props) => {
       const {
         prefixCls,
         format: format2,
@@ -46084,7 +46060,7 @@ var require_admin = __commonJS({
         disabledAlpha,
         onFormatChange,
         onChange
-      } = props2;
+      } = props;
       const [colorFormat, setColorFormat] = useMergedState(ColorFormat.hex, {
         value: format2,
         onChange: onFormatChange
@@ -46171,8 +46147,8 @@ var require_admin = __commonJS({
     });
     var UnstableContext = /* @__PURE__ */ reactExports.createContext({});
     var _excluded$e = ["prefixCls", "value", "valueIndex", "onStartMove", "onDelete", "style", "render", "dragging", "draggingDelete", "onOffsetChange", "onChangeComplete", "onFocus", "onMouseEnter"];
-    var Handle = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var prefixCls = props2.prefixCls, value = props2.value, valueIndex = props2.valueIndex, onStartMove = props2.onStartMove, onDelete = props2.onDelete, style2 = props2.style, render2 = props2.render, dragging = props2.dragging, draggingDelete = props2.draggingDelete, onOffsetChange = props2.onOffsetChange, onChangeComplete = props2.onChangeComplete, onFocus = props2.onFocus, onMouseEnter = props2.onMouseEnter, restProps = _objectWithoutProperties(props2, _excluded$e);
+    var Handle = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var prefixCls = props.prefixCls, value = props.value, valueIndex = props.valueIndex, onStartMove = props.onStartMove, onDelete = props.onDelete, style2 = props.style, render2 = props.render, dragging = props.dragging, draggingDelete = props.draggingDelete, onOffsetChange = props.onOffsetChange, onChangeComplete = props.onChangeComplete, onFocus = props.onFocus, onMouseEnter = props.onMouseEnter, restProps = _objectWithoutProperties(props, _excluded$e);
       var _React$useContext = reactExports.useContext(SliderContext), min = _React$useContext.min, max = _React$useContext.max, direction = _React$useContext.direction, disabled = _React$useContext.disabled, keyboard = _React$useContext.keyboard, range2 = _React$useContext.range, tabIndex = _React$useContext.tabIndex, ariaLabelForHandle = _React$useContext.ariaLabelForHandle, ariaLabelledByForHandle = _React$useContext.ariaLabelledByForHandle, ariaValueTextFormatterForHandle = _React$useContext.ariaValueTextFormatterForHandle, styles = _React$useContext.styles, classNames$1 = _React$useContext.classNames;
       var handlePrefixCls = "".concat(prefixCls, "-handle");
       var onInternalStartMove = function onInternalStartMove2(e2) {
@@ -46279,8 +46255,8 @@ var require_admin = __commonJS({
       return handleNode;
     });
     var _excluded$d = ["prefixCls", "style", "onStartMove", "onOffsetChange", "values", "handleRender", "activeHandleRender", "draggingIndex", "draggingDelete", "onFocus"];
-    var Handles = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var prefixCls = props2.prefixCls, style2 = props2.style, onStartMove = props2.onStartMove, onOffsetChange = props2.onOffsetChange, values = props2.values, handleRender = props2.handleRender, activeHandleRender = props2.activeHandleRender, draggingIndex = props2.draggingIndex, draggingDelete = props2.draggingDelete, onFocus = props2.onFocus, restProps = _objectWithoutProperties(props2, _excluded$d);
+    var Handles = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var prefixCls = props.prefixCls, style2 = props.style, onStartMove = props.onStartMove, onOffsetChange = props.onOffsetChange, values = props.values, handleRender = props.handleRender, activeHandleRender = props.activeHandleRender, draggingIndex = props.draggingIndex, draggingDelete = props.draggingDelete, onFocus = props.onFocus, restProps = _objectWithoutProperties(props, _excluded$d);
       var handlesRef = reactExports.useRef({});
       var _React$useState = reactExports.useState(false), _React$useState2 = _slicedToArray(_React$useState, 2), activeVisible = _React$useState2[0], setActiveVisible = _React$useState2[1];
       var _React$useState3 = reactExports.useState(-1), _React$useState4 = _slicedToArray(_React$useState3, 2), activeIndex = _React$useState4[0], setActiveIndex = _React$useState4[1];
@@ -46348,8 +46324,8 @@ var require_admin = __commonJS({
         "aria-hidden": true
       })));
     });
-    var Mark = function Mark2(props2) {
-      var prefixCls = props2.prefixCls, style2 = props2.style, children = props2.children, value = props2.value, _onClick = props2.onClick;
+    var Mark = function Mark2(props) {
+      var prefixCls = props.prefixCls, style2 = props.style, children = props.children, value = props.value, _onClick = props.onClick;
       var _React$useContext = reactExports.useContext(SliderContext), min = _React$useContext.min, max = _React$useContext.max, direction = _React$useContext.direction, includedStart = _React$useContext.includedStart, includedEnd = _React$useContext.includedEnd, included = _React$useContext.included;
       var textCls = "".concat(prefixCls, "-text");
       var positionStyle = getDirectionStyle(direction, value, min, max);
@@ -46364,8 +46340,8 @@ var require_admin = __commonJS({
         }
       }, children);
     };
-    var Marks = function Marks2(props2) {
-      var prefixCls = props2.prefixCls, marks = props2.marks, onClick = props2.onClick;
+    var Marks = function Marks2(props) {
+      var prefixCls = props.prefixCls, marks = props.marks, onClick = props.onClick;
       var markPrefixCls = "".concat(prefixCls, "-mark");
       if (!marks.length) {
         return null;
@@ -46383,8 +46359,8 @@ var require_admin = __commonJS({
         }, label);
       }));
     };
-    var Dot = function Dot2(props2) {
-      var prefixCls = props2.prefixCls, value = props2.value, style2 = props2.style, activeStyle = props2.activeStyle;
+    var Dot = function Dot2(props) {
+      var prefixCls = props.prefixCls, value = props.value, style2 = props.style, activeStyle = props.activeStyle;
       var _React$useContext = reactExports.useContext(SliderContext), min = _React$useContext.min, max = _React$useContext.max, direction = _React$useContext.direction, included = _React$useContext.included, includedStart = _React$useContext.includedStart, includedEnd = _React$useContext.includedEnd;
       var dotClassName = "".concat(prefixCls, "-dot");
       var active = included && includedStart <= value && value <= includedEnd;
@@ -46397,8 +46373,8 @@ var require_admin = __commonJS({
         style: mergedStyle
       });
     };
-    var Steps = function Steps2(props2) {
-      var prefixCls = props2.prefixCls, marks = props2.marks, dots = props2.dots, style2 = props2.style, activeStyle = props2.activeStyle;
+    var Steps = function Steps2(props) {
+      var prefixCls = props.prefixCls, marks = props.marks, dots = props.dots, style2 = props.style, activeStyle = props.activeStyle;
       var _React$useContext = reactExports.useContext(SliderContext), min = _React$useContext.min, max = _React$useContext.max, step = _React$useContext.step;
       var stepDots = reactExports.useMemo(function() {
         var dotSet = /* @__PURE__ */ new Set();
@@ -46426,8 +46402,8 @@ var require_admin = __commonJS({
         });
       }));
     };
-    var Track = function Track2(props2) {
-      var prefixCls = props2.prefixCls, style2 = props2.style, start = props2.start, end = props2.end, index2 = props2.index, onStartMove = props2.onStartMove, replaceCls = props2.replaceCls;
+    var Track = function Track2(props) {
+      var prefixCls = props.prefixCls, style2 = props.style, start = props.start, end = props.end, index2 = props.index, onStartMove = props.onStartMove, replaceCls = props.replaceCls;
       var _React$useContext = reactExports.useContext(SliderContext), direction = _React$useContext.direction, min = _React$useContext.min, max = _React$useContext.max, disabled = _React$useContext.disabled, range2 = _React$useContext.range, classNames$1 = _React$useContext.classNames;
       var trackPrefixCls = "".concat(prefixCls, "-track");
       var offsetStart = getOffset$1(start, min, max);
@@ -46463,8 +46439,8 @@ var require_admin = __commonJS({
         onTouchStart: onInternalStartMove
       });
     };
-    var Tracks = function Tracks2(props2) {
-      var prefixCls = props2.prefixCls, style2 = props2.style, values = props2.values, startPoint = props2.startPoint, onStartMove = props2.onStartMove;
+    var Tracks = function Tracks2(props) {
+      var prefixCls = props.prefixCls, style2 = props.style, values = props.values, startPoint = props.startPoint, onStartMove = props.onStartMove;
       var _React$useContext = reactExports.useContext(SliderContext), included = _React$useContext.included, range2 = _React$useContext.range, min = _React$useContext.min, styles = _React$useContext.styles, classNames$1 = _React$useContext.classNames;
       var trackList = reactExports.useMemo(function() {
         if (!range2) {
@@ -46848,8 +46824,8 @@ var require_admin = __commonJS({
         return [true, editable, !editable && draggableTrack, minCount || 0, maxCount];
       }, [range2]);
     }
-    var Slider$1 = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-slider" : _props$prefixCls, className = props2.className, style2 = props2.style, classNames$1 = props2.classNames, styles = props2.styles, id2 = props2.id, _props$disabled = props2.disabled, disabled = _props$disabled === void 0 ? false : _props$disabled, _props$keyboard = props2.keyboard, keyboard = _props$keyboard === void 0 ? true : _props$keyboard, autoFocus = props2.autoFocus, onFocus = props2.onFocus, onBlur = props2.onBlur, _props$min = props2.min, min = _props$min === void 0 ? 0 : _props$min, _props$max = props2.max, max = _props$max === void 0 ? 100 : _props$max, _props$step = props2.step, step = _props$step === void 0 ? 1 : _props$step, value = props2.value, defaultValue = props2.defaultValue, range2 = props2.range, count = props2.count, onChange = props2.onChange, onBeforeChange = props2.onBeforeChange, onAfterChange = props2.onAfterChange, onChangeComplete = props2.onChangeComplete, _props$allowCross = props2.allowCross, allowCross = _props$allowCross === void 0 ? true : _props$allowCross, _props$pushable = props2.pushable, pushable = _props$pushable === void 0 ? false : _props$pushable, reverse = props2.reverse, vertical = props2.vertical, _props$included = props2.included, included = _props$included === void 0 ? true : _props$included, startPoint = props2.startPoint, trackStyle = props2.trackStyle, handleStyle = props2.handleStyle, railStyle = props2.railStyle, dotStyle = props2.dotStyle, activeDotStyle = props2.activeDotStyle, marks = props2.marks, dots = props2.dots, handleRender = props2.handleRender, activeHandleRender = props2.activeHandleRender, track = props2.track, _props$tabIndex = props2.tabIndex, tabIndex = _props$tabIndex === void 0 ? 0 : _props$tabIndex, ariaLabelForHandle = props2.ariaLabelForHandle, ariaLabelledByForHandle = props2.ariaLabelledByForHandle, ariaValueTextFormatterForHandle = props2.ariaValueTextFormatterForHandle;
+    var Slider$1 = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-slider" : _props$prefixCls, className = props.className, style2 = props.style, classNames$1 = props.classNames, styles = props.styles, id2 = props.id, _props$disabled = props.disabled, disabled = _props$disabled === void 0 ? false : _props$disabled, _props$keyboard = props.keyboard, keyboard = _props$keyboard === void 0 ? true : _props$keyboard, autoFocus = props.autoFocus, onFocus = props.onFocus, onBlur = props.onBlur, _props$min = props.min, min = _props$min === void 0 ? 0 : _props$min, _props$max = props.max, max = _props$max === void 0 ? 100 : _props$max, _props$step = props.step, step = _props$step === void 0 ? 1 : _props$step, value = props.value, defaultValue = props.defaultValue, range2 = props.range, count = props.count, onChange = props.onChange, onBeforeChange = props.onBeforeChange, onAfterChange = props.onAfterChange, onChangeComplete = props.onChangeComplete, _props$allowCross = props.allowCross, allowCross = _props$allowCross === void 0 ? true : _props$allowCross, _props$pushable = props.pushable, pushable = _props$pushable === void 0 ? false : _props$pushable, reverse = props.reverse, vertical = props.vertical, _props$included = props.included, included = _props$included === void 0 ? true : _props$included, startPoint = props.startPoint, trackStyle = props.trackStyle, handleStyle = props.handleStyle, railStyle = props.railStyle, dotStyle = props.dotStyle, activeDotStyle = props.activeDotStyle, marks = props.marks, dots = props.dots, handleRender = props.handleRender, activeHandleRender = props.activeHandleRender, track = props.track, _props$tabIndex = props.tabIndex, tabIndex = _props$tabIndex === void 0 ? 0 : _props$tabIndex, ariaLabelForHandle = props.ariaLabelForHandle, ariaLabelledByForHandle = props.ariaLabelledByForHandle, ariaValueTextFormatterForHandle = props.ariaValueTextFormatterForHandle;
       var handlesRef = reactExports.useRef(null);
       var containerRef = reactExports.useRef(null);
       var direction = reactExports.useMemo(function() {
@@ -46928,7 +46904,7 @@ var require_admin = __commonJS({
         var cloneNextValues = _toConsumableArray(nextValues).sort(function(a2, b2) {
           return a2 - b2;
         });
-        if (onChange && !isEqual$1(cloneNextValues, rawValues, true)) {
+        if (onChange && !isEqual(cloneNextValues, rawValues, true)) {
           onChange(getTriggerValue(cloneNextValues));
         }
         setValue(cloneNextValues);
@@ -47146,11 +47122,11 @@ var require_admin = __commonJS({
         onClick: changeToCloseValue
       })));
     });
-    const SliderTooltip = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const SliderTooltip = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         open: open2,
         draggingDelete
-      } = props2;
+      } = props;
       const innerRef = reactExports.useRef(null);
       const mergedOpen = open2 && !draggingDelete;
       const rafRef = reactExports.useRef(null);
@@ -47172,10 +47148,10 @@ var require_admin = __commonJS({
           cancelKeepAlign();
         }
         return cancelKeepAlign;
-      }, [mergedOpen, props2.title]);
+      }, [mergedOpen, props.title]);
       return /* @__PURE__ */ reactExports.createElement(Tooltip, Object.assign({
         ref: composeRef(innerRef, ref)
-      }, props2, {
+      }, props, {
         open: mergedOpen
       }));
     });
@@ -47537,7 +47513,7 @@ var require_admin = __commonJS({
       }
       return (val) => typeof val === "number" ? val.toString() : "";
     }
-    const Slider = /* @__PURE__ */ React$1.forwardRef((props2, ref) => {
+    const Slider = /* @__PURE__ */ React$1.forwardRef((props, ref) => {
       const {
         prefixCls: customizePrefixCls,
         range: range2,
@@ -47553,10 +47529,10 @@ var require_admin = __commonJS({
         tooltipPlacement: legacyTooltipPlacement,
         tooltip = {},
         onChangeComplete
-      } = props2, restProps = __rest$n(props2, ["prefixCls", "range", "className", "rootClassName", "style", "disabled", "tooltipPrefixCls", "tipFormatter", "tooltipVisible", "getTooltipPopupContainer", "tooltipPlacement", "tooltip", "onChangeComplete"]);
+      } = props, restProps = __rest$n(props, ["prefixCls", "range", "className", "rootClassName", "style", "disabled", "tooltipPrefixCls", "tipFormatter", "tooltipVisible", "getTooltipPopupContainer", "tooltipPlacement", "tooltip", "onChangeComplete"]);
       const {
         vertical
-      } = props2;
+      } = props;
       const {
         direction: contextDirection,
         slider,
@@ -47715,7 +47691,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const GradientColorSlider = (props2) => {
+    const GradientColorSlider = (props) => {
       const {
         prefixCls,
         colors,
@@ -47728,7 +47704,7 @@ var require_admin = __commonJS({
         onDragStart,
         onDragChange,
         onKeyDelete
-      } = props2, restProps = __rest$m(props2, ["prefixCls", "colors", "type", "color", "range", "className", "activeIndex", "onActive", "onDragStart", "onDragChange", "onKeyDelete"]);
+      } = props, restProps = __rest$m(props, ["prefixCls", "colors", "type", "color", "range", "className", "activeIndex", "onActive", "onDragStart", "onDragChange", "onKeyDelete"]);
       const sliderProps = Object.assign(Object.assign({}, restProps), {
         track: false
       });
@@ -47810,15 +47786,15 @@ var require_admin = __commonJS({
         }
       }))));
     };
-    const SingleColorSlider = (props2) => {
+    const SingleColorSlider = (props) => {
       const {
         value,
         onChange,
         onChangeComplete
-      } = props2;
+      } = props;
       const singleOnChange = (v2) => onChange(v2[0]);
       const singleOnChangeComplete = (v2) => onChangeComplete(v2[0]);
-      return /* @__PURE__ */ reactExports.createElement(GradientColorSlider, Object.assign({}, props2, {
+      return /* @__PURE__ */ reactExports.createElement(GradientColorSlider, Object.assign({}, props, {
         value: [value],
         onChange: singleOnChange,
         onChangeComplete: singleOnChangeComplete
@@ -47827,7 +47803,7 @@ var require_admin = __commonJS({
     function sortColors(colors) {
       return _toConsumableArray(colors).sort((a2, b2) => a2.percent - b2.percent);
     }
-    const GradientColorBar = (props2) => {
+    const GradientColorBar = (props) => {
       const {
         prefixCls,
         mode,
@@ -47837,7 +47813,7 @@ var require_admin = __commonJS({
         activeIndex,
         onGradientDragging,
         colors
-      } = props2;
+      } = props;
       const isGradient = mode === "gradient";
       const colorList = reactExports.useMemo(() => colors.map((info) => ({
         percent: info.percent,
@@ -48077,7 +48053,7 @@ var require_admin = __commonJS({
         onChange
       }) : null;
     };
-    const ColorPickerPanel = (props2) => {
+    const ColorPickerPanel = (props) => {
       const {
         prefixCls,
         presets,
@@ -48097,7 +48073,7 @@ var require_admin = __commonJS({
         onFormatChange,
         gradientDragging,
         onGradientDragging
-      } = props2;
+      } = props;
       const colorPickerPanelPrefixCls = `${prefixCls}-inner`;
       const panelContext = React$1.useMemo(() => ({
         prefixCls,
@@ -48147,7 +48123,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const ColorTrigger = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const ColorTrigger = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         color,
         prefixCls,
@@ -48157,7 +48133,7 @@ var require_admin = __commonJS({
         className,
         showText,
         activeIndex
-      } = props2, rest = __rest$k(props2, ["color", "prefixCls", "open", "disabled", "format", "className", "showText", "activeIndex"]);
+      } = props, rest = __rest$k(props, ["color", "prefixCls", "open", "disabled", "format", "className", "showText", "activeIndex"]);
       const colorTriggerPrefixCls = `${prefixCls}-trigger`;
       const colorTextPrefixCls = `${colorTriggerPrefixCls}-text`;
       const colorTextCellPrefixCls = `${colorTextPrefixCls}-cell`;
@@ -48867,7 +48843,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const ColorPicker = (props2) => {
+    const ColorPicker = (props) => {
       const {
         mode,
         value,
@@ -48899,7 +48875,7 @@ var require_admin = __commonJS({
         getPopupContainer,
         autoAdjustOverflow: autoAdjustOverflow2 = true,
         destroyTooltipOnHide
-      } = props2, rest = __rest$j(props2, ["mode", "value", "defaultValue", "format", "defaultFormat", "allowClear", "presets", "children", "trigger", "open", "disabled", "placement", "arrow", "panelRender", "showText", "style", "className", "size", "rootClassName", "prefixCls", "styles", "disabledAlpha", "onFormatChange", "onChange", "onClear", "onOpenChange", "onChangeComplete", "getPopupContainer", "autoAdjustOverflow", "destroyTooltipOnHide"]);
+      } = props, rest = __rest$j(props, ["mode", "value", "defaultValue", "format", "defaultFormat", "allowClear", "presets", "children", "trigger", "open", "disabled", "placement", "arrow", "panelRender", "showText", "style", "className", "size", "rootClassName", "prefixCls", "styles", "disabledAlpha", "onFormatChange", "onChange", "onClear", "onOpenChange", "onChangeComplete", "getPopupContainer", "autoAdjustOverflow", "destroyTooltipOnHide"]);
       const {
         getPrefixCls,
         direction,
@@ -49046,7 +49022,7 @@ var require_admin = __commonJS({
       "color-picker",
       /* istanbul ignore next */
       (prefixCls) => prefixCls,
-      (props2) => Object.assign(Object.assign({}, props2), {
+      (props) => Object.assign(Object.assign({}, props), {
         placement: "bottom",
         autoAdjustOverflow: false
       })
@@ -49094,7 +49070,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const InternalSpace = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const InternalSpace = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       var _a2, _b, _c;
       const {
         getPrefixCls,
@@ -49114,7 +49090,7 @@ var require_admin = __commonJS({
         wrap = false,
         classNames: customClassNames,
         styles
-      } = props2, otherProps = __rest$i(props2, ["size", "align", "className", "rootClassName", "children", "direction", "prefixCls", "split", "style", "wrap", "classNames", "styles"]);
+      } = props, otherProps = __rest$i(props, ["size", "align", "className", "rootClassName", "children", "direction", "prefixCls", "split", "style", "wrap", "classNames", "styles"]);
       const [horizontalSize, verticalSize] = Array.isArray(size) ? size : [size, size];
       const isPresetVerticalSize = isPresetSize(verticalSize);
       const isPresetHorizontalSize = isPresetSize(horizontalSize);
@@ -49182,7 +49158,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const DropdownButton = (props2) => {
+    const DropdownButton = (props) => {
       const {
         getPopupContainer: getContextPopupContainer,
         getPrefixCls,
@@ -49218,7 +49194,7 @@ var require_admin = __commonJS({
         overlayStyle,
         destroyPopupOnHide,
         dropdownRender
-      } = props2, restProps = __rest$h(props2, ["prefixCls", "type", "danger", "disabled", "loading", "onClick", "htmlType", "children", "className", "menu", "arrow", "autoFocus", "overlay", "trigger", "align", "open", "onOpenChange", "placement", "getPopupContainer", "href", "icon", "title", "buttonsRender", "mouseEnterDelay", "mouseLeaveDelay", "overlayClassName", "overlayStyle", "destroyPopupOnHide", "dropdownRender"]);
+      } = props, restProps = __rest$h(props, ["prefixCls", "type", "danger", "disabled", "loading", "onClick", "htmlType", "children", "className", "menu", "arrow", "autoFocus", "overlay", "trigger", "align", "open", "onOpenChange", "placement", "getPopupContainer", "href", "icon", "title", "buttonsRender", "mouseEnterDelay", "mouseLeaveDelay", "overlayClassName", "overlayStyle", "destroyPopupOnHide", "dropdownRender"]);
       const prefixCls = getPrefixCls("dropdown", customizePrefixCls);
       const buttonPrefixCls = `${prefixCls}-button`;
       const dropdownProps = {
@@ -49242,13 +49218,13 @@ var require_admin = __commonJS({
         compactItemClassnames
       } = useCompactItemContext(prefixCls, direction);
       const classes = classNames(buttonPrefixCls, compactItemClassnames, className);
-      if ("overlay" in props2) {
+      if ("overlay" in props) {
         dropdownProps.overlay = overlay;
       }
-      if ("open" in props2) {
+      if ("open" in props) {
         dropdownProps.open = open2;
       }
-      if ("placement" in props2) {
+      if ("placement" in props) {
         dropdownProps.placement = placement;
       } else {
         dropdownProps.placement = direction === "rtl" ? "bottomLeft" : "bottomRight";
@@ -49985,7 +49961,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const InternalForm = (props2, ref) => {
+    const InternalForm = (props, ref) => {
       const contextDisabled = reactExports.useContext(DisabledContext);
       const {
         getPrefixCls,
@@ -50013,7 +49989,7 @@ var require_admin = __commonJS({
         style: style2,
         feedbackIcons,
         variant
-      } = props2, restFormProps = __rest$g(props2, ["prefixCls", "className", "rootClassName", "size", "disabled", "form", "colon", "labelAlign", "labelWrap", "labelCol", "wrapperCol", "hideRequiredMark", "layout", "scrollToFirstError", "requiredMark", "onFinishFailed", "name", "style", "feedbackIcons", "variant"]);
+      } = props, restFormProps = __rest$g(props, ["prefixCls", "className", "rootClassName", "size", "disabled", "form", "colon", "labelAlign", "labelWrap", "labelCol", "wrapperCol", "hideRequiredMark", "layout", "scrollToFirstError", "requiredMark", "onFinishFailed", "name", "style", "feedbackIcons", "variant"]);
       const mergedSize = useSize(size);
       const contextValidateMessages = reactExports.useContext(ValidateMessagesContext);
       const mergedRequiredMark = reactExports.useMemo(() => {
@@ -50152,8 +50128,8 @@ var require_admin = __commonJS({
             frameRef.current = null;
             setValue((prevValue) => {
               let current = prevValue;
-              batchRef.current.forEach((func2) => {
-                current = func2(current);
+              batchRef.current.forEach((func) => {
+                current = func(current);
               });
               return current;
             });
@@ -50200,7 +50176,7 @@ var require_admin = __commonJS({
       const formToken = prepareToken$1(token2, rootPrefixCls);
       return [genFallbackStyle(formToken)];
     });
-    const FormItemInput = (props2) => {
+    const FormItemInput = (props) => {
       const {
         prefixCls,
         status,
@@ -50214,7 +50190,7 @@ var require_admin = __commonJS({
         fieldId,
         marginBottom,
         onErrorVisibleChanged
-      } = props2;
+      } = props;
       const baseClassName = `${prefixCls}-item`;
       const formContext = reactExports.useContext(FormContext);
       const mergedWrapperCol = wrapperCol || formContext.wrapperCol || {};
@@ -50259,7 +50235,7 @@ var require_admin = __commonJS({
       const extraDom = extra ? /* @__PURE__ */ reactExports.createElement("div", Object.assign({}, extraProps, {
         className: `${baseClassName}-extra`
       }), extra) : null;
-      const dom = formItemRender && formItemRender.mark === "pro_table_render" && formItemRender.render ? formItemRender.render(props2, {
+      const dom = formItemRender && formItemRender.mark === "pro_table_render" && formItemRender.render ? formItemRender.render(props, {
         input: inputDom,
         errorList: errorListDom,
         extra: extraDom
@@ -50273,8 +50249,8 @@ var require_admin = __commonJS({
       }));
     };
     var QuestionCircleOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z" } }, { "tag": "path", "attrs": { "d": "M623.6 316.7C593.6 290.4 554 276 512 276s-81.6 14.5-111.6 40.7C369.2 344 352 380.7 352 420v7.6c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V420c0-44.1 43.1-80 96-80s96 35.9 96 80c0 31.1-22 59.6-56.1 72.7-21.2 8.1-39.2 22.3-52.1 40.9-13.1 19-19.9 41.8-19.9 64.9V620c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8v-22.7a48.3 48.3 0 0130.9-44.8c59-22.7 97.1-74.7 97.1-132.5.1-39.3-17.1-76-48.3-103.3zM472 732a40 40 0 1080 0 40 40 0 10-80 0z" } }] }, "name": "question-circle", "theme": "outlined" };
-    var QuestionCircleOutlined = function QuestionCircleOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var QuestionCircleOutlined = function QuestionCircleOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: QuestionCircleOutlined$1
       }));
@@ -50446,7 +50422,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    function ItemHolder(props2) {
+    function ItemHolder(props) {
       const {
         prefixCls,
         className,
@@ -50465,7 +50441,7 @@ var require_admin = __commonJS({
         isRequired,
         onSubItemMetaChange,
         layout
-      } = props2, restProps = __rest$e(props2, ["prefixCls", "className", "rootClassName", "style", "help", "errors", "warnings", "validateStatus", "meta", "hasFeedback", "hidden", "children", "fieldId", "required", "isRequired", "onSubItemMetaChange", "layout"]);
+      } = props, restProps = __rest$e(props, ["prefixCls", "className", "rootClassName", "style", "help", "errors", "warnings", "validateStatus", "meta", "hasFeedback", "hidden", "children", "fieldId", "required", "isRequired", "onSubItemMetaChange", "layout"]);
       const itemPrefixCls = `${prefixCls}-item`;
       const {
         requiredMark,
@@ -50515,7 +50491,7 @@ var require_admin = __commonJS({
         ref: itemRef
       }, /* @__PURE__ */ reactExports.createElement(Row, Object.assign({
         className: `${itemPrefixCls}-row`
-      }, omit$1(restProps, [
+      }, omit(restProps, [
         "_internalItemRender",
         "colon",
         "dependencies",
@@ -50549,12 +50525,12 @@ var require_admin = __commonJS({
         "validateDebounce"
       ])), /* @__PURE__ */ reactExports.createElement(FormItemLabel, Object.assign({
         htmlFor: fieldId
-      }, props2, {
+      }, props, {
         requiredMark,
         required: required2 !== null && required2 !== void 0 ? required2 : isRequired,
         prefixCls,
         vertical
-      })), /* @__PURE__ */ reactExports.createElement(FormItemInput, Object.assign({}, props2, meta, {
+      })), /* @__PURE__ */ reactExports.createElement(FormItemInput, Object.assign({}, props, meta, {
         errors: debounceErrors,
         warnings: debounceWarnings,
         prefixCls,
@@ -50605,7 +50581,7 @@ var require_admin = __commonJS({
         validated: false
       };
     }
-    function InternalFormItem(props2) {
+    function InternalFormItem(props) {
       const {
         name,
         noStyle,
@@ -50623,7 +50599,7 @@ var require_admin = __commonJS({
         hidden,
         help,
         layout
-      } = props2;
+      } = props;
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
@@ -50690,8 +50666,8 @@ var require_admin = __commonJS({
         if (noStyle && !hidden) {
           return /* @__PURE__ */ reactExports.createElement(StatusProvider, {
             prefixCls,
-            hasFeedback: props2.hasFeedback,
-            validateStatus: props2.validateStatus,
+            hasFeedback: props.hasFeedback,
+            validateStatus: props.validateStatus,
             meta,
             errors: mergedErrors,
             warnings: mergedWarnings,
@@ -50700,7 +50676,7 @@ var require_admin = __commonJS({
         }
         return /* @__PURE__ */ reactExports.createElement(ItemHolder, Object.assign({
           key: "row"
-        }, props2, {
+        }, props, {
           className: classNames(className, cssVarCls, rootCls, hashId),
           prefixCls,
           fieldId,
@@ -50724,7 +50700,7 @@ var require_admin = __commonJS({
       if (messageVariables) {
         variables = Object.assign(Object.assign({}, variables), messageVariables);
       }
-      return wrapCSSVar(/* @__PURE__ */ reactExports.createElement(WrapperField, Object.assign({}, props2, {
+      return wrapCSSVar(/* @__PURE__ */ reactExports.createElement(WrapperField, Object.assign({}, props, {
         messageVariables: variables,
         trigger,
         validateTrigger: mergedValidateTrigger,
@@ -50753,12 +50729,12 @@ var require_admin = __commonJS({
           if (!childProps.id) {
             childProps.id = fieldId;
           }
-          if (help || mergedErrors.length > 0 || mergedWarnings.length > 0 || props2.extra) {
+          if (help || mergedErrors.length > 0 || mergedWarnings.length > 0 || props.extra) {
             const describedbyArr = [];
             if (help || mergedErrors.length > 0) {
               describedbyArr.push(`${fieldId}_help`);
             }
-            if (props2.extra) {
+            if (props.extra) {
               describedbyArr.push(`${fieldId}_extra`);
             }
             childProps["aria-describedby"] = describedbyArr.join(" ");
@@ -50812,7 +50788,7 @@ var require_admin = __commonJS({
       var {
         prefixCls: customizePrefixCls,
         children
-      } = _a2, props2 = __rest$d(_a2, ["prefixCls", "children"]);
+      } = _a2, props = __rest$d(_a2, ["prefixCls", "children"]);
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
@@ -50821,7 +50797,7 @@ var require_admin = __commonJS({
         prefixCls,
         status: "error"
       }), [prefixCls]);
-      return /* @__PURE__ */ reactExports.createElement(List$1, Object.assign({}, props2), (fields, operation, meta) => /* @__PURE__ */ reactExports.createElement(FormItemPrefixContext.Provider, {
+      return /* @__PURE__ */ reactExports.createElement(List$1, Object.assign({}, props), (fields, operation, meta) => /* @__PURE__ */ reactExports.createElement(FormItemPrefixContext.Provider, {
         value: contextValue
       }, children(fields.map((field) => Object.assign(Object.assign({}, field), {
         fieldKey: field.key
@@ -50878,8 +50854,8 @@ var require_admin = __commonJS({
       };
     }
     var PreviewGroupContext = /* @__PURE__ */ reactExports.createContext(null);
-    var Operations = function Operations2(props2) {
-      var visible = props2.visible, maskTransitionName = props2.maskTransitionName, getContainer2 = props2.getContainer, prefixCls = props2.prefixCls, rootClassName = props2.rootClassName, icons2 = props2.icons, countRender = props2.countRender, showSwitch = props2.showSwitch, showProgress = props2.showProgress, current = props2.current, transform = props2.transform, count = props2.count, scale = props2.scale, minScale = props2.minScale, maxScale = props2.maxScale, closeIcon = props2.closeIcon, onActive = props2.onActive, onClose = props2.onClose, onZoomIn = props2.onZoomIn, onZoomOut = props2.onZoomOut, onRotateRight = props2.onRotateRight, onRotateLeft = props2.onRotateLeft, onFlipX = props2.onFlipX, onFlipY = props2.onFlipY, onReset = props2.onReset, toolbarRender = props2.toolbarRender, zIndex = props2.zIndex, image = props2.image;
+    var Operations = function Operations2(props) {
+      var visible = props.visible, maskTransitionName = props.maskTransitionName, getContainer2 = props.getContainer, prefixCls = props.prefixCls, rootClassName = props.rootClassName, icons2 = props.icons, countRender = props.countRender, showSwitch = props.showSwitch, showProgress = props.showProgress, current = props.current, transform = props.transform, count = props.count, scale = props.scale, minScale = props.minScale, maxScale = props.maxScale, closeIcon = props.closeIcon, onActive = props.onActive, onClose = props.onClose, onZoomIn = props.onZoomIn, onZoomOut = props.onZoomOut, onRotateRight = props.onRotateRight, onRotateLeft = props.onRotateLeft, onFlipX = props.onFlipX, onFlipY = props.onFlipY, onReset = props.onReset, toolbarRender = props.toolbarRender, zIndex = props.zIndex, image = props.image;
       var groupContext = reactExports.useContext(PreviewGroupContext);
       var rotateLeft = icons2.rotateLeft, rotateRight = icons2.rotateRight, zoomIn2 = icons2.zoomIn, zoomOut2 = icons2.zoomOut, close = icons2.close, left = icons2.left, right = icons2.right, flipX = icons2.flipX, flipY = icons2.flipY;
       var toolClassName = "".concat(prefixCls, "-operations-operation");
@@ -51035,7 +51011,7 @@ var require_admin = __commonJS({
       var _useState = reactExports.useState(initialTransform), _useState2 = _slicedToArray(_useState, 2), transform = _useState2[0], setTransform = _useState2[1];
       var resetTransform = function resetTransform2(action) {
         setTransform(initialTransform);
-        if (!isEqual$1(initialTransform, transform)) {
+        if (!isEqual(initialTransform, transform)) {
           onTransform === null || onTransform === void 0 || onTransform({
             transform: initialTransform,
             action
@@ -51234,7 +51210,7 @@ var require_admin = __commonJS({
       });
     }
     function useStatus(_ref) {
-      var src = _ref.src, isCustomPlaceholder = _ref.isCustomPlaceholder, fallback2 = _ref.fallback;
+      var src = _ref.src, isCustomPlaceholder = _ref.isCustomPlaceholder, fallback = _ref.fallback;
       var _useState = reactExports.useState(isCustomPlaceholder ? "loading" : "normal"), _useState2 = _slicedToArray(_useState, 2), status = _useState2[0], setStatus = _useState2[1];
       var isLoaded = reactExports.useRef(false);
       var isError = status === "error";
@@ -51266,8 +51242,8 @@ var require_admin = __commonJS({
           onLoad();
         }
       };
-      var srcAndOnload = isError && fallback2 ? {
-        src: fallback2
+      var srcAndOnload = isError && fallback ? {
+        src: fallback
       } : {
         onLoad,
         src
@@ -51411,20 +51387,20 @@ var require_admin = __commonJS({
     }
     var _excluded$c = ["fallback", "src", "imgRef"], _excluded2$3 = ["prefixCls", "src", "alt", "imageInfo", "fallback", "movable", "onClose", "visible", "icons", "rootClassName", "closeIcon", "getContainer", "current", "count", "countRender", "scaleStep", "minScale", "maxScale", "transitionName", "maskTransitionName", "imageRender", "imgCommonProps", "toolbarRender", "onTransform", "onChange"];
     var PreviewImage = function PreviewImage2(_ref) {
-      var fallback2 = _ref.fallback, src = _ref.src, imgRef = _ref.imgRef, props2 = _objectWithoutProperties(_ref, _excluded$c);
+      var fallback = _ref.fallback, src = _ref.src, imgRef = _ref.imgRef, props = _objectWithoutProperties(_ref, _excluded$c);
       var _useStatus = useStatus({
         src,
-        fallback: fallback2
+        fallback
       }), _useStatus2 = _slicedToArray(_useStatus, 2), getImgRef = _useStatus2[0], srcAndOnload = _useStatus2[1];
       return /* @__PURE__ */ React$1.createElement("img", _extends({
         ref: function ref(_ref2) {
           imgRef.current = _ref2;
           getImgRef(_ref2);
         }
-      }, props2, srcAndOnload));
+      }, props, srcAndOnload));
     };
-    var Preview$4 = function Preview2(props2) {
-      var prefixCls = props2.prefixCls, src = props2.src, alt = props2.alt, imageInfo = props2.imageInfo, fallback2 = props2.fallback, _props$movable = props2.movable, movable = _props$movable === void 0 ? true : _props$movable, onClose = props2.onClose, visible = props2.visible, _props$icons = props2.icons, icons2 = _props$icons === void 0 ? {} : _props$icons, rootClassName = props2.rootClassName, closeIcon = props2.closeIcon, getContainer2 = props2.getContainer, _props$current = props2.current, current = _props$current === void 0 ? 0 : _props$current, _props$count = props2.count, count = _props$count === void 0 ? 1 : _props$count, countRender = props2.countRender, _props$scaleStep = props2.scaleStep, scaleStep = _props$scaleStep === void 0 ? 0.5 : _props$scaleStep, _props$minScale = props2.minScale, minScale = _props$minScale === void 0 ? 1 : _props$minScale, _props$maxScale = props2.maxScale, maxScale = _props$maxScale === void 0 ? 50 : _props$maxScale, _props$transitionName = props2.transitionName, transitionName = _props$transitionName === void 0 ? "zoom" : _props$transitionName, _props$maskTransition = props2.maskTransitionName, maskTransitionName = _props$maskTransition === void 0 ? "fade" : _props$maskTransition, imageRender = props2.imageRender, imgCommonProps = props2.imgCommonProps, toolbarRender = props2.toolbarRender, onTransform = props2.onTransform, onChange = props2.onChange, restProps = _objectWithoutProperties(props2, _excluded2$3);
+    var Preview = function Preview2(props) {
+      var prefixCls = props.prefixCls, src = props.src, alt = props.alt, imageInfo = props.imageInfo, fallback = props.fallback, _props$movable = props.movable, movable = _props$movable === void 0 ? true : _props$movable, onClose = props.onClose, visible = props.visible, _props$icons = props.icons, icons2 = _props$icons === void 0 ? {} : _props$icons, rootClassName = props.rootClassName, closeIcon = props.closeIcon, getContainer2 = props.getContainer, _props$current = props.current, current = _props$current === void 0 ? 0 : _props$current, _props$count = props.count, count = _props$count === void 0 ? 1 : _props$count, countRender = props.countRender, _props$scaleStep = props.scaleStep, scaleStep = _props$scaleStep === void 0 ? 0.5 : _props$scaleStep, _props$minScale = props.minScale, minScale = _props$minScale === void 0 ? 1 : _props$minScale, _props$maxScale = props.maxScale, maxScale = _props$maxScale === void 0 ? 50 : _props$maxScale, _props$transitionName = props.transitionName, transitionName = _props$transitionName === void 0 ? "zoom" : _props$transitionName, _props$maskTransition = props.maskTransitionName, maskTransitionName = _props$maskTransition === void 0 ? "fade" : _props$maskTransition, imageRender = props.imageRender, imgCommonProps = props.imgCommonProps, toolbarRender = props.toolbarRender, onTransform = props.onTransform, onChange = props.onChange, restProps = _objectWithoutProperties(props, _excluded2$3);
       var imgRef = reactExports.useRef();
       var groupContext = reactExports.useContext(PreviewGroupContext);
       var showLeftOrRightSwitches = groupContext && count > 1;
@@ -51509,8 +51485,8 @@ var require_admin = __commonJS({
         };
       }, [visible, showLeftOrRightSwitches, current]);
       var imgNode = /* @__PURE__ */ React$1.createElement(PreviewImage, _extends({}, imgCommonProps, {
-        width: props2.width,
-        height: props2.height,
+        width: props.width,
+        height: props.height,
         imgRef,
         className: "".concat(prefixCls, "-img"),
         alt,
@@ -51518,7 +51494,7 @@ var require_admin = __commonJS({
           transform: "translate3d(".concat(transform.x, "px, ").concat(transform.y, "px, 0) scale3d(").concat(transform.flipX ? "-" : "").concat(scale, ", ").concat(transform.flipY ? "-" : "").concat(scale, ", 1) rotate(").concat(rotate, "deg)"),
           transitionDuration: (!enableTransition || isTouching) && "0s"
         },
-        fallback: fallback2,
+        fallback,
         src,
         onWheel,
         onMouseDown,
@@ -51637,7 +51613,7 @@ var require_admin = __commonJS({
     var _excluded$b = ["visible", "onVisibleChange", "getContainer", "current", "movable", "minScale", "maxScale", "countRender", "closeIcon", "onChange", "onTransform", "toolbarRender", "imageRender"], _excluded2$2 = ["src"];
     var Group = function Group2(_ref) {
       var _mergedItems$current;
-      var _ref$previewPrefixCls = _ref.previewPrefixCls, previewPrefixCls = _ref$previewPrefixCls === void 0 ? "rc-image-preview" : _ref$previewPrefixCls, children = _ref.children, _ref$icons = _ref.icons, icons2 = _ref$icons === void 0 ? {} : _ref$icons, items2 = _ref.items, preview = _ref.preview, fallback2 = _ref.fallback;
+      var _ref$previewPrefixCls = _ref.previewPrefixCls, previewPrefixCls = _ref$previewPrefixCls === void 0 ? "rc-image-preview" : _ref$previewPrefixCls, children = _ref.children, _ref$icons = _ref.icons, icons2 = _ref$icons === void 0 ? {} : _ref$icons, items2 = _ref.items, preview = _ref.preview, fallback = _ref.fallback;
       var _ref2 = _typeof(preview) === "object" ? preview : {}, previewVisible = _ref2.visible, onVisibleChange = _ref2.onVisibleChange, getContainer2 = _ref2.getContainer, currentIndex = _ref2.current, movable = _ref2.movable, minScale = _ref2.minScale, maxScale = _ref2.maxScale, countRender = _ref2.countRender, closeIcon = _ref2.closeIcon, onChange = _ref2.onChange, onTransform = _ref2.onTransform, toolbarRender = _ref2.toolbarRender, imageRender = _ref2.imageRender, dialogProps = _objectWithoutProperties(_ref2, _excluded$b);
       var _usePreviewItems = usePreviewItems(items2), _usePreviewItems2 = _slicedToArray(_usePreviewItems, 3), mergedItems = _usePreviewItems2[0], register = _usePreviewItems2[1], fromItems = _usePreviewItems2[2];
       var _useMergedState = useMergedState(0, {
@@ -51691,7 +51667,7 @@ var require_admin = __commonJS({
       }, [register, onPreviewFromImage]);
       return /* @__PURE__ */ reactExports.createElement(PreviewGroupContext.Provider, {
         value: previewGroupContext
-      }, children, /* @__PURE__ */ reactExports.createElement(Preview$4, _extends({
+      }, children, /* @__PURE__ */ reactExports.createElement(Preview, _extends({
         "aria-hidden": !isShowPreview,
         movable,
         visible: isShowPreview,
@@ -51701,7 +51677,7 @@ var require_admin = __commonJS({
         mousePosition: mousePosition2,
         imgCommonProps,
         src,
-        fallback: fallback2,
+        fallback,
         icons: icons2,
         minScale,
         maxScale,
@@ -51739,8 +51715,8 @@ var require_admin = __commonJS({
       return id2;
     }
     var _excluded$a = ["src", "alt", "onPreviewClose", "prefixCls", "previewPrefixCls", "placeholder", "fallback", "width", "height", "style", "preview", "className", "onClick", "onError", "wrapperClassName", "wrapperStyle", "rootClassName"], _excluded2$1 = ["src", "visible", "onVisibleChange", "getContainer", "mask", "maskClassName", "movable", "icons", "scaleStep", "minScale", "maxScale", "imageRender", "toolbarRender"];
-    var ImageInternal = function ImageInternal2(props2) {
-      var imgSrc = props2.src, alt = props2.alt, onInitialPreviewClose = props2.onPreviewClose, _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-image" : _props$prefixCls, _props$previewPrefixC = props2.previewPrefixCls, previewPrefixCls = _props$previewPrefixC === void 0 ? "".concat(prefixCls, "-preview") : _props$previewPrefixC, placeholder = props2.placeholder, fallback2 = props2.fallback, width = props2.width, height = props2.height, style2 = props2.style, _props$preview = props2.preview, preview = _props$preview === void 0 ? true : _props$preview, className = props2.className, onClick = props2.onClick, onError = props2.onError, wrapperClassName = props2.wrapperClassName, wrapperStyle = props2.wrapperStyle, rootClassName = props2.rootClassName, otherProps = _objectWithoutProperties(props2, _excluded$a);
+    var ImageInternal = function ImageInternal2(props) {
+      var imgSrc = props.src, alt = props.alt, onInitialPreviewClose = props.onPreviewClose, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-image" : _props$prefixCls, _props$previewPrefixC = props.previewPrefixCls, previewPrefixCls = _props$previewPrefixC === void 0 ? "".concat(prefixCls, "-preview") : _props$previewPrefixC, placeholder = props.placeholder, fallback = props.fallback, width = props.width, height = props.height, style2 = props.style, _props$preview = props.preview, preview = _props$preview === void 0 ? true : _props$preview, className = props.className, onClick = props.onClick, onError = props.onError, wrapperClassName = props.wrapperClassName, wrapperStyle = props.wrapperStyle, rootClassName = props.rootClassName, otherProps = _objectWithoutProperties(props, _excluded$a);
       var isCustomPlaceholder = placeholder && placeholder !== true;
       var _ref = _typeof(preview) === "object" ? preview : {}, previewSrc = _ref.src, _ref$visible = _ref.visible, previewVisible = _ref$visible === void 0 ? void 0 : _ref$visible, _ref$onVisibleChange = _ref.onVisibleChange, onPreviewVisibleChange = _ref$onVisibleChange === void 0 ? onInitialPreviewClose : _ref$onVisibleChange, _ref$getContainer = _ref.getContainer, getPreviewContainer = _ref$getContainer === void 0 ? void 0 : _ref$getContainer, previewMask = _ref.mask, maskClassName = _ref.maskClassName, movable = _ref.movable, icons2 = _ref.icons, scaleStep = _ref.scaleStep, minScale = _ref.minScale, maxScale = _ref.maxScale, imageRender = _ref.imageRender, toolbarRender = _ref.toolbarRender, dialogProps = _objectWithoutProperties(_ref, _excluded2$1);
       var src = previewSrc !== null && previewSrc !== void 0 ? previewSrc : imgSrc;
@@ -51751,7 +51727,7 @@ var require_admin = __commonJS({
       var _useStatus = useStatus({
         src: imgSrc,
         isCustomPlaceholder,
-        fallback: fallback2
+        fallback
       }), _useStatus2 = _slicedToArray(_useStatus, 3), getImgRef = _useStatus2[0], srcAndOnload = _useStatus2[1], status = _useStatus2[2];
       var _useState = reactExports.useState(null), _useState2 = _slicedToArray(_useState, 2), mousePosition2 = _useState2[0], setMousePosition = _useState2[1];
       var groupContext = reactExports.useContext(PreviewGroupContext);
@@ -51764,13 +51740,13 @@ var require_admin = __commonJS({
       var imgCommonProps = reactExports.useMemo(function() {
         var obj = {};
         COMMON_PROPS.forEach(function(prop) {
-          if (props2[prop] !== void 0) {
-            obj[prop] = props2[prop];
+          if (props[prop] !== void 0) {
+            obj[prop] = props[prop];
           }
         });
         return obj;
       }, COMMON_PROPS.map(function(prop) {
-        return props2[prop];
+        return props[prop];
       }));
       var registerData = reactExports.useMemo(function() {
         return _objectSpread2(_objectSpread2({}, imgCommonProps), {}, {
@@ -51816,7 +51792,7 @@ var require_admin = __commonJS({
         style: {
           display: (style2 === null || style2 === void 0 ? void 0 : style2.display) === "none" ? "none" : void 0
         }
-      }, previewMask)), !groupContext && canPreview && /* @__PURE__ */ reactExports.createElement(Preview$4, _extends({
+      }, previewMask)), !groupContext && canPreview && /* @__PURE__ */ reactExports.createElement(Preview, _extends({
         "aria-hidden": !isShowPreview,
         visible: isShowPreview,
         prefixCls: previewPrefixCls,
@@ -51828,7 +51804,7 @@ var require_admin = __commonJS({
           width,
           height
         },
-        fallback: fallback2,
+        fallback,
         getContainer: getPreviewContainer,
         icons: icons2,
         movable,
@@ -51843,40 +51819,40 @@ var require_admin = __commonJS({
     };
     ImageInternal.PreviewGroup = Group;
     var RotateLeftOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "defs", "attrs": {}, "children": [{ "tag": "style", "attrs": {} }] }, { "tag": "path", "attrs": { "d": "M672 418H144c-17.7 0-32 14.3-32 32v414c0 17.7 14.3 32 32 32h528c17.7 0 32-14.3 32-32V450c0-17.7-14.3-32-32-32zm-44 402H188V494h440v326z" } }, { "tag": "path", "attrs": { "d": "M819.3 328.5c-78.8-100.7-196-153.6-314.6-154.2l-.2-64c0-6.5-7.6-10.1-12.6-6.1l-128 101c-4 3.1-3.9 9.1 0 12.3L492 318.6c5.1 4 12.7.4 12.6-6.1v-63.9c12.9.1 25.9.9 38.8 2.5 42.1 5.2 82.1 18.2 119 38.7 38.1 21.2 71.2 49.7 98.4 84.3 27.1 34.7 46.7 73.7 58.1 115.8a325.95 325.95 0 016.5 140.9h74.9c14.8-103.6-11.3-213-81-302.3z" } }] }, "name": "rotate-left", "theme": "outlined" };
-    var RotateLeftOutlined = function RotateLeftOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var RotateLeftOutlined = function RotateLeftOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: RotateLeftOutlined$1
       }));
     };
     var RefIcon$n = /* @__PURE__ */ reactExports.forwardRef(RotateLeftOutlined);
     var RotateRightOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "defs", "attrs": {}, "children": [{ "tag": "style", "attrs": {} }] }, { "tag": "path", "attrs": { "d": "M480.5 251.2c13-1.6 25.9-2.4 38.8-2.5v63.9c0 6.5 7.5 10.1 12.6 6.1L660 217.6c4-3.2 4-9.2 0-12.3l-128-101c-5.1-4-12.6-.4-12.6 6.1l-.2 64c-118.6.5-235.8 53.4-314.6 154.2A399.75 399.75 0 00123.5 631h74.9c-.9-5.3-1.7-10.7-2.4-16.1-5.1-42.1-2.1-84.1 8.9-124.8 11.4-42.2 31-81.1 58.1-115.8 27.2-34.7 60.3-63.2 98.4-84.3 37-20.6 76.9-33.6 119.1-38.8z" } }, { "tag": "path", "attrs": { "d": "M880 418H352c-17.7 0-32 14.3-32 32v414c0 17.7 14.3 32 32 32h528c17.7 0 32-14.3 32-32V450c0-17.7-14.3-32-32-32zm-44 402H396V494h440v326z" } }] }, "name": "rotate-right", "theme": "outlined" };
-    var RotateRightOutlined = function RotateRightOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var RotateRightOutlined = function RotateRightOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: RotateRightOutlined$1
       }));
     };
     var RefIcon$m = /* @__PURE__ */ reactExports.forwardRef(RotateRightOutlined);
     var SwapOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M847.9 592H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h605.2L612.9 851c-4.1 5.2-.4 13 6.3 13h72.5c4.9 0 9.5-2.2 12.6-6.1l168.8-214.1c16.5-21 1.6-51.8-25.2-51.8zM872 356H266.8l144.3-183c4.1-5.2.4-13-6.3-13h-72.5c-4.9 0-9.5 2.2-12.6 6.1L150.9 380.2c-16.5 21-1.6 51.8 25.1 51.8h696c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z" } }] }, "name": "swap", "theme": "outlined" };
-    var SwapOutlined = function SwapOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var SwapOutlined = function SwapOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: SwapOutlined$1
       }));
     };
     var RefIcon$l = /* @__PURE__ */ reactExports.forwardRef(SwapOutlined);
     var ZoomInOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M637 443H519V309c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v134H325c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h118v134c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V519h118c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8zm284 424L775 721c122.1-148.9 113.6-369.5-26-509-148-148.1-388.4-148.1-537 0-148.1 148.6-148.1 389 0 537 139.5 139.6 360.1 148.1 509 26l146 146c3.2 2.8 8.3 2.8 11 0l43-43c2.8-2.7 2.8-7.8 0-11zM696 696c-118.8 118.7-311.2 118.7-430 0-118.7-118.8-118.7-311.2 0-430 118.8-118.7 311.2-118.7 430 0 118.7 118.8 118.7 311.2 0 430z" } }] }, "name": "zoom-in", "theme": "outlined" };
-    var ZoomInOutlined = function ZoomInOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var ZoomInOutlined = function ZoomInOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: ZoomInOutlined$1
       }));
     };
     var RefIcon$k = /* @__PURE__ */ reactExports.forwardRef(ZoomInOutlined);
     var ZoomOutOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M637 443H325c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h312c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8zm284 424L775 721c122.1-148.9 113.6-369.5-26-509-148-148.1-388.4-148.1-537 0-148.1 148.6-148.1 389 0 537 139.5 139.6 360.1 148.1 509 26l146 146c3.2 2.8 8.3 2.8 11 0l43-43c2.8-2.7 2.8-7.8 0-11zM696 696c-118.8 118.7-311.2 118.7-430 0-118.7-118.8-118.7-311.2 0-430 118.8-118.7 311.2-118.7 430 0 118.7 118.8 118.7 311.2 0 430z" } }] }, "name": "zoom-out", "theme": "outlined" };
-    var ZoomOutOutlined = function ZoomOutOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var ZoomOutOutlined = function ZoomOutOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: ZoomOutOutlined$1
       }));
@@ -52251,7 +52227,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const Image = (props2) => {
+    const Image = (props) => {
       var _a2;
       const {
         prefixCls: customizePrefixCls,
@@ -52259,7 +52235,7 @@ var require_admin = __commonJS({
         className,
         rootClassName,
         style: style2
-      } = props2, otherProps = __rest$b(props2, ["prefixCls", "preview", "className", "rootClassName", "style"]);
+      } = props, otherProps = __rest$b(props, ["prefixCls", "preview", "className", "rootClassName", "style"]);
       const {
         getPrefixCls,
         locale: contextLocale = localeValues,
@@ -52323,16 +52299,16 @@ var require_admin = __commonJS({
       return result;
     };
     var DoubleLeftOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M272.9 512l265.4-339.1c4.1-5.2.4-12.9-6.3-12.9h-77.3c-4.9 0-9.6 2.3-12.6 6.1L186.8 492.3a31.99 31.99 0 000 39.5l255.3 326.1c3 3.9 7.7 6.1 12.6 6.1H532c6.7 0 10.4-7.7 6.3-12.9L272.9 512zm304 0l265.4-339.1c4.1-5.2.4-12.9-6.3-12.9h-77.3c-4.9 0-9.6 2.3-12.6 6.1L490.8 492.3a31.99 31.99 0 000 39.5l255.3 326.1c3 3.9 7.7 6.1 12.6 6.1H836c6.7 0 10.4-7.7 6.3-12.9L576.9 512z" } }] }, "name": "double-left", "theme": "outlined" };
-    var DoubleLeftOutlined = function DoubleLeftOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var DoubleLeftOutlined = function DoubleLeftOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: DoubleLeftOutlined$1
       }));
     };
     var RefIcon$i = /* @__PURE__ */ reactExports.forwardRef(DoubleLeftOutlined);
     var DoubleRightOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M533.2 492.3L277.9 166.1c-3-3.9-7.7-6.1-12.6-6.1H188c-6.7 0-10.4 7.7-6.3 12.9L447.1 512 181.7 851.1A7.98 7.98 0 00188 864h77.3c4.9 0 9.6-2.3 12.6-6.1l255.3-326.1c9.1-11.7 9.1-27.9 0-39.5zm304 0L581.9 166.1c-3-3.9-7.7-6.1-12.6-6.1H492c-6.7 0-10.4 7.7-6.3 12.9L751.1 512 485.7 851.1A7.98 7.98 0 00492 864h77.3c4.9 0 9.6-2.3 12.6-6.1l255.3-326.1c9.1-11.7 9.1-27.9 0-39.5z" } }] }, "name": "double-right", "theme": "outlined" };
-    var DoubleRightOutlined = function DoubleRightOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var DoubleRightOutlined = function DoubleRightOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: DoubleRightOutlined$1
       }));
@@ -52354,8 +52330,8 @@ var require_admin = __commonJS({
       page_size: "页码"
     };
     var defaultPageSizeOptions = ["10", "20", "50", "100"];
-    var Options = function Options2(props2) {
-      var _props$pageSizeOption = props2.pageSizeOptions, pageSizeOptions = _props$pageSizeOption === void 0 ? defaultPageSizeOptions : _props$pageSizeOption, locale2 = props2.locale, changeSize = props2.changeSize, pageSize = props2.pageSize, goButton = props2.goButton, quickGo = props2.quickGo, rootPrefixCls = props2.rootPrefixCls, Select2 = props2.selectComponentClass, selectPrefixCls = props2.selectPrefixCls, disabled = props2.disabled, buildOptionText = props2.buildOptionText, showSizeChanger = props2.showSizeChanger;
+    var Options = function Options2(props) {
+      var _props$pageSizeOption = props.pageSizeOptions, pageSizeOptions = _props$pageSizeOption === void 0 ? defaultPageSizeOptions : _props$pageSizeOption, locale2 = props.locale, changeSize = props.changeSize, pageSize = props.pageSize, goButton = props.goButton, quickGo = props.quickGo, rootPrefixCls = props.rootPrefixCls, Select2 = props.selectComponentClass, selectPrefixCls = props.selectPrefixCls, disabled = props.disabled, buildOptionText = props.buildOptionText, showSizeChanger = props.showSizeChanger;
       var _React$useState = React$1.useState(""), _React$useState2 = _slicedToArray(_React$useState, 2), goInputText = _React$useState2[0], setGoInputText = _React$useState2[1];
       var getValidValue = function getValidValue2() {
         return !goInputText || Number.isNaN(goInputText) ? void 0 : Number(goInputText);
@@ -52466,8 +52442,8 @@ var require_admin = __commonJS({
         className: prefixCls
       }, changeSelect, goInput);
     };
-    var Pager = function Pager2(props2) {
-      var rootPrefixCls = props2.rootPrefixCls, page = props2.page, active = props2.active, className = props2.className, showTitle = props2.showTitle, onClick = props2.onClick, onKeyPress = props2.onKeyPress, itemRender = props2.itemRender;
+    var Pager = function Pager2(props) {
+      var rootPrefixCls = props.rootPrefixCls, page = props.page, active = props.active, className = props.className, showTitle = props.showTitle, onClick = props.onClick, onKeyPress = props.onKeyPress, itemRender = props.itemRender;
       var prefixCls = "".concat(rootPrefixCls, "-item");
       var cls = classNames(prefixCls, "".concat(prefixCls, "-").concat(page), _defineProperty(_defineProperty({}, "".concat(prefixCls, "-active"), active), "".concat(prefixCls, "-disabled"), !page), className);
       var handleClick = function handleClick2() {
@@ -52490,7 +52466,7 @@ var require_admin = __commonJS({
     var defaultItemRender = function defaultItemRender2(page, type2, element) {
       return element;
     };
-    function noop$2() {
+    function noop$1() {
     }
     function isInteger(v2) {
       var value = Number(v2);
@@ -52500,8 +52476,8 @@ var require_admin = __commonJS({
       var _pageSize = typeof p2 === "undefined" ? pageSize : p2;
       return Math.floor((total - 1) / _pageSize) + 1;
     }
-    var Pagination$1 = function Pagination2(props2) {
-      var _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-pagination" : _props$prefixCls, _props$selectPrefixCl = props2.selectPrefixCls, selectPrefixCls = _props$selectPrefixCl === void 0 ? "rc-select" : _props$selectPrefixCl, className = props2.className, selectComponentClass = props2.selectComponentClass, currentProp = props2.current, _props$defaultCurrent = props2.defaultCurrent, defaultCurrent = _props$defaultCurrent === void 0 ? 1 : _props$defaultCurrent, _props$total = props2.total, total = _props$total === void 0 ? 0 : _props$total, pageSizeProp = props2.pageSize, _props$defaultPageSiz = props2.defaultPageSize, defaultPageSize = _props$defaultPageSiz === void 0 ? 10 : _props$defaultPageSiz, _props$onChange = props2.onChange, onChange = _props$onChange === void 0 ? noop$2 : _props$onChange, hideOnSinglePage = props2.hideOnSinglePage, align = props2.align, _props$showPrevNextJu = props2.showPrevNextJumpers, showPrevNextJumpers = _props$showPrevNextJu === void 0 ? true : _props$showPrevNextJu, showQuickJumper = props2.showQuickJumper, showLessItems = props2.showLessItems, _props$showTitle = props2.showTitle, showTitle = _props$showTitle === void 0 ? true : _props$showTitle, _props$onShowSizeChan = props2.onShowSizeChange, onShowSizeChange = _props$onShowSizeChan === void 0 ? noop$2 : _props$onShowSizeChan, _props$locale = props2.locale, locale$12 = _props$locale === void 0 ? locale : _props$locale, style2 = props2.style, _props$totalBoundaryS = props2.totalBoundaryShowSizeChanger, totalBoundaryShowSizeChanger = _props$totalBoundaryS === void 0 ? 50 : _props$totalBoundaryS, disabled = props2.disabled, simple = props2.simple, showTotal = props2.showTotal, _props$showSizeChange = props2.showSizeChanger, showSizeChanger = _props$showSizeChange === void 0 ? total > totalBoundaryShowSizeChanger : _props$showSizeChange, pageSizeOptions = props2.pageSizeOptions, _props$itemRender = props2.itemRender, itemRender = _props$itemRender === void 0 ? defaultItemRender : _props$itemRender, jumpPrevIcon = props2.jumpPrevIcon, jumpNextIcon = props2.jumpNextIcon, prevIcon = props2.prevIcon, nextIcon = props2.nextIcon;
+    var Pagination$1 = function Pagination2(props) {
+      var _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? "rc-pagination" : _props$prefixCls, _props$selectPrefixCl = props.selectPrefixCls, selectPrefixCls = _props$selectPrefixCl === void 0 ? "rc-select" : _props$selectPrefixCl, className = props.className, selectComponentClass = props.selectComponentClass, currentProp = props.current, _props$defaultCurrent = props.defaultCurrent, defaultCurrent = _props$defaultCurrent === void 0 ? 1 : _props$defaultCurrent, _props$total = props.total, total = _props$total === void 0 ? 0 : _props$total, pageSizeProp = props.pageSize, _props$defaultPageSiz = props.defaultPageSize, defaultPageSize = _props$defaultPageSiz === void 0 ? 10 : _props$defaultPageSiz, _props$onChange = props.onChange, onChange = _props$onChange === void 0 ? noop$1 : _props$onChange, hideOnSinglePage = props.hideOnSinglePage, align = props.align, _props$showPrevNextJu = props.showPrevNextJumpers, showPrevNextJumpers = _props$showPrevNextJu === void 0 ? true : _props$showPrevNextJu, showQuickJumper = props.showQuickJumper, showLessItems = props.showLessItems, _props$showTitle = props.showTitle, showTitle = _props$showTitle === void 0 ? true : _props$showTitle, _props$onShowSizeChan = props.onShowSizeChange, onShowSizeChange = _props$onShowSizeChan === void 0 ? noop$1 : _props$onShowSizeChan, _props$locale = props.locale, locale$12 = _props$locale === void 0 ? locale : _props$locale, style2 = props.style, _props$totalBoundaryS = props.totalBoundaryShowSizeChanger, totalBoundaryShowSizeChanger = _props$totalBoundaryS === void 0 ? 50 : _props$totalBoundaryS, disabled = props.disabled, simple = props.simple, showTotal = props.showTotal, _props$showSizeChange = props.showSizeChanger, showSizeChanger = _props$showSizeChange === void 0 ? total > totalBoundaryShowSizeChanger : _props$showSizeChange, pageSizeOptions = props.pageSizeOptions, _props$itemRender = props.itemRender, itemRender = _props$itemRender === void 0 ? defaultItemRender : _props$itemRender, jumpPrevIcon = props.jumpPrevIcon, jumpNextIcon = props.jumpNextIcon, prevIcon = props.prevIcon, nextIcon = props.nextIcon;
       var paginationRef = React$1.useRef(null);
       var _useMergedState = useMergedState(10, {
         value: pageSizeProp,
@@ -52527,7 +52503,7 @@ var require_admin = __commonJS({
           className: "".concat(prefixCls, "-item-link")
         });
         if (typeof icon === "function") {
-          iconNode = /* @__PURE__ */ React$1.createElement(icon, _objectSpread2({}, props2));
+          iconNode = /* @__PURE__ */ React$1.createElement(icon, _objectSpread2({}, props));
         }
         return iconNode;
       }
@@ -52654,7 +52630,7 @@ var require_admin = __commonJS({
         }
       }
       var jumpPrev = null;
-      var dataOrAriaAttributeProps = pickAttrs(props2, {
+      var dataOrAriaAttributeProps = pickAttrs(props, {
         aria: true,
         data: true
       });
@@ -52846,11 +52822,11 @@ var require_admin = __commonJS({
         showSizeChanger
       }));
     };
-    const MiniSelect = (props2) => /* @__PURE__ */ reactExports.createElement(Select, Object.assign({}, props2, {
+    const MiniSelect = (props) => /* @__PURE__ */ reactExports.createElement(Select, Object.assign({}, props, {
       showSearch: true,
       size: "small"
     }));
-    const MiddleSelect = (props2) => /* @__PURE__ */ reactExports.createElement(Select, Object.assign({}, props2, {
+    const MiddleSelect = (props) => /* @__PURE__ */ reactExports.createElement(Select, Object.assign({}, props, {
       showSearch: true,
       size: "middle"
     }));
@@ -53468,7 +53444,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const Pagination = (props2) => {
+    const Pagination = (props) => {
       const {
         align,
         prefixCls: customizePrefixCls,
@@ -53481,7 +53457,7 @@ var require_admin = __commonJS({
         selectComponentClass,
         responsive,
         showSizeChanger
-      } = props2, restProps = __rest$a(props2, ["align", "prefixCls", "selectPrefixCls", "className", "rootClassName", "style", "size", "locale", "selectComponentClass", "responsive", "showSizeChanger"]);
+      } = props, restProps = __rest$a(props, ["align", "prefixCls", "selectPrefixCls", "className", "rootClassName", "style", "size", "locale", "selectComponentClass", "responsive", "showSizeChanger"]);
       const {
         xs: xs2
       } = useBreakpoint(responsive);
@@ -53568,12 +53544,12 @@ var require_admin = __commonJS({
     const radius = viewSize / 2 - borderWidth / 2;
     const circumference = radius * 2 * Math.PI;
     const position = 50;
-    const CustomCircle = (props2) => {
+    const CustomCircle = (props) => {
       const {
         dotClassName,
         style: style2,
         hasCircleCls
-      } = props2;
+      } = props;
       return /* @__PURE__ */ reactExports.createElement("circle", {
         className: classNames(`${dotClassName}-circle`, {
           [`${dotClassName}-circle-bg`]: hasCircleCls
@@ -53624,11 +53600,11 @@ var require_admin = __commonJS({
         style: circleStyle
       })));
     };
-    function Looper(props2) {
+    function Looper(props) {
       const {
         prefixCls,
         percent = 0
-      } = props2;
+      } = props;
       const dotClassName = `${prefixCls}-dot`;
       const holderClassName = `${dotClassName}-holder`;
       const hideClassName = `${holderClassName}-hidden`;
@@ -53644,12 +53620,12 @@ var require_admin = __commonJS({
         percent
       }));
     }
-    function Indicator(props2) {
+    function Indicator(props) {
       const {
         prefixCls,
         indicator,
         percent
-      } = props2;
+      } = props;
       const dotClassName = `${prefixCls}-dot`;
       if (indicator && /* @__PURE__ */ reactExports.isValidElement(indicator)) {
         return cloneElement(indicator, {
@@ -53981,7 +53957,7 @@ var require_admin = __commonJS({
     function shouldDelay(spinning, delay) {
       return !!spinning && !!delay && !isNaN(Number(delay));
     }
-    const Spin = (props2) => {
+    const Spin = (props) => {
       var _a2;
       const {
         prefixCls: customizePrefixCls,
@@ -53997,7 +53973,7 @@ var require_admin = __commonJS({
         fullscreen = false,
         indicator,
         percent
-      } = props2, restProps = __rest$9(props2, ["prefixCls", "spinning", "delay", "className", "rootClassName", "size", "tip", "wrapperClassName", "style", "children", "fullscreen", "indicator", "percent"]);
+      } = props, restProps = __rest$9(props, ["prefixCls", "spinning", "delay", "className", "rootClassName", "size", "tip", "wrapperClassName", "style", "children", "fullscreen", "indicator", "percent"]);
       const {
         getPrefixCls,
         direction,
@@ -54080,7 +54056,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const PurePanel = (props2) => {
+    const PurePanel = (props) => {
       const {
         prefixCls: customizePrefixCls,
         className,
@@ -54090,7 +54066,7 @@ var require_admin = __commonJS({
         title,
         children,
         footer
-      } = props2, restProps = __rest$8(props2, ["prefixCls", "className", "closeIcon", "closable", "type", "title", "children", "footer"]);
+      } = props, restProps = __rest$8(props, ["prefixCls", "className", "closeIcon", "closable", "type", "title", "children", "footer"]);
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
@@ -54105,7 +54081,7 @@ var require_admin = __commonJS({
           closable: closable !== null && closable !== void 0 ? closable : false,
           title: "",
           footer: "",
-          children: /* @__PURE__ */ reactExports.createElement(ConfirmContent, Object.assign({}, props2, {
+          children: /* @__PURE__ */ reactExports.createElement(ConfirmContent, Object.assign({}, props, {
             prefixCls,
             confirmPrefixCls,
             rootPrefixCls,
@@ -54116,7 +54092,7 @@ var require_admin = __commonJS({
         additionalProps = {
           closable: closable !== null && closable !== void 0 ? closable : true,
           title,
-          footer: footer !== null && /* @__PURE__ */ reactExports.createElement(Footer$2, Object.assign({}, props2)),
+          footer: footer !== null && /* @__PURE__ */ reactExports.createElement(Footer$2, Object.assign({}, props)),
           children
         };
       }
@@ -54129,24 +54105,24 @@ var require_admin = __commonJS({
       }, additionalProps)));
     };
     const PurePanel$1 = withPureRenderTheme(PurePanel);
-    function modalWarn(props2) {
-      return confirm(withWarn(props2));
+    function modalWarn(props) {
+      return confirm(withWarn(props));
     }
     const Modal = Modal$1;
     Modal.useModal = useModal;
-    Modal.info = function infoFn(props2) {
-      return confirm(withInfo(props2));
+    Modal.info = function infoFn(props) {
+      return confirm(withInfo(props));
     };
-    Modal.success = function successFn(props2) {
-      return confirm(withSuccess(props2));
+    Modal.success = function successFn(props) {
+      return confirm(withSuccess(props));
     };
-    Modal.error = function errorFn(props2) {
-      return confirm(withError(props2));
+    Modal.error = function errorFn(props) {
+      return confirm(withError(props));
     };
     Modal.warning = modalWarn;
     Modal.warn = modalWarn;
-    Modal.confirm = function confirmFn(props2) {
-      return confirm(withConfirm(props2));
+    Modal.confirm = function confirmFn(props) {
+      return confirm(withConfirm(props));
     };
     Modal.destroyAll = function destroyAllFn() {
       while (destroyFns.length) {
@@ -54183,11 +54159,11 @@ var require_admin = __commonJS({
         pauseOnHover
       };
     }
-    const GlobalHolder = /* @__PURE__ */ React$1.forwardRef((props2, ref) => {
+    const GlobalHolder = /* @__PURE__ */ React$1.forwardRef((props, ref) => {
       const {
         notificationConfig,
         sync
-      } = props2;
+      } = props;
       const {
         getPrefixCls
       } = reactExports.useContext(ConfigContext);
@@ -54315,136 +54291,136 @@ var require_admin = __commonJS({
       }));
     });
     var CaretDownFilled$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "0 0 1024 1024", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z" } }] }, "name": "caret-down", "theme": "filled" };
-    var CaretDownFilled = function CaretDownFilled2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var CaretDownFilled = function CaretDownFilled2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: CaretDownFilled$1
       }));
     };
     var RefIcon$g = /* @__PURE__ */ reactExports.forwardRef(CaretDownFilled);
     var CaretDownOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "0 0 1024 1024", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z" } }] }, "name": "caret-down", "theme": "outlined" };
-    var CaretDownOutlined = function CaretDownOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var CaretDownOutlined = function CaretDownOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: CaretDownOutlined$1
       }));
     };
     var RefIcon$f = /* @__PURE__ */ reactExports.forwardRef(CaretDownOutlined);
     var CaretUpOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "0 0 1024 1024", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z" } }] }, "name": "caret-up", "theme": "outlined" };
-    var CaretUpOutlined = function CaretUpOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var CaretUpOutlined = function CaretUpOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: CaretUpOutlined$1
       }));
     };
     var RefIcon$e = /* @__PURE__ */ reactExports.forwardRef(CaretUpOutlined);
     var CopyOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M832 64H296c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h496v688c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8V96c0-17.7-14.3-32-32-32zM704 192H192c-17.7 0-32 14.3-32 32v530.7c0 8.5 3.4 16.6 9.4 22.6l173.3 173.3c2.2 2.2 4.7 4 7.4 5.5v1.9h4.2c3.5 1.3 7.2 2 11 2H704c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32zM350 856.2L263.9 770H350v86.2zM664 888H414V746c0-22.1-17.9-40-40-40H232V264h432v624z" } }] }, "name": "copy", "theme": "outlined" };
-    var CopyOutlined = function CopyOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var CopyOutlined = function CopyOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: CopyOutlined$1
       }));
     };
     var RefIcon$d = /* @__PURE__ */ reactExports.forwardRef(CopyOutlined);
     var DesktopOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M928 140H96c-17.7 0-32 14.3-32 32v496c0 17.7 14.3 32 32 32h380v112H304c-8.8 0-16 7.2-16 16v48c0 4.4 3.6 8 8 8h432c4.4 0 8-3.6 8-8v-48c0-8.8-7.2-16-16-16H548V700h380c17.7 0 32-14.3 32-32V172c0-17.7-14.3-32-32-32zm-40 488H136V212h752v416z" } }] }, "name": "desktop", "theme": "outlined" };
-    var DesktopOutlined = function DesktopOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var DesktopOutlined = function DesktopOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: DesktopOutlined$1
       }));
     };
     var RefIcon$c = /* @__PURE__ */ reactExports.forwardRef(DesktopOutlined);
     var EditOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M257.7 752c2 0 4-.2 6-.5L431.9 722c2-.4 3.9-1.3 5.3-2.8l423.9-423.9a9.96 9.96 0 000-14.1L694.9 114.9c-1.9-1.9-4.4-2.9-7.1-2.9s-5.2 1-7.1 2.9L256.8 538.8c-1.5 1.5-2.4 3.3-2.8 5.3l-29.5 168.2a33.5 33.5 0 009.4 29.8c6.6 6.4 14.9 9.9 23.8 9.9zm67.4-174.4L687.8 215l73.3 73.3-362.7 362.6-88.9 15.7 15.6-89zM880 836H144c-17.7 0-32 14.3-32 32v36c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-36c0-17.7-14.3-32-32-32z" } }] }, "name": "edit", "theme": "outlined" };
-    var EditOutlined = function EditOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var EditOutlined = function EditOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: EditOutlined$1
       }));
     };
     var RefIcon$b = /* @__PURE__ */ reactExports.forwardRef(EditOutlined);
     var EnterOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M864 170h-60c-4.4 0-8 3.6-8 8v518H310v-73c0-6.7-7.8-10.5-13-6.3l-141.9 112a8 8 0 000 12.6l141.9 112c5.3 4.2 13 .4 13-6.3v-75h498c35.3 0 64-28.7 64-64V178c0-4.4-3.6-8-8-8z" } }] }, "name": "enter", "theme": "outlined" };
-    var EnterOutlined = function EnterOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var EnterOutlined = function EnterOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: EnterOutlined$1
       }));
     };
     var RefIcon$a = /* @__PURE__ */ reactExports.forwardRef(EnterOutlined);
     var FileOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M854.6 288.6L639.4 73.4c-6-6-14.1-9.4-22.6-9.4H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V311.3c0-8.5-3.4-16.7-9.4-22.7zM790.2 326H602V137.8L790.2 326zm1.8 562H232V136h302v216a42 42 0 0042 42h216v494z" } }] }, "name": "file", "theme": "outlined" };
-    var FileOutlined = function FileOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var FileOutlined = function FileOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: FileOutlined$1
       }));
     };
     var RefIcon$9 = /* @__PURE__ */ reactExports.forwardRef(FileOutlined);
     var FilterFilled$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M349 838c0 17.7 14.2 32 31.8 32h262.4c17.6 0 31.8-14.3 31.8-32V642H349v196zm531.1-684H143.9c-24.5 0-39.8 26.7-27.5 48l221.3 376h348.8l221.3-376c12.1-21.3-3.2-48-27.7-48z" } }] }, "name": "filter", "theme": "filled" };
-    var FilterFilled = function FilterFilled2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var FilterFilled = function FilterFilled2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: FilterFilled$1
       }));
     };
     var RefIcon$8 = /* @__PURE__ */ reactExports.forwardRef(FilterFilled);
     var FolderOpenOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M928 444H820V330.4c0-17.7-14.3-32-32-32H473L355.7 186.2a8.15 8.15 0 00-5.5-2.2H96c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h698c13 0 24.8-7.9 29.7-20l134-332c1.5-3.8 2.3-7.9 2.3-12 0-17.7-14.3-32-32-32zM136 256h188.5l119.6 114.4H748V444H238c-13 0-24.8 7.9-29.7 20L136 643.2V256zm635.3 512H159l103.3-256h612.4L771.3 768z" } }] }, "name": "folder-open", "theme": "outlined" };
-    var FolderOpenOutlined = function FolderOpenOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var FolderOpenOutlined = function FolderOpenOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: FolderOpenOutlined$1
       }));
     };
     var RefIcon$7 = /* @__PURE__ */ reactExports.forwardRef(FolderOpenOutlined);
     var FolderOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M880 298.4H521L403.7 186.2a8.15 8.15 0 00-5.5-2.2H144c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V330.4c0-17.7-14.3-32-32-32zM840 768H184V256h188.5l119.6 114.4H840V768z" } }] }, "name": "folder", "theme": "outlined" };
-    var FolderOutlined = function FolderOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var FolderOutlined = function FolderOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: FolderOutlined$1
       }));
     };
     var RefIcon$6 = /* @__PURE__ */ reactExports.forwardRef(FolderOutlined);
     var HolderOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M300 276.5a56 56 0 1056-97 56 56 0 00-56 97zm0 284a56 56 0 1056-97 56 56 0 00-56 97zM640 228a56 56 0 10112 0 56 56 0 00-112 0zm0 284a56 56 0 10112 0 56 56 0 00-112 0zM300 844.5a56 56 0 1056-97 56 56 0 00-56 97zM640 796a56 56 0 10112 0 56 56 0 00-112 0z" } }] }, "name": "holder", "theme": "outlined" };
-    var HolderOutlined = function HolderOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var HolderOutlined = function HolderOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: HolderOutlined$1
       }));
     };
     var RefIcon$5 = /* @__PURE__ */ reactExports.forwardRef(HolderOutlined);
     var MinusCircleOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M696 480H328c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h368c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8z" } }, { "tag": "path", "attrs": { "d": "M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z" } }] }, "name": "minus-circle", "theme": "outlined" };
-    var MinusCircleOutlined = function MinusCircleOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var MinusCircleOutlined = function MinusCircleOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: MinusCircleOutlined$1
       }));
     };
     var RefIcon$4 = /* @__PURE__ */ reactExports.forwardRef(MinusCircleOutlined);
     var MinusSquareOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M328 544h368c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H328c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8z" } }, { "tag": "path", "attrs": { "d": "M880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zm-40 728H184V184h656v656z" } }] }, "name": "minus-square", "theme": "outlined" };
-    var MinusSquareOutlined = function MinusSquareOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var MinusSquareOutlined = function MinusSquareOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: MinusSquareOutlined$1
       }));
     };
     var RefIcon$3 = /* @__PURE__ */ reactExports.forwardRef(MinusSquareOutlined);
     var MobileOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M744 62H280c-35.3 0-64 28.7-64 64v768c0 35.3 28.7 64 64 64h464c35.3 0 64-28.7 64-64V126c0-35.3-28.7-64-64-64zm-8 824H288V134h448v752zM472 784a40 40 0 1080 0 40 40 0 10-80 0z" } }] }, "name": "mobile", "theme": "outlined" };
-    var MobileOutlined = function MobileOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var MobileOutlined = function MobileOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: MobileOutlined$1
       }));
     };
     var RefIcon$2 = /* @__PURE__ */ reactExports.forwardRef(MobileOutlined);
     var PlusSquareOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M328 544h152v152c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V544h152c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H544V328c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v152H328c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8z" } }, { "tag": "path", "attrs": { "d": "M880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zm-40 728H184V184h656v656z" } }] }, "name": "plus-square", "theme": "outlined" };
-    var PlusSquareOutlined = function PlusSquareOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var PlusSquareOutlined = function PlusSquareOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: PlusSquareOutlined$1
       }));
     };
     var RefIcon$1 = /* @__PURE__ */ reactExports.forwardRef(PlusSquareOutlined);
     var TabletOutlined$1 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M800 64H224c-35.3 0-64 28.7-64 64v768c0 35.3 28.7 64 64 64h576c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64zm-8 824H232V136h560v752zM472 784a40 40 0 1080 0 40 40 0 10-80 0z" } }] }, "name": "tablet", "theme": "outlined" };
-    var TabletOutlined = function TabletOutlined2(props2, ref) {
-      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props2, {
+    var TabletOutlined = function TabletOutlined2(props, ref) {
+      return /* @__PURE__ */ reactExports.createElement(Icon$2, _extends({}, props, {
         ref,
         icon: TabletOutlined$1
       }));
@@ -54819,7 +54795,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const InternalSwitch = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const InternalSwitch = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         prefixCls: customizePrefixCls,
         size: customizeSize,
@@ -54833,7 +54809,7 @@ var require_admin = __commonJS({
         defaultChecked: defaultCheckedProp,
         defaultValue,
         onChange
-      } = props2, restProps = __rest$7(props2, ["prefixCls", "size", "disabled", "loading", "className", "rootClassName", "style", "checked", "value", "defaultChecked", "defaultValue", "onChange"]);
+      } = props, restProps = __rest$7(props, ["prefixCls", "size", "disabled", "loading", "className", "rootClassName", "style", "checked", "value", "defaultChecked", "defaultValue", "onChange"]);
       const [checked, setChecked] = useMergedState(false, {
         value: checkedProp !== null && checkedProp !== void 0 ? checkedProp : value,
         defaultValue: defaultCheckedProp !== null && defaultCheckedProp !== void 0 ? defaultCheckedProp : defaultValue
@@ -54936,7 +54912,7 @@ var require_admin = __commonJS({
         }
         function trigger(nextValue) {
           var nextSelectorValue = eventSelector(nextValue);
-          if (!isEqual$1(valueRef.current, nextSelectorValue, true)) {
+          if (!isEqual(valueRef.current, nextSelectorValue, true)) {
             forceUpdate({});
           }
         }
@@ -54954,37 +54930,37 @@ var require_admin = __commonJS({
       }
       function makeImmutable2(Component, shouldTriggerRender) {
         var refAble = supportRef(Component);
-        var ImmutableComponent = function ImmutableComponent2(props2, ref) {
+        var ImmutableComponent = function ImmutableComponent2(props, ref) {
           var refProps = refAble ? {
             ref
           } : {};
           var renderTimesRef = reactExports.useRef(0);
-          var prevProps = reactExports.useRef(props2);
+          var prevProps = reactExports.useRef(props);
           var mark = useImmutableMark2();
           if (mark !== null) {
-            return /* @__PURE__ */ reactExports.createElement(Component, _extends({}, props2, refProps));
+            return /* @__PURE__ */ reactExports.createElement(Component, _extends({}, props, refProps));
           }
           if (
             // Always trigger re-render if not provide `notTriggerRender`
-            !shouldTriggerRender || shouldTriggerRender(prevProps.current, props2)
+            !shouldTriggerRender || shouldTriggerRender(prevProps.current, props)
           ) {
             renderTimesRef.current += 1;
           }
-          prevProps.current = props2;
+          prevProps.current = props;
           return /* @__PURE__ */ reactExports.createElement(ImmutableContext.Provider, {
             value: renderTimesRef.current
-          }, /* @__PURE__ */ reactExports.createElement(Component, _extends({}, props2, refProps)));
+          }, /* @__PURE__ */ reactExports.createElement(Component, _extends({}, props, refProps)));
         };
         return refAble ? /* @__PURE__ */ reactExports.forwardRef(ImmutableComponent) : ImmutableComponent;
       }
       function responseImmutable2(Component, propsAreEqual) {
         var refAble = supportRef(Component);
-        var ImmutableComponent = function ImmutableComponent2(props2, ref) {
+        var ImmutableComponent = function ImmutableComponent2(props, ref) {
           var refProps = refAble ? {
             ref
           } : {};
           useImmutableMark2();
-          return /* @__PURE__ */ reactExports.createElement(Component, _extends({}, props2, refProps));
+          return /* @__PURE__ */ reactExports.createElement(Component, _extends({}, props, refProps));
         };
         return refAble ? /* @__PURE__ */ reactExports.memo(/* @__PURE__ */ reactExports.forwardRef(ImmutableComponent), propsAreEqual) : /* @__PURE__ */ reactExports.memo(ImmutableComponent, propsAreEqual);
       }
@@ -55069,7 +55045,7 @@ var require_admin = __commonJS({
         if (perfRecord.renderWithProps) {
           return true;
         }
-        return !isEqual$1(prev2, next2, true);
+        return !isEqual(prev2, next2, true);
       });
       return retData;
     }
@@ -55098,9 +55074,9 @@ var require_admin = __commonJS({
       }
       return title;
     };
-    function Cell(props2) {
+    function Cell(props) {
       var _ref2, _ref3, _legacyCellProps$colS, _ref4, _ref5, _legacyCellProps$rowS, _additionalProps$titl, _classNames;
-      var Component = props2.component, children = props2.children, ellipsis = props2.ellipsis, scope = props2.scope, prefixCls = props2.prefixCls, className = props2.className, align = props2.align, record = props2.record, render2 = props2.render, dataIndex = props2.dataIndex, renderIndex = props2.renderIndex, shouldCellUpdate = props2.shouldCellUpdate, index2 = props2.index, rowType = props2.rowType, colSpan = props2.colSpan, rowSpan = props2.rowSpan, fixLeft = props2.fixLeft, fixRight = props2.fixRight, firstFixLeft = props2.firstFixLeft, lastFixLeft = props2.lastFixLeft, firstFixRight = props2.firstFixRight, lastFixRight = props2.lastFixRight, appendNode = props2.appendNode, _props$additionalProp = props2.additionalProps, additionalProps = _props$additionalProp === void 0 ? {} : _props$additionalProp, isSticky = props2.isSticky;
+      var Component = props.component, children = props.children, ellipsis = props.ellipsis, scope = props.scope, prefixCls = props.prefixCls, className = props.className, align = props.align, record = props.record, render2 = props.render, dataIndex = props.dataIndex, renderIndex = props.renderIndex, shouldCellUpdate = props.shouldCellUpdate, index2 = props.index, rowType = props.rowType, colSpan = props.colSpan, rowSpan = props.rowSpan, fixLeft = props.fixLeft, fixRight = props.fixRight, firstFixLeft = props.firstFixLeft, lastFixLeft = props.lastFixLeft, firstFixRight = props.firstFixRight, lastFixRight = props.lastFixRight, appendNode = props.appendNode, _props$additionalProp = props.additionalProps, additionalProps = _props$additionalProp === void 0 ? {} : _props$additionalProp, isSticky = props.isSticky;
       var cellPrefixCls = "".concat(prefixCls, "-cell");
       var _useContext = useContext(TableContext, ["supportSticky", "allColumnsFixedLeft", "rowHoverable"]), supportSticky = _useContext.supportSticky, allColumnsFixedLeft = _useContext.allColumnsFixedLeft, rowHoverable = _useContext.rowHoverable;
       var _useCellRender = useCellRender(record, dataIndex, renderIndex, children, render2, shouldCellUpdate), _useCellRender2 = _slicedToArray(_useCellRender, 2), childNode = _useCellRender2[0], legacyCellProps = _useCellRender2[1];
@@ -55236,8 +55212,8 @@ var require_admin = __commonJS({
     }
     var _excluded$8 = ["children"];
     function FooterRow(_ref) {
-      var children = _ref.children, props2 = _objectWithoutProperties(_ref, _excluded$8);
-      return /* @__PURE__ */ reactExports.createElement("tr", props2, children);
+      var children = _ref.children, props = _objectWithoutProperties(_ref, _excluded$8);
+      return /* @__PURE__ */ reactExports.createElement("tr", props, children);
     }
     function Summary(_ref) {
       var children = _ref.children;
@@ -55245,8 +55221,8 @@ var require_admin = __commonJS({
     }
     Summary.Row = FooterRow;
     Summary.Cell = SummaryCell;
-    function Footer(props2) {
-      var children = props2.children, stickyOffsets = props2.stickyOffsets, flattenColumns = props2.flattenColumns;
+    function Footer(props) {
+      var children = props.children, stickyOffsets = props.stickyOffsets, flattenColumns = props.flattenColumns;
       var prefixCls = useContext(TableContext, "prefixCls");
       var lastColumnIndex = flattenColumns.length - 1;
       var scrollColumn = flattenColumns[lastColumnIndex];
@@ -55347,8 +55323,8 @@ var require_admin = __commonJS({
         })
       });
     }
-    function ExpandedRow(props2) {
-      var prefixCls = props2.prefixCls, children = props2.children, Component = props2.component, cellComponent = props2.cellComponent, className = props2.className, expanded = props2.expanded, colSpan = props2.colSpan, isEmpty2 = props2.isEmpty;
+    function ExpandedRow(props) {
+      var prefixCls = props.prefixCls, children = props.children, Component = props.component, cellComponent = props.cellComponent, className = props.className, expanded = props.expanded, colSpan = props.colSpan, isEmpty2 = props.isEmpty;
       var _useContext = useContext(TableContext, ["scrollbarSize", "fixHeader", "fixColumn", "componentWidth", "horizonScroll"]), scrollbarSize = _useContext.scrollbarSize, fixHeader = _useContext.fixHeader, fixColumn = _useContext.fixColumn, componentWidth = _useContext.componentWidth, horizonScroll = _useContext.horizonScroll;
       var contentNode = children;
       if (isEmpty2 ? horizonScroll && componentWidth : fixColumn) {
@@ -55403,8 +55379,8 @@ var require_admin = __commonJS({
         additionalCellProps: additionalCellProps || {}
       };
     }
-    function BodyRow(props2) {
-      var className = props2.className, style2 = props2.style, record = props2.record, index2 = props2.index, renderIndex = props2.renderIndex, rowKey = props2.rowKey, _props$indent = props2.indent, indent = _props$indent === void 0 ? 0 : _props$indent, RowComponent = props2.rowComponent, cellComponent = props2.cellComponent, scopeCellComponent = props2.scopeCellComponent;
+    function BodyRow(props) {
+      var className = props.className, style2 = props.style, record = props.record, index2 = props.index, renderIndex = props.renderIndex, rowKey = props.rowKey, _props$indent = props.indent, indent = _props$indent === void 0 ? 0 : _props$indent, RowComponent = props.rowComponent, cellComponent = props.cellComponent, scopeCellComponent = props.scopeCellComponent;
       var rowInfo = useRowInfo(record, rowKey, index2, indent);
       var prefixCls = rowInfo.prefixCls, flattenColumns = rowInfo.flattenColumns, expandedRowClassName = rowInfo.expandedRowClassName, expandedRowRender = rowInfo.expandedRowRender, rowProps = rowInfo.rowProps, expanded = rowInfo.expanded, rowSupportExpand = rowInfo.rowSupportExpand;
       var expandedRef = reactExports.useRef(false);
@@ -55500,8 +55476,8 @@ var require_admin = __commonJS({
         });
       })));
     }
-    function Body(props2) {
-      var data = props2.data, measureColumnWidth = props2.measureColumnWidth;
+    function Body(props) {
+      var data = props.data, measureColumnWidth = props.measureColumnWidth;
       var _useContext = useContext(TableContext, ["prefixCls", "getComponent", "onColumnResize", "flattenColumns", "getRowKey", "expandedKeys", "childrenColumnName", "emptyNode"]), prefixCls = _useContext.prefixCls, getComponent = _useContext.getComponent, onColumnResize = _useContext.onColumnResize, flattenColumns = _useContext.flattenColumns, getRowKey = _useContext.getRowKey, expandedKeys = _useContext.expandedKeys, childrenColumnName = _useContext.childrenColumnName, emptyNode = _useContext.emptyNode;
       var flattenData2 = useFlattenRecords(data, childrenColumnName, expandedKeys, getRowKey);
       var perfRef = reactExports.useRef({
@@ -55554,10 +55530,10 @@ var require_admin = __commonJS({
     const Body$1 = responseImmutable(Body);
     var _excluded$7 = ["expandable"];
     var INTERNAL_COL_DEFINE = "RC_TABLE_INTERNAL_COL_DEFINE";
-    function getExpandableProps(props2) {
-      var expandable = props2.expandable, legacyExpandableConfig = _objectWithoutProperties(props2, _excluded$7);
+    function getExpandableProps(props) {
+      var expandable = props.expandable, legacyExpandableConfig = _objectWithoutProperties(props, _excluded$7);
       var config;
-      if ("expandable" in props2) {
+      if ("expandable" in props) {
         config = _objectSpread2(_objectSpread2({}, legacyExpandableConfig), expandable);
       } else {
         config = legacyExpandableConfig;
@@ -55616,8 +55592,8 @@ var require_admin = __commonJS({
         return cloneColumns;
       }, [colWidths.join("_"), columCount]);
     }
-    var FixedHolder = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var className = props2.className, noData = props2.noData, columns = props2.columns, flattenColumns = props2.flattenColumns, colWidths = props2.colWidths, columCount = props2.columCount, stickyOffsets = props2.stickyOffsets, direction = props2.direction, fixHeader = props2.fixHeader, stickyTopOffset = props2.stickyTopOffset, stickyBottomOffset = props2.stickyBottomOffset, stickyClassName = props2.stickyClassName, onScroll = props2.onScroll, maxContentScroll = props2.maxContentScroll, children = props2.children, restProps = _objectWithoutProperties(props2, _excluded$5);
+    var FixedHolder = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var className = props.className, noData = props.noData, columns = props.columns, flattenColumns = props.flattenColumns, colWidths = props.colWidths, columCount = props.columCount, stickyOffsets = props.stickyOffsets, direction = props.direction, fixHeader = props.fixHeader, stickyTopOffset = props.stickyTopOffset, stickyBottomOffset = props.stickyBottomOffset, stickyClassName = props.stickyClassName, onScroll = props.onScroll, maxContentScroll = props.maxContentScroll, children = props.children, restProps = _objectWithoutProperties(props, _excluded$5);
       var _useContext = useContext(TableContext, ["prefixCls", "scrollbarSize", "isSticky", "getComponent"]), prefixCls = _useContext.prefixCls, scrollbarSize = _useContext.scrollbarSize, isSticky = _useContext.isSticky, getComponent = _useContext.getComponent;
       var TableComponent = getComponent(["header", "table"], "table");
       var combinationScrollBarSize = isSticky && !fixHeader ? 0 : scrollbarSize;
@@ -55705,8 +55681,8 @@ var require_admin = __commonJS({
       }))));
     });
     const FixedHolder$1 = /* @__PURE__ */ reactExports.memo(FixedHolder);
-    var HeaderRow = function HeaderRow2(props2) {
-      var cells = props2.cells, stickyOffsets = props2.stickyOffsets, flattenColumns = props2.flattenColumns, RowComponent = props2.rowComponent, CellComponent = props2.cellComponent, onHeaderRow = props2.onHeaderRow, index2 = props2.index;
+    var HeaderRow = function HeaderRow2(props) {
+      var cells = props.cells, stickyOffsets = props.stickyOffsets, flattenColumns = props.flattenColumns, RowComponent = props.rowComponent, CellComponent = props.cellComponent, onHeaderRow = props.onHeaderRow, index2 = props.index;
       var _useContext = useContext(TableContext, ["prefixCls", "direction"]), prefixCls = _useContext.prefixCls, direction = _useContext.direction;
       var rowProps;
       if (onHeaderRow) {
@@ -55787,8 +55763,8 @@ var require_admin = __commonJS({
       }
       return rows;
     }
-    var Header = function Header2(props2) {
-      var stickyOffsets = props2.stickyOffsets, columns = props2.columns, flattenColumns = props2.flattenColumns, onHeaderRow = props2.onHeaderRow;
+    var Header = function Header2(props) {
+      var stickyOffsets = props.stickyOffsets, columns = props.columns, flattenColumns = props.flattenColumns, onHeaderRow = props.onHeaderRow;
       var _useContext = useContext(TableContext, ["prefixCls", "getComponent"]), prefixCls = _useContext.prefixCls, getComponent = _useContext.getComponent;
       var rows = reactExports.useMemo(function() {
         return parseHeaderRows(columns);
@@ -55874,8 +55850,8 @@ var require_admin = __commonJS({
       return toArray$5(children).filter(function(node2) {
         return /* @__PURE__ */ reactExports.isValidElement(node2);
       }).map(function(_ref) {
-        var key = _ref.key, props2 = _ref.props;
-        var nodeChildren = props2.children, restProps = _objectWithoutProperties(props2, _excluded$4);
+        var key = _ref.key, props = _ref.props;
+        var nodeChildren = props.children, restProps = _objectWithoutProperties(props, _excluded$4);
         var column2 = _objectSpread2({
           key
         }, restProps);
@@ -56076,8 +56052,8 @@ var require_admin = __commonJS({
       dig(data);
       return keys2;
     }
-    function useExpand(props2, mergedData, getRowKey) {
-      var expandableConfig = getExpandableProps(props2);
+    function useExpand(props, mergedData, getRowKey) {
+      var expandableConfig = getExpandableProps(props);
       var expandIcon = expandableConfig.expandIcon, expandedRowKeys = expandableConfig.expandedRowKeys, defaultExpandedRowKeys = expandableConfig.defaultExpandedRowKeys, defaultExpandAllRows = expandableConfig.defaultExpandAllRows, expandedRowRender = expandableConfig.expandedRowRender, onExpand = expandableConfig.onExpand, onExpandedRowsChange = expandableConfig.onExpandedRowsChange, childrenColumnName = expandableConfig.childrenColumnName;
       var mergedExpandIcon = expandIcon || renderExpandIcon$1;
       var mergedChildrenColumnName = childrenColumnName || "children";
@@ -56085,7 +56061,7 @@ var require_admin = __commonJS({
         if (expandedRowRender) {
           return "row";
         }
-        if (props2.expandable && props2.internalHooks === INTERNAL_HOOKS && props2.expandable.__PARENT_RENDER_ICON__ || mergedData.some(function(record) {
+        if (props.expandable && props.internalHooks === INTERNAL_HOOKS && props.expandable.__PARENT_RENDER_ICON__ || mergedData.some(function(record) {
           return record && _typeof(record) === "object" && record[mergedChildrenColumnName];
         })) {
           return "nest";
@@ -56131,7 +56107,7 @@ var require_admin = __commonJS({
       return useMemo(function() {
         return fixedInfoList;
       }, [fixedInfoList], function(prev2, next2) {
-        return !isEqual$1(prev2, next2);
+        return !isEqual(prev2, next2);
       });
     }
     function useLayoutState(defaultState) {
@@ -56394,12 +56370,12 @@ var require_admin = __commonJS({
       return "No Data";
     }
     function Table$1(tableProps, ref) {
-      var props2 = _objectSpread2({
+      var props = _objectSpread2({
         rowKey: "key",
         prefixCls: DEFAULT_PREFIX,
         emptyText: defaultEmpty
       }, tableProps);
-      var prefixCls = props2.prefixCls, className = props2.className, rowClassName = props2.rowClassName, style2 = props2.style, data = props2.data, rowKey = props2.rowKey, scroll = props2.scroll, tableLayout = props2.tableLayout, direction = props2.direction, title = props2.title, footer = props2.footer, summary = props2.summary, caption = props2.caption, id2 = props2.id, showHeader = props2.showHeader, components2 = props2.components, emptyText = props2.emptyText, onRow = props2.onRow, onHeaderRow = props2.onHeaderRow, onScroll = props2.onScroll, internalHooks = props2.internalHooks, transformColumns = props2.transformColumns, internalRefs = props2.internalRefs, tailor = props2.tailor, getContainerWidth = props2.getContainerWidth, sticky = props2.sticky, _props$rowHoverable = props2.rowHoverable, rowHoverable = _props$rowHoverable === void 0 ? true : _props$rowHoverable;
+      var prefixCls = props.prefixCls, className = props.className, rowClassName = props.rowClassName, style2 = props.style, data = props.data, rowKey = props.rowKey, scroll = props.scroll, tableLayout = props.tableLayout, direction = props.direction, title = props.title, footer = props.footer, summary = props.summary, caption = props.caption, id2 = props.id, showHeader = props.showHeader, components2 = props.components, emptyText = props.emptyText, onRow = props.onRow, onHeaderRow = props.onHeaderRow, onScroll = props.onScroll, internalHooks = props.internalHooks, transformColumns = props.transformColumns, internalRefs = props.internalRefs, tailor = props.tailor, getContainerWidth = props.getContainerWidth, sticky = props.sticky, _props$rowHoverable = props.rowHoverable, rowHoverable = _props$rowHoverable === void 0 ? true : _props$rowHoverable;
       var mergedData = data || EMPTY_DATA;
       var hasData = !!mergedData.length;
       var useInternalHooks = internalHooks === INTERNAL_HOOKS;
@@ -56417,10 +56393,10 @@ var require_admin = __commonJS({
       }, [rowKey]);
       var customizeScrollBody = getComponent(["body"]);
       var _useHover = useHover(), _useHover2 = _slicedToArray(_useHover, 3), startRow = _useHover2[0], endRow = _useHover2[1], onHover = _useHover2[2];
-      var _useExpand = useExpand(props2, mergedData, getRowKey), _useExpand2 = _slicedToArray(_useExpand, 6), expandableConfig = _useExpand2[0], expandableType = _useExpand2[1], mergedExpandedKeys = _useExpand2[2], mergedExpandIcon = _useExpand2[3], mergedChildrenColumnName = _useExpand2[4], onTriggerExpand = _useExpand2[5];
+      var _useExpand = useExpand(props, mergedData, getRowKey), _useExpand2 = _slicedToArray(_useExpand, 6), expandableConfig = _useExpand2[0], expandableType = _useExpand2[1], mergedExpandedKeys = _useExpand2[2], mergedExpandIcon = _useExpand2[3], mergedChildrenColumnName = _useExpand2[4], onTriggerExpand = _useExpand2[5];
       var scrollX = scroll === null || scroll === void 0 ? void 0 : scroll.x;
       var _React$useState = reactExports.useState(0), _React$useState2 = _slicedToArray(_React$useState, 2), componentWidth = _React$useState2[0], setComponentWidth = _React$useState2[1];
-      var _useColumns = useColumns(_objectSpread2(_objectSpread2(_objectSpread2({}, props2), expandableConfig), {}, {
+      var _useColumns = useColumns(_objectSpread2(_objectSpread2(_objectSpread2({}, props), expandableConfig), {}, {
         expandable: !!expandableConfig.expandedRowRender,
         columnTitle: expandableConfig.columnTitle,
         expandedKeys: mergedExpandedKeys,
@@ -56682,10 +56658,10 @@ var require_admin = __commonJS({
       var captionElement = caption !== null && caption !== void 0 ? /* @__PURE__ */ reactExports.createElement("caption", {
         className: "".concat(prefixCls, "-caption")
       }, caption) : void 0;
-      var dataProps = pickAttrs(props2, {
+      var dataProps = pickAttrs(props, {
         data: true
       });
-      var ariaProps = pickAttrs(props2, {
+      var ariaProps = pickAttrs(props, {
         aria: true
       });
       if (fixHeader || isSticky) {
@@ -56884,8 +56860,8 @@ var require_admin = __commonJS({
       var mergedColSpan = colSpan || 1;
       return columnsOffset[colIndex + mergedColSpan] - (columnsOffset[colIndex] || 0);
     }
-    function VirtualCell(props2) {
-      var rowInfo = props2.rowInfo, column2 = props2.column, colIndex = props2.colIndex, indent = props2.indent, index2 = props2.index, component = props2.component, renderIndex = props2.renderIndex, record = props2.record, style2 = props2.style, className = props2.className, inverse = props2.inverse, getHeight = props2.getHeight;
+    function VirtualCell(props) {
+      var rowInfo = props.rowInfo, column2 = props.column, colIndex = props.colIndex, indent = props.indent, index2 = props.index, component = props.component, renderIndex = props.renderIndex, record = props.record, style2 = props.style, className = props.className, inverse = props.inverse, getHeight = props.getHeight;
       var render2 = column2.render, dataIndex = column2.dataIndex, columnClassName = column2.className, colWidth = column2.width;
       var _useContext = useContext(GridContext, ["columnsOffset"]), columnsOffset = _useContext.columnsOffset;
       var _getCellProps = getCellProps(rowInfo, column2, colIndex, indent, index2), key = _getCellProps.key, fixedInfo = _getCellProps.fixedInfo, appendCellNode = _getCellProps.appendCellNode, additionalCellProps = _getCellProps.additionalCellProps;
@@ -56941,8 +56917,8 @@ var require_admin = __commonJS({
       }));
     }
     var _excluded$3 = ["data", "index", "className", "rowKey", "style", "extra", "getHeight"];
-    var BodyLine = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var data = props2.data, index2 = props2.index, className = props2.className, rowKey = props2.rowKey, style2 = props2.style, extra = props2.extra, getHeight = props2.getHeight, restProps = _objectWithoutProperties(props2, _excluded$3);
+    var BodyLine = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var data = props.data, index2 = props.index, className = props.className, rowKey = props.rowKey, style2 = props.style, extra = props.extra, getHeight = props.getHeight, restProps = _objectWithoutProperties(props, _excluded$3);
       var record = data.record, indent = data.indent, renderIndex = data.index;
       var _useContext = useContext(TableContext, ["prefixCls", "flattenColumns", "fixColumn", "componentWidth", "scrollX"]), scrollX = _useContext.scrollX, flattenColumns = _useContext.flattenColumns, prefixCls = _useContext.prefixCls, fixColumn = _useContext.fixColumn, componentWidth = _useContext.componentWidth;
       var _useContext2 = useContext(StaticContext, ["getComponent"]), getComponent = _useContext2.getComponent;
@@ -57005,8 +56981,8 @@ var require_admin = __commonJS({
       return rowNode;
     });
     var ResponseBodyLine = responseImmutable(BodyLine);
-    var Grid = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var data = props2.data, onScroll = props2.onScroll;
+    var Grid = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var data = props.data, onScroll = props.onScroll;
       var _useContext = useContext(TableContext, ["flattenColumns", "onColumnResize", "getRowKey", "prefixCls", "expandedKeys", "childrenColumnName", "scrollX"]), flattenColumns = _useContext.flattenColumns, onColumnResize = _useContext.onColumnResize, getRowKey = _useContext.getRowKey, expandedKeys = _useContext.expandedKeys, prefixCls = _useContext.prefixCls, childrenColumnName = _useContext.childrenColumnName, scrollX = _useContext.scrollX;
       var _useContext2 = useContext(StaticContext), sticky = _useContext2.sticky, scrollY = _useContext2.scrollY, listItemHeight = _useContext2.listItemHeight, getComponent = _useContext2.getComponent, onTablePropScroll = _useContext2.onScroll;
       var listRef = reactExports.useRef();
@@ -57200,16 +57176,16 @@ var require_admin = __commonJS({
       }));
     });
     var ResponseGrid = responseImmutable(Grid);
-    var renderBody = function renderBody2(rawData, props2) {
-      var ref = props2.ref, onScroll = props2.onScroll;
+    var renderBody = function renderBody2(rawData, props) {
+      var ref = props.ref, onScroll = props.onScroll;
       return /* @__PURE__ */ reactExports.createElement(ResponseGrid, {
         ref,
         data: rawData,
         onScroll
       });
     };
-    function VirtualTable(props2, ref) {
-      var data = props2.data, columns = props2.columns, scroll = props2.scroll, sticky = props2.sticky, _props$prefixCls = props2.prefixCls, prefixCls = _props$prefixCls === void 0 ? DEFAULT_PREFIX : _props$prefixCls, className = props2.className, listItemHeight = props2.listItemHeight, components2 = props2.components, onScroll = props2.onScroll;
+    function VirtualTable(props, ref) {
+      var data = props.data, columns = props.columns, scroll = props.scroll, sticky = props.sticky, _props$prefixCls = props.prefixCls, prefixCls = _props$prefixCls === void 0 ? DEFAULT_PREFIX : _props$prefixCls, className = props.className, listItemHeight = props.listItemHeight, components2 = props.components, onScroll = props.onScroll;
       var _ref = scroll || {}, scrollX = _ref.x, scrollY = _ref.y;
       if (typeof scrollX !== "number") {
         scrollX = 1;
@@ -57232,7 +57208,7 @@ var require_admin = __commonJS({
       }, [sticky, scrollY, listItemHeight, getComponent, onInternalScroll]);
       return /* @__PURE__ */ reactExports.createElement(StaticContext.Provider, {
         value: context
-      }, /* @__PURE__ */ reactExports.createElement(ImmutableTable, _extends({}, props2, {
+      }, /* @__PURE__ */ reactExports.createElement(ImmutableTable, _extends({}, props, {
         className: classNames(className, "".concat(prefixCls, "-virtual")),
         scroll: _objectSpread2(_objectSpread2({}, scroll), {}, {
           x: scrollX
@@ -57415,8 +57391,8 @@ var require_admin = __commonJS({
           if (!treeCheckable || checkable === false) return false;
           return treeCheckable;
         });
-        _defineProperty(_assertThisInitialized(_this), "syncLoadData", function(props2) {
-          var expanded = props2.expanded, loading = props2.loading, loaded = props2.loaded;
+        _defineProperty(_assertThisInitialized(_this), "syncLoadData", function(props) {
+          var expanded = props.expanded, loading = props.loading, loaded = props.loaded;
           var _this$props$context = _this.props.context, loadData = _this$props$context.loadData, onNodeLoad = _this$props$context.onNodeLoad;
           if (loading) {
             return;
@@ -57605,9 +57581,9 @@ var require_admin = __commonJS({
       }]);
       return InternalTreeNode2;
     }(reactExports.Component);
-    var ContextTreeNode = function ContextTreeNode2(props2) {
+    var ContextTreeNode = function ContextTreeNode2(props) {
       return /* @__PURE__ */ reactExports.createElement(TreeContext.Consumer, null, function(context) {
-        return /* @__PURE__ */ reactExports.createElement(InternalTreeNode, _extends({}, props2, {
+        return /* @__PURE__ */ reactExports.createElement(InternalTreeNode, _extends({}, props, {
           context
         }));
       });
@@ -57760,9 +57736,9 @@ var require_admin = __commonJS({
         dropAllowed
       };
     }
-    function calcSelectedKeys(selectedKeys, props2) {
+    function calcSelectedKeys(selectedKeys, props) {
       if (!selectedKeys) return void 0;
-      var multiple = props2.multiple;
+      var multiple = props.multiple;
       if (multiple) {
         return selectedKeys.slice();
       }
@@ -58337,14 +58313,14 @@ var require_admin = __commonJS({
       });
     }
     function renderExpandIcon(locale2) {
-      return (props2) => {
+      return (props) => {
         const {
           prefixCls,
           onExpand,
           record,
           expanded,
           expandable
-        } = props2;
+        } = props;
         const iconPrefix = `${prefixCls}-row-expand-icon`;
         return /* @__PURE__ */ reactExports.createElement("button", {
           type: "button",
@@ -58388,14 +58364,14 @@ var require_admin = __commonJS({
     function getColumnPos(index2, pos) {
       return pos ? `${pos}-${index2}` : `${index2}`;
     }
-    const renderColumnTitle = (title, props2) => {
+    const renderColumnTitle = (title, props) => {
       if (typeof title === "function") {
-        return title(props2);
+        return title(props);
       }
       return title;
     };
-    const safeColumnTitle = (title, props2) => {
-      const res = renderColumnTitle(title, props2);
+    const safeColumnTitle = (title, props) => {
+      const res = renderColumnTitle(title, props);
       if (Object.prototype.toString.call(res) === "[object Object]") {
         return "";
       }
@@ -58458,7 +58434,7 @@ var require_admin = __commonJS({
     }
     var _excluded$1 = ["className", "style", "motion", "motionNodes", "motionType", "onMotionStart", "onMotionEnd", "active", "treeNodeRequiredProps"];
     var MotionTreeNode = function MotionTreeNode2(_ref, ref) {
-      var className = _ref.className, style2 = _ref.style, motion2 = _ref.motion, motionNodes = _ref.motionNodes, motionType = _ref.motionType, onOriginMotionStart = _ref.onMotionStart, onOriginMotionEnd = _ref.onMotionEnd, active = _ref.active, treeNodeRequiredProps = _ref.treeNodeRequiredProps, props2 = _objectWithoutProperties(_ref, _excluded$1);
+      var className = _ref.className, style2 = _ref.style, motion2 = _ref.motion, motionNodes = _ref.motionNodes, motionType = _ref.motionType, onOriginMotionStart = _ref.onMotionStart, onOriginMotionEnd = _ref.onMotionEnd, active = _ref.active, treeNodeRequiredProps = _ref.treeNodeRequiredProps, props = _objectWithoutProperties(_ref, _excluded$1);
       var _React$useState = reactExports.useState(true), _React$useState2 = _slicedToArray(_React$useState, 2), visible = _React$useState2[0], setVisible = _React$useState2[1];
       var _React$useContext = reactExports.useContext(TreeContext), prefixCls = _React$useContext.prefixCls;
       var targetVisible = motionNodes && motionType !== "hide";
@@ -58519,7 +58495,7 @@ var require_admin = __commonJS({
         domRef: ref,
         className,
         style: style2
-      }, props2, {
+      }, props, {
         active
       }));
     };
@@ -58537,12 +58513,12 @@ var require_admin = __commonJS({
         };
       }
       function find(shorter, longer) {
-        var cache2 = /* @__PURE__ */ new Map();
+        var cache = /* @__PURE__ */ new Map();
         shorter.forEach(function(key) {
-          cache2.set(key, true);
+          cache.set(key, true);
         });
         var keys2 = longer.filter(function(key) {
-          return !cache2.has(key);
+          return !cache.has(key);
         });
         return keys2.length === 1 ? keys2[0] : null;
       }
@@ -58584,7 +58560,7 @@ var require_admin = __commonJS({
       padding: 0,
       margin: 0
     };
-    var noop$1 = function noop2() {
+    var noop = function noop2() {
     };
     var MOTION_KEY = "RC_TREE_MOTION_".concat(Math.random());
     var MotionNode = {
@@ -58628,11 +58604,11 @@ var require_admin = __commonJS({
       }
       return path2;
     }
-    var NodeList = /* @__PURE__ */ reactExports.forwardRef(function(props2, ref) {
-      var prefixCls = props2.prefixCls, data = props2.data;
-      props2.selectable;
-      props2.checkable;
-      var expandedKeys = props2.expandedKeys, selectedKeys = props2.selectedKeys, checkedKeys = props2.checkedKeys, loadedKeys = props2.loadedKeys, loadingKeys = props2.loadingKeys, halfCheckedKeys = props2.halfCheckedKeys, keyEntities = props2.keyEntities, disabled = props2.disabled, dragging = props2.dragging, dragOverNodeKey = props2.dragOverNodeKey, dropPosition = props2.dropPosition, motion2 = props2.motion, height = props2.height, itemHeight = props2.itemHeight, virtual = props2.virtual, focusable2 = props2.focusable, activeItem = props2.activeItem, focused = props2.focused, tabIndex = props2.tabIndex, onKeyDown2 = props2.onKeyDown, onFocus = props2.onFocus, onBlur = props2.onBlur, onActiveChange = props2.onActiveChange, onListChangeStart = props2.onListChangeStart, onListChangeEnd = props2.onListChangeEnd, domProps = _objectWithoutProperties(props2, _excluded);
+    var NodeList = /* @__PURE__ */ reactExports.forwardRef(function(props, ref) {
+      var prefixCls = props.prefixCls, data = props.data;
+      props.selectable;
+      props.checkable;
+      var expandedKeys = props.expandedKeys, selectedKeys = props.selectedKeys, checkedKeys = props.checkedKeys, loadedKeys = props.loadedKeys, loadingKeys = props.loadingKeys, halfCheckedKeys = props.halfCheckedKeys, keyEntities = props.keyEntities, disabled = props.disabled, dragging = props.dragging, dragOverNodeKey = props.dragOverNodeKey, dropPosition = props.dropPosition, motion2 = props.motion, height = props.height, itemHeight = props.itemHeight, virtual = props.virtual, focusable2 = props.focusable, activeItem = props.activeItem, focused = props.focused, tabIndex = props.tabIndex, onKeyDown2 = props.onKeyDown, onFocus = props.onFocus, onBlur = props.onBlur, onActiveChange = props.onActiveChange, onListChangeStart = props.onListChangeStart, onListChangeEnd = props.onListChangeEnd, domProps = _objectWithoutProperties(props, _excluded);
       var listRef = reactExports.useRef(null);
       var indentMeasurerRef = reactExports.useRef(null);
       reactExports.useImperativeHandle(ref, function() {
@@ -58720,7 +58696,7 @@ var require_admin = __commonJS({
         onFocus,
         onBlur,
         value: "",
-        onChange: noop$1,
+        onChange: noop,
         "aria-label": "for screen reader"
       })), /* @__PURE__ */ reactExports.createElement("div", {
         className: "".concat(prefixCls, "-treenode"),
@@ -59593,25 +59569,25 @@ var require_admin = __commonJS({
         }
       }], [{
         key: "getDerivedStateFromProps",
-        value: function getDerivedStateFromProps(props2, prevState) {
+        value: function getDerivedStateFromProps(props, prevState) {
           var prevProps = prevState.prevProps;
           var newState = {
-            prevProps: props2
+            prevProps: props
           };
           function needSync(name) {
-            return !prevProps && name in props2 || prevProps && prevProps[name] !== props2[name];
+            return !prevProps && name in props || prevProps && prevProps[name] !== props[name];
           }
           var treeData;
           var fieldNames = prevState.fieldNames;
           if (needSync("fieldNames")) {
-            fieldNames = fillFieldNames(props2.fieldNames);
+            fieldNames = fillFieldNames(props.fieldNames);
             newState.fieldNames = fieldNames;
           }
           if (needSync("treeData")) {
-            treeData = props2.treeData;
+            treeData = props.treeData;
           } else if (needSync("children")) {
             warningOnce(false, "`children` of Tree is deprecated. Please use `treeData` instead.");
-            treeData = convertTreeToData(props2.children);
+            treeData = convertTreeToData(props.children);
           }
           if (treeData) {
             newState.treeData = treeData;
@@ -59622,8 +59598,8 @@ var require_admin = __commonJS({
           }
           var keyEntities = newState.keyEntities || prevState.keyEntities;
           if (needSync("expandedKeys") || prevProps && needSync("autoExpandParent")) {
-            newState.expandedKeys = props2.autoExpandParent || !prevProps && props2.defaultExpandParent ? conductExpandParent(props2.expandedKeys, keyEntities) : props2.expandedKeys;
-          } else if (!prevProps && props2.defaultExpandAll) {
+            newState.expandedKeys = props.autoExpandParent || !prevProps && props.defaultExpandParent ? conductExpandParent(props.expandedKeys, keyEntities) : props.expandedKeys;
+          } else if (!prevProps && props.defaultExpandAll) {
             var cloneKeyEntities = _objectSpread2({}, keyEntities);
             delete cloneKeyEntities[MOTION_KEY];
             var nextExpandedKeys = [];
@@ -59634,8 +59610,8 @@ var require_admin = __commonJS({
               }
             });
             newState.expandedKeys = nextExpandedKeys;
-          } else if (!prevProps && props2.defaultExpandedKeys) {
-            newState.expandedKeys = props2.autoExpandParent || props2.defaultExpandParent ? conductExpandParent(props2.defaultExpandedKeys, keyEntities) : props2.defaultExpandedKeys;
+          } else if (!prevProps && props.defaultExpandedKeys) {
+            newState.expandedKeys = props.autoExpandParent || props.defaultExpandParent ? conductExpandParent(props.defaultExpandedKeys, keyEntities) : props.defaultExpandedKeys;
           }
           if (!newState.expandedKeys) {
             delete newState.expandedKeys;
@@ -59644,28 +59620,28 @@ var require_admin = __commonJS({
             var flattenNodes = flattenTreeData(treeData || prevState.treeData, newState.expandedKeys || prevState.expandedKeys, fieldNames);
             newState.flattenNodes = flattenNodes;
           }
-          if (props2.selectable) {
+          if (props.selectable) {
             if (needSync("selectedKeys")) {
-              newState.selectedKeys = calcSelectedKeys(props2.selectedKeys, props2);
-            } else if (!prevProps && props2.defaultSelectedKeys) {
-              newState.selectedKeys = calcSelectedKeys(props2.defaultSelectedKeys, props2);
+              newState.selectedKeys = calcSelectedKeys(props.selectedKeys, props);
+            } else if (!prevProps && props.defaultSelectedKeys) {
+              newState.selectedKeys = calcSelectedKeys(props.defaultSelectedKeys, props);
             }
           }
-          if (props2.checkable) {
+          if (props.checkable) {
             var checkedKeyEntity;
             if (needSync("checkedKeys")) {
-              checkedKeyEntity = parseCheckedKeys(props2.checkedKeys) || {};
-            } else if (!prevProps && props2.defaultCheckedKeys) {
-              checkedKeyEntity = parseCheckedKeys(props2.defaultCheckedKeys) || {};
+              checkedKeyEntity = parseCheckedKeys(props.checkedKeys) || {};
+            } else if (!prevProps && props.defaultCheckedKeys) {
+              checkedKeyEntity = parseCheckedKeys(props.defaultCheckedKeys) || {};
             } else if (treeData) {
-              checkedKeyEntity = parseCheckedKeys(props2.checkedKeys) || {
+              checkedKeyEntity = parseCheckedKeys(props.checkedKeys) || {
                 checkedKeys: prevState.checkedKeys,
                 halfCheckedKeys: prevState.halfCheckedKeys
               };
             }
             if (checkedKeyEntity) {
               var _checkedKeyEntity = checkedKeyEntity, _checkedKeyEntity$che = _checkedKeyEntity.checkedKeys, checkedKeys = _checkedKeyEntity$che === void 0 ? [] : _checkedKeyEntity$che, _checkedKeyEntity$hal = _checkedKeyEntity.halfCheckedKeys, halfCheckedKeys = _checkedKeyEntity$hal === void 0 ? [] : _checkedKeyEntity$hal;
-              if (!props2.checkStrictly) {
+              if (!props.checkStrictly) {
                 var conductKeys = conductCheck(checkedKeys, true, keyEntities);
                 checkedKeys = conductKeys.checkedKeys;
                 halfCheckedKeys = conductKeys.halfCheckedKeys;
@@ -59675,7 +59651,7 @@ var require_admin = __commonJS({
             }
           }
           if (needSync("loadedKeys")) {
-            newState.loadedKeys = props2.loadedKeys;
+            newState.loadedKeys = props.loadedKeys;
           }
           return newState;
         }
@@ -60150,14 +60126,14 @@ var require_admin = __commonJS({
       }, genTreeStyle(prefixCls, token2), genCollapseMotion(token2)];
     }, prepareComponentToken$2);
     const offset = 4;
-    function dropIndicatorRender(props2) {
+    function dropIndicatorRender(props) {
       const {
         dropPosition,
         dropLevelOffset,
         prefixCls,
         indent,
         direction = "ltr"
-      } = props2;
+      } = props;
       const startPosition = direction === "ltr" ? "left" : "right";
       const endPosition = direction === "ltr" ? "right" : "left";
       const style2 = {
@@ -60181,14 +60157,14 @@ var require_admin = __commonJS({
         className: `${prefixCls}-drop-indicator`
       });
     }
-    const SwitcherIconCom = (props2) => {
+    const SwitcherIconCom = (props) => {
       const {
         prefixCls,
         switcherIcon,
         treeNodeProps,
         showLine,
         switcherLoadingIcon
-      } = props2;
+      } = props;
       const {
         isLeaf,
         expanded,
@@ -60247,7 +60223,7 @@ var require_admin = __commonJS({
         className: switcherCls
       });
     };
-    const Tree$1 = /* @__PURE__ */ React$1.forwardRef((props2, ref) => {
+    const Tree$1 = /* @__PURE__ */ React$1.forwardRef((props, ref) => {
       var _a2;
       const {
         getPrefixCls,
@@ -60269,13 +60245,13 @@ var require_admin = __commonJS({
         draggable,
         motion: customMotion,
         style: style2
-      } = props2;
+      } = props;
       const prefixCls = getPrefixCls("tree", customizePrefixCls);
       const rootPrefixCls = getPrefixCls();
       const motion2 = customMotion !== null && customMotion !== void 0 ? customMotion : Object.assign(Object.assign({}, initCollapseMotion(rootPrefixCls)), {
         motionAppear: false
       });
-      const newProps = Object.assign(Object.assign({}, props2), {
+      const newProps = Object.assign(Object.assign({}, props), {
         checkable,
         selectable,
         showIcon,
@@ -60414,11 +60390,11 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    function getIcon(props2) {
+    function getIcon(props) {
       const {
         isLeaf,
         expanded
-      } = props2;
+      } = props;
       if (isLeaf) {
         return /* @__PURE__ */ reactExports.createElement(RefIcon$9, null);
       }
@@ -60436,48 +60412,48 @@ var require_admin = __commonJS({
         defaultExpandAll,
         defaultExpandParent,
         defaultExpandedKeys
-      } = _a2, props2 = __rest$6(_a2, ["defaultExpandAll", "defaultExpandParent", "defaultExpandedKeys"]);
+      } = _a2, props = __rest$6(_a2, ["defaultExpandAll", "defaultExpandParent", "defaultExpandedKeys"]);
       const lastSelectedKey = reactExports.useRef();
       const cachedSelectedKeys = reactExports.useRef();
       const getInitExpandedKeys = () => {
         const {
           keyEntities
-        } = convertDataToEntities(getTreeData(props2));
+        } = convertDataToEntities(getTreeData(props));
         let initExpandedKeys;
         if (defaultExpandAll) {
           initExpandedKeys = Object.keys(keyEntities);
         } else if (defaultExpandParent) {
-          initExpandedKeys = conductExpandParent(props2.expandedKeys || defaultExpandedKeys || [], keyEntities);
+          initExpandedKeys = conductExpandParent(props.expandedKeys || defaultExpandedKeys || [], keyEntities);
         } else {
-          initExpandedKeys = props2.expandedKeys || defaultExpandedKeys || [];
+          initExpandedKeys = props.expandedKeys || defaultExpandedKeys || [];
         }
         return initExpandedKeys;
       };
-      const [selectedKeys, setSelectedKeys] = reactExports.useState(props2.selectedKeys || props2.defaultSelectedKeys || []);
+      const [selectedKeys, setSelectedKeys] = reactExports.useState(props.selectedKeys || props.defaultSelectedKeys || []);
       const [expandedKeys, setExpandedKeys] = reactExports.useState(() => getInitExpandedKeys());
       reactExports.useEffect(() => {
-        if ("selectedKeys" in props2) {
-          setSelectedKeys(props2.selectedKeys);
+        if ("selectedKeys" in props) {
+          setSelectedKeys(props.selectedKeys);
         }
-      }, [props2.selectedKeys]);
+      }, [props.selectedKeys]);
       reactExports.useEffect(() => {
-        if ("expandedKeys" in props2) {
-          setExpandedKeys(props2.expandedKeys);
+        if ("expandedKeys" in props) {
+          setExpandedKeys(props.expandedKeys);
         }
-      }, [props2.expandedKeys]);
+      }, [props.expandedKeys]);
       const onExpand = (keys2, info) => {
         var _a22;
-        if (!("expandedKeys" in props2)) {
+        if (!("expandedKeys" in props)) {
           setExpandedKeys(keys2);
         }
-        return (_a22 = props2.onExpand) === null || _a22 === void 0 ? void 0 : _a22.call(props2, keys2, info);
+        return (_a22 = props.onExpand) === null || _a22 === void 0 ? void 0 : _a22.call(props, keys2, info);
       };
       const onSelect = (keys2, event) => {
         var _a22;
         const {
           multiple,
           fieldNames
-        } = props2;
+        } = props;
         const {
           node: node2,
           nativeEvent
@@ -60485,7 +60461,7 @@ var require_admin = __commonJS({
         const {
           key = ""
         } = node2;
-        const treeData = getTreeData(props2);
+        const treeData = getTreeData(props);
         const newEvent = Object.assign(Object.assign({}, event), {
           selected: true
         });
@@ -60512,8 +60488,8 @@ var require_admin = __commonJS({
           cachedSelectedKeys.current = newSelectedKeys;
           newEvent.selectedNodes = convertDirectoryKeysToNodes(treeData, newSelectedKeys, fieldNames);
         }
-        (_a22 = props2.onSelect) === null || _a22 === void 0 ? void 0 : _a22.call(props2, newSelectedKeys, newEvent);
-        if (!("selectedKeys" in props2)) {
+        (_a22 = props.onSelect) === null || _a22 === void 0 ? void 0 : _a22.call(props, newSelectedKeys, newEvent);
+        if (!("selectedKeys" in props)) {
           setSelectedKeys(newSelectedKeys);
         }
       };
@@ -60526,7 +60502,7 @@ var require_admin = __commonJS({
         className,
         showIcon = true,
         expandAction = "click"
-      } = props2, otherProps = __rest$6(props2, ["prefixCls", "className", "showIcon", "expandAction"]);
+      } = props, otherProps = __rest$6(props, ["prefixCls", "className", "showIcon", "expandAction"]);
       const prefixCls = getPrefixCls("tree", customizePrefixCls);
       const connectClassName = classNames(`${prefixCls}-directory`, {
         [`${prefixCls}-directory-rtl`]: direction === "rtl"
@@ -60550,14 +60526,14 @@ var require_admin = __commonJS({
     const Tree = Tree$1;
     Tree.DirectoryTree = ForwardDirectoryTree;
     Tree.TreeNode = ContextTreeNode;
-    const FilterSearch = (props2) => {
+    const FilterSearch = (props) => {
       const {
         value,
         filterSearch,
         tablePrefixCls,
         locale: locale2,
         onChange
-      } = props2;
+      } = props;
       if (!filterSearch) {
         return null;
       }
@@ -60581,12 +60557,12 @@ var require_admin = __commonJS({
         event.stopPropagation();
       }
     };
-    const FilterDropdownMenuWrapper = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => /* @__PURE__ */ reactExports.createElement("div", {
-      className: props2.className,
+    const FilterDropdownMenuWrapper = /* @__PURE__ */ reactExports.forwardRef((props, ref) => /* @__PURE__ */ reactExports.createElement("div", {
+      className: props.className,
       onClick: (e2) => e2.stopPropagation(),
       onKeyDown,
       ref
-    }, props2.children));
+    }, props.children));
     function flattenKeys(filters) {
       let keys2 = [];
       (filters || []).forEach((_ref) => {
@@ -60660,7 +60636,7 @@ var require_admin = __commonJS({
     function wrapStringListType(keys2) {
       return keys2 || [];
     }
-    const FilterDropdown = (props2) => {
+    const FilterDropdown = (props) => {
       var _a2, _b;
       const {
         tablePrefixCls,
@@ -60678,7 +60654,7 @@ var require_admin = __commonJS({
         children,
         getPopupContainer,
         rootClassName
-      } = props2;
+      } = props;
       const {
         filterDropdownOpen,
         onFilterDropdownOpenChange,
@@ -60748,7 +60724,7 @@ var require_admin = __commonJS({
         if (mergedKeys === null && (!filterState || !filterState.filteredKeys)) {
           return null;
         }
-        if (isEqual$1(mergedKeys, filterState === null || filterState === void 0 ? void 0 : filterState.filteredKeys, true)) {
+        if (isEqual(mergedKeys, filterState === null || filterState === void 0 ? void 0 : filterState.filteredKeys, true)) {
           return null;
         }
         triggerFilter({
@@ -60950,7 +60926,7 @@ var require_admin = __commonJS({
         };
         const getResetDisabled = () => {
           if (filterResetToDefaultFilteredValue) {
-            return isEqual$1((defaultFilteredValue || []).map((key) => String(key)), selectedKeys, true);
+            return isEqual((defaultFilteredValue || []).map((key) => String(key)), selectedKeys, true);
           }
           return selectedKeys.length === 0;
         };
@@ -61137,7 +61113,7 @@ var require_admin = __commonJS({
       }
       return [column2];
     });
-    const useFilter = (props2) => {
+    const useFilter = (props) => {
       const {
         prefixCls,
         dropdownPrefixCls,
@@ -61146,7 +61122,7 @@ var require_admin = __commonJS({
         getPopupContainer,
         locale: tableLocale,
         rootClassName
-      } = props2;
+      } = props;
       devUseWarning();
       const mergedColumns = reactExports.useMemo(() => getMergedColumns(rawMergedColumns || []), [rawMergedColumns]);
       const [filterStates, setFilterStates] = reactExports.useState(() => collectFilterStates(mergedColumns, true));
@@ -61541,7 +61517,7 @@ var require_admin = __commonJS({
         return record;
       });
     };
-    const useFilterSorter = (props2) => {
+    const useFilterSorter = (props) => {
       const {
         prefixCls,
         mergedColumns,
@@ -61549,7 +61525,7 @@ var require_admin = __commonJS({
         tableLocale,
         showSorterTooltip,
         onSorterChange
-      } = props2;
+      } = props;
       const [sortStates, setSortStates] = reactExports.useState(collectSortStates(mergedColumns, true));
       const getColumnKeys = (columns, pos) => {
         const newKeys = [];
@@ -63047,7 +63023,7 @@ var require_admin = __commonJS({
       }
     });
     const EMPTY_LIST = [];
-    const InternalTable = (props2, ref) => {
+    const InternalTable = (props, ref) => {
       var _a2, _b;
       const {
         prefixCls: customizePrefixCls,
@@ -63080,7 +63056,7 @@ var require_admin = __commonJS({
           target: "full-header"
         },
         virtual
-      } = props2;
+      } = props;
       devUseWarning();
       const baseColumns = reactExports.useMemo(() => columns || convertChildrenToColumns(children), [columns, children]);
       const needResponsive = reactExports.useMemo(() => baseColumns.some((col) => col.responsive), [baseColumns]);
@@ -63089,7 +63065,7 @@ var require_admin = __commonJS({
         const matched = new Set(Object.keys(screens).filter((m2) => screens[m2]));
         return baseColumns.filter((c2) => !c2.responsive || c2.responsive.some((r2) => matched.has(r2)));
       }, [baseColumns, screens]);
-      const tableProps = omit$1(props2, ["className", "style", "columns"]);
+      const tableProps = omit(props, ["className", "style", "columns"]);
       const {
         locale: contextLocale = localeValues,
         direction,
@@ -63376,10 +63352,10 @@ var require_admin = __commonJS({
       })), bottomPaginationNode)));
     };
     const InternalTable$1 = /* @__PURE__ */ reactExports.forwardRef(InternalTable);
-    const Table = (props2, ref) => {
+    const Table = (props, ref) => {
       const renderTimesRef = reactExports.useRef(0);
       renderTimesRef.current += 1;
-      return /* @__PURE__ */ reactExports.createElement(InternalTable$1, Object.assign({}, props2, {
+      return /* @__PURE__ */ reactExports.createElement(InternalTable$1, Object.assign({}, props, {
         ref,
         _renderTimes: renderTimesRef.current
       }));
@@ -63698,7 +63674,7 @@ var require_admin = __commonJS({
       titleMarginBottom: "0.5em"
     });
     const useStyle = genStyleHooks("Typography", (token2) => [genTypographyStyle(token2)], prepareComponentToken);
-    const Editable = (props2) => {
+    const Editable = (props) => {
       const {
         prefixCls,
         "aria-label": ariaLabel,
@@ -63713,7 +63689,7 @@ var require_admin = __commonJS({
         onEnd,
         component,
         enterIcon = /* @__PURE__ */ reactExports.createElement(RefIcon$a, null)
-      } = props2;
+      } = props;
       const ref = reactExports.useRef(null);
       const inComposition = reactExports.useRef(false);
       const lastKeyCode = reactExports.useRef();
@@ -64036,7 +64012,7 @@ var require_admin = __commonJS({
       }
       return t2;
     };
-    const Typography$1 = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const Typography$1 = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         prefixCls: customizePrefixCls,
         component: Component = "article",
@@ -64046,7 +64022,7 @@ var require_admin = __commonJS({
         children,
         direction: typographyDirection,
         style: style2
-      } = props2, restProps = __rest$4(props2, ["prefixCls", "component", "className", "rootClassName", "setContentRef", "children", "direction", "style"]);
+      } = props, restProps = __rest$4(props, ["prefixCls", "component", "className", "rootClassName", "setContentRef", "children", "direction", "style"]);
       const {
         getPrefixCls,
         direction: contextDirection,
@@ -64186,7 +64162,7 @@ var require_admin = __commonJS({
       overflow: "hidden",
       WebkitBoxOrient: "vertical"
     };
-    function EllipsisMeasure(props2) {
+    function EllipsisMeasure(props) {
       const {
         enableMeasure,
         width,
@@ -64196,7 +64172,7 @@ var require_admin = __commonJS({
         expanded,
         miscDeps,
         onEllipsis
-      } = props2;
+      } = props;
       const nodeList = reactExports.useMemo(() => toArray$5(text), [text]);
       const nodeLen = reactExports.useMemo(() => getNodesLen(nodeList), [text]);
       const fullContent = reactExports.useMemo(() => children(nodeList, false), [text]);
@@ -64353,7 +64329,7 @@ var require_admin = __commonJS({
       return currentContent;
     }
     const ELLIPSIS_STR = "...";
-    const Base = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const Base = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       var _a2;
       const {
         prefixCls: customizePrefixCls,
@@ -64367,7 +64343,7 @@ var require_admin = __commonJS({
         copyable,
         component,
         title
-      } = props2, restProps = __rest$3(props2, ["prefixCls", "className", "style", "type", "disabled", "children", "ellipsis", "editable", "copyable", "component", "title"]);
+      } = props, restProps = __rest$3(props, ["prefixCls", "className", "style", "type", "disabled", "children", "ellipsis", "editable", "copyable", "component", "title"]);
       const {
         getPrefixCls,
         direction
@@ -64376,7 +64352,7 @@ var require_admin = __commonJS({
       const typographyRef = reactExports.useRef(null);
       const editIconRef = reactExports.useRef(null);
       const prefixCls = getPrefixCls("typography", customizePrefixCls);
-      const textProps = omit$1(restProps, ["mark", "code", "delete", "underline", "strong", "keyboard", "italic"]);
+      const textProps = omit(restProps, ["mark", "code", "delete", "underline", "strong", "keyboard", "italic"]);
       const [enableEdit, editConfig] = useMergedConfig(editable);
       const [editing, setEditing] = useMergedState(false, {
         value: editConfig.editing
@@ -64622,7 +64598,7 @@ var require_admin = __commonJS({
         onEllipsis: onJsEllipsis,
         expanded,
         miscDeps: [copied, expanded, copyLoading, enableEdit, enableCopy]
-      }, (node2, canEllipsis) => wrapperDecorations(props2, /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, node2.length > 0 && canEllipsis && !expanded && topAriaLabel ? /* @__PURE__ */ reactExports.createElement("span", {
+      }, (node2, canEllipsis) => wrapperDecorations(props, /* @__PURE__ */ reactExports.createElement(reactExports.Fragment, null, node2.length > 0 && canEllipsis && !expanded && topAriaLabel ? /* @__PURE__ */ reactExports.createElement("span", {
         key: "show-content",
         "aria-hidden": true
       }, node2) : node2, renderEllipsis(canEllipsis)))))));
@@ -64650,9 +64626,9 @@ var require_admin = __commonJS({
         component: "a"
       }));
     });
-    const Paragraph = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => /* @__PURE__ */ reactExports.createElement(Base, Object.assign({
+    const Paragraph = /* @__PURE__ */ reactExports.forwardRef((props, ref) => /* @__PURE__ */ reactExports.createElement(Base, Object.assign({
       ref
-    }, props2, {
+    }, props, {
       component: "div"
     })));
     var __rest$1 = function(s, e2) {
@@ -64669,7 +64645,7 @@ var require_admin = __commonJS({
       } = _a2, restProps = __rest$1(_a2, ["ellipsis"]);
       const mergedEllipsis = reactExports.useMemo(() => {
         if (ellipsis && typeof ellipsis === "object") {
-          return omit$1(ellipsis, ["expandable", "rows"]);
+          return omit(ellipsis, ["expandable", "rows"]);
         }
         return ellipsis;
       }, [ellipsis]);
@@ -64690,10 +64666,10 @@ var require_admin = __commonJS({
       return t2;
     };
     const TITLE_ELE_LIST = [1, 2, 3, 4, 5];
-    const Title = /* @__PURE__ */ reactExports.forwardRef((props2, ref) => {
+    const Title = /* @__PURE__ */ reactExports.forwardRef((props, ref) => {
       const {
         level = 1
-      } = props2, restProps = __rest(props2, ["level"]);
+      } = props, restProps = __rest(props, ["level"]);
       const component = TITLE_ELE_LIST.includes(level) ? `h${level}` : `h1`;
       return /* @__PURE__ */ reactExports.createElement(Base, Object.assign({
         ref
@@ -64709,7 +64685,7 @@ var require_admin = __commonJS({
     function PhotoIcon({
       title,
       titleId,
-      ...props2
+      ...props
     }, svgRef) {
       return /* @__PURE__ */ reactExports.createElement("svg", Object.assign({
         xmlns: "http://www.w3.org/2000/svg",
@@ -64719,7 +64695,7 @@ var require_admin = __commonJS({
         "data-slot": "icon",
         ref: svgRef,
         "aria-labelledby": titleId
-      }, props2), title ? /* @__PURE__ */ reactExports.createElement("title", {
+      }, props), title ? /* @__PURE__ */ reactExports.createElement("title", {
         id: titleId
       }, title) : null, /* @__PURE__ */ reactExports.createElement("path", {
         fillRule: "evenodd",
@@ -64731,7 +64707,7 @@ var require_admin = __commonJS({
     function UserCircleIcon({
       title,
       titleId,
-      ...props2
+      ...props
     }, svgRef) {
       return /* @__PURE__ */ reactExports.createElement("svg", Object.assign({
         xmlns: "http://www.w3.org/2000/svg",
@@ -64741,7 +64717,7 @@ var require_admin = __commonJS({
         "data-slot": "icon",
         ref: svgRef,
         "aria-labelledby": titleId
-      }, props2), title ? /* @__PURE__ */ reactExports.createElement("title", {
+      }, props), title ? /* @__PURE__ */ reactExports.createElement("title", {
         id: titleId
       }, title) : null, /* @__PURE__ */ reactExports.createElement("path", {
         fillRule: "evenodd",
@@ -65153,20 +65129,20 @@ var require_admin = __commonJS({
       var uid2 = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || "");
       return uid2 ? "Symbol(src)_1." + uid2 : "";
     }();
-    function isMasked$1(func2) {
-      return !!maskSrcKey && maskSrcKey in func2;
+    function isMasked$1(func) {
+      return !!maskSrcKey && maskSrcKey in func;
     }
     var _isMasked = isMasked$1;
     var funcProto$1 = Function.prototype;
     var funcToString$1 = funcProto$1.toString;
-    function toSource$1(func2) {
-      if (func2 != null) {
+    function toSource$1(func) {
+      if (func != null) {
         try {
-          return funcToString$1.call(func2);
+          return funcToString$1.call(func);
         } catch (e2) {
         }
         try {
-          return func2 + "";
+          return func + "";
         } catch (e2) {
         }
       }
@@ -65402,17 +65378,17 @@ var require_admin = __commonJS({
     var _MapCache = MapCache$1;
     var MapCache = _MapCache;
     var FUNC_ERROR_TEXT = "Expected a function";
-    function memoize$1(func2, resolver) {
-      if (typeof func2 != "function" || resolver != null && typeof resolver != "function") {
+    function memoize$1(func, resolver) {
+      if (typeof func != "function" || resolver != null && typeof resolver != "function") {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
       var memoized = function() {
-        var args = arguments, key = resolver ? resolver.apply(this, args) : args[0], cache2 = memoized.cache;
-        if (cache2.has(key)) {
-          return cache2.get(key);
+        var args = arguments, key = resolver ? resolver.apply(this, args) : args[0], cache = memoized.cache;
+        if (cache.has(key)) {
+          return cache.get(key);
         }
-        var result = func2.apply(this, args);
-        memoized.cache = cache2.set(key, result) || cache2;
+        var result = func.apply(this, args);
+        memoized.cache = cache.set(key, result) || cache;
         return result;
       };
       memoized.cache = new (memoize$1.Cache || MapCache)();
@@ -65422,14 +65398,14 @@ var require_admin = __commonJS({
     var memoize_1 = memoize$1;
     var memoize = memoize_1;
     var MAX_MEMOIZE_SIZE = 500;
-    function memoizeCapped$1(func2) {
-      var result = memoize(func2, function(key) {
-        if (cache2.size === MAX_MEMOIZE_SIZE) {
-          cache2.clear();
+    function memoizeCapped$1(func) {
+      var result = memoize(func, function(key) {
+        if (cache.size === MAX_MEMOIZE_SIZE) {
+          cache.clear();
         }
         return key;
       });
-      var cache2 = result.cache;
+      var cache = result.cache;
       return result;
     }
     var _memoizeCapped = memoizeCapped$1;
@@ -77344,11 +77320,11 @@ var require_admin = __commonJS({
         };
       }
     }
-    function safeJsonParse(data, fallback2 = []) {
+    function safeJsonParse(data, fallback = []) {
       try {
-        return data ? JSON.parse(data) : fallback2;
+        return data ? JSON.parse(data) : fallback;
       } catch (error) {
-        return fallback2;
+        return fallback;
       }
     }
     function TsEditor({ label, name, defaultValue, required: required2, form }) {
@@ -77483,11 +77459,11 @@ var require_admin = __commonJS({
      */
     const createLucideIcon = (iconName, iconNode) => {
       const Component = reactExports.forwardRef(
-        ({ className, ...props2 }, ref) => reactExports.createElement(Icon, {
+        ({ className, ...props }, ref) => reactExports.createElement(Icon, {
           ref,
           iconNode,
           className: mergeClasses(`lucide-${toKebabCase(iconName)}`, className),
-          ...props2
+          ...props
         })
       );
       Component.displayName = `${iconName}`;
@@ -77684,7 +77660,7 @@ var require_admin = __commonJS({
      * This source code is licensed under the ISC license.
      * See the LICENSE file in the root directory of this source tree.
      */
-    const Facebook$3 = createLucideIcon("Facebook", [
+    const Facebook = createLucideIcon("Facebook", [
       [
         "path",
         { d: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z", key: "1jg4f8" }
@@ -79875,7 +79851,7 @@ var require_admin = __commonJS({
                 onClick: () => setActiveTab("4"),
                 children: [
                   /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { className: `sidebar-button ${activeTab === "4" ? "active" : ""}`, children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(Facebook$3, { size: 22 }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(Facebook, { size: 22 }),
                     " "
                   ] }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs mt-1", children: translations2.social })
@@ -81837,13 +81813,13 @@ var require_admin = __commonJS({
       }();
       function noop2() {
       }
-      function promise(func2) {
+      function promise(func) {
         var ModulePromise = module2.exports.Promise;
         var Prom = ModulePromise !== void 0 ? ModulePromise : global2.Promise;
         if (typeof Prom === "function") {
-          return new Prom(func2);
+          return new Prom(func);
         }
-        func2(noop2, noop2);
+        func(noop2, noop2);
         return null;
       }
       var bitmapMapper = /* @__PURE__ */ function(skipTransform, map) {
@@ -83085,1491 +83061,90 @@ var require_admin = __commonJS({
         ) })
       ] });
     }
-    var loadScript = function load(src, opts, cb2) {
-      var head = document.head || document.getElementsByTagName("head")[0];
-      var script = document.createElement("script");
-      if (typeof opts === "function") {
-        cb2 = opts;
-        opts = {};
-      }
-      opts = opts || {};
-      cb2 = cb2 || function() {
+    function TsVideo({
+      url,
+      light = null,
+      width = "100%",
+      height = "400px",
+      controls = true,
+      playing = false,
+      onPlay = () => {
+      },
+      onPause = () => {
+      },
+      onEnded = () => {
+      },
+      onReady = () => {
+      },
+      className = "",
+      style: style2 = {}
+    }) {
+      const [isLoaded, setIsLoaded] = reactExports.useState(!light);
+      const [isPlaying, setIsPlaying] = reactExports.useState(playing);
+      const iframeRef = reactExports.useRef(null);
+      const getYouTubeVideoId = (url2) => {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        const match2 = url2.match(regExp);
+        return match2 && match2[2].length === 11 ? match2[2] : null;
       };
-      script.type = opts.type || "text/javascript";
-      script.charset = opts.charset || "utf8";
-      script.async = "async" in opts ? !!opts.async : true;
-      script.src = src;
-      if (opts.attrs) {
-        setAttributes(script, opts.attrs);
-      }
-      if (opts.text) {
-        script.text = "" + opts.text;
-      }
-      var onend = "onload" in script ? stdOnEnd : ieOnEnd;
-      onend(script, cb2);
-      if (!script.onload) {
-        stdOnEnd(script, cb2);
-      }
-      head.appendChild(script);
-    };
-    function setAttributes(script, attrs) {
-      for (var attr in attrs) {
-        script.setAttribute(attr, attrs[attr]);
-      }
-    }
-    function stdOnEnd(script, cb2) {
-      script.onload = function() {
-        this.onerror = this.onload = null;
-        cb2(null, script);
-      };
-      script.onerror = function() {
-        this.onerror = this.onload = null;
-        cb2(new Error("Failed to load " + this.src), script);
-      };
-    }
-    function ieOnEnd(script, cb2) {
-      script.onreadystatechange = function() {
-        if (this.readyState != "complete" && this.readyState != "loaded") return;
-        this.onreadystatechange = null;
-        cb2(null, script);
-      };
-    }
-    var isMergeableObject = function isMergeableObject2(value) {
-      return isNonNullObject(value) && !isSpecial(value);
-    };
-    function isNonNullObject(value) {
-      return !!value && typeof value === "object";
-    }
-    function isSpecial(value) {
-      var stringValue = Object.prototype.toString.call(value);
-      return stringValue === "[object RegExp]" || stringValue === "[object Date]" || isReactElement(value);
-    }
-    var canUseSymbol = typeof Symbol === "function" && Symbol.for;
-    var REACT_ELEMENT_TYPE = canUseSymbol ? Symbol.for("react.element") : 60103;
-    function isReactElement(value) {
-      return value.$$typeof === REACT_ELEMENT_TYPE;
-    }
-    function emptyTarget(val) {
-      return Array.isArray(val) ? [] : {};
-    }
-    function cloneUnlessOtherwiseSpecified(value, options) {
-      return options.clone !== false && options.isMergeableObject(value) ? deepmerge(emptyTarget(value), value, options) : value;
-    }
-    function defaultArrayMerge(target, source, options) {
-      return target.concat(source).map(function(element) {
-        return cloneUnlessOtherwiseSpecified(element, options);
-      });
-    }
-    function getMergeFunction(key, options) {
-      if (!options.customMerge) {
-        return deepmerge;
-      }
-      var customMerge = options.customMerge(key);
-      return typeof customMerge === "function" ? customMerge : deepmerge;
-    }
-    function getEnumerableOwnPropertySymbols(target) {
-      return Object.getOwnPropertySymbols ? Object.getOwnPropertySymbols(target).filter(function(symbol) {
-        return Object.propertyIsEnumerable.call(target, symbol);
-      }) : [];
-    }
-    function getKeys(target) {
-      return Object.keys(target).concat(getEnumerableOwnPropertySymbols(target));
-    }
-    function propertyIsOnObject(object2, property) {
-      try {
-        return property in object2;
-      } catch (_) {
-        return false;
-      }
-    }
-    function propertyIsUnsafe(target, key) {
-      return propertyIsOnObject(target, key) && !(Object.hasOwnProperty.call(target, key) && Object.propertyIsEnumerable.call(target, key));
-    }
-    function mergeObject(target, source, options) {
-      var destination = {};
-      if (options.isMergeableObject(target)) {
-        getKeys(target).forEach(function(key) {
-          destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
-        });
-      }
-      getKeys(source).forEach(function(key) {
-        if (propertyIsUnsafe(target, key)) {
-          return;
-        }
-        if (propertyIsOnObject(target, key) && options.isMergeableObject(source[key])) {
-          destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
-        } else {
-          destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
-        }
-      });
-      return destination;
-    }
-    function deepmerge(target, source, options) {
-      options = options || {};
-      options.arrayMerge = options.arrayMerge || defaultArrayMerge;
-      options.isMergeableObject = options.isMergeableObject || isMergeableObject;
-      options.cloneUnlessOtherwiseSpecified = cloneUnlessOtherwiseSpecified;
-      var sourceIsArray = Array.isArray(source);
-      var targetIsArray = Array.isArray(target);
-      var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
-      if (!sourceAndTargetTypesMatch) {
-        return cloneUnlessOtherwiseSpecified(source, options);
-      } else if (sourceIsArray) {
-        return options.arrayMerge(target, source, options);
-      } else {
-        return mergeObject(target, source, options);
-      }
-    }
-    deepmerge.all = function deepmergeAll(array2, options) {
-      if (!Array.isArray(array2)) {
-        throw new Error("first argument should be an array");
-      }
-      return array2.reduce(function(prev2, next2) {
-        return deepmerge(prev2, next2, options);
-      }, {});
-    };
-    var deepmerge_1 = deepmerge;
-    var cjs = deepmerge_1;
-    var __create$i = Object.create;
-    var __defProp$k = Object.defineProperty;
-    var __getOwnPropDesc$k = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$k = Object.getOwnPropertyNames;
-    var __getProtoOf$i = Object.getPrototypeOf;
-    var __hasOwnProp$k = Object.prototype.hasOwnProperty;
-    var __export$k = (target, all) => {
-      for (var name in all)
-        __defProp$k(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$k = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$k(from2))
-          if (!__hasOwnProp$k.call(to, key) && key !== except)
-            __defProp$k(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$k(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$i = (mod, isNodeMode, target) => (target = mod != null ? __create$i(__getProtoOf$i(mod)) : {}, __copyProps$k(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$k(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$k = (mod) => __copyProps$k(__defProp$k({}, "__esModule", { value: true }), mod);
-    var utils_exports = {};
-    __export$k(utils_exports, {
-      callPlayer: () => callPlayer,
-      getConfig: () => getConfig,
-      getSDK: () => getSDK,
-      isBlobUrl: () => isBlobUrl,
-      isMediaStream: () => isMediaStream,
-      lazy: () => lazy,
-      omit: () => omit,
-      parseEndTime: () => parseEndTime,
-      parseStartTime: () => parseStartTime,
-      queryString: () => queryString,
-      randomString: () => randomString,
-      supportsWebKitPresentationMode: () => supportsWebKitPresentationMode
-    });
-    var utils = __toCommonJS$k(utils_exports);
-    var import_react$g = __toESM$i(reactExports);
-    var import_load_script = __toESM$i(loadScript);
-    var import_deepmerge$1 = __toESM$i(cjs);
-    const lazy = (componentImportFn) => import_react$g.default.lazy(async () => {
-      const obj = await componentImportFn();
-      return typeof obj.default === "function" ? obj : obj.default;
-    });
-    const MATCH_START_QUERY = /[?&#](?:start|t)=([0-9hms]+)/;
-    const MATCH_END_QUERY = /[?&#]end=([0-9hms]+)/;
-    const MATCH_START_STAMP = /(\d+)(h|m|s)/g;
-    const MATCH_NUMERIC = /^\d+$/;
-    function parseTimeParam(url, pattern2) {
-      if (url instanceof Array) {
-        return void 0;
-      }
-      const match2 = url.match(pattern2);
-      if (match2) {
-        const stamp = match2[1];
-        if (stamp.match(MATCH_START_STAMP)) {
-          return parseTimeString(stamp);
-        }
-        if (MATCH_NUMERIC.test(stamp)) {
-          return parseInt(stamp);
-        }
-      }
-      return void 0;
-    }
-    function parseTimeString(stamp) {
-      let seconds = 0;
-      let array2 = MATCH_START_STAMP.exec(stamp);
-      while (array2 !== null) {
-        const [, count, period] = array2;
-        if (period === "h")
-          seconds += parseInt(count, 10) * 60 * 60;
-        if (period === "m")
-          seconds += parseInt(count, 10) * 60;
-        if (period === "s")
-          seconds += parseInt(count, 10);
-        array2 = MATCH_START_STAMP.exec(stamp);
-      }
-      return seconds;
-    }
-    function parseStartTime(url) {
-      return parseTimeParam(url, MATCH_START_QUERY);
-    }
-    function parseEndTime(url) {
-      return parseTimeParam(url, MATCH_END_QUERY);
-    }
-    function randomString() {
-      return Math.random().toString(36).substr(2, 5);
-    }
-    function queryString(object2) {
-      return Object.keys(object2).map((key) => `${key}=${object2[key]}`).join("&");
-    }
-    function getGlobal(key) {
-      if (window[key]) {
-        return window[key];
-      }
-      if (window.exports && window.exports[key]) {
-        return window.exports[key];
-      }
-      if (window.module && window.module.exports && window.module.exports[key]) {
-        return window.module.exports[key];
-      }
-      return null;
-    }
-    const requests = {};
-    const getSDK = enableStubOn(function getSDK2(url, sdkGlobal, sdkReady = null, isLoaded = () => true, fetchScript = import_load_script.default) {
-      const existingGlobal = getGlobal(sdkGlobal);
-      if (existingGlobal && isLoaded(existingGlobal)) {
-        return Promise.resolve(existingGlobal);
-      }
-      return new Promise((resolve, reject) => {
-        if (requests[url]) {
-          requests[url].push({ resolve, reject });
-          return;
-        }
-        requests[url] = [{ resolve, reject }];
-        const onLoaded = (sdk) => {
-          requests[url].forEach((request) => request.resolve(sdk));
-        };
-        if (sdkReady) {
-          const previousOnReady = window[sdkReady];
-          window[sdkReady] = function() {
-            if (previousOnReady)
-              previousOnReady();
-            onLoaded(getGlobal(sdkGlobal));
-          };
-        }
-        fetchScript(url, (err) => {
-          if (err) {
-            requests[url].forEach((request) => request.reject(err));
-            requests[url] = null;
-          } else if (!sdkReady) {
-            onLoaded(getGlobal(sdkGlobal));
-          }
-        });
-      });
-    });
-    function getConfig(props2, defaultProps2) {
-      return (0, import_deepmerge$1.default)(defaultProps2.config, props2.config);
-    }
-    function omit(object2, ...arrays) {
-      const omitKeys = [].concat(...arrays);
-      const output = {};
-      const keys2 = Object.keys(object2);
-      for (const key of keys2) {
-        if (omitKeys.indexOf(key) === -1) {
-          output[key] = object2[key];
-        }
-      }
-      return output;
-    }
-    function callPlayer(method2, ...args) {
-      if (!this.player || !this.player[method2]) {
-        let message = `ReactPlayer: ${this.constructor.displayName} player could not call %c${method2}%c – `;
-        if (!this.player) {
-          message += "The player was not available";
-        } else if (!this.player[method2]) {
-          message += "The method was not available";
-        }
-        console.warn(message, "font-weight: bold", "");
-        return null;
-      }
-      return this.player[method2](...args);
-    }
-    function isMediaStream(url) {
-      return typeof window !== "undefined" && typeof window.MediaStream !== "undefined" && url instanceof window.MediaStream;
-    }
-    function isBlobUrl(url) {
-      return /^blob:/.test(url);
-    }
-    function supportsWebKitPresentationMode(video = document.createElement("video")) {
-      const notMobile = /iPhone|iPod/.test(navigator.userAgent) === false;
-      return video.webkitSupportsPresentationMode && typeof video.webkitSetPresentationMode === "function" && notMobile;
-    }
-    function enableStubOn(fn) {
-      return fn;
-    }
-    var __defProp$j = Object.defineProperty;
-    var __getOwnPropDesc$j = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$j = Object.getOwnPropertyNames;
-    var __hasOwnProp$j = Object.prototype.hasOwnProperty;
-    var __export$j = (target, all) => {
-      for (var name in all)
-        __defProp$j(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$j = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$j(from2))
-          if (!__hasOwnProp$j.call(to, key) && key !== except)
-            __defProp$j(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$j(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toCommonJS$j = (mod) => __copyProps$j(__defProp$j({}, "__esModule", { value: true }), mod);
-    var patterns_exports = {};
-    __export$j(patterns_exports, {
-      AUDIO_EXTENSIONS: () => AUDIO_EXTENSIONS,
-      DASH_EXTENSIONS: () => DASH_EXTENSIONS,
-      FLV_EXTENSIONS: () => FLV_EXTENSIONS,
-      HLS_EXTENSIONS: () => HLS_EXTENSIONS,
-      MATCH_URL_DAILYMOTION: () => MATCH_URL_DAILYMOTION,
-      MATCH_URL_FACEBOOK: () => MATCH_URL_FACEBOOK,
-      MATCH_URL_FACEBOOK_WATCH: () => MATCH_URL_FACEBOOK_WATCH,
-      MATCH_URL_KALTURA: () => MATCH_URL_KALTURA,
-      MATCH_URL_MIXCLOUD: () => MATCH_URL_MIXCLOUD,
-      MATCH_URL_MUX: () => MATCH_URL_MUX,
-      MATCH_URL_SOUNDCLOUD: () => MATCH_URL_SOUNDCLOUD,
-      MATCH_URL_STREAMABLE: () => MATCH_URL_STREAMABLE,
-      MATCH_URL_TWITCH_CHANNEL: () => MATCH_URL_TWITCH_CHANNEL,
-      MATCH_URL_TWITCH_VIDEO: () => MATCH_URL_TWITCH_VIDEO,
-      MATCH_URL_VIDYARD: () => MATCH_URL_VIDYARD,
-      MATCH_URL_VIMEO: () => MATCH_URL_VIMEO,
-      MATCH_URL_WISTIA: () => MATCH_URL_WISTIA,
-      MATCH_URL_YOUTUBE: () => MATCH_URL_YOUTUBE,
-      VIDEO_EXTENSIONS: () => VIDEO_EXTENSIONS,
-      canPlay: () => canPlay
-    });
-    var patterns = __toCommonJS$j(patterns_exports);
-    var import_utils$f = utils;
-    const MATCH_URL_YOUTUBE = /(?:youtu\.be\/|youtube(?:-nocookie|education)?\.com\/(?:embed\/|v\/|watch\/|watch\?v=|watch\?.+&v=|shorts\/|live\/))((\w|-){11})|youtube\.com\/playlist\?list=|youtube\.com\/user\//;
-    const MATCH_URL_SOUNDCLOUD = /(?:soundcloud\.com|snd\.sc)\/[^.]+$/;
-    const MATCH_URL_VIMEO = /vimeo\.com\/(?!progressive_redirect).+/;
-    const MATCH_URL_MUX = /stream\.mux\.com\/(?!\w+\.m3u8)(\w+)/;
-    const MATCH_URL_FACEBOOK = /^https?:\/\/(www\.)?facebook\.com.*\/(video(s)?|watch|story)(\.php?|\/).+$/;
-    const MATCH_URL_FACEBOOK_WATCH = /^https?:\/\/fb\.watch\/.+$/;
-    const MATCH_URL_STREAMABLE = /streamable\.com\/([a-z0-9]+)$/;
-    const MATCH_URL_WISTIA = /(?:wistia\.(?:com|net)|wi\.st)\/(?:medias|embed)\/(?:iframe\/)?([^?]+)/;
-    const MATCH_URL_TWITCH_VIDEO = /(?:www\.|go\.)?twitch\.tv\/videos\/(\d+)($|\?)/;
-    const MATCH_URL_TWITCH_CHANNEL = /(?:www\.|go\.)?twitch\.tv\/([a-zA-Z0-9_]+)($|\?)/;
-    const MATCH_URL_DAILYMOTION = /^(?:(?:https?):)?(?:\/\/)?(?:www\.)?(?:(?:dailymotion\.com(?:\/embed)?\/video)|dai\.ly)\/([a-zA-Z0-9]+)(?:_[\w_-]+)?(?:[\w.#_-]+)?/;
-    const MATCH_URL_MIXCLOUD = /mixcloud\.com\/([^/]+\/[^/]+)/;
-    const MATCH_URL_VIDYARD = /vidyard.com\/(?:watch\/)?([a-zA-Z0-9-_]+)/;
-    const MATCH_URL_KALTURA = /^https?:\/\/[a-zA-Z]+\.kaltura.(com|org)\/p\/([0-9]+)\/sp\/([0-9]+)00\/embedIframeJs\/uiconf_id\/([0-9]+)\/partner_id\/([0-9]+)(.*)entry_id.([a-zA-Z0-9-_].*)$/;
-    const AUDIO_EXTENSIONS = /\.(m4a|m4b|mp4a|mpga|mp2|mp2a|mp3|m2a|m3a|wav|weba|aac|oga|spx)($|\?)/i;
-    const VIDEO_EXTENSIONS = /\.(mp4|og[gv]|webm|mov|m4v)(#t=[,\d+]+)?($|\?)/i;
-    const HLS_EXTENSIONS = /\.(m3u8)($|\?)/i;
-    const DASH_EXTENSIONS = /\.(mpd)($|\?)/i;
-    const FLV_EXTENSIONS = /\.(flv)($|\?)/i;
-    const canPlayFile = (url) => {
-      if (url instanceof Array) {
-        for (const item of url) {
-          if (typeof item === "string" && canPlayFile(item)) {
-            return true;
-          }
-          if (canPlayFile(item.src)) {
-            return true;
-          }
-        }
-        return false;
-      }
-      if ((0, import_utils$f.isMediaStream)(url) || (0, import_utils$f.isBlobUrl)(url)) {
-        return true;
-      }
-      return AUDIO_EXTENSIONS.test(url) || VIDEO_EXTENSIONS.test(url) || HLS_EXTENSIONS.test(url) || DASH_EXTENSIONS.test(url) || FLV_EXTENSIONS.test(url);
-    };
-    const canPlay = {
-      youtube: (url) => {
-        if (url instanceof Array) {
-          return url.every((item) => MATCH_URL_YOUTUBE.test(item));
-        }
-        return MATCH_URL_YOUTUBE.test(url);
-      },
-      soundcloud: (url) => MATCH_URL_SOUNDCLOUD.test(url) && !AUDIO_EXTENSIONS.test(url),
-      vimeo: (url) => MATCH_URL_VIMEO.test(url) && !VIDEO_EXTENSIONS.test(url) && !HLS_EXTENSIONS.test(url),
-      mux: (url) => MATCH_URL_MUX.test(url),
-      facebook: (url) => MATCH_URL_FACEBOOK.test(url) || MATCH_URL_FACEBOOK_WATCH.test(url),
-      streamable: (url) => MATCH_URL_STREAMABLE.test(url),
-      wistia: (url) => MATCH_URL_WISTIA.test(url),
-      twitch: (url) => MATCH_URL_TWITCH_VIDEO.test(url) || MATCH_URL_TWITCH_CHANNEL.test(url),
-      dailymotion: (url) => MATCH_URL_DAILYMOTION.test(url),
-      mixcloud: (url) => MATCH_URL_MIXCLOUD.test(url),
-      vidyard: (url) => MATCH_URL_VIDYARD.test(url),
-      kaltura: (url) => MATCH_URL_KALTURA.test(url),
-      file: canPlayFile
-    };
-    var __defProp$i = Object.defineProperty;
-    var __getOwnPropDesc$i = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$i = Object.getOwnPropertyNames;
-    var __hasOwnProp$i = Object.prototype.hasOwnProperty;
-    var __export$i = (target, all) => {
-      for (var name in all)
-        __defProp$i(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$i = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$i(from2))
-          if (!__hasOwnProp$i.call(to, key) && key !== except)
-            __defProp$i(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$i(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toCommonJS$i = (mod) => __copyProps$i(__defProp$i({}, "__esModule", { value: true }), mod);
-    var players_exports = {};
-    __export$i(players_exports, {
-      default: () => players_default
-    });
-    var players = __toCommonJS$i(players_exports);
-    var import_utils$e = utils;
-    var import_patterns$d = patterns;
-    var players_default = [
-      {
-        key: "youtube",
-        name: "YouTube",
-        canPlay: import_patterns$d.canPlay.youtube,
-        lazyPlayer: (0, import_utils$e.lazy)(() => __vitePreload(() => Promise.resolve().then(() => YouTube$2), true ? void 0 : void 0))
-      },
-      {
-        key: "soundcloud",
-        name: "SoundCloud",
-        canPlay: import_patterns$d.canPlay.soundcloud,
-        lazyPlayer: (0, import_utils$e.lazy)(() => __vitePreload(() => Promise.resolve().then(() => SoundCloud$2), true ? void 0 : void 0))
-      },
-      {
-        key: "vimeo",
-        name: "Vimeo",
-        canPlay: import_patterns$d.canPlay.vimeo,
-        lazyPlayer: (0, import_utils$e.lazy)(() => __vitePreload(() => Promise.resolve().then(() => Vimeo$2), true ? void 0 : void 0))
-      },
-      {
-        key: "mux",
-        name: "Mux",
-        canPlay: import_patterns$d.canPlay.mux,
-        lazyPlayer: (0, import_utils$e.lazy)(() => __vitePreload(() => Promise.resolve().then(() => Mux$2), true ? void 0 : void 0))
-      },
-      {
-        key: "facebook",
-        name: "Facebook",
-        canPlay: import_patterns$d.canPlay.facebook,
-        lazyPlayer: (0, import_utils$e.lazy)(() => __vitePreload(() => Promise.resolve().then(() => Facebook$2), true ? void 0 : void 0))
-      },
-      {
-        key: "streamable",
-        name: "Streamable",
-        canPlay: import_patterns$d.canPlay.streamable,
-        lazyPlayer: (0, import_utils$e.lazy)(() => __vitePreload(() => Promise.resolve().then(() => Streamable$2), true ? void 0 : void 0))
-      },
-      {
-        key: "wistia",
-        name: "Wistia",
-        canPlay: import_patterns$d.canPlay.wistia,
-        lazyPlayer: (0, import_utils$e.lazy)(() => __vitePreload(() => Promise.resolve().then(() => Wistia$2), true ? void 0 : void 0))
-      },
-      {
-        key: "twitch",
-        name: "Twitch",
-        canPlay: import_patterns$d.canPlay.twitch,
-        lazyPlayer: (0, import_utils$e.lazy)(() => __vitePreload(() => Promise.resolve().then(() => Twitch$2), true ? void 0 : void 0))
-      },
-      {
-        key: "dailymotion",
-        name: "DailyMotion",
-        canPlay: import_patterns$d.canPlay.dailymotion,
-        lazyPlayer: (0, import_utils$e.lazy)(() => __vitePreload(() => Promise.resolve().then(() => DailyMotion$2), true ? void 0 : void 0))
-      },
-      {
-        key: "mixcloud",
-        name: "Mixcloud",
-        canPlay: import_patterns$d.canPlay.mixcloud,
-        lazyPlayer: (0, import_utils$e.lazy)(() => __vitePreload(() => Promise.resolve().then(() => Mixcloud$2), true ? void 0 : void 0))
-      },
-      {
-        key: "vidyard",
-        name: "Vidyard",
-        canPlay: import_patterns$d.canPlay.vidyard,
-        lazyPlayer: (0, import_utils$e.lazy)(() => __vitePreload(() => Promise.resolve().then(() => Vidyard$2), true ? void 0 : void 0))
-      },
-      {
-        key: "kaltura",
-        name: "Kaltura",
-        canPlay: import_patterns$d.canPlay.kaltura,
-        lazyPlayer: (0, import_utils$e.lazy)(() => __vitePreload(() => Promise.resolve().then(() => Kaltura$2), true ? void 0 : void 0))
-      },
-      {
-        key: "file",
-        name: "FilePlayer",
-        canPlay: import_patterns$d.canPlay.file,
-        canEnablePIP: (url) => {
-          return import_patterns$d.canPlay.file(url) && (document.pictureInPictureEnabled || (0, import_utils$e.supportsWebKitPresentationMode)()) && !import_patterns$d.AUDIO_EXTENSIONS.test(url);
-        },
-        lazyPlayer: (0, import_utils$e.lazy)(() => __vitePreload(() => Promise.resolve().then(() => FilePlayer$2), true ? void 0 : void 0))
-      }
-    ];
-    var safeIsNaN = Number.isNaN || function ponyfill(value) {
-      return typeof value === "number" && value !== value;
-    };
-    function isEqual(first, second) {
-      if (first === second) {
-        return true;
-      }
-      if (safeIsNaN(first) && safeIsNaN(second)) {
-        return true;
-      }
-      return false;
-    }
-    function areInputsEqual(newInputs, lastInputs) {
-      if (newInputs.length !== lastInputs.length) {
-        return false;
-      }
-      for (var i = 0; i < newInputs.length; i++) {
-        if (!isEqual(newInputs[i], lastInputs[i])) {
-          return false;
-        }
-      }
-      return true;
-    }
-    function memoizeOne(resultFn, isEqual2) {
-      if (isEqual2 === void 0) {
-        isEqual2 = areInputsEqual;
-      }
-      var lastThis;
-      var lastArgs = [];
-      var lastResult;
-      var calledOnce = false;
-      function memoized() {
-        var newArgs = [];
-        for (var _i2 = 0; _i2 < arguments.length; _i2++) {
-          newArgs[_i2] = arguments[_i2];
-        }
-        if (calledOnce && lastThis === this && isEqual2(newArgs, lastArgs)) {
-          return lastResult;
-        }
-        lastResult = resultFn.apply(this, newArgs);
-        calledOnce = true;
-        lastThis = this;
-        lastArgs = newArgs;
-        return lastResult;
-      }
-      return memoized;
-    }
-    const memoizeOne_esm = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-      __proto__: null,
-      default: memoizeOne
-    }, Symbol.toStringTag, { value: "Module" }));
-    const require$$2 = /* @__PURE__ */ getAugmentedNamespace(memoizeOne_esm);
-    var hasElementType = typeof Element !== "undefined";
-    var hasMap = typeof Map === "function";
-    var hasSet = typeof Set === "function";
-    var hasArrayBuffer = typeof ArrayBuffer === "function" && !!ArrayBuffer.isView;
-    function equal(a2, b2) {
-      if (a2 === b2) return true;
-      if (a2 && b2 && typeof a2 == "object" && typeof b2 == "object") {
-        if (a2.constructor !== b2.constructor) return false;
-        var length2, i, keys2;
-        if (Array.isArray(a2)) {
-          length2 = a2.length;
-          if (length2 != b2.length) return false;
-          for (i = length2; i-- !== 0; )
-            if (!equal(a2[i], b2[i])) return false;
-          return true;
-        }
-        var it2;
-        if (hasMap && a2 instanceof Map && b2 instanceof Map) {
-          if (a2.size !== b2.size) return false;
-          it2 = a2.entries();
-          while (!(i = it2.next()).done)
-            if (!b2.has(i.value[0])) return false;
-          it2 = a2.entries();
-          while (!(i = it2.next()).done)
-            if (!equal(i.value[1], b2.get(i.value[0]))) return false;
-          return true;
-        }
-        if (hasSet && a2 instanceof Set && b2 instanceof Set) {
-          if (a2.size !== b2.size) return false;
-          it2 = a2.entries();
-          while (!(i = it2.next()).done)
-            if (!b2.has(i.value[0])) return false;
-          return true;
-        }
-        if (hasArrayBuffer && ArrayBuffer.isView(a2) && ArrayBuffer.isView(b2)) {
-          length2 = a2.length;
-          if (length2 != b2.length) return false;
-          for (i = length2; i-- !== 0; )
-            if (a2[i] !== b2[i]) return false;
-          return true;
-        }
-        if (a2.constructor === RegExp) return a2.source === b2.source && a2.flags === b2.flags;
-        if (a2.valueOf !== Object.prototype.valueOf && typeof a2.valueOf === "function" && typeof b2.valueOf === "function") return a2.valueOf() === b2.valueOf();
-        if (a2.toString !== Object.prototype.toString && typeof a2.toString === "function" && typeof b2.toString === "function") return a2.toString() === b2.toString();
-        keys2 = Object.keys(a2);
-        length2 = keys2.length;
-        if (length2 !== Object.keys(b2).length) return false;
-        for (i = length2; i-- !== 0; )
-          if (!Object.prototype.hasOwnProperty.call(b2, keys2[i])) return false;
-        if (hasElementType && a2 instanceof Element) return false;
-        for (i = length2; i-- !== 0; ) {
-          if ((keys2[i] === "_owner" || keys2[i] === "__v" || keys2[i] === "__o") && a2.$$typeof) {
-            continue;
-          }
-          if (!equal(a2[keys2[i]], b2[keys2[i]])) return false;
-        }
-        return true;
-      }
-      return a2 !== a2 && b2 !== b2;
-    }
-    var reactFastCompare = function isEqual2(a2, b2) {
-      try {
-        return equal(a2, b2);
-      } catch (error) {
-        if ((error.message || "").match(/stack|recursion/i)) {
-          console.warn("react-fast-compare cannot handle circular refs");
-          return false;
-        }
-        throw error;
-      }
-    };
-    var propTypes$1 = { exports: {} };
-    var ReactPropTypesSecret$1 = "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED";
-    var ReactPropTypesSecret_1 = ReactPropTypesSecret$1;
-    var ReactPropTypesSecret = ReactPropTypesSecret_1;
-    function emptyFunction() {
-    }
-    function emptyFunctionWithReset() {
-    }
-    emptyFunctionWithReset.resetWarningCache = emptyFunction;
-    var factoryWithThrowingShims = function() {
-      function shim2(props2, propName, componentName, location, propFullName, secret) {
-        if (secret === ReactPropTypesSecret) {
-          return;
-        }
-        var err = new Error(
-          "Calling PropTypes validators directly is not supported by the `prop-types` package. Use PropTypes.checkPropTypes() to call them. Read more at http://fb.me/use-check-prop-types"
-        );
-        err.name = "Invariant Violation";
-        throw err;
-      }
-      shim2.isRequired = shim2;
-      function getShim() {
-        return shim2;
-      }
-      var ReactPropTypes = {
-        array: shim2,
-        bigint: shim2,
-        bool: shim2,
-        func: shim2,
-        number: shim2,
-        object: shim2,
-        string: shim2,
-        symbol: shim2,
-        any: shim2,
-        arrayOf: getShim,
-        element: shim2,
-        elementType: shim2,
-        instanceOf: getShim,
-        node: shim2,
-        objectOf: getShim,
-        oneOf: getShim,
-        oneOfType: getShim,
-        shape: getShim,
-        exact: getShim,
-        checkPropTypes: emptyFunctionWithReset,
-        resetWarningCache: emptyFunction
-      };
-      ReactPropTypes.PropTypes = ReactPropTypes;
-      return ReactPropTypes;
-    };
-    {
-      propTypes$1.exports = factoryWithThrowingShims();
-    }
-    var propTypesExports = propTypes$1.exports;
-    var __create$h = Object.create;
-    var __defProp$h = Object.defineProperty;
-    var __getOwnPropDesc$h = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$h = Object.getOwnPropertyNames;
-    var __getProtoOf$h = Object.getPrototypeOf;
-    var __hasOwnProp$h = Object.prototype.hasOwnProperty;
-    var __export$h = (target, all) => {
-      for (var name in all)
-        __defProp$h(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$h = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$h(from2))
-          if (!__hasOwnProp$h.call(to, key) && key !== except)
-            __defProp$h(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$h(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$h = (mod, isNodeMode, target) => (target = mod != null ? __create$h(__getProtoOf$h(mod)) : {}, __copyProps$h(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$h(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$h = (mod) => __copyProps$h(__defProp$h({}, "__esModule", { value: true }), mod);
-    var props_exports = {};
-    __export$h(props_exports, {
-      defaultProps: () => defaultProps,
-      propTypes: () => propTypes
-    });
-    var props = __toCommonJS$h(props_exports);
-    var import_prop_types = __toESM$h(propTypesExports);
-    const { string, bool, number, array, oneOfType, shape, object, func, node } = import_prop_types.default;
-    const propTypes = {
-      url: oneOfType([string, array, object]),
-      playing: bool,
-      loop: bool,
-      controls: bool,
-      volume: number,
-      muted: bool,
-      playbackRate: number,
-      width: oneOfType([string, number]),
-      height: oneOfType([string, number]),
-      style: object,
-      progressInterval: number,
-      playsinline: bool,
-      pip: bool,
-      stopOnUnmount: bool,
-      light: oneOfType([bool, string, object]),
-      playIcon: node,
-      previewTabIndex: number,
-      previewAriaLabel: string,
-      fallback: node,
-      oEmbedUrl: string,
-      wrapper: oneOfType([
-        string,
-        func,
-        shape({ render: func.isRequired })
-      ]),
-      config: shape({
-        soundcloud: shape({
-          options: object
-        }),
-        youtube: shape({
-          playerVars: object,
-          embedOptions: object,
-          onUnstarted: func
-        }),
-        facebook: shape({
-          appId: string,
-          version: string,
-          playerId: string,
-          attributes: object
-        }),
-        dailymotion: shape({
-          params: object
-        }),
-        vimeo: shape({
-          playerOptions: object,
-          title: string
-        }),
-        mux: shape({
-          attributes: object,
-          version: string
-        }),
-        file: shape({
-          attributes: object,
-          tracks: array,
-          forceVideo: bool,
-          forceAudio: bool,
-          forceHLS: bool,
-          forceSafariHLS: bool,
-          forceDisableHls: bool,
-          forceDASH: bool,
-          forceFLV: bool,
-          hlsOptions: object,
-          hlsVersion: string,
-          dashVersion: string,
-          flvVersion: string
-        }),
-        wistia: shape({
-          options: object,
-          playerId: string,
-          customControls: array
-        }),
-        mixcloud: shape({
-          options: object
-        }),
-        twitch: shape({
-          options: object,
-          playerId: string
-        }),
-        vidyard: shape({
-          options: object
-        })
-      }),
-      onReady: func,
-      onStart: func,
-      onPlay: func,
-      onPause: func,
-      onBuffer: func,
-      onBufferEnd: func,
-      onEnded: func,
-      onError: func,
-      onDuration: func,
-      onSeek: func,
-      onPlaybackRateChange: func,
-      onPlaybackQualityChange: func,
-      onProgress: func,
-      onClickPreview: func,
-      onEnablePIP: func,
-      onDisablePIP: func
-    };
-    const noop = () => {
-    };
-    const defaultProps = {
-      playing: false,
-      loop: false,
-      controls: false,
-      volume: null,
-      muted: false,
-      playbackRate: 1,
-      width: "640px",
-      height: "360px",
-      style: {},
-      progressInterval: 1e3,
-      playsinline: false,
-      pip: false,
-      stopOnUnmount: true,
-      light: false,
-      fallback: null,
-      wrapper: "div",
-      previewTabIndex: 0,
-      previewAriaLabel: "",
-      oEmbedUrl: "https://noembed.com/embed?url={url}",
-      config: {
-        soundcloud: {
-          options: {
-            visual: true,
-            // Undocumented, but makes player fill container and look better
-            buying: false,
-            liking: false,
-            download: false,
-            sharing: false,
-            show_comments: false,
-            show_playcount: false
-          }
-        },
-        youtube: {
-          playerVars: {
-            playsinline: 1,
-            showinfo: 0,
-            rel: 0,
-            iv_load_policy: 3,
-            modestbranding: 1
-          },
-          embedOptions: {},
-          onUnstarted: noop
-        },
-        facebook: {
-          appId: "1309697205772819",
-          version: "v3.3",
-          playerId: null,
-          attributes: {}
-        },
-        dailymotion: {
-          params: {
-            api: 1,
-            "endscreen-enable": false
-          }
-        },
-        vimeo: {
-          playerOptions: {
-            autopause: false,
-            byline: false,
-            portrait: false,
-            title: false
-          },
-          title: null
-        },
-        mux: {
-          attributes: {},
-          version: "2"
-        },
-        file: {
-          attributes: {},
-          tracks: [],
-          forceVideo: false,
-          forceAudio: false,
-          forceHLS: false,
-          forceDASH: false,
-          forceFLV: false,
-          hlsOptions: {},
-          hlsVersion: "1.1.4",
-          dashVersion: "3.1.3",
-          flvVersion: "1.5.0",
-          forceDisableHls: false
-        },
-        wistia: {
-          options: {},
-          playerId: null,
-          customControls: null
-        },
-        mixcloud: {
-          options: {
-            hide_cover: 1
-          }
-        },
-        twitch: {
-          options: {},
-          playerId: null
-        },
-        vidyard: {
-          options: {}
-        }
-      },
-      onReady: noop,
-      onStart: noop,
-      onPlay: noop,
-      onPause: noop,
-      onBuffer: noop,
-      onBufferEnd: noop,
-      onEnded: noop,
-      onError: noop,
-      onDuration: noop,
-      onSeek: noop,
-      onPlaybackRateChange: noop,
-      onPlaybackQualityChange: noop,
-      onProgress: noop,
-      onClickPreview: noop,
-      onEnablePIP: noop,
-      onDisablePIP: noop
-    };
-    var __create$g = Object.create;
-    var __defProp$g = Object.defineProperty;
-    var __getOwnPropDesc$g = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$g = Object.getOwnPropertyNames;
-    var __getProtoOf$g = Object.getPrototypeOf;
-    var __hasOwnProp$g = Object.prototype.hasOwnProperty;
-    var __defNormalProp$f = (obj, key, value) => key in obj ? __defProp$g(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __export$g = (target, all) => {
-      for (var name in all)
-        __defProp$g(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$g = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$g(from2))
-          if (!__hasOwnProp$g.call(to, key) && key !== except)
-            __defProp$g(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$g(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$g = (mod, isNodeMode, target) => (target = mod != null ? __create$g(__getProtoOf$g(mod)) : {}, __copyProps$g(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$g(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$g = (mod) => __copyProps$g(__defProp$g({}, "__esModule", { value: true }), mod);
-    var __publicField$f = (obj, key, value) => {
-      __defNormalProp$f(obj, typeof key !== "symbol" ? key + "" : key, value);
-      return value;
-    };
-    var Player_exports = {};
-    __export$g(Player_exports, {
-      default: () => Player
-    });
-    var Player_1 = __toCommonJS$g(Player_exports);
-    var import_react$f = __toESM$g(reactExports);
-    var import_react_fast_compare$1 = __toESM$g(reactFastCompare);
-    var import_props$1 = props;
-    var import_utils$d = utils;
-    const SEEK_ON_PLAY_EXPIRY = 5e3;
-    class Player extends import_react$f.Component {
-      constructor() {
-        super(...arguments);
-        __publicField$f(this, "mounted", false);
-        __publicField$f(this, "isReady", false);
-        __publicField$f(this, "isPlaying", false);
-        __publicField$f(this, "isLoading", true);
-        __publicField$f(this, "loadOnReady", null);
-        __publicField$f(this, "startOnPlay", true);
-        __publicField$f(this, "seekOnPlay", null);
-        __publicField$f(this, "onDurationCalled", false);
-        __publicField$f(this, "handlePlayerMount", (player) => {
-          if (this.player) {
-            this.progress();
-            return;
-          }
-          this.player = player;
-          this.player.load(this.props.url);
-          this.progress();
-        });
-        __publicField$f(this, "getInternalPlayer", (key) => {
-          if (!this.player)
-            return null;
-          return this.player[key];
-        });
-        __publicField$f(this, "progress", () => {
-          if (this.props.url && this.player && this.isReady) {
-            const playedSeconds = this.getCurrentTime() || 0;
-            const loadedSeconds = this.getSecondsLoaded();
-            const duration = this.getDuration();
-            if (duration) {
-              const progress = {
-                playedSeconds,
-                played: playedSeconds / duration
-              };
-              if (loadedSeconds !== null) {
-                progress.loadedSeconds = loadedSeconds;
-                progress.loaded = loadedSeconds / duration;
-              }
-              if (progress.playedSeconds !== this.prevPlayed || progress.loadedSeconds !== this.prevLoaded) {
-                this.props.onProgress(progress);
-              }
-              this.prevPlayed = progress.playedSeconds;
-              this.prevLoaded = progress.loadedSeconds;
-            }
-          }
-          this.progressTimeout = setTimeout(this.progress, this.props.progressFrequency || this.props.progressInterval);
-        });
-        __publicField$f(this, "handleReady", () => {
-          if (!this.mounted)
-            return;
-          this.isReady = true;
-          this.isLoading = false;
-          const { onReady, playing, volume, muted } = this.props;
-          onReady();
-          if (!muted && volume !== null) {
-            this.player.setVolume(volume);
-          }
-          if (this.loadOnReady) {
-            this.player.load(this.loadOnReady, true);
-            this.loadOnReady = null;
-          } else if (playing) {
-            this.player.play();
-          }
-          this.handleDurationCheck();
-        });
-        __publicField$f(this, "handlePlay", () => {
-          this.isPlaying = true;
-          this.isLoading = false;
-          const { onStart, onPlay, playbackRate } = this.props;
-          if (this.startOnPlay) {
-            if (this.player.setPlaybackRate && playbackRate !== 1) {
-              this.player.setPlaybackRate(playbackRate);
-            }
-            onStart();
-            this.startOnPlay = false;
-          }
-          onPlay();
-          if (this.seekOnPlay) {
-            this.seekTo(this.seekOnPlay);
-            this.seekOnPlay = null;
-          }
-          this.handleDurationCheck();
-        });
-        __publicField$f(this, "handlePause", (e2) => {
-          this.isPlaying = false;
-          if (!this.isLoading) {
-            this.props.onPause(e2);
-          }
-        });
-        __publicField$f(this, "handleEnded", () => {
-          const { activePlayer, loop, onEnded } = this.props;
-          if (activePlayer.loopOnEnded && loop) {
-            this.seekTo(0);
-          }
-          if (!loop) {
-            this.isPlaying = false;
-            onEnded();
-          }
-        });
-        __publicField$f(this, "handleError", (...args) => {
-          this.isLoading = false;
-          this.props.onError(...args);
-        });
-        __publicField$f(this, "handleDurationCheck", () => {
-          clearTimeout(this.durationCheckTimeout);
-          const duration = this.getDuration();
-          if (duration) {
-            if (!this.onDurationCalled) {
-              this.props.onDuration(duration);
-              this.onDurationCalled = true;
-            }
-          } else {
-            this.durationCheckTimeout = setTimeout(this.handleDurationCheck, 100);
-          }
-        });
-        __publicField$f(this, "handleLoaded", () => {
-          this.isLoading = false;
-        });
-      }
-      componentDidMount() {
-        this.mounted = true;
-      }
-      componentWillUnmount() {
-        clearTimeout(this.progressTimeout);
-        clearTimeout(this.durationCheckTimeout);
-        if (this.isReady && this.props.stopOnUnmount) {
-          this.player.stop();
-          if (this.player.disablePIP) {
-            this.player.disablePIP();
-          }
-        }
-        this.mounted = false;
-      }
-      componentDidUpdate(prevProps) {
-        if (!this.player) {
-          return;
-        }
-        const { url, playing, volume, muted, playbackRate, pip, loop, activePlayer, disableDeferredLoading } = this.props;
-        if (!(0, import_react_fast_compare$1.default)(prevProps.url, url)) {
-          if (this.isLoading && !activePlayer.forceLoad && !disableDeferredLoading && !(0, import_utils$d.isMediaStream)(url)) {
-            console.warn(`ReactPlayer: the attempt to load ${url} is being deferred until the player has loaded`);
-            this.loadOnReady = url;
-            return;
-          }
-          this.isLoading = true;
-          this.startOnPlay = true;
-          this.onDurationCalled = false;
-          this.player.load(url, this.isReady);
-        }
-        if (!prevProps.playing && playing && !this.isPlaying) {
-          this.player.play();
-        }
-        if (prevProps.playing && !playing && this.isPlaying) {
-          this.player.pause();
-        }
-        if (!prevProps.pip && pip && this.player.enablePIP) {
-          this.player.enablePIP();
-        }
-        if (prevProps.pip && !pip && this.player.disablePIP) {
-          this.player.disablePIP();
-        }
-        if (prevProps.volume !== volume && volume !== null) {
-          this.player.setVolume(volume);
-        }
-        if (prevProps.muted !== muted) {
-          if (muted) {
-            this.player.mute();
-          } else {
-            this.player.unmute();
-            if (volume !== null) {
-              setTimeout(() => this.player.setVolume(volume));
-            }
-          }
-        }
-        if (prevProps.playbackRate !== playbackRate && this.player.setPlaybackRate) {
-          this.player.setPlaybackRate(playbackRate);
-        }
-        if (prevProps.loop !== loop && this.player.setLoop) {
-          this.player.setLoop(loop);
-        }
-      }
-      getDuration() {
-        if (!this.isReady)
-          return null;
-        return this.player.getDuration();
-      }
-      getCurrentTime() {
-        if (!this.isReady)
-          return null;
-        return this.player.getCurrentTime();
-      }
-      getSecondsLoaded() {
-        if (!this.isReady)
-          return null;
-        return this.player.getSecondsLoaded();
-      }
-      seekTo(amount, type2, keepPlaying) {
-        if (!this.isReady) {
-          if (amount !== 0) {
-            this.seekOnPlay = amount;
-            setTimeout(() => {
-              this.seekOnPlay = null;
-            }, SEEK_ON_PLAY_EXPIRY);
-          }
-          return;
-        }
-        const isFraction = !type2 ? amount > 0 && amount < 1 : type2 === "fraction";
-        if (isFraction) {
-          const duration = this.player.getDuration();
-          if (!duration) {
-            console.warn("ReactPlayer: could not seek using fraction – duration not yet available");
-            return;
-          }
-          this.player.seekTo(duration * amount, keepPlaying);
-          return;
-        }
-        this.player.seekTo(amount, keepPlaying);
-      }
-      render() {
-        const Player2 = this.props.activePlayer;
-        if (!Player2) {
-          return null;
-        }
-        return /* @__PURE__ */ import_react$f.default.createElement(
-          Player2,
+      const videoId = getYouTubeVideoId(url);
+      const thumbnailUrl = light || `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+      const handleThumbnailClick = reactExports.useCallback(() => {
+        setIsLoaded(true);
+        setIsPlaying(true);
+        onPlay();
+        onReady();
+      }, [onPlay, onReady]);
+      if (light && !isLoaded) {
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
           {
-            ...this.props,
-            onMount: this.handlePlayerMount,
-            onReady: this.handleReady,
-            onPlay: this.handlePlay,
-            onPause: this.handlePause,
-            onEnded: this.handleEnded,
-            onLoaded: this.handleLoaded,
-            onError: this.handleError
+            className: `relative cursor-pointer ${className}`,
+            style: { width, height, ...style2 },
+            onClick: handleThumbnailClick,
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "img",
+                {
+                  src: thumbnailUrl,
+                  alt: "Video thumbnail",
+                  className: "w-full h-full object-cover"
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-20 h-20 bg-white rounded-full flex items-center justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Play,
+                {
+                  size: 28,
+                  className: "text-gray-800 ml-1",
+                  fill: "currentColor"
+                }
+              ) }) })
+            ]
           }
         );
       }
-    }
-    __publicField$f(Player, "displayName", "Player");
-    __publicField$f(Player, "propTypes", import_props$1.propTypes);
-    __publicField$f(Player, "defaultProps", import_props$1.defaultProps);
-    var __create$f = Object.create;
-    var __defProp$f = Object.defineProperty;
-    var __getOwnPropDesc$f = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$f = Object.getOwnPropertyNames;
-    var __getProtoOf$f = Object.getPrototypeOf;
-    var __hasOwnProp$f = Object.prototype.hasOwnProperty;
-    var __defNormalProp$e = (obj, key, value) => key in obj ? __defProp$f(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __export$f = (target, all) => {
-      for (var name in all)
-        __defProp$f(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$f = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$f(from2))
-          if (!__hasOwnProp$f.call(to, key) && key !== except)
-            __defProp$f(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$f(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$f = (mod, isNodeMode, target) => (target = mod != null ? __create$f(__getProtoOf$f(mod)) : {}, __copyProps$f(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$f(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$f = (mod) => __copyProps$f(__defProp$f({}, "__esModule", { value: true }), mod);
-    var __publicField$e = (obj, key, value) => {
-      __defNormalProp$e(obj, typeof key !== "symbol" ? key + "" : key, value);
-      return value;
-    };
-    var ReactPlayer_exports = {};
-    __export$f(ReactPlayer_exports, {
-      createReactPlayer: () => createReactPlayer
-    });
-    var ReactPlayer$1 = __toCommonJS$f(ReactPlayer_exports);
-    var import_react$e = __toESM$f(reactExports);
-    var import_deepmerge = __toESM$f(cjs);
-    var import_memoize_one = __toESM$f(require$$2);
-    var import_react_fast_compare = __toESM$f(reactFastCompare);
-    var import_props = props;
-    var import_utils$c = utils;
-    var import_Player = __toESM$f(Player_1);
-    const Preview$3 = (0, import_utils$c.lazy)(() => __vitePreload(() => Promise.resolve().then(() => Preview$2), true ? void 0 : void 0));
-    const IS_BROWSER = typeof window !== "undefined" && window.document && typeof document !== "undefined";
-    const IS_GLOBAL = typeof commonjsGlobal !== "undefined" && commonjsGlobal.window && commonjsGlobal.window.document;
-    const SUPPORTED_PROPS = Object.keys(import_props.propTypes);
-    const UniversalSuspense = IS_BROWSER || IS_GLOBAL ? import_react$e.Suspense : () => null;
-    const customPlayers = [];
-    const createReactPlayer = (players2, fallback2) => {
-      var _a2;
-      return _a2 = class extends import_react$e.Component {
-        constructor() {
-          super(...arguments);
-          __publicField$e(this, "state", {
-            showPreview: !!this.props.light
-          });
-          __publicField$e(this, "references", {
-            wrapper: (wrapper) => {
-              this.wrapper = wrapper;
-            },
-            player: (player) => {
-              this.player = player;
-            }
-          });
-          __publicField$e(this, "handleClickPreview", (e2) => {
-            this.setState({ showPreview: false });
-            this.props.onClickPreview(e2);
-          });
-          __publicField$e(this, "showPreview", () => {
-            this.setState({ showPreview: true });
-          });
-          __publicField$e(this, "getDuration", () => {
-            if (!this.player)
-              return null;
-            return this.player.getDuration();
-          });
-          __publicField$e(this, "getCurrentTime", () => {
-            if (!this.player)
-              return null;
-            return this.player.getCurrentTime();
-          });
-          __publicField$e(this, "getSecondsLoaded", () => {
-            if (!this.player)
-              return null;
-            return this.player.getSecondsLoaded();
-          });
-          __publicField$e(this, "getInternalPlayer", (key = "player") => {
-            if (!this.player)
-              return null;
-            return this.player.getInternalPlayer(key);
-          });
-          __publicField$e(this, "seekTo", (fraction, type2, keepPlaying) => {
-            if (!this.player)
-              return null;
-            this.player.seekTo(fraction, type2, keepPlaying);
-          });
-          __publicField$e(this, "handleReady", () => {
-            this.props.onReady(this);
-          });
-          __publicField$e(this, "getActivePlayer", (0, import_memoize_one.default)((url) => {
-            for (const player of [...customPlayers, ...players2]) {
-              if (player.canPlay(url)) {
-                return player;
-              }
-            }
-            if (fallback2) {
-              return fallback2;
-            }
-            return null;
-          }));
-          __publicField$e(this, "getConfig", (0, import_memoize_one.default)((url, key) => {
-            const { config } = this.props;
-            return import_deepmerge.default.all([
-              import_props.defaultProps.config,
-              import_props.defaultProps.config[key] || {},
-              config,
-              config[key] || {}
-            ]);
-          }));
-          __publicField$e(this, "getAttributes", (0, import_memoize_one.default)((url) => {
-            return (0, import_utils$c.omit)(this.props, SUPPORTED_PROPS);
-          }));
-          __publicField$e(this, "renderActivePlayer", (url) => {
-            if (!url)
-              return null;
-            const player = this.getActivePlayer(url);
-            if (!player)
-              return null;
-            const config = this.getConfig(url, player.key);
-            return /* @__PURE__ */ import_react$e.default.createElement(
-              import_Player.default,
-              {
-                ...this.props,
-                key: player.key,
-                ref: this.references.player,
-                config,
-                activePlayer: player.lazyPlayer || player,
-                onReady: this.handleReady
-              }
-            );
-          });
-        }
-        shouldComponentUpdate(nextProps, nextState) {
-          return !(0, import_react_fast_compare.default)(this.props, nextProps) || !(0, import_react_fast_compare.default)(this.state, nextState);
-        }
-        componentDidUpdate(prevProps) {
-          const { light } = this.props;
-          if (!prevProps.light && light) {
-            this.setState({ showPreview: true });
-          }
-          if (prevProps.light && !light) {
-            this.setState({ showPreview: false });
-          }
-        }
-        renderPreview(url) {
-          if (!url)
-            return null;
-          const { light, playIcon, previewTabIndex, oEmbedUrl, previewAriaLabel } = this.props;
-          return /* @__PURE__ */ import_react$e.default.createElement(
-            Preview$3,
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "div",
+        {
+          className,
+          style: { width, height, ...style2 },
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "iframe",
             {
-              url,
-              light,
-              playIcon,
-              previewTabIndex,
-              previewAriaLabel,
-              oEmbedUrl,
-              onClick: this.handleClickPreview
+              ref: iframeRef,
+              width: "100%",
+              height: "100%",
+              src: `https://www.youtube.com/embed/${videoId}?autoplay=${isPlaying ? 1 : 0}&controls=${controls ? 1 : 0}`,
+              title: "YouTube video player",
+              frameBorder: "0",
+              allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+              allowFullScreen: true,
+              onLoad: () => onReady()
             }
-          );
+          )
         }
-        render() {
-          const { url, style: style2, width, height, fallback: fallback22, wrapper: Wrapper2 } = this.props;
-          const { showPreview } = this.state;
-          const attributes2 = this.getAttributes(url);
-          const wrapperRef = typeof Wrapper2 === "string" ? this.references.wrapper : void 0;
-          return /* @__PURE__ */ import_react$e.default.createElement(Wrapper2, { ref: wrapperRef, style: { ...style2, width, height }, ...attributes2 }, /* @__PURE__ */ import_react$e.default.createElement(UniversalSuspense, { fallback: fallback22 }, showPreview ? this.renderPreview(url) : this.renderActivePlayer(url)));
-        }
-      }, __publicField$e(_a2, "displayName", "ReactPlayer"), __publicField$e(_a2, "propTypes", import_props.propTypes), __publicField$e(_a2, "defaultProps", import_props.defaultProps), __publicField$e(_a2, "addCustomPlayer", (player) => {
-        customPlayers.push(player);
-      }), __publicField$e(_a2, "removeCustomPlayers", () => {
-        customPlayers.length = 0;
-      }), __publicField$e(_a2, "canPlay", (url) => {
-        for (const Player2 of [...customPlayers, ...players2]) {
-          if (Player2.canPlay(url)) {
-            return true;
-          }
-        }
-        return false;
-      }), __publicField$e(_a2, "canEnablePIP", (url) => {
-        for (const Player2 of [...customPlayers, ...players2]) {
-          if (Player2.canEnablePIP && Player2.canEnablePIP(url)) {
-            return true;
-          }
-        }
-        return false;
-      }), _a2;
-    };
-    var __create$e = Object.create;
-    var __defProp$e = Object.defineProperty;
-    var __getOwnPropDesc$e = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$e = Object.getOwnPropertyNames;
-    var __getProtoOf$e = Object.getPrototypeOf;
-    var __hasOwnProp$e = Object.prototype.hasOwnProperty;
-    var __export$e = (target, all) => {
-      for (var name in all)
-        __defProp$e(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$e = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$e(from2))
-          if (!__hasOwnProp$e.call(to, key) && key !== except)
-            __defProp$e(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$e(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$e = (mod, isNodeMode, target) => (target = mod != null ? __create$e(__getProtoOf$e(mod)) : {}, __copyProps$e(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$e(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$e = (mod) => __copyProps$e(__defProp$e({}, "__esModule", { value: true }), mod);
-    var src_exports = {};
-    __export$e(src_exports, {
-      default: () => src_default
-    });
-    var lib = __toCommonJS$e(src_exports);
-    var import_players = __toESM$e(players);
-    var import_ReactPlayer = ReactPlayer$1;
-    const fallback = import_players.default[import_players.default.length - 1];
-    var src_default = (0, import_ReactPlayer.createReactPlayer)(import_players.default, fallback);
-    const ReactPlayer = /* @__PURE__ */ getDefaultExportFromCjs(lib);
+      );
+    }
     function Dashboard() {
       const tsteamImage = tsteam_settings.assets_path;
       const translations2 = getTranslations();
@@ -84583,7 +83158,15 @@ var require_admin = __commonJS({
             ctalink: "https://themespell.com/ts-team-member/"
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-8 tsteam__global--border w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ReactPlayer, { light: "https://img.youtube.com/vi/DCMKZ5AWrPc/maxresdefault.jpg", width: "1160px", height: "650px", url: "https://www.youtube.com/watch?v=DCMKZ5AWrPc" }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-8 tsteam__global--border w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          TsVideo,
+          {
+            light: "https://img.youtube.com/vi/DCMKZ5AWrPc/maxresdefault.jpg",
+            width: "1160px",
+            height: "650px",
+            url: "https://www.youtube.com/watch?v=DCMKZ5AWrPc"
+          }
+        ) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between items-center gap-6 mt-8", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white p-12 pt-8 tsteam__global--border h-96", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
@@ -85609,2464 +84192,6 @@ var require_admin = __commonJS({
       __proto__: null,
       default: Tiles
     }, Symbol.toStringTag, { value: "Module" }));
-    var __create$d = Object.create;
-    var __defProp$d = Object.defineProperty;
-    var __getOwnPropDesc$d = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$d = Object.getOwnPropertyNames;
-    var __getProtoOf$d = Object.getPrototypeOf;
-    var __hasOwnProp$d = Object.prototype.hasOwnProperty;
-    var __defNormalProp$d = (obj, key, value) => key in obj ? __defProp$d(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __export$d = (target, all) => {
-      for (var name in all)
-        __defProp$d(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$d = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$d(from2))
-          if (!__hasOwnProp$d.call(to, key) && key !== except)
-            __defProp$d(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$d(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$d = (mod, isNodeMode, target) => (target = mod != null ? __create$d(__getProtoOf$d(mod)) : {}, __copyProps$d(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$d(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$d = (mod) => __copyProps$d(__defProp$d({}, "__esModule", { value: true }), mod);
-    var __publicField$d = (obj, key, value) => {
-      __defNormalProp$d(obj, typeof key !== "symbol" ? key + "" : key, value);
-      return value;
-    };
-    var YouTube_exports = {};
-    __export$d(YouTube_exports, {
-      default: () => YouTube
-    });
-    var YouTube_1 = __toCommonJS$d(YouTube_exports);
-    var import_react$d = __toESM$d(reactExports);
-    var import_utils$b = utils;
-    var import_patterns$c = patterns;
-    const SDK_URL$b = "https://www.youtube.com/iframe_api";
-    const SDK_GLOBAL$a = "YT";
-    const SDK_GLOBAL_READY$3 = "onYouTubeIframeAPIReady";
-    const MATCH_PLAYLIST = /[?&](?:list|channel)=([a-zA-Z0-9_-]+)/;
-    const MATCH_USER_UPLOADS = /user\/([a-zA-Z0-9_-]+)\/?/;
-    const MATCH_NOCOOKIE = /youtube-nocookie\.com/;
-    const NOCOOKIE_HOST = "https://www.youtube-nocookie.com";
-    class YouTube extends import_react$d.Component {
-      constructor() {
-        super(...arguments);
-        __publicField$d(this, "callPlayer", import_utils$b.callPlayer);
-        __publicField$d(this, "parsePlaylist", (url) => {
-          if (url instanceof Array) {
-            return {
-              listType: "playlist",
-              playlist: url.map(this.getID).join(",")
-            };
-          }
-          if (MATCH_PLAYLIST.test(url)) {
-            const [, playlistId] = url.match(MATCH_PLAYLIST);
-            return {
-              listType: "playlist",
-              list: playlistId.replace(/^UC/, "UU")
-            };
-          }
-          if (MATCH_USER_UPLOADS.test(url)) {
-            const [, username] = url.match(MATCH_USER_UPLOADS);
-            return {
-              listType: "user_uploads",
-              list: username
-            };
-          }
-          return {};
-        });
-        __publicField$d(this, "onStateChange", (event) => {
-          const { data } = event;
-          const { onPlay, onPause, onBuffer, onBufferEnd, onEnded, onReady, loop, config: { playerVars, onUnstarted } } = this.props;
-          const { UNSTARTED, PLAYING, PAUSED, BUFFERING, ENDED, CUED } = window[SDK_GLOBAL$a].PlayerState;
-          if (data === UNSTARTED)
-            onUnstarted();
-          if (data === PLAYING) {
-            onPlay();
-            onBufferEnd();
-          }
-          if (data === PAUSED)
-            onPause();
-          if (data === BUFFERING)
-            onBuffer();
-          if (data === ENDED) {
-            const isPlaylist = !!this.callPlayer("getPlaylist");
-            if (loop && !isPlaylist) {
-              if (playerVars.start) {
-                this.seekTo(playerVars.start);
-              } else {
-                this.play();
-              }
-            }
-            onEnded();
-          }
-          if (data === CUED)
-            onReady();
-        });
-        __publicField$d(this, "mute", () => {
-          this.callPlayer("mute");
-        });
-        __publicField$d(this, "unmute", () => {
-          this.callPlayer("unMute");
-        });
-        __publicField$d(this, "ref", (container) => {
-          this.container = container;
-        });
-      }
-      componentDidMount() {
-        this.props.onMount && this.props.onMount(this);
-      }
-      getID(url) {
-        if (!url || url instanceof Array || MATCH_PLAYLIST.test(url)) {
-          return null;
-        }
-        return url.match(import_patterns$c.MATCH_URL_YOUTUBE)[1];
-      }
-      load(url, isReady) {
-        const { playing, muted, playsinline, controls, loop, config, onError } = this.props;
-        const { playerVars, embedOptions } = config;
-        const id2 = this.getID(url);
-        if (isReady) {
-          if (MATCH_PLAYLIST.test(url) || MATCH_USER_UPLOADS.test(url) || url instanceof Array) {
-            this.player.loadPlaylist(this.parsePlaylist(url));
-            return;
-          }
-          this.player.cueVideoById({
-            videoId: id2,
-            startSeconds: (0, import_utils$b.parseStartTime)(url) || playerVars.start,
-            endSeconds: (0, import_utils$b.parseEndTime)(url) || playerVars.end
-          });
-          return;
-        }
-        (0, import_utils$b.getSDK)(SDK_URL$b, SDK_GLOBAL$a, SDK_GLOBAL_READY$3, (YT) => YT.loaded).then((YT) => {
-          if (!this.container)
-            return;
-          this.player = new YT.Player(this.container, {
-            width: "100%",
-            height: "100%",
-            videoId: id2,
-            playerVars: {
-              autoplay: playing ? 1 : 0,
-              mute: muted ? 1 : 0,
-              controls: controls ? 1 : 0,
-              start: (0, import_utils$b.parseStartTime)(url),
-              end: (0, import_utils$b.parseEndTime)(url),
-              origin: window.location.origin,
-              playsinline: playsinline ? 1 : 0,
-              ...this.parsePlaylist(url),
-              ...playerVars
-            },
-            events: {
-              onReady: () => {
-                if (loop) {
-                  this.player.setLoop(true);
-                }
-                this.props.onReady();
-              },
-              onPlaybackRateChange: (event) => this.props.onPlaybackRateChange(event.data),
-              onPlaybackQualityChange: (event) => this.props.onPlaybackQualityChange(event),
-              onStateChange: this.onStateChange,
-              onError: (event) => onError(event.data)
-            },
-            host: MATCH_NOCOOKIE.test(url) ? NOCOOKIE_HOST : void 0,
-            ...embedOptions
-          });
-        }, onError);
-        if (embedOptions.events) {
-          console.warn("Using `embedOptions.events` will likely break things. Use ReactPlayer’s callback props instead, eg onReady, onPlay, onPause");
-        }
-      }
-      play() {
-        this.callPlayer("playVideo");
-      }
-      pause() {
-        this.callPlayer("pauseVideo");
-      }
-      stop() {
-        if (!document.body.contains(this.callPlayer("getIframe")))
-          return;
-        this.callPlayer("stopVideo");
-      }
-      seekTo(amount, keepPlaying = false) {
-        this.callPlayer("seekTo", amount);
-        if (!keepPlaying && !this.props.playing) {
-          this.pause();
-        }
-      }
-      setVolume(fraction) {
-        this.callPlayer("setVolume", fraction * 100);
-      }
-      setPlaybackRate(rate) {
-        this.callPlayer("setPlaybackRate", rate);
-      }
-      setLoop(loop) {
-        this.callPlayer("setLoop", loop);
-      }
-      getDuration() {
-        return this.callPlayer("getDuration");
-      }
-      getCurrentTime() {
-        return this.callPlayer("getCurrentTime");
-      }
-      getSecondsLoaded() {
-        return this.callPlayer("getVideoLoadedFraction") * this.getDuration();
-      }
-      render() {
-        const { display } = this.props;
-        const style2 = {
-          width: "100%",
-          height: "100%",
-          display
-        };
-        return /* @__PURE__ */ import_react$d.default.createElement("div", { style: style2 }, /* @__PURE__ */ import_react$d.default.createElement("div", { ref: this.ref }));
-      }
-    }
-    __publicField$d(YouTube, "displayName", "YouTube");
-    __publicField$d(YouTube, "canPlay", import_patterns$c.canPlay.youtube);
-    const YouTube$1 = /* @__PURE__ */ getDefaultExportFromCjs(YouTube_1);
-    const YouTube$2 = /* @__PURE__ */ _mergeNamespaces({
-      __proto__: null,
-      default: YouTube$1
-    }, [YouTube_1]);
-    var __create$c = Object.create;
-    var __defProp$c = Object.defineProperty;
-    var __getOwnPropDesc$c = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$c = Object.getOwnPropertyNames;
-    var __getProtoOf$c = Object.getPrototypeOf;
-    var __hasOwnProp$c = Object.prototype.hasOwnProperty;
-    var __defNormalProp$c = (obj, key, value) => key in obj ? __defProp$c(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __export$c = (target, all) => {
-      for (var name in all)
-        __defProp$c(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$c = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$c(from2))
-          if (!__hasOwnProp$c.call(to, key) && key !== except)
-            __defProp$c(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$c(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$c = (mod, isNodeMode, target) => (target = mod != null ? __create$c(__getProtoOf$c(mod)) : {}, __copyProps$c(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$c(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$c = (mod) => __copyProps$c(__defProp$c({}, "__esModule", { value: true }), mod);
-    var __publicField$c = (obj, key, value) => {
-      __defNormalProp$c(obj, typeof key !== "symbol" ? key + "" : key, value);
-      return value;
-    };
-    var SoundCloud_exports = {};
-    __export$c(SoundCloud_exports, {
-      default: () => SoundCloud
-    });
-    var SoundCloud_1 = __toCommonJS$c(SoundCloud_exports);
-    var import_react$c = __toESM$c(reactExports);
-    var import_utils$a = utils;
-    var import_patterns$b = patterns;
-    const SDK_URL$a = "https://w.soundcloud.com/player/api.js";
-    const SDK_GLOBAL$9 = "SC";
-    class SoundCloud extends import_react$c.Component {
-      constructor() {
-        super(...arguments);
-        __publicField$c(this, "callPlayer", import_utils$a.callPlayer);
-        __publicField$c(this, "duration", null);
-        __publicField$c(this, "currentTime", null);
-        __publicField$c(this, "fractionLoaded", null);
-        __publicField$c(this, "mute", () => {
-          this.setVolume(0);
-        });
-        __publicField$c(this, "unmute", () => {
-          if (this.props.volume !== null) {
-            this.setVolume(this.props.volume);
-          }
-        });
-        __publicField$c(this, "ref", (iframe) => {
-          this.iframe = iframe;
-        });
-      }
-      componentDidMount() {
-        this.props.onMount && this.props.onMount(this);
-      }
-      load(url, isReady) {
-        (0, import_utils$a.getSDK)(SDK_URL$a, SDK_GLOBAL$9).then((SC) => {
-          if (!this.iframe)
-            return;
-          const { PLAY, PLAY_PROGRESS, PAUSE, FINISH, ERROR } = SC.Widget.Events;
-          if (!isReady) {
-            this.player = SC.Widget(this.iframe);
-            this.player.bind(PLAY, this.props.onPlay);
-            this.player.bind(PAUSE, () => {
-              const remaining = this.duration - this.currentTime;
-              if (remaining < 0.05) {
-                return;
-              }
-              this.props.onPause();
-            });
-            this.player.bind(PLAY_PROGRESS, (e2) => {
-              this.currentTime = e2.currentPosition / 1e3;
-              this.fractionLoaded = e2.loadedProgress;
-            });
-            this.player.bind(FINISH, () => this.props.onEnded());
-            this.player.bind(ERROR, (e2) => this.props.onError(e2));
-          }
-          this.player.load(url, {
-            ...this.props.config.options,
-            callback: () => {
-              this.player.getDuration((duration) => {
-                this.duration = duration / 1e3;
-                this.props.onReady();
-              });
-            }
-          });
-        });
-      }
-      play() {
-        this.callPlayer("play");
-      }
-      pause() {
-        this.callPlayer("pause");
-      }
-      stop() {
-      }
-      seekTo(seconds, keepPlaying = true) {
-        this.callPlayer("seekTo", seconds * 1e3);
-        if (!keepPlaying) {
-          this.pause();
-        }
-      }
-      setVolume(fraction) {
-        this.callPlayer("setVolume", fraction * 100);
-      }
-      getDuration() {
-        return this.duration;
-      }
-      getCurrentTime() {
-        return this.currentTime;
-      }
-      getSecondsLoaded() {
-        return this.fractionLoaded * this.duration;
-      }
-      render() {
-        const { display } = this.props;
-        const style2 = {
-          width: "100%",
-          height: "100%",
-          display
-        };
-        return /* @__PURE__ */ import_react$c.default.createElement(
-          "iframe",
-          {
-            ref: this.ref,
-            src: `https://w.soundcloud.com/player/?url=${encodeURIComponent(this.props.url)}`,
-            style: style2,
-            frameBorder: 0,
-            allow: "autoplay"
-          }
-        );
-      }
-    }
-    __publicField$c(SoundCloud, "displayName", "SoundCloud");
-    __publicField$c(SoundCloud, "canPlay", import_patterns$b.canPlay.soundcloud);
-    __publicField$c(SoundCloud, "loopOnEnded", true);
-    const SoundCloud$1 = /* @__PURE__ */ getDefaultExportFromCjs(SoundCloud_1);
-    const SoundCloud$2 = /* @__PURE__ */ _mergeNamespaces({
-      __proto__: null,
-      default: SoundCloud$1
-    }, [SoundCloud_1]);
-    var __create$b = Object.create;
-    var __defProp$b = Object.defineProperty;
-    var __getOwnPropDesc$b = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$b = Object.getOwnPropertyNames;
-    var __getProtoOf$b = Object.getPrototypeOf;
-    var __hasOwnProp$b = Object.prototype.hasOwnProperty;
-    var __defNormalProp$b = (obj, key, value) => key in obj ? __defProp$b(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __export$b = (target, all) => {
-      for (var name in all)
-        __defProp$b(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$b = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$b(from2))
-          if (!__hasOwnProp$b.call(to, key) && key !== except)
-            __defProp$b(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$b(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$b = (mod, isNodeMode, target) => (target = mod != null ? __create$b(__getProtoOf$b(mod)) : {}, __copyProps$b(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$b(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$b = (mod) => __copyProps$b(__defProp$b({}, "__esModule", { value: true }), mod);
-    var __publicField$b = (obj, key, value) => {
-      __defNormalProp$b(obj, typeof key !== "symbol" ? key + "" : key, value);
-      return value;
-    };
-    var Vimeo_exports = {};
-    __export$b(Vimeo_exports, {
-      default: () => Vimeo
-    });
-    var Vimeo_1 = __toCommonJS$b(Vimeo_exports);
-    var import_react$b = __toESM$b(reactExports);
-    var import_utils$9 = utils;
-    var import_patterns$a = patterns;
-    const SDK_URL$9 = "https://player.vimeo.com/api/player.js";
-    const SDK_GLOBAL$8 = "Vimeo";
-    const cleanUrl = (url) => {
-      return url.replace("/manage/videos", "");
-    };
-    class Vimeo extends import_react$b.Component {
-      constructor() {
-        super(...arguments);
-        __publicField$b(this, "callPlayer", import_utils$9.callPlayer);
-        __publicField$b(this, "duration", null);
-        __publicField$b(this, "currentTime", null);
-        __publicField$b(this, "secondsLoaded", null);
-        __publicField$b(this, "mute", () => {
-          this.setMuted(true);
-        });
-        __publicField$b(this, "unmute", () => {
-          this.setMuted(false);
-        });
-        __publicField$b(this, "ref", (container) => {
-          this.container = container;
-        });
-      }
-      componentDidMount() {
-        this.props.onMount && this.props.onMount(this);
-      }
-      load(url) {
-        this.duration = null;
-        (0, import_utils$9.getSDK)(SDK_URL$9, SDK_GLOBAL$8).then((Vimeo2) => {
-          if (!this.container)
-            return;
-          const { playerOptions, title } = this.props.config;
-          this.player = new Vimeo2.Player(this.container, {
-            url: cleanUrl(url),
-            autoplay: this.props.playing,
-            muted: this.props.muted,
-            loop: this.props.loop,
-            playsinline: this.props.playsinline,
-            controls: this.props.controls,
-            ...playerOptions
-          });
-          this.player.ready().then(() => {
-            const iframe = this.container.querySelector("iframe");
-            iframe.style.width = "100%";
-            iframe.style.height = "100%";
-            if (title) {
-              iframe.title = title;
-            }
-          }).catch(this.props.onError);
-          this.player.on("loaded", () => {
-            this.props.onReady();
-            this.refreshDuration();
-          });
-          this.player.on("play", () => {
-            this.props.onPlay();
-            this.refreshDuration();
-          });
-          this.player.on("pause", this.props.onPause);
-          this.player.on("seeked", (e2) => this.props.onSeek(e2.seconds));
-          this.player.on("ended", this.props.onEnded);
-          this.player.on("error", this.props.onError);
-          this.player.on("timeupdate", ({ seconds }) => {
-            this.currentTime = seconds;
-          });
-          this.player.on("progress", ({ seconds }) => {
-            this.secondsLoaded = seconds;
-          });
-          this.player.on("bufferstart", this.props.onBuffer);
-          this.player.on("bufferend", this.props.onBufferEnd);
-          this.player.on("playbackratechange", (e2) => this.props.onPlaybackRateChange(e2.playbackRate));
-        }, this.props.onError);
-      }
-      refreshDuration() {
-        this.player.getDuration().then((duration) => {
-          this.duration = duration;
-        });
-      }
-      play() {
-        const promise = this.callPlayer("play");
-        if (promise) {
-          promise.catch(this.props.onError);
-        }
-      }
-      pause() {
-        this.callPlayer("pause");
-      }
-      stop() {
-        this.callPlayer("unload");
-      }
-      seekTo(seconds, keepPlaying = true) {
-        this.callPlayer("setCurrentTime", seconds);
-        if (!keepPlaying) {
-          this.pause();
-        }
-      }
-      setVolume(fraction) {
-        this.callPlayer("setVolume", fraction);
-      }
-      setMuted(muted) {
-        this.callPlayer("setMuted", muted);
-      }
-      setLoop(loop) {
-        this.callPlayer("setLoop", loop);
-      }
-      setPlaybackRate(rate) {
-        this.callPlayer("setPlaybackRate", rate);
-      }
-      getDuration() {
-        return this.duration;
-      }
-      getCurrentTime() {
-        return this.currentTime;
-      }
-      getSecondsLoaded() {
-        return this.secondsLoaded;
-      }
-      render() {
-        const { display } = this.props;
-        const style2 = {
-          width: "100%",
-          height: "100%",
-          overflow: "hidden",
-          display
-        };
-        return /* @__PURE__ */ import_react$b.default.createElement(
-          "div",
-          {
-            key: this.props.url,
-            ref: this.ref,
-            style: style2
-          }
-        );
-      }
-    }
-    __publicField$b(Vimeo, "displayName", "Vimeo");
-    __publicField$b(Vimeo, "canPlay", import_patterns$a.canPlay.vimeo);
-    __publicField$b(Vimeo, "forceLoad", true);
-    const Vimeo$1 = /* @__PURE__ */ getDefaultExportFromCjs(Vimeo_1);
-    const Vimeo$2 = /* @__PURE__ */ _mergeNamespaces({
-      __proto__: null,
-      default: Vimeo$1
-    }, [Vimeo_1]);
-    var __create$a = Object.create;
-    var __defProp$a = Object.defineProperty;
-    var __getOwnPropDesc$a = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$a = Object.getOwnPropertyNames;
-    var __getProtoOf$a = Object.getPrototypeOf;
-    var __hasOwnProp$a = Object.prototype.hasOwnProperty;
-    var __defNormalProp$a = (obj, key, value) => key in obj ? __defProp$a(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __export$a = (target, all) => {
-      for (var name in all)
-        __defProp$a(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$a = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$a(from2))
-          if (!__hasOwnProp$a.call(to, key) && key !== except)
-            __defProp$a(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$a(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$a = (mod, isNodeMode, target) => (target = mod != null ? __create$a(__getProtoOf$a(mod)) : {}, __copyProps$a(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$a(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$a = (mod) => __copyProps$a(__defProp$a({}, "__esModule", { value: true }), mod);
-    var __publicField$a = (obj, key, value) => {
-      __defNormalProp$a(obj, typeof key !== "symbol" ? key + "" : key, value);
-      return value;
-    };
-    var Mux_exports = {};
-    __export$a(Mux_exports, {
-      default: () => Mux
-    });
-    var Mux_1 = __toCommonJS$a(Mux_exports);
-    var import_react$a = __toESM$a(reactExports);
-    var import_patterns$9 = patterns;
-    const SDK_URL$8 = "https://cdn.jsdelivr.net/npm/@mux/mux-player@VERSION/dist/mux-player.mjs";
-    class Mux extends import_react$a.Component {
-      constructor() {
-        super(...arguments);
-        __publicField$a(this, "onReady", (...args) => this.props.onReady(...args));
-        __publicField$a(this, "onPlay", (...args) => this.props.onPlay(...args));
-        __publicField$a(this, "onBuffer", (...args) => this.props.onBuffer(...args));
-        __publicField$a(this, "onBufferEnd", (...args) => this.props.onBufferEnd(...args));
-        __publicField$a(this, "onPause", (...args) => this.props.onPause(...args));
-        __publicField$a(this, "onEnded", (...args) => this.props.onEnded(...args));
-        __publicField$a(this, "onError", (...args) => this.props.onError(...args));
-        __publicField$a(this, "onPlayBackRateChange", (event) => this.props.onPlaybackRateChange(event.target.playbackRate));
-        __publicField$a(this, "onEnablePIP", (...args) => this.props.onEnablePIP(...args));
-        __publicField$a(this, "onSeek", (e2) => {
-          this.props.onSeek(e2.target.currentTime);
-        });
-        __publicField$a(this, "onDurationChange", () => {
-          const duration = this.getDuration();
-          this.props.onDuration(duration);
-        });
-        __publicField$a(this, "mute", () => {
-          this.player.muted = true;
-        });
-        __publicField$a(this, "unmute", () => {
-          this.player.muted = false;
-        });
-        __publicField$a(this, "ref", (player) => {
-          this.player = player;
-        });
-      }
-      componentDidMount() {
-        this.props.onMount && this.props.onMount(this);
-        this.addListeners(this.player);
-        const playbackId = this.getPlaybackId(this.props.url);
-        if (playbackId) {
-          this.player.playbackId = playbackId;
-        }
-      }
-      componentWillUnmount() {
-        this.player.playbackId = null;
-        this.removeListeners(this.player);
-      }
-      addListeners(player) {
-        const { playsinline } = this.props;
-        player.addEventListener("play", this.onPlay);
-        player.addEventListener("waiting", this.onBuffer);
-        player.addEventListener("playing", this.onBufferEnd);
-        player.addEventListener("pause", this.onPause);
-        player.addEventListener("seeked", this.onSeek);
-        player.addEventListener("ended", this.onEnded);
-        player.addEventListener("error", this.onError);
-        player.addEventListener("ratechange", this.onPlayBackRateChange);
-        player.addEventListener("enterpictureinpicture", this.onEnablePIP);
-        player.addEventListener("leavepictureinpicture", this.onDisablePIP);
-        player.addEventListener("webkitpresentationmodechanged", this.onPresentationModeChange);
-        player.addEventListener("canplay", this.onReady);
-        if (playsinline) {
-          player.setAttribute("playsinline", "");
-        }
-      }
-      removeListeners(player) {
-        player.removeEventListener("canplay", this.onReady);
-        player.removeEventListener("play", this.onPlay);
-        player.removeEventListener("waiting", this.onBuffer);
-        player.removeEventListener("playing", this.onBufferEnd);
-        player.removeEventListener("pause", this.onPause);
-        player.removeEventListener("seeked", this.onSeek);
-        player.removeEventListener("ended", this.onEnded);
-        player.removeEventListener("error", this.onError);
-        player.removeEventListener("ratechange", this.onPlayBackRateChange);
-        player.removeEventListener("enterpictureinpicture", this.onEnablePIP);
-        player.removeEventListener("leavepictureinpicture", this.onDisablePIP);
-        player.removeEventListener("canplay", this.onReady);
-      }
-      async load(url) {
-        var _a2;
-        const { onError, config } = this.props;
-        if (!((_a2 = globalThis.customElements) == null ? void 0 : _a2.get("mux-player"))) {
-          try {
-            const sdkUrl = SDK_URL$8.replace("VERSION", config.version);
-            await __vitePreload(() => import(
-              /* webpackIgnore: true */
-              `${sdkUrl}`
-            ), true ? [] : void 0);
-            this.props.onLoaded();
-          } catch (error) {
-            onError(error);
-          }
-        }
-        const [, id2] = url.match(import_patterns$9.MATCH_URL_MUX);
-        this.player.playbackId = id2;
-      }
-      play() {
-        const promise = this.player.play();
-        if (promise) {
-          promise.catch(this.props.onError);
-        }
-      }
-      pause() {
-        this.player.pause();
-      }
-      stop() {
-        this.player.playbackId = null;
-      }
-      seekTo(seconds, keepPlaying = true) {
-        this.player.currentTime = seconds;
-        if (!keepPlaying) {
-          this.pause();
-        }
-      }
-      setVolume(fraction) {
-        this.player.volume = fraction;
-      }
-      enablePIP() {
-        if (this.player.requestPictureInPicture && document.pictureInPictureElement !== this.player) {
-          this.player.requestPictureInPicture();
-        }
-      }
-      disablePIP() {
-        if (document.exitPictureInPicture && document.pictureInPictureElement === this.player) {
-          document.exitPictureInPicture();
-        }
-      }
-      setPlaybackRate(rate) {
-        try {
-          this.player.playbackRate = rate;
-        } catch (error) {
-          this.props.onError(error);
-        }
-      }
-      getDuration() {
-        if (!this.player)
-          return null;
-        const { duration, seekable } = this.player;
-        if (duration === Infinity && seekable.length > 0) {
-          return seekable.end(seekable.length - 1);
-        }
-        return duration;
-      }
-      getCurrentTime() {
-        if (!this.player)
-          return null;
-        return this.player.currentTime;
-      }
-      getSecondsLoaded() {
-        if (!this.player)
-          return null;
-        const { buffered } = this.player;
-        if (buffered.length === 0) {
-          return 0;
-        }
-        const end = buffered.end(buffered.length - 1);
-        const duration = this.getDuration();
-        if (end > duration) {
-          return duration;
-        }
-        return end;
-      }
-      getPlaybackId(url) {
-        const [, id2] = url.match(import_patterns$9.MATCH_URL_MUX);
-        return id2;
-      }
-      render() {
-        const { url, playing, loop, controls, muted, config, width, height } = this.props;
-        const style2 = {
-          width: width === "auto" ? width : "100%",
-          height: height === "auto" ? height : "100%"
-        };
-        if (controls === false) {
-          style2["--controls"] = "none";
-        }
-        return /* @__PURE__ */ import_react$a.default.createElement(
-          "mux-player",
-          {
-            ref: this.ref,
-            "playback-id": this.getPlaybackId(url),
-            style: style2,
-            preload: "auto",
-            autoPlay: playing || void 0,
-            muted: muted ? "" : void 0,
-            loop: loop ? "" : void 0,
-            ...config.attributes
-          }
-        );
-      }
-    }
-    __publicField$a(Mux, "displayName", "Mux");
-    __publicField$a(Mux, "canPlay", import_patterns$9.canPlay.mux);
-    const Mux$1 = /* @__PURE__ */ getDefaultExportFromCjs(Mux_1);
-    const Mux$2 = /* @__PURE__ */ _mergeNamespaces({
-      __proto__: null,
-      default: Mux$1
-    }, [Mux_1]);
-    var __create$9 = Object.create;
-    var __defProp$9 = Object.defineProperty;
-    var __getOwnPropDesc$9 = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$9 = Object.getOwnPropertyNames;
-    var __getProtoOf$9 = Object.getPrototypeOf;
-    var __hasOwnProp$9 = Object.prototype.hasOwnProperty;
-    var __defNormalProp$9 = (obj, key, value) => key in obj ? __defProp$9(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __export$9 = (target, all) => {
-      for (var name in all)
-        __defProp$9(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$9 = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$9(from2))
-          if (!__hasOwnProp$9.call(to, key) && key !== except)
-            __defProp$9(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$9(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$9 = (mod, isNodeMode, target) => (target = mod != null ? __create$9(__getProtoOf$9(mod)) : {}, __copyProps$9(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$9(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$9 = (mod) => __copyProps$9(__defProp$9({}, "__esModule", { value: true }), mod);
-    var __publicField$9 = (obj, key, value) => {
-      __defNormalProp$9(obj, typeof key !== "symbol" ? key + "" : key, value);
-      return value;
-    };
-    var Facebook_exports = {};
-    __export$9(Facebook_exports, {
-      default: () => Facebook
-    });
-    var Facebook_1 = __toCommonJS$9(Facebook_exports);
-    var import_react$9 = __toESM$9(reactExports);
-    var import_utils$8 = utils;
-    var import_patterns$8 = patterns;
-    const SDK_URL$7 = "https://connect.facebook.net/en_US/sdk.js";
-    const SDK_GLOBAL$7 = "FB";
-    const SDK_GLOBAL_READY$2 = "fbAsyncInit";
-    const PLAYER_ID_PREFIX$2 = "facebook-player-";
-    class Facebook extends import_react$9.Component {
-      constructor() {
-        super(...arguments);
-        __publicField$9(this, "callPlayer", import_utils$8.callPlayer);
-        __publicField$9(this, "playerID", this.props.config.playerId || `${PLAYER_ID_PREFIX$2}${(0, import_utils$8.randomString)()}`);
-        __publicField$9(this, "mute", () => {
-          this.callPlayer("mute");
-        });
-        __publicField$9(this, "unmute", () => {
-          this.callPlayer("unmute");
-        });
-      }
-      componentDidMount() {
-        this.props.onMount && this.props.onMount(this);
-      }
-      load(url, isReady) {
-        if (isReady) {
-          (0, import_utils$8.getSDK)(SDK_URL$7, SDK_GLOBAL$7, SDK_GLOBAL_READY$2).then((FB) => FB.XFBML.parse());
-          return;
-        }
-        (0, import_utils$8.getSDK)(SDK_URL$7, SDK_GLOBAL$7, SDK_GLOBAL_READY$2).then((FB) => {
-          FB.init({
-            appId: this.props.config.appId,
-            xfbml: true,
-            version: this.props.config.version
-          });
-          FB.Event.subscribe("xfbml.render", (msg) => {
-            this.props.onLoaded();
-          });
-          FB.Event.subscribe("xfbml.ready", (msg) => {
-            if (msg.type === "video" && msg.id === this.playerID) {
-              this.player = msg.instance;
-              this.player.subscribe("startedPlaying", this.props.onPlay);
-              this.player.subscribe("paused", this.props.onPause);
-              this.player.subscribe("finishedPlaying", this.props.onEnded);
-              this.player.subscribe("startedBuffering", this.props.onBuffer);
-              this.player.subscribe("finishedBuffering", this.props.onBufferEnd);
-              this.player.subscribe("error", this.props.onError);
-              if (this.props.muted) {
-                this.callPlayer("mute");
-              } else {
-                this.callPlayer("unmute");
-              }
-              this.props.onReady();
-              document.getElementById(this.playerID).querySelector("iframe").style.visibility = "visible";
-            }
-          });
-        });
-      }
-      play() {
-        this.callPlayer("play");
-      }
-      pause() {
-        this.callPlayer("pause");
-      }
-      stop() {
-      }
-      seekTo(seconds, keepPlaying = true) {
-        this.callPlayer("seek", seconds);
-        if (!keepPlaying) {
-          this.pause();
-        }
-      }
-      setVolume(fraction) {
-        this.callPlayer("setVolume", fraction);
-      }
-      getDuration() {
-        return this.callPlayer("getDuration");
-      }
-      getCurrentTime() {
-        return this.callPlayer("getCurrentPosition");
-      }
-      getSecondsLoaded() {
-        return null;
-      }
-      render() {
-        const { attributes: attributes2 } = this.props.config;
-        const style2 = {
-          width: "100%",
-          height: "100%"
-        };
-        return /* @__PURE__ */ import_react$9.default.createElement(
-          "div",
-          {
-            style: style2,
-            id: this.playerID,
-            className: "fb-video",
-            "data-href": this.props.url,
-            "data-autoplay": this.props.playing ? "true" : "false",
-            "data-allowfullscreen": "true",
-            "data-controls": this.props.controls ? "true" : "false",
-            ...attributes2
-          }
-        );
-      }
-    }
-    __publicField$9(Facebook, "displayName", "Facebook");
-    __publicField$9(Facebook, "canPlay", import_patterns$8.canPlay.facebook);
-    __publicField$9(Facebook, "loopOnEnded", true);
-    const Facebook$1 = /* @__PURE__ */ getDefaultExportFromCjs(Facebook_1);
-    const Facebook$2 = /* @__PURE__ */ _mergeNamespaces({
-      __proto__: null,
-      default: Facebook$1
-    }, [Facebook_1]);
-    var __create$8 = Object.create;
-    var __defProp$8 = Object.defineProperty;
-    var __getOwnPropDesc$8 = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$8 = Object.getOwnPropertyNames;
-    var __getProtoOf$8 = Object.getPrototypeOf;
-    var __hasOwnProp$8 = Object.prototype.hasOwnProperty;
-    var __defNormalProp$8 = (obj, key, value) => key in obj ? __defProp$8(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __export$8 = (target, all) => {
-      for (var name in all)
-        __defProp$8(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$8 = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$8(from2))
-          if (!__hasOwnProp$8.call(to, key) && key !== except)
-            __defProp$8(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$8(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$8 = (mod, isNodeMode, target) => (target = mod != null ? __create$8(__getProtoOf$8(mod)) : {}, __copyProps$8(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$8(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$8 = (mod) => __copyProps$8(__defProp$8({}, "__esModule", { value: true }), mod);
-    var __publicField$8 = (obj, key, value) => {
-      __defNormalProp$8(obj, typeof key !== "symbol" ? key + "" : key, value);
-      return value;
-    };
-    var Streamable_exports = {};
-    __export$8(Streamable_exports, {
-      default: () => Streamable
-    });
-    var Streamable_1 = __toCommonJS$8(Streamable_exports);
-    var import_react$8 = __toESM$8(reactExports);
-    var import_utils$7 = utils;
-    var import_patterns$7 = patterns;
-    const SDK_URL$6 = "https://cdn.embed.ly/player-0.1.0.min.js";
-    const SDK_GLOBAL$6 = "playerjs";
-    class Streamable extends import_react$8.Component {
-      constructor() {
-        super(...arguments);
-        __publicField$8(this, "callPlayer", import_utils$7.callPlayer);
-        __publicField$8(this, "duration", null);
-        __publicField$8(this, "currentTime", null);
-        __publicField$8(this, "secondsLoaded", null);
-        __publicField$8(this, "mute", () => {
-          this.callPlayer("mute");
-        });
-        __publicField$8(this, "unmute", () => {
-          this.callPlayer("unmute");
-        });
-        __publicField$8(this, "ref", (iframe) => {
-          this.iframe = iframe;
-        });
-      }
-      componentDidMount() {
-        this.props.onMount && this.props.onMount(this);
-      }
-      load(url) {
-        (0, import_utils$7.getSDK)(SDK_URL$6, SDK_GLOBAL$6).then((playerjs) => {
-          if (!this.iframe)
-            return;
-          this.player = new playerjs.Player(this.iframe);
-          this.player.setLoop(this.props.loop);
-          this.player.on("ready", this.props.onReady);
-          this.player.on("play", this.props.onPlay);
-          this.player.on("pause", this.props.onPause);
-          this.player.on("seeked", this.props.onSeek);
-          this.player.on("ended", this.props.onEnded);
-          this.player.on("error", this.props.onError);
-          this.player.on("timeupdate", ({ duration, seconds }) => {
-            this.duration = duration;
-            this.currentTime = seconds;
-          });
-          this.player.on("buffered", ({ percent }) => {
-            if (this.duration) {
-              this.secondsLoaded = this.duration * percent;
-            }
-          });
-          if (this.props.muted) {
-            this.player.mute();
-          }
-        }, this.props.onError);
-      }
-      play() {
-        this.callPlayer("play");
-      }
-      pause() {
-        this.callPlayer("pause");
-      }
-      stop() {
-      }
-      seekTo(seconds, keepPlaying = true) {
-        this.callPlayer("setCurrentTime", seconds);
-        if (!keepPlaying) {
-          this.pause();
-        }
-      }
-      setVolume(fraction) {
-        this.callPlayer("setVolume", fraction * 100);
-      }
-      setLoop(loop) {
-        this.callPlayer("setLoop", loop);
-      }
-      getDuration() {
-        return this.duration;
-      }
-      getCurrentTime() {
-        return this.currentTime;
-      }
-      getSecondsLoaded() {
-        return this.secondsLoaded;
-      }
-      render() {
-        const id2 = this.props.url.match(import_patterns$7.MATCH_URL_STREAMABLE)[1];
-        const style2 = {
-          width: "100%",
-          height: "100%"
-        };
-        return /* @__PURE__ */ import_react$8.default.createElement(
-          "iframe",
-          {
-            ref: this.ref,
-            src: `https://streamable.com/o/${id2}`,
-            frameBorder: "0",
-            scrolling: "no",
-            style: style2,
-            allow: "encrypted-media; autoplay; fullscreen;"
-          }
-        );
-      }
-    }
-    __publicField$8(Streamable, "displayName", "Streamable");
-    __publicField$8(Streamable, "canPlay", import_patterns$7.canPlay.streamable);
-    const Streamable$1 = /* @__PURE__ */ getDefaultExportFromCjs(Streamable_1);
-    const Streamable$2 = /* @__PURE__ */ _mergeNamespaces({
-      __proto__: null,
-      default: Streamable$1
-    }, [Streamable_1]);
-    var __create$7 = Object.create;
-    var __defProp$7 = Object.defineProperty;
-    var __getOwnPropDesc$7 = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$7 = Object.getOwnPropertyNames;
-    var __getProtoOf$7 = Object.getPrototypeOf;
-    var __hasOwnProp$7 = Object.prototype.hasOwnProperty;
-    var __defNormalProp$7 = (obj, key, value) => key in obj ? __defProp$7(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __export$7 = (target, all) => {
-      for (var name in all)
-        __defProp$7(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$7 = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$7(from2))
-          if (!__hasOwnProp$7.call(to, key) && key !== except)
-            __defProp$7(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$7(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$7 = (mod, isNodeMode, target) => (target = mod != null ? __create$7(__getProtoOf$7(mod)) : {}, __copyProps$7(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$7(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$7 = (mod) => __copyProps$7(__defProp$7({}, "__esModule", { value: true }), mod);
-    var __publicField$7 = (obj, key, value) => {
-      __defNormalProp$7(obj, typeof key !== "symbol" ? key + "" : key, value);
-      return value;
-    };
-    var Wistia_exports = {};
-    __export$7(Wistia_exports, {
-      default: () => Wistia
-    });
-    var Wistia_1 = __toCommonJS$7(Wistia_exports);
-    var import_react$7 = __toESM$7(reactExports);
-    var import_utils$6 = utils;
-    var import_patterns$6 = patterns;
-    const SDK_URL$5 = "https://fast.wistia.com/assets/external/E-v1.js";
-    const SDK_GLOBAL$5 = "Wistia";
-    const PLAYER_ID_PREFIX$1 = "wistia-player-";
-    class Wistia extends import_react$7.Component {
-      constructor() {
-        super(...arguments);
-        __publicField$7(this, "callPlayer", import_utils$6.callPlayer);
-        __publicField$7(this, "playerID", this.props.config.playerId || `${PLAYER_ID_PREFIX$1}${(0, import_utils$6.randomString)()}`);
-        __publicField$7(this, "onPlay", (...args) => this.props.onPlay(...args));
-        __publicField$7(this, "onPause", (...args) => this.props.onPause(...args));
-        __publicField$7(this, "onSeek", (...args) => this.props.onSeek(...args));
-        __publicField$7(this, "onEnded", (...args) => this.props.onEnded(...args));
-        __publicField$7(this, "onPlaybackRateChange", (...args) => this.props.onPlaybackRateChange(...args));
-        __publicField$7(this, "mute", () => {
-          this.callPlayer("mute");
-        });
-        __publicField$7(this, "unmute", () => {
-          this.callPlayer("unmute");
-        });
-      }
-      componentDidMount() {
-        this.props.onMount && this.props.onMount(this);
-      }
-      load(url) {
-        const { playing, muted, controls, onReady, config, onError } = this.props;
-        (0, import_utils$6.getSDK)(SDK_URL$5, SDK_GLOBAL$5).then((Wistia2) => {
-          if (config.customControls) {
-            config.customControls.forEach((control) => Wistia2.defineControl(control));
-          }
-          window._wq = window._wq || [];
-          window._wq.push({
-            id: this.playerID,
-            options: {
-              autoPlay: playing,
-              silentAutoPlay: "allow",
-              muted,
-              controlsVisibleOnLoad: controls,
-              fullscreenButton: controls,
-              playbar: controls,
-              playbackRateControl: controls,
-              qualityControl: controls,
-              volumeControl: controls,
-              settingsControl: controls,
-              smallPlayButton: controls,
-              ...config.options
-            },
-            onReady: (player) => {
-              this.player = player;
-              this.unbind();
-              this.player.bind("play", this.onPlay);
-              this.player.bind("pause", this.onPause);
-              this.player.bind("seek", this.onSeek);
-              this.player.bind("end", this.onEnded);
-              this.player.bind("playbackratechange", this.onPlaybackRateChange);
-              onReady();
-            }
-          });
-        }, onError);
-      }
-      unbind() {
-        this.player.unbind("play", this.onPlay);
-        this.player.unbind("pause", this.onPause);
-        this.player.unbind("seek", this.onSeek);
-        this.player.unbind("end", this.onEnded);
-        this.player.unbind("playbackratechange", this.onPlaybackRateChange);
-      }
-      play() {
-        this.callPlayer("play");
-      }
-      pause() {
-        this.callPlayer("pause");
-      }
-      stop() {
-        this.unbind();
-        this.callPlayer("remove");
-      }
-      seekTo(seconds, keepPlaying = true) {
-        this.callPlayer("time", seconds);
-        if (!keepPlaying) {
-          this.pause();
-        }
-      }
-      setVolume(fraction) {
-        this.callPlayer("volume", fraction);
-      }
-      setPlaybackRate(rate) {
-        this.callPlayer("playbackRate", rate);
-      }
-      getDuration() {
-        return this.callPlayer("duration");
-      }
-      getCurrentTime() {
-        return this.callPlayer("time");
-      }
-      getSecondsLoaded() {
-        return null;
-      }
-      render() {
-        const { url } = this.props;
-        const videoID = url && url.match(import_patterns$6.MATCH_URL_WISTIA)[1];
-        const className = `wistia_embed wistia_async_${videoID}`;
-        const style2 = {
-          width: "100%",
-          height: "100%"
-        };
-        return /* @__PURE__ */ import_react$7.default.createElement("div", { id: this.playerID, key: videoID, className, style: style2 });
-      }
-    }
-    __publicField$7(Wistia, "displayName", "Wistia");
-    __publicField$7(Wistia, "canPlay", import_patterns$6.canPlay.wistia);
-    __publicField$7(Wistia, "loopOnEnded", true);
-    const Wistia$1 = /* @__PURE__ */ getDefaultExportFromCjs(Wistia_1);
-    const Wistia$2 = /* @__PURE__ */ _mergeNamespaces({
-      __proto__: null,
-      default: Wistia$1
-    }, [Wistia_1]);
-    var __create$6 = Object.create;
-    var __defProp$6 = Object.defineProperty;
-    var __getOwnPropDesc$6 = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$6 = Object.getOwnPropertyNames;
-    var __getProtoOf$6 = Object.getPrototypeOf;
-    var __hasOwnProp$6 = Object.prototype.hasOwnProperty;
-    var __defNormalProp$6 = (obj, key, value) => key in obj ? __defProp$6(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __export$6 = (target, all) => {
-      for (var name in all)
-        __defProp$6(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$6 = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$6(from2))
-          if (!__hasOwnProp$6.call(to, key) && key !== except)
-            __defProp$6(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$6(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$6 = (mod, isNodeMode, target) => (target = mod != null ? __create$6(__getProtoOf$6(mod)) : {}, __copyProps$6(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$6(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$6 = (mod) => __copyProps$6(__defProp$6({}, "__esModule", { value: true }), mod);
-    var __publicField$6 = (obj, key, value) => {
-      __defNormalProp$6(obj, typeof key !== "symbol" ? key + "" : key, value);
-      return value;
-    };
-    var Twitch_exports = {};
-    __export$6(Twitch_exports, {
-      default: () => Twitch
-    });
-    var Twitch_1 = __toCommonJS$6(Twitch_exports);
-    var import_react$6 = __toESM$6(reactExports);
-    var import_utils$5 = utils;
-    var import_patterns$5 = patterns;
-    const SDK_URL$4 = "https://player.twitch.tv/js/embed/v1.js";
-    const SDK_GLOBAL$4 = "Twitch";
-    const PLAYER_ID_PREFIX = "twitch-player-";
-    class Twitch extends import_react$6.Component {
-      constructor() {
-        super(...arguments);
-        __publicField$6(this, "callPlayer", import_utils$5.callPlayer);
-        __publicField$6(this, "playerID", this.props.config.playerId || `${PLAYER_ID_PREFIX}${(0, import_utils$5.randomString)()}`);
-        __publicField$6(this, "mute", () => {
-          this.callPlayer("setMuted", true);
-        });
-        __publicField$6(this, "unmute", () => {
-          this.callPlayer("setMuted", false);
-        });
-      }
-      componentDidMount() {
-        this.props.onMount && this.props.onMount(this);
-      }
-      load(url, isReady) {
-        const { playsinline, onError, config, controls } = this.props;
-        const isChannel = import_patterns$5.MATCH_URL_TWITCH_CHANNEL.test(url);
-        const id2 = isChannel ? url.match(import_patterns$5.MATCH_URL_TWITCH_CHANNEL)[1] : url.match(import_patterns$5.MATCH_URL_TWITCH_VIDEO)[1];
-        if (isReady) {
-          if (isChannel) {
-            this.player.setChannel(id2);
-          } else {
-            this.player.setVideo("v" + id2);
-          }
-          return;
-        }
-        (0, import_utils$5.getSDK)(SDK_URL$4, SDK_GLOBAL$4).then((Twitch2) => {
-          this.player = new Twitch2.Player(this.playerID, {
-            video: isChannel ? "" : id2,
-            channel: isChannel ? id2 : "",
-            height: "100%",
-            width: "100%",
-            playsinline,
-            autoplay: this.props.playing,
-            muted: this.props.muted,
-            // https://github.com/CookPete/react-player/issues/733#issuecomment-549085859
-            controls: isChannel ? true : controls,
-            time: (0, import_utils$5.parseStartTime)(url),
-            ...config.options
-          });
-          const { READY, PLAYING, PAUSE, ENDED, ONLINE, OFFLINE, SEEK } = Twitch2.Player;
-          this.player.addEventListener(READY, this.props.onReady);
-          this.player.addEventListener(PLAYING, this.props.onPlay);
-          this.player.addEventListener(PAUSE, this.props.onPause);
-          this.player.addEventListener(ENDED, this.props.onEnded);
-          this.player.addEventListener(SEEK, this.props.onSeek);
-          this.player.addEventListener(ONLINE, this.props.onLoaded);
-          this.player.addEventListener(OFFLINE, this.props.onLoaded);
-        }, onError);
-      }
-      play() {
-        this.callPlayer("play");
-      }
-      pause() {
-        this.callPlayer("pause");
-      }
-      stop() {
-        this.callPlayer("pause");
-      }
-      seekTo(seconds, keepPlaying = true) {
-        this.callPlayer("seek", seconds);
-        if (!keepPlaying) {
-          this.pause();
-        }
-      }
-      setVolume(fraction) {
-        this.callPlayer("setVolume", fraction);
-      }
-      getDuration() {
-        return this.callPlayer("getDuration");
-      }
-      getCurrentTime() {
-        return this.callPlayer("getCurrentTime");
-      }
-      getSecondsLoaded() {
-        return null;
-      }
-      render() {
-        const style2 = {
-          width: "100%",
-          height: "100%"
-        };
-        return /* @__PURE__ */ import_react$6.default.createElement("div", { style: style2, id: this.playerID });
-      }
-    }
-    __publicField$6(Twitch, "displayName", "Twitch");
-    __publicField$6(Twitch, "canPlay", import_patterns$5.canPlay.twitch);
-    __publicField$6(Twitch, "loopOnEnded", true);
-    const Twitch$1 = /* @__PURE__ */ getDefaultExportFromCjs(Twitch_1);
-    const Twitch$2 = /* @__PURE__ */ _mergeNamespaces({
-      __proto__: null,
-      default: Twitch$1
-    }, [Twitch_1]);
-    var __create$5 = Object.create;
-    var __defProp$5 = Object.defineProperty;
-    var __getOwnPropDesc$5 = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$5 = Object.getOwnPropertyNames;
-    var __getProtoOf$5 = Object.getPrototypeOf;
-    var __hasOwnProp$5 = Object.prototype.hasOwnProperty;
-    var __defNormalProp$5 = (obj, key, value) => key in obj ? __defProp$5(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __export$5 = (target, all) => {
-      for (var name in all)
-        __defProp$5(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$5 = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$5(from2))
-          if (!__hasOwnProp$5.call(to, key) && key !== except)
-            __defProp$5(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$5(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$5 = (mod, isNodeMode, target) => (target = mod != null ? __create$5(__getProtoOf$5(mod)) : {}, __copyProps$5(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$5(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$5 = (mod) => __copyProps$5(__defProp$5({}, "__esModule", { value: true }), mod);
-    var __publicField$5 = (obj, key, value) => {
-      __defNormalProp$5(obj, typeof key !== "symbol" ? key + "" : key, value);
-      return value;
-    };
-    var DailyMotion_exports = {};
-    __export$5(DailyMotion_exports, {
-      default: () => DailyMotion
-    });
-    var DailyMotion_1 = __toCommonJS$5(DailyMotion_exports);
-    var import_react$5 = __toESM$5(reactExports);
-    var import_utils$4 = utils;
-    var import_patterns$4 = patterns;
-    const SDK_URL$3 = "https://api.dmcdn.net/all.js";
-    const SDK_GLOBAL$3 = "DM";
-    const SDK_GLOBAL_READY$1 = "dmAsyncInit";
-    class DailyMotion extends import_react$5.Component {
-      constructor() {
-        super(...arguments);
-        __publicField$5(this, "callPlayer", import_utils$4.callPlayer);
-        __publicField$5(this, "onDurationChange", () => {
-          const duration = this.getDuration();
-          this.props.onDuration(duration);
-        });
-        __publicField$5(this, "mute", () => {
-          this.callPlayer("setMuted", true);
-        });
-        __publicField$5(this, "unmute", () => {
-          this.callPlayer("setMuted", false);
-        });
-        __publicField$5(this, "ref", (container) => {
-          this.container = container;
-        });
-      }
-      componentDidMount() {
-        this.props.onMount && this.props.onMount(this);
-      }
-      load(url) {
-        const { controls, config, onError, playing } = this.props;
-        const [, id2] = url.match(import_patterns$4.MATCH_URL_DAILYMOTION);
-        if (this.player) {
-          this.player.load(id2, {
-            start: (0, import_utils$4.parseStartTime)(url),
-            autoplay: playing
-          });
-          return;
-        }
-        (0, import_utils$4.getSDK)(SDK_URL$3, SDK_GLOBAL$3, SDK_GLOBAL_READY$1, (DM) => DM.player).then((DM) => {
-          if (!this.container)
-            return;
-          const Player2 = DM.player;
-          this.player = new Player2(this.container, {
-            width: "100%",
-            height: "100%",
-            video: id2,
-            params: {
-              controls,
-              autoplay: this.props.playing,
-              mute: this.props.muted,
-              start: (0, import_utils$4.parseStartTime)(url),
-              origin: window.location.origin,
-              ...config.params
-            },
-            events: {
-              apiready: this.props.onReady,
-              seeked: () => this.props.onSeek(this.player.currentTime),
-              video_end: this.props.onEnded,
-              durationchange: this.onDurationChange,
-              pause: this.props.onPause,
-              playing: this.props.onPlay,
-              waiting: this.props.onBuffer,
-              error: (event) => onError(event)
-            }
-          });
-        }, onError);
-      }
-      play() {
-        this.callPlayer("play");
-      }
-      pause() {
-        this.callPlayer("pause");
-      }
-      stop() {
-      }
-      seekTo(seconds, keepPlaying = true) {
-        this.callPlayer("seek", seconds);
-        if (!keepPlaying) {
-          this.pause();
-        }
-      }
-      setVolume(fraction) {
-        this.callPlayer("setVolume", fraction);
-      }
-      getDuration() {
-        return this.player.duration || null;
-      }
-      getCurrentTime() {
-        return this.player.currentTime;
-      }
-      getSecondsLoaded() {
-        return this.player.bufferedTime;
-      }
-      render() {
-        const { display } = this.props;
-        const style2 = {
-          width: "100%",
-          height: "100%",
-          display
-        };
-        return /* @__PURE__ */ import_react$5.default.createElement("div", { style: style2 }, /* @__PURE__ */ import_react$5.default.createElement("div", { ref: this.ref }));
-      }
-    }
-    __publicField$5(DailyMotion, "displayName", "DailyMotion");
-    __publicField$5(DailyMotion, "canPlay", import_patterns$4.canPlay.dailymotion);
-    __publicField$5(DailyMotion, "loopOnEnded", true);
-    const DailyMotion$1 = /* @__PURE__ */ getDefaultExportFromCjs(DailyMotion_1);
-    const DailyMotion$2 = /* @__PURE__ */ _mergeNamespaces({
-      __proto__: null,
-      default: DailyMotion$1
-    }, [DailyMotion_1]);
-    var __create$4 = Object.create;
-    var __defProp$4 = Object.defineProperty;
-    var __getOwnPropDesc$4 = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$4 = Object.getOwnPropertyNames;
-    var __getProtoOf$4 = Object.getPrototypeOf;
-    var __hasOwnProp$4 = Object.prototype.hasOwnProperty;
-    var __defNormalProp$4 = (obj, key, value) => key in obj ? __defProp$4(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __export$4 = (target, all) => {
-      for (var name in all)
-        __defProp$4(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$4 = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$4(from2))
-          if (!__hasOwnProp$4.call(to, key) && key !== except)
-            __defProp$4(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$4(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$4 = (mod, isNodeMode, target) => (target = mod != null ? __create$4(__getProtoOf$4(mod)) : {}, __copyProps$4(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$4(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$4 = (mod) => __copyProps$4(__defProp$4({}, "__esModule", { value: true }), mod);
-    var __publicField$4 = (obj, key, value) => {
-      __defNormalProp$4(obj, typeof key !== "symbol" ? key + "" : key, value);
-      return value;
-    };
-    var Mixcloud_exports = {};
-    __export$4(Mixcloud_exports, {
-      default: () => Mixcloud
-    });
-    var Mixcloud_1 = __toCommonJS$4(Mixcloud_exports);
-    var import_react$4 = __toESM$4(reactExports);
-    var import_utils$3 = utils;
-    var import_patterns$3 = patterns;
-    const SDK_URL$2 = "https://widget.mixcloud.com/media/js/widgetApi.js";
-    const SDK_GLOBAL$2 = "Mixcloud";
-    class Mixcloud extends import_react$4.Component {
-      constructor() {
-        super(...arguments);
-        __publicField$4(this, "callPlayer", import_utils$3.callPlayer);
-        __publicField$4(this, "duration", null);
-        __publicField$4(this, "currentTime", null);
-        __publicField$4(this, "secondsLoaded", null);
-        __publicField$4(this, "mute", () => {
-        });
-        __publicField$4(this, "unmute", () => {
-        });
-        __publicField$4(this, "ref", (iframe) => {
-          this.iframe = iframe;
-        });
-      }
-      componentDidMount() {
-        this.props.onMount && this.props.onMount(this);
-      }
-      load(url) {
-        (0, import_utils$3.getSDK)(SDK_URL$2, SDK_GLOBAL$2).then((Mixcloud2) => {
-          this.player = Mixcloud2.PlayerWidget(this.iframe);
-          this.player.ready.then(() => {
-            this.player.events.play.on(this.props.onPlay);
-            this.player.events.pause.on(this.props.onPause);
-            this.player.events.ended.on(this.props.onEnded);
-            this.player.events.error.on(this.props.error);
-            this.player.events.progress.on((seconds, duration) => {
-              this.currentTime = seconds;
-              this.duration = duration;
-            });
-            this.props.onReady();
-          });
-        }, this.props.onError);
-      }
-      play() {
-        this.callPlayer("play");
-      }
-      pause() {
-        this.callPlayer("pause");
-      }
-      stop() {
-      }
-      seekTo(seconds, keepPlaying = true) {
-        this.callPlayer("seek", seconds);
-        if (!keepPlaying) {
-          this.pause();
-        }
-      }
-      setVolume(fraction) {
-      }
-      getDuration() {
-        return this.duration;
-      }
-      getCurrentTime() {
-        return this.currentTime;
-      }
-      getSecondsLoaded() {
-        return null;
-      }
-      render() {
-        const { url, config } = this.props;
-        const id2 = url.match(import_patterns$3.MATCH_URL_MIXCLOUD)[1];
-        const style2 = {
-          width: "100%",
-          height: "100%"
-        };
-        const query = (0, import_utils$3.queryString)({
-          ...config.options,
-          feed: `/${id2}/`
-        });
-        return /* @__PURE__ */ import_react$4.default.createElement(
-          "iframe",
-          {
-            key: id2,
-            ref: this.ref,
-            style: style2,
-            src: `https://www.mixcloud.com/widget/iframe/?${query}`,
-            frameBorder: "0",
-            allow: "autoplay"
-          }
-        );
-      }
-    }
-    __publicField$4(Mixcloud, "displayName", "Mixcloud");
-    __publicField$4(Mixcloud, "canPlay", import_patterns$3.canPlay.mixcloud);
-    __publicField$4(Mixcloud, "loopOnEnded", true);
-    const Mixcloud$1 = /* @__PURE__ */ getDefaultExportFromCjs(Mixcloud_1);
-    const Mixcloud$2 = /* @__PURE__ */ _mergeNamespaces({
-      __proto__: null,
-      default: Mixcloud$1
-    }, [Mixcloud_1]);
-    var __create$3 = Object.create;
-    var __defProp$3 = Object.defineProperty;
-    var __getOwnPropDesc$3 = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$3 = Object.getOwnPropertyNames;
-    var __getProtoOf$3 = Object.getPrototypeOf;
-    var __hasOwnProp$3 = Object.prototype.hasOwnProperty;
-    var __defNormalProp$3 = (obj, key, value) => key in obj ? __defProp$3(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __export$3 = (target, all) => {
-      for (var name in all)
-        __defProp$3(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$3 = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$3(from2))
-          if (!__hasOwnProp$3.call(to, key) && key !== except)
-            __defProp$3(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$3(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$3 = (mod, isNodeMode, target) => (target = mod != null ? __create$3(__getProtoOf$3(mod)) : {}, __copyProps$3(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$3(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$3 = (mod) => __copyProps$3(__defProp$3({}, "__esModule", { value: true }), mod);
-    var __publicField$3 = (obj, key, value) => {
-      __defNormalProp$3(obj, typeof key !== "symbol" ? key + "" : key, value);
-      return value;
-    };
-    var Vidyard_exports = {};
-    __export$3(Vidyard_exports, {
-      default: () => Vidyard
-    });
-    var Vidyard_1 = __toCommonJS$3(Vidyard_exports);
-    var import_react$3 = __toESM$3(reactExports);
-    var import_utils$2 = utils;
-    var import_patterns$2 = patterns;
-    const SDK_URL$1 = "https://play.vidyard.com/embed/v4.js";
-    const SDK_GLOBAL$1 = "VidyardV4";
-    const SDK_GLOBAL_READY = "onVidyardAPI";
-    class Vidyard extends import_react$3.Component {
-      constructor() {
-        super(...arguments);
-        __publicField$3(this, "callPlayer", import_utils$2.callPlayer);
-        __publicField$3(this, "mute", () => {
-          this.setVolume(0);
-        });
-        __publicField$3(this, "unmute", () => {
-          if (this.props.volume !== null) {
-            this.setVolume(this.props.volume);
-          }
-        });
-        __publicField$3(this, "ref", (container) => {
-          this.container = container;
-        });
-      }
-      componentDidMount() {
-        this.props.onMount && this.props.onMount(this);
-      }
-      load(url) {
-        const { playing, config, onError, onDuration } = this.props;
-        const id2 = url && url.match(import_patterns$2.MATCH_URL_VIDYARD)[1];
-        if (this.player) {
-          this.stop();
-        }
-        (0, import_utils$2.getSDK)(SDK_URL$1, SDK_GLOBAL$1, SDK_GLOBAL_READY).then((Vidyard2) => {
-          if (!this.container)
-            return;
-          Vidyard2.api.addReadyListener((data, player) => {
-            if (this.player) {
-              return;
-            }
-            this.player = player;
-            this.player.on("ready", this.props.onReady);
-            this.player.on("play", this.props.onPlay);
-            this.player.on("pause", this.props.onPause);
-            this.player.on("seek", this.props.onSeek);
-            this.player.on("playerComplete", this.props.onEnded);
-          }, id2);
-          Vidyard2.api.renderPlayer({
-            uuid: id2,
-            container: this.container,
-            autoplay: playing ? 1 : 0,
-            ...config.options
-          });
-          Vidyard2.api.getPlayerMetadata(id2).then((meta) => {
-            this.duration = meta.length_in_seconds;
-            onDuration(meta.length_in_seconds);
-          });
-        }, onError);
-      }
-      play() {
-        this.callPlayer("play");
-      }
-      pause() {
-        this.callPlayer("pause");
-      }
-      stop() {
-        window.VidyardV4.api.destroyPlayer(this.player);
-      }
-      seekTo(amount, keepPlaying = true) {
-        this.callPlayer("seek", amount);
-        if (!keepPlaying) {
-          this.pause();
-        }
-      }
-      setVolume(fraction) {
-        this.callPlayer("setVolume", fraction);
-      }
-      setPlaybackRate(rate) {
-        this.callPlayer("setPlaybackSpeed", rate);
-      }
-      getDuration() {
-        return this.duration;
-      }
-      getCurrentTime() {
-        return this.callPlayer("currentTime");
-      }
-      getSecondsLoaded() {
-        return null;
-      }
-      render() {
-        const { display } = this.props;
-        const style2 = {
-          width: "100%",
-          height: "100%",
-          display
-        };
-        return /* @__PURE__ */ import_react$3.default.createElement("div", { style: style2 }, /* @__PURE__ */ import_react$3.default.createElement("div", { ref: this.ref }));
-      }
-    }
-    __publicField$3(Vidyard, "displayName", "Vidyard");
-    __publicField$3(Vidyard, "canPlay", import_patterns$2.canPlay.vidyard);
-    const Vidyard$1 = /* @__PURE__ */ getDefaultExportFromCjs(Vidyard_1);
-    const Vidyard$2 = /* @__PURE__ */ _mergeNamespaces({
-      __proto__: null,
-      default: Vidyard$1
-    }, [Vidyard_1]);
-    var __create$2 = Object.create;
-    var __defProp$2 = Object.defineProperty;
-    var __getOwnPropDesc$2 = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$2 = Object.getOwnPropertyNames;
-    var __getProtoOf$2 = Object.getPrototypeOf;
-    var __hasOwnProp$2 = Object.prototype.hasOwnProperty;
-    var __defNormalProp$2 = (obj, key, value) => key in obj ? __defProp$2(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __export$2 = (target, all) => {
-      for (var name in all)
-        __defProp$2(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$2 = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$2(from2))
-          if (!__hasOwnProp$2.call(to, key) && key !== except)
-            __defProp$2(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$2(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$2 = (mod, isNodeMode, target) => (target = mod != null ? __create$2(__getProtoOf$2(mod)) : {}, __copyProps$2(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$2(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$2 = (mod) => __copyProps$2(__defProp$2({}, "__esModule", { value: true }), mod);
-    var __publicField$2 = (obj, key, value) => {
-      __defNormalProp$2(obj, typeof key !== "symbol" ? key + "" : key, value);
-      return value;
-    };
-    var Kaltura_exports = {};
-    __export$2(Kaltura_exports, {
-      default: () => Kaltura
-    });
-    var Kaltura_1 = __toCommonJS$2(Kaltura_exports);
-    var import_react$2 = __toESM$2(reactExports);
-    var import_utils$1 = utils;
-    var import_patterns$1 = patterns;
-    const SDK_URL = "https://cdn.embed.ly/player-0.1.0.min.js";
-    const SDK_GLOBAL = "playerjs";
-    class Kaltura extends import_react$2.Component {
-      constructor() {
-        super(...arguments);
-        __publicField$2(this, "callPlayer", import_utils$1.callPlayer);
-        __publicField$2(this, "duration", null);
-        __publicField$2(this, "currentTime", null);
-        __publicField$2(this, "secondsLoaded", null);
-        __publicField$2(this, "mute", () => {
-          this.callPlayer("mute");
-        });
-        __publicField$2(this, "unmute", () => {
-          this.callPlayer("unmute");
-        });
-        __publicField$2(this, "ref", (iframe) => {
-          this.iframe = iframe;
-        });
-      }
-      componentDidMount() {
-        this.props.onMount && this.props.onMount(this);
-      }
-      load(url) {
-        (0, import_utils$1.getSDK)(SDK_URL, SDK_GLOBAL).then((playerjs) => {
-          if (!this.iframe)
-            return;
-          this.player = new playerjs.Player(this.iframe);
-          this.player.on("ready", () => {
-            setTimeout(() => {
-              this.player.isReady = true;
-              this.player.setLoop(this.props.loop);
-              if (this.props.muted) {
-                this.player.mute();
-              }
-              this.addListeners(this.player, this.props);
-              this.props.onReady();
-            }, 500);
-          });
-        }, this.props.onError);
-      }
-      addListeners(player, props2) {
-        player.on("play", props2.onPlay);
-        player.on("pause", props2.onPause);
-        player.on("ended", props2.onEnded);
-        player.on("error", props2.onError);
-        player.on("timeupdate", ({ duration, seconds }) => {
-          this.duration = duration;
-          this.currentTime = seconds;
-        });
-      }
-      play() {
-        this.callPlayer("play");
-      }
-      pause() {
-        this.callPlayer("pause");
-      }
-      stop() {
-      }
-      seekTo(seconds, keepPlaying = true) {
-        this.callPlayer("setCurrentTime", seconds);
-        if (!keepPlaying) {
-          this.pause();
-        }
-      }
-      setVolume(fraction) {
-        this.callPlayer("setVolume", fraction);
-      }
-      setLoop(loop) {
-        this.callPlayer("setLoop", loop);
-      }
-      getDuration() {
-        return this.duration;
-      }
-      getCurrentTime() {
-        return this.currentTime;
-      }
-      getSecondsLoaded() {
-        return this.secondsLoaded;
-      }
-      render() {
-        const style2 = {
-          width: "100%",
-          height: "100%"
-        };
-        return /* @__PURE__ */ import_react$2.default.createElement(
-          "iframe",
-          {
-            ref: this.ref,
-            src: this.props.url,
-            frameBorder: "0",
-            scrolling: "no",
-            style: style2,
-            allow: "encrypted-media; autoplay; fullscreen;",
-            referrerPolicy: "no-referrer-when-downgrade"
-          }
-        );
-      }
-    }
-    __publicField$2(Kaltura, "displayName", "Kaltura");
-    __publicField$2(Kaltura, "canPlay", import_patterns$1.canPlay.kaltura);
-    const Kaltura$1 = /* @__PURE__ */ getDefaultExportFromCjs(Kaltura_1);
-    const Kaltura$2 = /* @__PURE__ */ _mergeNamespaces({
-      __proto__: null,
-      default: Kaltura$1
-    }, [Kaltura_1]);
-    var __create$1 = Object.create;
-    var __defProp$1 = Object.defineProperty;
-    var __getOwnPropDesc$1 = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames$1 = Object.getOwnPropertyNames;
-    var __getProtoOf$1 = Object.getPrototypeOf;
-    var __hasOwnProp$1 = Object.prototype.hasOwnProperty;
-    var __defNormalProp$1 = (obj, key, value) => key in obj ? __defProp$1(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __export$1 = (target, all) => {
-      for (var name in all)
-        __defProp$1(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps$1 = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames$1(from2))
-          if (!__hasOwnProp$1.call(to, key) && key !== except)
-            __defProp$1(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc$1(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM$1 = (mod, isNodeMode, target) => (target = mod != null ? __create$1(__getProtoOf$1(mod)) : {}, __copyProps$1(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp$1(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS$1 = (mod) => __copyProps$1(__defProp$1({}, "__esModule", { value: true }), mod);
-    var __publicField$1 = (obj, key, value) => {
-      __defNormalProp$1(obj, typeof key !== "symbol" ? key + "" : key, value);
-      return value;
-    };
-    var FilePlayer_exports = {};
-    __export$1(FilePlayer_exports, {
-      default: () => FilePlayer
-    });
-    var FilePlayer_1 = __toCommonJS$1(FilePlayer_exports);
-    var import_react$1 = __toESM$1(reactExports);
-    var import_utils = utils;
-    var import_patterns = patterns;
-    const HAS_NAVIGATOR = typeof navigator !== "undefined";
-    const IS_IPAD_PRO = HAS_NAVIGATOR && navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1;
-    const IS_IOS = HAS_NAVIGATOR && (/iPad|iPhone|iPod/.test(navigator.userAgent) || IS_IPAD_PRO) && !window.MSStream;
-    const IS_SAFARI = HAS_NAVIGATOR && /^((?!chrome|android).)*safari/i.test(navigator.userAgent) && !window.MSStream;
-    const HLS_SDK_URL = "https://cdn.jsdelivr.net/npm/hls.js@VERSION/dist/hls.min.js";
-    const HLS_GLOBAL = "Hls";
-    const DASH_SDK_URL = "https://cdnjs.cloudflare.com/ajax/libs/dashjs/VERSION/dash.all.min.js";
-    const DASH_GLOBAL = "dashjs";
-    const FLV_SDK_URL = "https://cdn.jsdelivr.net/npm/flv.js@VERSION/dist/flv.min.js";
-    const FLV_GLOBAL = "flvjs";
-    const MATCH_DROPBOX_URL = /www\.dropbox\.com\/.+/;
-    const MATCH_CLOUDFLARE_STREAM = /https:\/\/watch\.cloudflarestream\.com\/([a-z0-9]+)/;
-    const REPLACE_CLOUDFLARE_STREAM = "https://videodelivery.net/{id}/manifest/video.m3u8";
-    class FilePlayer extends import_react$1.Component {
-      constructor() {
-        super(...arguments);
-        __publicField$1(this, "onReady", (...args) => this.props.onReady(...args));
-        __publicField$1(this, "onPlay", (...args) => this.props.onPlay(...args));
-        __publicField$1(this, "onBuffer", (...args) => this.props.onBuffer(...args));
-        __publicField$1(this, "onBufferEnd", (...args) => this.props.onBufferEnd(...args));
-        __publicField$1(this, "onPause", (...args) => this.props.onPause(...args));
-        __publicField$1(this, "onEnded", (...args) => this.props.onEnded(...args));
-        __publicField$1(this, "onError", (...args) => this.props.onError(...args));
-        __publicField$1(this, "onPlayBackRateChange", (event) => this.props.onPlaybackRateChange(event.target.playbackRate));
-        __publicField$1(this, "onEnablePIP", (...args) => this.props.onEnablePIP(...args));
-        __publicField$1(this, "onDisablePIP", (e2) => {
-          const { onDisablePIP, playing } = this.props;
-          onDisablePIP(e2);
-          if (playing) {
-            this.play();
-          }
-        });
-        __publicField$1(this, "onPresentationModeChange", (e2) => {
-          if (this.player && (0, import_utils.supportsWebKitPresentationMode)(this.player)) {
-            const { webkitPresentationMode } = this.player;
-            if (webkitPresentationMode === "picture-in-picture") {
-              this.onEnablePIP(e2);
-            } else if (webkitPresentationMode === "inline") {
-              this.onDisablePIP(e2);
-            }
-          }
-        });
-        __publicField$1(this, "onSeek", (e2) => {
-          this.props.onSeek(e2.target.currentTime);
-        });
-        __publicField$1(this, "mute", () => {
-          this.player.muted = true;
-        });
-        __publicField$1(this, "unmute", () => {
-          this.player.muted = false;
-        });
-        __publicField$1(this, "renderSourceElement", (source, index2) => {
-          if (typeof source === "string") {
-            return /* @__PURE__ */ import_react$1.default.createElement("source", { key: index2, src: source });
-          }
-          return /* @__PURE__ */ import_react$1.default.createElement("source", { key: index2, ...source });
-        });
-        __publicField$1(this, "renderTrack", (track, index2) => {
-          return /* @__PURE__ */ import_react$1.default.createElement("track", { key: index2, ...track });
-        });
-        __publicField$1(this, "ref", (player) => {
-          if (this.player) {
-            this.prevPlayer = this.player;
-          }
-          this.player = player;
-        });
-      }
-      componentDidMount() {
-        this.props.onMount && this.props.onMount(this);
-        this.addListeners(this.player);
-        const src = this.getSource(this.props.url);
-        if (src) {
-          this.player.src = src;
-        }
-        if (IS_IOS || this.props.config.forceDisableHls) {
-          this.player.load();
-        }
-      }
-      componentDidUpdate(prevProps) {
-        if (this.shouldUseAudio(this.props) !== this.shouldUseAudio(prevProps)) {
-          this.removeListeners(this.prevPlayer, prevProps.url);
-          this.addListeners(this.player);
-        }
-        if (this.props.url !== prevProps.url && !(0, import_utils.isMediaStream)(this.props.url) && !(this.props.url instanceof Array)) {
-          this.player.srcObject = null;
-        }
-      }
-      componentWillUnmount() {
-        this.player.removeAttribute("src");
-        this.removeListeners(this.player);
-        if (this.hls) {
-          this.hls.destroy();
-        }
-      }
-      addListeners(player) {
-        const { url, playsinline } = this.props;
-        player.addEventListener("play", this.onPlay);
-        player.addEventListener("waiting", this.onBuffer);
-        player.addEventListener("playing", this.onBufferEnd);
-        player.addEventListener("pause", this.onPause);
-        player.addEventListener("seeked", this.onSeek);
-        player.addEventListener("ended", this.onEnded);
-        player.addEventListener("error", this.onError);
-        player.addEventListener("ratechange", this.onPlayBackRateChange);
-        player.addEventListener("enterpictureinpicture", this.onEnablePIP);
-        player.addEventListener("leavepictureinpicture", this.onDisablePIP);
-        player.addEventListener("webkitpresentationmodechanged", this.onPresentationModeChange);
-        if (!this.shouldUseHLS(url)) {
-          player.addEventListener("canplay", this.onReady);
-        }
-        if (playsinline) {
-          player.setAttribute("playsinline", "");
-          player.setAttribute("webkit-playsinline", "");
-          player.setAttribute("x5-playsinline", "");
-        }
-      }
-      removeListeners(player, url) {
-        player.removeEventListener("canplay", this.onReady);
-        player.removeEventListener("play", this.onPlay);
-        player.removeEventListener("waiting", this.onBuffer);
-        player.removeEventListener("playing", this.onBufferEnd);
-        player.removeEventListener("pause", this.onPause);
-        player.removeEventListener("seeked", this.onSeek);
-        player.removeEventListener("ended", this.onEnded);
-        player.removeEventListener("error", this.onError);
-        player.removeEventListener("ratechange", this.onPlayBackRateChange);
-        player.removeEventListener("enterpictureinpicture", this.onEnablePIP);
-        player.removeEventListener("leavepictureinpicture", this.onDisablePIP);
-        player.removeEventListener("webkitpresentationmodechanged", this.onPresentationModeChange);
-        if (!this.shouldUseHLS(url)) {
-          player.removeEventListener("canplay", this.onReady);
-        }
-      }
-      shouldUseAudio(props2) {
-        if (props2.config.forceVideo) {
-          return false;
-        }
-        if (props2.config.attributes.poster) {
-          return false;
-        }
-        return import_patterns.AUDIO_EXTENSIONS.test(props2.url) || props2.config.forceAudio;
-      }
-      shouldUseHLS(url) {
-        if (IS_SAFARI && this.props.config.forceSafariHLS || this.props.config.forceHLS) {
-          return true;
-        }
-        if (IS_IOS || this.props.config.forceDisableHls) {
-          return false;
-        }
-        return import_patterns.HLS_EXTENSIONS.test(url) || MATCH_CLOUDFLARE_STREAM.test(url);
-      }
-      shouldUseDASH(url) {
-        return import_patterns.DASH_EXTENSIONS.test(url) || this.props.config.forceDASH;
-      }
-      shouldUseFLV(url) {
-        return import_patterns.FLV_EXTENSIONS.test(url) || this.props.config.forceFLV;
-      }
-      load(url) {
-        const { hlsVersion, hlsOptions, dashVersion, flvVersion } = this.props.config;
-        if (this.hls) {
-          this.hls.destroy();
-        }
-        if (this.dash) {
-          this.dash.reset();
-        }
-        if (this.shouldUseHLS(url)) {
-          (0, import_utils.getSDK)(HLS_SDK_URL.replace("VERSION", hlsVersion), HLS_GLOBAL).then((Hls) => {
-            this.hls = new Hls(hlsOptions);
-            this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
-              this.props.onReady();
-            });
-            this.hls.on(Hls.Events.ERROR, (e2, data) => {
-              this.props.onError(e2, data, this.hls, Hls);
-            });
-            if (MATCH_CLOUDFLARE_STREAM.test(url)) {
-              const id2 = url.match(MATCH_CLOUDFLARE_STREAM)[1];
-              this.hls.loadSource(REPLACE_CLOUDFLARE_STREAM.replace("{id}", id2));
-            } else {
-              this.hls.loadSource(url);
-            }
-            this.hls.attachMedia(this.player);
-            this.props.onLoaded();
-          });
-        }
-        if (this.shouldUseDASH(url)) {
-          (0, import_utils.getSDK)(DASH_SDK_URL.replace("VERSION", dashVersion), DASH_GLOBAL).then((dashjs) => {
-            this.dash = dashjs.MediaPlayer().create();
-            this.dash.initialize(this.player, url, this.props.playing);
-            this.dash.on("error", this.props.onError);
-            if (parseInt(dashVersion) < 3) {
-              this.dash.getDebug().setLogToBrowserConsole(false);
-            } else {
-              this.dash.updateSettings({ debug: { logLevel: dashjs.Debug.LOG_LEVEL_NONE } });
-            }
-            this.props.onLoaded();
-          });
-        }
-        if (this.shouldUseFLV(url)) {
-          (0, import_utils.getSDK)(FLV_SDK_URL.replace("VERSION", flvVersion), FLV_GLOBAL).then((flvjs) => {
-            this.flv = flvjs.createPlayer({ type: "flv", url });
-            this.flv.attachMediaElement(this.player);
-            this.flv.on(flvjs.Events.ERROR, (e2, data) => {
-              this.props.onError(e2, data, this.flv, flvjs);
-            });
-            this.flv.load();
-            this.props.onLoaded();
-          });
-        }
-        if (url instanceof Array) {
-          this.player.load();
-        } else if ((0, import_utils.isMediaStream)(url)) {
-          try {
-            this.player.srcObject = url;
-          } catch (e2) {
-            this.player.src = window.URL.createObjectURL(url);
-          }
-        }
-      }
-      play() {
-        const promise = this.player.play();
-        if (promise) {
-          promise.catch(this.props.onError);
-        }
-      }
-      pause() {
-        this.player.pause();
-      }
-      stop() {
-        this.player.removeAttribute("src");
-        if (this.dash) {
-          this.dash.reset();
-        }
-      }
-      seekTo(seconds, keepPlaying = true) {
-        this.player.currentTime = seconds;
-        if (!keepPlaying) {
-          this.pause();
-        }
-      }
-      setVolume(fraction) {
-        this.player.volume = fraction;
-      }
-      enablePIP() {
-        if (this.player.requestPictureInPicture && document.pictureInPictureElement !== this.player) {
-          this.player.requestPictureInPicture();
-        } else if ((0, import_utils.supportsWebKitPresentationMode)(this.player) && this.player.webkitPresentationMode !== "picture-in-picture") {
-          this.player.webkitSetPresentationMode("picture-in-picture");
-        }
-      }
-      disablePIP() {
-        if (document.exitPictureInPicture && document.pictureInPictureElement === this.player) {
-          document.exitPictureInPicture();
-        } else if ((0, import_utils.supportsWebKitPresentationMode)(this.player) && this.player.webkitPresentationMode !== "inline") {
-          this.player.webkitSetPresentationMode("inline");
-        }
-      }
-      setPlaybackRate(rate) {
-        try {
-          this.player.playbackRate = rate;
-        } catch (error) {
-          this.props.onError(error);
-        }
-      }
-      getDuration() {
-        if (!this.player)
-          return null;
-        const { duration, seekable } = this.player;
-        if (duration === Infinity && seekable.length > 0) {
-          return seekable.end(seekable.length - 1);
-        }
-        return duration;
-      }
-      getCurrentTime() {
-        if (!this.player)
-          return null;
-        return this.player.currentTime;
-      }
-      getSecondsLoaded() {
-        if (!this.player)
-          return null;
-        const { buffered } = this.player;
-        if (buffered.length === 0) {
-          return 0;
-        }
-        const end = buffered.end(buffered.length - 1);
-        const duration = this.getDuration();
-        if (end > duration) {
-          return duration;
-        }
-        return end;
-      }
-      getSource(url) {
-        const useHLS = this.shouldUseHLS(url);
-        const useDASH = this.shouldUseDASH(url);
-        const useFLV = this.shouldUseFLV(url);
-        if (url instanceof Array || (0, import_utils.isMediaStream)(url) || useHLS || useDASH || useFLV) {
-          return void 0;
-        }
-        if (MATCH_DROPBOX_URL.test(url)) {
-          return url.replace("www.dropbox.com", "dl.dropboxusercontent.com");
-        }
-        return url;
-      }
-      render() {
-        const { url, playing, loop, controls, muted, config, width, height } = this.props;
-        const useAudio = this.shouldUseAudio(this.props);
-        const Element2 = useAudio ? "audio" : "video";
-        const style2 = {
-          width: width === "auto" ? width : "100%",
-          height: height === "auto" ? height : "100%"
-        };
-        return /* @__PURE__ */ import_react$1.default.createElement(
-          Element2,
-          {
-            ref: this.ref,
-            src: this.getSource(url),
-            style: style2,
-            preload: "auto",
-            autoPlay: playing || void 0,
-            controls,
-            muted,
-            loop,
-            ...config.attributes
-          },
-          url instanceof Array && url.map(this.renderSourceElement),
-          config.tracks.map(this.renderTrack)
-        );
-      }
-    }
-    __publicField$1(FilePlayer, "displayName", "FilePlayer");
-    __publicField$1(FilePlayer, "canPlay", import_patterns.canPlay.file);
-    const FilePlayer$1 = /* @__PURE__ */ getDefaultExportFromCjs(FilePlayer_1);
-    const FilePlayer$2 = /* @__PURE__ */ _mergeNamespaces({
-      __proto__: null,
-      default: FilePlayer$1
-    }, [FilePlayer_1]);
-    var __create = Object.create;
-    var __defProp = Object.defineProperty;
-    var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-    var __getOwnPropNames2 = Object.getOwnPropertyNames;
-    var __getProtoOf = Object.getPrototypeOf;
-    var __hasOwnProp = Object.prototype.hasOwnProperty;
-    var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-    var __export = (target, all) => {
-      for (var name in all)
-        __defProp(target, name, { get: all[name], enumerable: true });
-    };
-    var __copyProps = (to, from2, except, desc) => {
-      if (from2 && typeof from2 === "object" || typeof from2 === "function") {
-        for (let key of __getOwnPropNames2(from2))
-          if (!__hasOwnProp.call(to, key) && key !== except)
-            __defProp(to, key, { get: () => from2[key], enumerable: !(desc = __getOwnPropDesc(from2, key)) || desc.enumerable });
-      }
-      return to;
-    };
-    var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-      // If the importer is in node compatibility mode or this is not an ESM
-      // file that has been converted to a CommonJS file using a Babel-
-      // compatible transform (i.e. "__esModule" has not been set), then set
-      // "default" to the CommonJS "module.exports" for node compatibility.
-      !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-      mod
-    ));
-    var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-    var __publicField = (obj, key, value) => {
-      __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-      return value;
-    };
-    var Preview_exports = {};
-    __export(Preview_exports, {
-      default: () => Preview
-    });
-    var Preview_1 = __toCommonJS(Preview_exports);
-    var import_react = __toESM(reactExports);
-    const ICON_SIZE = "64px";
-    const cache = {};
-    class Preview extends import_react.Component {
-      constructor() {
-        super(...arguments);
-        __publicField(this, "mounted", false);
-        __publicField(this, "state", {
-          image: null
-        });
-        __publicField(this, "handleKeyPress", (e2) => {
-          if (e2.key === "Enter" || e2.key === " ") {
-            this.props.onClick();
-          }
-        });
-      }
-      componentDidMount() {
-        this.mounted = true;
-        this.fetchImage(this.props);
-      }
-      componentDidUpdate(prevProps) {
-        const { url, light } = this.props;
-        if (prevProps.url !== url || prevProps.light !== light) {
-          this.fetchImage(this.props);
-        }
-      }
-      componentWillUnmount() {
-        this.mounted = false;
-      }
-      fetchImage({ url, light, oEmbedUrl }) {
-        if (import_react.default.isValidElement(light)) {
-          return;
-        }
-        if (typeof light === "string") {
-          this.setState({ image: light });
-          return;
-        }
-        if (cache[url]) {
-          this.setState({ image: cache[url] });
-          return;
-        }
-        this.setState({ image: null });
-        return window.fetch(oEmbedUrl.replace("{url}", url)).then((response) => response.json()).then((data) => {
-          if (data.thumbnail_url && this.mounted) {
-            const image = data.thumbnail_url.replace("height=100", "height=480").replace("-d_295x166", "-d_640");
-            this.setState({ image });
-            cache[url] = image;
-          }
-        });
-      }
-      render() {
-        const { light, onClick, playIcon, previewTabIndex, previewAriaLabel } = this.props;
-        const { image } = this.state;
-        const isElement = import_react.default.isValidElement(light);
-        const flexCenter = {
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center"
-        };
-        const styles = {
-          preview: {
-            width: "100%",
-            height: "100%",
-            backgroundImage: image && !isElement ? `url(${image})` : void 0,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            cursor: "pointer",
-            ...flexCenter
-          },
-          shadow: {
-            background: "radial-gradient(rgb(0, 0, 0, 0.3), rgba(0, 0, 0, 0) 60%)",
-            borderRadius: ICON_SIZE,
-            width: ICON_SIZE,
-            height: ICON_SIZE,
-            position: isElement ? "absolute" : void 0,
-            ...flexCenter
-          },
-          playIcon: {
-            borderStyle: "solid",
-            borderWidth: "16px 0 16px 26px",
-            borderColor: "transparent transparent transparent white",
-            marginLeft: "7px"
-          }
-        };
-        const defaultPlayIcon = /* @__PURE__ */ import_react.default.createElement("div", { style: styles.shadow, className: "react-player__shadow" }, /* @__PURE__ */ import_react.default.createElement("div", { style: styles.playIcon, className: "react-player__play-icon" }));
-        return /* @__PURE__ */ import_react.default.createElement(
-          "div",
-          {
-            style: styles.preview,
-            className: "react-player__preview",
-            onClick,
-            tabIndex: previewTabIndex,
-            onKeyPress: this.handleKeyPress,
-            ...previewAriaLabel ? { "aria-label": previewAriaLabel } : {}
-          },
-          isElement ? light : null,
-          playIcon || defaultPlayIcon
-        );
-      }
-    }
-    const Preview$1 = /* @__PURE__ */ getDefaultExportFromCjs(Preview_1);
-    const Preview$2 = /* @__PURE__ */ _mergeNamespaces({
-      __proto__: null,
-      default: Preview$1
-    }, [Preview_1]);
   }
 });
 export default require_admin();

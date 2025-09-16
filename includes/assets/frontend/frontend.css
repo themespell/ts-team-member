@@ -2909,6 +2909,9 @@ html:has(.drawer-toggle:checked) {
 .mb-8 {
     margin-bottom: 2rem;
 }
+.ml-1 {
+    margin-left: 0.25rem;
+}
 .ml-16 {
     margin-left: 4rem;
 }
@@ -2994,6 +2997,9 @@ html:has(.drawer-toggle:checked) {
 .h-16 {
     height: 4rem;
 }
+.h-20 {
+    height: 5rem;
+}
 .h-24 {
     height: 6rem;
 }
@@ -3048,6 +3054,9 @@ html:has(.drawer-toggle:checked) {
 }
 .w-16 {
     width: 4rem;
+}
+.w-20 {
+    width: 5rem;
 }
 .w-24 {
     width: 6rem;
