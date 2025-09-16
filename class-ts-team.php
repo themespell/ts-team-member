@@ -60,7 +60,6 @@ final class TSTeam {
 	}
 
 	public function init_plugin() {
-		$this->load_textdomain();
 		$this->dispatch_hooks();
 	}
 
@@ -72,14 +71,6 @@ final class TSTeam {
 		TSTeam\Enqueue::init();
 		TSTeam\Frontend::init();
 		TSTeam\Addons::init();
-	}
-
-	public function load_textdomain() {
-		load_plugin_textdomain(
-			'ts-team-member',
-			false,
-			dirname( plugin_basename( __FILE__ ) ) . '/languages/'
-		);
 	}
 
 	public function load_dependency() {
