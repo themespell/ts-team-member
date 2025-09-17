@@ -39,13 +39,13 @@ src
 *.sql
 *.tar.gz
 *.zip
-blocks/src
+!blocks/src
 blocks/node_modules
 blocks/package.json
 blocks/package-lock.json
+blocks/src/.DS_Store
 
 !includes/library/
-!includes/library/freemius/
-includes/library/composer/
+includes/library/.DS_Store
 includes/library/composer.json
 includes/library/composer.lock
