@@ -64908,7 +64908,7 @@ var require_admin = __commonJS({
             label: translations$1.getPro
           }
         },
-        version: "1.1.5"
+        version: "1.1.6"
       }
     };
     function hideAdminElements() {
@@ -83161,7 +83161,7 @@ var require_admin = __commonJS({
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-8 tsteam__global--border w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           TsVideo,
           {
-            light: "https://img.youtube.com/vi/DCMKZ5AWrPc/maxresdefault.jpg",
+            light: `${tsteamImage}/img/tsteam_dashboard_video_cover.jpg`,
             width: "1160px",
             height: "650px",
             url: "https://www.youtube.com/watch?v=DCMKZ5AWrPc"
