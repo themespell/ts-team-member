@@ -1,10 +1,10 @@
 === TS Team Member Showcase ===
 Contributors: themespell, asadabir
 Tags: team, team members, team showcase, team builder, team plugin
-Requires at least: 3.0.1
+Requires at least: 5.5
 Tested up to: 6.8
 Requires PHP: 5.4
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -228,6 +228,10 @@ If the user does **not** opt in, only essential data may be sent for license val
 7. Elementor widget for TS Team Member.
 
 == Changelog ==
+
+1.1.6
+* Fixed Asset Loading Issue
+* Readme Updated
 
 1.1.5
 * Fixed Freemius Library Dependency
