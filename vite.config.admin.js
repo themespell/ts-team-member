@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
     plugins: [react()],
     build: {
-        minify: false,
+        minify: true,
         manifest: false,
         rollupOptions: {
             input: path.resolve(__dirname, 'src/main.jsx'), // Admin entry point
