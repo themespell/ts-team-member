@@ -4,7 +4,7 @@ Tags: team, team members, team showcase, team builder, team plugin
 Requires at least: 5.5
 Tested up to: 6.8
 Requires PHP: 5.4
-Stable tag: 1.1.6
+Stable tag: 1.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,29 +54,29 @@ From simple team profiles to advanced team management, member directories, or cr
 
 TS Team Member can be the go-to option for any business looking for a reliable tool to manage their team showcase. It’s an extraordinary choice for those needing an efficient and user-friendly **team management solution** in WordPress.
 
-✅ **Corporate Websites:** Highlight your executive team, board members, or staff with polished and professional profiles. Build trust and credibility by showcasing the people behind your success. TS Team Member’s customizable layouts and responsive designs ensure your team looks great on any device, making it perfect for corporate websites of all sizes.
+✅ **Corporate Websites**
 
-✅ **Creative Agencies:** Showcase your designers, developers, and creatives with visually stunning profiles that reflect your agency’s unique style. TS Team Member’s elegant layouts and interactive features, like sliders and popups, help you present your team in a way that captivates clients and sets your agency apart.
+✅ **Creative Agencies**
 
-✅ **Small Businesses:** Introduce your team members to create a personal connection with your audience. Whether you’re a local shop or a growing startup, TS Team Member makes it easy to display your team with professionalism and charm, helping you build trust and loyalty with your customers.
+✅ **Small Businesses**
 
-✅ **Non-Profit Organizations:** Feature volunteers, organizers, and leaders to inspire confidence in your mission. TS Team Member’s flexible layouts and social media integration allow you to highlight the people driving your cause, making it easier to connect with donors and supporters.
+✅ **Non-Profit Organizations**
 
-✅ **Educational Institutions:** Display faculty members, administrators, and staff to personalize your institution’s online presence. TS Team Member’s clean and professional designs help you showcase your team in a way that reflects the values and excellence of your educational organization.
+✅ **Educational Institutions**
 
-✅ **Freelancers & Consultants:** Create a portfolio-style showcase to highlight your skills and expertise. TS Team Member’s customizable profiles and elegant layouts allow you to present yourself professionally, helping you attract new clients and grow your business.
+✅ **Freelancers & Consultants**
 
-✅ **Healthcare Providers:** Showcase doctors, nurses, and support staff to humanize your practice. TS Team Member’s responsive designs and easy-to-use interface make it simple to create profiles that build trust and comfort with your patients.
+✅ **Healthcare Providers**
 
-✅ **Real Estate Agencies:** Introduce agents and brokers to build trust with potential clients. TS Team Member’s sleek layouts and interactive features help you present your team in a way that highlights their expertise and professionalism, making it easier to close deals.
+✅ **Real Estate Agencies**
 
-✅ **Restaurants & Cafes:** Feature your chefs, managers, and staff to connect with customers on a personal level. TS Team Member’s visually appealing designs and social media integration allow you to showcase your team in a way that enhances your brand’s personality and charm.
+✅ **Restaurants & Cafes**
 
-✅ **Fitness Centers & Gyms:** Highlight trainers, coaches, and wellness experts to attract new members. TS Team Member’s dynamic layouts and interactive features help you present your team in a way that motivates and inspires your audience.
+✅ **Fitness Centers & Gyms**
 
-✅ **Tech Startups:** Display your developers, designers, and innovators to impress investors and clients. TS Team Member’s modern and professional designs help you showcase your team’s talent and expertise, making it easier to stand out in a competitive industry.
+✅ **Tech Startups**
 
-✅ **Event Planners:** Showcase your team to give clients a glimpse of the people behind your successful events. TS Team Member’s elegant layouts and interactive features allow you to present your team in a way that builds confidence and excitement for your services.
+✅ **Event Planners**
 
 ## 💪 POWERFUL INPUT FIELDS
 
@@ -117,11 +117,7 @@ TS Team Member can be the go-to option for any business looking for a reliable t
 *   Flex View **\[PRO\]**
 *   Marquee View **\[PRO\]**
 *   Table View **\[PRO\]**
-*   Circle Mask Layout **\[PRO\]**
-*   Fancy Card Layout **\[PRO\]**
-*   Glass Layout **\[PRO\]**
-*   Capsule Card Layout **\[PRO\]**
-*   Drawer Details Style **\[PRO\]**
+*   All Pro Layouts **\[PRO\]**
 
 
 More features Coming Soon! 😎
@@ -228,6 +224,10 @@ If the user does **not** opt in, only essential data may be sent for license val
 7. Elementor widget for TS Team Member.
 
 == Changelog ==
+
+1.1.7
+* Fixed Asset Render Blocking Issue
+* Readme Updated
 
 1.1.6
 * Fixed Asset Loading Issue
