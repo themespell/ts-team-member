@@ -24,33 +24,12 @@ function DetailsModal({ member }) {
     };
 
     const handleButtonClick = (e) => {
-        // Get the post ID from the data attribute
-        const postId = e.target.getAttribute('data-post-id');
-
-        // Find the member with the matching post_id
-        const member = team_members.find(m => m.post_id.toString() === postId.toString());
-
-        if (member) {
-            setCurrentMember(member);
-
-            // Generate the modal ID using the member's information
-            const modalId = `${member.title.replace(/\s+/g, '-').toLowerCase()}-${member.post_id}-details`;
-
-            // Open the modal
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.setAttribute('open', '');
-            }
+        const buttonId = e.target.id;
+        const modal = document.getElementById(`${buttonId}-details`);
+        if (modal) {
+            modal.setAttribute('open', '');
         }
     };
-
-    // const handleButtonClick = (e) => {
-    //     const buttonId = e.target.id;
-    //     const modal = document.getElementById(`${buttonId}-details`);
-    //     if (modal) {
-    //         modal.setAttribute('open', '');
-    //     }
-    // };
 
     useEffect(() => {
         const imageElements = document.querySelectorAll('.tsteam-member__image');
