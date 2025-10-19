@@ -23,14 +23,20 @@ function runCommand(command, label) {
 
 // Watch both admin and frontend builds
 async function watchBuilds() {
-    console.log('Starting watch mode for admin and frontend...');
+    console.log('Starting watch mode for admin and frontend (minified and unminified)...');
 
     try {
-        // Start watching admin build
-        runCommand('vite build --config vite.config.admin.js --watch', 'Admin');
+        // Start watching admin build (minified)
+        runCommand('vite build --config vite.config.admin.js --watch', 'Admin Min');
 
-        // Start watching frontend build
-        runCommand('vite build --config vite.config.frontend.js --watch', 'Frontend');
+        // Start watching admin build (unminified)
+        runCommand('vite build --config vite.config.admin.js --watch --mode development-unminified', 'Admin Unmin');
+
+        // Start watching frontend build (minified)
+        runCommand('vite build --config vite.config.frontend.js --watch', 'Frontend Min');
+
+        // Start watching frontend build (unminified)
+        runCommand('vite build --config vite.config.frontend.js --watch --mode development-unminified', 'Frontend Unmin');
     } catch (error) {
         console.error('Failed to start watch mode:', error);
     }
