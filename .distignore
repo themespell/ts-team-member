@@ -47,5 +47,5 @@ blocks/src/.DS_Store
 
 !includes/library/
 includes/library/.DS_Store
-includes/library/composer.json
+!includes/library/composer.json
 includes/library/composer.lock
