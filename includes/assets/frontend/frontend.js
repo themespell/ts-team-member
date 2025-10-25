@@ -8788,7 +8788,7 @@ var require_frontend = __commonJS({
             label: translations.getPro
           }
         },
-        version: "1.1.7"
+        version: "1.1.9"
       }
     });
     var classnames = { exports: {} };

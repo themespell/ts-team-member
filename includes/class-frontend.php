@@ -27,7 +27,7 @@ class Frontend {
 		}
 
 			wp_enqueue_style( 'tsteam-member-main', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend/frontend.min.css' );
-			wp_enqueue_script( 'tsteam-member-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend/frontend.min.js', $dependency, '2.2.2', true );
+			wp_enqueue_script( 'tsteam-member-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend/frontend.min.js', $dependency, '2.2.3', true );
 			wp_localize_script(
 				'tsteam-member-script',
 				'tsteam_settings',
