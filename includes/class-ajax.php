@@ -3,6 +3,7 @@ namespace TSTeam;
 
 use TSTeam\TeamMember;
 use TSTeam\TeamShowcase;
+use TSTeam\MemberCategory;
 use TSTeam\Migration;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,6 +16,7 @@ class AJAX {
 		$self = new self();
 		TeamMember::init();
 		TeamShowcase::init();
+		MemberCategory::init();
 		Migration::init();
 	}
 }
