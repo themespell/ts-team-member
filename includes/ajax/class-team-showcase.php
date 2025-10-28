@@ -64,56 +64,70 @@ class TeamShowcase {
 		wp_send_json_success( $showcases );
 	}
 
-	public function get_showcase_by_id() {
-		check_ajax_referer( 'tsteam_nonce' );
+    public function get_showcase_by_id() {
+        check_ajax_referer( 'tsteam_nonce' );
 
-		$post_id = isset( $_POST['post_id'] ) ? (int) $_POST['post_id'] : 0;
+        $post_id = isset( $_POST['post_id'] ) ? (int) $_POST['post_id'] : 0;
 
-		$args = array(
-			'post_type' => 'tsteam-showcase',
-			'p'         => $post_id,
-		);
+        $args = array(
+           'post_type' => 'tsteam-showcase',
+           'p'         => $post_id,
+        );
 
-		$query = new \WP_Query( $args );
+        $query = new \WP_Query( $args );
 
-		if ( ! $query->have_posts() ) {
-			wp_send_json_error( array( 'message' => 'Showcase not found' ) );
-			return;
-		}
+        if ( ! $query->have_posts() ) {
+           wp_send_json_error( array( 'message' => 'Showcase not found' ) );
+           return;
+        }
 
-		$query->the_post();
-		$post_id = get_the_ID();
+        $query->the_post();
+        $post_id = get_the_ID();
 
-		// Get the team member IDs stored as meta data
-		$team_member_ids   = get_post_meta( $post_id, 'tsteam_team_members', true );
-		$showcase_settings = get_post_meta( $post_id, 'tsteam_showcase_settings', true );
+        // Get the team member IDs stored as meta data
+        $team_member_ids   = get_post_meta( $post_id, 'tsteam_team_members', true );
+        $member_categories = get_post_meta( $post_id, 'tsteam_member_categories', true );
+        $showcase_settings = get_post_meta( $post_id, 'tsteam_showcase_settings', true );
 
-		if ( ! empty( $team_member_ids ) && is_array( $team_member_ids ) ) {
-			$team_members_result = Helper::get_team_members_by_ids( $team_member_ids );
+        // Check if we should get members by category instead of manual selection
+        if ( empty( $team_member_ids ) && ! empty( $member_categories ) && is_array( $member_categories ) ) {
+           // Get team members by category IDs
+           $team_members_result = Helper::get_team_members_by_category_ids( $member_categories );
 
-			if ( $team_members_result['error'] ) {
-				wp_send_json_error( array( 'message' => $team_members_result['message'] ) );
-				return;
-			}
+           if ( $team_members_result['error'] ) {
+              wp_send_json_error( array( 'message' => $team_members_result['message'] ) );
+              return;
+           }
 
-			$team_members = $team_members_result['team_members'];
-		} else {
-			$team_members = array();
-		}
+           $team_members = $team_members_result['team_members'];
+        } elseif ( ! empty( $team_member_ids ) && is_array( $team_member_ids ) ) {
+           // Get team members by manual selection
+           $team_members_result = Helper::get_team_members_by_ids( $team_member_ids );
 
-		$showcase = array(
-			'post_id'   => $post_id,
-			'title'     => get_the_title( $post_id ),
-			'content'   => get_the_content(),
-			'meta_data' => array(
-				'team_members'      => $team_members,
-				'showcase_settings' => ! empty( $showcase_settings ) ? $showcase_settings : Common::get_default_showcase_settings(),
-			),
-		);
+           if ( $team_members_result['error'] ) {
+              wp_send_json_error( array( 'message' => $team_members_result['message'] ) );
+              return;
+           }
 
-		wp_reset_postdata();
-		wp_send_json_success( $showcase );
-	}
+           $team_members = $team_members_result['team_members'];
+        } else {
+           $team_members = array();
+        }
+
+        $showcase = array(
+           'post_id'   => $post_id,
+           'title'     => get_the_title( $post_id ),
+           'content'   => get_the_content(),
+           'meta_data' => array(
+              'team_members'      => $team_members,
+              'member_categories' => $member_categories,
+              'showcase_settings' => ! empty( $showcase_settings ) ? $showcase_settings : Common::get_default_showcase_settings(),
+           ),
+        );
+
+        wp_reset_postdata();
+        wp_send_json_success( $showcase );
+    }
 
 	public function create_showcase() {
 		check_ajax_referer( 'tsteam_nonce' );
@@ -124,6 +138,7 @@ class TeamShowcase {
 
 		$showcase_title    = isset( $_POST['title'] ) ? sanitize_text_field( wp_unslash( $_POST['title'] ) ) : '';
 		$team_members      = isset( $_POST['team_members'] ) ? array_map( 'intval', (array) $_POST['team_members'] ) : array();
+		$member_categories   = isset( $_POST['member_categories'] ) ? array_map( 'intval', (array) $_POST['member_categories'] ) : array();
 		$showcase_settings = isset($_POST['data']) ? Common::sanitize_json_data($_POST['data']) : wp_json_encode(array());
 
 		$args = array(
@@ -141,6 +156,7 @@ class TeamShowcase {
 		}
 
 		update_post_meta( $is_post, 'tsteam_team_members', $team_members );
+		update_post_meta( $is_post, 'tsteam_member_categories', $member_categories );
 		update_post_meta( $is_post, 'tsteam_showcase_settings', $showcase_settings );
 		wp_send_json_success( array( 'post_id' => $is_post ) );
 	}
@@ -158,8 +174,9 @@ class TeamShowcase {
 			wp_send_json_error( array( 'message' => 'Invalid ID' ) );
 		}
 
-		$showcase_title = ( isset( $_POST['data']['title'] ) ? sanitize_text_field( wp_unslash( $_POST['data']['title'] ) ) : '' );
-		$team_members   = isset( $_POST['data']['team_members'] ) ? array_map( 'intval', (array) $_POST['data']['team_members'] ) : array();
+		$showcase_title      = ( isset( $_POST['data']['title'] ) ? sanitize_text_field( wp_unslash( $_POST['data']['title'] ) ) : '' );
+		$team_members        = isset( $_POST['data']['team_members'] ) ? array_map( 'intval', (array) $_POST['data']['team_members'] ) : array();
+		$member_categories   = isset( $_POST['data']['member_categories'] ) ? array_map( 'intval', (array) $_POST['data']['member_categories'] ) : array();
 
 		$args    = array(
 			'ID'         => $post_id,
@@ -167,6 +184,7 @@ class TeamShowcase {
 			'post_title' => $showcase_title,
 			'meta_input' => array(
 				'tsteam_team_members' => $team_members,
+				'tsteam_member_categories' => $member_categories
 			),
 		);
 		$is_post = wp_update_post( $args );
