@@ -19,7 +19,7 @@ function ContentTab() {
             output="object"
             showProBadge={true}
         />
-        {(selectedView.value === 'grid' || selectedView.value === 'carousel' || selectedView.value === 'marquee') && (
+        {(selectedView.value === 'grid' || selectedView.value === 'carousel' || selectedView.value === 'marquee' || selectedView.value === 'filterable') && (
             <TsSelect
                 label={translations.layout}
                 name="selectedLayout"
@@ -208,6 +208,34 @@ function ContentTab() {
                 />
 
                 <TsDivider/>
+            </div>
+        )}
+
+        {selectedView.value === 'filterable' && (
+            <div>
+                <TsDivider
+                    label="Filterable Settings"
+                />
+                <TsSlider
+                    label={translations.containerWidth}
+                    range={containerSettings.width.range}
+                    name='containerSettings.width.default'
+                    responsive={true}
+                    unit={true}
+                />
+                <TsSlider
+                    label={translations.columns}
+                    range={columnSettings.column.range}
+                    name='columnSettings.column.default'
+                    responsive={true}
+                />
+                <TsSlider
+                    label={translations.columnGap}
+                    range={columnSettings.gap.range}
+                    name='columnSettings.gap.default'
+                    responsive={true}
+                    unit={true}
+                />
             </div>
         )}
     </div>

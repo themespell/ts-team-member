@@ -62,6 +62,7 @@ const pro_views = [
     { label: 'Marquee', value: 'marquee', type: 'pro', disabled: !isPro || isLicenseInactive },
     { label: 'Table', value: 'table', type: 'pro', disabled: !isPro || isLicenseInactive },
     { label: 'Confetti', value: 'confetti', type: 'pro', disabled: !isPro || isLicenseInactive },
+    { label: 'Filterable', value: 'filterable', type: 'pro', disabled: !isPro || isLicenseInactive },
 ];
 
 const pro_details = [
