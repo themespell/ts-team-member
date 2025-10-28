@@ -5,6 +5,7 @@ import { updateData } from '../../../services/updateData.js';
 import { toastNotification } from '../../../utils/toastNotification.js';
 import TeamShowcaseFields from './TeamShowcaseFields.jsx';
 import TeamMemberFields from './TeamMemberFields.jsx';
+import MemberCategoryFields from "./MemberCategoryFields.jsx";
 
 import commonStore from '../../../states/commonStore.js';
 import {getTranslations} from "../../../utils/translations.js";
@@ -57,6 +58,7 @@ function FormContainer({ actionType, type, name, post_id }) {
       >
         {type === 'team_showcase' && <TeamShowcaseFields form={form} post_id={post_id}/>}
         {type === 'team_member' && <TeamMemberFields form={form} post_id={post_id}/>}
+        {type === 'member_category' && <MemberCategoryFields form={form} post_id={post_id}/>}
 
         <div style={{
             display: 'flex',

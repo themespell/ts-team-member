@@ -43,6 +43,7 @@ function TeamMemberFields({ form, post_id }) {
           form.setFieldsValue({
             member_name: response.data.title,
             member_designation: response.data.meta_data.designation,
+            member_category: response.data.meta_data.category,
             member_image: response.data.meta_data.image,
             member_description: response.data.content,
             member_email: response.data.meta_data.email,
