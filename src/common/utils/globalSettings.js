@@ -65,7 +65,7 @@ const globalSettings = {
           },
           memberCategory:{
               link: '?page=tsteam-showcase&path=member-category',
-              label: translations.teamMember,
+              label: translations.memberCategory,
           },
           tools:{
               link: '?page=tsteam-showcase&path=tools',

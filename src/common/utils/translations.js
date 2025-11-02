@@ -8,6 +8,7 @@ export const getTranslations = () => {
         dashboard: window.tsteam_i18n.dashboard || 'Dashboard',
         teamShowcase: window.tsteam_i18n.team_showcase || 'Team Showcase',
         teamMember: window.tsteam_i18n.team_member || 'Team Member',
+        memberCategory: window.tsteam_i18n.member_category || 'Member Category',
         tools: window.tsteam_i18n.tools || 'Tools',
         account: window.tsteam_i18n.account || 'Account',
         supportForum: window.tsteam_i18n.support_forum || 'Support Forum',
