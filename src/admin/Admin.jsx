@@ -1,5 +1,6 @@
 import TeamShowcase from './components/TeamShowcase';
 import TeamMember from './components/TeamMember';
+import MemberCategory from "./components/MamberCategory.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import Tools from "./components/Tools.jsx";
 import Migration from "./components/tools/migration/Migration.jsx";
@@ -13,6 +14,7 @@ const translations = getTranslations();
 
 function AdminPanel() {
   const isTeamMemberPage = currentUrl.includes(`&path=team-member`);
+  const isMemberCategoryPage = currentUrl.includes(`&path=member-category`);
   const isDashboardPage = currentUrl.includes(`&path=dashboard`);
   const isToolsPage = currentUrl.includes(`&path=tools`);
   const isMigrationPage = currentUrl.includes(`&path=migration`);
@@ -70,6 +72,19 @@ function AdminPanel() {
                 </div>
             </>
         );
+    } else if (isMemberCategoryPage) {
+    return (
+        <>
+            <Topbar title={'Member Category'}/>
+            <div className='tsteam__admin--style overflow-x-auto w-full flex justify-center pt-12 pb-12'>
+                <div className='flex justify-between gap-8 w-4/6'>
+                    <div className='w-full'>
+                        <MemberCategory/>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
     } else {
         return (
             <>

@@ -66,6 +66,7 @@ final class TSTeam {
 	public function dispatch_hooks() {
 		TSTeam\Autoload::init();
 		TSTeam\Database::init();
+		TSTeam\Taxonomy::init();
 		TSTeam\Admin::init();
 		TSTeam\AJAX::init();
 		TSTeam\Enqueue::init();

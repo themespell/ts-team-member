@@ -21,6 +21,7 @@ import FlexView from "../frontend/components/FlexView.jsx";
 import MarqueeView from "../frontend/components/MarqueeView.jsx";
 import TableView from "../frontend/components/TableView.jsx";
 import ConfettiView from "../frontend/components/ConfettiView.jsx";
+import FilterableView from "../frontend/components/FiltarableView.jsx";
 
 function Editor() {
   const translations = getTranslations();
@@ -33,6 +34,7 @@ function Editor() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [postData, setPostData] = useState(null);
+  const [categoryData, setCategoryData] = useState(null);
 
   useEffect(() => {
     hideAdminElements();
@@ -49,7 +51,7 @@ function Editor() {
       fetchData(`tsteam/${postTypeFromUrl}/fetch/single`, (response) => {
         if (response && response.success) {
           setPostData(response.data.meta_data);
-
+          setCategoryData(response.data.meta_data.member_categories);
           const showcaseSettings = JSON.parse(response.data.meta_data.showcase_settings);
           Object.keys(showcaseSettings).forEach((key) => {
             const value = showcaseSettings[key];
@@ -139,6 +141,14 @@ function Editor() {
                       viewport={viewport}
                       isEditor={isEditor}
                   />
+              ) : allSettings.selectedView.value === "filterable" && isPro ? (
+                  <FilterableView
+                  team_members={postData.team_members}
+                  settings={allSettings}
+                  category={categoryData}
+                  viewport={viewport}
+                  isEditor={isEditor}
+                />
               ) : (
                   <StaticView
                       team_members={postData.team_members}
