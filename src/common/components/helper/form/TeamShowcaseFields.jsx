@@ -121,18 +121,6 @@ function TeamShowcaseFields({ form, post_id }) {
                 />
             </Form.Item>
         )}
-
-      {/*<Form.Item*/}
-      {/*    name={showMembersBy === 'category' ? 'member_categories' : 'team_members'}*/}
-      {/*    rules={[{ required: true, message: `Please select ${showMembersBy === 'category' ? 'categories' : 'team members'}`}]}*/}
-      {/*>*/}
-      {/*  <TsSelect*/}
-      {/*      label={showMembersBy === 'category' ? (translations.memberCategory || "Member Category") : translations.teamMember}*/}
-      {/*      defaultValue={form.getFieldValue(showMembersBy === 'category' ? 'member_categories' : 'team_members')}*/}
-      {/*      options={showMembersBy === 'category' ? memberCategories : teamMembers}*/}
-      {/*      mode="multiple"*/}
-      {/*  />*/}
-      {/*</Form.Item>*/}
     </div>
   );
 }
