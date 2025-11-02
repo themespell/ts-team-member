@@ -8788,7 +8788,7 @@ var require_frontend = __commonJS({
             label: translations.getPro
           }
         },
-        version: "1.1.9"
+        version: "1.2.0"
       }
     });
     var classnames = { exports: {} };
@@ -24413,6 +24413,93 @@ var require_frontend = __commonJS({
         console.error("window.wp or wp.data.select is not available. Skipping MutationObserver.");
       }
     }
+    function wpbakeryLoader(initializeReact2) {
+      const isWPBakeryEditor = () => {
+        if (window.vc_iframe) {
+          return true;
+        }
+        if (typeof window.vc !== "undefined") {
+          return true;
+        }
+        if (document.body.classList.contains("vc_editor")) {
+          return true;
+        }
+        return false;
+      };
+      if (!isWPBakeryEditor()) {
+        console.log("Not in WPBakery editor mode. Skipping WPBakery-specific logic.");
+        return;
+      }
+      console.log("WPBakery editor detected. Initializing...");
+      const initializeAllShowcases = () => {
+        const showcaseElements = document.querySelectorAll(".tsteam-showcase");
+        showcaseElements.forEach((element) => {
+          if (!element.hasAttribute("data-tsteam-initialized")) {
+            element.setAttribute("data-tsteam-initialized", "true");
+            initializeReact2(element);
+          }
+        });
+      };
+      setTimeout(() => {
+        initializeAllShowcases();
+      }, 500);
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          mutation.addedNodes.forEach((node2) => {
+            if (node2.nodeType === Node.ELEMENT_NODE) {
+              if (node2.classList && node2.classList.contains("tsteam-showcase")) {
+                if (!node2.hasAttribute("data-tsteam-initialized")) {
+                  node2.setAttribute("data-tsteam-initialized", "true");
+                  initializeReact2(node2);
+                }
+              }
+              const newShowcaseElements = node2.querySelectorAll(".tsteam-showcase");
+              newShowcaseElements.forEach((element) => {
+                if (!element.hasAttribute("data-tsteam-initialized")) {
+                  element.setAttribute("data-tsteam-initialized", "true");
+                  initializeReact2(element);
+                }
+              });
+            }
+          });
+        });
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+      if (window.vc && window.vc.events) {
+        window.vc.events.on("shortcodes:add", function(model) {
+          console.log("WPBakery element added");
+          setTimeout(() => {
+            initializeAllShowcases();
+          }, 300);
+        });
+        window.vc.events.on("shortcodes:update", function(model) {
+          console.log("WPBakery element updated");
+          setTimeout(() => {
+            initializeAllShowcases();
+          }, 300);
+        });
+        window.vc.events.on("app.render", function() {
+          console.log("WPBakery app rendered");
+          setTimeout(() => {
+            initializeAllShowcases();
+          }, 500);
+        });
+      }
+      if (window.vc_iframe) {
+        window.vc_iframe.on("ready", function() {
+          console.log("WPBakery iframe ready");
+          setTimeout(() => {
+            initializeAllShowcases();
+          }, 500);
+        });
+      }
+      jQuery(document).on("vc-reload", function() {
+        console.log("WPBakery reload triggered");
+        setTimeout(() => {
+          initializeAllShowcases();
+        }, 300);
+      });
+    }
     function initializeReact(element) {
       const id2 = element.getAttribute("data-id");
       if (!id2) {
@@ -24432,6 +24519,9 @@ var require_frontend = __commonJS({
     document.addEventListener("DOMContentLoaded", () => {
       if (window.elementorFrontend && window.elementorFrontend.isEditMode()) {
         elementorLoader(initializeReact);
+      }
+      if (window.vc_iframe || typeof window.vc !== "undefined" || document.body.classList.contains("vc_editor")) {
+        wpbakeryLoader(initializeReact);
       }
       if (window.wp && window.wp.data && window.wp.data.select) {
         const isGutenbergEditor = !!window.wp.data.select("core/edit-post") || !!window.wp.data.select("core/editor");

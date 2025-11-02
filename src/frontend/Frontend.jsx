@@ -13,6 +13,7 @@ import { fetchData } from '../common/services/fetchData.js';
 import {toastNotification} from "../common/utils/toastNotification.js";
 import {elementorLoader} from "./utils/elementorLoader.js";
 import {gutenbergLoader} from "./utils/gutenbergLoader.js";
+import {wpbakeryLoader} from "./utils/wpbakeryLoader.js";
 
 function initializeReact(element) {
   const id = element.getAttribute('data-id');
@@ -40,6 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Handle Elementor's edit mode
   if (window.elementorFrontend && window.elementorFrontend.isEditMode()) {
     elementorLoader(initializeReact);
+  }
+
+  // Handle WPBakery editor mode
+  if (window.vc_iframe || (typeof window.vc !== 'undefined') || document.body.classList.contains('vc_editor')) {
+      wpbakeryLoader(initializeReact);
   }
 
   // Handle Gutenberg editor
