@@ -4,7 +4,7 @@ Tags: team, team members, team showcase, team builder, team plugin
 Requires at least: 5.5
 Tested up to: 6.8
 Requires PHP: 5.4
-Stable tag: 1.1.9
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -228,6 +228,17 @@ If the user does **not** opt in, only essential data may be sent for license val
 7. Elementor widget for TS Team Member.
 
 == Changelog ==
+
+1.2.0
+* Added Member Category
+* Added WPBakery Element
+* Added Filterable View Support For Pro
+* Updated Team Showcase Creating Steps (Member Category, Manual Selection)
+* Readme Updated
+
+1.1.9
+* Compatible and tested with latest WordPress
+* Readme Updated
 
 1.1.8
 * Fixed JS & CSS Minification Issue
