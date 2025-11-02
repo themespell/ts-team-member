@@ -64735,6 +64735,7 @@ var require_admin = __commonJS({
         dashboard: window.tsteam_i18n.dashboard || "Dashboard",
         teamShowcase: window.tsteam_i18n.team_showcase || "Team Showcase",
         teamMember: window.tsteam_i18n.team_member || "Team Member",
+        memberCategory: window.tsteam_i18n.member_category || "Member Category",
         tools: window.tsteam_i18n.tools || "Tools",
         account: window.tsteam_i18n.account || "Account",
         supportForum: window.tsteam_i18n.support_forum || "Support Forum",
@@ -64886,6 +64887,10 @@ var require_admin = __commonJS({
           teamMember: {
             link: "?page=tsteam-showcase&path=team-member",
             label: translations$1.teamMember
+          },
+          memberCategory: {
+            link: "?page=tsteam-showcase&path=member-category",
+            label: translations$1.memberCategory
           },
           tools: {
             link: "?page=tsteam-showcase&path=tools",
@@ -65871,7 +65876,7 @@ var require_admin = __commonJS({
     function TsProBadge({ heading, description, label, ctalink, onClick }) {
       return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "bg-amber-500 text-white text-xs px-2 py-0.5 rounded font-medium", children: "PRO" });
     }
-    function TsSelect({ label, name, defaultValue, options, onChange, mode, output = "value", showProBadge = false }) {
+    function TsSelect({ label, name, defaultValue, options, onChange, mode, output = "value", showProBadge = false, form, rules: rules2 }) {
       const { saveSettings } = editorFunction();
       const [currentValue, setCurrentValue] = reactExports.useState(defaultValue);
       reactExports.useEffect(() => {
@@ -65883,6 +65888,9 @@ var require_admin = __commonJS({
           return;
         }
         setCurrentValue(value);
+        if (form) {
+          form.setFieldsValue({ [name]: value });
+        }
         if (onChange) {
           onChange(value);
         } else {
@@ -65902,6 +65910,41 @@ var require_admin = __commonJS({
         ] }),
         disabled: option.disabled || false
       })) : options;
+      const selectElement = /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Select,
+        {
+          placeholder: `Select ${label}`,
+          value: form ? void 0 : get$1(editorStore(), name) || currentValue,
+          activeBorderColor: "linear-gradient(45deg, #7A5AF8, #7140D9, #950CED, #F46174)",
+          activeOutlineColor: "linear-gradient(45deg, #7A5AF8, #7140D9, #950CED, #F46174)",
+          hoverBorderColor: "linear-gradient(45deg, #7A5AF8, #7140D9, #950CED, #F46174)",
+          style: {
+            width: "100%"
+          },
+          onChange: handleChange,
+          options: transformedOptions,
+          mode,
+          optionFilterProp: "children",
+          filterOption: showProBadge ? (input, option) => {
+            var _a2;
+            if (option.disabled) return false;
+            const originalOption = options.find((opt) => opt.value === option.value);
+            return (_a2 = originalOption == null ? void 0 : originalOption.label) == null ? void 0 : _a2.toLowerCase().includes(input.toLowerCase());
+          } : void 0
+        }
+      );
+      if (form) {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Form.Item,
+          {
+            label,
+            name,
+            rules: rules2,
+            style: { marginBottom: 16 },
+            children: selectElement
+          }
+        );
+      }
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
         label && /* @__PURE__ */ jsxRuntimeExports.jsx(
           "label",
@@ -65913,29 +65956,7 @@ var require_admin = __commonJS({
             children: label
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Select,
-          {
-            placeholder: `Select ${label}`,
-            value: get$1(editorStore(), name) || currentValue,
-            activeBorderColor: "linear-gradient(45deg, #7A5AF8, #7140D9, #950CED, #F46174)",
-            activeOutlineColor: "linear-gradient(45deg, #7A5AF8, #7140D9, #950CED, #F46174)",
-            hoverBorderColor: "linear-gradient(45deg, #7A5AF8, #7140D9, #950CED, #F46174)",
-            style: {
-              width: "100%"
-            },
-            onChange: handleChange,
-            options: transformedOptions,
-            mode,
-            optionFilterProp: "children",
-            filterOption: showProBadge ? (input, option) => {
-              var _a2;
-              if (option.disabled) return false;
-              const originalOption = options.find((opt) => opt.value === option.value);
-              return (_a2 = originalOption == null ? void 0 : originalOption.label) == null ? void 0 : _a2.toLowerCase().includes(input.toLowerCase());
-            } : void 0
-          }
-        )
+        selectElement
       ] });
     }
     const editorHelper = {
@@ -66035,7 +66056,8 @@ var require_admin = __commonJS({
       { label: "Flex", value: "flex", type: "pro", disabled: !isPro || isLicenseInactive },
       { label: "Marquee", value: "marquee", type: "pro", disabled: !isPro || isLicenseInactive },
       { label: "Table", value: "table", type: "pro", disabled: !isPro || isLicenseInactive },
-      { label: "Confetti", value: "confetti", type: "pro", disabled: !isPro || isLicenseInactive }
+      { label: "Confetti", value: "confetti", type: "pro", disabled: !isPro || isLicenseInactive },
+      { label: "Filterable", value: "filterable", type: "pro", disabled: !isPro || isLicenseInactive }
     ];
     const pro_details = [
       { label: "Drawer", value: "drawer", type: "pro", disabled: !isPro || isLicenseInactive }
@@ -78195,6 +78217,12 @@ var require_admin = __commonJS({
     function TeamShowcaseFields({ form, post_id }) {
       const translations2 = getTranslations();
       const [teamMembers, setTeamMembers] = reactExports.useState([]);
+      const [memberCategories, setMemberCategories] = reactExports.useState([]);
+      const [showMembersBy, setShowMembersBy] = reactExports.useState("manual");
+      const showMembersByOptions = [
+        { label: "Manual Selection", value: "manual" },
+        { label: "Category Selection", value: "category" }
+      ];
       reactExports.useEffect(() => {
         fetchData("tsteam/team_member/fetch", (response) => {
           if (response.success && response.data) {
@@ -78209,15 +78237,35 @@ var require_admin = __commonJS({
         });
       }, []);
       reactExports.useEffect(() => {
+        fetchData("tsteam/member_category/fetch", (response) => {
+          if (response.success && response.data) {
+            console.log(response);
+            const options = response.data.map((category) => ({
+              label: category.name,
+              value: category.post_id
+              // Changed from category.show_member_by to category.slug
+            }));
+            setMemberCategories(options);
+          } else {
+            console.error("Failed to fetch member categories.");
+          }
+        });
+      }, []);
+      reactExports.useEffect(() => {
         if (post_id) {
           fetchData(`tsteam/team_showcase/fetch/single`, (response) => {
+            var _a2;
             if (response.success && response.data) {
+              const showBy = response.data.meta_data.show_members_by || "manual";
+              setShowMembersBy(showBy);
               form.setFieldsValue({
                 title: response.data.title,
-                team_members: response.data.meta_data.team_members.map((member) => ({
+                show_members_by: showBy,
+                team_members: showBy === "manual" ? (_a2 = response.data.meta_data.team_members) == null ? void 0 : _a2.map((member) => ({
                   label: member.name,
                   value: member.post_id
-                }))
+                })) : void 0,
+                member_categories: showBy === "category" ? response.data.meta_data.member_categories : void 0
               });
             } else {
               console.error("Failed to fetch showcase data.");
@@ -78225,6 +78273,13 @@ var require_admin = __commonJS({
           }, { post_id });
         }
       }, [post_id, form]);
+      reactExports.useEffect(() => {
+        if (showMembersBy === "category") {
+          form.setFieldValue("team_members", void 0);
+        } else {
+          form.setFieldValue("member_categories", void 0);
+        }
+      }, [showMembersBy, form]);
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-6", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           TsInput,
@@ -78235,6 +78290,16 @@ var require_admin = __commonJS({
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
+          TsSelect,
+          {
+            label: translations2.showMembersBy || "Show Members By",
+            name: "show_members_by",
+            options: showMembersByOptions,
+            onChange: (value) => setShowMembersBy(value),
+            rules: [{ required: true, message: "Please select how to show members" }]
+          }
+        ),
+        showMembersBy === "manual" && /* @__PURE__ */ jsxRuntimeExports.jsx(
           Form.Item,
           {
             name: "team_members",
@@ -78243,8 +78308,22 @@ var require_admin = __commonJS({
               TsSelect,
               {
                 label: translations2.teamMember,
-                defaultValue: form.getFieldValue("team_members"),
                 options: teamMembers,
+                mode: "multiple"
+              }
+            )
+          }
+        ),
+        showMembersBy === "category" && /* @__PURE__ */ jsxRuntimeExports.jsx(
+          Form.Item,
+          {
+            name: "member_categories",
+            rules: [{ required: true, message: "Please select categories" }],
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              TsSelect,
+              {
+                label: translations2.memberCategory || "Member Category",
+                options: memberCategories,
                 mode: "multiple"
               }
             )
@@ -78255,11 +78334,25 @@ var require_admin = __commonJS({
     function TeamMemberBasic({ form, member_image }) {
       const translations2 = getTranslations();
       const [memberImage, setMemberImage] = reactExports.useState(member_image || null);
+      const [categoryOptions, setCategoryOptions] = reactExports.useState([]);
       reactExports.useEffect(() => {
         if (member_image) {
           setMemberImage(member_image);
         }
       }, [member_image]);
+      reactExports.useEffect(() => {
+        fetchData("tsteam/member_category/fetch", (response) => {
+          if (response.success && response.data) {
+            const options = response.data.map((category) => ({
+              label: category.name,
+              value: category.slug
+            }));
+            setCategoryOptions(options);
+          } else {
+            console.error("Failed to fetch team members.");
+          }
+        });
+      }, []);
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-6 bg-white", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -78293,15 +78386,26 @@ var require_admin = __commonJS({
           )
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            TsInput,
-            {
-              label: translations2.memberDescription,
-              name: "member_description",
-              type: "description",
-              maxLength: 150
-            }
-          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              TsSelect,
+              {
+                label: translations2.memberCategory || "Member Category",
+                name: "member_category",
+                form,
+                options: categoryOptions
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              TsInput,
+              {
+                label: translations2.memberDescription,
+                name: "member_description",
+                type: "description",
+                maxLength: 150
+              }
+            )
+          ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("label", { children: translations2.memberImage }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -78502,6 +78606,7 @@ var require_admin = __commonJS({
               form.setFieldsValue({
                 member_name: response.data.title,
                 member_designation: response.data.meta_data.designation,
+                member_category: response.data.meta_data.category,
                 member_image: response.data.meta_data.image,
                 member_description: response.data.content,
                 member_email: response.data.meta_data.email,
@@ -78563,6 +78668,27 @@ var require_admin = __commonJS({
               paddingTop: "2rem"
               // backgroundColor: '#F3EEFF',
             }
+          }
+        )
+      ] });
+    }
+    function MemberCategoryFields({ form, term_id }) {
+      const translations2 = getTranslations();
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-6", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          TsInput,
+          {
+            label: translations2.categoryName || "Category Name",
+            name: "name",
+            required: true
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          TsInput,
+          {
+            label: translations2.slug || "Slug",
+            name: "slug",
+            placeholder: "category-slug"
           }
         )
       ] });
@@ -78636,6 +78762,7 @@ var require_admin = __commonJS({
           children: [
             type2 === "team_showcase" && /* @__PURE__ */ jsxRuntimeExports.jsx(TeamShowcaseFields, { form, post_id }),
             type2 === "team_member" && /* @__PURE__ */ jsxRuntimeExports.jsx(TeamMemberFields, { form, post_id }),
+            type2 === "member_category" && /* @__PURE__ */ jsxRuntimeExports.jsx(MemberCategoryFields, { form, post_id }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: {
               display: "flex",
               justifyContent: "flex-end",
@@ -79149,7 +79276,7 @@ var require_admin = __commonJS({
             showProBadge: true
           }
         ),
-        (selectedView.value === "grid" || selectedView.value === "carousel" || selectedView.value === "marquee") && /* @__PURE__ */ jsxRuntimeExports.jsx(
+        (selectedView.value === "grid" || selectedView.value === "carousel" || selectedView.value === "marquee" || selectedView.value === "filterable") && /* @__PURE__ */ jsxRuntimeExports.jsx(
           TsSelect,
           {
             label: translations2.layout,
@@ -79391,6 +79518,43 @@ var require_admin = __commonJS({
             }
           ),
           /* @__PURE__ */ jsxRuntimeExports.jsx(TsDivider, {})
+        ] }),
+        selectedView.value === "filterable" && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            TsDivider,
+            {
+              label: "Filterable Settings"
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            TsSlider,
+            {
+              label: translations2.containerWidth,
+              range: containerSettings.width.range,
+              name: "containerSettings.width.default",
+              responsive: true,
+              unit: true
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            TsSlider,
+            {
+              label: translations2.columns,
+              range: columnSettings.column.range,
+              name: "columnSettings.column.default",
+              responsive: true
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            TsSlider,
+            {
+              label: translations2.columnGap,
+              range: columnSettings.gap.range,
+              name: "columnSettings.gap.default",
+              responsive: true,
+              unit: true
+            }
+          )
         ] })
       ] });
     }
@@ -80258,7 +80422,7 @@ var require_admin = __commonJS({
         );
       });
     };
-    function Layout({ team_members: team_members2, settings, layoutType, id: id2, imageUrl, title, subtitle, description, socialIcons, details, animationConfig }) {
+    function Layout({ team_members, settings, layoutType, id: id2, imageUrl, title, subtitle, description, socialIcons, details, animationConfig }) {
       const [Component, setComponent] = reactExports.useState(null);
       reactExports.useEffect(() => {
         if (layoutType) {
@@ -80276,7 +80440,7 @@ var require_admin = __commonJS({
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         Component,
         {
-          team_members: team_members2,
+          team_members,
           settings,
           id: id2,
           imageUrl,
@@ -80581,7 +80745,7 @@ var require_admin = __commonJS({
       )) });
     };
     function DetailsModal({ member }) {
-      const [currentMember, setCurrentMember] = reactExports.useState(null);
+      reactExports.useState(null);
       const modalId = `${member.title.replace(/\s+/g, "-").toLowerCase()}-${member.post_id}`;
       const editorData = safeJsonParse(member.meta_data.information);
       const skills = safeJsonParse(member.meta_data.skills);
@@ -80594,15 +80758,10 @@ var require_admin = __commonJS({
         }
       };
       const handleButtonClick = (e2) => {
-        const postId = e2.target.getAttribute("data-post-id");
-        const member2 = team_members.find((m2) => m2.post_id.toString() === postId.toString());
-        if (member2) {
-          setCurrentMember(member2);
-          const modalId2 = `${member2.title.replace(/\s+/g, "-").toLowerCase()}-${member2.post_id}-details`;
-          const modal = document.getElementById(modalId2);
-          if (modal) {
-            modal.setAttribute("open", "");
-          }
+        const buttonId = e2.target.id;
+        const modal = document.getElementById(`${buttonId}-details`);
+        if (modal) {
+          modal.setAttribute("open", "");
         }
       };
       reactExports.useEffect(() => {
@@ -81147,7 +81306,7 @@ var require_admin = __commonJS({
       const generatedCSS = cssGenerator.generateCSS();
       return React$1.createElement("style", null, generatedCSS);
     };
-    function CarouselView({ team_members: team_members2, settings, viewport, isEditor }) {
+    function CarouselView({ team_members, settings, viewport, isEditor }) {
       var _a2, _b;
       const [ProLayoutComponent, setProLayoutComponent] = reactExports.useState(null);
       const commonStyles = getCommonStyles(settings);
@@ -81198,7 +81357,7 @@ var require_admin = __commonJS({
               backgroundColor: carouselStyles.navBgColor,
               color: carouselStyles.navColor
             },
-            children: team_members2 && team_members2.length > 0 ? team_members2.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            children: team_members && team_members.length > 0 ? team_members.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
               {
                 className: "tsteam-carousel",
@@ -81334,7 +81493,7 @@ var require_admin = __commonJS({
       if (!config) return null;
       return config;
     };
-    function StaticView({ team_members: team_members2, settings, viewport, isEditor }) {
+    function StaticView({ team_members, settings, viewport, isEditor }) {
       var _a2, _b;
       const [ProLayoutComponent, setProLayoutComponent] = reactExports.useState(null);
       const commonStyles = getCommonStyles(settings);
@@ -81384,7 +81543,7 @@ var require_admin = __commonJS({
           },
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(GenerateLayoutStyle, { settings }),
-            team_members2 && team_members2.length > 0 ? team_members2.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.Fragment, { children: ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+            team_members && team_members.length > 0 ? team_members.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.Fragment, { children: ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               ProLayoutComponent,
               {
                 settings,
@@ -81416,7 +81575,7 @@ var require_admin = __commonJS({
         }
       );
     }
-    function FlexView({ team_members: team_members2, settings, viewport, isEditor, Details: Details2 }) {
+    function FlexView({ team_members, settings, viewport, isEditor, Details: Details2 }) {
       var _a2, _b;
       const [ProLayoutComponent, setProLayoutComponent] = reactExports.useState(null);
       const commonStyles = getCommonStyles(settings);
@@ -81454,7 +81613,7 @@ var require_admin = __commonJS({
               ProLayoutComponent,
               {
                 settings,
-                team_members: team_members2,
+                team_members,
                 Details: Details2
               }
             ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -81462,7 +81621,7 @@ var require_admin = __commonJS({
               {
                 settings,
                 layoutType: settings.selectedLayout.value,
-                team_members: team_members2,
+                team_members,
                 Details: Details2
               }
             )
@@ -81628,7 +81787,7 @@ var require_admin = __commonJS({
         columnGap
       };
     };
-    function MarqueeView({ team_members: team_members2, settings, viewport, isEditor }) {
+    function MarqueeView({ team_members, settings, viewport, isEditor }) {
       var _a2, _b;
       const [ProLayoutComponent, setProLayoutComponent] = reactExports.useState(null);
       const commonStyles = getCommonStyles(settings);
@@ -81678,7 +81837,7 @@ var require_admin = __commonJS({
                 style: {
                   width: "100%"
                 },
-                children: team_members2 && team_members2.length > 0 ? team_members2.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginRight: marqueeStyles.columnGap }, children: ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                children: team_members && team_members.length > 0 ? team_members.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginRight: marqueeStyles.columnGap }, children: ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
                   ProLayoutComponent,
                   {
                     settings,
@@ -81722,7 +81881,7 @@ var require_admin = __commonJS({
         }
       );
     }
-    function TableView({ team_members: team_members2, settings, viewport, isEditor }) {
+    function TableView({ team_members, settings, viewport, isEditor }) {
       var _a2, _b;
       const [ProLayoutComponent, setProLayoutComponent] = reactExports.useState(null);
       const commonStyles = getCommonStyles(settings);
@@ -81772,11 +81931,11 @@ var require_admin = __commonJS({
           },
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(GenerateLayoutStyle, { settings }),
-            team_members2 && team_members2.length > 0 ? ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+            team_members && team_members.length > 0 ? ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               ProLayoutComponent,
               {
                 settings,
-                team_members: team_members2,
+                team_members,
                 Details
               }
             ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -81784,7 +81943,7 @@ var require_admin = __commonJS({
               {
                 settings,
                 layoutType: settings.selectedLayout.value,
-                team_members: team_members2,
+                team_members,
                 Details
               }
             ) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No team members found." })
@@ -82488,7 +82647,7 @@ var require_admin = __commonJS({
     }(), module, false);
     const confettiModule = module.exports;
     module.exports.create;
-    function ConfettiView({ team_members: team_members2, settings, viewport, isEditor }) {
+    function ConfettiView({ team_members, settings, viewport, isEditor }) {
       var _a2, _b;
       const [ProLayoutComponent, setProLayoutComponent] = reactExports.useState(null);
       const commonStyles = getCommonStyles(settings);
@@ -82544,7 +82703,7 @@ var require_admin = __commonJS({
             ...commonStyles,
             ...responsiveStyles
           },
-          children: team_members2 && team_members2.length > 0 ? team_members2.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+          children: team_members && team_members.length > 0 ? team_members.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             ProLayoutComponent,
             {
               settings,
@@ -82585,6 +82744,159 @@ var require_admin = __commonJS({
         }
       );
     }
+    function FilterableView({ team_members, settings, category, viewport, isEditor }) {
+      var _a2, _b;
+      const [ProLayoutComponent, setProLayoutComponent] = reactExports.useState(null);
+      const [activeCategory, setActiveCategory] = reactExports.useState("all");
+      const commonStyles = getCommonStyles(settings);
+      const [responsiveStyles, setResponsiveStyles] = reactExports.useState(
+        getResponsiveStyles(settings, viewport, isEditor)
+      );
+      const categories = reactExports.useMemo(() => {
+        const categoryMap = /* @__PURE__ */ new Map();
+        team_members == null ? void 0 : team_members.forEach((member) => {
+          var _a3;
+          (_a3 = member.categories) == null ? void 0 : _a3.forEach((cat) => {
+            if (!categoryMap.has(cat.slug)) {
+              categoryMap.set(cat.slug, cat.name);
+            }
+          });
+        });
+        return Array.from(categoryMap, ([slug, name]) => ({ slug, name }));
+      }, [team_members]);
+      const filteredMembers = reactExports.useMemo(() => {
+        if (activeCategory === "all") {
+          return team_members;
+        }
+        return team_members == null ? void 0 : team_members.filter(
+          (member) => {
+            var _a3;
+            return (_a3 = member.categories) == null ? void 0 : _a3.some((cat) => cat.slug === activeCategory);
+          }
+        );
+      }, [team_members, activeCategory]);
+      reactExports.useEffect(() => {
+        if (settings == null ? void 0 : settings.typography) {
+          const typographyKeys = ["name", "designation", "description"];
+          typographyKeys.forEach((key) => {
+            const fontFamily = settings.typography[key];
+            if (fontFamily) {
+              loadGoogleFont(fontFamily);
+            }
+          });
+        }
+      }, [settings == null ? void 0 : settings.typography]);
+      reactExports.useMemo(() => {
+        setProLayoutComponent(() => getProLayout(settings));
+      }, [(_a2 = settings == null ? void 0 : settings.selectedLayout) == null ? void 0 : _a2.type, (_b = settings == null ? void 0 : settings.selectedLayout) == null ? void 0 : _b.value]);
+      reactExports.useEffect(() => {
+        const updateResponsiveStyles = () => {
+          setResponsiveStyles(getResponsiveStyles(settings, viewport, isEditor));
+        };
+        if (isEditor) {
+          updateResponsiveStyles();
+        } else {
+          updateResponsiveStyles();
+          window.addEventListener("resize", updateResponsiveStyles);
+          return () => {
+            window.removeEventListener("resize", updateResponsiveStyles);
+          };
+        }
+      }, [settings, isEditor, viewport]);
+      const animationConfig = reactExports.useMemo(() => {
+        const hoverAnimation = (settings == null ? void 0 : settings.hoverAnimation) || "none";
+        const config = getAnimationClasses(hoverAnimation);
+        return config;
+      }, [settings == null ? void 0 : settings.hoverAnimation]);
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-filterable-wrapper", children: [
+        categories.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-category-tabs", style: {
+          display: "flex",
+          gap: "10px",
+          marginBottom: "30px",
+          flexWrap: "wrap",
+          justifyContent: "center"
+        }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              className: `tsteam-tab ${activeCategory === "all" ? "active" : ""}`,
+              onClick: () => setActiveCategory("all"),
+              style: {
+                padding: "10px 20px",
+                border: activeCategory === "all" ? "2px solid #007bff" : "1px solid #ddd",
+                background: activeCategory === "all" ? "#007bff" : "#fff",
+                color: activeCategory === "all" ? "#fff" : "#333",
+                borderRadius: "5px",
+                cursor: "pointer",
+                fontWeight: activeCategory === "all" ? "bold" : "normal",
+                transition: "all 0.3s ease"
+              },
+              children: "All"
+            }
+          ),
+          categories.map((cat) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              className: `tsteam-tab ${activeCategory === cat.slug ? "active" : ""}`,
+              onClick: () => setActiveCategory(cat.slug),
+              style: {
+                padding: "10px 20px",
+                border: activeCategory === cat.slug ? "2px solid #007bff" : "1px solid #ddd",
+                background: activeCategory === cat.slug ? "#007bff" : "#fff",
+                color: activeCategory === cat.slug ? "#fff" : "#333",
+                borderRadius: "5px",
+                cursor: "pointer",
+                fontWeight: activeCategory === cat.slug ? "bold" : "normal",
+                transition: "all 0.3s ease"
+              },
+              children: cat.name
+            },
+            cat.slug
+          ))
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "tsteam-container",
+            style: {
+              ...commonStyles,
+              ...responsiveStyles
+            },
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(GenerateLayoutStyle, { settings }),
+              filteredMembers && filteredMembers.length > 0 ? filteredMembers.map((member, index2) => /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.Fragment, { children: ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                ProLayoutComponent,
+                {
+                  settings,
+                  imageUrl: member.meta_data.image,
+                  id: member.post_id,
+                  title: member.title,
+                  subtitle: member.meta_data.designation,
+                  description: member.meta_data.description,
+                  socialIcons: member.meta_data.socialLinks || [],
+                  details: /* @__PURE__ */ jsxRuntimeExports.jsx(Details, { settings, member }),
+                  animationConfig
+                }
+              ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Layout,
+                {
+                  settings,
+                  layoutType: settings.selectedLayout.value,
+                  id: member.post_id,
+                  imageUrl: member.meta_data.image,
+                  title: member.title,
+                  subtitle: member.meta_data.designation,
+                  description: member.meta_data.description,
+                  socialIcons: member.meta_data.socialLinks || [],
+                  details: /* @__PURE__ */ jsxRuntimeExports.jsx(Details, { settings, member }),
+                  animationConfig
+                }
+              ) }, member.post_id || index2)) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { textAlign: "center", padding: "20px", color: "#666" }, children: "No team members found in this category." })
+            ]
+          }
+        )
+      ] });
+    }
     function Editor() {
       const translations2 = getTranslations();
       const isPro2 = tsteam_settings.is_pro;
@@ -82595,6 +82907,7 @@ var require_admin = __commonJS({
       const [isSidebarOpen, setIsSidebarOpen] = reactExports.useState(true);
       const [isLoading, setIsLoading] = reactExports.useState(true);
       const [postData, setPostData] = reactExports.useState(null);
+      const [categoryData, setCategoryData] = reactExports.useState(null);
       reactExports.useEffect(() => {
         hideAdminElements();
         setIsLoading(true);
@@ -82607,6 +82920,7 @@ var require_admin = __commonJS({
           fetchData(`tsteam/${postTypeFromUrl}/fetch/single`, (response) => {
             if (response && response.success) {
               setPostData(response.data.meta_data);
+              setCategoryData(response.data.meta_data.member_categories);
               const showcaseSettings = JSON.parse(response.data.meta_data.showcase_settings);
               Object.keys(showcaseSettings).forEach((key) => {
                 const value = showcaseSettings[key];
@@ -82699,6 +83013,15 @@ var require_admin = __commonJS({
                 {
                   team_members: postData.team_members,
                   settings: allSettings,
+                  viewport,
+                  isEditor
+                }
+              ) : allSettings.selectedView.value === "filterable" && isPro2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                FilterableView,
+                {
+                  team_members: postData.team_members,
+                  settings: allSettings,
+                  category: categoryData,
                   viewport,
                   isEditor
                 }
@@ -83043,6 +83366,16 @@ var require_admin = __commonJS({
         {
           type: "team_member",
           title: translations2.teamMember
+        }
+      ) }) });
+    }
+    function MemberCategory() {
+      getTranslations();
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "min-h-fit flex", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Container,
+        {
+          type: "member_category",
+          title: "Member Category"
         }
       ) }) });
     }
@@ -83635,6 +83968,7 @@ var require_admin = __commonJS({
     const translations = getTranslations();
     function AdminPanel() {
       const isTeamMemberPage = currentUrl.includes(`&path=team-member`);
+      const isMemberCategoryPage = currentUrl.includes(`&path=member-category`);
       const isDashboardPage = currentUrl.includes(`&path=dashboard`);
       const isToolsPage = currentUrl.includes(`&path=tools`);
       const isMigrationPage = currentUrl.includes(`&path=migration`);
@@ -83658,6 +83992,11 @@ var require_admin = __commonJS({
         return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(Topbar, { title: "Team Member Generator" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam__admin--style overflow-x-auto w-full flex justify-center pt-12 pb-12", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-between gap-8 w-4/6", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsx(TeamMemberGenerator, {}) }) }) })
+        ] });
+      } else if (isMemberCategoryPage) {
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(Topbar, { title: "Member Category" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam__admin--style overflow-x-auto w-full flex justify-center pt-12 pb-12", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-between gap-8 w-4/6", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MemberCategory, {}) }) }) })
         ] });
       } else {
         return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [

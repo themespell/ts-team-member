@@ -7082,7 +7082,7 @@ var require_frontend = __commonJS({
         );
       });
     };
-    function Layout({ team_members: team_members2, settings, layoutType, id: id2, imageUrl, title, subtitle, description, socialIcons, details, animationConfig }) {
+    function Layout({ team_members, settings, layoutType, id: id2, imageUrl, title, subtitle, description, socialIcons, details, animationConfig }) {
       const [Component, setComponent] = reactExports.useState(null);
       reactExports.useEffect(() => {
         if (layoutType) {
@@ -7100,7 +7100,7 @@ var require_frontend = __commonJS({
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         Component,
         {
-          team_members: team_members2,
+          team_members,
           settings,
           id: id2,
           imageUrl,
@@ -7579,7 +7579,7 @@ var require_frontend = __commonJS({
       )) });
     };
     function DetailsModal({ member }) {
-      const [currentMember, setCurrentMember] = reactExports.useState(null);
+      reactExports.useState(null);
       const modalId = `${member.title.replace(/\s+/g, "-").toLowerCase()}-${member.post_id}`;
       const editorData = safeJsonParse(member.meta_data.information);
       const skills = safeJsonParse(member.meta_data.skills);
@@ -7592,15 +7592,10 @@ var require_frontend = __commonJS({
         }
       };
       const handleButtonClick = (e2) => {
-        const postId = e2.target.getAttribute("data-post-id");
-        const member2 = team_members.find((m2) => m2.post_id.toString() === postId.toString());
-        if (member2) {
-          setCurrentMember(member2);
-          const modalId2 = `${member2.title.replace(/\s+/g, "-").toLowerCase()}-${member2.post_id}-details`;
-          const modal = document.getElementById(modalId2);
-          if (modal) {
-            modal.setAttribute("open", "");
-          }
+        const buttonId = e2.target.id;
+        const modal = document.getElementById(`${buttonId}-details`);
+        if (modal) {
+          modal.setAttribute("open", "");
         }
       };
       reactExports.useEffect(() => {
@@ -8145,7 +8140,7 @@ var require_frontend = __commonJS({
       const generatedCSS = cssGenerator.generateCSS();
       return ReactExports.createElement("style", null, generatedCSS);
     };
-    function StaticView({ team_members: team_members2, settings, viewport, isEditor }) {
+    function StaticView({ team_members, settings, viewport, isEditor }) {
       var _a2, _b;
       const [ProLayoutComponent, setProLayoutComponent] = reactExports.useState(null);
       const commonStyles = getCommonStyles(settings);
@@ -8195,7 +8190,7 @@ var require_frontend = __commonJS({
           },
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(GenerateLayoutStyle, { settings }),
-            team_members2 && team_members2.length > 0 ? team_members2.map((member, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.Fragment, { children: ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+            team_members && team_members.length > 0 ? team_members.map((member, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.Fragment, { children: ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               ProLayoutComponent,
               {
                 settings,
@@ -8227,7 +8222,7 @@ var require_frontend = __commonJS({
         }
       );
     }
-    function FlexView({ team_members: team_members2, settings, viewport, isEditor, Details: Details2 }) {
+    function FlexView({ team_members, settings, viewport, isEditor, Details: Details2 }) {
       var _a2, _b;
       const [ProLayoutComponent, setProLayoutComponent] = reactExports.useState(null);
       const commonStyles = getCommonStyles(settings);
@@ -8265,7 +8260,7 @@ var require_frontend = __commonJS({
               ProLayoutComponent,
               {
                 settings,
-                team_members: team_members2,
+                team_members,
                 Details: Details2
               }
             ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -8273,7 +8268,7 @@ var require_frontend = __commonJS({
               {
                 settings,
                 layoutType: settings.selectedLayout.value,
-                team_members: team_members2,
+                team_members,
                 Details: Details2
               }
             )
@@ -8615,6 +8610,7 @@ var require_frontend = __commonJS({
         dashboard: window.tsteam_i18n.dashboard || "Dashboard",
         teamShowcase: window.tsteam_i18n.team_showcase || "Team Showcase",
         teamMember: window.tsteam_i18n.team_member || "Team Member",
+        memberCategory: window.tsteam_i18n.member_category || "Member Category",
         tools: window.tsteam_i18n.tools || "Tools",
         account: window.tsteam_i18n.account || "Account",
         supportForum: window.tsteam_i18n.support_forum || "Support Forum",
@@ -8766,6 +8762,10 @@ var require_frontend = __commonJS({
           teamMember: {
             link: "?page=tsteam-showcase&path=team-member",
             label: translations.teamMember
+          },
+          memberCategory: {
+            link: "?page=tsteam-showcase&path=member-category",
+            label: translations.memberCategory
           },
           tools: {
             link: "?page=tsteam-showcase&path=tools",
@@ -17784,7 +17784,8 @@ var require_frontend = __commonJS({
       { label: "Flex", value: "flex", type: "pro", disabled: !isPro || isLicenseInactive },
       { label: "Marquee", value: "marquee", type: "pro", disabled: !isPro || isLicenseInactive },
       { label: "Table", value: "table", type: "pro", disabled: !isPro || isLicenseInactive },
-      { label: "Confetti", value: "confetti", type: "pro", disabled: !isPro || isLicenseInactive }
+      { label: "Confetti", value: "confetti", type: "pro", disabled: !isPro || isLicenseInactive },
+      { label: "Filterable", value: "filterable", type: "pro", disabled: !isPro || isLicenseInactive }
     ];
     const pro_details = [
       { label: "Drawer", value: "drawer", type: "pro", disabled: !isPro || isLicenseInactive }
@@ -23134,7 +23135,7 @@ var require_frontend = __commonJS({
         navColor
       };
     };
-    function CarouselView({ team_members: team_members2, settings, viewport, isEditor }) {
+    function CarouselView({ team_members, settings, viewport, isEditor }) {
       var _a2, _b;
       const [ProLayoutComponent, setProLayoutComponent] = reactExports.useState(null);
       const commonStyles = getCommonStyles(settings);
@@ -23185,7 +23186,7 @@ var require_frontend = __commonJS({
               backgroundColor: carouselStyles.navBgColor,
               color: carouselStyles.navColor
             },
-            children: team_members2 && team_members2.length > 0 ? team_members2.map((member, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            children: team_members && team_members.length > 0 ? team_members.map((member, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
               "div",
               {
                 className: "tsteam-carousel",
@@ -23403,7 +23404,7 @@ var require_frontend = __commonJS({
         columnGap
       };
     };
-    function MarqueeView({ team_members: team_members2, settings, viewport, isEditor }) {
+    function MarqueeView({ team_members, settings, viewport, isEditor }) {
       var _a2, _b;
       const [ProLayoutComponent, setProLayoutComponent] = reactExports.useState(null);
       const commonStyles = getCommonStyles(settings);
@@ -23453,7 +23454,7 @@ var require_frontend = __commonJS({
                 style: {
                   width: "100%"
                 },
-                children: team_members2 && team_members2.length > 0 ? team_members2.map((member, index) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginRight: marqueeStyles.columnGap }, children: ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                children: team_members && team_members.length > 0 ? team_members.map((member, index) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { style: { marginRight: marqueeStyles.columnGap }, children: ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
                   ProLayoutComponent,
                   {
                     settings,
@@ -23497,7 +23498,7 @@ var require_frontend = __commonJS({
         }
       );
     }
-    function TableView({ team_members: team_members2, settings, viewport, isEditor }) {
+    function TableView({ team_members, settings, viewport, isEditor }) {
       var _a2, _b;
       const [ProLayoutComponent, setProLayoutComponent] = reactExports.useState(null);
       const commonStyles = getCommonStyles(settings);
@@ -23547,11 +23548,11 @@ var require_frontend = __commonJS({
           },
           children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(GenerateLayoutStyle, { settings }),
-            team_members2 && team_members2.length > 0 ? ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+            team_members && team_members.length > 0 ? ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
               ProLayoutComponent,
               {
                 settings,
-                team_members: team_members2,
+                team_members,
                 Details
               }
             ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -23559,7 +23560,7 @@ var require_frontend = __commonJS({
               {
                 settings,
                 layoutType: settings.selectedLayout.value,
-                team_members: team_members2,
+                team_members,
                 Details
               }
             ) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No team members found." })
@@ -24263,7 +24264,7 @@ var require_frontend = __commonJS({
     }(), module, false);
     const confettiModule = module.exports;
     module.exports.create;
-    function ConfettiView({ team_members: team_members2, settings, viewport, isEditor }) {
+    function ConfettiView({ team_members, settings, viewport, isEditor }) {
       var _a2, _b;
       const [ProLayoutComponent, setProLayoutComponent] = reactExports.useState(null);
       const commonStyles = getCommonStyles(settings);
@@ -24319,7 +24320,7 @@ var require_frontend = __commonJS({
             ...commonStyles,
             ...responsiveStyles
           },
-          children: team_members2 && team_members2.length > 0 ? team_members2.map((member, index) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+          children: team_members && team_members.length > 0 ? team_members.map((member, index) => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
             ProLayoutComponent,
             {
               settings,
