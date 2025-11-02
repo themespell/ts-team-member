@@ -14,6 +14,7 @@ class Strings {
             'dashboard'              => __('Dashboard', 'ts-team-member'),
             'team_showcase'          => __('Team Showcase', 'ts-team-member'),
             'team_member'            => __('Team Member', 'ts-team-member'),
+            'member_category'        => __('Member Category', 'ts-team-member'),
             'tools'                  => __('Tools', 'ts-team-member'),
             'account'                => __('Account', 'ts-team-member'),
             'support_forum'          => __('Support', 'ts-team-member'),
