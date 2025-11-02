@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 // Load Composer autoloader
 require_once plugin_dir_path( __FILE__ ) . 'includes/library/vendor/autoload.php';

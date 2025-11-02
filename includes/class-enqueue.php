@@ -27,8 +27,8 @@ class Enqueue {
 
 		if ( $screen_info ) {
 			wp_enqueue_media();
-			wp_enqueue_style( 'tsteam-admin-main', TSTEAM_ROOT_DIR_URL . 'includes/assets/admin/admin.css' );
-			wp_enqueue_script( 'tsteam-admin-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/admin/admin.js', $dependency, '2.2.1', true );
+			wp_enqueue_style( 'tsteam-admin-main', TSTEAM_ROOT_DIR_URL . 'includes/assets/admin/admin.min.css' );
+			wp_enqueue_script( 'tsteam-admin-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/admin/admin.min.js', $dependency, '2.2.3', true );
 			wp_set_script_translations('tsteam-admin-script', 'ts-team-member', plugin_dir_path(__FILE__)  . 'languages');
 
 			wp_localize_script(
