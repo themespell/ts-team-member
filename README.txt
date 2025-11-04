@@ -1,14 +1,14 @@
-=== TS Team Member Showcase ===
+=== TS Team Member Showcase - Team Showcase, Team Grid, Team Carousel, Team Marquee ===
 Contributors: themespell, asadabir
 Tags: team, team members, team showcase, team builder, team plugin
 Requires at least: 5.5
 Tested up to: 6.8
 Requires PHP: 5.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Team members, Team showcase and Team plugin in one place – display your Team Members Showcase with a stunning Team Member slider.
+Team members, Team showcase and Team plugin all in one – showcase your team with stunning Grid, Carousel, Marquee, Table, and Filterable layouts using shortcodes, Elementor widget, or WPBakery addon for full professionalism and flexibility.
 
 == Description ==
 
@@ -228,6 +228,10 @@ If the user does **not** opt in, only essential data may be sent for license val
 7. Elementor widget for TS Team Member.
 
 == Changelog ==
+
+1.2.1
+* Minor UI bug fixed
+* Readme Updated
 
 1.2.0
 * Added Member Category
