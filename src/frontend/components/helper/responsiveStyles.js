@@ -1,7 +1,7 @@
 // responsiveStyles.js
 export const getResponsiveStyles = (settings, viewport, isEditor) => {
     let currentColumns, currentWidth, columnGap;
-
+    
     if (isEditor) {
         switch (viewport) {
             case 'mobile':
@@ -37,6 +37,13 @@ export const getResponsiveStyles = (settings, viewport, isEditor) => {
     }
 
     if (settings?.selectedView?.value === 'grid'){
+        return {
+            width: currentWidth,
+            gridTemplateColumns: `repeat(${currentColumns}, 1fr)`,
+            gap: columnGap,
+        };
+    }
+    if (settings?.selectedView?.value === 'filterable'){
         return {
             width: currentWidth,
             gridTemplateColumns: `repeat(${currentColumns}, 1fr)`,
