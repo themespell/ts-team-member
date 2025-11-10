@@ -81507,7 +81507,6 @@ var require_admin = __commonJS({
       const [responsiveStyles, setResponsiveStyles] = reactExports.useState(
         getResponsiveStyles(settings, viewport, isEditor)
       );
-      console.log(responsiveStyles);
       reactExports.useEffect(() => {
         if (settings == null ? void 0 : settings.typography) {
           const typographyKeys = ["name", "designation", "description"];
@@ -82865,7 +82864,7 @@ var require_admin = __commonJS({
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "div",
           {
-            className: "tsteam-container",
+            className: "tsteam-container items-start",
             style: {
               ...commonStyles,
               ...responsiveStyles

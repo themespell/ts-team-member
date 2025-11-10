@@ -8154,7 +8154,6 @@ var require_frontend = __commonJS({
       const [responsiveStyles, setResponsiveStyles] = reactExports.useState(
         getResponsiveStyles(settings, viewport, isEditor)
       );
-      console.log(responsiveStyles);
       reactExports.useEffect(() => {
         if (settings == null ? void 0 : settings.typography) {
           const typographyKeys = ["name", "designation", "description"];

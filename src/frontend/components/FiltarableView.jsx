@@ -132,7 +132,7 @@ function FilterableView({ team_members, settings, category, viewport, isEditor }
 
             {/* Team Members Container */}
             <div
-                className="tsteam-container"
+                className="tsteam-container items-start"
                 style={{
                     ...commonStyles,
                     ...responsiveStyles,
