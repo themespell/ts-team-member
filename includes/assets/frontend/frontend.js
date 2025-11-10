@@ -7136,7 +7136,7 @@ var require_frontend = __commonJS({
       };
     };
     const getResponsiveStyles = (settings, viewport, isEditor) => {
-      var _a2, _b, _c, _d, _e, _f, _g, _h, _i2, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t2, _u, _v, _w, _x, _y, _z, _A, _B, _C, _D, _E, _F, _G, _H, _I, _J, _K, _L, _M, _N, _O, _P, _Q, _R, _S, _T, _U, _V, _W, _X, _Y, _Z, __, _$, _aa;
+      var _a2, _b, _c, _d, _e, _f, _g, _h, _i2, _j, _k, _l, _m, _n, _o, _p, _q, _r, _s, _t2, _u, _v, _w, _x, _y, _z, _A, _B, _C, _D, _E, _F, _G, _H, _I, _J, _K, _L, _M, _N, _O, _P, _Q, _R, _S, _T, _U, _V, _W, _X, _Y, _Z, __, _$, _aa, _ba;
       let currentColumns, currentWidth, columnGap;
       if (isEditor) {
         switch (viewport) {
@@ -7172,6 +7172,13 @@ var require_frontend = __commonJS({
         }
       }
       if (((_aa = settings == null ? void 0 : settings.selectedView) == null ? void 0 : _aa.value) === "grid") {
+        return {
+          width: currentWidth,
+          gridTemplateColumns: `repeat(${currentColumns}, 1fr)`,
+          gap: columnGap
+        };
+      }
+      if (((_ba = settings == null ? void 0 : settings.selectedView) == null ? void 0 : _ba.value) === "filterable") {
         return {
           width: currentWidth,
           gridTemplateColumns: `repeat(${currentColumns}, 1fr)`,
@@ -8147,6 +8154,7 @@ var require_frontend = __commonJS({
       const [responsiveStyles, setResponsiveStyles] = reactExports.useState(
         getResponsiveStyles(settings, viewport, isEditor)
       );
+      console.log(responsiveStyles);
       reactExports.useEffect(() => {
         if (settings == null ? void 0 : settings.typography) {
           const typographyKeys = ["name", "designation", "description"];

@@ -15,7 +15,6 @@ function FilterableView({ team_members, settings, category, viewport, isEditor }
     const [responsiveStyles, setResponsiveStyles] = useState(
         getResponsiveStyles(settings, viewport, isEditor),
     );
-
     // Extract unique categories from team members
     const categories = useMemo(() => {
         const categoryMap = new Map();
