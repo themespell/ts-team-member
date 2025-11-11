@@ -23575,6 +23575,159 @@ var require_frontend = __commonJS({
         }
       );
     }
+    function FilterableView({ team_members, settings, category, viewport, isEditor }) {
+      var _a2, _b;
+      const [ProLayoutComponent, setProLayoutComponent] = reactExports.useState(null);
+      const [activeCategory, setActiveCategory] = reactExports.useState("all");
+      const commonStyles = getCommonStyles(settings);
+      const [responsiveStyles, setResponsiveStyles] = reactExports.useState(
+        getResponsiveStyles(settings, viewport, isEditor)
+      );
+      const categories = reactExports.useMemo(() => {
+        const categoryMap = /* @__PURE__ */ new Map();
+        team_members == null ? void 0 : team_members.forEach((member) => {
+          var _a3;
+          (_a3 = member.categories) == null ? void 0 : _a3.forEach((cat) => {
+            if (!categoryMap.has(cat.slug)) {
+              categoryMap.set(cat.slug, cat.name);
+            }
+          });
+        });
+        return Array.from(categoryMap, ([slug, name]) => ({ slug, name }));
+      }, [team_members]);
+      const filteredMembers = reactExports.useMemo(() => {
+        if (activeCategory === "all") {
+          return team_members;
+        }
+        return team_members == null ? void 0 : team_members.filter(
+          (member) => {
+            var _a3;
+            return (_a3 = member.categories) == null ? void 0 : _a3.some((cat) => cat.slug === activeCategory);
+          }
+        );
+      }, [team_members, activeCategory]);
+      reactExports.useEffect(() => {
+        if (settings == null ? void 0 : settings.typography) {
+          const typographyKeys = ["name", "designation", "description"];
+          typographyKeys.forEach((key) => {
+            const fontFamily = settings.typography[key];
+            if (fontFamily) {
+              loadGoogleFont(fontFamily);
+            }
+          });
+        }
+      }, [settings == null ? void 0 : settings.typography]);
+      reactExports.useMemo(() => {
+        setProLayoutComponent(() => getProLayout(settings));
+      }, [(_a2 = settings == null ? void 0 : settings.selectedLayout) == null ? void 0 : _a2.type, (_b = settings == null ? void 0 : settings.selectedLayout) == null ? void 0 : _b.value]);
+      reactExports.useEffect(() => {
+        const updateResponsiveStyles = () => {
+          setResponsiveStyles(getResponsiveStyles(settings, viewport, isEditor));
+        };
+        if (isEditor) {
+          updateResponsiveStyles();
+        } else {
+          updateResponsiveStyles();
+          window.addEventListener("resize", updateResponsiveStyles);
+          return () => {
+            window.removeEventListener("resize", updateResponsiveStyles);
+          };
+        }
+      }, [settings, isEditor, viewport]);
+      const animationConfig = reactExports.useMemo(() => {
+        const hoverAnimation = (settings == null ? void 0 : settings.hoverAnimation) || "none";
+        const config = getAnimationClasses(hoverAnimation);
+        return config;
+      }, [settings == null ? void 0 : settings.hoverAnimation]);
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-filterable-wrapper", children: [
+        categories.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-category-tabs", style: {
+          display: "flex",
+          gap: "10px",
+          marginBottom: "30px",
+          flexWrap: "wrap",
+          justifyContent: "center"
+        }, children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              className: `tsteam-tab ${activeCategory === "all" ? "active" : ""}`,
+              onClick: () => setActiveCategory("all"),
+              style: {
+                padding: "10px 20px",
+                border: activeCategory === "all" ? "2px solid #007bff" : "1px solid #ddd",
+                background: activeCategory === "all" ? "#007bff" : "#fff",
+                color: activeCategory === "all" ? "#fff" : "#333",
+                borderRadius: "5px",
+                cursor: "pointer",
+                fontWeight: activeCategory === "all" ? "bold" : "normal",
+                transition: "all 0.3s ease"
+              },
+              children: "All"
+            }
+          ),
+          categories.map((cat) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              className: `tsteam-tab ${activeCategory === cat.slug ? "active" : ""}`,
+              onClick: () => setActiveCategory(cat.slug),
+              style: {
+                padding: "10px 20px",
+                border: activeCategory === cat.slug ? "2px solid #007bff" : "1px solid #ddd",
+                background: activeCategory === cat.slug ? "#007bff" : "#fff",
+                color: activeCategory === cat.slug ? "#fff" : "#333",
+                borderRadius: "5px",
+                cursor: "pointer",
+                fontWeight: activeCategory === cat.slug ? "bold" : "normal",
+                transition: "all 0.3s ease"
+              },
+              children: cat.name
+            },
+            cat.slug
+          ))
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "tsteam-container items-start",
+            style: {
+              ...commonStyles,
+              ...responsiveStyles
+            },
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(GenerateLayoutStyle, { settings }),
+              filteredMembers && filteredMembers.length > 0 ? filteredMembers.map((member, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.Fragment, { children: ProLayoutComponent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                ProLayoutComponent,
+                {
+                  settings,
+                  imageUrl: member.meta_data.image,
+                  id: member.post_id,
+                  title: member.title,
+                  subtitle: member.meta_data.designation,
+                  description: member.meta_data.description,
+                  socialIcons: member.meta_data.socialLinks || [],
+                  details: /* @__PURE__ */ jsxRuntimeExports.jsx(Details, { settings, member }),
+                  animationConfig
+                }
+              ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Layout,
+                {
+                  settings,
+                  layoutType: settings.selectedLayout.value,
+                  id: member.post_id,
+                  imageUrl: member.meta_data.image,
+                  title: member.title,
+                  subtitle: member.meta_data.designation,
+                  description: member.meta_data.description,
+                  socialIcons: member.meta_data.socialLinks || [],
+                  details: /* @__PURE__ */ jsxRuntimeExports.jsx(Details, { settings, member }),
+                  animationConfig
+                }
+              ) }, member.post_id || index)) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { textAlign: "center", padding: "20px", color: "#666" }, children: "No team members found in this category." })
+            ]
+          }
+        )
+      ] });
+    }
     var module = {};
     (function main(global2, module2, isWorker, workerSize) {
       var canUseWorker = !!(global2.Worker && global2.Blob && global2.Promise && global2.OffscreenCanvas && global2.OffscreenCanvasRenderingContext2D && global2.HTMLCanvasElement && global2.HTMLCanvasElement.prototype.transferControlToOffscreen && global2.URL && global2.URL.createObjectURL);
@@ -24572,7 +24725,7 @@ var require_frontend = __commonJS({
         }
       };
       const renderViewComponent = () => {
-        var _a2, _b, _c, _d, _e;
+        var _a2, _b, _c, _d, _e, _f;
         if (((_a2 = settings == null ? void 0 : settings.selectedView) == null ? void 0 : _a2.value) === "flex") {
           return /* @__PURE__ */ jsxRuntimeExports.jsx(FlexView, { team_members: teamMembers, settings });
         } else if (((_b = settings == null ? void 0 : settings.selectedView) == null ? void 0 : _b.value) === "carousel") {
@@ -24581,7 +24734,9 @@ var require_frontend = __commonJS({
           return /* @__PURE__ */ jsxRuntimeExports.jsx(MarqueeView, { team_members: teamMembers, settings });
         } else if (((_d = settings == null ? void 0 : settings.selectedView) == null ? void 0 : _d.value) === "table" && isPro2) {
           return /* @__PURE__ */ jsxRuntimeExports.jsx(TableView, { team_members: teamMembers, settings });
-        } else if (((_e = settings == null ? void 0 : settings.selectedView) == null ? void 0 : _e.value) === "confetti" && isPro2) {
+        } else if (((_e = settings == null ? void 0 : settings.selectedView) == null ? void 0 : _e.value) === "filterable" && isPro2) {
+          return /* @__PURE__ */ jsxRuntimeExports.jsx(FilterableView, { team_members: teamMembers, settings });
+        } else if (((_f = settings == null ? void 0 : settings.selectedView) == null ? void 0 : _f.value) === "confetti" && isPro2) {
           return /* @__PURE__ */ jsxRuntimeExports.jsx(ConfettiView, { team_members: teamMembers, settings });
         } else {
           return /* @__PURE__ */ jsxRuntimeExports.jsx(StaticView, { team_members: teamMembers, settings });

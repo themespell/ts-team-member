@@ -8,6 +8,7 @@ import FlexView from "./components/FlexView.jsx";
 import CarouselView from './components/CarouselView.jsx';
 import MarqueeView from './components/MarqueeView.jsx';
 import TableView from "./components/TableView.jsx";
+import FilterableView from "./components/FiltarableView.jsx";
 import ConfettiView from "./components/ConfettiView.jsx";
 import { fetchData } from '../common/services/fetchData.js';
 import {toastNotification} from "../common/utils/toastNotification.js";
@@ -110,7 +111,9 @@ const renderViewComponent = () => {
     } else if (settings?.selectedView?.value === "marquee" && isPro) {
       return <MarqueeView team_members={teamMembers} settings={settings} />;
     } else if (settings?.selectedView?.value === "table" && isPro) {
-      return <TableView team_members={teamMembers} settings={settings} />;
+      return <TableView team_members={teamMembers} settings={settings}/>;
+    } else if (settings?.selectedView?.value === "filterable" && isPro) {
+      return <FilterableView team_members={teamMembers} settings={settings} />;
     } else if (settings?.selectedView?.value === "confetti" && isPro) {
       return <ConfettiView team_members={teamMembers} settings={settings} />;
     } else {
