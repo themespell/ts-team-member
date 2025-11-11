@@ -4,7 +4,7 @@ Tags: team, team members, team showcase, team builder, team plugin
 Requires at least: 5.5
 Tested up to: 6.8
 Requires PHP: 5.4
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ Whether you are building a corporate website, creative agency, or any kind of sm
 
 ## 🔗 USEFUL LINKS
 
-[**Official Website**](https://themespell.com/ts-team-member/) **||** [**Demo**](https://preview.themespell.com/ts-team-member/) **||** [**Public Roadmap**](https://trello.com/b/maXPCdTB/ts-team-member-roadmap) **|| Documentation**
+[**Official Website**](https://themespell.com/ts-team-member/) **||** [**Demo**](https://preview.themespell.com/ts-team-member/) **||** [**Public Roadmap**](https://trello.com/b/maXPCdTB/ts-team-member-roadmap) **|| [**Documentation**](https://themespell.com/docs)**
 
 https://www.youtube.com/watch?v=DCMKZ5AWrPc&ab_channel=themespell
 
@@ -228,6 +228,11 @@ If the user does **not** opt in, only essential data may be sent for license val
 7. Elementor widget for TS Team Member.
 
 == Changelog ==
+
+1.2.2
+* Fixed Filterable View Support For Pro
+* UI Issue Fixed
+* Readme Updated
 
 1.2.1
 * Minor UI bug fixed
