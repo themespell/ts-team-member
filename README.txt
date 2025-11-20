@@ -4,7 +4,7 @@ Tags: team, team members, team showcase, team builder, team plugin
 Requires at least: 5.5
 Tested up to: 6.8
 Requires PHP: 5.4
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -228,6 +228,10 @@ If the user does **not** opt in, only essential data may be sent for license val
 7. Elementor widget for TS Team Member.
 
 == Changelog ==
+
+1.2.3
+* Fixed Background Color Issue For Hello Elementor
+* Readme Updated
 
 1.2.2
 * Fixed Filterable View Support For Pro
