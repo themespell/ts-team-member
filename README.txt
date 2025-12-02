@@ -1,18 +1,18 @@
-=== TS Team Member Showcase - Team Showcase, Team Grid, Team Carousel, Team Marquee ===
+=== TS Team Members Showcase ===
 Contributors: themespell, asadabir
-Tags: team, team members, team showcase, team builder, team plugin
+Tags: team showcase, team members showcase, team member, team builder, team plugin
 Requires at least: 5.5
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 5.4
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Team members, Team showcase and Team plugin all in one – showcase your team with stunning Grid, Carousel, Marquee, Table, and Filterable layouts using shortcodes, Elementor widget, or WPBakery addon for full professionalism and flexibility.
+WordPress Team Showcase Plugin is an elegant and highly customizable solution for displaying team members on your website.
 
 == Description ==
 
-**TS Team Member - Elegant and Highly Customizable Team Showcase Plugin**
+**TS Team Member - A Smart Team Showcase plugin that elegant and highly customizable**
 
 Showcase your team members in style with **TS Team Member**, the highly flexible, elegant, and comprehensive WordPress plugin for creating beautiful and responsive team member profiles. 
 
@@ -26,7 +26,7 @@ https://www.youtube.com/watch?v=DCMKZ5AWrPc&ab_channel=themespell
 
 From simple team profiles to advanced team management, member directories, or creative agency showcases, **TS Team Member** can meet virtually all your team display needs with elegance and flexibility.
 
-## 🔧 KEY FEATURES
+## 🔧 Key Features of WordPress Team Plugin
 
 🔥 **Real-Time Live Builder:** The **Live Builder** allows you to design and customize your team showcase in real-time. As you adjust views, layouts, typography control, styles, and any kind of settings, you will see the changes instantly. This feature eliminates guesswork, saves time, and ensures your team profiles look exactly the way you want, all without touching a single line of code.
 
@@ -228,6 +228,11 @@ If the user does **not** opt in, only essential data may be sent for license val
 7. Elementor widget for TS Team Member.
 
 == Changelog ==
+
+1.2.4
+* Compatible & Tested with latest WordPress 6.9
+* Fixed minor UI bug issue
+* Readme Updated
 
 1.2.3
 * Fixed Background Color Issue For Hello Elementor
