@@ -163,7 +163,7 @@ var require_frontend = __commonJS({
       throw a._result;
     }
     var U$2 = { current: null }, V$2 = { transition: null }, W$2 = { ReactCurrentDispatcher: U$2, ReactCurrentBatchConfig: V$2, ReactCurrentOwner: K$2 };
-    function X$1() {
+    function X$2() {
       throw Error("act(...) is not supported in production builds of React.");
     }
     react_production_min.Children = { map: S$1, forEach: function(a, b2, e2) {
@@ -191,7 +191,7 @@ var require_frontend = __commonJS({
     react_production_min.StrictMode = q$5;
     react_production_min.Suspense = w$2;
     react_production_min.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = W$2;
-    react_production_min.act = X$1;
+    react_production_min.act = X$2;
     react_production_min.cloneElement = function(a, b2, e2) {
       if (null === a || void 0 === a) throw Error("React.cloneElement(...): The argument must be a React element, but you passed " + a + ".");
       var d2 = C$1({}, a.props), c2 = a.key, k2 = a.ref, h2 = a._owner;
@@ -243,7 +243,7 @@ var require_frontend = __commonJS({
         V$2.transition = b2;
       }
     };
-    react_production_min.unstable_act = X$1;
+    react_production_min.unstable_act = X$2;
     react_production_min.useCallback = function(a, b2) {
       return U$2.current.useCallback(a, b2);
     };
@@ -5044,7 +5044,7 @@ var require_frontend = __commonJS({
       if (5 === d2 || 6 === d2) a = a.stateNode, b2 ? c2.insertBefore(a, b2) : c2.appendChild(a);
       else if (4 !== d2 && (a = a.child, null !== a)) for (Wj(a, b2, c2), a = a.sibling; null !== a; ) Wj(a, b2, c2), a = a.sibling;
     }
-    var X = null, Xj = false;
+    var X$1 = null, Xj = false;
     function Yj(a, b2, c2) {
       for (c2 = c2.child; null !== c2; ) Zj(a, b2, c2), c2 = c2.sibling;
     }
@@ -5057,23 +5057,23 @@ var require_frontend = __commonJS({
         case 5:
           U$1 || Lj(c2, b2);
         case 6:
-          var d2 = X, e2 = Xj;
-          X = null;
+          var d2 = X$1, e2 = Xj;
+          X$1 = null;
           Yj(a, b2, c2);
-          X = d2;
+          X$1 = d2;
           Xj = e2;
-          null !== X && (Xj ? (a = X, c2 = c2.stateNode, 8 === a.nodeType ? a.parentNode.removeChild(c2) : a.removeChild(c2)) : X.removeChild(c2.stateNode));
+          null !== X$1 && (Xj ? (a = X$1, c2 = c2.stateNode, 8 === a.nodeType ? a.parentNode.removeChild(c2) : a.removeChild(c2)) : X$1.removeChild(c2.stateNode));
           break;
         case 18:
-          null !== X && (Xj ? (a = X, c2 = c2.stateNode, 8 === a.nodeType ? Kf(a.parentNode, c2) : 1 === a.nodeType && Kf(a, c2), bd(a)) : Kf(X, c2.stateNode));
+          null !== X$1 && (Xj ? (a = X$1, c2 = c2.stateNode, 8 === a.nodeType ? Kf(a.parentNode, c2) : 1 === a.nodeType && Kf(a, c2), bd(a)) : Kf(X$1, c2.stateNode));
           break;
         case 4:
-          d2 = X;
+          d2 = X$1;
           e2 = Xj;
-          X = c2.stateNode.containerInfo;
+          X$1 = c2.stateNode.containerInfo;
           Xj = true;
           Yj(a, b2, c2);
-          X = d2;
+          X$1 = d2;
           Xj = e2;
           break;
         case 0:
@@ -5130,23 +5130,23 @@ var require_frontend = __commonJS({
           a: for (; null !== h2; ) {
             switch (h2.tag) {
               case 5:
-                X = h2.stateNode;
+                X$1 = h2.stateNode;
                 Xj = false;
                 break a;
               case 3:
-                X = h2.stateNode.containerInfo;
+                X$1 = h2.stateNode.containerInfo;
                 Xj = true;
                 break a;
               case 4:
-                X = h2.stateNode.containerInfo;
+                X$1 = h2.stateNode.containerInfo;
                 Xj = true;
                 break a;
             }
             h2 = h2.return;
           }
-          if (null === X) throw Error(p$3(160));
+          if (null === X$1) throw Error(p$3(160));
           Zj(f2, g2, e2);
-          X = null;
+          X$1 = null;
           Xj = false;
           var k2 = e2.alternate;
           null !== k2 && (k2.return = null);
@@ -7341,24 +7341,6 @@ var require_frontend = __commonJS({
         }
       });
     };
-    const SkillsBar = ({ skills }) => {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-6", children: skills.map((skill, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-2", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between items-center", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: skill.skill }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
-            skill.rating,
-            "%"
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full bg-red-100 rounded-full h-1.5 mt-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: "bg-red-500 h-1.5 rounded-full",
-            style: { width: `${skill.rating}%` }
-          }
-        ) })
-      ] }, index)) });
-    };
     /**
      * @license lucide-react v0.469.0 - ISC
      *
@@ -7489,6 +7471,75 @@ var require_frontend = __commonJS({
         }
       ]
     ]);
+    /**
+     * @license lucide-react v0.469.0 - ISC
+     *
+     * This source code is licensed under the ISC license.
+     * See the LICENSE file in the root directory of this source tree.
+     */
+    const Mail = createLucideIcon("Mail", [
+      ["rect", { width: "20", height: "16", x: "2", y: "4", rx: "2", key: "18n3k1" }],
+      ["path", { d: "m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7", key: "1ocrg3" }]
+    ]);
+    /**
+     * @license lucide-react v0.469.0 - ISC
+     *
+     * This source code is licensed under the ISC license.
+     * See the LICENSE file in the root directory of this source tree.
+     */
+    const MapPin = createLucideIcon("MapPin", [
+      [
+        "path",
+        {
+          d: "M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0",
+          key: "1r0f0z"
+        }
+      ],
+      ["circle", { cx: "12", cy: "10", r: "3", key: "ilqhr7" }]
+    ]);
+    /**
+     * @license lucide-react v0.469.0 - ISC
+     *
+     * This source code is licensed under the ISC license.
+     * See the LICENSE file in the root directory of this source tree.
+     */
+    const Phone = createLucideIcon("Phone", [
+      [
+        "path",
+        {
+          d: "M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z",
+          key: "foiqr5"
+        }
+      ]
+    ]);
+    /**
+     * @license lucide-react v0.469.0 - ISC
+     *
+     * This source code is licensed under the ISC license.
+     * See the LICENSE file in the root directory of this source tree.
+     */
+    const X = createLucideIcon("X", [
+      ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
+      ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
+    ]);
+    const SkillsBar = ({ skills }) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "space-y-6", children: skills.map((skill, index) => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between items-center", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: skill.skill }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { children: [
+            skill.rating,
+            "%"
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full bg-red-100 rounded-full h-1.5 mt-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: "bg-red-500 h-1.5 rounded-full",
+            style: { width: `${skill.rating}%` }
+          }
+        ) })
+      ] }, index)) });
+    };
     const CTAButton = ({ donationLink, hireLink, website, resume }) => {
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap gap-4", children: [
         website && /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -7628,51 +7679,63 @@ var require_frontend = __commonJS({
         {
           id: `${modalId}-details`,
           className: "modal",
-          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "modal-box max-w-[80vw] max-h-[80vh] h-[80vh] w-[80vw] overflow-y-auto relative p-0", children: [
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "modal-box max-w-[65vw] max-h-[90vh] w-[85vw] overflow-y-auto relative p-0 rounded-2xl shadow-2xl", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "button",
               {
-                className: "btn btn-sm btn-circle btn-ghost absolute right-12 top-8 z-50",
+                className: "absolute right-6 top-6 z-50 p-2.5 rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-200 hover:scale-110 shadow-md",
                 onClick: () => document.getElementById(`${modalId}-details`).close(),
-                children: "✕"
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "w-5 h-5 text-gray-700" })
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white p-6 flex relative", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full flex flex-col items-center justify-center mb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-white p-8 md:p-12 border-b border-gray-100", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col md:flex-row gap-8 items-center md:items-start", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full md:w-auto flex flex-col items-center justify-center mb-4 md:mb-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "img",
                 {
                   src: member.meta_data.image,
                   alt: member.title,
-                  className: "w-[450px] h-[450px] object-cover max-w-sm mx-auto rounded-lg"
+                  className: "w-64 h-64 md:w-80 md:h-80 object-cover rounded-2xl shadow-xl ring-1 ring-gray-200"
                 }
-              ) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full flex flex-col justify-center md:w-2/3 md:pl-8 mt-6 md:mt-0", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm uppercase text-gray-600 mb-1", children: member.meta_data.designation }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-3xl font-bold text-gray-900 mb-4", children: member.title }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-4", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "font-medium", children: [
-                    "Experience: ",
-                    member.meta_data.experience
+              ) }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full flex flex-col justify-center", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "inline-block w-fit px-4 py-1.5 mb-3 bg-indigo-50 rounded-full text-sm font-semibold uppercase tracking-wider text-indigo-700", children: member.meta_data.designation }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-4xl md:text-5xl font-bold mb-6 text-gray-900", children: member.title }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6", children: [
+                  member.meta_data.experience && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 bg-gray-50 rounded-xl p-4 border border-gray-200", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-2 bg-indigo-100 rounded-lg", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Briefcase, { className: "w-5 h-5 text-indigo-600" }) }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-gray-500 font-medium", children: "Experience" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-gray-900", children: member.meta_data.experience })
+                    ] })
                   ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "font-medium", children: [
-                    "Location: ",
-                    member.meta_data.location
+                  member.meta_data.location && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 bg-gray-50 rounded-xl p-4 border border-gray-200", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-2 bg-indigo-100 rounded-lg", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MapPin, { className: "w-5 h-5 text-indigo-600" }) }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-gray-500 font-medium", children: "Location" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-gray-900", children: member.meta_data.location })
+                    ] })
                   ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "font-medium", children: [
-                    "Email: ",
-                    member.meta_data.email
+                  member.meta_data.email && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 bg-gray-50 rounded-xl p-4 border border-gray-200", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-2 bg-indigo-100 rounded-lg", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Mail, { className: "w-5 h-5 text-indigo-600" }) }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "overflow-hidden", children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-gray-500 font-medium", children: "Email" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-gray-900 text-sm truncate", children: member.meta_data.email })
+                    ] })
                   ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "font-medium", children: [
-                    "Phone: ",
-                    member.meta_data.phone
+                  member.meta_data.phone && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 bg-gray-50 rounded-xl p-4 border border-gray-200", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-2 bg-indigo-100 rounded-lg", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Phone, { className: "w-5 h-5 text-indigo-600" }) }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-gray-500 font-medium", children: "Phone" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-gray-900", children: member.meta_data.phone })
+                    ] })
                   ] })
                 ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-medium mb-2", children: "Social Media" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-4 bg-gray-50 rounded-xl p-5 border border-gray-200", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-semibold mb-3 text-gray-700", children: "Social Media" }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(SocialLinks, { socialLinks })
                 ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-medium mb-2", children: "Links" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-4 bg-gray-50 rounded-xl p-5 border border-gray-200", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-semibold mb-3 text-gray-700", children: "Links" }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     CTAButton,
                     {
@@ -7684,20 +7747,20 @@ var require_frontend = __commonJS({
                   )
                 ] })
               ] })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-indigo-600 text-white flex-grow p-12", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex max-w-6xl mx-auto", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full md:w-1/2 md:pr-12 mb-8 md:mb-0", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-2xl font-bold mb-6", children: "Overview" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-indigo-100 leading-relaxed", children: member.meta_data.description })
+            ] }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-gray-50 flex-grow p-8 md:p-12", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col md:flex-row gap-6 max-w-6xl mx-auto", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full md:w-1/2 bg-white rounded-xl p-6 shadow-sm border border-gray-200", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-2xl font-bold text-gray-900 mb-4", children: "Overview" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-600 leading-relaxed", children: member.meta_data.description })
               ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full md:w-1/2", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-2xl font-bold mb-6", children: "Skills" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full md:w-1/2 bg-white rounded-xl p-6 shadow-sm border border-gray-200", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-2xl font-bold text-gray-900 mb-4", children: "Skills" }),
                 /* @__PURE__ */ jsxRuntimeExports.jsx(SkillsBar, { skills })
               ] })
             ] }) }),
-            editorData && editorData.blocks && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-white p-12", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-6xl mx-auto", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-2xl font-bold mb-6", children: "Details" }),
-              renderEditorContent(editorData.blocks)
+            editorData && editorData.blocks && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-white p-8 md:p-12 border-t border-gray-100", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-6xl mx-auto", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-2xl font-bold text-gray-900 mb-6", children: "Details" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "prose max-w-none text-gray-600", children: renderEditorContent(editorData.blocks) })
             ] }) })
           ] })
         }
@@ -7744,31 +7807,64 @@ var require_frontend = __commonJS({
       }, []);
       const drawerContent = /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "drawer", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("input", { id: `${drawerId}-details-toggle`, type: "checkbox", className: "drawer-toggle" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "drawer-side", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "drawer-side z-50", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("label", { htmlFor: `${drawerId}-details-toggle`, "aria-label": "close sidebar", className: "drawer-overlay" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white min-h-full w-80 p-0 shadow-lg", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-sm overflow-scroll bg-white", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                "img",
-                {
-                  className: "w-[250px] h-[250px] object-cover mt-12 ml-4 rounded-xl",
-                  src: member.meta_data.image,
-                  alt: member.title
-                }
-              ) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-4 pt-8", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-bold", children: member.title }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-600", children: member.meta_data.designation }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-4", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-sm font-bold", children: "Overview" }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-gray-600 mt-1", children: member.meta_data.description })
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-white min-h-full w-[450px] p-0 shadow-2xl", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "sticky top-0 bg-white z-10 p-4 border-b border-gray-100 flex justify-end", children: /* @__PURE__ */ jsxRuntimeExports.jsx("label", { htmlFor: `${drawerId}-details-toggle`, className: "cursor-pointer p-2.5 rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-200 hover:scale-110 shadow-md", children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "w-5 h-5 text-gray-700" }) }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "overflow-y-auto h-[calc(100vh-80px)]", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-6 border-b border-gray-100", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative mb-6 flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "img",
+                  {
+                    className: "w-56 h-56 object-cover rounded-full shadow-2xl ring-4 ring-indigo-50",
+                    src: member.meta_data.image,
+                    alt: member.title
+                  }
+                ) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-6 text-center", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-3xl font-bold text-gray-900 mb-2", children: member.title }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "inline-block px-5 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full text-sm font-semibold uppercase tracking-wider text-white shadow-lg", children: member.meta_data.designation })
                 ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-medium mb-2", children: "Social Media" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3 mb-6", children: [
+                  member.meta_data.experience && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "group flex items-center gap-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-4 border border-indigo-100 hover:shadow-md transition-all duration-200", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-3 bg-white rounded-xl shadow-sm group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Briefcase, { className: "w-5 h-5 text-indigo-600" }) }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-gray-500 font-medium", children: "Experience" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-gray-900", children: member.meta_data.experience })
+                    ] })
+                  ] }),
+                  member.meta_data.location && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "group flex items-center gap-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-4 border border-indigo-100 hover:shadow-md transition-all duration-200", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-3 bg-white rounded-xl shadow-sm group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsxRuntimeExports.jsx(MapPin, { className: "w-5 h-5 text-indigo-600" }) }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-gray-500 font-medium", children: "Location" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-gray-900", children: member.meta_data.location })
+                    ] })
+                  ] }),
+                  member.meta_data.email && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "group flex items-center gap-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-4 border border-indigo-100 hover:shadow-md transition-all duration-200", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-3 bg-white rounded-xl shadow-sm group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Mail, { className: "w-5 h-5 text-indigo-600" }) }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "overflow-hidden flex-1", children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-gray-500 font-medium", children: "Email" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-gray-900 text-sm truncate", children: member.meta_data.email })
+                    ] })
+                  ] }),
+                  member.meta_data.phone && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "group flex items-center gap-4 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-4 border border-indigo-100 hover:shadow-md transition-all duration-200", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-3 bg-white rounded-xl shadow-sm group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Phone, { className: "w-5 h-5 text-indigo-600" }) }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-xs text-gray-500 font-medium", children: "Phone" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-semibold text-gray-900", children: member.meta_data.phone })
+                    ] })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-50 rounded-xl p-5 border border-gray-200 mb-4", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-lg font-bold text-gray-900 mb-3", children: "Overview" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-600 leading-relaxed", children: member.meta_data.description })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-50 rounded-xl p-5 border border-gray-200 mb-4", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-semibold mb-3 text-gray-700", children: "Social Media" }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(SocialLinks, { socialLinks })
                 ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "font-medium mb-2", children: "Links" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-50 rounded-xl p-5 border border-gray-200 mb-4", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-sm font-semibold mb-3 text-gray-700", children: "Links" }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(
                     CTAButton,
                     {
@@ -7779,15 +7875,15 @@ var require_frontend = __commonJS({
                     }
                   )
                 ] }),
-                skills && skills.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-4", children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-sm font-bold", children: "Experience & Skill" }),
+                skills && skills.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-50 rounded-xl p-5 border border-gray-200", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-lg font-bold text-gray-900 mb-3", children: "Experience & Skill" }),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(SkillsBar, { skills })
                 ] })
+              ] }),
+              editorData && editorData.blocks && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-6", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-xl font-bold text-gray-900 mb-4", children: "Details" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "prose max-w-none text-gray-600", children: renderEditorContent(editorData.blocks) })
               ] })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-4", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "mb-6", children: "Details" }),
-              editorData && editorData.blocks ? renderEditorContent(editorData.blocks) : null
             ] })
           ] })
         ] })
@@ -7797,6 +7893,8 @@ var require_frontend = __commonJS({
     const DetailsFullScreen = ({ member }) => {
       const modalId = `${member.title.replace(/\s+/g, "-").toLowerCase()}-${member.post_id}`;
       const editorData = safeJsonParse(member.meta_data.information);
+      const skills = safeJsonParse(member.meta_data.skills);
+      const socialLinks = member.meta_data.socialLinks;
       const [isFullScreen, setIsFullScreen] = reactExports.useState(false);
       const [height, setHeight] = reactExports.useState(0);
       const [transitioning, setTransitioning] = reactExports.useState(false);
@@ -7862,44 +7960,89 @@ var require_frontend = __commonJS({
             width: "100%",
             height,
             zIndex: 9999,
-            backgroundColor: "rgba(0, 0, 0, 0.9)",
+            backgroundColor: "#0a0a0a",
             transition: transitioning ? "height 0.5s ease-in-out, background-color 0.5s ease-in-out" : "none",
-            overflow: "hidden",
+            overflow: "auto",
             display: "flex",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "flex-start",
+            padding: "40px 0"
           },
-          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative w-full h-full flex justify-center items-center", children: [
+          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative w-full max-w-6xl px-8", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               "button",
               {
-                className: "absolute top-24 right-32 text-white text-3xl",
+                className: "fixed top-8 right-8 z-50 p-3 rounded-full bg-gray-800/80 hover:bg-gray-700 backdrop-blur-sm transition-all duration-200",
                 onClick: closeFullScreen,
-                children: "×"
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(X, { className: "w-6 h-6 text-white" })
               }
             ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "modal-content text-white w-4/6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-8", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-4/6", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "img",
-                  {
-                    src: member.meta_data.image,
-                    alt: member.title,
-                    className: "w-96 h-96 object-contain mb-4"
-                  }
-                ),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-base", children: member.meta_data.email }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-base", children: member.meta_data.phone }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-base", children: "394-268-9576" }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-base", children: member.meta_data.website })
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-2xl text-white", children: member.title }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-base", children: member.meta_data.designation }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-base text-gray-300", children: member.meta_data.description }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "editor-content mt-4 text-gray-100", children: editorData && editorData.blocks ? renderEditorContent(editorData.blocks) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No content available." }) })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-center mb-8", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "img",
+              {
+                src: member.meta_data.image,
+                alt: member.title,
+                className: "w-96 h-96 object-cover rounded-3xl shadow-2xl"
+              }
+            ) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-center mb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "inline-block px-5 py-2 bg-indigo-900/30 rounded-full text-sm font-semibold uppercase tracking-wider text-indigo-300 border border-indigo-800/50", children: member.meta_data.designation }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-4xl font-bold text-white text-center mb-8", children: member.title }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-900/50 rounded-2xl p-6 border border-gray-800 mb-6", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-white text-lg font-semibold mb-4", children: "Contact Information" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "space-y-3", children: [
+                member.meta_data.email && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 text-gray-300", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-2 bg-indigo-500/20 rounded-lg", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Mail, { className: "w-5 h-5 text-indigo-400" }) }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm", children: member.meta_data.email })
+                ] }),
+                member.meta_data.phone && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 text-gray-300", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-2 bg-indigo-500/20 rounded-lg", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Phone, { className: "w-5 h-5 text-indigo-400" }) }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm", children: member.meta_data.phone })
+                ] }),
+                member.meta_data.website && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3 text-gray-300", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-2 bg-indigo-500/20 rounded-lg", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Globe, { className: "w-5 h-5 text-indigo-400" }) }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm", children: member.meta_data.website })
+                ] })
               ] })
-            ] }) })
+            ] }),
+            socialLinks && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-900/50 rounded-2xl p-6 border border-gray-800 mb-6", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-white text-lg font-semibold mb-4", children: "Social Media" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(SocialLinks, { socialLinks })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-900/50 rounded-2xl p-6 border border-gray-800 mb-8", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-white text-lg font-semibold mb-4", children: "Links" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                CTAButton,
+                {
+                  donationLink: member.meta_data.donationLink,
+                  hireLink: member.meta_data.hireLink,
+                  website: member.meta_data.website,
+                  resume: member.meta_data.resume
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col lg:flex-row gap-6 mb-8", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full lg:w-1/2 bg-gray-900/50 rounded-2xl p-6 border border-gray-800", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 mb-4", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "w-1 h-6 bg-indigo-500 rounded-full" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-white text-xl font-bold", children: "Overview" })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-300 leading-relaxed", children: member.meta_data.description })
+              ] }),
+              skills && skills.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full lg:w-1/2 bg-gray-900/50 rounded-2xl p-6 border border-gray-800", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 mb-4", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "w-1 h-6 bg-indigo-500 rounded-full" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-white text-xl font-bold", children: "Skills & Expertise" })
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(SkillsBar, { skills })
+              ] })
+            ] }),
+            editorData && editorData.blocks && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-gray-900/50 rounded-2xl p-6 border border-gray-800", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 mb-4", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "w-1 h-6 bg-indigo-500 rounded-full" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-white text-xl font-bold", children: "Details" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "text-gray-300 leading-relaxed", children: renderEditorContent(editorData.blocks) })
+            ] })
           ] })
         }
       );
@@ -17795,8 +17938,8 @@ var require_frontend = __commonJS({
       { label: "Filterable", value: "filterable", type: "pro", disabled: !isPro || isLicenseInactive }
     ];
     const pro_details = [
-      { label: "Drawer", value: "drawer", type: "pro", disabled: !isPro || isLicenseInactive }
-      // { label: 'Full Screen', value: 'fullscreen', type: 'pro', disabled: !isPro || isLicenseInactive },
+      { label: "Drawer", value: "drawer", type: "pro", disabled: !isPro || isLicenseInactive },
+      { label: "Full Screen", value: "fullscreen", type: "pro", disabled: !isPro || isLicenseInactive }
     ];
     create((set2) => ({
       isEditor: true,
