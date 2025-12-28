@@ -37,6 +37,20 @@ class Common {
 		return false;
 	}
 
+    public static function is_showcase_editor_screen() {
+        if ( ! is_admin() ) {
+            return false;
+        }
+        $page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
+        $path = isset( $_GET['path'] ) ? sanitize_text_field( $_GET['path'] ) : '';
+
+        if ( $page === 'tsteam-showcase' && $path === 'editor' ) {
+            return true;
+        }
+
+        return false;
+    }
+
 	public static function get_default_showcase_settings() {
 		$showcase_settings = array(
 			'layout' => 'Card',
