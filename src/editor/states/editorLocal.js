@@ -67,7 +67,7 @@ const pro_views = [
 
 const pro_details = [
     { label: 'Drawer', value: 'drawer', type: 'pro', disabled: !isPro || isLicenseInactive },
-    // { label: 'Full Screen', value: 'fullscreen', type: 'pro', disabled: !isPro || isLicenseInactive },
+    { label: 'Full Screen', value: 'fullscreen', type: 'pro', disabled: !isPro || isLicenseInactive },
 ];
 
 // States Only For use in Editor
