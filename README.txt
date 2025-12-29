@@ -4,7 +4,7 @@ Tags: team showcase, team members showcase, team member, team builder, team plug
 Requires at least: 5.5
 Tested up to: 6.9
 Requires PHP: 5.4
-Stable tag: 1.2.4
+Stable tag: 1.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -228,6 +228,11 @@ If the user does **not** opt in, only essential data may be sent for license val
 7. Elementor widget for TS Team Member.
 
 == Changelog ==
+
+1.2.5
+* Fixed Media Library issue while activate pro
+* Improved Details view
+* Readme Updated
 
 1.2.4
 * Compatible & Tested with latest WordPress 6.9
