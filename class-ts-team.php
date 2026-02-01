@@ -10,7 +10,7 @@
 	 * Plugin Name:       TS Team Member Showcase
 	 * Plugin URI:        https://themespell.com/ts-team-member/
 	 * Description:       Team Members, Team Showcase, Team Member Slider Plugin for WordPress
-	 * Version:           1.2.5
+	 * Version:           1.2.6
 	 * Author:            Themespell
 	 * Author URI:        https://themespell.com/
 	 * License:           GPL-2.0+
@@ -46,7 +46,7 @@ final class TSTeam {
 	}
 
 	public function define_constants() {
-		define( 'TSTEAM_VERSION', '1.2.5' );
+		define( 'TSTEAM_VERSION', '1.2.6' );
 		define( 'TSTEAM_PLUGIN_FILE', __FILE__ );
 		define( 'TSTEAM_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 		define( 'TSTEAM_ROOT_DIR_PATH', plugin_dir_path( __FILE__ ) );
@@ -72,6 +72,7 @@ final class TSTeam {
 		TSTeam\Enqueue::init();
 		TSTeam\Frontend::init();
 		TSTeam\Addons::init();
+		TSTeam\QATester::init();
 	}
 
 	public function load_dependency() {

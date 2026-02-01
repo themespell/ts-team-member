@@ -26,6 +26,9 @@ class Enqueue {
 			$dependency[] = 'tsteampro-admin-script';
 		}
 
+		// Manually set to true to enable QA Tester and dev features
+		$devmode = false;
+
 		if ( $screen_info ) {
             wp_enqueue_media();
 			wp_enqueue_style( 'tsteam-admin-main', TSTEAM_ROOT_DIR_URL . 'includes/assets/admin/admin.min.css' );
@@ -42,6 +45,7 @@ class Enqueue {
 					'wp_url'     => site_url(),
 					'assets_path'=> TSTEAM_ROOT_DIR_URL . 'includes/library/',
 					'is_pro'     => $isPro,
+					'devmode'     => $devmode,
 				)
 			);
 

@@ -7084,18 +7084,45 @@ var require_frontend = __commonJS({
     };
     function Layout({ team_members, settings, layoutType, id: id2, imageUrl, title, subtitle, description, socialIcons, details, animationConfig }) {
       const [Component, setComponent] = reactExports.useState(null);
+      const [error, setError] = reactExports.useState(null);
+      const [isLoading, setIsLoading] = reactExports.useState(true);
       reactExports.useEffect(() => {
         if (layoutType) {
-          __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "./Card/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$3), true ? void 0 : void 0), "./HorizontalCard/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$2), true ? void 0 : void 0), "./OverlayCard/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$1), true ? void 0 : void 0), "./Tiles/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend), true ? void 0 : void 0) }), `./${layoutType}/Frontend.jsx`, 3).then((module2) => {
+          setIsLoading(true);
+          setError(null);
+          __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "./Card/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$4), true ? void 0 : void 0), "./HorizontalCard/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$3), true ? void 0 : void 0), "./ModernCard/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$2), true ? void 0 : void 0), "./OverlayCard/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$1), true ? void 0 : void 0), "./Tiles/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend), true ? void 0 : void 0) }), `./${layoutType}/Frontend.jsx`, 3).then((module2) => {
             const LoadedComponent = module2.default;
             setComponent(() => LoadedComponent);
-          }).catch((error) => {
-            console.error("Error loading component:", error);
+            setIsLoading(false);
+          }).catch((err) => {
+            console.error("Error loading layout component:", err);
+            setError(`Layout "${layoutType}" not found or failed to load. Please check if Frontend.jsx exists.`);
+            setIsLoading(false);
           });
         }
       }, [layoutType]);
+      if (isLoading) {
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full p-8 text-center", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "mt-2 text-gray-600", children: [
+            "Loading ",
+            layoutType,
+            " layout..."
+          ] })
+        ] });
+      }
+      if (error) {
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full p-8 text-center bg-red-50 border border-red-200 rounded-lg", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-red-800 font-medium", children: "Layout Error" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-red-600 text-sm mt-1", children: error }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-red-500 text-xs mt-2", children: "Available layouts: Card, HorizontalCard, OverlayCard, Tiles" })
+        ] });
+      }
       if (!Component) {
-        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: "Loading..." });
+        return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full p-8 text-center bg-yellow-50 border border-yellow-200 rounded-lg", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-yellow-800 font-medium", children: "Component not loaded" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-yellow-600 text-sm mt-1", children: "Please try selecting a different layout." })
+        ] });
       }
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         Component,
@@ -8854,6 +8881,7 @@ var require_frontend = __commonJS({
       };
     };
     const isPro$1 = !!tsteam_settings.is_pro;
+    const devMode = tsteam_settings.devmode ?? false;
     const translations = getTranslations();
     ({
       token: {
@@ -8921,6 +8949,12 @@ var require_frontend = __commonJS({
             link: "?page=tsteam-showcase&path=tools",
             label: translations.tools
           },
+          ...devMode && {
+            qaTester: {
+              link: "?page=tsteam-showcase&path=qa-tester",
+              label: "QA Tester"
+            }
+          },
           ...isPro$1 && {
             account: {
               link: "admin.php?page=tsteam-admin-account",
@@ -8938,7 +8972,7 @@ var require_frontend = __commonJS({
             label: translations.getPro
           }
         },
-        version: "1.2.5"
+        version: "1.2.6"
       }
     });
     var classnames = { exports: {} };
@@ -24810,7 +24844,7 @@ var require_frontend = __commonJS({
         return;
       }
       createRoot$1(element).render(
-        /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Frontend$4, { id: id2 }) })
+        /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.StrictMode, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(Frontend$5, { id: id2 }) })
       );
     }
     function initializeAllWidgets() {
@@ -24836,11 +24870,11 @@ var require_frontend = __commonJS({
         initializeAllWidgets();
       }
     });
-    function Frontend$4({ id: id2 }) {
+    function Frontend$5({ id: id2 }) {
       const isPro2 = tsteam_settings.is_pro;
       const [teamMembers, setTeamMembers] = reactExports.useState([]);
       const [settings, setSettings] = reactExports.useState({});
-      const devMode = Boolean(tsteam_settings.devmode);
+      const devMode2 = Boolean(tsteam_settings.devmode);
       const [isHovering, setIsHovering] = reactExports.useState(false);
       reactExports.useEffect(() => {
         if (id2) {
@@ -24885,7 +24919,7 @@ var require_frontend = __commonJS({
           return /* @__PURE__ */ jsxRuntimeExports.jsx(StaticView, { team_members: teamMembers, settings });
         }
       };
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: devMode ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: devMode2 ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
           onMouseEnter: () => setIsHovering(true),
@@ -25045,7 +25079,7 @@ var require_frontend = __commonJS({
       }
       return renderContent();
     };
-    const Frontend$3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+    const Frontend$4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       __proto__: null,
       default: Card
     }, Symbol.toStringTag, { value: "Module" }));
@@ -25152,9 +25186,60 @@ var require_frontend = __commonJS({
       }
       return renderContent();
     };
-    const Frontend$2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+    const Frontend$3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       __proto__: null,
       default: HorizontalCard
+    }, Symbol.toStringTag, { value: "Module" }));
+    const ModernCard = ({
+      settings,
+      id: id2,
+      imageUrl,
+      title,
+      subtitle,
+      description,
+      socialIcons,
+      details,
+      animationConfig
+    }) => {
+      const renderContent = () => /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-modern-card w-full max-w-sm bg-white rounded-2xl shadow-xl overflow-hidden group hover:shadow-2xl transition-all duration-300", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative h-48 overflow-hidden bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-black/20" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "img",
+            {
+              id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
+              src: imageUrl,
+              alt: title,
+              className: `w-full h-full object-cover ${details ? "cursor-pointer" : ""}`
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-purple-700 shadow-lg", children: "Team Member" })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-6", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center mb-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-xl font-bold text-gray-900 mb-1 group-hover:text-purple-600 transition-colors", children: title || "Team Member" }),
+            subtitle && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-medium text-purple-600 bg-purple-50 inline-block px-3 py-1 rounded-full", children: subtitle })
+          ] }),
+          description && /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-gray-600 text-center mb-4 line-clamp-3", children: description }),
+          socialIcons && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-center gap-2 mb-4", children: socialIcons }),
+          details && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-center", children: details })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 border-2 border-transparent group-hover:border-purple-200 rounded-2xl pointer-events-none transition-colors duration-300" })
+      ] });
+      if (!animationConfig) {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative", children: renderContent() });
+      }
+      if (animationConfig.type === "single") {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: animationConfig.class, children: renderContent() });
+      }
+      if (animationConfig.type === "wrapper") {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: animationConfig.parent, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: animationConfig.wrapper, children: renderContent() }) });
+      }
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative", children: renderContent() });
+    };
+    const Frontend$2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+      __proto__: null,
+      default: ModernCard
     }, Symbol.toStringTag, { value: "Module" }));
     const getSocialIcon$1 = (channel) => {
       const icons = {

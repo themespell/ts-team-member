@@ -8,6 +8,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Admin {
 
+	// Manually set to true to enable QA Tester menu
+	private $devmode = false;
+
 	public static function init() {
 		$self = new self();
 		add_action( 'admin_menu', array( $self, 'add_admin_menu' ) );
@@ -67,6 +70,18 @@ class Admin {
         	'tsteam-showcase&path=tools',
         	array( $this, 'tsteam_callback' ),
         );
+
+		// Only add QA Tester menu when devmode is enabled
+		if ( $this->devmode ) {
+			add_submenu_page(
+				$parent,
+				__( 'QA Tester', 'ts-team-member' ),
+				__( 'QA Tester', 'ts-team-member' ),
+				'manage_options',
+				'tsteam-showcase&path=qa-tester',
+				array( $this, 'tsteam_callback' ),
+			);
+		}
 
 		remove_submenu_page($parent, $parent);
 	}

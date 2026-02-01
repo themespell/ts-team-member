@@ -2,6 +2,7 @@ import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import {getTranslations} from "./translations.js";
 
 const isPro = !!tsteam_settings.is_pro ?? false;
+const devMode = tsteam_settings.devmode ?? false;
 
 const translations = getTranslations();
 
@@ -71,6 +72,12 @@ const globalSettings = {
               link: '?page=tsteam-showcase&path=tools',
               label: translations.tools,
           },
+          ...(devMode && {
+              qaTester:{
+                  link: '?page=tsteam-showcase&path=qa-tester',
+                  label: 'QA Tester',
+              },
+          }),
           ...(isPro && {
               account:{
                   link: 'admin.php?page=tsteam-admin-account',
@@ -88,7 +95,7 @@ const globalSettings = {
                 label: translations.getPro,
             }
         }),
-      version: '1.2.5',
+      version: '1.2.6',
     }
   };
   
