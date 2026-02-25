@@ -83249,11 +83249,14 @@ var require_admin = __commonJS({
         setLoading(true);
         fetchData(`tsteam/${type2}/fetch`, (response) => {
           if (response && response.success) {
-            const showcaseData = response.data.map((item) => ({
+            const showcaseData = (response.data || []).map((item) => ({
               key: item.post_id,
               ...item
             }));
-            const dynamicColumns = Object.keys(showcaseData[0]).filter((key) => key !== "post_id" && key !== "key").map((key) => ({
+
+            // If there is no data (e.g. no member categories yet), render an empty table instead of crashing.
+            const firstRow = showcaseData[0] || null;
+            const dynamicColumns = firstRow ? Object.keys(firstRow).filter((key) => key !== "post_id" && key !== "key").map((key) => ({
               title: key.charAt(0).toUpperCase() + key.slice(1),
               dataIndex: key,
               key,
@@ -83270,7 +83273,7 @@ var require_admin = __commonJS({
                     return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: text });
                 }
               }
-            }));
+            })) : [];
             const actionColumn = {
               title: "Action",
               key: "action",
@@ -83333,10 +83336,12 @@ var require_admin = __commonJS({
                 }
               )
             };
-            setColumns([...dynamicColumns, actionColumn]);
+            setColumns([...(dynamicColumns || []), actionColumn]);
             setData(showcaseData);
           } else {
             console.error("Error fetching showcases:", response);
+            setColumns([actionColumn]);
+            setData([]);
           }
           setLoading(false);
         });
