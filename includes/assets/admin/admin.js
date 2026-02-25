@@ -78289,15 +78289,23 @@ var require_admin = __commonJS({
             if (response.success && response.data) {
               const showBy = response.data.meta_data.show_members_by || "manual";
               setShowMembersBy(showBy);
+              const memberIds = showBy === "manual" ? (_a2 = response.data.meta_data.team_members) == null ? void 0 : _a2.map((member) => member.post_id) : void 0;
               form.setFieldsValue({
                 title: response.data.title,
                 show_members_by: showBy,
-                team_members: showBy === "manual" ? (_a2 = response.data.meta_data.team_members) == null ? void 0 : _a2.map((member) => ({
-                  label: member.name,
-                  value: member.post_id
-                })) : void 0,
+                // AntD Select in this build expects raw values (IDs), not {label,value}
+                team_members: memberIds,
                 member_categories: showBy === "category" ? response.data.meta_data.member_categories : void 0
               });
+              // Ensure the multi-select shows saved values even if options load after the API call.
+              if (showBy === "manual" && Array.isArray(memberIds)) {
+                setTimeout(() => {
+                  try {
+                    form.setFieldValue("team_members", memberIds);
+                  } catch (e) {
+                  }
+                }, 50);
+              }
             } else {
               console.error("Failed to fetch showcase data.");
             }
@@ -78327,37 +78335,30 @@ var require_admin = __commonJS({
             name: "show_members_by",
             options: showMembersByOptions,
             onChange: (value) => setShowMembersBy(value),
+            form,
             rules: [{ required: true, message: "Please select how to show members" }]
           }
         ),
         showMembersBy === "manual" && /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Form.Item,
+          TsSelect,
           {
+            label: translations2.teamMember,
             name: "team_members",
-            rules: [{ required: true, message: "Please select team members" }],
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-              TsSelect,
-              {
-                label: translations2.teamMember,
-                options: teamMembers,
-                mode: "multiple"
-              }
-            )
+            options: teamMembers,
+            mode: "multiple",
+            form,
+            rules: [{ required: true, message: "Please select team members" }]
           }
         ),
         showMembersBy === "category" && /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Form.Item,
+          TsSelect,
           {
+            label: translations2.memberCategory || "Member Category",
             name: "member_categories",
-            rules: [{ required: true, message: "Please select categories" }],
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-              TsSelect,
-              {
-                label: translations2.memberCategory || "Member Category",
-                options: memberCategories,
-                mode: "multiple"
-              }
-            )
+            options: memberCategories,
+            mode: "multiple",
+            form,
+            rules: [{ required: true, message: "Please select categories" }]
           }
         )
       ] });

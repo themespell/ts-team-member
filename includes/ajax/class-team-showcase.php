@@ -114,11 +114,15 @@ class TeamShowcase {
            $team_members = array();
         }
 
+        // Determine selection mode for editor UI
+        $show_members_by = ( empty( $team_member_ids ) && ! empty( $member_categories ) ) ? 'category' : 'manual';
+
         $showcase = array(
            'post_id'   => $post_id,
            'title'     => get_the_title( $post_id ),
            'content'   => get_the_content(),
            'meta_data' => array(
+              'show_members_by'   => $show_members_by,
               'team_members'      => $team_members,
               'member_categories' => $member_categories,
               'showcase_settings' => ! empty( $showcase_settings ) ? $showcase_settings : Common::get_default_showcase_settings(),
