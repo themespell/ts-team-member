@@ -26,14 +26,8 @@ class Frontend {
 			$dependency[] = 'tsteampro-admin-script';
 		}
 
-			$root_path = defined( 'TSTEAM_ROOT_DIR_PATH' ) ? TSTEAM_ROOT_DIR_PATH : plugin_dir_path( dirname( __FILE__ ) );
-			$front_css_path = $root_path . 'includes/assets/frontend/frontend.min.css';
-			$front_js_path  = $root_path . 'includes/assets/frontend/frontend.min.js';
-			$front_css_ver  = file_exists( $front_css_path ) ? filemtime( $front_css_path ) : null;
-			$front_js_ver   = file_exists( $front_js_path ) ? filemtime( $front_js_path ) : '2.3.4';
-
-			wp_enqueue_style( 'tsteam-member-main', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend/frontend.min.css', array(), $front_css_ver );
-			wp_enqueue_script( 'tsteam-member-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend/frontend.min.js', $dependency, $front_js_ver, true );
+			wp_enqueue_style( 'tsteam-member-main', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend/frontend.min.css' );
+			wp_enqueue_script( 'tsteam-member-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend/frontend.min.js', $dependency, '2.3.4', true );
 			wp_localize_script(
 				'tsteam-member-script',
 				'tsteam_settings',
