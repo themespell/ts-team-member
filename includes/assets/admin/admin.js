@@ -78269,12 +78269,11 @@ var require_admin = __commonJS({
       }, []);
       reactExports.useEffect(() => {
         fetchData("tsteam/member_category/fetch", (response) => {
-          if (response.success && response.data) {
-            console.log(response);
-            const options = response.data.map((category) => ({
+          if (response.success) {
+            const list = Array.isArray(response.data) ? response.data : [];
+            const options = list.map((category) => ({
               label: category.name,
               value: category.post_id
-              // Changed from category.show_member_by to category.slug
             }));
             setMemberCategories(options);
           } else {
@@ -78293,16 +78292,14 @@ var require_admin = __commonJS({
               form.setFieldsValue({
                 title: response.data.title,
                 show_members_by: showBy,
-                // AntD Select in this build expects raw values (IDs), not {label,value}
                 team_members: memberIds,
                 member_categories: showBy === "category" ? response.data.meta_data.member_categories : void 0
               });
-              // Ensure the multi-select shows saved values even if options load after the API call.
               if (showBy === "manual" && Array.isArray(memberIds)) {
                 setTimeout(() => {
                   try {
                     form.setFieldValue("team_members", memberIds);
-                  } catch (e) {
+                  } catch (e2) {
                   }
                 }, 50);
               }
@@ -83253,8 +83250,6 @@ var require_admin = __commonJS({
               key: item.post_id,
               ...item
             }));
-
-            // If there is no data (e.g. no member categories yet), render an empty table instead of crashing.
             const firstRow = showcaseData[0] || null;
             const dynamicColumns = firstRow ? Object.keys(firstRow).filter((key) => key !== "post_id" && key !== "key").map((key) => ({
               title: key.charAt(0).toUpperCase() + key.slice(1),
@@ -83274,7 +83269,7 @@ var require_admin = __commonJS({
                 }
               }
             })) : [];
-            const actionColumn = {
+            const actionColumn2 = {
               title: "Action",
               key: "action",
               render: (_, record) => /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -83336,7 +83331,7 @@ var require_admin = __commonJS({
                 }
               )
             };
-            setColumns([...(dynamicColumns || []), actionColumn]);
+            setColumns([...dynamicColumns || [], actionColumn2]);
             setData(showcaseData);
           } else {
             console.error("Error fetching showcases:", response);
