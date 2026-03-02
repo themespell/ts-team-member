@@ -21,7 +21,9 @@ function DataTable({ type, title, editor }) {
   const [selectedPost, setSelectedPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [bulkDeleteModalOpen, setBulkDeleteModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   const isPro = window.tsteam_settings?.is_pro || false;
   const isLicenseInactive = window.tsTeamPro?.is_licence_inactive || false;
@@ -33,8 +35,16 @@ function DataTable({ type, title, editor }) {
     reloadData: state.reloadData,
   }));
 
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: (newSelectedRowKeys) => {
+      setSelectedRowKeys(newSelectedRowKeys);
+    },
+  };
+
   useEffect(() => {
     setLoading(true);
+    setSelectedRowKeys([]);
     fetchData(`tsteam/${type}/fetch`, (response) => {
       if (response && response.success) {
         const showcaseData = (response.data || []).map((item) => ({
@@ -193,6 +203,50 @@ function DataTable({ type, title, editor }) {
         toastNotification('warning', 'Pro Feature', `The ${feature} feature is only available in the Pro version.`);
     };
 
+    const handleBulkDelete = () => {
+        if (selectedRowKeys.length === 0) {
+            toastNotification('warning', 'No Selection', 'Please select at least one item to delete.');
+            return;
+        }
+        setBulkDeleteModalOpen(true);
+    };
+
+    const confirmBulkDelete = () => {
+        const deletePromises = selectedRowKeys.map((id) =>
+            deleteData(`tsteam/${type}/delete`, id)
+        );
+
+        Promise.all(deletePromises)
+            .then((responses) => {
+                const successCount = responses.filter((r) => r.success).length;
+                const failCount = responses.length - successCount;
+
+                if (successCount > 0) {
+                    toastNotification(
+                        'success',
+                        'Bulk Delete Completed',
+                        `${successCount} ${title}${successCount > 1 ? ' items' : ' item'} deleted successfully.`
+                    );
+                    setData((prevData) => prevData.filter((item) => !selectedRowKeys.includes(item.key)));
+                    setSelectedRowKeys([]);
+                }
+
+                if (failCount > 0) {
+                    toastNotification(
+                        'error',
+                        'Partial Error',
+                        `${failCount} item(s) could not be deleted.`
+                    );
+                }
+
+                setBulkDeleteModalOpen(false);
+            })
+            .catch((error) => {
+                toastNotification('error', 'Error', `There was an error deleting the items.`);
+                setBulkDeleteModalOpen(false);
+            });
+    };
+
   const handleEdit = (post_id) => {
     setSelectedPost(post_id);
     saveSettings('updateModal', true);
@@ -215,16 +269,29 @@ function DataTable({ type, title, editor }) {
 
   return (
     <div className="shadow-md rounded-lg overflow-hidden mt-4">
+      {selectedRowKeys.length > 0 && (
+        <div className="bg-purple-50 border border-purple-200 rounded-t-xl p-3 flex items-center justify-between">
+          <span className="text-purple-700 font-medium">
+            {selectedRowKeys.length} {selectedRowKeys.length === 1 ? 'item' : 'items'} selected
+          </span>
+          <TsButton
+            label={`Delete Selected (${selectedRowKeys.length})`}
+            onClick={handleBulkDelete}
+            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+          />
+        </div>
+      )}
       <Table
       bordered
-      columns={columns} 
+      columns={columns}
       dataSource={data}
       loading={loading}
+      rowSelection={rowSelection}
       pagination={{
           position: ['bottomCenter'],
           defaultPageSize: 10,
           showSizeChanger: true,
-          pageSizeOptions: [10, 20, 50, 100],  // Use numbers instead of strings
+          pageSizeOptions: [10, 20, 50, 100],
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
       }}
       />
@@ -267,6 +334,37 @@ function DataTable({ type, title, editor }) {
                     <TsButton
                         label={translations.yesDelete}
                         onClick={confirmDelete}
+                        className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-lg"
+                    />
+                </div>
+            </div>
+        </TsModal>
+
+        <TsModal
+            isOpen={bulkDeleteModalOpen}
+            isClose={() => setBulkDeleteModalOpen(false)}
+            width={400}
+            name={title}
+        >
+            <div className="flex flex-col items-center justify-center p-6">
+                <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-6">
+                    <AlertTriangle className="w-8 h-8 text-red-500" />
+                </div>
+
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Delete Multiple Items</h3>
+                <p className="text-gray-600 text-center mb-8">
+                    Are you sure you want to delete <strong>{selectedRowKeys.length}</strong> selected {selectedRowKeys.length === 1 ? 'item' : 'items'}? This action cannot be undone.
+                </p>
+
+                <div className="flex space-x-4 w-full">
+                    <TsButton
+                        label="Cancel"
+                        onClick={() => setBulkDeleteModalOpen(false)}
+                        className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-lg"
+                    />
+                    <TsButton
+                        label={`Delete ${selectedRowKeys.length} ${selectedRowKeys.length === 1 ? 'Item' : 'Items'}`}
+                        onClick={confirmBulkDelete}
                         className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-lg"
                     />
                 </div>

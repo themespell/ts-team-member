@@ -83233,7 +83233,9 @@ var require_admin = __commonJS({
       const [selectedPost, setSelectedPost] = reactExports.useState(null);
       const [loading, setLoading] = reactExports.useState(true);
       const [deleteModalOpen, setDeleteModalOpen] = reactExports.useState(false);
+      const [bulkDeleteModalOpen, setBulkDeleteModalOpen] = reactExports.useState(false);
       const [deleteId, setDeleteId] = reactExports.useState(null);
+      const [selectedRowKeys, setSelectedRowKeys] = reactExports.useState([]);
       const isPro2 = ((_a2 = window.tsteam_settings) == null ? void 0 : _a2.is_pro) || false;
       const isLicenseInactive2 = ((_b = window.tsTeamPro) == null ? void 0 : _b.is_licence_inactive) || false;
       const canDuplicate = isPro2 && !isLicenseInactive2;
@@ -83242,8 +83244,15 @@ var require_admin = __commonJS({
         updateModal: state.updateModal,
         reloadData: state.reloadData
       }));
+      const rowSelection = {
+        selectedRowKeys,
+        onChange: (newSelectedRowKeys) => {
+          setSelectedRowKeys(newSelectedRowKeys);
+        }
+      };
       reactExports.useEffect(() => {
         setLoading(true);
+        setSelectedRowKeys([]);
         fetchData(`tsteam/${type2}/fetch`, (response) => {
           if (response && response.success) {
             const showcaseData = (response.data || []).map((item) => ({
@@ -83269,7 +83278,7 @@ var require_admin = __commonJS({
                 }
               }
             })) : [];
-            const actionColumn2 = {
+            const actionColumn = {
               title: "Action",
               key: "action",
               render: (_, record) => /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -83331,11 +83340,11 @@ var require_admin = __commonJS({
                 }
               )
             };
-            setColumns([...dynamicColumns || [], actionColumn2]);
+            setColumns([...dynamicColumns || [], actionColumn]);
             setData(showcaseData);
           } else {
             console.error("Error fetching showcases:", response);
-            setColumns([actionColumn]);
+            setColumns([]);
             setData([]);
           }
           setLoading(false);
@@ -83371,6 +83380,45 @@ var require_admin = __commonJS({
           toastNotification("error", "Error", `There was an error duplicating the ${title}.`);
         });
       };
+      const handleProFeature = (feature) => {
+        toastNotification("warning", "Pro Feature", `The ${feature} feature is only available in the Pro version.`);
+      };
+      const handleBulkDelete = () => {
+        if (selectedRowKeys.length === 0) {
+          toastNotification("warning", "No Selection", "Please select at least one item to delete.");
+          return;
+        }
+        setBulkDeleteModalOpen(true);
+      };
+      const confirmBulkDelete = () => {
+        const deletePromises = selectedRowKeys.map(
+          (id2) => deleteData(`tsteam/${type2}/delete`, id2)
+        );
+        Promise.all(deletePromises).then((responses) => {
+          const successCount = responses.filter((r2) => r2.success).length;
+          const failCount = responses.length - successCount;
+          if (successCount > 0) {
+            toastNotification(
+              "success",
+              "Bulk Delete Completed",
+              `${successCount} ${title}${successCount > 1 ? " items" : " item"} deleted successfully.`
+            );
+            setData((prevData) => prevData.filter((item) => !selectedRowKeys.includes(item.key)));
+            setSelectedRowKeys([]);
+          }
+          if (failCount > 0) {
+            toastNotification(
+              "error",
+              "Partial Error",
+              `${failCount} item(s) could not be deleted.`
+            );
+          }
+          setBulkDeleteModalOpen(false);
+        }).catch((error) => {
+          toastNotification("error", "Error", `There was an error deleting the items.`);
+          setBulkDeleteModalOpen(false);
+        });
+      };
       const handleEdit = (post_id) => {
         setSelectedPost(post_id);
         saveSettings("updateModal", true);
@@ -83389,6 +83437,22 @@ var require_admin = __commonJS({
         window.location.href = currentUrl2;
       };
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "shadow-md rounded-lg overflow-hidden mt-4", children: [
+        selectedRowKeys.length > 0 && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "bg-purple-50 border border-purple-200 rounded-t-xl p-3 flex items-center justify-between", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-purple-700 font-medium", children: [
+            selectedRowKeys.length,
+            " ",
+            selectedRowKeys.length === 1 ? "item" : "items",
+            " selected"
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            TsButton,
+            {
+              label: `Delete Selected (${selectedRowKeys.length})`,
+              onClick: handleBulkDelete,
+              className: "bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+            }
+          )
+        ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           ForwardTable,
           {
@@ -83396,12 +83460,12 @@ var require_admin = __commonJS({
             columns,
             dataSource: data,
             loading,
+            rowSelection,
             pagination: {
               position: ["bottomCenter"],
               defaultPageSize: 10,
               showSizeChanger: true,
               pageSizeOptions: [10, 20, 50, 100],
-              // Use numbers instead of strings
               showTotal: (total, range2) => `${range2[0]}-${range2[1]} of ${total} items`
             }
           }
@@ -83450,6 +83514,44 @@ var require_admin = __commonJS({
                   {
                     label: translations2.yesDelete,
                     onClick: confirmDelete,
+                    className: "flex-1 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-lg"
+                  }
+                )
+              ] })
+            ] })
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          TsModal,
+          {
+            isOpen: bulkDeleteModalOpen,
+            isClose: () => setBulkDeleteModalOpen(false),
+            width: 400,
+            name: title,
+            children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col items-center justify-center p-6", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-6", children: /* @__PURE__ */ jsxRuntimeExports.jsx(TriangleAlert, { className: "w-8 h-8 text-red-500" }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-xl font-semibold text-gray-900 mb-2", children: "Delete Multiple Items" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-gray-600 text-center mb-8", children: [
+                "Are you sure you want to delete ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx("strong", { children: selectedRowKeys.length }),
+                " selected ",
+                selectedRowKeys.length === 1 ? "item" : "items",
+                "? This action cannot be undone."
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex space-x-4 w-full", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  TsButton,
+                  {
+                    label: "Cancel",
+                    onClick: () => setBulkDeleteModalOpen(false),
+                    className: "flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 rounded-lg"
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  TsButton,
+                  {
+                    label: `Delete ${selectedRowKeys.length} ${selectedRowKeys.length === 1 ? "Item" : "Items"}`,
+                    onClick: confirmBulkDelete,
                     className: "flex-1 bg-red-500 hover:bg-red-600 text-white py-2.5 rounded-lg"
                   }
                 )
