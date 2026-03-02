@@ -12,11 +12,13 @@ WordPress Team Showcase Plugin is an elegant and highly customizable solution fo
 
 == Description ==
 
+**WordPress team members showcase plugin** lets you present your team members in style with TS Team Members, a powerful, elegant, and fully responsive WordPress team plugin designed to create beautiful and professional team members profiles.
+
+Whether you’re creating a corporate site, a creative agency, or a small business portfolio, this team showcase WordPress plugin makes it easy to present your team with full professionalism, elegance, and complete customization—all in one place.
+
 **TS Team Member - A Smart Team Showcase plugin that elegant and highly customizable**
 
-Showcase your team members in style with **TS Team Member**, the highly flexible, elegant, and comprehensive WordPress plugin for creating beautiful and responsive team member profiles. 
-
-Whether you are building a corporate website, creative agency, or any kind of small business portfolio, this plugin makes it effortless to display your team with full professionalism, customization, and elegance **all in one place**. 
+The team members plugin for WordPress lets you showcase your team profiles in multiple layouts, including Grid, Slider, Table, drawers, popups, panels,and Filter views. Whether you prefer a clean, classic team section or a sleek, modern design, this WordPress team plugin gives you complete flexibility, easy customization, and full control over how your team is presented on your website.
 
 ## 🔗 USEFUL LINKS
 
@@ -24,31 +26,45 @@ Whether you are building a corporate website, creative agency, or any kind of sm
 
 https://www.youtube.com/watch?v=DCMKZ5AWrPc&ab_channel=themespell
 
-From simple team profiles to advanced team management, member directories, or creative agency showcases, **TS Team Member** can meet virtually all your team display needs with elegance and flexibility.
+All layouts are fully responsive and come with flexible design options. Perfect for creating a professional WordPress team directory, an engaging team carousel, or a clean and organized staff showcase on your website.
 
 ## 🔧 Key Features of WordPress Team Plugin
 
-🔥 **Real-Time Live Builder:** The **Live Builder** allows you to design and customize your team showcase in real-time. As you adjust views, layouts, typography control, styles, and any kind of settings, you will see the changes instantly. This feature eliminates guesswork, saves time, and ensures your team profiles look exactly the way you want, all without touching a single line of code.
+🔥 **Real-Time Live Builder:** The **Live Builder** in this WordPress team plugin allows you to design and customize your team showcase in real time. As you adjust views, layouts, typography controls, styles, and other settings, you’ll see changes instantly. This team showcase plugin feature removes guesswork, saves time, and ensures your team profiles look exactly the way you want—without writing a single line of code.
 
-🔥 **Layouts Style Copy/Paste With A Single Click:** With the **Layouts Style Copy/Paste** feature, you can save time by duplicating styles and layouts across multiple team showcases with just one click. This model of idea ensures consistency across your website while eliminating the need to recreate designs from scratch. It’s a productivity booster for busy website owners.
+🔥 **Layouts Style Copy/Paste With A Single Click:** With the Layouts Style Copy/Paste feature, you can save time by duplicating styles and layouts across multiple team showcases with just one click. This model of idea ensures consistency across your website while eliminating the need to recreate designs from scratch. This WordPress team members plugin known as a productivity booster for busy website owners.
 
-🔥 **Simplistic Admin UI:** The admin interface of TS Team Member is **built with ReactJS**, offering a fast, smooth, and intuitive user experience. Whether you are a beginner or an advanced user, the clean and modern design makes it easy to manage your team profiles, customize layouts, and tweak settings without any hassle.
+🔥 **Simplistic Admin UI:** The admin interface of TS Team Member is built with ReactJS, offering a fast, smooth, and intuitive user experience. Whether you’re a beginner or an advanced user, the clean and modern design lets you easily manage team profiles, customize layouts, and adjust settings—perfect for creating a smooth team members slider experience.
 
-**🔥 Member Migration:** **Switch without the stress!** The Member Migration Tool makes it easy to transfer your existing team data to TS Team Member. Say goodbye to manual work and hello to a seamless transition.
+🔥 **Member Migration:** Ready-Made Shortcode & PHP Snippet: Our TS Team Member, a powerful team showcase WordPress plugin, provides ready-made shortcodes and PHP snippets for every team showcase. Whether you want to display a single member or a full team grid, you can easily embed it anywhere by simply copying and pasting the code into your posts, pages, or theme files for instant display.
 
-🔥 **Ready-Made Shortcode & PHP Snippet:** Our TS Team Member provides **ready-made shortcodes** and **PHP snippets** for each team showcase. Whether you’re embedding a single team member showcase or an entire team grid, these tools make integration effortless. Simply copy and paste the code into your posts, pages, or theme files, and your team showcase will appear instantly.
+🔥 **Highly Customizable Design Control:** Take full control of your team profiles with advanced design options using this WordPress team plugin. Adjust columns, margins, padding, borders, typography, detail styles, and more to create a look that perfectly matches your brand. Every element is fully customizable, allowing you to design unique and professional team showcases tailored to your needs.
 
-🔥 **Highly Customizable Design Control:** Take full control of your team profiles with advanced design options. Adjust **columns**, **margins**, **padding**, **borders**, **typography**, **detail styles**, and many more options to create a look that perfectly matches your brand. Every element is customizable, allowing you to create unique and professional team showcases tailored to your needs.
+🔥 **Universal Compatibility:** TS Team Member, a reliable team members plugin for WordPress, is designed to work seamlessly with all popular WordPress themes and plugins. Whether you’re using a page builder like Elementor, Divi, or a custom theme, TS Team Member integrates smoothly without conflicts, making it the perfect addition to any WordPress website.
 
-🔥 **Universal Compatibility:** TS Team Member is designed to work seamlessly with **all popular WordPress themes and plugins**. Whether you are using a page builder like Elementor, Divi, or a custom theme, you can trust TS Team Member to integrate smoothly without conflicts. It is the perfect addition to any WordPress website.
+🔥 **Performance-optimized:** Built for speed and efficiency, TS Team Member is lightweight and ensures fast loading times. It won’t slow down your site, providing a smooth experience for visitors, and is perfect for a WordPress team slider plugin, keeping your team profiles quick to load and engaging even on slower connections.
 
-**🔥 Performance-optimized:** Built with performance in mind, TS Team Member is **lightweight and fast**. It won’t slow down your website, ensuring a smooth experience for both you and your visitors. Your team profiles will load quickly, even on slower connections, keeping your audience engaged.
+🔥 **SEO-Ready Profiles:** Our **TS Team Member** is SEO-optimized to help your team page rank higher in search engine results. Each team member profile is structured for maximum visibility, ensuring that your team showcases are search-engine friendly. This makes it an ideal team showcase WordPress plugin to attract more visitors and grow your online presence.
 
-🔥 **SEO-Ready Profiles:** Our TS Team Member is **SEO-optimized** to help your team page rank higher in search engine results. Each team member profile is structured for maximum visibility, ensuring that your team showcases are search-engine friendly. This feature helps you attract more visitors and grow your online presence.
+🔥 **Free & Beginner-Friendly:** TS Team Member is Free and designed for users of all skill levels. As a team plugin WordPress, it offers an intuitive interface and most of its powerful features in the free version, allowing you to build professional team profiles without any coding. It’s the perfect tool for beginners and experts alike.
 
-🔥 **Free & Beginner-Friendly:** TS Team Member is **Free** and designed for users of all skill levels. With its intuitive interface and **90% powerful features in the free version**, you can create professional team profiles without any coding knowledge. It’s the perfect tool for beginners and experts alike.
+🔥 **Responsive & Mobile-Friendly:** Your team profiles will look flawless on any device. This WordPress team members plugin, TS Team Member, is fully responsive and mobile-friendly, ensuring a smooth experience for visitors on desktops, tablets, and smartphones. No matter how your audience views your site, your team showcase will always appear perfect.
 
-🔥**Responsive & Mobile-Friendly:** Your team profiles will look stunning on any device. The TS Team Member is fully responsive and mobile-friendly, ensuring a seamless experience for visitors on **desktops**, **tablets**, and **smartphones**. No matter how your audience accesses your site, your team showcase will always look perfect.
+🔥 **Live Builder with Preview Support:** Say goodbye to guesswork! The Live Preview Builder in this WordPress team plugin lets you design and customize your team profiles in real-time. As you adjust views, layouts, colors, typography, and styles, you will see the changes instantly on a split-screen interface. No more refreshing or switching between tabs, and every tweak is visible immediately. This team showcase plugin feature is powered by dynamic AJAX rendering, ensuring smooth performance even for large teams. Whether you are a beginner or a pro, the Live Preview Builder makes creating stunning team profiles fast, intuitive, and stress-free.
+
+🔥 **Admin SPA Interface (Built with ReactJS):** Experience the power of a modern web application with the Single-Page Application (SPA) Admin Interface, built using ReactJS. This sleek, fast, and responsive interface in the team members WordPress plugin eliminates page reloads, allowing you to navigate through team members, layouts, and settings seamlessly. Features like auto-save drafts, version history, and real-time collaboration make teamwork effortless. The SPA architecture reduces server load and ensures a lag-free experience, even for large teams. This team showcase plugin is built for simplicity, letting you create stunning team displays easily without any technical hassle.
+
+🔥 **Layout Design Copy/Paste [PRO]:** Save time and maintain consistency with the Layout Design Copy/Paste feature. This powerful tool in the WordPress team showcase plugin allows you to copy the design and style of one layout and paste it onto another with just one click. Whether you’re creating multiple team groups or updating existing ones, this feature eliminates the need to recreate designs from scratch. It’s perfect for busy website owners who want to streamline their workflow while ensuring a cohesive look across all team profiles.
+
+🔥 **Block Style Editor for Details Information:** Take full control of your team member details with the Block Style Editor (Powered by Editor JS). This powerful feature in the team members plugin for WordPress allows you to customize every aspect of the details section, from fonts, colors, and spacing to advanced text formatting options. Transform text into headings & lists and apply styles like bold & italic. You can even add links to external URLs or internal pages, making it easy to connect your team members with their work or social profiles. Additionally, we are excited to introduce even more features, including blockquotes, indents, text alignment, text direction, code blocks, and advanced list styling. Whether you’re showcasing biographies, contact info, or other details, the WordPress team plugin ensures your content looks professional and polished. With easy-to-use controls and real-time previews, you can design visually appealing sections that perfectly match your brand’s style. It’s a powerful tool for creating team profiles that truly stand out.
+
+🔥 **Layout Typography Control:** Typography matters, and with Layout Typography Control, you have complete command over it. Customize every element in your team profiles, including names, descriptions, designations, and detailed information. Choose from a wide range of stylish fonts like Dancing Script, Pacifico, Shadows Into Light, Great Vibes, Satisfy, Caveat, Courgette, Kaushan Script, and more to create a unique and professional look. Whether you’re aiming for a sleek, modern design or a classic, elegant style, this feature in the WordPress team slider plugin lets you fine-tune typography to perfection. Adjust the font for each field individually, ensuring every detail aligns with your brand’s identity. The real-time preview ensures you see every change instantly, making it easy to create visually cohesive and engaging team showcases. With Layout Typography Control, your team profiles will not only look stunning but also reflect your brand’s personality and professionalism.
+
+🔥 **Hover Animation:** Add a touch of interactivity with Hover Animation. Choose from a variety of effects like 3D float, tilt, blur, slide top, or many more to make your team profiles more engaging. These animations are triggered when users hover over team member cards, adding a dynamic and modern feel to your showcase. With customizable settings, you can create animations that align with your brand’s personality and style.
+
+🔥 **ShortCode Generator:** Embedding your team showcase has never been easier! The ready-made ShortCode Generator in the team showcase WordPress plugin automatically creates shortcodes for each team group, ensuring seamless integration into your website. Whenever you update your team profiles, the shortcodes are automatically refreshed, so you never have to manually replace them. Simply copy and paste the shortcode into any post, page, or widget, and your team profiles will appear instantly. This feature is perfect for beginners and pros alike, offering a quick, hassle-free way to display your team without any coding knowledge. It’s the ultimate tool for saving time and maintaining consistency across your site.
+
+🔥 **PHP Snippet Generator:** For advanced users, the ready-made PHP Snippet Generator in the team members WordPress plugin takes customization to the next level. This feature automatically generates PHP snippets that allow you to pull team data directly into your theme templates. Create conditional displays based on user roles, combine multiple layouts on a single page, or dynamically showcase team members based on specific criteria. The snippets are automatically updated whenever you make changes, ensuring your team profiles stay current without manual intervention. This feature offers unmatched flexibility, making the WordPress team slider plugin an ideal tool for developers looking to create highly customized and dynamic team showcases.
 
 ## 🧐WHO NEEDS TS TEAM MEMBER?
 
@@ -98,69 +114,72 @@ TS Team Member can be the go-to option for any business looking for a reliable t
 👉 Personal Social links (Free access 35+ social media icons, including Facebook, Twitter, LinkedIn, GitHub, YouTube, and many more)
 👉 Dynamic Custom Fields (Coming Soon)
 
-## 💡 DAILY EXPERIENCED WITH ADVANCED FEATURES
-
-*   Live Builder 
-*   Admin SPA interface (build with ReactJS) 
-*   Block Style Editor for Details 
-*   Layout Typography Control 
-*   Shortcode Generator
-*   PHP Snippet Generator
-*   Hover Animation
-*   Grid View
-*   Carousel View
-*   Card Layout
-*   Horizontal Card Layout
-*   Overlay Card Layout
-*   Modal / Popup Details Style
-*   Layout Design Copy/Paste **\[PRO\]**
-*   Flex View **\[PRO\]**
-*   Marquee View **\[PRO\]**
-*   Table View **\[PRO\]**
-*   All Pro Layouts **\[PRO\]**
-
-
-More features Coming Soon! 😎
-
-**🌟 Live Builder with Preview Support:** Say goodbye to guesswork! The **Live Preview Builder** lets you design and customize your team profiles in real-time. As you adjust views, layouts, colors, typography, and styles, you will see the changes instantly on a split-screen interface. No more refreshing or switching between tabs, and every tweak is visible immediately. This feature is powered by dynamic AJAX rendering, ensuring smooth performance even for large teams. Whether you are a beginner or a pro, the Live Preview Builder makes creating stunning team profiles fast, intuitive, and stress-free.
-
-**💻 Admin SPA Interface (Built with ReactJS):** Experience the power of a modern web application with the **Single-Page Application (SPA) Admin Interface**, built using **ReactJS**. This sleek, fast, and responsive interface eliminates page reloads, allowing you to navigate through team members, layouts, and settings seamlessly. Features like auto-save drafts, version history, and real-time collaboration make teamwork effortless. The SPA architecture reduces server load and ensures a lag-free experience, even for large teams. It is designed for simplicity, so you can focus on creating wonderful team showcases without any technical hassle.
-
-**📥📤 Layout Design Copy/Paste \[PRO\]:** Save time and maintain consistency with the **Layout Design Copy/Paste** feature. This powerful tool allows you to copy the design and style of one layout and paste it onto another with **just one click**. Whether you’re creating multiple team groups or updating existing ones, this feature eliminates the need to recreate designs from scratch. It’s perfect for busy website owners who want to streamline their workflow while ensuring a cohesive look across all team profiles.
-
-**🎨 Block Style Editor for Details Information:** Take full control of your team member details with the **Block Style Editor (Powered by Editor JS)**. This powerful feature allows you to customize every aspect of the details section, from fonts, colors, and spacing to advanced text formatting options. Transform text into **headings** & **lists** and apply styles like **bold** & **italic**. You can even **add links** to external URLs or internal pages, making it easy to connect your team members with their work or social profiles. Additionally, we are excited to introduce even more features, including **blockquotes, indents, text alignment, text direction, code blocks, and advanced list styling**. Whether you’re highlighting other areas, biographies, or contact information, the Block Style Editor ensures your content looks polished and professional. With **intuitive controls** and **real-time previews**, you can create visually appealing details sections that match your brand’s style effortlessly. It’s the ultimate tool for crafting team profiles that stand out and leave a lasting impression.
-
-**🔤 Layout Typography Control:** Typography matters, and with **Layout Typography Control**, you have complete command over it. Customize every element in your team profiles, including **names, descriptions, designations, and detailed information**. Choose from a wide range of stylish fonts like **Dancing Script, Pacifico, Shadows Into Light, Great Vibes, Satisfy, Caveat, Courgette, Kaushan Script**, and more to create a unique and professional look. Whether you’re aiming for a sleek, modern design or a classic, elegant style, this feature lets you fine-tune typography to perfection. Adjust the font for each field individually, ensuring every detail aligns with your brand’s identity. The **real-time preview** ensures you see every change instantly, making it easy to create visually cohesive and engaging team showcases. With Layout Typography Control, your team profiles will not only look stunning but also reflect your brand’s personality and professionalism.
-
-**🌀 Hover Animation:** Add a touch of interactivity with Hover Animation. Choose from a variety of effects like **3D float**, **tilt**, **blur**, **slide top**, or many more to make your team profiles more engaging. These animations are triggered when users hover over team member cards, adding a dynamic and modern feel to your showcase. With customizable settings, you can create animations that align with your brand’s personality and style.
-
-**📋 ShortCode Generator:** Embedding your team showcase has never been easier! The ready-made ShortCode Generator automatically creates shortcodes for each team group, ensuring seamless integration into your website. Whenever you update your team profiles, the shortcodes are automatically refreshed, so you never have to manually replace them. Simply copy and paste the shortcode into any post, page, or widget, and your team profiles will appear instantly. This feature is perfect for beginners and pros alike, offering a quick, hassle-free way to display your team without any coding knowledge. It’s the ultimate tool for saving time and maintaining consistency across your site.
-
-**🔧 PHP Snippet Generator:** For advanced users, the ready-made PHP Snippet Generator takes customization to the next level. This feature automatically generates PHP snippets that allow you to pull team data directly into your theme templates. Create conditional displays based on user roles, combine multiple layouts on a single page, or dynamically showcase team members based on specific criteria. The snippets are automatically updated whenever you make changes, ensuring your team profiles stay current without manual intervention. This feature provides unparalleled flexibility, making it the perfect tool for developers who want to create highly tailored and dynamic team showcases.
 
 ## 👉 All View Style 👈
 
-**📊 Grid View:** The Grid View offers a clean, organized way to display your team. Choose between dynamic and fixed layouts, and customize the number of columns for different screen sizes. Add animations like fade-ins or bounces to make your grid more engaging. Infinite scroll support ensures smooth loading for large teams, while hover effects and customizable spacing let you create a polished, professional look.
+**Grid View:** The Grid View offers a clean, organized way to display your team. Choose between dynamic and fixed layouts, and customize the number of columns for different screen sizes. Add animations like fade-ins or bounces to make your grid more engaging. Infinite scroll support ensures smooth loading for large teams, while hover effects and customizable spacing let you create a polished, professional look.
 
-**🎠 Carousel View:** Showcase your team in an interactive Carousel View. Set autoplay options, pause-on-hover, and transition effects like slide, fade, or cube rotations. Display 1-6 slides at a time, with optional captions below or overlay text on images for a magazine-style look. This feature is perfect for creating dynamic, eye-catching team profiles that captivate your audience.
+**Carousel View:** Showcase your team in an interactive Carousel View using the WordPress team showcase plugin. Set autoplay options, pause-on-hover, and transition effects like slide, fade, or cube rotations. Display 1–6 slides at a time, with optional captions below or overlay text on images for a magazine-style look. This feature is ideal for creating dynamic, engaging team profiles that capture your audience’s attention.
 
-**🔄 Flex View \[PRO\]:** The Flex View offers unparalleled flexibility in displaying your team. Expanded layout uses CSS Flexbox to create dynamic, responsive team profiles that adapt seamlessly to any screen size. Customize the alignment, spacing, and order of team members to create unique and visually appealing showcases. Whether you’re highlighting key team members or creating a balanced grid, the Flex View gives you complete control over your team’s presentation.
+**Flex View \[PRO\]:** The Flex View offers unparalleled flexibility in displaying your team. Expanded layout uses CSS Flexbox to create dynamic, responsive team profiles that adapt seamlessly to any screen size. Customize the alignment, spacing, and order of team members to create unique and visually appealing showcases. Whether you’re highlighting key team members or creating a balanced grid, the Flex View gives you complete control over your team’s presentation.
 
-**🎬 Marquee View \[PRO\]:** Add a touch of dynamism with the Marquee View. This layout features a scrolling marquee that showcases your team members in a continuous loop. Customize the scroll speed, direction, and pause-on-hover effects to create an eye-catching display. Perfect for highlighting key team members or creating a sense of motion on your website, the Marquee View is ideal for creative agencies and modern businesses.
+**Marquee View \[PRO\]:** Add a touch of dynamism with the Marquee View. This layout in the team plugin WordPress features a scrolling marquee that continuously showcases your team members in a seamless loop. Customize the scroll speed, direction, and pause-on-hover effects to create an eye-catching display. Perfect for highlighting key team members or creating a sense of motion on your website, the Marquee View is ideal
 
-**📑 Table View \[PRO\]:** Organize your team profiles in a structured and professional format with the Table View. This layout is perfect for displaying detailed information like names, roles, and contact details in a clean, tabular format. Customize column widths, row heights, and hover effects to create a polished and functional team showcase. It’s ideal for corporate websites and organizations that need to present large teams in an easy-to-read format.
+**Table View \[PRO\]:** Organize your team profiles in a structured and professional format with the Table View. This layout is perfect for displaying detailed information like names, roles, and contact details in a clean, tabular format. Customize column widths, row heights, and hover effects to create a polished and functional team showcase. For corporate websites and organizations looking to display large teams clearly, the WordPress team members plugin provides the perfect solution.
 
 ## 👉 Details Style 👈
 
 **🪟 Modal / Popup Details Style:** Keep your pages clean while offering deep dives into team details. The Modal/Popup Details Style can be triggered by a click, hover, or a "Learn More" button. Customize dimensions, background overlays (color, blur, or gradient), and exit animations like zoom-out or slide-down. This feature ensures a seamless and engaging user experience.
 
-**🚪 Drawer Details Style \[PRO\]:** Keep your pages clean and organized with the Drawer Details Style. This feature displays team member details in a sliding drawer that can be triggered by click or hover. Customize the drawer’s position, size, and animation to create a seamless and engaging user experience. It’s perfect for providing additional information without cluttering your page, ensuring a polished and professional look.
+**🚪 Drawer Details Style \[PRO\]:** Keep your pages clean and organized with the Drawer Details Style. With this feature in the team members WordPress plugin, team member details appear in a sliding drawer that can be triggered by click or hover. You can customize the drawer’s position, size, and animation to create a smooth and engaging user experience. It’s perfect for providing additional information without cluttering your page, ensuring a polished and professional look.
+
+**🚪 🖥️ Full Screen Details Style \[PRO\]:** Keep your pages bold and immersive with the Full Screen Details Style. This feature expands team member details to cover the entire screen when triggered by a click, hover, or a "View Profile" button. It allows you to showcase rich content like bios, portfolios, videos, and social links without limitations. Perfect for storytelling-focused layouts, this style delivers a distraction-free and engaging user experience while maintaining a sleek and modern design.
 
 == Frequently Asked Questions ==
 
 = How do I add a team showcase to my page? =
 
 Simply use the `[tsteam_showcase id={your-id}]` shortcode on any page, post, or widget area where you'd like the team showcase to appear.
+
+= How do I add social links using this Team Members WordPress plugin? =
+
+Yes,this team plugin allows you to easily add social links. You can include all popular platforms like Facebook, Twitter, LinkedIn, Instagram, and more, helping visitors connect with your team directly from your website.
+
+= How can I add a new team member using this WordPress team members plugin? =
+
+To add a team member navigate to Dashboard → TS Team Members → Add New Member. Enter the member’s name, role, and a short bio, then upload a clear, professional photo. You can assign the member to relevant groups, add their social media profiles, highlight their skills, and include custom links to portfolios or other external sites.
+
+= Does this WordPress team plugin allow adding skills for each member? =
+
+Yes, it does. Multiple skills can be added for each member. Simply enter the skill name (e.g., Graphic Design, Marketing, Development) and assign a percentage or rating to display proficiency. This feature will make it easy to highlight their expertise and strengths.
+
+= Does this WordPress team members plugin support a carousel view? =
+
+Yes, this plugin includes a carousel view to showcase your team members in a sliding layout.
+
+= Is there any page builder add-ons available for this plugin? =
+
+Yes, this plugin offers add-ons for Elementor, Gutenberg, and WPBakery. There’s no need to install any separate add-on pack-everything is ready to use.
+
+= Does this team showcase plugin offer filterable layouts for team members? =
+
+Yes, this plugin includes filterable layouts, available in our Pro version for easy and dynamic team member display.
+
+= Is it possible to duplicate team members? =
+
+Yes, you can duplicate team members, but this feature is available only in the Pro version.
+
+= Does this Team Members slider support multiple languages? =
+
+Yes, It comes with built-in multilingual support and also works smoothly with Loco Translate, so you can easily translate TS Team Members plugin into any language you need.
+
+= Are there any limits on the number of team members you can add? =
+
+No, there is no strict limitation—you can add as many team members as you need using this WordPress team plugin, depending on your website’s performance and hosting capacity.
+
+= Is there any pre-built layouts available =
+
+Yes, the plugin offers 50+ ready-made layouts that you can instantly copy and paste for your team sections.
 
 = Can I customize the layout of the team member profiles? =
 
@@ -228,6 +247,11 @@ If the user does **not** opt in, only essential data may be sent for license val
 7. Elementor widget for TS Team Member.
 
 == Changelog ==
+
+1.2.6
+* Fixed Admin End UX Issues
+* Fixed Member Category Infinite Loading Issue
+* Readme Updated
 
 1.2.5
 * Fixed Media Library issue while activate pro

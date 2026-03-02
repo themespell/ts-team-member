@@ -44,9 +44,11 @@ class Helper {
 			$member_meta        = get_post_meta( $post_id, 'tsteam_member_info', true );
 
 			$team_members[] = array(
-				'post_id'           => $post_id,
-				'title'             => get_the_title(),
-				'content'           => get_the_content(),
+				'post_id'   => $post_id,
+				// Back-compat: admin dropdown expects "name" but older code used "title"
+				'name'      => get_the_title(),
+				'title'     => get_the_title(),
+				'content'   => get_the_content(),
 				'meta_data' => $member_meta,
 			);
 		}
@@ -131,6 +133,8 @@ class Helper {
 
                 $team_members[] = array(
                     'post_id'    => $post_id,
+                    // Back-compat: admin dropdown expects "name" but older code used "title"
+                    'name'       => get_the_title(),
                     'title'      => get_the_title(),
                     'content'    => get_the_content(),
                     'meta_data'  => $member_meta,

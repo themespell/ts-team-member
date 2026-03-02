@@ -62,8 +62,9 @@ class MemberCategory {
 
 		$categories = get_terms( $args );
 
+		// Return an empty array instead of error so the editor UI doesn't break when no categories exist.
 		if ( is_wp_error( $categories ) || empty( $categories ) ) {
-			wp_send_json_error( array( 'message' => 'No categories found' ) );
+			wp_send_json_success( array() );
 			return;
 		}
 

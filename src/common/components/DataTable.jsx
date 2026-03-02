@@ -37,12 +37,13 @@ function DataTable({ type, title, editor }) {
     setLoading(true);
     fetchData(`tsteam/${type}/fetch`, (response) => {
       if (response && response.success) {
-        const showcaseData = response.data.map((item) => ({
+        const showcaseData = (response.data || []).map((item) => ({
           key: item.post_id,
           ...item,
         }));
 
-        const dynamicColumns = Object.keys(showcaseData[0])
+        const firstRow = showcaseData[0] || null;
+        const dynamicColumns = firstRow ? Object.keys(firstRow)
         .filter((key) => key !== 'post_id' && key !== 'key')
         .map((key) => ({
           title: key.charAt(0).toUpperCase() + key.slice(1),
@@ -62,7 +63,7 @@ function DataTable({ type, title, editor }) {
                 return <span>{text}</span>;
             }
           },
-      }));
+      })) : [];
 
         const actionColumn = {
           title: 'Action',
@@ -139,10 +140,12 @@ function DataTable({ type, title, editor }) {
           ),
         };
 
-        setColumns([...dynamicColumns, actionColumn]);
+        setColumns([...(dynamicColumns || []), actionColumn]);
         setData(showcaseData);
       } else {
         console.error('Error fetching showcases:', response);
+        setColumns([actionColumn]);
+        setData([]);
       }
       setLoading(false);
     });

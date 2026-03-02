@@ -64913,7 +64913,7 @@ var require_admin = __commonJS({
             label: translations$1.getPro
           }
         },
-        version: "1.2.5"
+        version: "1.2.6"
       }
     };
     function hideAdminElements() {
@@ -78269,12 +78269,11 @@ var require_admin = __commonJS({
       }, []);
       reactExports.useEffect(() => {
         fetchData("tsteam/member_category/fetch", (response) => {
-          if (response.success && response.data) {
-            console.log(response);
-            const options = response.data.map((category) => ({
+          if (response.success) {
+            const list = Array.isArray(response.data) ? response.data : [];
+            const options = list.map((category) => ({
               label: category.name,
               value: category.post_id
-              // Changed from category.show_member_by to category.slug
             }));
             setMemberCategories(options);
           } else {
@@ -78289,15 +78288,21 @@ var require_admin = __commonJS({
             if (response.success && response.data) {
               const showBy = response.data.meta_data.show_members_by || "manual";
               setShowMembersBy(showBy);
+              const memberIds = showBy === "manual" ? (_a2 = response.data.meta_data.team_members) == null ? void 0 : _a2.map((member) => member.post_id) : void 0;
               form.setFieldsValue({
                 title: response.data.title,
                 show_members_by: showBy,
-                team_members: showBy === "manual" ? (_a2 = response.data.meta_data.team_members) == null ? void 0 : _a2.map((member) => ({
-                  label: member.name,
-                  value: member.post_id
-                })) : void 0,
+                team_members: memberIds,
                 member_categories: showBy === "category" ? response.data.meta_data.member_categories : void 0
               });
+              if (showBy === "manual" && Array.isArray(memberIds)) {
+                setTimeout(() => {
+                  try {
+                    form.setFieldValue("team_members", memberIds);
+                  } catch (e2) {
+                  }
+                }, 50);
+              }
             } else {
               console.error("Failed to fetch showcase data.");
             }
@@ -78327,37 +78332,30 @@ var require_admin = __commonJS({
             name: "show_members_by",
             options: showMembersByOptions,
             onChange: (value) => setShowMembersBy(value),
+            form,
             rules: [{ required: true, message: "Please select how to show members" }]
           }
         ),
         showMembersBy === "manual" && /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Form.Item,
+          TsSelect,
           {
+            label: translations2.teamMember,
             name: "team_members",
-            rules: [{ required: true, message: "Please select team members" }],
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-              TsSelect,
-              {
-                label: translations2.teamMember,
-                options: teamMembers,
-                mode: "multiple"
-              }
-            )
+            options: teamMembers,
+            mode: "multiple",
+            form,
+            rules: [{ required: true, message: "Please select team members" }]
           }
         ),
         showMembersBy === "category" && /* @__PURE__ */ jsxRuntimeExports.jsx(
-          Form.Item,
+          TsSelect,
           {
+            label: translations2.memberCategory || "Member Category",
             name: "member_categories",
-            rules: [{ required: true, message: "Please select categories" }],
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-              TsSelect,
-              {
-                label: translations2.memberCategory || "Member Category",
-                options: memberCategories,
-                mode: "multiple"
-              }
-            )
+            options: memberCategories,
+            mode: "multiple",
+            form,
+            rules: [{ required: true, message: "Please select categories" }]
           }
         )
       ] });
@@ -83248,11 +83246,12 @@ var require_admin = __commonJS({
         setLoading(true);
         fetchData(`tsteam/${type2}/fetch`, (response) => {
           if (response && response.success) {
-            const showcaseData = response.data.map((item) => ({
+            const showcaseData = (response.data || []).map((item) => ({
               key: item.post_id,
               ...item
             }));
-            const dynamicColumns = Object.keys(showcaseData[0]).filter((key) => key !== "post_id" && key !== "key").map((key) => ({
+            const firstRow = showcaseData[0] || null;
+            const dynamicColumns = firstRow ? Object.keys(firstRow).filter((key) => key !== "post_id" && key !== "key").map((key) => ({
               title: key.charAt(0).toUpperCase() + key.slice(1),
               dataIndex: key,
               key,
@@ -83269,8 +83268,8 @@ var require_admin = __commonJS({
                     return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: text });
                 }
               }
-            }));
-            const actionColumn = {
+            })) : [];
+            const actionColumn2 = {
               title: "Action",
               key: "action",
               render: (_, record) => /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -83332,10 +83331,12 @@ var require_admin = __commonJS({
                 }
               )
             };
-            setColumns([...dynamicColumns, actionColumn]);
+            setColumns([...dynamicColumns || [], actionColumn2]);
             setData(showcaseData);
           } else {
             console.error("Error fetching showcases:", response);
+            setColumns([actionColumn]);
+            setData([]);
           }
           setLoading(false);
         });
