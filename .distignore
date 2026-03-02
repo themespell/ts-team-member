@@ -5,6 +5,7 @@
 .gitlab-ci.yml
 .travis.yml
 .DS_Store
+dist
 Thumbs.db
 behat.yml
 bin
@@ -47,5 +48,8 @@ blocks/src/.DS_Store
 
 !includes/library/
 includes/library/.DS_Store
+!includes/library/vendor/
+!includes/library/vendor/**
+!includes/library/vendor
 !includes/library/composer.json
 includes/library/composer.lock
