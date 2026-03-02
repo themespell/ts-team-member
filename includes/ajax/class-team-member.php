@@ -49,11 +49,16 @@ class TeamMember {
 			$post_id            = get_the_ID();
 			$member_meta        = get_post_meta( $post_id, 'tsteam_member_info', true );
 
+			// Ensure member_meta is an array
+			if ( ! is_array( $member_meta ) ) {
+				$member_meta = array();
+			}
+
 			$members[] = array(
 				'post_id'     => $post_id,
-				'image' => $member_meta['image'],
+				'image' => $member_meta['image'] ?? '',
 				'name'        => get_the_title(),
-				'designation' => $member_meta['designation'],
+				'designation' => $member_meta['designation'] ?? '',
 				'description' => get_the_content(),
 			);
 		}
@@ -87,6 +92,11 @@ class TeamMember {
 		$query->the_post();
 
 		$member_meta        = get_post_meta( $team_member_id, 'tsteam_member_info', true );
+
+		// Ensure member_meta is an array
+		if ( ! is_array( $member_meta ) ) {
+			$member_meta = array();
+		}
 
 		$showcase = array(
 			'post_id'   => $team_member_id,
@@ -177,6 +187,11 @@ class TeamMember {
 
             // Get the original meta data
             $member_meta = get_post_meta( $post_id, 'tsteam_member_info', true );
+
+            // Ensure member_meta is an array
+            if ( ! is_array( $member_meta ) ) {
+                $member_meta = array();
+            }
 
             // Create new post args
             $args = array(
