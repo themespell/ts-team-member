@@ -144,7 +144,7 @@ function DataTable({ type, title, editor }) {
         setData(showcaseData);
       } else {
         console.error('Error fetching showcases:', response);
-        setColumns([actionColumn]);
+        setColumns([]);
         setData([]);
       }
       setLoading(false);
@@ -187,6 +187,10 @@ function DataTable({ type, title, editor }) {
                 console.error('Duplicate error:', error);
                 toastNotification('error', 'Error', `There was an error duplicating the ${title}.`);
             });
+    };
+
+    const handleProFeature = (feature) => {
+        toastNotification('warning', 'Pro Feature', `The ${feature} feature is only available in the Pro version.`);
     };
 
   const handleEdit = (post_id) => {
