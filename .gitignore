@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 dist
+.wordpress-org
 dist-ssr
 *.local
 

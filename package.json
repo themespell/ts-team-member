@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "node build.js",
     "dist": "node build-dist.js",
+    "dist:push": "node build-svn.js",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "watch": "node build-watch.js",
