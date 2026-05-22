@@ -90,6 +90,8 @@ function loadDistIgnore() {
     '.DS_Store',
     'dist',
     'build-dist.js',
+    'build-svn.js',
+    '.wordpress-org',
     '.claude',
     '.idea',
     'eslint.config.js'

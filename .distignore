@@ -6,6 +6,8 @@
 .travis.yml
 .DS_Store
 dist
+build-svn.js
+.wordpress-org
 Thumbs.db
 behat.yml
 bin
