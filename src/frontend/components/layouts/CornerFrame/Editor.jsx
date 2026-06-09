@@ -12,13 +12,8 @@ const register_controls = () => {
             },
             {
                 type: 'color',
-                label: 'Card Background',
-                name: 'tscornerframe.color.cardBg',
-            },
-            {
-                type: 'color',
-                label: 'Text Color',
-                name: 'tscornerframe.color.text',
+                label: 'Overlay Color',
+                name: 'tscornerframe.color.overlay',
             },
         ]
     };

@@ -3559,6 +3559,10 @@ html:has(.drawer-toggle:checked) {
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
 }
+.\!text-white {
+    --tw-text-opacity: 1 !important;
+    color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
+}
 .opacity-0 {
     opacity: 0;
 }
@@ -4625,14 +4629,12 @@ URL: https://animista.net/play/attention/wobble
     background-color: var(--tscard-color-separator, blue);
     border: none;
 }:root {
-    --tscornerframe-accent: #b59558;
-    --tscornerframe-card-bg: #0c0c0c;
-    --tscornerframe-text: #ffffff;
+    --tscornerframe-color-accent: #b59558;
+    --tscornerframe-color-overlay: #0c0c0c;
 }
 
 .tsteam-cornerframe-card {
     position: relative;
-    background: var(--tscornerframe-card-bg);
     border-radius: 8px;
     overflow: hidden;
     aspect-ratio: 3/4;
@@ -4682,9 +4684,13 @@ URL: https://animista.net/play/attention/wobble
     right: 0;
     bottom: 0;
     padding: 24px 28px 28px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 40%, rgba(0, 0, 0, 0.6) 80%, transparent);
-    color: var(--tscornerframe-text);
-    border-left: 3px solid var(--tscornerframe-accent);
+    background: linear-gradient(
+        to top,
+        var(--tscornerframe-color-overlay, #0c0c0c) 40%,
+        rgba(0, 0, 0, 0.6) 80%,
+        transparent
+    );
+    border-left: 3px solid var(--tscornerframe-color-accent);
     margin: 0 24px 24px;
     z-index: 1;
 }
@@ -4693,7 +4699,6 @@ URL: https://animista.net/play/attention/wobble
     font-size: 28px;
     font-weight: 700;
     letter-spacing: 1px;
-    color: #fff;
     text-transform: uppercase;
 }
 
@@ -4701,7 +4706,7 @@ URL: https://animista.net/play/attention/wobble
     font-size: 36px;
     font-weight: 800;
     letter-spacing: 1px;
-    color: var(--tscornerframe-accent);
+    color: var(--tscornerframe-color-accent);
     text-transform: uppercase;
     line-height: 1;
     margin-top: 2px;
@@ -4741,7 +4746,7 @@ URL: https://animista.net/play/attention/wobble
 }
 
 .tsteam-cornerframe-social-link:hover {
-    background: var(--tscornerframe-accent);
+    background: var(--tscornerframe-color-accent);
     color: #000;
 }
 

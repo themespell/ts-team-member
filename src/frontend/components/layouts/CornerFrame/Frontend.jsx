@@ -1,6 +1,6 @@
 import React from "react";
 import SocialIcons from "./SocialIcons.jsx";
-
+import TsMemberName from "../__common/components/TsMemberName.jsx";
 import './style.css';
 
 const CornerFrame = ({
@@ -32,8 +32,10 @@ const CornerFrame = ({
         alt={title}
       />
       <div className="tsteam-cornerframe-info">
-        {first && <div className="tsteam-cornerframe-first">{first}</div>}
+        <TsMemberName  >
+          {first && <div className="tsteam-cornerframe-first">{first}</div>}
         {last && <div className="tsteam-cornerframe-last">{last}</div>}
+        </TsMemberName>
         {subtitle && <div className="tsteam-cornerframe-role">{subtitle}</div>}
         {description && <div className="tsteam-cornerframe-description">{description}</div>}
         <SocialIcons socialIcons={socialIcons} settings={settings} />

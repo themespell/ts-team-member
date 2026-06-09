@@ -24968,7 +24968,7 @@ var require_frontend = __commonJS({
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
         "h3",
         {
-          className: `text-[16px] font-semibold mb-0.5 tsteam-member__name ${className} `,
+          className: ` ${className} text-[16px] font-semibold mb-0.5 tsteam-member__name  `,
           children
         }
       );
@@ -25077,7 +25077,7 @@ var require_frontend = __commonJS({
       }
       if (!data || !Array.isArray(data)) return null;
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-socials", children: data.map((item, index) => {
-        var _a2, _b;
+        var _a2, _b, _c, _d;
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "a",
           {
@@ -25086,7 +25086,8 @@ var require_frontend = __commonJS({
             rel: "noopener noreferrer",
             className: "tsteam-cornerframe-social-link",
             style: {
-              color: ((_b = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.color) == null ? void 0 : _b.socialIcon) || "var(--tscornerframe-accent)"
+              color: (_b = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.color) == null ? void 0 : _b.socialIcon,
+              background: (_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIconBg
             },
             children: getSocialIcon$4(item.socialChannel)
           },
@@ -25122,8 +25123,10 @@ var require_frontend = __commonJS({
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-cornerframe-info", children: [
-          first && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-first", children: first }),
-          last && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-last", children: last }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(TsMemberName, { children: [
+            first && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-first", children: first }),
+            last && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-last", children: last })
+          ] }),
           subtitle && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-role", children: subtitle }),
           description && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-description", children: description }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$4, { socialIcons, settings }),
@@ -25631,13 +25634,8 @@ var require_frontend = __commonJS({
           },
           {
             type: "color",
-            label: "Card Background",
-            name: "tscornerframe.color.cardBg"
-          },
-          {
-            type: "color",
-            label: "Text Color",
-            name: "tscornerframe.color.text"
+            label: "Overlay Color",
+            name: "tscornerframe.color.overlay"
           }
         ]
       };

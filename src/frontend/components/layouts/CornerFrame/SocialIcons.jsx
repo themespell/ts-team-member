@@ -60,7 +60,8 @@ const SocialIcons = ({ socialIcons, settings }) => {
                     rel="noopener noreferrer"
                     className="tsteam-cornerframe-social-link"
                     style={{
-                        color: settings?.layout?.color?.socialIcon || 'var(--tscornerframe-accent)',
+                        color: settings?.layout?.color?.socialIcon,
+                        background: settings?.layout?.color?.socialIconBg,
                     }}
                 >
                     {getSocialIcon(item.socialChannel)}
