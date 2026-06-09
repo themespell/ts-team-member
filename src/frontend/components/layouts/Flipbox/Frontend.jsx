@@ -34,7 +34,6 @@ const Flipbox = ({
           {description && (
             <TsMemberDescription>{description}</TsMemberDescription>
           )}
-          {details && <div className="tsteam-flipbox-details">{details}</div>}
         </div>
 
         {/* Back Side */}

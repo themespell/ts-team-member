@@ -84631,8 +84631,7 @@ var require_admin = __commonJS({
           ) }),
           title && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberName, { children: title }),
           subtitle && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDesignation, { children: subtitle }),
-          description && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDescription, { children: description }),
-          details && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-flipbox-details", children: details })
+          description && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDescription, { children: description })
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-flipbox-back", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-flipbox-back-top", children: [

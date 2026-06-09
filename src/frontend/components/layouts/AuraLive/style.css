@@ -1,8 +1,5 @@
 :root {
     --auralive-bg: #ffffff;
-    --auralive-title: #111827;
-    --auralive-subtitle: #4f46e5;
-    --auralive-text: #6b7280;
 }
 
 .tsteam-auralive-wrapper {
@@ -10,8 +7,6 @@
     padding: 2px;
     border-radius: 1.25rem;
     overflow: hidden;
-    max-width: 320px;
-    margin: 0 auto;
 }
 
 .tsteam-auralive-wrapper::before {
@@ -101,30 +96,5 @@
     gap: 0.5rem;
 }
 
-.tsteam-auralive-socials-wrapper a {
-    width: 32px;
-    height: 32px;
-    border-radius: 0.5rem;
-    background: #f1f5f9;
-    color: #94a3b8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
 
-.tsteam-auralive-socials-wrapper a:hover {
-    background: rgba(99, 102, 241, 0.1) !important;
-    color: #6366f1 !important;
-    transform: translateY(-2px);
-}
 
-.tsteam-auralive-socials-wrapper a svg {
-    width: 14px;
-    height: 14px;
-}
-
-.tsteam-auralive-details {
-    margin-top: 1rem;
-    font-size: 0.75rem;
-}
