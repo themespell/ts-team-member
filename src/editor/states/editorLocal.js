@@ -83,6 +83,8 @@ const editorLocal = create((set) => ({
         { label: 'Tiles', value: 'Tiles', type: 'free', disabled: false },
         { label: 'Spotlight', value: 'Spotlight', type: 'free', disabled: false },
         { label: 'CornerFrame', value: 'CornerFrame', type: 'free', disabled: false },
+        { label: 'Flipbox', value: 'Flipbox', type: 'free', disabled: false },
+        { label: 'Aura Live', value: 'AuraLive', type: 'free', disabled: false },
         ...proOnlyLayouts, // These will be empty array when Pro is active
         ...updatedGridLayouts,
     ],

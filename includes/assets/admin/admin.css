@@ -3559,10 +3559,6 @@ html:has(.drawer-toggle:checked) {
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity));
 }
-.\!text-white {
-    --tw-text-opacity: 1 !important;
-    color: rgb(255 255 255 / var(--tw-text-opacity)) !important;
-}
 .opacity-0 {
     opacity: 0;
 }
@@ -4617,6 +4613,137 @@ URL: https://animista.net/play/attention/wobble
         text-shadow: 0 1px 0 #cccccc, 0 2px 0 #cccccc, 0 3px 0 #cccccc, 0 4px 0 #cccccc, 0 5px 0 #cccccc, 0 6px 0 #cccccc, 0 7px 0 #cccccc, 0 8px 0 #cccccc, 0 9px 0 #cccccc, 0 50px 30px rgba(0, 0, 0, 0.3);
     }
 }:root {
+    --auralive-bg: #ffffff;
+    --auralive-title: #111827;
+    --auralive-subtitle: #4f46e5;
+    --auralive-text: #6b7280;
+}
+
+.tsteam-auralive-wrapper {
+    position: relative;
+    padding: 2px;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+.tsteam-auralive-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, #6366f1, #a855f7, #ec4899, #6366f1);
+    animation: auralive-spin 3s linear infinite;
+}
+
+@keyframes auralive-spin {
+    to { transform: rotate(360deg); }
+}
+
+.tsteam-auralive-inner {
+    position: relative;
+    z-index: 10;
+    background: var(--auralive-bg);
+    border-radius: 1.125rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.tsteam-auralive-avatar-wrap {
+    width: 96px;
+    height: 96px;
+    border-radius: 9999px;
+    background: linear-gradient(to bottom right, #e0e7ff, #f3e8ff);
+    border: 2px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.1), 0 4px 6px -4px rgba(99, 102, 241, 0.1);
+    animation: auralive-float 3s ease-in-out infinite;
+}
+
+@keyframes auralive-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.tsteam-auralive-image {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+    border-radius: 9999px;
+}
+
+.tsteam-auralive-inner .tsteam-member__name {
+    color: var(--auralive-title);
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.tsteam-auralive-inner .tsteam-member__designation {
+    color: var(--auralive-subtitle);
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+}
+
+.tsteam-auralive-divider {
+    width: 3rem;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #818cf8, transparent);
+    margin-bottom: 1rem;
+}
+
+.tsteam-auralive-inner .tsteam-member__description {
+    color: var(--auralive-text);
+    font-size: 0.75rem;
+    line-height: 1.625;
+    margin-bottom: 1.5rem;
+}
+
+.tsteam-auralive-socials-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.tsteam-auralive-socials-wrapper a {
+    width: 32px;
+    height: 32px;
+    border-radius: 0.5rem;
+    background: #f1f5f9;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.tsteam-auralive-socials-wrapper a:hover {
+    background: rgba(99, 102, 241, 0.1) !important;
+    color: #6366f1 !important;
+    transform: translateY(-2px);
+}
+
+.tsteam-auralive-socials-wrapper a svg {
+    width: 14px;
+    height: 14px;
+}
+
+.tsteam-auralive-details {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+}
+:root {
     --tscard-color-separator: blue;
 }
 
@@ -4752,6 +4879,167 @@ URL: https://animista.net/play/attention/wobble
 
 .tsteam-cornerframe-details {
     margin-top: 12px;
+}
+:root {
+    --flipbox-bg: #ffffff;
+    --flipbox-back-bg: #f5f3ff;
+    --flipbox-border: #e2e8f0;
+    --flipbox-title: #0f172a;
+    --flipbox-subtitle: #4f46e5;
+    --flipbox-text: #64748b;
+}
+
+.tsteam-flipbox-card {
+    perspective: 1000px;
+    width: 100%;
+    max-width: 320px;
+    height: 400px;
+    margin: 0 auto;
+}
+
+.tsteam-flipbox-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.tsteam-flipbox-card:hover .tsteam-flipbox-inner {
+    transform: rotateY(180deg);
+}
+
+.tsteam-flipbox-front, .tsteam-flipbox-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 1rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Front Styling */
+.tsteam-flipbox-front {
+    background: var(--flipbox-bg);
+    border: 1px solid var(--flipbox-border);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.tsteam-flipbox-avatar-wrap {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 9999px;
+    background: linear-gradient(to bottom right, #e0e7ff, #f3e8ff);
+    border: 1px solid #c7d2fe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.tsteam-flipbox-image {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+    border-radius: 9999px;
+}
+
+.tsteam-flipbox-front .tsteam-member__name,
+.tsteam-flipbox-back .tsteam-member__name {
+    color: var(--flipbox-title);
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.tsteam-flipbox-front .tsteam-member__designation,
+.tsteam-flipbox-back .tsteam-member__designation {
+    color: var(--flipbox-subtitle);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.tsteam-flipbox-front .tsteam-member__designation {
+    margin-bottom: 1rem;
+}
+.tsteam-flipbox-back .tsteam-member__designation {
+    margin-bottom: 1.25rem;
+}
+
+.tsteam-flipbox-front .tsteam-member__description,
+.tsteam-flipbox-back .tsteam-member__description {
+    color: var(--flipbox-text);
+    font-size: 0.75rem;
+    line-height: 1.625;
+}
+
+.tsteam-flipbox-details {
+    margin-top: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    font-size: 0.625rem;
+    color: #059669;
+    font-weight: 500;
+}
+
+.tsteam-flipbox-details::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background-color: #10b981;
+    border-radius: 50%;
+}
+
+/* Back Styling */
+.tsteam-flipbox-back {
+    background: linear-gradient(to bottom right, #eef2ff, #ffffff);
+    border: 1px solid #c7d2fe;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transform: rotateY(180deg);
+    justify-content: space-between;
+    text-align: left;
+}
+
+.tsteam-flipbox-back-top {
+    display: flex;
+    flex-direction: column;
+}
+
+.tsteam-flipbox-socials-wrapper {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tsteam-flipbox-socials-wrapper a {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    background: #f1f5f9;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.tsteam-flipbox-socials-wrapper a:hover {
+    background: rgba(99, 102, 241, 0.1) !important;
+    color: #6366f1 !important;
+    transform: translateY(-2px);
+}
+
+.tsteam-flipbox-socials-wrapper a svg {
+    width: 14px;
+    height: 14px;
 }
 :root {
     --tshorizontal-borderColor: #ccc; /* Default border color */

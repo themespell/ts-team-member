@@ -66074,6 +66074,8 @@ var require_admin = __commonJS({
         { label: "Tiles", value: "Tiles", type: "free", disabled: false },
         { label: "Spotlight", value: "Spotlight", type: "free", disabled: false },
         { label: "CornerFrame", value: "CornerFrame", type: "free", disabled: false },
+        { label: "Flipbox", value: "Flipbox", type: "free", disabled: false },
+        { label: "Aura Live", value: "AuraLive", type: "free", disabled: false },
         ...proOnlyLayouts,
         // These will be empty array when Pro is active
         ...updatedGridLayouts
@@ -79589,7 +79591,7 @@ var require_admin = __commonJS({
         ] })
       ] });
     }
-    const register_controls$5 = () => {
+    const register_controls$7 = () => {
       return {
         controls: [
           {
@@ -79604,11 +79606,11 @@ var require_admin = __commonJS({
         ]
       };
     };
-    const Editor$6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+    const Editor$8 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       __proto__: null,
-      register_controls: register_controls$5
+      register_controls: register_controls$7
     }, Symbol.toStringTag, { value: "Module" }));
-    const register_controls$4 = () => {
+    const register_controls$6 = () => {
       return {
         controls: [
           {
@@ -79623,11 +79625,11 @@ var require_admin = __commonJS({
         ]
       };
     };
-    const Editor$5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+    const Editor$7 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       __proto__: null,
-      register_controls: register_controls$4
+      register_controls: register_controls$6
     }, Symbol.toStringTag, { value: "Module" }));
-    const register_controls$3 = () => {
+    const register_controls$5 = () => {
       return {
         controls: [
           {
@@ -79677,11 +79679,11 @@ var require_admin = __commonJS({
         ]
       };
     };
-    const Editor$4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+    const Editor$6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       __proto__: null,
-      register_controls: register_controls$3
+      register_controls: register_controls$5
     }, Symbol.toStringTag, { value: "Module" }));
-    const register_controls$2 = () => {
+    const register_controls$4 = () => {
       return {
         controls: [
           {
@@ -79706,11 +79708,11 @@ var require_admin = __commonJS({
         ]
       };
     };
-    const Editor$3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+    const Editor$5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       __proto__: null,
-      register_controls: register_controls$2
+      register_controls: register_controls$4
     }, Symbol.toStringTag, { value: "Module" }));
-    const register_controls$1 = () => {
+    const register_controls$3 = () => {
       return {
         controls: [
           {
@@ -79740,11 +79742,11 @@ var require_admin = __commonJS({
         ]
       };
     };
-    const Editor$2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+    const Editor$4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       __proto__: null,
-      register_controls: register_controls$1
+      register_controls: register_controls$3
     }, Symbol.toStringTag, { value: "Module" }));
-    const register_controls = () => {
+    const register_controls$2 = () => {
       return {
         controls: [
           {
@@ -79764,18 +79766,48 @@ var require_admin = __commonJS({
         ]
       };
     };
+    const Editor$3 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+      __proto__: null,
+      register_controls: register_controls$2
+    }, Symbol.toStringTag, { value: "Module" }));
+    const register_controls$1 = () => {
+      return {
+        controls: [
+          {
+            type: "divider",
+            label: "Flipbox Styles"
+          }
+        ]
+      };
+    };
+    const Editor$2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+      __proto__: null,
+      register_controls: register_controls$1
+    }, Symbol.toStringTag, { value: "Module" }));
+    const register_controls = () => {
+      return {
+        controls: [
+          {
+            type: "divider",
+            label: "AuraLive Styles"
+          }
+        ]
+      };
+    };
     const Editor$1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       __proto__: null,
       register_controls
     }, Symbol.toStringTag, { value: "Module" }));
     const TsLayouts = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       __proto__: null,
-      Card: Editor$6,
-      CornerFrame: Editor$1,
-      HorizontalCard: Editor$5,
-      OverlayCard: Editor$4,
-      Spotlight: Editor$2,
-      Tiles: Editor$3
+      AuraLive: Editor$1,
+      Card: Editor$8,
+      CornerFrame: Editor$3,
+      Flipbox: Editor$2,
+      HorizontalCard: Editor$7,
+      OverlayCard: Editor$6,
+      Spotlight: Editor$4,
+      Tiles: Editor$5
     }, Symbol.toStringTag, { value: "Module" }));
     const renderControls = {
       slider: (control) => /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -80503,7 +80535,7 @@ var require_admin = __commonJS({
       const [Component, setComponent] = reactExports.useState(null);
       reactExports.useEffect(() => {
         if (layoutType) {
-          __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "./Card/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$5), true ? void 0 : void 0), "./CornerFrame/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$4), true ? void 0 : void 0), "./HorizontalCard/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$3), true ? void 0 : void 0), "./OverlayCard/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$2), true ? void 0 : void 0), "./Spotlight/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$1), true ? void 0 : void 0), "./Tiles/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend), true ? void 0 : void 0) }), `./${layoutType}/Frontend.jsx`, 3).then((module2) => {
+          __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "./AuraLive/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$7), true ? void 0 : void 0), "./Card/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$6), true ? void 0 : void 0), "./CornerFrame/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$5), true ? void 0 : void 0), "./Flipbox/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$4), true ? void 0 : void 0), "./HorizontalCard/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$3), true ? void 0 : void 0), "./OverlayCard/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$2), true ? void 0 : void 0), "./Spotlight/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend$1), true ? void 0 : void 0), "./Tiles/Frontend.jsx": () => __vitePreload(() => Promise.resolve().then(() => Frontend), true ? void 0 : void 0) }), `./${layoutType}/Frontend.jsx`, 3).then((module2) => {
             const LoadedComponent = module2.default;
             setComponent(() => LoadedComponent);
           }).catch((error) => {
@@ -81432,7 +81464,7 @@ var require_admin = __commonJS({
             setControls([]);
           }
         } else if (layoutType) {
-          __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "../layouts/Card/Editor.jsx": () => __vitePreload(() => Promise.resolve().then(() => Editor$6), true ? void 0 : void 0), "../layouts/CornerFrame/Editor.jsx": () => __vitePreload(() => Promise.resolve().then(() => Editor$1), true ? void 0 : void 0), "../layouts/HorizontalCard/Editor.jsx": () => __vitePreload(() => Promise.resolve().then(() => Editor$5), true ? void 0 : void 0), "../layouts/OverlayCard/Editor.jsx": () => __vitePreload(() => Promise.resolve().then(() => Editor$4), true ? void 0 : void 0), "../layouts/Spotlight/Editor.jsx": () => __vitePreload(() => Promise.resolve().then(() => Editor$2), true ? void 0 : void 0), "../layouts/Tiles/Editor.jsx": () => __vitePreload(() => Promise.resolve().then(() => Editor$3), true ? void 0 : void 0) }), `../layouts/${layoutType}/Editor.jsx`, 4).then((module2) => {
+          __variableDynamicImportRuntimeHelper(/* @__PURE__ */ Object.assign({ "../layouts/AuraLive/Editor.jsx": () => __vitePreload(() => Promise.resolve().then(() => Editor$1), true ? void 0 : void 0), "../layouts/Card/Editor.jsx": () => __vitePreload(() => Promise.resolve().then(() => Editor$8), true ? void 0 : void 0), "../layouts/CornerFrame/Editor.jsx": () => __vitePreload(() => Promise.resolve().then(() => Editor$3), true ? void 0 : void 0), "../layouts/Flipbox/Editor.jsx": () => __vitePreload(() => Promise.resolve().then(() => Editor$2), true ? void 0 : void 0), "../layouts/HorizontalCard/Editor.jsx": () => __vitePreload(() => Promise.resolve().then(() => Editor$7), true ? void 0 : void 0), "../layouts/OverlayCard/Editor.jsx": () => __vitePreload(() => Promise.resolve().then(() => Editor$6), true ? void 0 : void 0), "../layouts/Spotlight/Editor.jsx": () => __vitePreload(() => Promise.resolve().then(() => Editor$4), true ? void 0 : void 0), "../layouts/Tiles/Editor.jsx": () => __vitePreload(() => Promise.resolve().then(() => Editor$5), true ? void 0 : void 0) }), `../layouts/${layoutType}/Editor.jsx`, 4).then((module2) => {
             const register_controls2 = module2.register_controls;
             setControls(register_controls2().controls || []);
           }).catch((error) => {
@@ -84383,6 +84415,39 @@ var require_admin = __commonJS({
         " "
       ] });
     };
+    const AuraLive = ({ settings, id: id2, imageUrl, title, subtitle, description, socialIcons, details, animationConfig }) => {
+      const renderContent = () => /* @__PURE__ */ jsxRuntimeExports.jsx("article", { className: "tsteam-auralive-wrapper", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-auralive-inner", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-auralive-avatar-wrap", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "img",
+          {
+            id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
+            src: imageUrl,
+            alt: title,
+            className: "tsteam-auralive-image"
+          }
+        ) }),
+        title && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberName, { children: title }),
+        subtitle && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDesignation, { children: subtitle }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-auralive-divider" }),
+        description && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDescription, { children: description }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-auralive-socials-wrapper", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$5, { socialIcons, settings }) }),
+        details && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-auralive-details", children: details })
+      ] }) });
+      if (!animationConfig) {
+        return renderContent();
+      }
+      if (animationConfig.type === "single") {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: animationConfig.class, children: renderContent() });
+      }
+      if (animationConfig.type === "wrapper") {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: animationConfig.parent, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: animationConfig.wrapper, children: renderContent() }) });
+      }
+      return renderContent();
+    };
+    const Frontend$7 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+      __proto__: null,
+      default: AuraLive
+    }, Symbol.toStringTag, { value: "Module" }));
     const Card = ({
       settings,
       id: id2,
@@ -84443,7 +84508,7 @@ var require_admin = __commonJS({
       }
       return renderContent();
     };
-    const Frontend$5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+    const Frontend$6 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       __proto__: null,
       default: Card
     }, Symbol.toStringTag, { value: "Module" }));
@@ -84538,9 +84603,60 @@ var require_admin = __commonJS({
       }
       return /* @__PURE__ */ jsxRuntimeExports.jsx(CardComponent, {});
     };
-    const Frontend$4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+    const Frontend$5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
       __proto__: null,
       default: CornerFrame
+    }, Symbol.toStringTag, { value: "Module" }));
+    const Flipbox = ({
+      settings,
+      id: id2,
+      imageUrl,
+      title,
+      subtitle,
+      description,
+      socialIcons,
+      details,
+      animationConfig
+    }) => {
+      const renderContent = () => /* @__PURE__ */ jsxRuntimeExports.jsx("article", { className: "tsteam-flipbox-card", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-flipbox-inner", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-flipbox-front", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-flipbox-avatar-wrap", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "img",
+            {
+              id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}-front`,
+              src: imageUrl,
+              alt: title,
+              className: "tsteam-flipbox-image"
+            }
+          ) }),
+          title && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberName, { children: title }),
+          subtitle && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDesignation, { children: subtitle }),
+          description && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDescription, { children: description }),
+          details && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-flipbox-details", children: details })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-flipbox-back", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-flipbox-back-top", children: [
+            title && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberName, { children: title }),
+            subtitle && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDesignation, { children: subtitle }),
+            description && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDescription, { children: description })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-flipbox-back-bottom", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-flipbox-socials-wrapper", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$5, { socialIcons, settings }) }) })
+        ] })
+      ] }) });
+      if (!animationConfig) {
+        return renderContent();
+      }
+      if (animationConfig.type === "single") {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: animationConfig.class, children: renderContent() });
+      }
+      if (animationConfig.type === "wrapper") {
+        return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: animationConfig.parent, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: animationConfig.wrapper, children: renderContent() }) });
+      }
+      return renderContent();
+    };
+    const Frontend$4 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+      __proto__: null,
+      default: Flipbox
     }, Symbol.toStringTag, { value: "Module" }));
     const getSocialIcon$3 = (channel) => {
       const icons2 = {
