@@ -81,6 +81,8 @@ const editorLocal = create((set) => ({
         { label: 'Horizontal Card', value: 'HorizontalCard', type: 'free', disabled: false },
         { label: 'Overlay Card', value: 'OverlayCard', type: 'free', disabled: false },
         { label: 'Tiles', value: 'Tiles', type: 'free', disabled: false },
+        { label: 'Spotlight', value: 'Spotlight', type: 'free', disabled: false },
+        { label: 'CornerFrame', value: 'CornerFrame', type: 'free', disabled: false },
         ...proOnlyLayouts, // These will be empty array when Pro is active
         ...updatedGridLayouts,
     ],
