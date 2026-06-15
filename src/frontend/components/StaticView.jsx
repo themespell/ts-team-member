@@ -80,6 +80,7 @@ function StaticView({ team_members, settings, viewport, isEditor }) {
                 socialIcons={member.meta_data.socialLinks || []}
                 details={<Details settings={settings} member={member} />}
                 animationConfig={animationConfig}
+                videoLink={member.meta_data.videoLink}
               />
             ) : (
               <Layout
@@ -93,6 +94,7 @@ function StaticView({ team_members, settings, viewport, isEditor }) {
                 socialIcons={member.meta_data.socialLinks || []}
                 details={<Details settings={settings} member={member} />}
                 animationConfig={animationConfig}
+                videoLink={member.meta_data.videoLink}
               />
             )}
           </Fragment>

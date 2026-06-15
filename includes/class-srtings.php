@@ -58,6 +58,7 @@ class Strings {
             'resume_link'            => __('Resume Link', 'ts-team-member'),
             'hire_link'              => __('Hire Link', 'ts-team-member'),
             'donation_link'          => __('Donation Link', 'ts-team-member'),
+            'video_link'             => __('Video Link', 'ts-team-member'),
             'social_links'           => __('Social Links', 'ts-team-member'),
             'skills'                 => __('Skills', 'ts-team-member'),
             'showcase_name'          => __('Showcase Name', 'ts-team-member'),

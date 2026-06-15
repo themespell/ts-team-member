@@ -27,7 +27,13 @@ function TeamMemberProfile({ form, social_links, skills }) {
         label={translations.donationLink}
         name="member_donation"
         />
-        
+
+        <TsInput
+        label={translations.videoLink}
+        name="member_video"
+        showProBadge={true}
+        />
+
         </div>
 
 

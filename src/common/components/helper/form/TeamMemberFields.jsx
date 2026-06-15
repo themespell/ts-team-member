@@ -57,6 +57,7 @@ function TeamMemberFields({ form, post_id }) {
             member_resume: response.data.meta_data.resume,
             member_hire: response.data.meta_data.hireLink,
             member_donation: response.data.meta_data.donationLink,
+            member_video: response.data.meta_data.videoLink,
           });
           setMemberImage(response.data.meta_data.image);
           setMemberInformation(response.data.meta_data.information);
