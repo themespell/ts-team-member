@@ -12,6 +12,7 @@ const Spotlight = ({
   subtitle,
   description,
   socialIcons,
+  details,
   animationConfig,
 }) => {
   const renderContent = () => (
@@ -50,6 +51,10 @@ const Spotlight = ({
                 {description}
               </TsMemberDescription>
             ) : null}
+
+            {details && (
+              <div className="tsteam-spotlight__details">{details}</div>
+            )}
           </div>
         </div>
       </div>

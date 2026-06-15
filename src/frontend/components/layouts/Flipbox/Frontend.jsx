@@ -46,6 +46,9 @@ const Flipbox = ({
             )}
           </div>
           <div className="tsteam-flipbox-back-bottom">
+            {details && (
+              <div className="tsteam-flipbox-details">{details}</div>
+            )}
             <div className="tsteam-flipbox-socials-wrapper">
               <SocialIcons socialIcons={socialIcons} settings={settings} />
             </div>
