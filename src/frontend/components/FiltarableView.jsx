@@ -153,6 +153,7 @@ function FilterableView({ team_members, settings, category, viewport, isEditor }
                                     socialIcons={member.meta_data.socialLinks || []}
                                     details={<Details settings={settings} member={member} />}
                                     animationConfig={animationConfig}
+                                    videoLink={member.meta_data.videoLink}
                                 />
                             ) : (
                                 <Layout
@@ -166,6 +167,7 @@ function FilterableView({ team_members, settings, category, viewport, isEditor }
                                     socialIcons={member.meta_data.socialLinks || []}
                                     details={<Details settings={settings} member={member} />}
                                     animationConfig={animationConfig}
+                                    videoLink={member.meta_data.videoLink}
                                 />
                             )}
                         </Fragment>

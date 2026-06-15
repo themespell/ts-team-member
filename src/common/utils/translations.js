@@ -52,6 +52,7 @@ export const getTranslations = () => {
         resumeLink: window.tsteam_i18n.resume_link || 'Resume Link',
         hireLink: window.tsteam_i18n.hire_link || 'Hire Link',
         donationLink: window.tsteam_i18n.donation_link || 'Donation Link',
+        videoLink: window.tsteam_i18n.video_link || 'Video Link',
         socialLinks: window.tsteam_i18n.social_links || 'Social Links',
         skills: window.tsteam_i18n.skills || 'Skills',
         showcaseName: window.tsteam_i18n.showcase_name || 'Showcase Name',

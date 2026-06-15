@@ -177,6 +177,7 @@ class Helper {
 			'resume'       => isset( $post_data['member_resume'] ) ? sanitize_text_field( wp_unslash( $post_data['member_resume'] ) ) : '',
 			'hireLink'     => isset( $post_data['member_hire'] ) ? sanitize_text_field( wp_unslash( $post_data['member_hire'] ) ) : '',
 			'donationLink' => isset( $post_data['member_donation'] ) ? sanitize_text_field( wp_unslash( $post_data['member_donation'] ) ) : '',
+			'videoLink'    => isset( $post_data['member_video'] ) ? sanitize_text_field( wp_unslash( $post_data['member_video'] ) ) : '',
 			'socialLinks'  => isset( $post_data['member_social'] ) ? wp_json_encode( Common::sanitize_array_data( wp_unslash( $post_data['member_social'] ) ) ) : wp_json_encode( array() ),
             'skills'       => isset( $post_data['member_skills'] ) ? wp_json_encode( Common::sanitize_array_data( wp_unslash( $post_data['member_skills'] ) ) ) : wp_json_encode( array() )
 		);
