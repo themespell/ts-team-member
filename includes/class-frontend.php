@@ -21,13 +21,17 @@ class Frontend {
 	public function tsteam_scripts() {
 		$isPro      = Common::isProActivated();
 		$dependency = array( 'jquery' );
+		$frontend_css_path = TSTEAM_ROOT_DIR_PATH . 'includes/assets/frontend/frontend.min.css';
+		$frontend_js_path  = TSTEAM_ROOT_DIR_PATH . 'includes/assets/frontend/frontend.min.js';
+		$frontend_css_ver  = file_exists( $frontend_css_path ) ? filemtime( $frontend_css_path ) : null;
+		$frontend_js_ver   = file_exists( $frontend_js_path ) ? filemtime( $frontend_js_path ) : null;
 
 		if ( $isPro ) {
 			$dependency[] = 'tsteampro-admin-script';
 		}
 
-			wp_enqueue_style( 'tsteam-member-main', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend/frontend.min.css' );
-			wp_enqueue_script( 'tsteam-member-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend/frontend.min.js', $dependency, '2.3.4', true );
+			wp_enqueue_style( 'tsteam-member-main', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend/frontend.min.css', array(), $frontend_css_ver );
+			wp_enqueue_script( 'tsteam-member-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/frontend/frontend.min.js', $dependency, $frontend_js_ver, true );
 			wp_localize_script(
 				'tsteam-member-script',
 				'tsteam_settings',

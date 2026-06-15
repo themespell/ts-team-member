@@ -21,6 +21,10 @@ class Enqueue {
 		$isEditor = Common::is_showcase_editor_screen();
 		$isPro       = Common::isProActivated();
 		$dependency  = array( 'jquery', 'wp-i18n' );
+		$admin_css_path = TSTEAM_ROOT_DIR_PATH . 'includes/assets/admin/admin.min.css';
+		$admin_js_path  = TSTEAM_ROOT_DIR_PATH . 'includes/assets/admin/admin.min.js';
+		$admin_css_ver  = file_exists( $admin_css_path ) ? filemtime( $admin_css_path ) : null;
+		$admin_js_ver   = file_exists( $admin_js_path ) ? filemtime( $admin_js_path ) : null;
 
 		if ( $isEditor && $isPro ) {
 			$dependency[] = 'tsteampro-admin-script';
@@ -28,8 +32,8 @@ class Enqueue {
 
 		if ( $screen_info ) {
             wp_enqueue_media();
-			wp_enqueue_style( 'tsteam-admin-main', TSTEAM_ROOT_DIR_URL . 'includes/assets/admin/admin.min.css' );
-			wp_enqueue_script( 'tsteam-admin-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/admin/admin.min.js', $dependency, '2.3.5', true );
+			wp_enqueue_style( 'tsteam-admin-main', TSTEAM_ROOT_DIR_URL . 'includes/assets/admin/admin.min.css', array(), $admin_css_ver );
+			wp_enqueue_script( 'tsteam-admin-script', TSTEAM_ROOT_DIR_URL . 'includes/assets/admin/admin.min.js', $dependency, $admin_js_ver, true );
 			wp_set_script_translations('tsteam-admin-script', 'ts-team-member', plugin_dir_path(__FILE__)  . 'languages');
 
 			wp_localize_script(

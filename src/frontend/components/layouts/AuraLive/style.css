@@ -1,0 +1,100 @@
+:root {
+    --auralive-bg: #ffffff;
+}
+
+.tsteam-auralive-wrapper {
+    position: relative;
+    padding: 2px;
+    border-radius: 1.25rem;
+    overflow: hidden;
+}
+
+.tsteam-auralive-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, #6366f1, #a855f7, #ec4899, #6366f1);
+    animation: auralive-spin 3s linear infinite;
+}
+
+@keyframes auralive-spin {
+    to { transform: rotate(360deg); }
+}
+
+.tsteam-auralive-inner {
+    position: relative;
+    z-index: 10;
+    background: var(--auralive-bg);
+    border-radius: 1.125rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.tsteam-auralive-avatar-wrap {
+    width: 96px;
+    height: 96px;
+    border-radius: 9999px;
+    background: linear-gradient(to bottom right, #e0e7ff, #f3e8ff);
+    border: 2px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.1), 0 4px 6px -4px rgba(99, 102, 241, 0.1);
+    animation: auralive-float 3s ease-in-out infinite;
+}
+
+@keyframes auralive-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.tsteam-auralive-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 9999px;
+}
+
+.tsteam-auralive-inner .tsteam-member__name {
+    color: var(--auralive-title);
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.tsteam-auralive-inner .tsteam-member__designation {
+    color: var(--auralive-subtitle);
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+}
+
+.tsteam-auralive-divider {
+    width: 3rem;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #818cf8, transparent);
+    margin-bottom: 1rem;
+}
+
+.tsteam-auralive-inner .tsteam-member__description {
+    color: var(--auralive-text);
+    font-size: 0.75rem;
+    line-height: 1.625;
+    margin-bottom: 1.5rem;
+}
+
+.tsteam-auralive-socials-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+
+

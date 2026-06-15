@@ -1,0 +1,124 @@
+:root {
+    --tscornerframe-color-accent: #b59558;
+    --tscornerframe-color-overlay: #0c0c0c;
+}
+
+.tsteam-cornerframe-card {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    max-width: 400px;
+    width: 100%;
+}
+
+.tsteam-cornerframe-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.tsteam-cornerframe-card::before,
+.tsteam-cornerframe-card::after {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--tscornerframe-accent);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.tsteam-cornerframe-card::before {
+    top: 0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+    border-top-right-radius: 8px;
+}
+
+.tsteam-cornerframe-card::after {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+    border-bottom-left-radius: 8px;
+}
+
+.tsteam-cornerframe-info {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 24px 28px 28px;
+    background: linear-gradient(
+        to top,
+        var(--tscornerframe-color-overlay, #0c0c0c) 40%,
+        rgba(0, 0, 0, 0.6) 80%,
+        transparent
+    );
+    border-left: 3px solid var(--tscornerframe-color-accent);
+    margin: 0 24px 24px;
+    z-index: 1;
+}
+
+.tsteam-cornerframe-first {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.tsteam-cornerframe-last {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--tscornerframe-color-accent);
+    text-transform: uppercase;
+    line-height: 1;
+    margin-top: 2px;
+}
+
+.tsteam-cornerframe-role {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #e5e5e5;
+    font-weight: 400;
+}
+
+.tsteam-cornerframe-description {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #ccc;
+    line-height: 1.4;
+}
+
+.tsteam-cornerframe-socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.tsteam-cornerframe-social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    color: #fff;
+}
+
+.tsteam-cornerframe-social-link:hover {
+    background: var(--tscornerframe-color-accent);
+    color: #000;
+}
+
+.tsteam-cornerframe-details {
+    margin-top: 12px;
+}

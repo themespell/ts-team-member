@@ -1,0 +1,107 @@
+:root {
+    --flipbox-bg: #ffffff;
+    --flipbox-back-bg: #f5f3ff;
+    --flipbox-border: #e2e8f0;
+}
+
+.tsteam-flipbox-card {
+    perspective: 1000px;
+    height: 400px;
+}
+
+.tsteam-flipbox-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.tsteam-flipbox-card:hover .tsteam-flipbox-inner {
+    transform: rotateY(180deg);
+}
+
+.tsteam-flipbox-front, .tsteam-flipbox-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 1rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Front Styling */
+.tsteam-flipbox-front {
+    background: var(--flipbox-bg);
+    border: 1px solid var(--flipbox-border);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.tsteam-flipbox-avatar-wrap {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 9999px;
+    background: linear-gradient(to bottom right, #e0e7ff, #f3e8ff);
+    border: 1px solid #c7d2fe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+.tsteam-flipbox-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 9999px;
+}
+
+
+
+/* Back Styling */
+.tsteam-flipbox-back {
+    background: linear-gradient(to bottom right, #eef2ff, #ffffff);
+    border: 1px solid #c7d2fe;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transform: rotateY(180deg);
+    justify-content: space-between;
+    text-align: left;
+}
+
+.tsteam-flipbox-back-top {
+    display: flex;
+    flex-direction: column;
+}
+
+.tsteam-flipbox-socials-wrapper {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tsteam-flipbox-socials-wrapper a {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    background: #f1f5f9;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.tsteam-flipbox-socials-wrapper a:hover {
+    background: rgba(99, 102, 241, 0.1) !important;
+    color: #6366f1 !important;
+    transform: translateY(-2px);
+}
+
+.tsteam-flipbox-socials-wrapper a svg {
+    width: 14px;
+    height: 14px;
+}

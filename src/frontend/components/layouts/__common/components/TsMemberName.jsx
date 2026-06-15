@@ -1,7 +1,7 @@
 const TsMemberName = ({ children, className = "" }) => {
   return (
     <h3
-      className={`text-[16px] font-semibold mb-0.5 tsteam-member__name ${className} `}
+      className={` ${className} text-[16px] font-semibold mb-0.5 tsteam-member__name  `}
     >
       {children}
     </h3>

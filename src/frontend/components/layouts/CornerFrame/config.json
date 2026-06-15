@@ -1,0 +1,49 @@
+{
+  "layout": {
+    "name": "CornerFrame",
+    "editor": {
+      "controls": {}
+    },
+    "container": {
+      "style": "tsteam-cornerframe-wrapper"
+    },
+    "image": {
+      "style": "tsteam-cornerframe-image"
+    },
+    "animation": {
+      "style": ""
+    },
+    "content": {
+      "style": "tsteam-cornerframe-info",
+      "header": {
+        "title": {
+          "markup": "div",
+          "style": "tsteam-cornerframe-names"
+        },
+        "subtitle": {
+          "visible": true,
+          "markup": "div",
+          "style": "tsteam-cornerframe-role"
+        }
+      },
+      "body": {
+        "visible": true,
+        "markup": "div",
+        "style": "tsteam-cornerframe-description"
+      },
+      "footer": {
+        "markup": "div",
+        "social": {
+          "visible": true,
+          "markup": "div",
+          "container": {
+            "style": "tsteam-cornerframe-socials"
+          },
+          "icon": {
+            "style": "tsteam-cornerframe-social-link"
+          }
+        }
+      }
+    }
+  }
+}
