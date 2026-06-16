@@ -64914,7 +64914,7 @@ var require_admin = __commonJS({
             label: translations$1.getPro
           }
         },
-        version: "1.2.7"
+        version: "1.2.8"
       }
     };
     function hideAdminElements() {

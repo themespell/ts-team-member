@@ -3273,9 +3273,6 @@ html:has(.drawer-toggle:checked) {
 .border-t {
     border-top-width: 1px;
 }
-.border-r {
-    border-right-width: 1px;
-}
 .border-dashed {
     border-style: dashed;
 }
@@ -3913,80 +3910,6 @@ html:has(.drawer-toggle:checked) {
 }
 .progress-bar-glow:hover {
 	box-shadow: 0 0 20px 0 rgba(124, 58, 237, 0.8);
-}
-.before\:absolute::before {
-    content: var(--tw-content);
-    position: absolute;
-}
-.before\:right-0::before {
-    content: var(--tw-content);
-    right: 0px;
-}
-.before\:top-0::before {
-    content: var(--tw-content);
-    top: 0px;
-}
-.before\:h-6::before {
-    content: var(--tw-content);
-    height: 1.5rem;
-}
-.before\:w-6::before {
-    content: var(--tw-content);
-    width: 1.5rem;
-}
-.before\:border-r-2::before {
-    content: var(--tw-content);
-    border-right-width: 2px;
-}
-.before\:border-t-2::before {
-    content: var(--tw-content);
-    border-top-width: 2px;
-}
-.before\:border-\[\#b59558\]::before {
-    content: var(--tw-content);
-    --tw-border-opacity: 1;
-    border-color: rgb(181 149 88 / var(--tw-border-opacity));
-}
-.before\:content-\[\'\'\]::before {
-    --tw-content: '';
-    content: var(--tw-content);
-}
-.after\:absolute::after {
-    content: var(--tw-content);
-    position: absolute;
-}
-.after\:bottom-0::after {
-    content: var(--tw-content);
-    bottom: 0px;
-}
-.after\:left-0::after {
-    content: var(--tw-content);
-    left: 0px;
-}
-.after\:h-6::after {
-    content: var(--tw-content);
-    height: 1.5rem;
-}
-.after\:w-6::after {
-    content: var(--tw-content);
-    width: 1.5rem;
-}
-.after\:border-b-2::after {
-    content: var(--tw-content);
-    border-bottom-width: 2px;
-}
-.after\:border-l-2::after {
-    content: var(--tw-content);
-    border-left-width: 2px;
-}
-.after\:border-\[\#b59558\]::after {
-    content: var(--tw-content);
-    --tw-border-opacity: 1;
-    border-color: rgb(181 149 88 / var(--tw-border-opacity));
-}
-.after\:content-\[\'\'\]::after {
-    --tw-content: '';
-    content: var(--tw-content);
 }
 .hover\:-translate-y-1:hover {
     --tw-translate-y: -0.25rem;
