@@ -7082,7 +7082,7 @@ var require_frontend = __commonJS({
         );
       });
     };
-    function Layout({ team_members, settings, layoutType, id: id2, imageUrl, title, subtitle, description, socialIcons, details, animationConfig }) {
+    function Layout({ team_members, settings, layoutType, id: id2, imageUrl, title, subtitle, description, socialIcons, details, animationConfig, videoLink }) {
       const [Component, setComponent] = reactExports.useState(null);
       reactExports.useEffect(() => {
         if (layoutType) {
@@ -7109,7 +7109,8 @@ var require_frontend = __commonJS({
           description,
           socialIcons,
           details,
-          animationConfig
+          animationConfig,
+          videoLink
         }
       ) });
     }
@@ -8351,7 +8352,8 @@ var require_frontend = __commonJS({
                 description: member.meta_data.description,
                 socialIcons: member.meta_data.socialLinks || [],
                 details: /* @__PURE__ */ jsxRuntimeExports.jsx(Details, { settings, member }),
-                animationConfig
+                animationConfig,
+                videoLink: member.meta_data.videoLink
               }
             ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
               Layout,
@@ -8365,7 +8367,8 @@ var require_frontend = __commonJS({
                 description: member.meta_data.description,
                 socialIcons: member.meta_data.socialLinks || [],
                 details: /* @__PURE__ */ jsxRuntimeExports.jsx(Details, { settings, member }),
-                animationConfig
+                animationConfig,
+                videoLink: member.meta_data.videoLink
               }
             ) }, index)) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No team members found." })
           ]
@@ -8804,6 +8807,7 @@ var require_frontend = __commonJS({
         resumeLink: window.tsteam_i18n.resume_link || "Resume Link",
         hireLink: window.tsteam_i18n.hire_link || "Hire Link",
         donationLink: window.tsteam_i18n.donation_link || "Donation Link",
+        videoLink: window.tsteam_i18n.video_link || "Video Link",
         socialLinks: window.tsteam_i18n.social_links || "Social Links",
         skills: window.tsteam_i18n.skills || "Skills",
         showcaseName: window.tsteam_i18n.showcase_name || "Showcase Name",
@@ -23853,7 +23857,8 @@ var require_frontend = __commonJS({
                   description: member.meta_data.description,
                   socialIcons: member.meta_data.socialLinks || [],
                   details: /* @__PURE__ */ jsxRuntimeExports.jsx(Details, { settings, member }),
-                  animationConfig
+                  animationConfig,
+                  videoLink: member.meta_data.videoLink
                 }
               ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
                 Layout,
@@ -23867,7 +23872,8 @@ var require_frontend = __commonJS({
                   description: member.meta_data.description,
                   socialIcons: member.meta_data.socialLinks || [],
                   details: /* @__PURE__ */ jsxRuntimeExports.jsx(Details, { settings, member }),
-                  animationConfig
+                  animationConfig,
+                  videoLink: member.meta_data.videoLink
                 }
               ) }, member.post_id || index)) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { textAlign: "center", padding: "20px", color: "#666" }, children: "No team members found in this category." })
             ]
@@ -25148,13 +25154,18 @@ var require_frontend = __commonJS({
         return { first: parts[0], last: parts.slice(1).join(" ") };
       };
       const { first, last } = getFirstLast(title);
-      const CardComponent = () => /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "tsteam-cornerframe-card", children: [
+      const CardComponent = () => /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "tsteam-cornerframe-card  ", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { class: "tsteam-cornerframe-card__corner tsteam-cornerframe-card__top-left" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { class: "tsteam-cornerframe-card__corner tsteam-cornerframe-card__top-right" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { class: "tsteam-cornerframe-card__corner tsteam-cornerframe-card__bottom-left" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { class: "tsteam-cornerframe-card__corner tsteam-cornerframe-card__bottom-right" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "img",
           {
             id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
             src: imageUrl,
-            alt: title
+            alt: title,
+            className: `tsteam-member__image ${details ? "cursor-pointer" : ""} `
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-cornerframe-info", children: [
@@ -25163,7 +25174,6 @@ var require_frontend = __commonJS({
             last && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-last", children: last })
           ] }),
           subtitle && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-role", children: subtitle }),
-          description && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-description", children: description }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$4, { socialIcons, settings }),
           details && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-details", children: details })
         ] })
@@ -25735,6 +25745,16 @@ var require_frontend = __commonJS({
             type: "color",
             label: "Overlay Color",
             name: "tscornerframe.color.overlay"
+          },
+          {
+            type: "slider",
+            label: "corner Frame Item Height",
+            name: "tscornerframe.item.height",
+            range: {
+              min: 400,
+              max: 600
+            },
+            unit: "px"
           }
         ]
       };

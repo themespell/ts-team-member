@@ -64779,6 +64779,7 @@ var require_admin = __commonJS({
         resumeLink: window.tsteam_i18n.resume_link || "Resume Link",
         hireLink: window.tsteam_i18n.hire_link || "Hire Link",
         donationLink: window.tsteam_i18n.donation_link || "Donation Link",
+        videoLink: window.tsteam_i18n.video_link || "Video Link",
         socialLinks: window.tsteam_i18n.social_links || "Social Links",
         skills: window.tsteam_i18n.skills || "Skills",
         showcaseName: window.tsteam_i18n.showcase_name || "Showcase Name",
@@ -64946,7 +64947,14 @@ var require_admin = __commonJS({
         }
       });
     };
-    function TsInput({ type: type2, label, name, required: required2, maxLength }) {
+    function TsProBadge({ heading, description, label, ctalink, onClick }) {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "bg-amber-500 text-white text-xs px-2 py-0.5 rounded font-medium", children: "PRO" });
+    }
+    function TsInput({ type: type2, label, name, required: required2, maxLength, disabled = false, showProBadge = false }) {
+      var _a2;
+      const isPro2 = !!tsteam_settings.is_pro;
+      const isLicenseInactive2 = !!((_a2 = window.tsTeamPro) == null ? void 0 : _a2.is_licence_inactive);
+      const shouldDisable = disabled || showProBadge && (!isPro2 || isLicenseInactive2);
       const renderInput = () => {
         switch (type2) {
           case "password":
@@ -64958,7 +64966,8 @@ var require_admin = __commonJS({
                   borderRadius: `${globalSettings.components.Input.borderRadius}px`,
                   padding: `${globalSettings.components.Input.paddingBlock}px`
                 },
-                placeholder: `Enter ${label.toLowerCase()}`
+                placeholder: `Enter ${label.toLowerCase()}`,
+                disabled: shouldDisable
               }
             );
           case "description":
@@ -64968,6 +64977,7 @@ var require_admin = __commonJS({
                 placeholder: `Enter ${label.toLowerCase()}`,
                 showCount: true,
                 maxLength,
+                disabled: shouldDisable,
                 style: {
                   height: maxLength,
                   resize: "none",
@@ -64987,7 +64997,8 @@ var require_admin = __commonJS({
                 },
                 type: "number",
                 maxLength,
-                placeholder: `Enter ${label.toLowerCase()}`
+                placeholder: `Enter ${label.toLowerCase()}`,
+                disabled: shouldDisable
               }
             );
           default:
@@ -65000,7 +65011,8 @@ var require_admin = __commonJS({
                   padding: `${globalSettings.components.Input.paddingBlock}px`
                 },
                 maxLength,
-                placeholder: `Enter ${label.toLowerCase()}`
+                placeholder: `Enter ${label.toLowerCase()}`,
+                disabled: shouldDisable
               }
             );
         }
@@ -65008,7 +65020,10 @@ var require_admin = __commonJS({
       return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         Form.Item,
         {
-          label,
+          label: /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            label,
+            showProBadge && (!isPro2 || isLicenseInactive2) && /* @__PURE__ */ jsxRuntimeExports.jsx(TsProBadge, {})
+          ] }),
           name,
           rules: [
             {
@@ -65873,9 +65888,6 @@ var require_admin = __commonJS({
         }
       }
     }));
-    function TsProBadge({ heading, description, label, ctalink, onClick }) {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "bg-amber-500 text-white text-xs px-2 py-0.5 rounded font-medium", children: "PRO" });
-    }
     function TsSelect({ label, name, defaultValue, options, onChange, mode, output = "value", showProBadge = false, form, rules: rules2 }) {
       const { saveSettings } = editorFunction();
       const [currentValue, setCurrentValue] = reactExports.useState(defaultValue);
@@ -78502,6 +78514,14 @@ var require_admin = __commonJS({
               label: translations2.donationLink,
               name: "member_donation"
             }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            TsInput,
+            {
+              label: translations2.videoLink,
+              name: "member_video",
+              showProBadge: true
+            }
           )
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -78651,7 +78671,8 @@ var require_admin = __commonJS({
                 member_website: response.data.meta_data.website,
                 member_resume: response.data.meta_data.resume,
                 member_hire: response.data.meta_data.hireLink,
-                member_donation: response.data.meta_data.donationLink
+                member_donation: response.data.meta_data.donationLink,
+                member_video: response.data.meta_data.videoLink
               });
               setMemberImage(response.data.meta_data.image);
               setMemberInformation(response.data.meta_data.information);
@@ -79762,6 +79783,16 @@ var require_admin = __commonJS({
             type: "color",
             label: "Overlay Color",
             name: "tscornerframe.color.overlay"
+          },
+          {
+            type: "slider",
+            label: "corner Frame Item Height",
+            name: "tscornerframe.item.height",
+            range: {
+              min: 400,
+              max: 600
+            },
+            unit: "px"
           }
         ]
       };
@@ -80531,7 +80562,7 @@ var require_admin = __commonJS({
         );
       });
     };
-    function Layout({ team_members, settings, layoutType, id: id2, imageUrl, title, subtitle, description, socialIcons, details, animationConfig }) {
+    function Layout({ team_members, settings, layoutType, id: id2, imageUrl, title, subtitle, description, socialIcons, details, animationConfig, videoLink }) {
       const [Component, setComponent] = reactExports.useState(null);
       reactExports.useEffect(() => {
         if (layoutType) {
@@ -80558,7 +80589,8 @@ var require_admin = __commonJS({
           description,
           socialIcons,
           details,
-          animationConfig
+          animationConfig,
+          videoLink
         }
       ) });
     }
@@ -81762,7 +81794,8 @@ var require_admin = __commonJS({
                 description: member.meta_data.description,
                 socialIcons: member.meta_data.socialLinks || [],
                 details: /* @__PURE__ */ jsxRuntimeExports.jsx(Details, { settings, member }),
-                animationConfig
+                animationConfig,
+                videoLink: member.meta_data.videoLink
               }
             ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
               Layout,
@@ -81776,7 +81809,8 @@ var require_admin = __commonJS({
                 description: member.meta_data.description,
                 socialIcons: member.meta_data.socialLinks || [],
                 details: /* @__PURE__ */ jsxRuntimeExports.jsx(Details, { settings, member }),
-                animationConfig
+                animationConfig,
+                videoLink: member.meta_data.videoLink
               }
             ) }, index2)) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No team members found." })
           ]
@@ -83083,7 +83117,8 @@ var require_admin = __commonJS({
                   description: member.meta_data.description,
                   socialIcons: member.meta_data.socialLinks || [],
                   details: /* @__PURE__ */ jsxRuntimeExports.jsx(Details, { settings, member }),
-                  animationConfig
+                  animationConfig,
+                  videoLink: member.meta_data.videoLink
                 }
               ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
                 Layout,
@@ -83097,7 +83132,8 @@ var require_admin = __commonJS({
                   description: member.meta_data.description,
                   socialIcons: member.meta_data.socialLinks || [],
                   details: /* @__PURE__ */ jsxRuntimeExports.jsx(Details, { settings, member }),
-                  animationConfig
+                  animationConfig,
+                  videoLink: member.meta_data.videoLink
                 }
               ) }, member.post_id || index2)) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { style: { textAlign: "center", padding: "20px", color: "#666" }, children: "No team members found in this category." })
             ]
@@ -84574,13 +84610,18 @@ var require_admin = __commonJS({
         return { first: parts[0], last: parts.slice(1).join(" ") };
       };
       const { first, last } = getFirstLast(title);
-      const CardComponent = () => /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "tsteam-cornerframe-card", children: [
+      const CardComponent = () => /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "tsteam-cornerframe-card  ", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { class: "tsteam-cornerframe-card__corner tsteam-cornerframe-card__top-left" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { class: "tsteam-cornerframe-card__corner tsteam-cornerframe-card__top-right" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { class: "tsteam-cornerframe-card__corner tsteam-cornerframe-card__bottom-left" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { class: "tsteam-cornerframe-card__corner tsteam-cornerframe-card__bottom-right" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "img",
           {
             id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
             src: imageUrl,
-            alt: title
+            alt: title,
+            className: `tsteam-member__image ${details ? "cursor-pointer" : ""} `
           }
         ),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-cornerframe-info", children: [
@@ -84589,7 +84630,6 @@ var require_admin = __commonJS({
             last && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-last", children: last })
           ] }),
           subtitle && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-role", children: subtitle }),
-          description && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-description", children: description }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$4, { socialIcons, settings }),
           details && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-details", children: details })
         ] })
