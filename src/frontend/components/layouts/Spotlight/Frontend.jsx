@@ -13,6 +13,7 @@ const Spotlight = ({
   description,
   socialIcons,
   animationConfig,
+  details,
 }) => {
   const renderContent = () => (
     <>
@@ -23,7 +24,7 @@ const Spotlight = ({
               id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`}
               src={imageUrl}
               alt={title}
-              className="tsteam-member__image"
+              className={`tsteam-member__image ${details ? "cursor-pointer" : ""}  `}
             />
             {socialIcons ? (
               <div className="tsteam-spotlight__overlay">
@@ -33,22 +34,16 @@ const Spotlight = ({
           </div>
 
           <div className="tsteam-spotlight__body">
-            {title ? (
-              <TsMemberName className="tsteam-spotlight__name">
-                {title}
-              </TsMemberName>
-            ) : null}
+            {title ? <TsMemberName>{title}</TsMemberName> : null}
 
             {subtitle ? (
-              <TsMemberDesignation className="tsteam-spotlight__designation">
+              <TsMemberDesignation className="my-2">
                 {subtitle}
               </TsMemberDesignation>
             ) : null}
 
             {description ? (
-              <TsMemberDescription className="tsteam-spotlight__description">
-                {description}
-              </TsMemberDescription>
+              <TsMemberDescription>{description}</TsMemberDescription>
             ) : null}
           </div>
         </div>

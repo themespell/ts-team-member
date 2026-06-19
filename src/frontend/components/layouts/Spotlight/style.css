@@ -1,24 +1,26 @@
 :root {
     --spotlight-color-background: #ffffff;
-    --spotlight-color-accent: #f26f7f;
+    --spotlight-color-accent: #cf6ff2;
     --spotlight-color-overlay: rgba(40, 38, 66, 0.62);
     --spotlight-color-buttonText: #7b808c;
 }
 
 .tsteam-spotlight__item {
+    display: flex;
+    justify-content: center;
     animation: tsteam-spotlight-enter 620ms ease both;
 }
 
 .tsteam-spotlight {
-    width: min(100%, 350px);
+    width: min(100%, 360px);
     margin: 0 auto;
-    padding: 8px 0 0;
+    padding: 20px 24px 24px;
     background: var(--spotlight-color-background);
-    border: 0;
-    border-radius: 36px;
+    border: 1px solid rgba(31, 41, 55, 0.06);
+    border-radius: 8px;
     overflow: visible;
-    box-shadow: none;
-    transition: transform 240ms ease;
+    box-shadow: 0 28px 60px rgba(143, 143, 143, 0.078);
+    transition: transform 240ms ease, box-shadow 240ms ease;
 }
 
 .tsteam-spotlight:hover {
@@ -82,6 +84,7 @@
     justify-content: center;
     padding: 24px;
     background: var(--spotlight-color-overlay);
+    border-radius: 50%;
     opacity: 0;
     transition: opacity 260ms ease;
 }
@@ -94,8 +97,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     color: #fff;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.82);
@@ -132,33 +135,10 @@
 }
 
 .tsteam-spotlight__body {
-    padding: 0 12px 4px;
+    padding: 0 12px 18px;
     text-align: center;
 }
 
-.tsteam-spotlight__name {
-    margin: 0 0 6px;
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1.08;
-    color: #1f2740;
-}
-
-.tsteam-spotlight__designation {
-    display: block;
-    margin: 0 0 18px;
-    color: #8b8f9b;
-    font-size: 1rem;
-    font-weight: 500;
-}
-
-.tsteam-spotlight__description {
-    max-width: 270px;
-    margin: 0 auto;
-    color: #767c87;
-    font-size: 1rem;
-    line-height: 1.75;
-}
 
 @keyframes tsteam-spotlight-enter {
     0% {
@@ -226,16 +206,18 @@
 
 @media (max-width: 640px) {
     .tsteam-spotlight {
-        width: min(100%, 320px);
+        width: min(100%, 100%);
+        max-width: 320px;
+        padding: 16px 18px 20px;
     }
 
     .tsteam-spotlight__media {
-        width: min(100%, 250px);
-        margin-bottom: 22px;
+        width: min(100%, 240px);
+        margin-bottom: 20px;
     }
 
     .tsteam-spotlight__body {
-        padding: 0 8px 4px;
+        padding: 0 10px 16px;
     }
 
     .tsteam-spotlight__name {

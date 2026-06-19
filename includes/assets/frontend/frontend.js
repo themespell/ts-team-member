@@ -24995,7 +24995,17 @@ var require_frontend = __commonJS({
         " "
       ] });
     };
-    const AuraLive = ({ settings, id: id2, imageUrl, title, subtitle, description, socialIcons, details, animationConfig }) => {
+    const AuraLive = ({
+      settings,
+      id: id2,
+      imageUrl,
+      title,
+      subtitle,
+      description,
+      socialIcons,
+      details,
+      animationConfig
+    }) => {
       const renderContent = () => /* @__PURE__ */ jsxRuntimeExports.jsx("article", { className: "tsteam-auralive-wrapper", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-auralive-inner", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-auralive-avatar-wrap", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           "img",
@@ -25003,7 +25013,7 @@ var require_frontend = __commonJS({
             id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
             src: imageUrl,
             alt: title,
-            className: "tsteam-auralive-image"
+            className: `tsteam-member__image ${details ? "cursor-pointer" : ""}  `
           }
         ) }),
         title && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberName, { children: title }),
@@ -25575,7 +25585,8 @@ var require_frontend = __commonJS({
       subtitle,
       description,
       socialIcons,
-      animationConfig
+      animationConfig,
+      details
     }) => {
       const renderContent = () => /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full tsteam-spotlight__item", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-spotlight", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-spotlight__media", children: [
@@ -25585,15 +25596,15 @@ var require_frontend = __commonJS({
               id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
               src: imageUrl,
               alt: title,
-              className: "tsteam-member__image"
+              className: `tsteam-member__image ${details ? "cursor-pointer" : ""}  `
             }
           ),
           socialIcons ? /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-spotlight__overlay", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$1, { socialIcons, settings }) }) : null
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "tsteam-spotlight__body", children: [
-          title ? /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberName, { className: "tsteam-spotlight__name", children: title }) : null,
-          subtitle ? /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDesignation, { className: "tsteam-spotlight__designation", children: subtitle }) : null,
-          description ? /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDescription, { className: "tsteam-spotlight__description", children: description }) : null
+          title ? /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberName, { children: title }) : null,
+          subtitle ? /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDesignation, { className: "my-2", children: subtitle }) : null,
+          description ? /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDescription, { children: description }) : null
         ] })
       ] }) }) });
       if (!animationConfig) {

@@ -2701,6 +2701,10 @@ html:has(.drawer-toggle:checked) {
     margin-left: auto;
     margin-right: auto;
 }
+.my-2 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
 .my-4 {
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -3155,9 +3159,6 @@ html:has(.drawer-toggle:checked) {
 }
 .border-t {
     border-top-width: 1px;
-}
-.border-r {
-    border-right-width: 1px;
 }
 .border-dashed {
     border-style: dashed;
@@ -3924,98 +3925,6 @@ body{
 
 .tsteam__dasboard--card a:hover {
 	color: #FFFFFF;
-}
-
-.before\:absolute::before {
-    content: var(--tw-content);
-    position: absolute;
-}
-
-.before\:right-0::before {
-    content: var(--tw-content);
-    right: 0px;
-}
-
-.before\:top-0::before {
-    content: var(--tw-content);
-    top: 0px;
-}
-
-.before\:h-6::before {
-    content: var(--tw-content);
-    height: 1.5rem;
-}
-
-.before\:w-6::before {
-    content: var(--tw-content);
-    width: 1.5rem;
-}
-
-.before\:border-r-2::before {
-    content: var(--tw-content);
-    border-right-width: 2px;
-}
-
-.before\:border-t-2::before {
-    content: var(--tw-content);
-    border-top-width: 2px;
-}
-
-.before\:border-\[\#b59558\]::before {
-    content: var(--tw-content);
-    --tw-border-opacity: 1;
-    border-color: rgb(181 149 88 / var(--tw-border-opacity));
-}
-
-.before\:content-\[\'\'\]::before {
-    --tw-content: '';
-    content: var(--tw-content);
-}
-
-.after\:absolute::after {
-    content: var(--tw-content);
-    position: absolute;
-}
-
-.after\:bottom-0::after {
-    content: var(--tw-content);
-    bottom: 0px;
-}
-
-.after\:left-0::after {
-    content: var(--tw-content);
-    left: 0px;
-}
-
-.after\:h-6::after {
-    content: var(--tw-content);
-    height: 1.5rem;
-}
-
-.after\:w-6::after {
-    content: var(--tw-content);
-    width: 1.5rem;
-}
-
-.after\:border-b-2::after {
-    content: var(--tw-content);
-    border-bottom-width: 2px;
-}
-
-.after\:border-l-2::after {
-    content: var(--tw-content);
-    border-left-width: 2px;
-}
-
-.after\:border-\[\#b59558\]::after {
-    content: var(--tw-content);
-    --tw-border-opacity: 1;
-    border-color: rgb(181 149 88 / var(--tw-border-opacity));
-}
-
-.after\:content-\[\'\'\]::after {
-    --tw-content: '';
-    content: var(--tw-content);
 }
 
 .hover\:-translate-y-1:hover {
@@ -5081,25 +4990,27 @@ URL: https://animista.net/play/attention/wobble
     border-color: var(--tshorizontal-borderColor-hover, blue); /* Fallback to blue if variable is not defined */
 }:root {
     --spotlight-color-background: #ffffff;
-    --spotlight-color-accent: #f26f7f;
+    --spotlight-color-accent: #cf6ff2;
     --spotlight-color-overlay: rgba(40, 38, 66, 0.62);
     --spotlight-color-buttonText: #7b808c;
 }
 
 .tsteam-spotlight__item {
+    display: flex;
+    justify-content: center;
     animation: tsteam-spotlight-enter 620ms ease both;
 }
 
 .tsteam-spotlight {
-    width: min(100%, 350px);
+    width: min(100%, 360px);
     margin: 0 auto;
-    padding: 8px 0 0;
+    padding: 20px 24px 24px;
     background: var(--spotlight-color-background);
-    border: 0;
-    border-radius: 36px;
+    border: 1px solid rgba(31, 41, 55, 0.06);
+    border-radius: 8px;
     overflow: visible;
-    box-shadow: none;
-    transition: transform 240ms ease;
+    box-shadow: 0 28px 60px rgba(143, 143, 143, 0.078);
+    transition: transform 240ms ease, box-shadow 240ms ease;
 }
 
 .tsteam-spotlight:hover {
@@ -5164,6 +5075,7 @@ URL: https://animista.net/play/attention/wobble
     justify-content: center;
     padding: 24px;
     background: var(--spotlight-color-overlay);
+    border-radius: 50%;
     opacity: 0;
     transition: opacity 260ms ease;
 }
@@ -5176,8 +5088,8 @@ URL: https://animista.net/play/attention/wobble
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     color: #fff;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.82);
@@ -5215,33 +5127,10 @@ URL: https://animista.net/play/attention/wobble
 }
 
 .tsteam-spotlight__body {
-    padding: 0 12px 4px;
+    padding: 0 12px 18px;
     text-align: center;
 }
 
-.tsteam-spotlight__name {
-    margin: 0 0 6px;
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1.08;
-    color: #1f2740;
-}
-
-.tsteam-spotlight__designation {
-    display: block;
-    margin: 0 0 18px;
-    color: #8b8f9b;
-    font-size: 1rem;
-    font-weight: 500;
-}
-
-.tsteam-spotlight__description {
-    max-width: 270px;
-    margin: 0 auto;
-    color: #767c87;
-    font-size: 1rem;
-    line-height: 1.75;
-}
 
 @keyframes tsteam-spotlight-enter {
     0% {
@@ -5309,16 +5198,18 @@ URL: https://animista.net/play/attention/wobble
 
 @media (max-width: 640px) {
     .tsteam-spotlight {
-        width: min(100%, 320px);
+        width: min(100%, 100%);
+        max-width: 320px;
+        padding: 16px 18px 20px;
     }
 
     .tsteam-spotlight__media {
-        width: min(100%, 250px);
-        margin-bottom: 22px;
+        width: min(100%, 240px);
+        margin-bottom: 20px;
     }
 
     .tsteam-spotlight__body {
-        padding: 0 8px 4px;
+        padding: 0 10px 16px;
     }
 
     .tsteam-spotlight__name {
