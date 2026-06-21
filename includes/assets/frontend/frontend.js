@@ -24960,7 +24960,7 @@ var require_frontend = __commonJS({
             href: item.link,
             target: "_blank",
             rel: "noopener noreferrer",
-            className: "inline-flex h-9 w-9 items-center justify-center rounded-lg text-white hover:text-white bg-gradient-to-br from-[#7547D7] to-[#A146DB] hover:from-[#8558eb] hover:to-[#ac53e3] transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:shadow-lg shadow-md",
+            className: "inline-flex h-9 w-9 items-center justify-center rounded-lg text-white hover:text-white  bg-[#7547D7]  hover:[#7547D7] transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:shadow-lg shadow-md",
             style: {
               backgroundColor: (_b = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.color) == null ? void 0 : _b.socialIconBg,
               color: (_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon,
@@ -25056,7 +25056,7 @@ var require_frontend = __commonJS({
             id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
             src: imageUrl,
             alt: title,
-            className: `w-full h-full object-cover ${details ? "cursor-pointer" : ""}`
+            className: ` tsteam-member__image w-full h-full object-cover ${details ? "cursor-pointer" : ""}`
           }
         ) }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-2xl bg-white pt-20 pb-7 px-6 text-center border border-solid border-gray-200 shadow-md hover:shadow-lg transition-all duration-300 tsteam-card-container", children: [
@@ -25265,7 +25265,7 @@ var require_frontend = __commonJS({
             href: item.link,
             target: "_blank",
             rel: "noopener noreferrer",
-            className: "inline-flex h-9 w-9 items-center justify-center rounded-lg text-white hover:text-white bg-gradient-to-br from-[#7547D7] to-[#A146DB] hover:from-[#8558eb] hover:to-[#ac53e3] transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:shadow-lg shadow-md",
+            className: "inline-flex h-9 w-9 items-center justify-center rounded-lg text-white hover:text-white  bg-[#7547D7] hover:bg-[#7547D7] transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:shadow-lg shadow-md",
             style: {
               backgroundColor: (_b = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.color) == null ? void 0 : _b.socialIconBg,
               color: (_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon,

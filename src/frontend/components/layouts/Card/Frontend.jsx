@@ -26,7 +26,7 @@ const Card = ({
             id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`}
             src={imageUrl}
             alt={title}
-            className={`w-full h-full object-cover ${
+            className={` tsteam-member__image w-full h-full object-cover ${
               details ? "cursor-pointer" : ""
             }`}
           />

@@ -49,7 +49,6 @@ const SocialIcons = ({ socialIcons,settings }) => {
     }
 
     if (!data || !Array.isArray(data)) return null;
-
     return (
         <div className="flex flex-wrap items-center justify-center gap-2">
             {data.map((item, index) => (
@@ -58,7 +57,7 @@ const SocialIcons = ({ socialIcons,settings }) => {
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-white hover:text-white bg-gradient-to-br from-[#7547D7] to-[#A146DB] hover:from-[#8558eb] hover:to-[#ac53e3] transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:shadow-lg shadow-md"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-white hover:text-white  bg-[#7547D7]  hover:[#7547D7] transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:shadow-lg shadow-md"
                     style={{
                         backgroundColor: settings?.layout?.color?.socialIconBg,
                         color: settings?.layout?.color?.socialIcon,
