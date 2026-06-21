@@ -24952,7 +24952,7 @@ var require_frontend = __commonJS({
         }
       }
       if (!data || !Array.isArray(data)) return null;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-4", children: data.map((item, index) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-2", children: data.map((item, index) => {
         var _a2, _b, _c, _d, _e, _f;
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "a",
@@ -24960,7 +24960,7 @@ var require_frontend = __commonJS({
             href: item.link,
             target: "_blank",
             rel: "noopener noreferrer",
-            className: "text-white hover:text-white text-sm bg-purple-500 hover:bg-purple-600 rounded-full p-2 transition-colors",
+            className: "inline-flex h-9 w-9 items-center justify-center rounded-lg text-white hover:text-white bg-gradient-to-br from-[#7547D7] to-[#A146DB] hover:from-[#8558eb] hover:to-[#ac53e3] transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:shadow-lg shadow-md",
             style: {
               backgroundColor: (_b = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.color) == null ? void 0 : _b.socialIconBg,
               color: (_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon,
@@ -25049,43 +25049,24 @@ var require_frontend = __commonJS({
       details,
       animationConfig
     }) => {
-      console.log("Passing animationConfig to Card:", animationConfig);
-      const renderContent = () => /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full flex flex-col items-center", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
+      const renderContent = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "group relative w-full max-w-sm tsteam-card-layout", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative mx-auto -mb-14 w-44 h-44 rounded-2xl overflow-hidden ring-4 ring-white transition-transform duration-500 group-hover:-translate-y-2 bg-gradient-to-br from-[#7547D7] to-[#A146DB] z-10 tsteam-image-glow", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           "img",
           {
             id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
             src: imageUrl,
             alt: title,
-            className: `tsteam-member__image w-32 max-h-[8rem] rounded-xl -mb-12 z-10 relative shadow-2xl object-cover ${details ? "cursor-pointer" : ""}`
+            className: `w-full h-full object-cover ${details ? "cursor-pointer" : ""}`
           }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: "w-full max-w-sm bg-white rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] overflow-hidden tsteam-card-container ",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-5 pt-16 pb-5 text-center flex flex-col items-center", children: [
-              title && /* @__PURE__ */ jsxRuntimeExports.jsxs(TsMemberName, { children: [
-                " ",
-                title,
-                " "
-              ] }),
-              subtitle && /* @__PURE__ */ jsxRuntimeExports.jsxs(TsMemberDesignation, { children: [
-                " ",
-                subtitle,
-                " "
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("hr", { className: "tscard__separator" }),
-              description && /* @__PURE__ */ jsxRuntimeExports.jsxs(TsMemberDescription, { children: [
-                " ",
-                description,
-                " "
-              ] }),
-              details && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 flex items-center justify-center", children: details }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$5, { socialIcons, settings })
-            ] })
-          }
-        )
+        ) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-2xl bg-white pt-20 pb-7 px-6 text-center border border-solid border-gray-200 shadow-md hover:shadow-lg transition-all duration-300 tsteam-card-container", children: [
+          title && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberName, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "name-underline inline-block", children: title }) }),
+          subtitle && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDesignation, { children: subtitle }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("hr", { className: "tscard__separator" }),
+          description && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDescription, { children: description }),
+          details && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 flex items-center justify-center", children: details }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-5", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$5, { socialIcons, settings }) })
+        ] })
       ] }) });
       if (!animationConfig) {
         return renderContent();
@@ -25276,7 +25257,7 @@ var require_frontend = __commonJS({
         }
       }
       if (!data || !Array.isArray(data)) return null;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-4", children: data.map((item, index) => {
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-2", children: data.map((item, index) => {
         var _a2, _b, _c, _d, _e, _f;
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "a",
@@ -25284,7 +25265,7 @@ var require_frontend = __commonJS({
             href: item.link,
             target: "_blank",
             rel: "noopener noreferrer",
-            className: "text-white hover:text-white text-sm bg-purple-500 hover:bg-purple-600 rounded-full p-2 transition-colors",
+            className: "inline-flex h-9 w-9 items-center justify-center rounded-lg text-white hover:text-white bg-gradient-to-br from-[#7547D7] to-[#A146DB] hover:from-[#8558eb] hover:to-[#ac53e3] transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:shadow-lg shadow-md",
             style: {
               backgroundColor: (_b = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.color) == null ? void 0 : _b.socialIconBg,
               color: (_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon,
@@ -25307,42 +25288,28 @@ var require_frontend = __commonJS({
       details,
       animationConfig
     }) => {
-      const renderContent = () => /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tshorizontal__border-color", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "div",
-        {
-          className: "flex items-start p-6 gap-6 tsteam-horizontalcard-container",
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "img",
-              {
-                id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
-                src: imageUrl,
-                alt: title,
-                className: `tsteam-member__image w-24 h-24 object-cover shadow-lg ${details ? "cursor-pointer" : ""}`
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between items-start", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                  title && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberName, { children: title }),
-                  subtitle && /* @__PURE__ */ jsxRuntimeExports.jsxs(TsMemberDesignation, { children: [
-                    " ",
-                    subtitle,
-                    " "
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$3, { socialIcons, settings }) })
-              ] }),
-              description && /* @__PURE__ */ jsxRuntimeExports.jsxs(TsMemberDescription, { children: [
-                " ",
-                description,
-                " "
-              ] }),
-              details && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4", children: details })
-            ] })
-          ]
-        }
-      ) }) }) });
+      const renderContent = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full flex justify-center text-left", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "group relative flex items-start gap-5 p-5 w-full max-w-2xl rounded-2xl tshorizontal-card-wrapper tsteam-horizontalcard-container text-left", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "shrink-0 h-28 w-28 rounded-xl overflow-hidden bg-gradient-to-br from-[#7547D7] to-[#A146DB]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "img",
+          {
+            id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
+            src: imageUrl,
+            alt: title,
+            className: `h-full w-full object-cover ${details ? "cursor-pointer" : ""}`
+          }
+        ) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0 flex-1 text-left", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between items-start gap-3 flex-wrap text-left", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0 text-left", children: [
+              title && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberName, { className: "text-left", children: title }),
+              subtitle && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDesignation, { className: "text-left", children: subtitle })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$3, { socialIcons, settings }) })
+          ] }),
+          description && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 text-left", children: /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDescription, { className: "text-left", children: description }) }),
+          details && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 text-left", children: details })
+        ] })
+      ] }) });
       if (!animationConfig) {
         return renderContent();
       }

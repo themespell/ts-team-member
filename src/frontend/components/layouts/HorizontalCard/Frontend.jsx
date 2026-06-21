@@ -19,45 +19,37 @@ const HorizontalCard = ({
 }) => {
 
   const renderContent = () => (
-    <>
-    <div className="w-full">
-      <div className="tshorizontal__border-color">
-        <div
-          className="flex items-start p-6 gap-6 tsteam-horizontalcard-container">
+    <div className="w-full flex justify-center text-left">
+      <article className="group relative flex items-start gap-5 p-5 w-full max-w-2xl rounded-2xl tshorizontal-card-wrapper tsteam-horizontalcard-container text-left">
+        <div className="shrink-0 h-28 w-28 rounded-xl overflow-hidden bg-gradient-to-br from-[#7547D7] to-[#A146DB]">
           <img
-              id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`}
-              src={imageUrl}
-              alt={title}
-              className={`tsteam-member__image w-24 h-24 object-cover shadow-lg ${
-                  details ? "cursor-pointer" : ""
-              }`}
+            id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`}
+            src={imageUrl}
+            alt={title}
+            className={`h-full w-full object-cover ${
+              details ? "cursor-pointer" : ""
+            }`}
           />
-          {/* Content Section */}
-          <div className="flex-1">
-            <div className="flex justify-between items-start">
-              <div>
-                {title && <TsMemberName>{title}</TsMemberName>}
-                 {subtitle && (
-                  <TsMemberDesignation> {subtitle} </TsMemberDesignation>
-                )}
-              </div>
-
-              {/* Social Icons */}
-              <div className="flex gap-1">
-                <SocialIcons socialIcons={socialIcons} settings={settings} />
-              </div>
-            </div>
-
-            {description && (
-              <TsMemberDescription> {description} </TsMemberDescription>
-            )}
-
-            {details && <div className="mt-4">{details}</div>}
-          </div>
         </div>
-      </div>
+        <div className="min-w-0 flex-1 text-left">
+          <div className="flex justify-between items-start gap-3 flex-wrap text-left">
+            <div className="min-w-0 text-left">
+              {title && <TsMemberName className="text-left">{title}</TsMemberName>}
+              {subtitle && <TsMemberDesignation className="text-left">{subtitle}</TsMemberDesignation>}
+            </div>
+            <div className="shrink-0">
+              <SocialIcons socialIcons={socialIcons} settings={settings} />
+            </div>
+          </div>
+          {description && (
+            <div className="mt-2 text-left">
+              <TsMemberDescription className="text-left">{description}</TsMemberDescription>
+            </div>
+          )}
+          {details && <div className="mt-4 text-left">{details}</div>}
+        </div>
+      </article>
     </div>
-    </>
   );
 
   // Handle different animation types
