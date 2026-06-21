@@ -19,7 +19,7 @@ const Tiles = ({
         id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`}
         src={imageUrl}
         alt={title}
-        className={` object-cover w-[216px] h-[216px] block !rounded-full tsteam-member__image mb-5 bg-white ${
+        className={` object-cover w-[216px] !h-[216px] block !rounded-full tsteam-member__image mb-5 bg-white ${
           details ? "cursor-pointer" : ""
         }`}
       />

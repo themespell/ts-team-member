@@ -1,0 +1,5 @@
+.tsteam-tsoverlaycard {
+    --team-member-name-color: #ffffff;
+    --team-member-designation-color: rgba(255, 255, 255, 0.8);
+    --team-member-description-color: rgba(255, 255, 255, 0.75);
+}
