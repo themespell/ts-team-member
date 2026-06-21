@@ -3246,6 +3246,10 @@ html:has(.drawer-toggle:checked) {
     --tw-border-opacity: 1;
     border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
+.bg-\[\#7547D7\] {
+    --tw-bg-opacity: 1;
+    background-color: rgb(117 71 215 / var(--tw-bg-opacity));
+}
 .bg-amber-500 {
     --tw-bg-opacity: 1;
     background-color: rgb(245 158 11 / var(--tw-bg-opacity));
@@ -3324,10 +3328,6 @@ html:has(.drawer-toggle:checked) {
 .bg-yellow-400 {
     --tw-bg-opacity: 1;
     background-color: rgb(250 204 21 / var(--tw-bg-opacity));
-}
-.bg-\[\#7547D7\] {
-    --tw-bg-opacity: 1;
-    background-color: rgb(117 71 215 / var(--tw-bg-opacity));
 }
 .bg-opacity-0 {
     --tw-bg-opacity: 0;
@@ -4017,6 +4017,11 @@ body{
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.hover\:bg-\[\#7547D7\]:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(117 71 215 / var(--tw-bg-opacity));
+}
+
 .hover\:bg-gray-100:hover {
     --tw-bg-opacity: 1;
     background-color: rgb(243 244 246 / var(--tw-bg-opacity));
@@ -4050,11 +4055,6 @@ body{
 .hover\:bg-white:hover {
     --tw-bg-opacity: 1;
     background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.hover\:bg-\[\#7547D7\]:hover {
-    --tw-bg-opacity: 1;
-    background-color: rgb(117 71 215 / var(--tw-bg-opacity));
 }
 
 .hover\:from-\[\#8558eb\]:hover {

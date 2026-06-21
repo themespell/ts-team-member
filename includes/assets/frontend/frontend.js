@@ -17917,6 +17917,7 @@ var require_frontend = __commonJS({
       { label: "Moon", value: "Moon", type: "pro", disabled: true },
       { label: "FancyCoverflow", value: "FancyCoverflow", type: "pro", disabled: true },
       { label: "FancyCoverflow2", value: "FancyCoverflow2", type: "pro", disabled: true },
+      { label: "ThreeDSkew", value: "ThreeDSkew", type: "pro", disabled: true },
       { label: "Interactive", value: "Interactive", type: "pro", disabled: true },
       { label: "Glassmorphism", value: "Glassmorphism", type: "pro", disabled: true },
       { label: "Colorful", value: "Colorful", type: "pro", disabled: true }
