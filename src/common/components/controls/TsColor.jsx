@@ -18,10 +18,10 @@ function TsColor({ label, name, onChange }) {
   };
 
   return (
-    <div className="mb-4 flex justify-between items-center">
+    <div className="ts-editor-field ts-editor-field--inline">
       {label && (
         <label 
-        className="block text-sm font-medium text-gray-700 mb-2"
+        className="ts-editor-field__label"
         style={
           {
             color: globalSettings.theme.textColor,
@@ -29,10 +29,12 @@ function TsColor({ label, name, onChange }) {
         }
         >{label}</label>
       )}
-      <ColorPicker
-      defaultValue={defaultValue}
-      onChange={handleChange}
-      />
+      <div className="ts-editor-field__color">
+        <ColorPicker
+          defaultValue={defaultValue}
+          onChange={handleChange}
+        />
+      </div>
     </div>
   );
 }

@@ -8,7 +8,7 @@ function TsButton({ id, prefix, label, onClick, htmlType, className }) {
         <>
             <button
                 id={id}
-                className={`${buttonClassName} btn`}
+                className={`${buttonClassName} btn ts-editor-button`}
                 onClick={onClick}
                 type={htmlType}
             >

@@ -2,7 +2,7 @@ import {useState} from "react";
 import { TsButton } from "../../common/components/controls/tsControls";
 import editorFunction from "../states/editorFunction";
 import editorLocal from "../states/editorLocal.js";
-import {Monitor, Tablet, Smartphone, Code, CircleX, Copy, ClipboardPaste, ClipboardCopy} from 'lucide-react';
+import {Monitor, Tablet, Smartphone, Code, CircleX, Copy, ClipboardPaste, ClipboardCopy, Undo2, Redo2} from 'lucide-react';
 import {Button, Dropdown} from "antd";
 import {TsModal} from "../../common/components/controls/tsControls";
 import {getTranslations} from "../../common/utils/translations.js";
@@ -11,8 +11,8 @@ import TsProBadge from "../../common/components/controls/TsProBadge.jsx";
 function Topbar({ type, onCopySettings, onPasteSettings}) {
     const translations = getTranslations();
     const tsteamLogo = tsteam_settings.assets_path;
-    const isPro = !!tsteam_settings.is_pro ?? null;
-    const isLicenseInactive = !!window.tsTeamPro?.is_licence_inactive ?? null;
+    const isPro = !!tsteam_settings.is_pro;
+    const isLicenseInactive = !!window.tsTeamPro?.is_licence_inactive;
 
     const { viewport, setViewport } = editorLocal();
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -76,61 +76,63 @@ function Topbar({ type, onCopySettings, onPasteSettings}) {
 
     return (
         <>
-            <div className="flex tsteam__editor-topbar p-3 justify-between items-center">
-                <div>
-                    <img src={`${tsteamLogo}/img/tsteam_icon_white.svg`} className="tsteam__topbar-logo w-10 h-10 ml-16"/>
+            <div className="ts-editor-topbar">
+                <div className="ts-editor-topbar__brand">
+                    <div className="ts-editor-topbar__brand-mark">
+                        <img src={`${tsteamLogo}/img/tsteam_icon_white.svg`} className="tsteam__topbar-logo w-5 h-5"/>
+                    </div>
+                    <div className="ts-editor-topbar__brand-copy">
+                        <span>Team Members</span>
+                        <small>Draft · auto-saved</small>
+                    </div>
+                    <div className="ts-editor-topbar__history">
+                        <button type="button" className="ts-editor-icon-button" aria-label="Undo">
+                            <Undo2 size={16} />
+                        </button>
+                        <button type="button" className="ts-editor-icon-button" aria-label="Redo">
+                            <Redo2 size={16} />
+                        </button>
+                    </div>
                 </div>
 
-                {/* Responsive Buttons */}
-                <div className="editor-toolbar flex gap-2 mx-auto">
+                <div className="ts-editor-viewport-switcher">
                     <Button
-                        className={`btn ${viewport === 'desktop' ? 'responsive-button-primary' : 'responsive-button-secondary'}`}
-                        style={{
-                            width: '40px',
-                            height: '40px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            transition: 'background-color 0.3s, color 0.3s',
-                    }}
+                        className={`ts-editor-viewport-button ${viewport === 'desktop' ? 'is-active' : ''}`}
                         icon={<Monitor/>}
                         onClick={() => handleViewportChange('desktop')}
                     />
                     <Button
-                        className={`btn ${viewport === 'tablet' ? 'responsive-button-primary' : 'responsive-button-secondary'}`}
-                        style={{width: '40px', height: '40px'}}
+                        className={`ts-editor-viewport-button ${viewport === 'tablet' ? 'is-active' : ''}`}
                         icon={<Tablet/>}
                         onClick={() => handleViewportChange('tablet')}
                     />
                     <Button
-                        className={`btn ${viewport === 'mobile' ? 'responsive-button-primary' : 'responsive-button-secondary'}`}
-                        style={{width: '40px', height: '40px'}}
+                        className={`ts-editor-viewport-button ${viewport === 'mobile' ? 'is-active' : ''}`}
                         icon={<Smartphone />}
                         onClick={() => handleViewportChange('mobile')}
                     />
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex gap-2">
-                        <Dropdown menu={{ items }} trigger={['click']}>
-                            <TsButton
-                                label={<Copy />}
-                                className="bg-transparent text-white border-none hover:bg-white hover:text-purple-600"
-                            />
-                        </Dropdown>
+                <div className="ts-editor-topbar__actions">
+                    <Dropdown menu={{ items }} trigger={['click']}>
+                        <TsButton
+                            label={<><Copy size={16} /> Actions</>}
+                            className="ts-editor-ghost-button"
+                        />
+                    </Dropdown>
                     <TsButton
-                        label={<Code/>}
-                        className="bg-transparent text-white border-none hover:bg-white hover:text-purple-600"
+                        label={<><Code size={16} /> Code</>}
+                        className="ts-editor-ghost-button"
                         onClick={handleCodeClick}
                     />
                     <TsButton
                         label={translations.publish}
-                        className="tsteam__editor-button"
+                        className="ts-editor-primary-button"
                         onClick={handlePublishClick}
                     />
                     <TsButton
-                        label={<CircleX/>}
-                        className="bg-transparent text-white border-none hover:bg-red-500 hover:text-white"
+                        label={<CircleX size={16} />}
+                        className="ts-editor-icon-close"
                         onClick={handleBacktoAdmin}
                     />
                 </div>
