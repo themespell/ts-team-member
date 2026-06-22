@@ -65040,7 +65040,7 @@ var require_admin = __commonJS({
         }
       ) });
     }
-    function TsButton({ id: id2, prefix, label, onClick, htmlType, className }) {
+    function TsButton({ id: id2, prefix, label, onClick, htmlType, className, disabled = false }) {
       const defaultClassName = "tsteam-button btn btn-primary";
       const buttonClassName = className ? `${className}` : defaultClassName;
       return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -65050,6 +65050,7 @@ var require_admin = __commonJS({
           className: `${buttonClassName} btn ts-editor-button`,
           onClick,
           type: htmlType,
+          disabled,
           children: [
             prefix,
             " ",
@@ -65690,7 +65691,33 @@ var require_admin = __commonJS({
       return useBoundStore;
     };
     const create = (createState) => createState ? createImpl(createState) : createImpl;
-    const editorStore = create((set2) => ({
+    const HISTORY_LIMIT = 60;
+    const isHistoryKey = (key) => ["updateState", "hydrateState", "undo", "redo", "clearHistory", "undoStack", "redoStack", "canUndo", "canRedo"].includes(key);
+    const cloneSnapshot = (state) => JSON.parse(JSON.stringify(
+      Object.keys(state).filter((key) => !isHistoryKey(key)).reduce((acc, key) => {
+        acc[key] = state[key];
+        return acc;
+      }, {})
+    ));
+    const deepUpdateValue = (obj, keys2, value) => {
+      const [firstKey, ...restKeys] = keys2;
+      if (restKeys.length === 0) {
+        return { ...obj, [firstKey]: value };
+      }
+      return {
+        ...obj,
+        [firstKey]: deepUpdateValue(
+          obj[firstKey] !== void 0 ? obj[firstKey] : {},
+          restKeys,
+          value
+        )
+      };
+    };
+    const createStateFromSnapshot = (state, snapshot) => ({
+      ...state,
+      ...snapshot
+    });
+    const editorStore = create((set2, get2) => ({
       // Post Data
       postID: null,
       postType: null,
@@ -65809,26 +65836,81 @@ var require_admin = __commonJS({
         direction: "left",
         delay: 0
       },
-      updateState: (key, value) => set2((state) => {
+      undoStack: [],
+      redoStack: [],
+      canUndo: false,
+      canRedo: false,
+      updateState: (key, value, options = {}) => set2((state) => {
+        const { recordHistory = true } = options;
         const keys2 = key.split(".");
-        if (keys2.length === 1) {
-          return {
-            ...state,
-            [key]: value
-          };
+        const nextState = keys2.length === 1 ? {
+          ...state,
+          [key]: value
+        } : deepUpdateValue(state, keys2, value);
+        if (!recordHistory) {
+          return nextState;
         }
-        const deepUpdate = (obj, keys3) => {
-          const [firstKey, ...restKeys] = keys3;
-          if (restKeys.length === 0) {
-            return { ...obj, [firstKey]: value };
-          }
-          return {
-            ...obj,
-            [firstKey]: deepUpdate(obj[firstKey] !== void 0 ? obj[firstKey] : {}, restKeys)
-          };
+        const previousSnapshot = cloneSnapshot(state);
+        const nextSnapshot = cloneSnapshot(nextState);
+        if (JSON.stringify(previousSnapshot) === JSON.stringify(nextSnapshot)) {
+          return nextState;
+        }
+        const undoStack = [...state.undoStack, previousSnapshot].slice(-HISTORY_LIMIT);
+        return {
+          ...nextState,
+          undoStack,
+          redoStack: [],
+          canUndo: undoStack.length > 0,
+          canRedo: false
         };
-        return deepUpdate(state, keys2);
-      })
+      }),
+      hydrateState: (partialState) => set2((state) => ({
+        ...state,
+        ...partialState,
+        undoStack: [],
+        redoStack: [],
+        canUndo: false,
+        canRedo: false
+      })),
+      undo: () => set2((state) => {
+        if (!state.undoStack.length) {
+          return state;
+        }
+        const previousSnapshot = state.undoStack[state.undoStack.length - 1];
+        const currentSnapshot = cloneSnapshot(state);
+        const undoStack = state.undoStack.slice(0, -1);
+        const redoStack = [...state.redoStack, currentSnapshot].slice(-HISTORY_LIMIT);
+        return {
+          ...createStateFromSnapshot(state, previousSnapshot),
+          undoStack,
+          redoStack,
+          canUndo: undoStack.length > 0,
+          canRedo: redoStack.length > 0
+        };
+      }),
+      redo: () => set2((state) => {
+        if (!state.redoStack.length) {
+          return state;
+        }
+        const nextSnapshot = state.redoStack[state.redoStack.length - 1];
+        const currentSnapshot = cloneSnapshot(state);
+        const redoStack = state.redoStack.slice(0, -1);
+        const undoStack = [...state.undoStack, currentSnapshot].slice(-HISTORY_LIMIT);
+        return {
+          ...createStateFromSnapshot(state, nextSnapshot),
+          undoStack,
+          redoStack,
+          canUndo: undoStack.length > 0,
+          canRedo: redoStack.length > 0
+        };
+      }),
+      clearHistory: () => set2((state) => ({
+        ...state,
+        undoStack: [],
+        redoStack: [],
+        canUndo: false,
+        canRedo: false
+      }))
     }));
     const ajax_url$3 = tsteam_settings.ajax_url;
     const updateData = (action, data, post_id) => {
@@ -65870,10 +65952,13 @@ var require_admin = __commonJS({
           updateState(key, value);
         }
       },
+      hydrateSettings: (settings) => {
+        editorStore.getState().hydrateState(settings);
+      },
       updateSettings: (action) => {
         const state = editorStore.getState();
         const { postID, postType, ...restState } = state;
-        const data = Object.keys(restState).filter((key) => typeof restState[key] !== "function").reduce((obj, key) => {
+        const data = Object.keys(restState).filter((key) => typeof restState[key] !== "function" && !["undoStack", "redoStack", "canUndo", "canRedo"].includes(key)).reduce((obj, key) => {
           obj[key] = restState[key];
           return obj;
         }, {});
@@ -66153,6 +66238,21 @@ var require_admin = __commonJS({
           setSelectedView(viewMap[viewport] || "Desktop");
         }
       }, [viewport, responsive]);
+      const storedValue = get$1(
+        editorStore(),
+        responsive ? `${name}[${selectedView.toLowerCase()}]` : name,
+        0
+      );
+      reactExports.useEffect(() => {
+        var _a2;
+        if (!unit2 || typeof storedValue !== "string") {
+          return;
+        }
+        const matchedUnit = (_a2 = storedValue.match(/[a-z%]+$/i)) == null ? void 0 : _a2[0];
+        if (matchedUnit && matchedUnit !== selectedUnit) {
+          setSelectedUnit(matchedUnit);
+        }
+      }, [storedValue, unit2, selectedUnit]);
       const handleDropdownClick = (key) => {
         setSelectedView(viewMap[key]);
       };
@@ -66182,7 +66282,7 @@ var require_admin = __commonJS({
           }
         }
       };
-      const sliderValue = parseInt(get$1(editorStore(), responsive ? `${name}[${selectedView.toLowerCase()}]` : name, 0));
+      const sliderValue = parseInt(storedValue);
       return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-field ts-editor-field--slider", children: [
         label && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-field__header", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-field__header-left", children: [
@@ -79159,7 +79259,7 @@ var require_admin = __commonJS({
         console.error("Failed to paste settings from clipboard:", error);
       }
     };
-    function Topbar$1({ type: type2, onCopySettings, onPasteSettings }) {
+    function Topbar$1({ type: type2, onCopySettings, onPasteSettings, onUndo, onRedo, canUndo, canRedo }) {
       var _a2;
       const translations2 = getTranslations();
       const tsteamLogo = tsteam_settings.assets_path;
@@ -79229,8 +79329,8 @@ var require_admin = __commonJS({
               /* @__PURE__ */ jsxRuntimeExports.jsx("small", { children: "Draft · auto-saved" })
             ] }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-topbar__history", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", className: "ts-editor-icon-button", "aria-label": "Undo", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Undo2, { size: 16 }) }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", className: "ts-editor-icon-button", "aria-label": "Redo", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Redo2, { size: 16 }) })
+              /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", className: "ts-editor-icon-button", "aria-label": "Undo", onClick: onUndo, disabled: !canUndo, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Undo2, { size: 16 }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", className: "ts-editor-icon-button", "aria-label": "Redo", onClick: onRedo, disabled: !canRedo, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Redo2, { size: 16 }) })
             ] })
           ] }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-viewport-switcher", children: [
@@ -79975,7 +80075,7 @@ var require_admin = __commonJS({
           TsSlider,
           {
             label: translations2.borderWidth,
-            name: "layout.borderWidth",
+            name: "layout.borderWidth.card",
             range: common.range,
             unit: true
           }
@@ -79984,7 +80084,7 @@ var require_admin = __commonJS({
           TsSlider,
           {
             label: translations2.borderRadius,
-            name: "layout.borderRadius",
+            name: "layout.borderRadius.card",
             range: common.range,
             unit: true
           }
@@ -81464,6 +81564,33 @@ var require_admin = __commonJS({
       }
       return addImportantToStyles(tsTeamMemberAvatarCSS);
     };
+    const getLayoutValue = (value, nestedKey) => {
+      if (value && typeof value === "object") {
+        return value == null ? void 0 : value[nestedKey];
+      }
+      return value;
+    };
+    const getTsTeamMemberCardStyle = (settings) => {
+      var _a2, _b, _c, _d, _e2, _f;
+      const cardCSS = {};
+      const cardBorderWidth = getLayoutValue((_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.borderWidth, "card");
+      const cardBorderRadius = getLayoutValue((_b = settings == null ? void 0 : settings.layout) == null ? void 0 : _b.borderRadius, "card");
+      if ((_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.background) {
+        cardCSS.backgroundColor = settings.layout.color.background;
+      }
+      if ((_f = (_e2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _e2.color) == null ? void 0 : _f.border) {
+        cardCSS.borderColor = settings.layout.color.border;
+        cardCSS.borderStyle = "solid";
+      }
+      if (cardBorderWidth) {
+        cardCSS.borderWidth = cardBorderWidth;
+        cardCSS.borderStyle = "solid";
+      }
+      if (cardBorderRadius) {
+        cardCSS.borderRadius = cardBorderRadius;
+      }
+      return addImportantToStyles(cardCSS);
+    };
     const GenerateLayoutStyle = ({ settings = {} }) => {
       var _a2, _b;
       const [controls, setControls] = reactExports.useState([]);
@@ -81510,6 +81637,12 @@ var require_admin = __commonJS({
       cssGenerator.addClassStyles(".tsteam-member__designation", getTsTeamMemberDesignationStyle(settings));
       cssGenerator.addClassStyles(".tsteam-member__description", getTsTeamMemberDescriptionStyle(settings));
       cssGenerator.addClassStyles(".tsteam-member__image", getTsTeamMemberAvatarStyle(settings));
+      cssGenerator.addClassStyles(".tsteam-card-container", getTsTeamMemberCardStyle(settings));
+      cssGenerator.addClassStyles(".tshorizontal-card-wrapper", getTsTeamMemberCardStyle(settings));
+      cssGenerator.addClassStyles(".tsteam-tiles-container", getTsTeamMemberCardStyle(settings));
+      cssGenerator.addClassStyles(".tsteam-cornerframe-card", getTsTeamMemberCardStyle(settings));
+      cssGenerator.addClassStyles(".tsteam-spotlight", getTsTeamMemberCardStyle(settings));
+      cssGenerator.addClassStyles(".tsteam-tsoverlaycard", getTsTeamMemberCardStyle(settings));
       if (settings == null ? void 0 : settings.typography) {
         const { name, designation, description } = settings.typography;
         if (name) {
@@ -83130,9 +83263,9 @@ var require_admin = __commonJS({
       const translations2 = getTranslations();
       const isPro2 = tsteam_settings.is_pro;
       const { isEditor, viewport, setViewport } = editorLocal();
-      const { postType } = editorStore();
+      const { postType, undo, redo, canUndo, canRedo } = editorStore();
       const allSettings = editorStore();
-      const { saveSettings } = editorFunction();
+      const { saveSettings, hydrateSettings } = editorFunction();
       const [isSidebarOpen, setIsSidebarOpen] = reactExports.useState(true);
       const [isLoading, setIsLoading] = reactExports.useState(true);
       const [postData, setPostData] = reactExports.useState(null);
@@ -83151,9 +83284,10 @@ var require_admin = __commonJS({
               setPostData(response.data.meta_data);
               setCategoryData(response.data.meta_data.member_categories);
               const showcaseSettings = JSON.parse(response.data.meta_data.showcase_settings);
-              Object.keys(showcaseSettings).forEach((key) => {
-                const value = showcaseSettings[key];
-                saveSettings(key, value);
+              hydrateSettings({
+                postID: postIdFromUrl,
+                postType: postTypeFromUrl,
+                ...showcaseSettings
               });
               setTimeout(() => {
                 setIsLoading(false);
@@ -83187,6 +83321,10 @@ var require_admin = __commonJS({
             type: postType,
             viewport,
             setViewport,
+            onUndo: undo,
+            onRedo: redo,
+            canUndo,
+            canRedo,
             onCopySettings: () => handleCopySettings(allSettings),
             onPasteSettings: () => handlePasteSettings(saveSettings)
           }

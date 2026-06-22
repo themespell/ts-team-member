@@ -1,6 +1,43 @@
 import { create } from 'zustand'
 
-const editorStore = create((set) => ({
+const HISTORY_LIMIT = 60;
+
+const isHistoryKey = (key) =>
+    ['updateState', 'hydrateState', 'undo', 'redo', 'clearHistory', 'undoStack', 'redoStack', 'canUndo', 'canRedo']
+        .includes(key);
+
+const cloneSnapshot = (state) => JSON.parse(JSON.stringify(
+    Object.keys(state)
+        .filter((key) => !isHistoryKey(key))
+        .reduce((acc, key) => {
+            acc[key] = state[key];
+            return acc;
+        }, {})
+));
+
+const deepUpdateValue = (obj, keys, value) => {
+    const [firstKey, ...restKeys] = keys;
+
+    if (restKeys.length === 0) {
+        return { ...obj, [firstKey]: value };
+    }
+
+    return {
+        ...obj,
+        [firstKey]: deepUpdateValue(
+            obj[firstKey] !== undefined ? obj[firstKey] : {},
+            restKeys,
+            value
+        )
+    };
+};
+
+const createStateFromSnapshot = (state, snapshot) => ({
+    ...state,
+    ...snapshot,
+});
+
+const editorStore = create((set, get) => ({
     // Post Data
     postID: null,
     postType: null,
@@ -121,27 +158,97 @@ const editorStore = create((set) => ({
         delay: 0
     },
 
-    updateState: (key, value) => set((state) => {
+    undoStack: [],
+    redoStack: [],
+    canUndo: false,
+    canRedo: false,
+
+    updateState: (key, value, options = {}) => set((state) => {
+        const { recordHistory = true } = options;
         const keys = key.split('.');
-        if (keys.length === 1) {
-            return {
+        const nextState = keys.length === 1
+            ? {
                 ...state,
                 [key]: value,
-            };
-        }
-        const deepUpdate = (obj, keys) => {
-            const [firstKey, ...restKeys] = keys;
-            if (restKeys.length === 0) {
-                return { ...obj, [firstKey]: value };
             }
-            
-            return {
-                ...obj,
-                [firstKey]: deepUpdate(obj[firstKey] !== undefined ? obj[firstKey] : {}, restKeys)
-            };
+            : deepUpdateValue(state, keys, value);
+
+        if (!recordHistory) {
+            return nextState;
+        }
+
+        const previousSnapshot = cloneSnapshot(state);
+        const nextSnapshot = cloneSnapshot(nextState);
+
+        if (JSON.stringify(previousSnapshot) === JSON.stringify(nextSnapshot)) {
+            return nextState;
+        }
+
+        const undoStack = [...state.undoStack, previousSnapshot].slice(-HISTORY_LIMIT);
+
+        return {
+            ...nextState,
+            undoStack,
+            redoStack: [],
+            canUndo: undoStack.length > 0,
+            canRedo: false,
         };
-        return deepUpdate(state, keys);
     }),
+
+    hydrateState: (partialState) => set((state) => ({
+        ...state,
+        ...partialState,
+        undoStack: [],
+        redoStack: [],
+        canUndo: false,
+        canRedo: false,
+    })),
+
+    undo: () => set((state) => {
+        if (!state.undoStack.length) {
+            return state;
+        }
+
+        const previousSnapshot = state.undoStack[state.undoStack.length - 1];
+        const currentSnapshot = cloneSnapshot(state);
+        const undoStack = state.undoStack.slice(0, -1);
+        const redoStack = [...state.redoStack, currentSnapshot].slice(-HISTORY_LIMIT);
+
+        return {
+            ...createStateFromSnapshot(state, previousSnapshot),
+            undoStack,
+            redoStack,
+            canUndo: undoStack.length > 0,
+            canRedo: redoStack.length > 0,
+        };
+    }),
+
+    redo: () => set((state) => {
+        if (!state.redoStack.length) {
+            return state;
+        }
+
+        const nextSnapshot = state.redoStack[state.redoStack.length - 1];
+        const currentSnapshot = cloneSnapshot(state);
+        const redoStack = state.redoStack.slice(0, -1);
+        const undoStack = [...state.undoStack, currentSnapshot].slice(-HISTORY_LIMIT);
+
+        return {
+            ...createStateFromSnapshot(state, nextSnapshot),
+            undoStack,
+            redoStack,
+            canUndo: undoStack.length > 0,
+            canRedo: redoStack.length > 0,
+        };
+    }),
+
+    clearHistory: () => set((state) => ({
+        ...state,
+        undoStack: [],
+        redoStack: [],
+        canUndo: false,
+        canRedo: false,
+    })),
 }))
 
 export default editorStore;

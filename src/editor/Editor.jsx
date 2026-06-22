@@ -27,9 +27,9 @@ function Editor() {
   const translations = getTranslations();
   const isPro = tsteam_settings.is_pro;
   const { isEditor, viewport, setViewport } = editorLocal();
-  const { postType } = editorStore();
+  const { postType, undo, redo, canUndo, canRedo } = editorStore();
   const allSettings = editorStore();
-  const { saveSettings } = editorFunction();
+  const { saveSettings, hydrateSettings } = editorFunction();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -53,9 +53,10 @@ function Editor() {
           setPostData(response.data.meta_data);
           setCategoryData(response.data.meta_data.member_categories);
           const showcaseSettings = JSON.parse(response.data.meta_data.showcase_settings);
-          Object.keys(showcaseSettings).forEach((key) => {
-            const value = showcaseSettings[key];
-            saveSettings(key, value);
+          hydrateSettings({
+            postID: postIdFromUrl,
+            postType: postTypeFromUrl,
+            ...showcaseSettings,
           });
 
           setTimeout(() => {
@@ -91,6 +92,10 @@ function Editor() {
       type={postType}
       viewport={viewport}
       setViewport={setViewport}
+      onUndo={undo}
+      onRedo={redo}
+      canUndo={canUndo}
+      canRedo={canRedo}
       onCopySettings={() => handleCopySettings(allSettings)}
       onPasteSettings={() => handlePasteSettings(saveSettings)}
       />

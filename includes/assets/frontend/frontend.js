@@ -8224,6 +8224,33 @@ var require_frontend = __commonJS({
       }
       return addImportantToStyles(tsTeamMemberAvatarCSS);
     };
+    const getLayoutValue = (value, nestedKey) => {
+      if (value && typeof value === "object") {
+        return value == null ? void 0 : value[nestedKey];
+      }
+      return value;
+    };
+    const getTsTeamMemberCardStyle = (settings) => {
+      var _a2, _b, _c, _d, _e, _f;
+      const cardCSS = {};
+      const cardBorderWidth = getLayoutValue((_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.borderWidth, "card");
+      const cardBorderRadius = getLayoutValue((_b = settings == null ? void 0 : settings.layout) == null ? void 0 : _b.borderRadius, "card");
+      if ((_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.background) {
+        cardCSS.backgroundColor = settings.layout.color.background;
+      }
+      if ((_f = (_e = settings == null ? void 0 : settings.layout) == null ? void 0 : _e.color) == null ? void 0 : _f.border) {
+        cardCSS.borderColor = settings.layout.color.border;
+        cardCSS.borderStyle = "solid";
+      }
+      if (cardBorderWidth) {
+        cardCSS.borderWidth = cardBorderWidth;
+        cardCSS.borderStyle = "solid";
+      }
+      if (cardBorderRadius) {
+        cardCSS.borderRadius = cardBorderRadius;
+      }
+      return addImportantToStyles(cardCSS);
+    };
     const GenerateLayoutStyle = ({ settings = {} }) => {
       var _a2, _b;
       const [controls, setControls] = reactExports.useState([]);
@@ -8270,6 +8297,12 @@ var require_frontend = __commonJS({
       cssGenerator.addClassStyles(".tsteam-member__designation", getTsTeamMemberDesignationStyle(settings));
       cssGenerator.addClassStyles(".tsteam-member__description", getTsTeamMemberDescriptionStyle(settings));
       cssGenerator.addClassStyles(".tsteam-member__image", getTsTeamMemberAvatarStyle(settings));
+      cssGenerator.addClassStyles(".tsteam-card-container", getTsTeamMemberCardStyle(settings));
+      cssGenerator.addClassStyles(".tshorizontal-card-wrapper", getTsTeamMemberCardStyle(settings));
+      cssGenerator.addClassStyles(".tsteam-tiles-container", getTsTeamMemberCardStyle(settings));
+      cssGenerator.addClassStyles(".tsteam-cornerframe-card", getTsTeamMemberCardStyle(settings));
+      cssGenerator.addClassStyles(".tsteam-spotlight", getTsTeamMemberCardStyle(settings));
+      cssGenerator.addClassStyles(".tsteam-tsoverlaycard", getTsTeamMemberCardStyle(settings));
       if (settings == null ? void 0 : settings.typography) {
         const { name, designation, description } = settings.typography;
         if (name) {
@@ -17682,7 +17715,33 @@ var require_frontend = __commonJS({
       return useBoundStore;
     };
     const create = (createState) => createState ? createImpl(createState) : createImpl;
-    const editorStore = create((set2) => ({
+    const HISTORY_LIMIT = 60;
+    const isHistoryKey = (key) => ["updateState", "hydrateState", "undo", "redo", "clearHistory", "undoStack", "redoStack", "canUndo", "canRedo"].includes(key);
+    const cloneSnapshot = (state) => JSON.parse(JSON.stringify(
+      Object.keys(state).filter((key) => !isHistoryKey(key)).reduce((acc, key) => {
+        acc[key] = state[key];
+        return acc;
+      }, {})
+    ));
+    const deepUpdateValue = (obj, keys2, value) => {
+      const [firstKey, ...restKeys] = keys2;
+      if (restKeys.length === 0) {
+        return { ...obj, [firstKey]: value };
+      }
+      return {
+        ...obj,
+        [firstKey]: deepUpdateValue(
+          obj[firstKey] !== void 0 ? obj[firstKey] : {},
+          restKeys,
+          value
+        )
+      };
+    };
+    const createStateFromSnapshot = (state, snapshot) => ({
+      ...state,
+      ...snapshot
+    });
+    const editorStore = create((set2, get2) => ({
       // Post Data
       postID: null,
       postType: null,
@@ -17801,26 +17860,81 @@ var require_frontend = __commonJS({
         direction: "left",
         delay: 0
       },
-      updateState: (key, value) => set2((state) => {
+      undoStack: [],
+      redoStack: [],
+      canUndo: false,
+      canRedo: false,
+      updateState: (key, value, options = {}) => set2((state) => {
+        const { recordHistory = true } = options;
         const keys2 = key.split(".");
-        if (keys2.length === 1) {
-          return {
-            ...state,
-            [key]: value
-          };
+        const nextState = keys2.length === 1 ? {
+          ...state,
+          [key]: value
+        } : deepUpdateValue(state, keys2, value);
+        if (!recordHistory) {
+          return nextState;
         }
-        const deepUpdate = (obj, keys3) => {
-          const [firstKey, ...restKeys] = keys3;
-          if (restKeys.length === 0) {
-            return { ...obj, [firstKey]: value };
-          }
-          return {
-            ...obj,
-            [firstKey]: deepUpdate(obj[firstKey] !== void 0 ? obj[firstKey] : {}, restKeys)
-          };
+        const previousSnapshot = cloneSnapshot(state);
+        const nextSnapshot = cloneSnapshot(nextState);
+        if (JSON.stringify(previousSnapshot) === JSON.stringify(nextSnapshot)) {
+          return nextState;
+        }
+        const undoStack = [...state.undoStack, previousSnapshot].slice(-HISTORY_LIMIT);
+        return {
+          ...nextState,
+          undoStack,
+          redoStack: [],
+          canUndo: undoStack.length > 0,
+          canRedo: false
         };
-        return deepUpdate(state, keys2);
-      })
+      }),
+      hydrateState: (partialState) => set2((state) => ({
+        ...state,
+        ...partialState,
+        undoStack: [],
+        redoStack: [],
+        canUndo: false,
+        canRedo: false
+      })),
+      undo: () => set2((state) => {
+        if (!state.undoStack.length) {
+          return state;
+        }
+        const previousSnapshot = state.undoStack[state.undoStack.length - 1];
+        const currentSnapshot = cloneSnapshot(state);
+        const undoStack = state.undoStack.slice(0, -1);
+        const redoStack = [...state.redoStack, currentSnapshot].slice(-HISTORY_LIMIT);
+        return {
+          ...createStateFromSnapshot(state, previousSnapshot),
+          undoStack,
+          redoStack,
+          canUndo: undoStack.length > 0,
+          canRedo: redoStack.length > 0
+        };
+      }),
+      redo: () => set2((state) => {
+        if (!state.redoStack.length) {
+          return state;
+        }
+        const nextSnapshot = state.redoStack[state.redoStack.length - 1];
+        const currentSnapshot = cloneSnapshot(state);
+        const redoStack = state.redoStack.slice(0, -1);
+        const undoStack = [...state.undoStack, currentSnapshot].slice(-HISTORY_LIMIT);
+        return {
+          ...createStateFromSnapshot(state, nextSnapshot),
+          undoStack,
+          redoStack,
+          canUndo: undoStack.length > 0,
+          canRedo: redoStack.length > 0
+        };
+      }),
+      clearHistory: () => set2((state) => ({
+        ...state,
+        undoStack: [],
+        redoStack: [],
+        canUndo: false,
+        canRedo: false
+      }))
     }));
     const ajax_url$1 = tsteam_settings.ajax_url;
     const updateData = (action, data, post_id) => {
@@ -17862,10 +17976,13 @@ var require_frontend = __commonJS({
           updateState(key, value);
         }
       },
+      hydrateSettings: (settings) => {
+        editorStore.getState().hydrateState(settings);
+      },
       updateSettings: (action) => {
         const state = editorStore.getState();
         const { postID, postType, ...restState } = state;
-        const data = Object.keys(restState).filter((key) => typeof restState[key] !== "function").reduce((obj, key) => {
+        const data = Object.keys(restState).filter((key) => typeof restState[key] !== "function" && !["undoStack", "redoStack", "canUndo", "canRedo"].includes(key)).reduce((obj, key) => {
           obj[key] = restState[key];
           return obj;
         }, {});

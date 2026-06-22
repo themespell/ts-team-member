@@ -233,6 +233,12 @@
 	color: #ffffff;
 }
 
+.ts-editor-icon-button:disabled,
+.ts-editor-button:disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+}
+
 .ts-editor-sidebar__panel {
 	flex: 1;
 	display: flex;

@@ -23,6 +23,23 @@ function TsSlider({ label, name, range, unit, responsive, onChange }) {
         }
     }, [viewport, responsive]);
 
+    const storedValue = get(
+        editorStore(),
+        responsive ? `${name}[${selectedView.toLowerCase()}]` : name,
+        0
+    );
+
+    useEffect(() => {
+        if (!unit || typeof storedValue !== 'string') {
+            return;
+        }
+
+        const matchedUnit = storedValue.match(/[a-z%]+$/i)?.[0];
+        if (matchedUnit && matchedUnit !== selectedUnit) {
+            setSelectedUnit(matchedUnit);
+        }
+    }, [storedValue, unit, selectedUnit]);
+
     const handleDropdownClick = (key) => {
         setSelectedView(viewMap[key]);
     };
@@ -59,7 +76,7 @@ function TsSlider({ label, name, range, unit, responsive, onChange }) {
         }
     };
 
-    const sliderValue = parseInt(get(editorStore(), responsive ? `${name}[${selectedView.toLowerCase()}]` : name, 0));
+    const sliderValue = parseInt(storedValue);
 
     return (
         <div className="ts-editor-field ts-editor-field--slider">

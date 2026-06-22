@@ -114,6 +114,7 @@ import {
     getTsTeamMemberDesignationStyle,
     getTsTeamMemberDescriptionStyle,
     getTsTeamMemberAvatarStyle,
+    getTsTeamMemberCardStyle,
 } from "./layoutStyles.js";
 import proLayouts from "../../../pro_support/proLayouts.js";
 
@@ -175,6 +176,12 @@ const GenerateLayoutStyle = ({ settings = {} }) => {
     cssGenerator.addClassStyles(".tsteam-member__designation", getTsTeamMemberDesignationStyle(settings));
     cssGenerator.addClassStyles(".tsteam-member__description", getTsTeamMemberDescriptionStyle(settings));
     cssGenerator.addClassStyles(".tsteam-member__image", getTsTeamMemberAvatarStyle(settings));
+    cssGenerator.addClassStyles(".tsteam-card-container", getTsTeamMemberCardStyle(settings));
+    cssGenerator.addClassStyles(".tshorizontal-card-wrapper", getTsTeamMemberCardStyle(settings));
+    cssGenerator.addClassStyles(".tsteam-tiles-container", getTsTeamMemberCardStyle(settings));
+    cssGenerator.addClassStyles(".tsteam-cornerframe-card", getTsTeamMemberCardStyle(settings));
+    cssGenerator.addClassStyles(".tsteam-spotlight", getTsTeamMemberCardStyle(settings));
+    cssGenerator.addClassStyles(".tsteam-tsoverlaycard", getTsTeamMemberCardStyle(settings));
 
     // Dynamically generate CSS variables for typography
     if (settings?.typography) {

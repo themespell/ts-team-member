@@ -8,7 +8,7 @@ import {TsModal} from "../../common/components/controls/tsControls";
 import {getTranslations} from "../../common/utils/translations.js";
 import TsProBadge from "../../common/components/controls/TsProBadge.jsx";
 
-function Topbar({ type, onCopySettings, onPasteSettings}) {
+function Topbar({ type, onCopySettings, onPasteSettings, onUndo, onRedo, canUndo, canRedo }) {
     const translations = getTranslations();
     const tsteamLogo = tsteam_settings.assets_path;
     const isPro = !!tsteam_settings.is_pro;
@@ -86,10 +86,10 @@ function Topbar({ type, onCopySettings, onPasteSettings}) {
                         <small>Draft · auto-saved</small>
                     </div>
                     <div className="ts-editor-topbar__history">
-                        <button type="button" className="ts-editor-icon-button" aria-label="Undo">
+                        <button type="button" className="ts-editor-icon-button" aria-label="Undo" onClick={onUndo} disabled={!canUndo}>
                             <Undo2 size={16} />
                         </button>
-                        <button type="button" className="ts-editor-icon-button" aria-label="Redo">
+                        <button type="button" className="ts-editor-icon-button" aria-label="Redo" onClick={onRedo} disabled={!canRedo}>
                             <Redo2 size={16} />
                         </button>
                     </div>

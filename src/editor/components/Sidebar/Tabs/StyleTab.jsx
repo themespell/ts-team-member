@@ -100,14 +100,14 @@ function StyleTab({ selectedLayout, layoutType }) {
 
       <TsSlider
         label={translations.borderWidth}
-        name="layout.borderWidth"
+        name="layout.borderWidth.card"
         range={common.range}
         unit={true}
       />
 
       <TsSlider
         label={translations.borderRadius}
-        name="layout.borderRadius"
+        name="layout.borderRadius.card"
         range={common.range}
         unit={true}
       />
