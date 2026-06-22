@@ -1,3 +1,14 @@
+const BRAND_STYLE = 'brand';
+
+const BRAND_COLORS = {
+    facebook: '#1877F2',
+    twitter: '#000000',
+    instagram: '#E4405F',
+    linkedin: '#0A66C2',
+    youtube: '#FF0000',
+    github: '#181717',
+};
+
 const getSocialIcon = (channel) => {
     const icons = {
         facebook: (
@@ -33,7 +44,7 @@ const getSocialIcon = (channel) => {
         )
     };
 
-    return icons[channel.toLowerCase()] || null;
+    return icons[channel?.toLowerCase?.()] || null;
 };
 
 const SocialIcons = ({ socialIcons,settings }) => {
@@ -49,24 +60,37 @@ const SocialIcons = ({ socialIcons,settings }) => {
     }
 
     if (!data || !Array.isArray(data)) return null;
+
+    const isBrandStyle = settings?.layout?.socialIconStyle === BRAND_STYLE;
+
     return (
         <div className="flex flex-wrap items-center justify-center gap-2">
-            {data.map((item, index) => (
-                <a
-                    key={index}
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-white hover:text-white  bg-[#7547D7]  hover:[#7547D7] transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:shadow-lg shadow-md"
-                    style={{
-                        backgroundColor: settings?.layout?.color?.socialIconBg,
-                        color: settings?.layout?.color?.socialIcon,
-                        borderRadius: settings?.layout?.borderRadius?.socialIcon
-                    }}
-                >
-                    {getSocialIcon(item.socialChannel)}
-                </a>
-            ))}
+            {data.map((item, index) => {
+                const brandColor = BRAND_COLORS[item.socialChannel?.toLowerCase?.()] || settings?.layout?.color?.socialIcon;
+
+                return (
+                    <a
+                        key={index}
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={isBrandStyle
+                            ? "inline-flex h-9 w-9 items-center justify-center text-sm transition-all duration-300 hover:-translate-y-0.5 hover:scale-110"
+                            : "inline-flex h-9 w-9 items-center justify-center rounded-lg text-white hover:text-white bg-[#7547D7] hover:[#7547D7] transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:shadow-lg shadow-md"}
+                        style={isBrandStyle ? {
+                            backgroundColor: 'transparent',
+                            color: brandColor,
+                            borderRadius: 0,
+                        } : {
+                            backgroundColor: settings?.layout?.color?.socialIconBg,
+                            color: settings?.layout?.color?.socialIcon,
+                            borderRadius: settings?.layout?.borderRadius?.socialIcon
+                        }}
+                    >
+                        {getSocialIcon(item.socialChannel)}
+                    </a>
+                );
+            })}
         </div>
     );
 };
