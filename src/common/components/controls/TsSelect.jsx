@@ -95,10 +95,10 @@ function TsSelect({ label, name, defaultValue, options, onChange, mode, output =
 
     // Otherwise, render with standalone label (existing behavior)
     return (
-        <div className="mb-4">
+        <div className="ts-editor-field">
             {label && (
                 <label
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="ts-editor-field__label"
                     style={
                         {
                             color: globalSettings.theme.textColor,
@@ -106,7 +106,7 @@ function TsSelect({ label, name, defaultValue, options, onChange, mode, output =
                     }
                 >{label}</label>
             )}
-            {selectElement}
+            <div className="ts-editor-field__control">{selectElement}</div>
         </div>
     );
 }

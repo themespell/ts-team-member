@@ -24,12 +24,16 @@ const editorFunction = create((set) => ({
         }
     },
 
+    hydrateSettings: (settings) => {
+        editorStore.getState().hydrateState(settings);
+    },
+
     updateSettings: (action) => {
         const state = editorStore.getState();
         const { postID, postType, ...restState } = state;
 
         const data = Object.keys(restState)
-            .filter((key) => typeof restState[key] !== 'function')
+            .filter((key) => typeof restState[key] !== 'function' && !['undoStack', 'redoStack', 'canUndo', 'canRedo'].includes(key))
             .reduce((obj, key) => {
                 obj[key] = restState[key];
                 return obj;

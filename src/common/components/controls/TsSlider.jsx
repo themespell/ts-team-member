@@ -23,6 +23,23 @@ function TsSlider({ label, name, range, unit, responsive, onChange }) {
         }
     }, [viewport, responsive]);
 
+    const storedValue = get(
+        editorStore(),
+        responsive ? `${name}[${selectedView.toLowerCase()}]` : name,
+        0
+    );
+
+    useEffect(() => {
+        if (!unit || typeof storedValue !== 'string') {
+            return;
+        }
+
+        const matchedUnit = storedValue.match(/[a-z%]+$/i)?.[0];
+        if (matchedUnit && matchedUnit !== selectedUnit) {
+            setSelectedUnit(matchedUnit);
+        }
+    }, [storedValue, unit, selectedUnit]);
+
     const handleDropdownClick = (key) => {
         setSelectedView(viewMap[key]);
     };
@@ -59,26 +76,25 @@ function TsSlider({ label, name, range, unit, responsive, onChange }) {
         }
     };
 
-    const sliderValue = parseInt(get(editorStore(), responsive ? `${name}[${selectedView.toLowerCase()}]` : name, 0));
+    const sliderValue = parseInt(storedValue);
 
     return (
-        <>
+        <div className="ts-editor-field ts-editor-field--slider">
             {label && (
-                <div className="flex justify-between">
-                    <div className="flex mb-1">
-                        <label className="block text-sm font-medium text-gray-700 mt-2">{label}</label>
+                <div className="ts-editor-field__header">
+                    <div className="ts-editor-field__header-left">
+                        <label className="ts-editor-field__label">{label}</label>
                         {responsive && (
-                            <div className="mt-1 ml-2">
-                                <Dropdown menu={{ items }} trigger={['click']}>
-                                    <Button
-                                        icon={
-                                            selectedView === 'Desktop' ? <DesktopOutlined /> :
-                                                selectedView === 'Tablet' ? <TabletOutlined /> :
-                                                    <MobileOutlined />
-                                        }
-                                    />
-                                </Dropdown>
-                            </div>
+                            <Dropdown menu={{ items }} trigger={['click']}>
+                                <Button
+                                    className="ts-editor-device-button"
+                                    icon={
+                                        selectedView === 'Desktop' ? <DesktopOutlined /> :
+                                            selectedView === 'Tablet' ? <TabletOutlined /> :
+                                                <MobileOutlined />
+                                    }
+                                />
+                            </Dropdown>
                         )}
                     </div>
                     {unit && (
@@ -98,45 +114,47 @@ function TsSlider({ label, name, range, unit, responsive, onChange }) {
                             }}
                             trigger={['click']}
                         >
-                            <Button>
+                            <Button className="ts-editor-unit-button">
                                 {selectedUnit} <DownOutlined />
                             </Button>
                         </Dropdown>
                     )}
                 </div>
             )}
-            <div className="mb-4 flex justify-between items-center w-full">
-                <div className="w-full mr-6">
+            <div className="ts-editor-slider">
+                <div className="ts-editor-slider__track">
                     <Slider
-                        value={isNaN(sliderValue) ? 0 : sliderValue} // Ensure valid number
+                        className="ts-editor-slider__range"
+                        value={isNaN(sliderValue) ? 0 : sliderValue}
                         min={parseInt(range.min)}
                         max={parseInt(range.max)}
                         onChange={handleChange}
                         styles={{
                             track: {
-                                background: 'linear-gradient(90deg, rgb(117, 71, 215) 18.75%, rgb(161, 70, 219) 92.5%)',
+                                background: 'linear-gradient(90deg, #6963ff 0%, #7f5cff 100%)',
                                 height: '4px',
                             },
                             rail: {
-                                backgroundColor: '#7537D7',
+                                backgroundColor: '#d8dbe7',
+                                height: '4px',
                             },
                             handle: {
-                                borderColor: '#7537D7',
+                                borderColor: '#6963ff',
+                                boxShadow: '0 0 0 4px rgba(105, 99, 255, 0.12)',
                             },
                             width: '100%',
                         }}
                     />
                 </div>
-                <div>
-                    <InputNumber
-                        value={isNaN(sliderValue) ? 0 : sliderValue} // Ensure valid number
-                        min={parseInt(range.min)}
-                        max={parseInt(range.max)}
-                        onChange={handleChange}
-                    />
-                </div>
+                <InputNumber
+                    className="ts-editor-slider__input"
+                    value={isNaN(sliderValue) ? 0 : sliderValue}
+                    min={parseInt(range.min)}
+                    max={parseInt(range.max)}
+                    onChange={handleChange}
+                />
             </div>
-        </>
+        </div>
     );
 }
 

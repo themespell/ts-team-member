@@ -3,8 +3,9 @@ import globalSettings from '../../utils/globalSettings';
 
 function TsDivider({ label }) {
   return (
-    <div className="mb-4">
+    <div className="ts-editor-divider">
         <Divider
+        className="ts-editor-divider__line"
         style={{
             borderColor: globalSettings.theme.borderColor,
             margin: '0px'

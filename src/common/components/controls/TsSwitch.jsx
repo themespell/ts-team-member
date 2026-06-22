@@ -19,10 +19,10 @@ function TsSwitch({ label, name, onChange }) {
   const isSwitchOn = storedValue === true || storedValue === 'true';
 
   return (
-    <div className="flex justify-between items-center mb-4">
+    <div className="ts-editor-field ts-editor-field--inline">
       {label && (
         <label 
-          className="block text-sm font-medium text-gray-700 mb-2"
+          className="ts-editor-field__label"
           style={{
             color: globalSettings.theme.textColor,
           }}
@@ -30,10 +30,12 @@ function TsSwitch({ label, name, onChange }) {
           {label}
         </label>
       )}
-      <Switch
-        checked={isSwitchOn}
-        onChange={handleChange}
-      />
+      <div className="ts-editor-field__switch">
+        <Switch
+          checked={isSwitchOn}
+          onChange={handleChange}
+        />
+      </div>
     </div>
   );
 }

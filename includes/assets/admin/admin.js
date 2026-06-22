@@ -65040,16 +65040,17 @@ var require_admin = __commonJS({
         }
       ) });
     }
-    function TsButton({ id: id2, prefix, label, onClick, htmlType, className }) {
+    function TsButton({ id: id2, prefix, label, onClick, htmlType, className, disabled = false }) {
       const defaultClassName = "tsteam-button btn btn-primary";
       const buttonClassName = className ? `${className}` : defaultClassName;
       return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "button",
         {
           id: id2,
-          className: `${buttonClassName} btn`,
+          className: `${buttonClassName} btn ts-editor-button`,
           onClick,
           type: htmlType,
+          disabled,
           children: [
             prefix,
             " ",
@@ -65690,7 +65691,33 @@ var require_admin = __commonJS({
       return useBoundStore;
     };
     const create = (createState) => createState ? createImpl(createState) : createImpl;
-    const editorStore = create((set2) => ({
+    const HISTORY_LIMIT = 60;
+    const isHistoryKey = (key) => ["updateState", "hydrateState", "undo", "redo", "clearHistory", "undoStack", "redoStack", "canUndo", "canRedo"].includes(key);
+    const cloneSnapshot = (state) => JSON.parse(JSON.stringify(
+      Object.keys(state).filter((key) => !isHistoryKey(key)).reduce((acc, key) => {
+        acc[key] = state[key];
+        return acc;
+      }, {})
+    ));
+    const deepUpdateValue = (obj, keys2, value) => {
+      const [firstKey, ...restKeys] = keys2;
+      if (restKeys.length === 0) {
+        return { ...obj, [firstKey]: value };
+      }
+      return {
+        ...obj,
+        [firstKey]: deepUpdateValue(
+          obj[firstKey] !== void 0 ? obj[firstKey] : {},
+          restKeys,
+          value
+        )
+      };
+    };
+    const createStateFromSnapshot = (state, snapshot) => ({
+      ...state,
+      ...snapshot
+    });
+    const editorStore = create((set2, get2) => ({
       // Post Data
       postID: null,
       postType: null,
@@ -65809,26 +65836,81 @@ var require_admin = __commonJS({
         direction: "left",
         delay: 0
       },
-      updateState: (key, value) => set2((state) => {
+      undoStack: [],
+      redoStack: [],
+      canUndo: false,
+      canRedo: false,
+      updateState: (key, value, options = {}) => set2((state) => {
+        const { recordHistory = true } = options;
         const keys2 = key.split(".");
-        if (keys2.length === 1) {
-          return {
-            ...state,
-            [key]: value
-          };
+        const nextState = keys2.length === 1 ? {
+          ...state,
+          [key]: value
+        } : deepUpdateValue(state, keys2, value);
+        if (!recordHistory) {
+          return nextState;
         }
-        const deepUpdate = (obj, keys3) => {
-          const [firstKey, ...restKeys] = keys3;
-          if (restKeys.length === 0) {
-            return { ...obj, [firstKey]: value };
-          }
-          return {
-            ...obj,
-            [firstKey]: deepUpdate(obj[firstKey] !== void 0 ? obj[firstKey] : {}, restKeys)
-          };
+        const previousSnapshot = cloneSnapshot(state);
+        const nextSnapshot = cloneSnapshot(nextState);
+        if (JSON.stringify(previousSnapshot) === JSON.stringify(nextSnapshot)) {
+          return nextState;
+        }
+        const undoStack = [...state.undoStack, previousSnapshot].slice(-HISTORY_LIMIT);
+        return {
+          ...nextState,
+          undoStack,
+          redoStack: [],
+          canUndo: undoStack.length > 0,
+          canRedo: false
         };
-        return deepUpdate(state, keys2);
-      })
+      }),
+      hydrateState: (partialState) => set2((state) => ({
+        ...state,
+        ...partialState,
+        undoStack: [],
+        redoStack: [],
+        canUndo: false,
+        canRedo: false
+      })),
+      undo: () => set2((state) => {
+        if (!state.undoStack.length) {
+          return state;
+        }
+        const previousSnapshot = state.undoStack[state.undoStack.length - 1];
+        const currentSnapshot = cloneSnapshot(state);
+        const undoStack = state.undoStack.slice(0, -1);
+        const redoStack = [...state.redoStack, currentSnapshot].slice(-HISTORY_LIMIT);
+        return {
+          ...createStateFromSnapshot(state, previousSnapshot),
+          undoStack,
+          redoStack,
+          canUndo: undoStack.length > 0,
+          canRedo: redoStack.length > 0
+        };
+      }),
+      redo: () => set2((state) => {
+        if (!state.redoStack.length) {
+          return state;
+        }
+        const nextSnapshot = state.redoStack[state.redoStack.length - 1];
+        const currentSnapshot = cloneSnapshot(state);
+        const redoStack = state.redoStack.slice(0, -1);
+        const undoStack = [...state.undoStack, currentSnapshot].slice(-HISTORY_LIMIT);
+        return {
+          ...createStateFromSnapshot(state, nextSnapshot),
+          undoStack,
+          redoStack,
+          canUndo: undoStack.length > 0,
+          canRedo: redoStack.length > 0
+        };
+      }),
+      clearHistory: () => set2((state) => ({
+        ...state,
+        undoStack: [],
+        redoStack: [],
+        canUndo: false,
+        canRedo: false
+      }))
     }));
     const ajax_url$3 = tsteam_settings.ajax_url;
     const updateData = (action, data, post_id) => {
@@ -65870,10 +65952,13 @@ var require_admin = __commonJS({
           updateState(key, value);
         }
       },
+      hydrateSettings: (settings) => {
+        editorStore.getState().hydrateState(settings);
+      },
       updateSettings: (action) => {
         const state = editorStore.getState();
         const { postID, postType, ...restState } = state;
-        const data = Object.keys(restState).filter((key) => typeof restState[key] !== "function").reduce((obj, key) => {
+        const data = Object.keys(restState).filter((key) => typeof restState[key] !== "function" && !["undoStack", "redoStack", "canUndo", "canRedo"].includes(key)).reduce((obj, key) => {
           obj[key] = restState[key];
           return obj;
         }, {});
@@ -65962,18 +66047,18 @@ var require_admin = __commonJS({
           }
         );
       }
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4", children: [
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-field", children: [
         label && /* @__PURE__ */ jsxRuntimeExports.jsx(
           "label",
           {
-            className: "block text-sm font-medium text-gray-700 mb-2",
+            className: "ts-editor-field__label",
             style: {
               color: globalSettings.theme.textColor
             },
             children: label
           }
         ),
-        selectElement
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-editor-field__control", children: selectElement })
       ] });
     }
     const editorHelper = {
@@ -66153,6 +66238,21 @@ var require_admin = __commonJS({
           setSelectedView(viewMap[viewport] || "Desktop");
         }
       }, [viewport, responsive]);
+      const storedValue = get$1(
+        editorStore(),
+        responsive ? `${name}[${selectedView.toLowerCase()}]` : name,
+        0
+      );
+      reactExports.useEffect(() => {
+        var _a2;
+        if (!unit2 || typeof storedValue !== "string") {
+          return;
+        }
+        const matchedUnit = (_a2 = storedValue.match(/[a-z%]+$/i)) == null ? void 0 : _a2[0];
+        if (matchedUnit && matchedUnit !== selectedUnit) {
+          setSelectedUnit(matchedUnit);
+        }
+      }, [storedValue, unit2, selectedUnit]);
       const handleDropdownClick = (key) => {
         setSelectedView(viewMap[key]);
       };
@@ -66182,17 +66282,18 @@ var require_admin = __commonJS({
           }
         }
       };
-      const sliderValue = parseInt(get$1(editorStore(), responsive ? `${name}[${selectedView.toLowerCase()}]` : name, 0));
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        label && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex mb-1", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "block text-sm font-medium text-gray-700 mt-2", children: label }),
-            responsive && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-1 ml-2", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Dropdown, { menu: { items: items2 }, trigger: ["click"], children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      const sliderValue = parseInt(storedValue);
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-field ts-editor-field--slider", children: [
+        label && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-field__header", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-field__header-left", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "ts-editor-field__label", children: label }),
+            responsive && /* @__PURE__ */ jsxRuntimeExports.jsx(Dropdown, { menu: { items: items2 }, trigger: ["click"], children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               Button$1,
               {
+                className: "ts-editor-device-button",
                 icon: selectedView === "Desktop" ? /* @__PURE__ */ jsxRuntimeExports.jsx(RefIcon$c, {}) : selectedView === "Tablet" ? /* @__PURE__ */ jsxRuntimeExports.jsx(RefIcon, {}) : /* @__PURE__ */ jsxRuntimeExports.jsx(RefIcon$2, {})
               }
-            ) }) })
+            ) })
           ] }),
           unit2 && /* @__PURE__ */ jsxRuntimeExports.jsx(
             Dropdown,
@@ -66211,7 +66312,7 @@ var require_admin = __commonJS({
                 }))
               },
               trigger: ["click"],
-              children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Button$1, { children: [
+              children: /* @__PURE__ */ jsxRuntimeExports.jsxs(Button$1, { className: "ts-editor-unit-button", children: [
                 selectedUnit,
                 " ",
                 /* @__PURE__ */ jsxRuntimeExports.jsx(RefIcon$w, {})
@@ -66219,38 +66320,42 @@ var require_admin = __commonJS({
             }
           )
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4 flex justify-between items-center w-full", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full mr-6", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-slider", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-editor-slider__track", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             Slider,
             {
+              className: "ts-editor-slider__range",
               value: isNaN(sliderValue) ? 0 : sliderValue,
               min: parseInt(range2.min),
               max: parseInt(range2.max),
               onChange: handleChange,
               styles: {
                 track: {
-                  background: "linear-gradient(90deg, rgb(117, 71, 215) 18.75%, rgb(161, 70, 219) 92.5%)",
+                  background: "linear-gradient(90deg, #6963ff 0%, #7f5cff 100%)",
                   height: "4px"
                 },
                 rail: {
-                  backgroundColor: "#7537D7"
+                  backgroundColor: "#d8dbe7",
+                  height: "4px"
                 },
                 handle: {
-                  borderColor: "#7537D7"
+                  borderColor: "#6963ff",
+                  boxShadow: "0 0 0 4px rgba(105, 99, 255, 0.12)"
                 },
                 width: "100%"
               }
             }
           ) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
             TypedInputNumber,
             {
+              className: "ts-editor-slider__input",
               value: isNaN(sliderValue) ? 0 : sliderValue,
               min: parseInt(range2.min),
               max: parseInt(range2.max),
               onChange: handleChange
             }
-          ) })
+          )
         ] })
       ] });
     }
@@ -66265,30 +66370,31 @@ var require_admin = __commonJS({
           saveSettings(name, hexColor);
         }
       };
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-4 flex justify-between items-center", children: [
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-field ts-editor-field--inline", children: [
         label && /* @__PURE__ */ jsxRuntimeExports.jsx(
           "label",
           {
-            className: "block text-sm font-medium text-gray-700 mb-2",
+            className: "ts-editor-field__label",
             style: {
               color: globalSettings.theme.textColor
             },
             children: label
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-editor-field__color", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           ColorPicker,
           {
             defaultValue,
             onChange: handleChange
           }
-        )
+        ) })
       ] });
     }
     function TsDivider({ label }) {
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mb-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-editor-divider", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
         Divider,
         {
+          className: "ts-editor-divider__line",
           style: {
             borderColor: globalSettings.theme.borderColor,
             margin: "0px"
@@ -77704,18 +77810,6 @@ var require_admin = __commonJS({
      * This source code is licensed under the ISC license.
      * See the LICENSE file in the root directory of this source tree.
      */
-    const Facebook = createLucideIcon("Facebook", [
-      [
-        "path",
-        { d: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z", key: "1jg4f8" }
-      ]
-    ]);
-    /**
-     * @license lucide-react v0.469.0 - ISC
-     *
-     * This source code is licensed under the ISC license.
-     * See the LICENSE file in the root directory of this source tree.
-     */
     const FilePenLine = createLucideIcon("FilePenLine", [
       [
         "path",
@@ -77793,11 +77887,11 @@ var require_admin = __commonJS({
      * This source code is licensed under the ISC license.
      * See the LICENSE file in the root directory of this source tree.
      */
-    const LayoutDashboard = createLucideIcon("LayoutDashboard", [
-      ["rect", { width: "7", height: "9", x: "3", y: "3", rx: "1", key: "10lvy0" }],
-      ["rect", { width: "7", height: "5", x: "14", y: "3", rx: "1", key: "16une8" }],
-      ["rect", { width: "7", height: "9", x: "14", y: "12", rx: "1", key: "1hutg5" }],
-      ["rect", { width: "7", height: "5", x: "3", y: "16", rx: "1", key: "ldoo1y" }]
+    const LayoutGrid = createLucideIcon("LayoutGrid", [
+      ["rect", { width: "7", height: "7", x: "3", y: "3", rx: "1", key: "1g98yp" }],
+      ["rect", { width: "7", height: "7", x: "14", y: "3", rx: "1", key: "6d4xhi" }],
+      ["rect", { width: "7", height: "7", x: "14", y: "14", rx: "1", key: "nxv5o0" }],
+      ["rect", { width: "7", height: "7", x: "3", y: "14", rx: "1", key: "1bb6yr" }]
     ]);
     /**
      * @license lucide-react v0.469.0 - ISC
@@ -77842,22 +77936,21 @@ var require_admin = __commonJS({
      * This source code is licensed under the ISC license.
      * See the LICENSE file in the root directory of this source tree.
      */
-    const Paintbrush = createLucideIcon("Paintbrush", [
-      ["path", { d: "m14.622 17.897-10.68-2.913", key: "vj2p1u" }],
-      [
-        "path",
-        {
-          d: "M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z",
-          key: "18tc5c"
-        }
-      ],
-      [
-        "path",
-        {
-          d: "M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15",
-          key: "ytzfxy"
-        }
-      ]
+    const PanelLeftClose = createLucideIcon("PanelLeftClose", [
+      ["rect", { width: "18", height: "18", x: "3", y: "3", rx: "2", key: "afitv7" }],
+      ["path", { d: "M9 3v18", key: "fh3hqa" }],
+      ["path", { d: "m16 15-3-3 3-3", key: "14y99z" }]
+    ]);
+    /**
+     * @license lucide-react v0.469.0 - ISC
+     *
+     * This source code is licensed under the ISC license.
+     * See the LICENSE file in the root directory of this source tree.
+     */
+    const PanelLeftOpen = createLucideIcon("PanelLeftOpen", [
+      ["rect", { width: "18", height: "18", x: "3", y: "3", rx: "2", key: "afitv7" }],
+      ["path", { d: "M9 3v18", key: "fh3hqa" }],
+      ["path", { d: "m14 9 3 3-3 3", key: "8010ee" }]
     ]);
     /**
      * @license lucide-react v0.469.0 - ISC
@@ -77905,6 +77998,16 @@ var require_admin = __commonJS({
      * This source code is licensed under the ISC license.
      * See the LICENSE file in the root directory of this source tree.
      */
+    const Redo2 = createLucideIcon("Redo2", [
+      ["path", { d: "m15 14 5-5-5-5", key: "12vg1m" }],
+      ["path", { d: "M20 9H9.5A5.5 5.5 0 0 0 4 14.5A5.5 5.5 0 0 0 9.5 20H13", key: "6uklza" }]
+    ]);
+    /**
+     * @license lucide-react v0.469.0 - ISC
+     *
+     * This source code is licensed under the ISC license.
+     * See the LICENSE file in the root directory of this source tree.
+     */
     const Settings = createLucideIcon("Settings", [
       [
         "path",
@@ -77921,29 +78024,22 @@ var require_admin = __commonJS({
      * This source code is licensed under the ISC license.
      * See the LICENSE file in the root directory of this source tree.
      */
+    const Share2 = createLucideIcon("Share2", [
+      ["circle", { cx: "18", cy: "5", r: "3", key: "gq8acd" }],
+      ["circle", { cx: "6", cy: "12", r: "3", key: "w7nqdw" }],
+      ["circle", { cx: "18", cy: "19", r: "3", key: "1xt0gg" }],
+      ["line", { x1: "8.59", x2: "15.42", y1: "13.51", y2: "17.49", key: "47mynk" }],
+      ["line", { x1: "15.41", x2: "8.59", y1: "6.51", y2: "10.49", key: "1n3mei" }]
+    ]);
+    /**
+     * @license lucide-react v0.469.0 - ISC
+     *
+     * This source code is licensed under the ISC license.
+     * See the LICENSE file in the root directory of this source tree.
+     */
     const Smartphone = createLucideIcon("Smartphone", [
       ["rect", { width: "14", height: "20", x: "5", y: "2", rx: "2", ry: "2", key: "1yt0o3" }],
       ["path", { d: "M12 18h.01", key: "mhygvu" }]
-    ]);
-    /**
-     * @license lucide-react v0.469.0 - ISC
-     *
-     * This source code is licensed under the ISC license.
-     * See the LICENSE file in the root directory of this source tree.
-     */
-    const SquareChevronLeft = createLucideIcon("SquareChevronLeft", [
-      ["rect", { width: "18", height: "18", x: "3", y: "3", rx: "2", key: "afitv7" }],
-      ["path", { d: "m14 16-4-4 4-4", key: "ojs7w8" }]
-    ]);
-    /**
-     * @license lucide-react v0.469.0 - ISC
-     *
-     * This source code is licensed under the ISC license.
-     * See the LICENSE file in the root directory of this source tree.
-     */
-    const SquareChevronRight = createLucideIcon("SquareChevronRight", [
-      ["rect", { width: "18", height: "18", x: "3", y: "3", rx: "2", key: "afitv7" }],
-      ["path", { d: "m10 8 4 4-4 4", key: "1wy4r4" }]
     ]);
     /**
      * @license lucide-react v0.469.0 - ISC
@@ -77995,6 +78091,16 @@ var require_admin = __commonJS({
       ["polyline", { points: "4 7 4 4 20 4 20 7", key: "1nosan" }],
       ["line", { x1: "9", x2: "15", y1: "20", y2: "20", key: "swin9y" }],
       ["line", { x1: "12", x2: "12", y1: "4", y2: "20", key: "1tx1rr" }]
+    ]);
+    /**
+     * @license lucide-react v0.469.0 - ISC
+     *
+     * This source code is licensed under the ISC license.
+     * See the LICENSE file in the root directory of this source tree.
+     */
+    const Undo2 = createLucideIcon("Undo2", [
+      ["path", { d: "M9 14 4 9l5-5", key: "102s5s" }],
+      ["path", { d: "M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11", key: "f3b9sd" }]
     ]);
     /**
      * @license lucide-react v0.469.0 - ISC
@@ -78860,14 +78966,47 @@ var require_admin = __commonJS({
     }
     function TsLoader({ label }) {
       const tsteamLogo = tsteam_settings.assets_path;
+      const [progress, setProgress] = reactExports.useState(0);
+      reactExports.useEffect(() => {
+        const interval = setInterval(() => {
+          setProgress((prev2) => {
+            if (prev2 >= 90) return 90;
+            return prev2 + Math.random() * 15;
+          });
+        }, 300);
+        return () => clearInterval(interval);
+      }, []);
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
-          className: "flex flex-col justify-center items-center h-screen",
-          style: { backgroundColor: globalSettings.theme.primaryColor },
+          className: "ts-loader-wrapper",
+          style: { backgroundColor: "#0f172a" },
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: `${tsteamLogo}/img/tsteam_icon_white.svg`, className: "tsteam__topbar-logo w-12 h-12" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-white mt-3", children: label })
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-loader-content", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-loader-logo-wrapper", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-loader-logo-pulse" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "img",
+                  {
+                    src: `${tsteamLogo}/img/tsteam_icon_white.svg`,
+                    className: "ts-loader-logo",
+                    alt: "Team Members"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-loader-text", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ts-loader-label", children: label }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-loader-dots", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", {}),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", {}),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", {})
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-loader-progress-wrapper", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-loader-progress-bar", style: { width: `${progress}%` } }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-loader-subtitle", children: "Team Members Editor" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-loader-bg-gradient" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-loader-bg-pattern" })
           ]
         }
       );
@@ -78883,24 +79022,24 @@ var require_admin = __commonJS({
       };
       const storedValue = get$1(editorStore(), name, false);
       const isSwitchOn = storedValue === true || storedValue === "true";
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between items-center mb-4", children: [
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-field ts-editor-field--inline", children: [
         label && /* @__PURE__ */ jsxRuntimeExports.jsx(
           "label",
           {
-            className: "block text-sm font-medium text-gray-700 mb-2",
+            className: "ts-editor-field__label",
             style: {
               color: globalSettings.theme.textColor
             },
             children: label
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-editor-field__switch", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           Switch,
           {
             checked: isSwitchOn,
             onChange: handleChange
           }
-        )
+        ) })
       ] });
     }
     function TsImage({ mediaUrl, alt, type: type2 = "default" }) {
@@ -79153,7 +79292,7 @@ var require_admin = __commonJS({
         console.error("Failed to paste settings from clipboard:", error);
       }
     };
-    function Topbar$1({ type: type2, onCopySettings, onPasteSettings }) {
+    function Topbar$1({ type: type2, onCopySettings, onPasteSettings, onUndo, onRedo, canUndo, canRedo }) {
       var _a2;
       const translations2 = getTranslations();
       const tsteamLogo = tsteam_settings.assets_path;
@@ -79215,21 +79354,23 @@ var require_admin = __commonJS({
         }
       ];
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex tsteam__editor-topbar p-3 justify-between items-center", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: `${tsteamLogo}/img/tsteam_icon_white.svg`, className: "tsteam__topbar-logo w-10 h-10 ml-16" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "editor-toolbar flex gap-2 mx-auto", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-topbar", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-topbar__brand", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-editor-topbar__brand-mark", children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: `${tsteamLogo}/img/tsteam_icon_white.svg`, className: "tsteam__topbar-logo w-5 h-5" }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-topbar__brand-copy", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Team Members" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("small", { children: "Draft · auto-saved" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-topbar__history", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", className: "ts-editor-icon-button", "aria-label": "Undo", onClick: onUndo, disabled: !canUndo, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Undo2, { size: 16 }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("button", { type: "button", className: "ts-editor-icon-button", "aria-label": "Redo", onClick: onRedo, disabled: !canRedo, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Redo2, { size: 16 }) })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-viewport-switcher", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               Button$1,
               {
-                className: `btn ${viewport === "desktop" ? "responsive-button-primary" : "responsive-button-secondary"}`,
-                style: {
-                  width: "40px",
-                  height: "40px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  transition: "background-color 0.3s, color 0.3s"
-                },
+                className: `ts-editor-viewport-button ${viewport === "desktop" ? "is-active" : ""}`,
                 icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Monitor, {}),
                 onClick: () => handleViewportChange("desktop")
               }
@@ -79237,8 +79378,7 @@ var require_admin = __commonJS({
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               Button$1,
               {
-                className: `btn ${viewport === "tablet" ? "responsive-button-primary" : "responsive-button-secondary"}`,
-                style: { width: "40px", height: "40px" },
+                className: `ts-editor-viewport-button ${viewport === "tablet" ? "is-active" : ""}`,
                 icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Tablet, {}),
                 onClick: () => handleViewportChange("tablet")
               }
@@ -79246,26 +79386,31 @@ var require_admin = __commonJS({
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               Button$1,
               {
-                className: `btn ${viewport === "mobile" ? "responsive-button-primary" : "responsive-button-secondary"}`,
-                style: { width: "40px", height: "40px" },
+                className: `ts-editor-viewport-button ${viewport === "mobile" ? "is-active" : ""}`,
                 icon: /* @__PURE__ */ jsxRuntimeExports.jsx(Smartphone, {}),
                 onClick: () => handleViewportChange("mobile")
               }
             )
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex gap-2", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-topbar__actions", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(Dropdown, { menu: { items: items2 }, trigger: ["click"], children: /* @__PURE__ */ jsxRuntimeExports.jsx(
               TsButton,
               {
-                label: /* @__PURE__ */ jsxRuntimeExports.jsx(Copy, {}),
-                className: "bg-transparent text-white border-none hover:bg-white hover:text-purple-600"
+                label: /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Copy, { size: 16 }),
+                  " Actions"
+                ] }),
+                className: "ts-editor-ghost-button"
               }
             ) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               TsButton,
               {
-                label: /* @__PURE__ */ jsxRuntimeExports.jsx(Code, {}),
-                className: "bg-transparent text-white border-none hover:bg-white hover:text-purple-600",
+                label: /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Code, { size: 16 }),
+                  " Code"
+                ] }),
+                className: "ts-editor-ghost-button",
                 onClick: handleCodeClick
               }
             ),
@@ -79273,15 +79418,18 @@ var require_admin = __commonJS({
               TsButton,
               {
                 label: translations2.publish,
-                className: "tsteam__editor-button",
+                className: "ts-editor-publish-button",
                 onClick: handlePublishClick
               }
             ),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               TsButton,
               {
-                label: /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, {}),
-                className: "bg-transparent text-white border-none hover:bg-red-500 hover:text-white",
+                label: /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                  "Close ",
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { size: 14 })
+                ] }),
+                className: "ts-editor-close-button",
                 onClick: handleBacktoAdmin
               }
             )
@@ -79963,7 +80111,7 @@ var require_admin = __commonJS({
           TsSlider,
           {
             label: translations2.borderWidth,
-            name: "layout.borderWidth",
+            name: "layout.borderWidth.card",
             range: common.range,
             unit: true
           }
@@ -79972,7 +80120,7 @@ var require_admin = __commonJS({
           TsSlider,
           {
             label: translations2.borderRadius,
-            name: "layout.borderRadius",
+            name: "layout.borderRadius.card",
             range: common.range,
             unit: true
           }
@@ -80087,15 +80235,6 @@ var require_admin = __commonJS({
         )
       ] });
     }
-    function DetailsTab() {
-      editorStore();
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-        TsDivider,
-        {
-          label: "Details Style Coming Soon"
-        }
-      ) });
-    }
     function MotionTab() {
       getTranslations();
       editorStore();
@@ -80149,96 +80288,51 @@ var require_admin = __commonJS({
     function Sidebar({ isOpen, selectedLayout, layoutType, onToggleSidebar }) {
       const translations2 = getTranslations();
       const [activeTab, setActiveTab] = reactExports.useState("1");
-      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `sidebar-container ${isOpen ? "open" : "closed"}`, children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sidebar-toggle", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "toggle-icon pb-12", onClick: onToggleSidebar, children: isOpen ? /* @__PURE__ */ jsxRuntimeExports.jsx(SquareChevronLeft, { size: 22 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(SquareChevronRight, { size: 22 }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sidebar-buttons flex flex-col gap-12 pt-12", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "div",
+      const tabs = reactExports.useMemo(() => [
+        { id: "1", label: translations2.content, icon: LayoutGrid, subtitle: "Team Members block", panel: /* @__PURE__ */ jsxRuntimeExports.jsx(ContentTab, {}) },
+        { id: "2", label: translations2.style, icon: Brush, subtitle: `${selectedLayout} layout`, panel: /* @__PURE__ */ jsxRuntimeExports.jsx(StyleTab, { selectedLayout, layoutType }) },
+        { id: "3", label: translations2.font, icon: Type, subtitle: "Typography controls", panel: /* @__PURE__ */ jsxRuntimeExports.jsx(TypographyTab, {}) },
+        { id: "4", label: translations2.social, icon: Share2, subtitle: "Social links styling", panel: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialTab, {}) },
+        { id: "6", label: translations2.motion, icon: Play, subtitle: "Animation options", panel: /* @__PURE__ */ jsxRuntimeExports.jsx(MotionTab, {}) },
+        { id: "7", label: translations2.global, icon: Settings, subtitle: "Canvas and container", panel: /* @__PURE__ */ jsxRuntimeExports.jsx(GlobalTab, {}) }
+      ], [translations2, selectedLayout, layoutType]);
+      const activeTabData = tabs.find((tab) => tab.id === activeTab) || tabs[0];
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `ts-editor-sidebar ${isOpen ? "is-open" : "is-closed"}`, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("aside", { className: "ts-editor-sidebar__rail", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("nav", { className: "ts-editor-sidebar__nav", children: tabs.map((tab) => {
+            const Icon2 = tab.icon;
+            return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "button",
               {
-                className: "flex flex-col justify-center items-center",
-                onClick: () => setActiveTab("1"),
+                type: "button",
+                className: `ts-editor-sidebar__rail-button ${activeTab === tab.id ? "is-active" : ""}`,
+                onClick: () => setActiveTab(tab.id),
                 children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: `sidebar-button ${activeTab === "1" ? "active" : ""}`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(LayoutDashboard, { size: 22 }) }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs mt-1", children: translations2.content })
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Icon2, { size: 18 }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: tab.label })
                 ]
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "div",
-              {
-                className: "flex flex-col justify-center items-center",
-                onClick: () => setActiveTab("2"),
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: `sidebar-button ${activeTab === "2" ? "active" : ""}`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Paintbrush, { size: 22 }) }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs mt-1", children: translations2.style })
-                ]
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "div",
-              {
-                className: "flex flex-col justify-center items-center",
-                onClick: () => setActiveTab("3"),
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { className: `sidebar-button ${activeTab === "3" ? "active" : ""}`, children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(Type, { size: 22 }),
-                    " "
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs mt-1", children: translations2.font })
-                ]
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "div",
-              {
-                className: "flex flex-col justify-center items-center",
-                onClick: () => setActiveTab("4"),
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { className: `sidebar-button ${activeTab === "4" ? "active" : ""}`, children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(Facebook, { size: 22 }),
-                    " "
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs mt-1", children: translations2.social })
-                ]
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "div",
-              {
-                className: "flex flex-col justify-center items-center",
-                onClick: () => setActiveTab("6"),
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { className: `sidebar-button ${activeTab === "6" ? "active" : ""}`, children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx(Play, { size: 22 }),
-                    " "
-                  ] }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs mt-1", children: translations2.motion })
-                ]
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(
-              "div",
-              {
-                className: "flex flex-col justify-center items-center",
-                onClick: () => setActiveTab("7"),
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: `sidebar-button ${activeTab === "7" ? "active" : ""}`, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Settings, { size: 22 }) }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs mt-1", children: translations2.global })
-                ]
-              }
-            )
-          ] })
+              },
+              tab.id
+            );
+          }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "button",
+            {
+              type: "button",
+              className: "ts-editor-sidebar__collapse",
+              onClick: onToggleSidebar,
+              "aria-label": isOpen ? "Collapse panel" : "Open panel",
+              children: isOpen ? /* @__PURE__ */ jsxRuntimeExports.jsx(PanelLeftClose, { size: 18 }) : /* @__PURE__ */ jsxRuntimeExports.jsx(PanelLeftOpen, { size: 18 })
+            }
+          )
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "sidebar", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "sidebar-content", children: [
-          activeTab === "1" && /* @__PURE__ */ jsxRuntimeExports.jsx(ContentTab, {}),
-          activeTab === "2" && /* @__PURE__ */ jsxRuntimeExports.jsx(StyleTab, { selectedLayout, layoutType }),
-          activeTab === "3" && /* @__PURE__ */ jsxRuntimeExports.jsx(TypographyTab, {}),
-          activeTab === "4" && /* @__PURE__ */ jsxRuntimeExports.jsx(SocialTab, {}),
-          activeTab === "5" && /* @__PURE__ */ jsxRuntimeExports.jsx(DetailsTab, {}),
-          activeTab === "6" && /* @__PURE__ */ jsxRuntimeExports.jsx(MotionTab, {}),
-          activeTab === "7" && /* @__PURE__ */ jsxRuntimeExports.jsx(GlobalTab, {})
-        ] }) })
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-sidebar__panel", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-sidebar__panel-header", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-editor-sidebar__panel-kicker", children: activeTabData.label }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-editor-sidebar__panel-subtitle", children: activeTabData.subtitle })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-editor-sidebar__panel-body", children: activeTabData.panel })
+        ] })
       ] });
     }
     const Carousel = ({
@@ -81506,6 +81600,33 @@ var require_admin = __commonJS({
       }
       return addImportantToStyles(tsTeamMemberAvatarCSS);
     };
+    const getLayoutValue = (value, nestedKey) => {
+      if (value && typeof value === "object") {
+        return value == null ? void 0 : value[nestedKey];
+      }
+      return value;
+    };
+    const getTsTeamMemberCardStyle = (settings) => {
+      var _a2, _b, _c, _d, _e2, _f;
+      const cardCSS = {};
+      const cardBorderWidth = getLayoutValue((_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.borderWidth, "card");
+      const cardBorderRadius = getLayoutValue((_b = settings == null ? void 0 : settings.layout) == null ? void 0 : _b.borderRadius, "card");
+      if ((_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.background) {
+        cardCSS.backgroundColor = settings.layout.color.background;
+      }
+      if ((_f = (_e2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _e2.color) == null ? void 0 : _f.border) {
+        cardCSS.borderColor = settings.layout.color.border;
+        cardCSS.borderStyle = "solid";
+      }
+      if (cardBorderWidth) {
+        cardCSS.borderWidth = cardBorderWidth;
+        cardCSS.borderStyle = "solid";
+      }
+      if (cardBorderRadius) {
+        cardCSS.borderRadius = cardBorderRadius;
+      }
+      return addImportantToStyles(cardCSS);
+    };
     const GenerateLayoutStyle = ({ settings = {} }) => {
       var _a2, _b;
       const [controls, setControls] = reactExports.useState([]);
@@ -81552,6 +81673,12 @@ var require_admin = __commonJS({
       cssGenerator.addClassStyles(".tsteam-member__designation", getTsTeamMemberDesignationStyle(settings));
       cssGenerator.addClassStyles(".tsteam-member__description", getTsTeamMemberDescriptionStyle(settings));
       cssGenerator.addClassStyles(".tsteam-member__image", getTsTeamMemberAvatarStyle(settings));
+      cssGenerator.addClassStyles(".tsteam-card-container", getTsTeamMemberCardStyle(settings));
+      cssGenerator.addClassStyles(".tshorizontal-card-wrapper", getTsTeamMemberCardStyle(settings));
+      cssGenerator.addClassStyles(".tsteam-tiles-container", getTsTeamMemberCardStyle(settings));
+      cssGenerator.addClassStyles(".tsteam-cornerframe-card", getTsTeamMemberCardStyle(settings));
+      cssGenerator.addClassStyles(".tsteam-spotlight", getTsTeamMemberCardStyle(settings));
+      cssGenerator.addClassStyles(".tsteam-tsoverlaycard", getTsTeamMemberCardStyle(settings));
       if (settings == null ? void 0 : settings.typography) {
         const { name, designation, description } = settings.typography;
         if (name) {
@@ -83172,9 +83299,9 @@ var require_admin = __commonJS({
       const translations2 = getTranslations();
       const isPro2 = tsteam_settings.is_pro;
       const { isEditor, viewport, setViewport } = editorLocal();
-      const { postType } = editorStore();
+      const { postType, undo, redo, canUndo, canRedo } = editorStore();
       const allSettings = editorStore();
-      const { saveSettings } = editorFunction();
+      const { saveSettings, hydrateSettings } = editorFunction();
       const [isSidebarOpen, setIsSidebarOpen] = reactExports.useState(true);
       const [isLoading, setIsLoading] = reactExports.useState(true);
       const [postData, setPostData] = reactExports.useState(null);
@@ -83193,9 +83320,10 @@ var require_admin = __commonJS({
               setPostData(response.data.meta_data);
               setCategoryData(response.data.meta_data.member_categories);
               const showcaseSettings = JSON.parse(response.data.meta_data.showcase_settings);
-              Object.keys(showcaseSettings).forEach((key) => {
-                const value = showcaseSettings[key];
-                saveSettings(key, value);
+              hydrateSettings({
+                postID: postIdFromUrl,
+                postType: postTypeFromUrl,
+                ...showcaseSettings
               });
               setTimeout(() => {
                 setIsLoading(false);
@@ -83229,11 +83357,15 @@ var require_admin = __commonJS({
             type: postType,
             viewport,
             setViewport,
+            onUndo: undo,
+            onRedo: redo,
+            canUndo,
+            canRedo,
             onCopySettings: () => handleCopySettings(allSettings),
             onPasteSettings: () => handlePasteSettings(saveSettings)
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "layout-container", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-shell", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(
             Sidebar,
             {
@@ -83243,70 +83375,72 @@ var require_admin = __commonJS({
               onToggleSidebar: handleToggleSidebar
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `main-content ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`, children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-center items-center min-h-screen mx-auto tsteam__editor_bg", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "div",
-            {
-              className: `editor-container editor-hover viewport-${viewport}`,
-              children: allSettings.selectedView.value === "flex" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-                FlexView,
-                {
-                  team_members: postData.team_members,
-                  settings: allSettings,
-                  viewport,
-                  isEditor
-                }
-              ) : allSettings.selectedView.value === "carousel" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-                CarouselView,
-                {
-                  team_members: postData.team_members,
-                  settings: allSettings,
-                  viewport,
-                  isEditor
-                }
-              ) : allSettings.selectedView.value === "marquee" && isPro2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-                MarqueeView,
-                {
-                  team_members: postData.team_members,
-                  settings: allSettings,
-                  viewport,
-                  isEditor
-                }
-              ) : allSettings.selectedView.value === "table" && isPro2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-                TableView,
-                {
-                  team_members: postData.team_members,
-                  settings: allSettings,
-                  viewport,
-                  isEditor
-                }
-              ) : allSettings.selectedView.value === "confetti" && isPro2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-                ConfettiView,
-                {
-                  team_members: postData.team_members,
-                  settings: allSettings,
-                  viewport,
-                  isEditor
-                }
-              ) : allSettings.selectedView.value === "filterable" && isPro2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
-                FilterableView,
-                {
-                  team_members: postData.team_members,
-                  settings: allSettings,
-                  category: categoryData,
-                  viewport,
-                  isEditor
-                }
-              ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
-                StaticView,
-                {
-                  team_members: postData.team_members,
-                  settings: allSettings,
-                  viewport,
-                  isEditor
-                }
-              )
-            }
-          ) }) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-editor-main", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-editor-canvas", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-preview-frame", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-editor-preview-chrome", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", {}),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", {}),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", {}),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-editor-preview-address" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-editor-preview-surface", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `editor-container editor-hover viewport-${viewport}`, children: allSettings.selectedView.value === "flex" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+              FlexView,
+              {
+                team_members: postData.team_members,
+                settings: allSettings,
+                viewport,
+                isEditor
+              }
+            ) : allSettings.selectedView.value === "carousel" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+              CarouselView,
+              {
+                team_members: postData.team_members,
+                settings: allSettings,
+                viewport,
+                isEditor
+              }
+            ) : allSettings.selectedView.value === "marquee" && isPro2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+              MarqueeView,
+              {
+                team_members: postData.team_members,
+                settings: allSettings,
+                viewport,
+                isEditor
+              }
+            ) : allSettings.selectedView.value === "table" && isPro2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+              TableView,
+              {
+                team_members: postData.team_members,
+                settings: allSettings,
+                viewport,
+                isEditor
+              }
+            ) : allSettings.selectedView.value === "confetti" && isPro2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+              ConfettiView,
+              {
+                team_members: postData.team_members,
+                settings: allSettings,
+                viewport,
+                isEditor
+              }
+            ) : allSettings.selectedView.value === "filterable" && isPro2 ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+              FilterableView,
+              {
+                team_members: postData.team_members,
+                settings: allSettings,
+                category: categoryData,
+                viewport,
+                isEditor
+              }
+            ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+              StaticView,
+              {
+                team_members: postData.team_members,
+                settings: allSettings,
+                viewport,
+                isEditor
+              }
+            ) }) })
+          ] }) }) })
         ] })
       ] });
     }

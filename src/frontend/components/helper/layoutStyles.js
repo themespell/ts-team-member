@@ -118,3 +118,37 @@ export const getTsTeamMemberAvatarStyle = (settings) => {
 
     return addImportantToStyles(tsTeamMemberAvatarCSS);
 };
+
+const getLayoutValue = (value, nestedKey) => {
+    if (value && typeof value === 'object') {
+        return value?.[nestedKey];
+    }
+
+    return value;
+};
+
+export const getTsTeamMemberCardStyle = (settings) => {
+    const cardCSS = {};
+    const cardBorderWidth = getLayoutValue(settings?.layout?.borderWidth, 'card');
+    const cardBorderRadius = getLayoutValue(settings?.layout?.borderRadius, 'card');
+
+    if (settings?.layout?.color?.background) {
+        cardCSS.backgroundColor = settings.layout.color.background;
+    }
+
+    if (settings?.layout?.color?.border) {
+        cardCSS.borderColor = settings.layout.color.border;
+        cardCSS.borderStyle = 'solid';
+    }
+
+    if (cardBorderWidth) {
+        cardCSS.borderWidth = cardBorderWidth;
+        cardCSS.borderStyle = 'solid';
+    }
+
+    if (cardBorderRadius) {
+        cardCSS.borderRadius = cardBorderRadius;
+    }
+
+    return addImportantToStyles(cardCSS);
+};

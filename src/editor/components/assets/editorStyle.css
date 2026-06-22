@@ -1,30 +1,52 @@
 /*Layout Styles*/
 @import url('../../../frontend/assets/layoutStyles.css');
 
+@font-face {
+	font-family: 'TsEditorSans';
+	src: url('../../../includes/library/fonts/ubuntu.woff2') format('woff2');
+	font-weight: 300 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+:root {
+	--editor-rail: #111827;
+	--editor-rail-foreground: #8f98ab;
+	--editor-rail-active: #7c72ff;
+	--editor-topbar: #f8fafc;
+	--editor-panel: #f8fafc;
+	--editor-panel-border: #e5e7eb;
+	--editor-canvas: linear-gradient(180deg, #eef2ff 0%, #f8fafc 100%);
+	--editor-label: #475569;
+	--editor-section: #94a3b8;
+	--editor-card-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+	--editor-frame-shadow: 0 32px 80px rgba(15, 23, 42, 0.12);
+}
+
 /*Scrollbar Styles*/
-.sidebar,
+.ts-editor-sidebar__panel-body,
 .viewport-tablet,
 .viewport-mobile,
 .editor-container,
-.main-content {
+.ts-editor-main {
 	scrollbar-width: thin;
 	scrollbar-color: #703FD6 transparent;
 	overflow: auto;
 }
 
-.sidebar::-webkit-scrollbar-track,
+.ts-editor-sidebar__panel-body::-webkit-scrollbar-track,
 .viewport-tablet::-webkit-scrollbar-track,
 .viewport-mobile::-webkit-scrollbar-track,
 .editor-container::-webkit-scrollbar-track,
-.main-content::-webkit-scrollbar-track {
+.ts-editor-main::-webkit-scrollbar-track {
 	background: transparent;
 }
 
-.sidebar::-webkit-scrollbar-thumb,
+.ts-editor-sidebar__panel-body::-webkit-scrollbar-thumb,
 .viewport-tablet::-webkit-scrollbar-thumb,
 .viewport-mobile::-webkit-scrollbar-thumb,
 .editor-container::-webkit-scrollbar-thumb,
-.main-content::-webkit-scrollbar-thumb {
+.ts-editor-main::-webkit-scrollbar-thumb {
 	background: #703FD6;
 	border-radius: 2px;
 	opacity: 0;
@@ -32,29 +54,29 @@
 }
 
 /* Show scrollbar thumb on hover */
-.sidebar:hover::-webkit-scrollbar-thumb,
+.ts-editor-sidebar__panel-body:hover::-webkit-scrollbar-thumb,
 .viewport-tablet:hover::-webkit-scrollbar-thumb,
 .viewport-mobile:hover::-webkit-scrollbar-thumb,
 .editor-container:hover::-webkit-scrollbar-thumb,
-.main-content:hover::-webkit-scrollbar-thumb {
+.ts-editor-main:hover::-webkit-scrollbar-thumb {
 	opacity: 1;
 }
 
 /* Ensure scrollbar is hidden by default in Firefox */
-.sidebar,
+.ts-editor-sidebar__panel-body,
 .viewport-tablet,
 .viewport-mobile,
 .editor-container,
-.main-content {
+.ts-editor-main {
 	scrollbar-color: transparent transparent;
 }
 
 /* Show scrollbar on hover in Firefox */
-.sidebar:hover,
+.ts-editor-sidebar__panel-body:hover,
 .viewport-tablet:hover,
 .viewport-mobile:hover,
 .editor-container:hover,
-.main-content:hover {
+.ts-editor-main:hover {
 	scrollbar-color: #703FD6 transparent;
 }
 
@@ -64,26 +86,11 @@
 #wpbody-content {
 	padding-bottom: 0px !important;
 	overflow: auto;
+	font-family: 'TsEditorSans', system-ui, sans-serif;
 }
 
 .editor-container {
-	@apply flex justify-center items-center;
-}
-
-.tsteam__editor_bg {
-	background: #faf8ff;
-	box-shadow: 0px 4px 8.6px 0px rgba(25, 84, 255, 0.22);
-}
-
-.tsteam__editor-topbar {
-	color: #fff;
-	background: #703FD6;
-}
-
-.tsteam__editor-button {
-	color: #703FD6;
-	background-color: #ffffff;
-	font-weight: 700;
+	@apply flex justify-center items-start;
 }
 
 .tsteam-container {
@@ -101,13 +108,13 @@
 }
 
 .viewport-desktop {
-	@apply flex justify-center items-center;
+	@apply flex justify-center items-start;
 	width: 100% !important;
 	min-width: 1200px !important;
 }
 
 .viewport-tablet {
-	@apply m-4 flex justify-center items-center;
+	@apply m-4 flex justify-center items-start;
 	width: 100% !important;
 	max-width: 768px !important;
 	background: #fff;
@@ -116,7 +123,7 @@
 }
 
 .viewport-mobile {
-	@apply m-4 flex justify-center items-center;
+	@apply m-4 flex justify-center items-start;
 	width: 100% !important;
 	max-width: 380px !important;
 	background: #fff;
@@ -126,108 +133,710 @@
 
 
 /* Container for the entire layout */
-.layout-container {
+.ts-editor-shell {
 	display: flex;
-	height: 100vh;
-	overflow: hidden; /* Prevent scrolling */
+	height: calc(100vh - 56px);
+	overflow: hidden;
+	background: var(--editor-canvas);
 }
 
-/* Sidebar container */
-.sidebar-container {
-	width: 400px;
-	height: 100vh;
-	background-color: #ffffff;
-	box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1) !important;
-	transition: width 0.3s ease-in-out;
+.ts-editor-sidebar {
+	display: flex;
+	height: 100%;
 	flex-shrink: 0;
-	padding: 1.5rem;
+	transition: width 0.28s ease;
+	width: 392px;
+	border-right: 1px solid var(--editor-panel-border);
+	background: var(--editor-panel);
 }
 
-/* When sidebar is closed */
-.sidebar-container.closed {
-	width: 50px; /* Width of the small section */
+.ts-editor-sidebar.is-closed {
+	width: 72px;
 }
 
-.sidebar-toggle {
-	width: 65px;
-	height: 100vh;
-	background-color: #111C5C; /* Blue background */
-	color: #ffffff;
+.ts-editor-sidebar__rail {
+	width: 72px;
+	background: var(--editor-rail);
+	color: #fff;
 	display: flex;
-	align-items: center;
-	flex-direction: column-reverse;
+	flex-direction: column;
 	justify-content: space-between;
-	cursor: pointer;
-	position: fixed;
-	left: 0;
-	top: 0;
-	z-index: 0; /* Ensure it's above other content */
+	align-items: center;
+	padding: 14px 10px;
+	flex-shrink: 0;
 }
 
-.sidebar-toggle span {
-	font-size: 20px; /* Icon size */
-}
-
-/* Main sidebar content */
-.sidebar {
+.ts-editor-sidebar__nav {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
 	width: 100%;
-	height: 100vh;
-	padding-left: 50px; /* Space for the small section */
-	overflow-y: auto; /* Enable scrolling if content overflows */
+	align-items: center;
 }
 
-/* Main content container */
-.main-content {
-	flex-grow: 1; /* Allow main content to grow and fill remaining space */
-	transition: margin-left 0.3s ease-in-out; /* Smooth transition */
-	height: 100vh;
-	overflow-y: hidden;
+.ts-editor-sidebar__rail-button {
+	position: relative;
+	width: 52px;
+	height: 52px;
+	border: none;
+	border-radius: 12px;
+	background: transparent;
+	color: var(--editor-rail-foreground);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	font-size: 10px;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	transition: all 0.18s ease;
 }
 
-.sidebar-button {
+.ts-editor-sidebar__rail-button svg {
+	flex-shrink: 0;
+}
+
+.ts-editor-sidebar__rail-button:hover,
+.ts-editor-sidebar__rail-button.is-active {
+	color: #ffffff;
+	background: rgba(255, 255, 255, 0.08);
+}
+
+.ts-editor-sidebar__rail-button.is-active::before {
+	content: '';
+	position: absolute;
+	left: -10px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 3px;
+	height: 28px;
+	border-radius: 0 999px 999px 0;
+	background: var(--editor-rail-active);
+}
+
+.ts-editor-sidebar__collapse {
+	width: 40px;
+	height: 40px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 35px; /* Adjust size as needed */
-	height: 35px; /* Adjust size as needed */
-	border-radius: 8px; /* Rounded corners */
-	background: transparent; /* Default background */
 	border: none;
-	cursor: pointer;
-	transition: background 0.5s ease; /* Smooth transition */
+	border-radius: 12px;
+	background: transparent;
+	color: var(--editor-rail-foreground);
+	transition: all 0.18s ease;
 }
 
-.sidebar-button.active {
-	color: #111C5C;
-	background: #fff;
+.ts-editor-sidebar__collapse:hover {
+	background: rgba(255, 255, 255, 0.08);
+	color: #ffffff;
 }
 
-.sidebar-button:hover {
-	background: rgba(255, 255, 255, 0.1); /* Light background on hover */
+.ts-editor-icon-button:disabled,
+.ts-editor-button:disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
 }
 
-/*Topbar Styles*/
+.ts-editor-sidebar__panel {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
 
-.responsive-button-secondary {
-	background-color: #703FD6;
-	color: #fff;
+.ts-editor-sidebar__panel-header {
+	height: 56px;
+	padding: 14px 18px;
+	border-bottom: 1px solid var(--editor-panel-border);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 2px;
+}
+
+.ts-editor-sidebar__panel-kicker {
+	font-size: 13px;
+	font-weight: 700;
+	color: #0f172a;
+	text-transform: capitalize;
+}
+
+.ts-editor-sidebar__panel-subtitle {
+	font-size: 11px;
+	color: #64748b;
+}
+
+.ts-editor-sidebar__panel-body {
+	flex: 1;
+	padding: 16px 18px 88px;
+	overflow-y: auto;
+}
+
+.ts-editor-main {
+	flex: 1;
+	min-width: 0;
+	overflow: auto;
+}
+
+.ts-editor-canvas {
+	min-height: 100%;
+	padding: 28px;
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+}
+
+.ts-editor-preview-frame {
+	width: 100%;
+	max-width: 1440px;
+	border-radius: 24px;
+	overflow: hidden;
+	background: #ffffff;
+	box-shadow: var(--editor-frame-shadow);
+	border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.ts-editor-preview-chrome {
+	height: 38px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 0 14px;
+	border-bottom: 1px solid #e5e7eb;
+	background: #f8fafc;
+}
+
+.ts-editor-preview-chrome > span {
+	width: 10px;
+	height: 10px;
+	border-radius: 999px;
+	display: block;
+}
+
+.ts-editor-preview-chrome > span:nth-child(1) { background: #fca5a5; }
+.ts-editor-preview-chrome > span:nth-child(2) { background: #fcd34d; }
+.ts-editor-preview-chrome > span:nth-child(3) { background: #86efac; }
+
+.ts-editor-preview-address {
+	height: 20px;
+	border-radius: 999px;
+	background: #e2e8f0;
+	flex: 1;
+	margin-left: 10px;
+}
+
+.ts-editor-preview-surface {
+	padding: 32px;
+	background: transparent;
+}
+
+.ts-editor-topbar {
+	height: 56px;
+	background: var(--editor-topbar);
+	border-bottom: 1px solid var(--editor-panel-border);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 16px;
+	gap: 16px;
+}
+
+.ts-editor-topbar__brand {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	min-width: 0;
+}
+
+.ts-editor-topbar__brand-mark {
+	width: 36px;
+	height: 36px;
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(135deg, #6963ff 0%, #8b5cf6 100%);
+	box-shadow: 0 10px 20px rgba(105, 99, 255, 0.22);
+}
+
+.ts-editor-topbar__brand-copy {
+	display: flex;
+	flex-direction: column;
+	line-height: 1.15;
+}
+
+.ts-editor-topbar__brand-copy span {
+	font-size: 13px;
+	font-weight: 700;
+	color: #0f172a;
+}
+
+.ts-editor-topbar__brand-copy small {
+	font-size: 11px;
+	color: #64748b;
+}
+
+.ts-editor-topbar__history {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding-left: 14px;
+	margin-left: 8px;
+	border-left: 1px solid #e2e8f0;
+}
+
+.ts-editor-icon-button {
+	width: 36px;
+	height: 36px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid transparent;
+	border-radius: 10px;
+	background: transparent;
+	color: #64748b;
+	transition: all 0.18s ease;
+}
+
+.ts-editor-icon-button:hover {
+	background: #eef2ff;
+	color: #0f172a;
+}
+
+.ts-editor-viewport-switcher {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 4px;
+	border: 1px solid var(--editor-panel-border);
+	border-radius: 12px;
+	background: rgba(226, 232, 240, 0.45);
+}
+
+.ts-editor-viewport-button {
+	width: 36px !important;
+	height: 32px !important;
+	border-radius: 8px !important;
 	border: none !important;
+	background: transparent !important;
+	color: #64748b !important;
+	box-shadow: none !important;
 }
 
-.responsive-button-secondary:hover {
-	background-color: #e0e0e0;
-	color: #000;
-	border-color: #ccc;
+.ts-editor-viewport-button.is-active {
+	background: #ffffff !important;
+	color: #0f172a !important;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08) !important;
+	border: 1px solid #e2e8f0 !important;
 }
 
-.responsive-button-primary {
-	background-color: #fff;
-	color: #703FD6;
-	border: 1px solid #703FD6;
+.ts-editor-topbar__actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.ts-editor-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	height: 36px;
+	border-radius: 10px;
+	padding: 0 14px;
+	font-size: 13px;
+	font-weight: 600;
+	border: 1px solid transparent;
+	transition: all 0.18s ease;
+}
+
+.ts-editor-ghost-button {
+	background: transparent !important;
+	color: #475569 !important;
+	border: 1px solid transparent !important;
+}
+
+.ts-editor-ghost-button:hover {
+	background: #eef2ff !important;
+	color: #0f172a !important;
+}
+
+.ts-editor-primary-button {
+	background: #6963ff !important;
+	color: #ffffff !important;
+	box-shadow: 0 12px 24px rgba(105, 99, 255, 0.22);
+}
+
+.ts-editor-primary-button:hover {
+	background: #5a55ea !important;
+	color: #ffffff !important;
+}
+
+/* Modern Publish Button */
+.ts-editor-publish-button {
+	background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+	color: #ffffff !important;
+	box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4) !important;
+	border: none !important;
+	position: relative;
+	overflow: hidden;
+}
+
+.ts-editor-publish-button::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+	pointer-events: none;
+}
+
+.ts-editor-publish-button:hover {
+	background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+	box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5) !important;
+	transform: translateY(-1px);
+}
+
+/* Close Button */
+.ts-editor-close-button {
+	gap: 6px !important;
+	padding: 0 18px !important;
+	border: 1px solid #e2e8f0 !important;
+	background: #ffffff !important;
+	color: #64748b !important;
+	border-radius: 10px !important;
+	font-size: 13px !important;
+	font-weight: 600 !important;
+	height: 38px !important;
+	transition: all 0.18s ease !important;
+}
+
+.ts-editor-close-button:hover {
+	background: #fef2f2 !important;
+	color: #ef4444 !important;
+	border-color: #fecaca !important;
+}
+
+.ts-editor-field {
+	margin-bottom: 18px;
+}
+
+.ts-editor-field__header,
+.ts-editor-field--inline {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.ts-editor-field__header-left {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.ts-editor-field__label {
+	display: block;
+	font-size: 12px !important;
+	font-weight: 600 !important;
+	color: var(--editor-label) !important;
+	margin-bottom: 8px;
+}
+
+.ts-editor-field--inline .ts-editor-field__label {
+	margin-bottom: 0;
+}
+
+.ts-editor-field__control .ant-select-selector,
+.ts-editor-unit-button,
+.ts-editor-device-button,
+.ts-editor-slider__input,
+.ts-editor-field__switch .ant-switch,
+.ts-editor-ghost-button,
+.ts-editor-icon-button,
+.ts-editor-icon-close {
+	box-shadow: none !important;
+}
+
+.ts-editor-field__control .ant-select-selector,
+.ts-editor-slider__input,
+.ts-editor-unit-button,
+.ts-editor-device-button {
+	border-radius: 10px !important;
+	border-color: #dbe1ea !important;
+	background: #ffffff !important;
+	min-height: 38px !important;
+}
+
+.ts-editor-field__control .ant-select-selector {
+	padding: 3px 11px !important;
+}
+
+.ts-editor-field__control .ant-select-selection-item,
+.ts-editor-field__control .ant-select-selection-placeholder,
+.ts-editor-slider__input input,
+.ts-editor-unit-button,
+.ts-editor-device-button {
+	font-size: 13px !important;
+	color: #0f172a !important;
+}
+
+.ts-editor-slider {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.ts-editor-slider__track {
+	flex: 1;
+}
+
+.ts-editor-slider__input {
+	width: 76px !important;
+}
+
+.ts-editor-slider__input .ant-input-number-input {
+	text-align: center;
+}
+
+.ts-editor-device-button,
+.ts-editor-unit-button {
+	height: 28px !important;
+}
+
+.ts-editor-divider {
+	margin: 22px 0 18px;
+}
+
+.ts-editor-divider__line .ant-divider-inner-text {
+	font-size: 11px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	color: var(--editor-section);
+}
+
+.ts-editor-field__color .ant-color-picker-trigger {
+	width: 38px;
+	height: 38px;
 	border-radius: 10px;
 }
 
-.responsive-button-primary:hover {
-	background-color: #0056b3;
-	border-color: #004080;
+.ts-editor-field__switch .ant-switch {
+	background: #cbd5e1;
+}
+
+.ts-editor-field__switch .ant-switch.ant-switch-checked {
+	background: #6963ff;
+}
+
+.ts-editor-sidebar.is-closed .ts-editor-sidebar__panel {
+	display: none;
+}
+
+@media (max-width: 1200px) {
+	.ts-editor-sidebar {
+		width: 344px;
+	}
+}
+
+@media (max-width: 960px) {
+	.ts-editor-topbar__brand-copy,
+	.ts-editor-topbar__history {
+		display: none;
+	}
+
+	.ts-editor-sidebar {
+		width: 72px;
+	}
+
+	.ts-editor-sidebar__panel {
+		display: none;
+	}
+
+	.ts-editor-canvas {
+		padding: 18px;
+	}
+
+	.ts-editor-preview-surface {
+		padding: 16px;
+	}
+}
+
+/* Professional Loader Styles */
+.ts-loader-wrapper {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 9999;
+	overflow: hidden;
+}
+
+.ts-loader-bg-gradient {
+	position: absolute;
+	inset: 0;
+	background: radial-gradient(ellipse at center, rgba(105, 99, 255, 0.15) 0%, transparent 70%);
+	animation: loaderPulse 4s ease-in-out infinite;
+}
+
+.ts-loader-bg-pattern {
+	position: absolute;
+	inset: 0;
+	background-image:
+		linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+	background-size: 50px 50px;
+	mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+	-webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+}
+
+.ts-loader-content {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 24px;
+}
+
+.ts-loader-logo-wrapper {
+	position: relative;
+	width: 80px;
+	height: 80px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.ts-loader-logo-pulse {
+	position: absolute;
+	inset: 0;
+	border-radius: 20px;
+	background: linear-gradient(135deg, #6366f1, #8b5cf6);
+	animation: logoPulse 2s ease-in-out infinite;
+}
+
+.ts-loader-logo {
+	position: relative;
+	z-index: 1;
+	width: 48px;
+	height: 48px;
+	animation: logoFloat 3s ease-in-out infinite;
+}
+
+.ts-loader-text {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.ts-loader-label {
+	font-size: 15px;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.9);
+	letter-spacing: 0.5px;
+}
+
+.ts-loader-dots {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+}
+
+.ts-loader-dots span {
+	width: 6px;
+	height: 6px;
+	background: rgba(255, 255, 255, 0.5);
+	border-radius: 50%;
+	animation: dotBounce 1.4s ease-in-out infinite;
+}
+
+.ts-loader-dots span:nth-child(2) {
+	animation-delay: 0.2s;
+}
+
+.ts-loader-dots span:nth-child(3) {
+	animation-delay: 0.4s;
+}
+
+.ts-loader-progress-wrapper {
+	width: 200px;
+	height: 3px;
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.ts-loader-progress-bar {
+	height: 100%;
+	background: linear-gradient(90deg, #6366f1, #8b5cf6, #a855f7);
+	background-size: 200% 100%;
+	animation: progressShine 1.5s ease-in-out infinite;
+	border-radius: 10px;
+	transition: width 0.3s ease;
+}
+
+.ts-loader-subtitle {
+	font-size: 11px;
+	font-weight: 500;
+	color: rgba(255, 255, 255, 0.4);
+	letter-spacing: 2px;
+	text-transform: uppercase;
+}
+
+@keyframes logoPulse {
+	0%, 100% {
+		opacity: 0.3;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 0.5;
+		transform: scale(1.05);
+	}
+}
+
+@keyframes logoFloat {
+	0%, 100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-8px);
+	}
+}
+
+@keyframes dotBounce {
+	0%, 80%, 100% {
+		transform: translateY(0);
+		opacity: 0.5;
+	}
+	40% {
+		transform: translateY(-6px);
+		opacity: 1;
+	}
+}
+
+@keyframes progressShine {
+	0% {
+		background-position: 200% 0;
+	}
+	100% {
+		background-position: -200% 0;
+	}
+}
+
+@keyframes loaderPulse {
+	0%, 100% {
+		opacity: 0.5;
+		transform: scale(1);
+	}
+	50% {
+		opacity: 1;
+		transform: scale(1.1);
+	}
 }

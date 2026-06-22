@@ -27,9 +27,9 @@ function Editor() {
   const translations = getTranslations();
   const isPro = tsteam_settings.is_pro;
   const { isEditor, viewport, setViewport } = editorLocal();
-  const { postType } = editorStore();
+  const { postType, undo, redo, canUndo, canRedo } = editorStore();
   const allSettings = editorStore();
-  const { saveSettings } = editorFunction();
+  const { saveSettings, hydrateSettings } = editorFunction();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -53,9 +53,10 @@ function Editor() {
           setPostData(response.data.meta_data);
           setCategoryData(response.data.meta_data.member_categories);
           const showcaseSettings = JSON.parse(response.data.meta_data.showcase_settings);
-          Object.keys(showcaseSettings).forEach((key) => {
-            const value = showcaseSettings[key];
-            saveSettings(key, value);
+          hydrateSettings({
+            postID: postIdFromUrl,
+            postType: postTypeFromUrl,
+            ...showcaseSettings,
           });
 
           setTimeout(() => {
@@ -91,72 +92,85 @@ function Editor() {
       type={postType}
       viewport={viewport}
       setViewport={setViewport}
+      onUndo={undo}
+      onRedo={redo}
+      canUndo={canUndo}
+      canRedo={canRedo}
       onCopySettings={() => handleCopySettings(allSettings)}
       onPasteSettings={() => handlePasteSettings(saveSettings)}
       />
-      <div className="layout-container">
+      <div className="ts-editor-shell">
         <Sidebar
             isOpen={isSidebarOpen}
             selectedLayout={allSettings.selectedLayout.value}
             layoutType={allSettings.selectedLayout.type}
-            onToggleSidebar={handleToggleSidebar} // Pass the toggle function
+            onToggleSidebar={handleToggleSidebar}
         />
-        <div className={`main-content ${isSidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
-          <div className='flex justify-center items-center min-h-screen mx-auto tsteam__editor_bg'>
-            <div
-                className={`editor-container editor-hover viewport-${viewport}`}
-            >
-              {allSettings.selectedView.value === "flex" ? (
-                      <FlexView
+        <div className="ts-editor-main">
+          <div className="ts-editor-canvas">
+            <div className="ts-editor-preview-frame">
+              <div className="ts-editor-preview-chrome">
+                <span></span>
+                <span></span>
+                <span></span>
+                <div className="ts-editor-preview-address"></div>
+              </div>
+
+              <div className="ts-editor-preview-surface">
+                <div className={`editor-container editor-hover viewport-${viewport}`}>
+                  {allSettings.selectedView.value === "flex" ? (
+                          <FlexView
+                              team_members={postData.team_members}
+                              settings={allSettings}
+                              viewport={viewport}
+                              isEditor={isEditor}
+                          />
+                      ) : allSettings.selectedView.value === "carousel" ? (
+                      <CarouselView
                           team_members={postData.team_members}
                           settings={allSettings}
                           viewport={viewport}
                           isEditor={isEditor}
                       />
-                  ) : allSettings.selectedView.value === "carousel" ? (
-                  <CarouselView
-                      team_members={postData.team_members}
-                      settings={allSettings}
-                      viewport={viewport}
-                      isEditor={isEditor}
-                  />
-              ) : allSettings.selectedView.value === "marquee" && isPro ? (
-                  <MarqueeView
-                      team_members={postData.team_members}
-                      settings={allSettings}
-                      viewport={viewport}
-                      isEditor={isEditor}
-                  />
-              ) : allSettings.selectedView.value === "table" && isPro ? (
-                      <TableView
+                  ) : allSettings.selectedView.value === "marquee" && isPro ? (
+                      <MarqueeView
                           team_members={postData.team_members}
                           settings={allSettings}
                           viewport={viewport}
                           isEditor={isEditor}
                       />
-              ) : allSettings.selectedView.value === "confetti" && isPro ? (
-                  <ConfettiView
+                  ) : allSettings.selectedView.value === "table" && isPro ? (
+                          <TableView
+                              team_members={postData.team_members}
+                              settings={allSettings}
+                              viewport={viewport}
+                              isEditor={isEditor}
+                          />
+                  ) : allSettings.selectedView.value === "confetti" && isPro ? (
+                      <ConfettiView
+                          team_members={postData.team_members}
+                          settings={allSettings}
+                          viewport={viewport}
+                          isEditor={isEditor}
+                      />
+                  ) : allSettings.selectedView.value === "filterable" && isPro ? (
+                      <FilterableView
                       team_members={postData.team_members}
                       settings={allSettings}
+                      category={categoryData}
                       viewport={viewport}
                       isEditor={isEditor}
-                  />
-              ) : allSettings.selectedView.value === "filterable" && isPro ? (
-                  <FilterableView
-                  team_members={postData.team_members}
-                  settings={allSettings}
-                  category={categoryData}
-                  viewport={viewport}
-                  isEditor={isEditor}
-                />
-              ) : (
-                  <StaticView
-                      team_members={postData.team_members}
-                      settings={allSettings}
-                      viewport={viewport}
-                      isEditor={isEditor}
-                  />
-              )}
+                    />
+                  ) : (
+                      <StaticView
+                          team_members={postData.team_members}
+                          settings={allSettings}
+                          viewport={viewport}
+                          isEditor={isEditor}
+                      />
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
