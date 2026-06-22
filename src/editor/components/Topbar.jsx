@@ -127,12 +127,12 @@ function Topbar({ type, onCopySettings, onPasteSettings, onUndo, onRedo, canUndo
                     />
                     <TsButton
                         label={translations.publish}
-                        className="ts-editor-primary-button"
+                        className="ts-editor-publish-button"
                         onClick={handlePublishClick}
                     />
                     <TsButton
-                        label={<CircleX size={16} />}
-                        className="ts-editor-icon-close"
+                        label={<>Close <CircleX size={14} /></>}
+                        className="ts-editor-close-button"
                         onClick={handleBacktoAdmin}
                     />
                 </div>

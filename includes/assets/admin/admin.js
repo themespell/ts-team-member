@@ -78966,14 +78966,47 @@ var require_admin = __commonJS({
     }
     function TsLoader({ label }) {
       const tsteamLogo = tsteam_settings.assets_path;
+      const [progress, setProgress] = reactExports.useState(0);
+      reactExports.useEffect(() => {
+        const interval = setInterval(() => {
+          setProgress((prev2) => {
+            if (prev2 >= 90) return 90;
+            return prev2 + Math.random() * 15;
+          });
+        }, 300);
+        return () => clearInterval(interval);
+      }, []);
       return /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
-          className: "flex flex-col justify-center items-center h-screen",
-          style: { backgroundColor: globalSettings.theme.primaryColor },
+          className: "ts-loader-wrapper",
+          style: { backgroundColor: "#0f172a" },
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: `${tsteamLogo}/img/tsteam_icon_white.svg`, className: "tsteam__topbar-logo w-12 h-12" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("label", { className: "text-white mt-3", children: label })
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-loader-content", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-loader-logo-wrapper", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-loader-logo-pulse" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "img",
+                  {
+                    src: `${tsteamLogo}/img/tsteam_icon_white.svg`,
+                    className: "ts-loader-logo",
+                    alt: "Team Members"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-loader-text", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "ts-loader-label", children: label }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "ts-loader-dots", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", {}),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", {}),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", {})
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-loader-progress-wrapper", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-loader-progress-bar", style: { width: `${progress}%` } }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-loader-subtitle", children: "Team Members Editor" })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-loader-bg-gradient" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "ts-loader-bg-pattern" })
           ]
         }
       );
@@ -79385,15 +79418,18 @@ var require_admin = __commonJS({
               TsButton,
               {
                 label: translations2.publish,
-                className: "ts-editor-primary-button",
+                className: "ts-editor-publish-button",
                 onClick: handlePublishClick
               }
             ),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
               TsButton,
               {
-                label: /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { size: 16 }),
-                className: "ts-editor-icon-close",
+                label: /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+                  "Close ",
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { size: 14 })
+                ] }),
+                className: "ts-editor-close-button",
                 onClick: handleBacktoAdmin
               }
             )
