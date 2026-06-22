@@ -1,4 +1,6 @@
 const BRAND_STYLE = 'brand';
+const BRAND_SOFT_STYLE = 'brand-soft';
+const BRAND_SOLID_STYLE = 'brand-solid';
 
 const BRAND_COLORS = {
     facebook: '#1877F2',
@@ -7,6 +9,24 @@ const BRAND_COLORS = {
     linkedin: '#0A66C2',
     youtube: '#FF0000',
     github: '#181717',
+};
+
+const hexToRgba = (hex, alpha) => {
+    if (!hex) return undefined;
+
+    const normalized = hex.replace('#', '');
+    const safeHex = normalized.length === 3
+        ? normalized.split('').map((char) => char + char).join('')
+        : normalized;
+    const int = Number.parseInt(safeHex, 16);
+
+    if (Number.isNaN(int)) return undefined;
+
+    const r = (int >> 16) & 255;
+    const g = (int >> 8) & 255;
+    const b = int & 255;
+
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
 const getSocialIcon = (channel) => {
@@ -36,12 +56,31 @@ const SocialIcons = ({ socialIcons, settings }) => {
 
     if (!data || !Array.isArray(data)) return null;
 
-    const isBrandStyle = settings?.layout?.socialIconStyle === BRAND_STYLE;
+    const socialIconStyle = settings?.layout?.socialIconStyle;
 
     return (
         <div className="tsteam-cornerframe-socials">
             {data.map((item, index) => {
                 const brandColor = BRAND_COLORS[item.socialChannel?.toLowerCase?.()] || settings?.layout?.color?.socialIcon;
+                const isBrandStyle = socialIconStyle === BRAND_STYLE;
+                const isBrandSoftStyle = socialIconStyle === BRAND_SOFT_STYLE;
+                const isBrandSolidStyle = socialIconStyle === BRAND_SOLID_STYLE;
+                const style = isBrandStyle ? {
+                    background: 'transparent',
+                    color: brandColor,
+                    borderRadius: 0,
+                } : isBrandSoftStyle ? {
+                    background: hexToRgba(brandColor, 0.14),
+                    color: brandColor,
+                    borderRadius: settings?.layout?.borderRadius?.socialIcon
+                } : isBrandSolidStyle ? {
+                    background: brandColor,
+                    color: '#ffffff',
+                    borderRadius: settings?.layout?.borderRadius?.socialIcon
+                } : {
+                    color: settings?.layout?.color?.socialIcon,
+                    background: settings?.layout?.color?.socialIconBg,
+                };
 
                 return (
                     <a
@@ -50,14 +89,7 @@ const SocialIcons = ({ socialIcons, settings }) => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="tsteam-cornerframe-social-link"
-                        style={isBrandStyle ? {
-                            background: 'transparent',
-                            color: brandColor,
-                            borderRadius: 0,
-                        } : {
-                            color: settings?.layout?.color?.socialIcon,
-                            background: settings?.layout?.color?.socialIconBg,
-                        }}
+                        style={style}
                     >
                         {getSocialIcon(item.socialChannel)}
                     </a>

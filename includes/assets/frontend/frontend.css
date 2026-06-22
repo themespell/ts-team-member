@@ -3989,6 +3989,17 @@ html:has(.drawer-toggle:checked) {
 .progress-bar-glow:hover {
 	box-shadow: 0 0 20px 0 rgba(124, 58, 237, 0.8);
 }
+.tsteam-social-icon {
+	transition: transform 220ms ease, box-shadow 260ms ease, background-color 220ms ease, color 220ms ease, filter 220ms ease;
+	will-change: transform;
+}
+.tsteam-social-icon:hover {
+	transform: translateY(-4px) scale(1.08);
+	box-shadow: var(--tsteam-social-hover-shadow, 0 14px 28px rgba(17, 24, 39, 0.16));
+	background-color: var(--tsteam-social-hover-bg, inherit) !important;
+	color: var(--tsteam-social-hover-color, inherit) !important;
+	filter: saturate(1.08);
+}
 .hover\:-translate-y-0\.5:hover {
     --tw-translate-y: -0.125rem;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -4141,7 +4152,8 @@ html:has(.drawer-toggle:checked) {
     .lg\:flex-row {
         flex-direction: row;
     }
-}/* --- Entrance Animations --- */
+}
+/* --- Entrance Animations --- */
 
 /* Bounce */
 @keyframes tsteam__entrance-bounce {

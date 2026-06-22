@@ -8839,6 +8839,11 @@ var require_frontend = __commonJS({
         descriptionTypography: window.tsteam_i18n.description_typography || "Description Typography",
         detailsTypography: window.tsteam_i18n.details_typography || "Details Typography",
         social: window.tsteam_i18n.social || "Social",
+        socialIconStyle: window.tsteam_i18n.social_icon_style || "Social Icon Style",
+        customColors: window.tsteam_i18n.custom_colors || "Custom Colors",
+        brandIconOnly: window.tsteam_i18n.brand_icon_only || "Brand Icon Only",
+        brandSoft: window.tsteam_i18n.brand_soft || "Brand Soft",
+        brandSolid: window.tsteam_i18n.brand_solid || "Brand Solid",
         socialIconBorderRadius: window.tsteam_i18n.social_icon_border_radius || "Social Icon Border Radius",
         socialIconColor: window.tsteam_i18n.social_icon_color || "Social Icon Color",
         socialIconBackgroundColor: window.tsteam_i18n.social_icon_background_color || "Social Icon Background Color",
@@ -24928,7 +24933,30 @@ var require_frontend = __commonJS({
         }
       ) }) : renderViewComponent() });
     }
+    const BRAND_STYLE$4 = "brand";
+    const BRAND_SOFT_STYLE$4 = "brand-soft";
+    const BRAND_SOLID_STYLE$4 = "brand-solid";
+    const BRAND_COLORS$4 = {
+      facebook: "#1877F2",
+      twitter: "#000000",
+      instagram: "#E4405F",
+      linkedin: "#0A66C2",
+      youtube: "#FF0000",
+      github: "#181717"
+    };
+    const hexToRgba$4 = (hex, alpha) => {
+      if (!hex) return void 0;
+      const normalized = hex.replace("#", "");
+      const safeHex = normalized.length === 3 ? normalized.split("").map((char2) => char2 + char2).join("") : normalized;
+      const int = Number.parseInt(safeHex, 16);
+      if (Number.isNaN(int)) return void 0;
+      const r2 = int >> 16 & 255;
+      const g2 = int >> 8 & 255;
+      const b2 = int & 255;
+      return `rgba(${r2}, ${g2}, ${b2}, ${alpha})`;
+    };
     const getSocialIcon$4 = (channel) => {
+      var _a2;
       const icons = {
         facebook: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 320 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" }) }),
         twitter: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 512 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" }) }),
@@ -24940,9 +24968,10 @@ var require_frontend = __commonJS({
         ] }),
         github: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "w-4 h-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" }) })
       };
-      return icons[channel.toLowerCase()] || null;
+      return icons[(_a2 = channel == null ? void 0 : channel.toLowerCase) == null ? void 0 : _a2.call(channel)] || null;
     };
     const SocialIcons$4 = ({ socialIcons, settings }) => {
+      var _a2;
       let data = socialIcons;
       if (typeof socialIcons === "string") {
         try {
@@ -24953,20 +24982,38 @@ var require_frontend = __commonJS({
         }
       }
       if (!data || !Array.isArray(data)) return null;
+      const socialIconStyle = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.socialIconStyle;
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-2", children: data.map((item, index) => {
-        var _a2, _b, _c, _d, _e, _f;
+        var _a3, _b, _c, _d, _e, _f, _g, _h, _i2, _j, _k, _l, _m, _n;
+        const brandColor = BRAND_COLORS$4[(_b = (_a3 = item.socialChannel) == null ? void 0 : _a3.toLowerCase) == null ? void 0 : _b.call(_a3)] || ((_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon);
+        const isBrandStyle = socialIconStyle === BRAND_STYLE$4;
+        const isBrandSoftStyle = socialIconStyle === BRAND_SOFT_STYLE$4;
+        const isBrandSolidStyle = socialIconStyle === BRAND_SOLID_STYLE$4;
+        const style2 = isBrandStyle ? {
+          backgroundColor: "transparent",
+          color: brandColor,
+          borderRadius: 0
+        } : isBrandSoftStyle ? {
+          backgroundColor: hexToRgba$4(brandColor, 0.14),
+          color: brandColor,
+          borderRadius: (_f = (_e = settings == null ? void 0 : settings.layout) == null ? void 0 : _e.borderRadius) == null ? void 0 : _f.socialIcon
+        } : isBrandSolidStyle ? {
+          backgroundColor: brandColor,
+          color: "#ffffff",
+          borderRadius: (_h = (_g = settings == null ? void 0 : settings.layout) == null ? void 0 : _g.borderRadius) == null ? void 0 : _h.socialIcon
+        } : {
+          backgroundColor: (_j = (_i2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _i2.color) == null ? void 0 : _j.socialIconBg,
+          color: (_l = (_k = settings == null ? void 0 : settings.layout) == null ? void 0 : _k.color) == null ? void 0 : _l.socialIcon,
+          borderRadius: (_n = (_m = settings == null ? void 0 : settings.layout) == null ? void 0 : _m.borderRadius) == null ? void 0 : _n.socialIcon
+        };
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "a",
           {
             href: item.link,
             target: "_blank",
             rel: "noopener noreferrer",
-            className: "inline-flex h-9 w-9 items-center justify-center rounded-lg text-white hover:text-white  bg-[#7547D7]  hover:[#7547D7] transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:shadow-lg shadow-md",
-            style: {
-              backgroundColor: (_b = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.color) == null ? void 0 : _b.socialIconBg,
-              color: (_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon,
-              borderRadius: (_f = (_e = settings == null ? void 0 : settings.layout) == null ? void 0 : _e.borderRadius) == null ? void 0 : _f.socialIcon
-            },
+            className: isBrandStyle ? "inline-flex h-9 w-9 items-center justify-center text-sm transition-all duration-300 hover:-translate-y-0.5 hover:scale-110" : "inline-flex h-9 w-9 items-center justify-center rounded-lg text-white hover:text-white bg-[#7547D7] hover:[#7547D7] transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:shadow-lg shadow-md",
+            style: style2,
             children: getSocialIcon$4(item.socialChannel)
           },
           index
@@ -25084,7 +25131,30 @@ var require_frontend = __commonJS({
       __proto__: null,
       default: Card
     }, Symbol.toStringTag, { value: "Module" }));
+    const BRAND_STYLE$3 = "brand";
+    const BRAND_SOFT_STYLE$3 = "brand-soft";
+    const BRAND_SOLID_STYLE$3 = "brand-solid";
+    const BRAND_COLORS$3 = {
+      facebook: "#1877F2",
+      twitter: "#000000",
+      instagram: "#E4405F",
+      linkedin: "#0A66C2",
+      youtube: "#FF0000",
+      github: "#181717"
+    };
+    const hexToRgba$3 = (hex, alpha) => {
+      if (!hex) return void 0;
+      const normalized = hex.replace("#", "");
+      const safeHex = normalized.length === 3 ? normalized.split("").map((char2) => char2 + char2).join("") : normalized;
+      const int = Number.parseInt(safeHex, 16);
+      if (Number.isNaN(int)) return void 0;
+      const r2 = int >> 16 & 255;
+      const g2 = int >> 8 & 255;
+      const b2 = int & 255;
+      return `rgba(${r2}, ${g2}, ${b2}, ${alpha})`;
+    };
     const getSocialIcon$3 = (channel) => {
+      var _a2;
       const icons = {
         facebook: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 320 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" }) }),
         twitter: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 512 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" }) }),
@@ -25096,9 +25166,10 @@ var require_frontend = __commonJS({
         ] }),
         github: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "w-4 h-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" }) })
       };
-      return icons[channel.toLowerCase()] || null;
+      return icons[(_a2 = channel == null ? void 0 : channel.toLowerCase) == null ? void 0 : _a2.call(channel)] || null;
     };
     const SocialIcons$3 = ({ socialIcons, settings }) => {
+      var _a2;
       let data = socialIcons;
       if (typeof socialIcons === "string") {
         try {
@@ -25109,8 +25180,29 @@ var require_frontend = __commonJS({
         }
       }
       if (!data || !Array.isArray(data)) return null;
+      const socialIconStyle = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.socialIconStyle;
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-socials", children: data.map((item, index) => {
-        var _a2, _b, _c, _d;
+        var _a3, _b, _c, _d, _e, _f, _g, _h, _i2, _j, _k, _l;
+        const brandColor = BRAND_COLORS$3[(_b = (_a3 = item.socialChannel) == null ? void 0 : _a3.toLowerCase) == null ? void 0 : _b.call(_a3)] || ((_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon);
+        const isBrandStyle = socialIconStyle === BRAND_STYLE$3;
+        const isBrandSoftStyle = socialIconStyle === BRAND_SOFT_STYLE$3;
+        const isBrandSolidStyle = socialIconStyle === BRAND_SOLID_STYLE$3;
+        const style2 = isBrandStyle ? {
+          background: "transparent",
+          color: brandColor,
+          borderRadius: 0
+        } : isBrandSoftStyle ? {
+          background: hexToRgba$3(brandColor, 0.14),
+          color: brandColor,
+          borderRadius: (_f = (_e = settings == null ? void 0 : settings.layout) == null ? void 0 : _e.borderRadius) == null ? void 0 : _f.socialIcon
+        } : isBrandSolidStyle ? {
+          background: brandColor,
+          color: "#ffffff",
+          borderRadius: (_h = (_g = settings == null ? void 0 : settings.layout) == null ? void 0 : _g.borderRadius) == null ? void 0 : _h.socialIcon
+        } : {
+          color: (_j = (_i2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _i2.color) == null ? void 0 : _j.socialIcon,
+          background: (_l = (_k = settings == null ? void 0 : settings.layout) == null ? void 0 : _k.color) == null ? void 0 : _l.socialIconBg
+        };
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "a",
           {
@@ -25118,10 +25210,7 @@ var require_frontend = __commonJS({
             target: "_blank",
             rel: "noopener noreferrer",
             className: "tsteam-cornerframe-social-link",
-            style: {
-              color: (_b = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.color) == null ? void 0 : _b.socialIcon,
-              background: (_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIconBg
-            },
+            style: style2,
             children: getSocialIcon$3(item.socialChannel)
           },
           index
@@ -25233,7 +25322,30 @@ var require_frontend = __commonJS({
       __proto__: null,
       default: Flipbox
     }, Symbol.toStringTag, { value: "Module" }));
+    const BRAND_STYLE$2 = "brand";
+    const BRAND_SOFT_STYLE$2 = "brand-soft";
+    const BRAND_SOLID_STYLE$2 = "brand-solid";
+    const BRAND_COLORS$2 = {
+      facebook: "#1877F2",
+      twitter: "#000000",
+      instagram: "#E4405F",
+      linkedin: "#0A66C2",
+      youtube: "#FF0000",
+      github: "#181717"
+    };
+    const hexToRgba$2 = (hex, alpha) => {
+      if (!hex) return void 0;
+      const normalized = hex.replace("#", "");
+      const safeHex = normalized.length === 3 ? normalized.split("").map((char2) => char2 + char2).join("") : normalized;
+      const int = Number.parseInt(safeHex, 16);
+      if (Number.isNaN(int)) return void 0;
+      const r2 = int >> 16 & 255;
+      const g2 = int >> 8 & 255;
+      const b2 = int & 255;
+      return `rgba(${r2}, ${g2}, ${b2}, ${alpha})`;
+    };
     const getSocialIcon$2 = (channel) => {
+      var _a2;
       const icons = {
         facebook: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 320 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" }) }),
         twitter: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 512 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" }) }),
@@ -25245,9 +25357,10 @@ var require_frontend = __commonJS({
         ] }),
         github: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "w-4 h-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" }) })
       };
-      return icons[channel.toLowerCase()] || null;
+      return icons[(_a2 = channel == null ? void 0 : channel.toLowerCase) == null ? void 0 : _a2.call(channel)] || null;
     };
     const SocialIcons$2 = ({ socialIcons, settings }) => {
+      var _a2;
       let data = socialIcons;
       if (typeof socialIcons === "string") {
         try {
@@ -25258,20 +25371,38 @@ var require_frontend = __commonJS({
         }
       }
       if (!data || !Array.isArray(data)) return null;
+      const socialIconStyle = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.socialIconStyle;
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-2", children: data.map((item, index) => {
-        var _a2, _b, _c, _d, _e, _f;
+        var _a3, _b, _c, _d, _e, _f, _g, _h, _i2, _j, _k, _l, _m, _n;
+        const brandColor = BRAND_COLORS$2[(_b = (_a3 = item.socialChannel) == null ? void 0 : _a3.toLowerCase) == null ? void 0 : _b.call(_a3)] || ((_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon);
+        const isBrandStyle = socialIconStyle === BRAND_STYLE$2;
+        const isBrandSoftStyle = socialIconStyle === BRAND_SOFT_STYLE$2;
+        const isBrandSolidStyle = socialIconStyle === BRAND_SOLID_STYLE$2;
+        const style2 = isBrandStyle ? {
+          backgroundColor: "transparent",
+          color: brandColor,
+          borderRadius: 0
+        } : isBrandSoftStyle ? {
+          backgroundColor: hexToRgba$2(brandColor, 0.14),
+          color: brandColor,
+          borderRadius: (_f = (_e = settings == null ? void 0 : settings.layout) == null ? void 0 : _e.borderRadius) == null ? void 0 : _f.socialIcon
+        } : isBrandSolidStyle ? {
+          backgroundColor: brandColor,
+          color: "#ffffff",
+          borderRadius: (_h = (_g = settings == null ? void 0 : settings.layout) == null ? void 0 : _g.borderRadius) == null ? void 0 : _h.socialIcon
+        } : {
+          backgroundColor: (_j = (_i2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _i2.color) == null ? void 0 : _j.socialIconBg,
+          color: (_l = (_k = settings == null ? void 0 : settings.layout) == null ? void 0 : _k.color) == null ? void 0 : _l.socialIcon,
+          borderRadius: (_n = (_m = settings == null ? void 0 : settings.layout) == null ? void 0 : _m.borderRadius) == null ? void 0 : _n.socialIcon
+        };
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "a",
           {
             href: item.link,
             target: "_blank",
             rel: "noopener noreferrer",
-            className: "inline-flex h-9 w-9 items-center justify-center rounded-lg text-white hover:text-white  bg-[#7547D7] hover:bg-[#7547D7] transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:shadow-lg shadow-md",
-            style: {
-              backgroundColor: (_b = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.color) == null ? void 0 : _b.socialIconBg,
-              color: (_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon,
-              borderRadius: (_f = (_e = settings == null ? void 0 : settings.layout) == null ? void 0 : _e.borderRadius) == null ? void 0 : _f.socialIcon
-            },
+            className: isBrandStyle ? "inline-flex h-9 w-9 items-center justify-center text-sm transition-all duration-300 hover:-translate-y-0.5 hover:scale-110" : "inline-flex h-9 w-9 items-center justify-center rounded-lg text-white hover:text-white bg-[#7547D7] hover:bg-[#7547D7] transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:shadow-lg shadow-md",
+            style: style2,
             children: getSocialIcon$2(item.socialChannel)
           },
           index
@@ -25399,6 +25530,28 @@ var require_frontend = __commonJS({
       __proto__: null,
       default: OverlayCard
     }, Symbol.toStringTag, { value: "Module" }));
+    const BRAND_STYLE$1 = "brand";
+    const BRAND_SOFT_STYLE$1 = "brand-soft";
+    const BRAND_SOLID_STYLE$1 = "brand-solid";
+    const BRAND_COLORS$1 = {
+      facebook: "#1877F2",
+      twitter: "#000000",
+      instagram: "#E4405F",
+      linkedin: "#0A66C2",
+      youtube: "#FF0000",
+      github: "#181717"
+    };
+    const hexToRgba$1 = (hex, alpha) => {
+      if (!hex) return void 0;
+      const normalized = hex.replace("#", "");
+      const safeHex = normalized.length === 3 ? normalized.split("").map((char2) => char2 + char2).join("") : normalized;
+      const int = Number.parseInt(safeHex, 16);
+      if (Number.isNaN(int)) return void 0;
+      const r2 = int >> 16 & 255;
+      const g2 = int >> 8 & 255;
+      const b2 = int & 255;
+      return `rgba(${r2}, ${g2}, ${b2}, ${alpha})`;
+    };
     const getSocialIcon$1 = (channel) => {
       var _a2;
       const icons = {
@@ -25415,6 +25568,7 @@ var require_frontend = __commonJS({
       return icons[(_a2 = channel == null ? void 0 : channel.toLowerCase) == null ? void 0 : _a2.call(channel)] || null;
     };
     const SocialIcons$1 = ({ socialIcons, settings }) => {
+      var _a2;
       let data = socialIcons;
       if (typeof socialIcons === "string") {
         try {
@@ -25425,8 +25579,33 @@ var require_frontend = __commonJS({
         }
       }
       if (!data || !Array.isArray(data)) return null;
+      const socialIconStyle = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.socialIconStyle;
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-2", children: data.map((item, index) => {
-        var _a2, _b, _c, _d, _e, _f;
+        var _a3, _b, _c, _d, _e, _f, _g, _h, _i2, _j, _k, _l, _m, _n;
+        const brandColor = BRAND_COLORS$1[(_b = (_a3 = item.socialChannel) == null ? void 0 : _a3.toLowerCase) == null ? void 0 : _b.call(_a3)] || ((_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon);
+        const isBrandStyle = socialIconStyle === BRAND_STYLE$1;
+        const isBrandSoftStyle = socialIconStyle === BRAND_SOFT_STYLE$1;
+        const isBrandSolidStyle = socialIconStyle === BRAND_SOLID_STYLE$1;
+        const style2 = isBrandStyle ? {
+          backgroundColor: "transparent",
+          color: brandColor,
+          borderRadius: 0,
+          border: "none"
+        } : isBrandSoftStyle ? {
+          backgroundColor: hexToRgba$1(brandColor, 0.14),
+          color: brandColor,
+          borderRadius: (_f = (_e = settings == null ? void 0 : settings.layout) == null ? void 0 : _e.borderRadius) == null ? void 0 : _f.socialIcon,
+          border: "none"
+        } : isBrandSolidStyle ? {
+          backgroundColor: brandColor,
+          color: "#ffffff",
+          borderRadius: (_h = (_g = settings == null ? void 0 : settings.layout) == null ? void 0 : _g.borderRadius) == null ? void 0 : _h.socialIcon,
+          border: "none"
+        } : {
+          backgroundColor: (_j = (_i2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _i2.color) == null ? void 0 : _j.socialIconBg,
+          color: (_l = (_k = settings == null ? void 0 : settings.layout) == null ? void 0 : _k.color) == null ? void 0 : _l.socialIcon,
+          borderRadius: (_n = (_m = settings == null ? void 0 : settings.layout) == null ? void 0 : _m.borderRadius) == null ? void 0 : _n.socialIcon
+        };
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "a",
           {
@@ -25434,11 +25613,7 @@ var require_frontend = __commonJS({
             target: "_blank",
             rel: "noopener noreferrer",
             className: "tsteam-spotlight__social",
-            style: {
-              backgroundColor: (_b = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.color) == null ? void 0 : _b.socialIconBg,
-              color: (_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon,
-              borderRadius: (_f = (_e = settings == null ? void 0 : settings.layout) == null ? void 0 : _e.borderRadius) == null ? void 0 : _f.socialIcon
-            },
+            style: style2,
             children: getSocialIcon$1(item.socialChannel)
           },
           index
@@ -25490,7 +25665,30 @@ var require_frontend = __commonJS({
       __proto__: null,
       default: Spotlight
     }, Symbol.toStringTag, { value: "Module" }));
+    const BRAND_STYLE = "brand";
+    const BRAND_SOFT_STYLE = "brand-soft";
+    const BRAND_SOLID_STYLE = "brand-solid";
+    const BRAND_COLORS = {
+      facebook: "#1877F2",
+      twitter: "#000000",
+      instagram: "#E4405F",
+      linkedin: "#0A66C2",
+      youtube: "#FF0000",
+      github: "#181717"
+    };
+    const hexToRgba = (hex, alpha) => {
+      if (!hex) return void 0;
+      const normalized = hex.replace("#", "");
+      const safeHex = normalized.length === 3 ? normalized.split("").map((char2) => char2 + char2).join("") : normalized;
+      const int = Number.parseInt(safeHex, 16);
+      if (Number.isNaN(int)) return void 0;
+      const r2 = int >> 16 & 255;
+      const g2 = int >> 8 & 255;
+      const b2 = int & 255;
+      return `rgba(${r2}, ${g2}, ${b2}, ${alpha})`;
+    };
     const getSocialIcon = (channel) => {
+      var _a2;
       const icons = {
         facebook: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 320 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" }) }),
         twitter: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 512 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" }) }),
@@ -25502,9 +25700,10 @@ var require_frontend = __commonJS({
         ] }),
         github: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "w-4 h-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" }) })
       };
-      return icons[channel.toLowerCase()] || null;
+      return icons[(_a2 = channel == null ? void 0 : channel.toLowerCase) == null ? void 0 : _a2.call(channel)] || null;
     };
     const SocialIcons = ({ socialIcons, settings }) => {
+      var _a2;
       let data = socialIcons;
       if (typeof socialIcons === "string") {
         try {
@@ -25515,20 +25714,38 @@ var require_frontend = __commonJS({
         }
       }
       if (!data || !Array.isArray(data)) return null;
+      const socialIconStyle = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.socialIconStyle;
       return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-4", children: data.map((item, index) => {
-        var _a2, _b, _c, _d, _e, _f;
+        var _a3, _b, _c, _d, _e, _f, _g, _h, _i2, _j, _k, _l, _m, _n;
+        const brandColor = BRAND_COLORS[(_b = (_a3 = item.socialChannel) == null ? void 0 : _a3.toLowerCase) == null ? void 0 : _b.call(_a3)] || ((_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon);
+        const isBrandStyle = socialIconStyle === BRAND_STYLE;
+        const isBrandSoftStyle = socialIconStyle === BRAND_SOFT_STYLE;
+        const isBrandSolidStyle = socialIconStyle === BRAND_SOLID_STYLE;
+        const style2 = isBrandStyle ? {
+          backgroundColor: "transparent",
+          color: brandColor,
+          borderRadius: 0
+        } : isBrandSoftStyle ? {
+          backgroundColor: hexToRgba(brandColor, 0.14),
+          color: brandColor,
+          borderRadius: (_f = (_e = settings == null ? void 0 : settings.layout) == null ? void 0 : _e.borderRadius) == null ? void 0 : _f.socialIcon
+        } : isBrandSolidStyle ? {
+          backgroundColor: brandColor,
+          color: "#ffffff",
+          borderRadius: (_h = (_g = settings == null ? void 0 : settings.layout) == null ? void 0 : _g.borderRadius) == null ? void 0 : _h.socialIcon
+        } : {
+          backgroundColor: (_j = (_i2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _i2.color) == null ? void 0 : _j.socialIconBg,
+          color: (_l = (_k = settings == null ? void 0 : settings.layout) == null ? void 0 : _k.color) == null ? void 0 : _l.socialIcon,
+          borderRadius: (_n = (_m = settings == null ? void 0 : settings.layout) == null ? void 0 : _m.borderRadius) == null ? void 0 : _n.socialIcon
+        };
         return /* @__PURE__ */ jsxRuntimeExports.jsx(
           "a",
           {
             href: item.link,
             target: "_blank",
             rel: "noopener noreferrer",
-            className: "bg-white hover:text-gray-200 text-sm text-purple-500 hover:bg-white rounded-full p-2 transition-colors",
-            style: {
-              backgroundColor: (_b = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.color) == null ? void 0 : _b.socialIconBg,
-              color: (_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon,
-              borderRadius: (_f = (_e = settings == null ? void 0 : settings.layout) == null ? void 0 : _e.borderRadius) == null ? void 0 : _f.socialIcon
-            },
+            className: isBrandStyle ? "inline-flex h-9 w-9 items-center justify-center text-sm transition-all duration-300 hover:-translate-y-0.5 hover:scale-110" : "bg-white hover:text-gray-200 text-sm text-purple-500 hover:bg-white rounded-full p-2 transition-colors",
+            style: style2,
             children: getSocialIcon(item.socialChannel)
           },
           index
