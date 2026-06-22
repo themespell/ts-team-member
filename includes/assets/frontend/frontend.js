@@ -7597,7 +7597,7 @@ var require_frontend = __commonJS({
         )
       ] });
     };
-    const getSocialIcon$1 = (channel) => {
+    const getSocialIcon$5 = (channel) => {
       const icons = {
         facebook: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 320 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" }) }),
         twitter: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 512 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" }) }),
@@ -7632,7 +7632,7 @@ var require_frontend = __commonJS({
           style: {
             backgroundColor: item.socialChannel === "facebook" ? "#4267B2" : item.socialChannel === "twitter" ? "#1DA1F2" : item.socialChannel === "instagram" ? "#E1306C" : item.socialChannel === "linkedin" ? "#0077B5" : item.socialChannel === "youtube" ? "#FF0000" : item.socialChannel === "github" ? "#333333" : "#6B7280"
           },
-          children: getSocialIcon$1(item.socialChannel)
+          children: getSocialIcon$5(item.socialChannel)
         },
         index
       )) });
@@ -8839,11 +8839,6 @@ var require_frontend = __commonJS({
         descriptionTypography: window.tsteam_i18n.description_typography || "Description Typography",
         detailsTypography: window.tsteam_i18n.details_typography || "Details Typography",
         social: window.tsteam_i18n.social || "Social",
-        socialIconStyle: window.tsteam_i18n.social_icon_style || "Social Icon Style",
-        customColors: window.tsteam_i18n.custom_colors || "Custom Colors",
-        brandIconOnly: window.tsteam_i18n.brand_icon_only || "Brand Icon Only",
-        brandSoft: window.tsteam_i18n.brand_soft || "Brand Soft",
-        brandSolid: window.tsteam_i18n.brand_solid || "Brand Solid",
         socialIconBorderRadius: window.tsteam_i18n.social_icon_border_radius || "Social Icon Border Radius",
         socialIconColor: window.tsteam_i18n.social_icon_color || "Social Icon Color",
         socialIconBackgroundColor: window.tsteam_i18n.social_icon_background_color || "Social Icon Background Color",
@@ -17922,6 +17917,7 @@ var require_frontend = __commonJS({
       { label: "Moon", value: "Moon", type: "pro", disabled: true },
       { label: "FancyCoverflow", value: "FancyCoverflow", type: "pro", disabled: true },
       { label: "FancyCoverflow2", value: "FancyCoverflow2", type: "pro", disabled: true },
+      { label: "ThreeDSkew", value: "ThreeDSkew", type: "pro", disabled: true },
       { label: "Interactive", value: "Interactive", type: "pro", disabled: true },
       { label: "Glassmorphism", value: "Glassmorphism", type: "pro", disabled: true },
       { label: "Colorful", value: "Colorful", type: "pro", disabled: true }
@@ -24932,33 +24928,7 @@ var require_frontend = __commonJS({
         }
       ) }) : renderViewComponent() });
     }
-    const SOCIAL_ICON_STYLES = {
-      custom: "custom",
-      brand: "brand",
-      brandSoft: "brand-soft",
-      brandSolid: "brand-solid"
-    };
-    const BRAND_COLORS = {
-      facebook: "#1877F2",
-      twitter: "#000000",
-      instagram: "#E4405F",
-      linkedin: "#0A66C2",
-      youtube: "#FF0000",
-      github: "#181717"
-    };
-    const hexToRgba = (hex, alpha) => {
-      if (!hex) return void 0;
-      const normalized = hex.replace("#", "");
-      const safeHex = normalized.length === 3 ? normalized.split("").map((char2) => char2 + char2).join("") : normalized;
-      const int = Number.parseInt(safeHex, 16);
-      if (Number.isNaN(int)) return void 0;
-      const r2 = int >> 16 & 255;
-      const g2 = int >> 8 & 255;
-      const b2 = int & 255;
-      return `rgba(${r2}, ${g2}, ${b2}, ${alpha})`;
-    };
-    const getSocialIcon = (channel) => {
-      var _a2;
+    const getSocialIcon$4 = (channel) => {
       const icons = {
         facebook: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 320 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" }) }),
         twitter: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 512 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" }) }),
@@ -24970,79 +24940,38 @@ var require_frontend = __commonJS({
         ] }),
         github: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "w-4 h-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" }) })
       };
-      return icons[(_a2 = channel == null ? void 0 : channel.toLowerCase) == null ? void 0 : _a2.call(channel)] || null;
+      return icons[channel.toLowerCase()] || null;
     };
-    const parseSocialIcons = (socialIcons) => {
+    const SocialIcons$4 = ({ socialIcons, settings }) => {
+      let data = socialIcons;
       if (typeof socialIcons === "string") {
         try {
-          return JSON.parse(socialIcons);
+          data = JSON.parse(socialIcons);
         } catch (error) {
           console.error("Error parsing socialIcons:", error);
           return null;
         }
       }
-      return socialIcons;
-    };
-    const getSocialIconStyle = (item, settings) => {
-      var _a2, _b, _c, _d, _e, _f, _g, _h, _i2, _j, _k, _l, _m, _n, _o;
-      const iconStyle = ((_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.socialIconStyle) || SOCIAL_ICON_STYLES.custom;
-      const brandColor = BRAND_COLORS[(_c = (_b = item == null ? void 0 : item.socialChannel) == null ? void 0 : _b.toLowerCase) == null ? void 0 : _c.call(_b)] || ((_e = (_d = settings == null ? void 0 : settings.layout) == null ? void 0 : _d.color) == null ? void 0 : _e.socialIcon);
-      const customBackground = (_g = (_f = settings == null ? void 0 : settings.layout) == null ? void 0 : _f.color) == null ? void 0 : _g.socialIconBg;
-      const customColor = (_i2 = (_h = settings == null ? void 0 : settings.layout) == null ? void 0 : _h.color) == null ? void 0 : _i2.socialIcon;
-      if (iconStyle === SOCIAL_ICON_STYLES.brandSolid) {
-        return {
-          backgroundColor: brandColor,
-          color: "#ffffff",
-          borderRadius: (_k = (_j = settings == null ? void 0 : settings.layout) == null ? void 0 : _j.borderRadius) == null ? void 0 : _k.socialIcon,
-          "--tsteam-social-hover-bg": brandColor,
-          "--tsteam-social-hover-color": "#ffffff",
-          "--tsteam-social-hover-shadow": `0 14px 28px ${hexToRgba(brandColor, 0.3)}`
-        };
-      }
-      if (iconStyle === SOCIAL_ICON_STYLES.brandSoft) {
-        return {
-          backgroundColor: hexToRgba(brandColor, 0.14),
-          color: brandColor,
-          borderRadius: (_m = (_l = settings == null ? void 0 : settings.layout) == null ? void 0 : _l.borderRadius) == null ? void 0 : _m.socialIcon,
-          "--tsteam-social-hover-bg": hexToRgba(brandColor, 0.22),
-          "--tsteam-social-hover-color": brandColor,
-          "--tsteam-social-hover-shadow": `0 14px 28px ${hexToRgba(brandColor, 0.22)}`
-        };
-      }
-      if (iconStyle === SOCIAL_ICON_STYLES.brand) {
-        return {
-          backgroundColor: "transparent",
-          color: brandColor,
-          borderRadius: 0,
-          "--tsteam-social-hover-bg": hexToRgba(brandColor, 0.14),
-          "--tsteam-social-hover-color": brandColor,
-          "--tsteam-social-hover-shadow": `0 14px 28px ${hexToRgba(brandColor, 0.2)}`
-        };
-      }
-      return {
-        backgroundColor: customBackground,
-        color: customColor,
-        borderRadius: (_o = (_n = settings == null ? void 0 : settings.layout) == null ? void 0 : _n.borderRadius) == null ? void 0 : _o.socialIcon,
-        "--tsteam-social-hover-bg": customBackground,
-        "--tsteam-social-hover-color": customColor,
-        "--tsteam-social-hover-shadow": `0 14px 28px ${hexToRgba(customBackground || customColor || "#000000", 0.2)}`
-      };
-    };
-    const SocialIcons$5 = ({ socialIcons, settings }) => {
-      const data = parseSocialIcons(socialIcons);
       if (!data || !Array.isArray(data)) return null;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-4", children: data.map((item, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "a",
-        {
-          href: item.link,
-          target: "_blank",
-          rel: "noopener noreferrer",
-          className: "tsteam-social-icon text-white hover:text-white text-sm bg-purple-500 hover:bg-purple-600 rounded-full p-2 transition-colors",
-          style: getSocialIconStyle(item, settings),
-          children: getSocialIcon(item.socialChannel)
-        },
-        index
-      )) });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-2", children: data.map((item, index) => {
+        var _a2, _b, _c, _d, _e, _f;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: item.link,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            className: "inline-flex h-9 w-9 items-center justify-center rounded-lg text-white hover:text-white  bg-[#7547D7]  hover:[#7547D7] transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:shadow-lg shadow-md",
+            style: {
+              backgroundColor: (_b = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.color) == null ? void 0 : _b.socialIconBg,
+              color: (_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon,
+              borderRadius: (_f = (_e = settings == null ? void 0 : settings.layout) == null ? void 0 : _e.borderRadius) == null ? void 0 : _f.socialIcon
+            },
+            children: getSocialIcon$4(item.socialChannel)
+          },
+          index
+        );
+      }) });
     };
     const TsMemberName = ({ children, className = "" }) => {
       return /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -25092,7 +25021,7 @@ var require_frontend = __commonJS({
         subtitle && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDesignation, { children: subtitle }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-auralive-divider" }),
         description && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDescription, { children: description }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-auralive-socials-wrapper", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$5, { socialIcons, settings }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-auralive-socials-wrapper", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$4, { socialIcons, settings }) }),
         details && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-auralive-details", children: details })
       ] }) });
       if (!animationConfig) {
@@ -25121,43 +25050,24 @@ var require_frontend = __commonJS({
       details,
       animationConfig
     }) => {
-      console.log("Passing animationConfig to Card:", animationConfig);
-      const renderContent = () => /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full flex flex-col items-center", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
+      const renderContent = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full flex justify-center", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "group relative w-full max-w-sm tsteam-card-layout", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "relative mx-auto -mb-14 w-44 h-44 rounded-2xl overflow-hidden ring-4 ring-white transition-transform duration-500 group-hover:-translate-y-2 bg-gradient-to-br from-[#7547D7] to-[#A146DB] z-10 tsteam-image-glow", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
           "img",
           {
             id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
             src: imageUrl,
             alt: title,
-            className: `tsteam-member__image w-32 max-h-[8rem] rounded-xl -mb-12 z-10 relative shadow-2xl object-cover ${details ? "cursor-pointer" : ""}`
+            className: ` tsteam-member__image w-full h-full object-cover ${details ? "cursor-pointer" : ""}`
           }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "div",
-          {
-            className: "w-full max-w-sm bg-white rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] overflow-hidden tsteam-card-container ",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-5 pt-16 pb-5 text-center flex flex-col items-center", children: [
-              title && /* @__PURE__ */ jsxRuntimeExports.jsxs(TsMemberName, { children: [
-                " ",
-                title,
-                " "
-              ] }),
-              subtitle && /* @__PURE__ */ jsxRuntimeExports.jsxs(TsMemberDesignation, { children: [
-                " ",
-                subtitle,
-                " "
-              ] }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("hr", { className: "tscard__separator" }),
-              description && /* @__PURE__ */ jsxRuntimeExports.jsxs(TsMemberDescription, { children: [
-                " ",
-                description,
-                " "
-              ] }),
-              details && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 flex items-center justify-center", children: details }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$5, { socialIcons, settings })
-            ] })
-          }
-        )
+        ) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "rounded-2xl bg-white pt-20 pb-7 px-6 text-center border border-solid border-gray-200 shadow-md hover:shadow-lg transition-all duration-300 tsteam-card-container", children: [
+          title && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberName, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "name-underline inline-block", children: title }) }),
+          subtitle && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDesignation, { children: subtitle }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("hr", { className: "tscard__separator" }),
+          description && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDescription, { children: description }),
+          details && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 flex items-center justify-center", children: details }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-5", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$4, { socialIcons, settings }) })
+        ] })
       ] }) });
       if (!animationConfig) {
         return renderContent();
@@ -25174,21 +25084,49 @@ var require_frontend = __commonJS({
       __proto__: null,
       default: Card
     }, Symbol.toStringTag, { value: "Module" }));
-    const SocialIcons$4 = ({ socialIcons, settings }) => {
-      const data = parseSocialIcons(socialIcons);
+    const getSocialIcon$3 = (channel) => {
+      const icons = {
+        facebook: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 320 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" }) }),
+        twitter: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 512 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" }) }),
+        instagram: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 448 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" }) }),
+        linkedin: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 448 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z" }) }),
+        youtube: /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "w-4 h-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("polygon", { points: "9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" })
+        ] }),
+        github: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "w-4 h-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" }) })
+      };
+      return icons[channel.toLowerCase()] || null;
+    };
+    const SocialIcons$3 = ({ socialIcons, settings }) => {
+      let data = socialIcons;
+      if (typeof socialIcons === "string") {
+        try {
+          data = JSON.parse(socialIcons);
+        } catch (error) {
+          console.error("Error parsing socialIcons:", error);
+          return null;
+        }
+      }
       if (!data || !Array.isArray(data)) return null;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-socials", children: data.map((item, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "a",
-        {
-          href: item.link,
-          target: "_blank",
-          rel: "noopener noreferrer",
-          className: "tsteam-social-icon tsteam-cornerframe-social-link",
-          style: getSocialIconStyle(item, settings),
-          children: getSocialIcon(item.socialChannel)
-        },
-        index
-      )) });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-socials", children: data.map((item, index) => {
+        var _a2, _b, _c, _d;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: item.link,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            className: "tsteam-cornerframe-social-link",
+            style: {
+              color: (_b = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.color) == null ? void 0 : _b.socialIcon,
+              background: (_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIconBg
+            },
+            children: getSocialIcon$3(item.socialChannel)
+          },
+          index
+        );
+      }) });
     };
     const CornerFrame = ({
       settings,
@@ -25228,7 +25166,7 @@ var require_frontend = __commonJS({
             last && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-last", children: last })
           ] }),
           subtitle && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-role", children: subtitle }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$4, { socialIcons, settings }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$3, { socialIcons, settings }),
           details && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-cornerframe-details", children: details })
         ] })
       ] });
@@ -25277,7 +25215,7 @@ var require_frontend = __commonJS({
             subtitle && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDesignation, { children: subtitle }),
             description && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDescription, { children: description })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-flipbox-back-bottom", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-flipbox-socials-wrapper", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$5, { socialIcons, settings }) }) })
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-flipbox-back-bottom", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tsteam-flipbox-socials-wrapper", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$4, { socialIcons, settings }) }) })
         ] })
       ] }) });
       if (!animationConfig) {
@@ -25295,21 +25233,50 @@ var require_frontend = __commonJS({
       __proto__: null,
       default: Flipbox
     }, Symbol.toStringTag, { value: "Module" }));
-    const SocialIcons$3 = ({ socialIcons, settings }) => {
-      const data = parseSocialIcons(socialIcons);
+    const getSocialIcon$2 = (channel) => {
+      const icons = {
+        facebook: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 320 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" }) }),
+        twitter: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 512 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" }) }),
+        instagram: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 448 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" }) }),
+        linkedin: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 448 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z" }) }),
+        youtube: /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "w-4 h-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("polygon", { points: "9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" })
+        ] }),
+        github: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "w-4 h-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" }) })
+      };
+      return icons[channel.toLowerCase()] || null;
+    };
+    const SocialIcons$2 = ({ socialIcons, settings }) => {
+      let data = socialIcons;
+      if (typeof socialIcons === "string") {
+        try {
+          data = JSON.parse(socialIcons);
+        } catch (error) {
+          console.error("Error parsing socialIcons:", error);
+          return null;
+        }
+      }
       if (!data || !Array.isArray(data)) return null;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-4", children: data.map((item, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "a",
-        {
-          href: item.link,
-          target: "_blank",
-          rel: "noopener noreferrer",
-          className: "tsteam-social-icon text-white hover:text-white text-sm bg-purple-500 hover:bg-purple-600 rounded-full p-2 transition-colors",
-          style: getSocialIconStyle(item, settings),
-          children: getSocialIcon(item.socialChannel)
-        },
-        index
-      )) });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-2", children: data.map((item, index) => {
+        var _a2, _b, _c, _d, _e, _f;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: item.link,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            className: "inline-flex h-9 w-9 items-center justify-center rounded-lg text-white hover:text-white  bg-[#7547D7] hover:bg-[#7547D7] transition-all duration-300 hover:-translate-y-0.5 hover:scale-110 hover:shadow-lg shadow-md",
+            style: {
+              backgroundColor: (_b = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.color) == null ? void 0 : _b.socialIconBg,
+              color: (_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon,
+              borderRadius: (_f = (_e = settings == null ? void 0 : settings.layout) == null ? void 0 : _e.borderRadius) == null ? void 0 : _f.socialIcon
+            },
+            children: getSocialIcon$2(item.socialChannel)
+          },
+          index
+        );
+      }) });
     };
     const HorizontalCard = ({
       settings,
@@ -25322,42 +25289,28 @@ var require_frontend = __commonJS({
       details,
       animationConfig
     }) => {
-      const renderContent = () => /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "tshorizontal__border-color", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
-        "div",
-        {
-          className: "flex items-start p-6 gap-6 tsteam-horizontalcard-container",
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "img",
-              {
-                id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
-                src: imageUrl,
-                alt: title,
-                className: `tsteam-member__image w-24 h-24 object-cover shadow-lg ${details ? "cursor-pointer" : ""}`
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between items-start", children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-                  title && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberName, { children: title }),
-                  subtitle && /* @__PURE__ */ jsxRuntimeExports.jsxs(TsMemberDesignation, { children: [
-                    " ",
-                    subtitle,
-                    " "
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$3, { socialIcons, settings }) })
-              ] }),
-              description && /* @__PURE__ */ jsxRuntimeExports.jsxs(TsMemberDescription, { children: [
-                " ",
-                description,
-                " "
-              ] }),
-              details && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4", children: details })
-            ] })
-          ]
-        }
-      ) }) }) });
+      const renderContent = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full flex justify-center text-left", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "group relative flex items-start gap-5 p-5 w-full max-w-2xl rounded-2xl tshorizontal-card-wrapper tsteam-horizontalcard-container text-left", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "shrink-0 h-28 w-28 rounded-xl overflow-hidden bg-gradient-to-br from-[#7547D7] to-[#A146DB]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "img",
+          {
+            id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
+            src: imageUrl,
+            alt: title,
+            className: `h-full w-full object-cover ${details ? "cursor-pointer" : ""}`
+          }
+        ) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0 flex-1 text-left", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between items-start gap-3 flex-wrap text-left", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0 text-left", children: [
+              title && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberName, { className: "text-left", children: title }),
+              subtitle && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDesignation, { className: "text-left", children: subtitle })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$2, { socialIcons, settings }) })
+          ] }),
+          description && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 text-left", children: /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDescription, { className: "text-left", children: description }) }),
+          details && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 text-left", children: details })
+        ] })
+      ] }) });
       if (!animationConfig) {
         return renderContent();
       }
@@ -25373,75 +25326,6 @@ var require_frontend = __commonJS({
       __proto__: null,
       default: HorizontalCard
     }, Symbol.toStringTag, { value: "Module" }));
-    const SocialIcons$2 = ({ socialIcons, settings }) => {
-      const data = parseSocialIcons(socialIcons);
-      if (!data || !Array.isArray(data)) return null;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-4", children: data.map((item, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "a",
-        {
-          href: item.link,
-          target: "_blank",
-          rel: "noopener noreferrer",
-          className: "tsteam-social-icon bg-white hover:text-gray-200 text-sm text-purple-500 hover:bg-purple-600 rounded-full p-2 transition-colors",
-          style: getSocialIconStyle(item, settings),
-          children: getSocialIcon(item.socialChannel)
-        },
-        index
-      )) });
-    };
-    const getTsTeamOverlayCardImageStyle = (settings) => {
-      var _a2, _b, _c, _d, _e, _f;
-      const tsTeamOverlayImageCSS = {};
-      if ((_b = (_a2 = settings == null ? void 0 : settings.tsoverlay) == null ? void 0 : _a2.size) == null ? void 0 : _b.image) {
-        tsTeamOverlayImageCSS["width"] = (_d = (_c = settings == null ? void 0 : settings.tsoverlay) == null ? void 0 : _c.size) == null ? void 0 : _d.image;
-        tsTeamOverlayImageCSS["height"] = (_f = (_e = settings == null ? void 0 : settings.tsoverlay) == null ? void 0 : _e.size) == null ? void 0 : _f.image;
-      } else {
-        tsTeamOverlayImageCSS["width"] = "400px";
-        tsTeamOverlayImageCSS["height"] = "400px";
-      }
-      return tsTeamOverlayImageCSS;
-    };
-    const getTsTeamOverlayCardOverlayStyle = (settings) => {
-      var _a2, _b, _c, _d, _e, _f, _g, _h, _i2, _j, _k, _l, _m, _n, _o, _p, _q, _r;
-      const tsTeamOverlayCardOverlayCSS = {};
-      tsTeamOverlayCardOverlayCSS["border-style"] = "solid";
-      if ((_a2 = settings == null ? void 0 : settings.tsoverlay) == null ? void 0 : _a2.borderRadius) {
-        tsTeamOverlayCardOverlayCSS["border-radius"] = (_b = settings == null ? void 0 : settings.tsoverlay) == null ? void 0 : _b.borderRadius;
-      }
-      if ((_d = (_c = settings == null ? void 0 : settings.tsoverlay) == null ? void 0 : _c.color) == null ? void 0 : _d.overlay) {
-        tsTeamOverlayCardOverlayCSS["background"] = (_f = (_e = settings == null ? void 0 : settings.tsoverlay) == null ? void 0 : _e.color) == null ? void 0 : _f.overlay;
-      }
-      if ((_g = settings == null ? void 0 : settings.tsoverlay) == null ? void 0 : _g.opacity) {
-        tsTeamOverlayCardOverlayCSS["opacity"] = Number((_h = settings == null ? void 0 : settings.tsoverlay) == null ? void 0 : _h.opacity) / 100;
-      }
-      if ((_i2 = settings == null ? void 0 : settings.tsoverlay) == null ? void 0 : _i2.borderWidth) {
-        tsTeamOverlayCardOverlayCSS["border-width"] = (_j = settings == null ? void 0 : settings.tsoverlay) == null ? void 0 : _j.borderWidth;
-      }
-      if ((_k = settings == null ? void 0 : settings.tsoverlay) == null ? void 0 : _k.borderWidth) {
-        tsTeamOverlayCardOverlayCSS["border-color"] = (_l = settings == null ? void 0 : settings.tsoverlay) == null ? void 0 : _l.borderColor;
-      }
-      if ((_n = (_m = settings == null ? void 0 : settings.tsoverlay) == null ? void 0 : _m.size) == null ? void 0 : _n.image) {
-        tsTeamOverlayCardOverlayCSS["width"] = (_p = (_o = settings == null ? void 0 : settings.tsoverlay) == null ? void 0 : _o.size) == null ? void 0 : _p.image;
-        tsTeamOverlayCardOverlayCSS["height"] = (_r = (_q = settings == null ? void 0 : settings.tsoverlay) == null ? void 0 : _q.size) == null ? void 0 : _r.image;
-      } else {
-        tsTeamOverlayCardOverlayCSS["width"] = "400px";
-        tsTeamOverlayCardOverlayCSS["height"] = "400px";
-      }
-      return tsTeamOverlayCardOverlayCSS;
-    };
-    const GenerateOverlayCardStyle = ({ settings = {} }) => {
-      const cssGenerator = new CSSGenerator();
-      cssGenerator.addClassStyles(
-        ".tsteam-tsoverlaycard .tsteam-member__image",
-        getTsTeamOverlayCardImageStyle(settings)
-      );
-      cssGenerator.addClassStyles(
-        ".tsteam-tsoverlaycard:hover .tsteam-tsoverlaycard__overlay",
-        getTsTeamOverlayCardOverlayStyle(settings)
-      );
-      const generatedCSS = cssGenerator.generateCSS();
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("style", { children: generatedCSS });
-    };
     const OverlayCard = ({
       settings,
       id: id2,
@@ -25453,55 +25337,53 @@ var require_frontend = __commonJS({
       details,
       animationConfig
     }) => {
-      const renderContent = () => /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(GenerateOverlayCardStyle, { settings }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative group w-full aspect-square tsteam-tsoverlaycard", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
-            "img",
+      const renderContent = () => /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-full flex justify-center text-left", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "group relative overflow-hidden rounded-3xl aspect-[3/4] w-full max-w-sm bg-gradient-to-br from-[#7547D7] to-[#A146DB] shadow-md hover:shadow-lg transition-shadow duration-300 tsteam-tsoverlaycard", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "img",
+          {
+            id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
+            src: imageUrl,
+            alt: title,
+            className: `absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 ${details ? "cursor-pointer" : ""}`
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute inset-x-0 bottom-0 p-6 text-white text-left flex flex-col items-start z-10", children: [
+          title && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberName, { className: "text-white text-left text-xl font-bold", children: title }),
+          subtitle && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDesignation, { className: "text-white/80 text-left text-sm mt-0.5", children: subtitle }),
+          description && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "max-h-0 opacity-0 group-hover:max-h-20 group-hover:opacity-90 overflow-hidden transition-all duration-500 ease-in-out mt-2 text-left", children: /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberDescription, { className: "text-white/75 text-xs", children: description }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center justify-between gap-4 mt-4 w-full flex-wrap", children: details && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "button",
             {
               id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
-              src: imageUrl,
-              alt: title,
-              className: `tsteam-member__image object-cover rounded-3xl ${details ? "cursor-pointer" : ""}`
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "div",
-            {
-              className: `tsteam-tsoverlaycard__overlay absolute inset-0 rounded-3xl flex flex-col items-center justify-center text-center p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out`,
+              className: "tsteam-member-button__details inline-flex items-center gap-1 text-xs font-semibold opacity-90 hover:opacity-100 text-white bg-transparent border-none cursor-pointer p-0",
               children: [
-                title && /* @__PURE__ */ jsxRuntimeExports.jsxs(TsMemberName, { children: [
-                  " ",
-                  title,
-                  " "
-                ] }),
-                subtitle && /* @__PURE__ */ jsxRuntimeExports.jsxs(TsMemberDesignation, { children: [
-                  " ",
-                  subtitle,
-                  " "
-                ] }),
-                description && /* @__PURE__ */ jsxRuntimeExports.jsxs(TsMemberDescription, { children: [
-                  " ",
-                  description,
-                  " "
-                ] }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex gap-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-in-out delay-150", children: /* @__PURE__ */ jsxRuntimeExports.jsx(SocialIcons$2, { socialIcons, settings }) }),
-                details && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    "button",
-                    {
-                      id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
-                      className: "tsteam-member-button__details bg-white text-black p-3 mt-4 rounded-md border-none",
-                      children: "Details"
-                    }
-                  ),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 ease-in-out delay-200", children: details })
-                ] })
+                "Details",
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "svg",
+                  {
+                    xmlns: "http://www.w3.org/2000/svg",
+                    width: "14",
+                    height: "14",
+                    viewBox: "0 0 24 24",
+                    fill: "none",
+                    stroke: "currentColor",
+                    strokeWidth: "2.5",
+                    strokeLinecap: "round",
+                    strokeLinejoin: "round",
+                    className: "h-3.5 w-3.5 ml-0.5 pointer-events-none",
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("line", { x1: "7", y1: "17", x2: "17", y2: "7" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("polyline", { points: "7 7 17 7 17 17" })
+                    ]
+                  }
+                )
               ]
             }
-          )
+          ) }),
+          details
         ] })
-      ] });
+      ] }) });
       if (!animationConfig) {
         return renderContent();
       }
@@ -25517,21 +25399,51 @@ var require_frontend = __commonJS({
       __proto__: null,
       default: OverlayCard
     }, Symbol.toStringTag, { value: "Module" }));
+    const getSocialIcon$1 = (channel) => {
+      var _a2;
+      const icons = {
+        facebook: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 320 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" }) }),
+        twitter: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 512 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" }) }),
+        instagram: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 448 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" }) }),
+        linkedin: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 448 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z" }) }),
+        youtube: /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "w-4 h-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("polygon", { points: "9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" })
+        ] }),
+        github: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "w-4 h-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" }) })
+      };
+      return icons[(_a2 = channel == null ? void 0 : channel.toLowerCase) == null ? void 0 : _a2.call(channel)] || null;
+    };
     const SocialIcons$1 = ({ socialIcons, settings }) => {
-      const data = parseSocialIcons(socialIcons);
+      let data = socialIcons;
+      if (typeof socialIcons === "string") {
+        try {
+          data = JSON.parse(socialIcons);
+        } catch (error) {
+          console.error("Error parsing socialIcons:", error);
+          return null;
+        }
+      }
       if (!data || !Array.isArray(data)) return null;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-2", children: data.map((item, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "a",
-        {
-          href: item.link,
-          target: "_blank",
-          rel: "noopener noreferrer",
-          className: "tsteam-social-icon tsteam-spotlight__social",
-          style: getSocialIconStyle(item, settings),
-          children: getSocialIcon(item.socialChannel)
-        },
-        index
-      )) });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-2", children: data.map((item, index) => {
+        var _a2, _b, _c, _d, _e, _f;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: item.link,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            className: "tsteam-spotlight__social",
+            style: {
+              backgroundColor: (_b = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.color) == null ? void 0 : _b.socialIconBg,
+              color: (_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon,
+              borderRadius: (_f = (_e = settings == null ? void 0 : settings.layout) == null ? void 0 : _e.borderRadius) == null ? void 0 : _f.socialIcon
+            },
+            children: getSocialIcon$1(item.socialChannel)
+          },
+          index
+        );
+      }) });
     };
     const Spotlight = ({
       settings,
@@ -25578,21 +25490,50 @@ var require_frontend = __commonJS({
       __proto__: null,
       default: Spotlight
     }, Symbol.toStringTag, { value: "Module" }));
+    const getSocialIcon = (channel) => {
+      const icons = {
+        facebook: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 320 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z" }) }),
+        twitter: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 512 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z" }) }),
+        instagram: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 448 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" }) }),
+        linkedin: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 448 512", className: "w-4 h-4 fill-current", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M100.3 448H7.4V148.9h92.9zM53.8 108.1C24.1 108.1 0 83.5 0 53.8a53.8 53.8 0 0 1 107.6 0c0 29.7-24.1 54.3-53.8 54.3zM447.9 448h-92.7V302.4c0-34.7-.7-79.2-48.3-79.2-48.3 0-55.7 37.7-55.7 76.7V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.7-48.3 87.9-48.3 94 0 111.3 61.9 111.3 142.3V448z" }) }),
+        youtube: /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "w-4 h-4", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("polygon", { points: "9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" })
+        ] }),
+        github: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "w-4 h-4", children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" }) })
+      };
+      return icons[channel.toLowerCase()] || null;
+    };
     const SocialIcons = ({ socialIcons, settings }) => {
-      const data = parseSocialIcons(socialIcons);
+      let data = socialIcons;
+      if (typeof socialIcons === "string") {
+        try {
+          data = JSON.parse(socialIcons);
+        } catch (error) {
+          console.error("Error parsing socialIcons:", error);
+          return null;
+        }
+      }
       if (!data || !Array.isArray(data)) return null;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-4", children: data.map((item, index) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-        "a",
-        {
-          href: item.link,
-          target: "_blank",
-          rel: "noopener noreferrer",
-          className: "tsteam-social-icon bg-white hover:text-gray-200 text-sm text-purple-500 hover:bg-white rounded-full p-2 transition-colors",
-          style: getSocialIconStyle(item, settings),
-          children: getSocialIcon(item.socialChannel)
-        },
-        index
-      )) });
+      return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap items-center justify-center gap-4", children: data.map((item, index) => {
+        var _a2, _b, _c, _d, _e, _f;
+        return /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "a",
+          {
+            href: item.link,
+            target: "_blank",
+            rel: "noopener noreferrer",
+            className: "bg-white hover:text-gray-200 text-sm text-purple-500 hover:bg-white rounded-full p-2 transition-colors",
+            style: {
+              backgroundColor: (_b = (_a2 = settings == null ? void 0 : settings.layout) == null ? void 0 : _a2.color) == null ? void 0 : _b.socialIconBg,
+              color: (_d = (_c = settings == null ? void 0 : settings.layout) == null ? void 0 : _c.color) == null ? void 0 : _d.socialIcon,
+              borderRadius: (_f = (_e = settings == null ? void 0 : settings.layout) == null ? void 0 : _e.borderRadius) == null ? void 0 : _f.socialIcon
+            },
+            children: getSocialIcon(item.socialChannel)
+          },
+          index
+        );
+      }) });
     };
     const Tiles = ({
       settings,
@@ -25611,7 +25552,7 @@ var require_frontend = __commonJS({
             id: `${title == null ? void 0 : title.replace(/\s+/g, "-").toLowerCase()}-${id2}`,
             src: imageUrl,
             alt: title,
-            className: ` object-cover w-[216px] h-[216px] block !rounded-full tsteam-member__image mb-5 bg-white ${details ? "cursor-pointer" : ""}`
+            className: ` object-cover w-[216px] !h-[216px] block !rounded-full tsteam-member__image mb-5 bg-white ${details ? "cursor-pointer" : ""}`
           }
         ),
         title && /* @__PURE__ */ jsxRuntimeExports.jsx(TsMemberName, { className: "group-hover:text-white text-[22px] ", children: title }),

@@ -18,34 +18,32 @@ const Card = ({
   details,
   animationConfig
 }) => {
-
-  // const animationConfig = getAnimationClasses(settings.hoverAnimation);
-  console.log("Passing animationConfig to Card:", animationConfig);
-
   const renderContent = () => (
-   <>
-    <div className="w-full flex flex-col items-center">
-      <img
-        id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`}
-        src={imageUrl}
-        alt={title}
-        className={`tsteam-member__image w-32 max-h-[8rem] rounded-xl -mb-12 z-10 relative shadow-2xl object-cover ${
-          details ? "cursor-pointer" : ""
-        }`}
-      />
-      <div
-        className="w-full max-w-sm bg-white rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.1)] overflow-hidden tsteam-card-container "
-      >
-        <div className="px-5 pt-16 pb-5 text-center flex flex-col items-center">
-          {title && <TsMemberName> {title} </TsMemberName>}
+    <div className="w-full flex justify-center">
+      <article className="group relative w-full max-w-sm tsteam-card-layout">
+        <div className="relative mx-auto -mb-14 w-44 h-44 rounded-2xl overflow-hidden ring-4 ring-white transition-transform duration-500 group-hover:-translate-y-2 bg-gradient-to-br from-[#7547D7] to-[#A146DB] z-10 tsteam-image-glow">
+          <img
+            id={`${title?.replace(/\s+/g, "-").toLowerCase()}-${id}`}
+            src={imageUrl}
+            alt={title}
+            className={` tsteam-member__image w-full h-full object-cover ${
+              details ? "cursor-pointer" : ""
+            }`}
+          />
+        </div>
+        <div className="rounded-2xl bg-white pt-20 pb-7 px-6 text-center border border-solid border-gray-200 shadow-md hover:shadow-lg transition-all duration-300 tsteam-card-container">
+          {title && (
+            <TsMemberName>
+              <span className="name-underline inline-block">{title}</span>
+            </TsMemberName>
+          )}
 
-          {subtitle && <TsMemberDesignation> {subtitle} </TsMemberDesignation>}
+          {subtitle && <TsMemberDesignation>{subtitle}</TsMemberDesignation>}
 
-          <hr className="tscard__separator"></hr>
-
+          <hr className="tscard__separator" />
 
           {description && (
-            <TsMemberDescription> {description} </TsMemberDescription>
+            <TsMemberDescription>{description}</TsMemberDescription>
           )}
 
           {details && (
@@ -54,11 +52,12 @@ const Card = ({
             </div>
           )}
 
-          <SocialIcons socialIcons={socialIcons} settings={settings} />
+          <div className="mt-5">
+            <SocialIcons socialIcons={socialIcons} settings={settings} />
+          </div>
         </div>
-      </div>
+      </article>
     </div>
-   </>
   );
 
   // Handle different animation types

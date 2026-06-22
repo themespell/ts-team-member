@@ -1,15 +1,17 @@
 :root {
-    --tshorizontal-borderColor: #ccc; /* Default border color */
-    --tshorizontal-borderColor-hover: blue; /* Default hover border color */
+    --tshorizontal-borderColor: #e5e7eb; /* Default border color */
+    --tshorizontal-borderColor-hover: #7547D7; /* Default hover border color */
 }
 
-.tshorizontal__border-color {
-    border: 1px solid var(--tshorizontal-borderColor, #ccc); /* Fallback to #ccc if variable is not defined */
-    border-radius: 20px; /* Rounded corners */
-    overflow: hidden; /* Ensures content stays within rounded borders */
-    background-color: white; /* Background color */
+.tshorizontal-card-wrapper {
+    border: 1px solid var(--tshorizontal-borderColor, #e5e7eb) !important;
+    background-color: white !important;
+    box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.3s ease-in-out !important;
 }
 
-.tshorizontal__border-color:hover {
-    border-color: var(--tshorizontal-borderColor-hover, blue); /* Fallback to blue if variable is not defined */
+.tshorizontal-card-wrapper:hover {
+    border-color: var(--tshorizontal-borderColor-hover, #7547D7) !important;
+    transform: translateY(-4px) !important;
+    box-shadow: 0 15px 35px -10px rgba(117, 71, 215, 0.4) !important;
 }
