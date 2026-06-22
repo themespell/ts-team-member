@@ -4,7 +4,7 @@ Tags: team showcase, team members showcase, team member, team builder, team plug
 Requires at least: 5.5
 Tested up to: 7.0
 Requires PHP: 5.4
-Stable tag: 1.2.8
+Stable tag: 1.2.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -247,6 +247,12 @@ If the user does **not** opt in, only essential data may be sent for license val
 7. Elementor widget for TS Team Member.
 
 == Changelog ==
+
+1.2.9
+* Revamped Editor
+* Improved Layout Designs
+* Added Undo / Redo Feature
+* Readme Updated
 
 1.2.8
 * Added Spotlight Layout
