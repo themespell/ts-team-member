@@ -8386,7 +8386,8 @@ var require_frontend = __commonJS({
                 socialIcons: member.meta_data.socialLinks || [],
                 details: /* @__PURE__ */ jsxRuntimeExports.jsx(Details, { settings, member }),
                 animationConfig,
-                videoLink: member.meta_data.videoLink
+                videoLink: member.meta_data.videoLink,
+                skills: JSON.parse(member.meta_data.skills) || []
               }
             ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
               Layout,
@@ -8401,7 +8402,8 @@ var require_frontend = __commonJS({
                 socialIcons: member.meta_data.socialLinks || [],
                 details: /* @__PURE__ */ jsxRuntimeExports.jsx(Details, { settings, member }),
                 animationConfig,
-                videoLink: member.meta_data.videoLink
+                videoLink: member.meta_data.videoLink,
+                skills: JSON.parse(member.meta_data.skills) || []
               }
             ) }, index)) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No team members found." })
           ]

@@ -81,6 +81,8 @@ function StaticView({ team_members, settings, viewport, isEditor }) {
                 details={<Details settings={settings} member={member} />}
                 animationConfig={animationConfig}
                 videoLink={member.meta_data.videoLink}
+                skills={JSON.parse(member.meta_data.skills) || []}
+
               />
             ) : (
               <Layout
@@ -95,6 +97,7 @@ function StaticView({ team_members, settings, viewport, isEditor }) {
                 details={<Details settings={settings} member={member} />}
                 animationConfig={animationConfig}
                 videoLink={member.meta_data.videoLink}
+                skills={JSON.parse(member.meta_data.skills) || []}
               />
             )}
           </Fragment>

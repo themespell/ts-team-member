@@ -73,7 +73,6 @@ function Frontend({ id }) {
   const devMode = Boolean(tsteam_settings.devmode);
   const [isHovering, setIsHovering] = useState(false);
 
-
   useEffect(() => {
     if (id) {
       fetchData(`tsteam/team_showcase/fetch/single`, (response) => {

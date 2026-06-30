@@ -81949,7 +81949,8 @@ var require_admin = __commonJS({
                 socialIcons: member.meta_data.socialLinks || [],
                 details: /* @__PURE__ */ jsxRuntimeExports.jsx(Details, { settings, member }),
                 animationConfig,
-                videoLink: member.meta_data.videoLink
+                videoLink: member.meta_data.videoLink,
+                skills: JSON.parse(member.meta_data.skills) || []
               }
             ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
               Layout,
@@ -81964,7 +81965,8 @@ var require_admin = __commonJS({
                 socialIcons: member.meta_data.socialLinks || [],
                 details: /* @__PURE__ */ jsxRuntimeExports.jsx(Details, { settings, member }),
                 animationConfig,
-                videoLink: member.meta_data.videoLink
+                videoLink: member.meta_data.videoLink,
+                skills: JSON.parse(member.meta_data.skills) || []
               }
             ) }, index2)) : /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "No team members found." })
           ]
