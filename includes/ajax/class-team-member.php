@@ -59,6 +59,7 @@ class TeamMember {
 				'image' => $member_meta['image'] ?? '',
 				'name'        => get_the_title(),
 				'designation' => $member_meta['designation'] ?? '',
+				'category'    => $this->get_category_name( $member_meta['category'] ?? '' ),
 				'description' => get_the_content(),
 			);
 		}
@@ -248,5 +249,19 @@ class TeamMember {
 		} else {
 			wp_send_json_error( array( 'message' => 'Failed to delete Team Member' ) );
 		}
+	}
+
+	/**
+	 * Get category name from slug.
+	 */
+	private function get_category_name( $slug ) {
+		if ( empty( $slug ) ) {
+			return '';
+		}
+		$term = get_term_by( 'slug', $slug, 'tsteam-member-category' );
+		if ( $term && ! is_wp_error( $term ) ) {
+			return $term->name;
+		}
+		return $slug;
 	}
 }

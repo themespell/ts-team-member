@@ -1,22 +1,26 @@
 #!/usr/bin/env node
 
 /**
- * WordPress.org SVN deployment script.
+ * WordPress.org SVN deployment script for TS Team Member.
  *
- * Flow:
- * 1. Build the distributable ZIP via build-dist.js
- * 2. Ensure a local SVN working copy exists in .wordpress-org
- * 3. Sync plugin files into trunk/ using .distignore rules
- * 4. Copy trunk/ to tags/{version}
- * 5. Commit to WordPress.org SVN
+ * Modes:
+ * - Full release (default): builds ZIP, syncs trunk + assets + tag, commits all
+ * - Assets only: syncs only the assets directory and commits
+ * - Pull: checks out SVN working copy to a user-specified path
  *
- * Optional environment variables:
+ * Usage:
+ *   npm run dist:push              # Full release
+ *   npm run dist:push:assets       # Push assets only
+ *   npm run dist:pull              # Pull SVN working copy
+ *
+ * Environment variables:
  * - WPORG_SLUG=ts-team-member
  * - WPORG_SVN_URL=https://plugins.svn.wordpress.org/ts-team-member/
  * - WPORG_WORKING_COPY=.wordpress-org
  * - WPORG_ASSETS_DIR=assets-wporg
  * - WPORG_COMMIT_MESSAGE="Release 1.2.6"
  * - WPORG_DRY_RUN=1
+ * - WPORG_ASSETS_ONLY=1
  */
 
 import fs from 'fs';
@@ -40,6 +44,7 @@ const SVN_URL = process.env.WPORG_SVN_URL || 'https://plugins.svn.wordpress.org/
 const WORKING_COPY_DIR = path.resolve(SOURCE_DIR, process.env.WPORG_WORKING_COPY || '.wordpress-org');
 const SVN_ASSETS_SOURCE = path.resolve(SOURCE_DIR, process.env.WPORG_ASSETS_DIR || 'assets-wporg');
 const DRY_RUN = process.env.WPORG_DRY_RUN === '1';
+const ASSETS_ONLY = process.env.WPORG_ASSETS_ONLY === '1';
 
 function runCommand(command, args, options = {}) {
   const result = spawnSync(command, args, {
@@ -85,21 +90,25 @@ function commandExists(command) {
 
 function getPluginMetadata() {
   const metadata = {
-    version: '1.0.0',
-    stableTag: '1.0.0'
+    version: null,
+    stableTag: null
   };
 
   const pluginContent = fs.readFileSync(MAIN_PLUGIN_FILE, 'utf8');
   const readmeContent = fs.readFileSync(README_FILE, 'utf8');
 
-  const versionMatch = pluginContent.match(/\*\s*Version:\s*([0-9.]+)/i);
-  if (versionMatch && versionMatch[1]) {
-    metadata.version = versionMatch[1];
+  const defineMatch = pluginContent.match(/define\s*\(\s*['"]\w+_VERSION['"]\s*,\s*['"]([0-9.]+)['"]\s*\)/);
+  if (defineMatch && defineMatch[1]) {
+    metadata.version = defineMatch[1];
+  } else {
+    throw new Error('Could not read version from PHP define() constant in ' + path.basename(MAIN_PLUGIN_FILE));
   }
 
   const stableTagMatch = readmeContent.match(/^Stable tag:\s*([0-9.]+)$/im);
   if (stableTagMatch && stableTagMatch[1]) {
     metadata.stableTag = stableTagMatch[1];
+  } else {
+    throw new Error('Could not read stable tag from ' + path.basename(README_FILE));
   }
 
   return metadata;
@@ -482,7 +491,51 @@ function hasWorkingCopyChanges() {
   return Boolean((statusResult.stdout || '').trim());
 }
 
-async function main() {
+function updateSvnWorkingCopy() {
+  console.log('Updating SVN working copy...');
+  runCommand('svn', withSvnAuth(['update']), { cwd: WORKING_COPY_DIR });
+}
+
+async function pushAssetsOnly() {
+  console.log('');
+  console.log('========================================');
+  console.log(`  Pushing assets for ${PLUGIN_SLUG}`);
+  console.log('========================================');
+  console.log('');
+
+  await ensureSvnAvailable();
+  ensureWorkingCopy();
+  updateSvnWorkingCopy();
+
+  const assetsDir = path.join(WORKING_COPY_DIR, 'assets');
+
+  if (syncDirectory(SVN_ASSETS_SOURCE, assetsDir)) {
+    console.log(`Synced WordPress.org assets from ${path.relative(SOURCE_DIR, SVN_ASSETS_SOURCE)}`);
+  } else {
+    console.log(`No ${path.relative(SOURCE_DIR, SVN_ASSETS_SOURCE)} directory found. Creating empty assets directory.`);
+    ensureDirectory(assetsDir);
+  }
+
+  applySvnAddsAndDeletes();
+
+  if (!hasWorkingCopyChanges()) {
+    console.log('No asset changes detected. Nothing to commit.');
+    return;
+  }
+
+  if (DRY_RUN) {
+    console.log('Dry run enabled. Skipping SVN commit.');
+    runCommand('svn', ['status'], { cwd: WORKING_COPY_DIR });
+    return;
+  }
+
+  const commitMessage = process.env.WPORG_COMMIT_MESSAGE || 'Update plugin assets';
+  console.log(`Committing with message: ${commitMessage}`);
+  runCommand('svn', withSvnAuth(['commit', '-m', commitMessage]), { cwd: WORKING_COPY_DIR });
+  console.log('Assets pushed successfully!');
+}
+
+async function pushFullRelease() {
   const metadata = getPluginMetadata();
   const commitMessage = process.env.WPORG_COMMIT_MESSAGE || `Release ${metadata.version}`;
   const ig = loadDistIgnore();
@@ -501,6 +554,7 @@ async function main() {
   runCommand('node', ['build-dist.js']);
 
   ensureWorkingCopy();
+  updateSvnWorkingCopy();
 
   const trunkDir = path.join(WORKING_COPY_DIR, 'trunk');
   const assetsDir = path.join(WORKING_COPY_DIR, 'assets');
@@ -533,9 +587,73 @@ async function main() {
 
   console.log(`Committing with message: ${commitMessage}`);
   runCommand('svn', withSvnAuth(['commit', '-m', commitMessage]), { cwd: WORKING_COPY_DIR });
+  console.log('Release pushed successfully!');
+}
+
+async function pullWorkingCopy() {
+  console.log('');
+  console.log('========================================');
+  console.log(`  Pulling ${PLUGIN_SLUG} from SVN`);
+  console.log('========================================');
+  console.log('');
+
+  await ensureSvnAvailable();
+
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+
+  let targetDir = WORKING_COPY_DIR;
+
+  try {
+    const defaultPath = WORKING_COPY_DIR;
+    const answer = await rl.question(
+      `Enter path to save SVN files (default: ${defaultPath}): `
+    );
+
+    const trimmed = answer.trim();
+
+    if (trimmed) {
+      targetDir = path.resolve(trimmed, PLUGIN_SLUG);
+    }
+  } finally {
+    rl.close();
+  }
+
+  if (fs.existsSync(targetDir) && fs.existsSync(path.join(targetDir, '.svn'))) {
+    console.log(`SVN working copy already exists at ${targetDir}. Updating...`);
+    runCommand('svn', withSvnAuth(['update']), { cwd: targetDir });
+  } else {
+    console.log(`Checking out ${SVN_URL} into ${targetDir}`);
+    runCommand('svn', withSvnAuth(['checkout', SVN_URL, targetDir]));
+  }
+
+  console.log('');
+  console.log('SVN working copy is ready at:', targetDir);
+  console.log('');
+  console.log('Directory structure:');
+  const entries = fs.readdirSync(targetDir, { withFileTypes: true });
+  entries.forEach(entry => {
+    const type = entry.isDirectory() ? 'dir ' : 'file';
+    console.log(`  [${type}] ${entry.name}`);
+  });
+  console.log('');
+}
+
+async function main() {
+  const mode = process.argv[2];
+
+  if (mode === 'pull') {
+    await pullWorkingCopy();
+  } else if (mode === 'assets' || ASSETS_ONLY) {
+    await pushAssetsOnly();
+  } else {
+    await pushFullRelease();
+  }
 }
 
 main().catch(error => {
-  console.error(`SVN push failed: ${error.message}`);
+  console.error(`SVN operation failed: ${error.message}`);
   process.exit(1);
 });

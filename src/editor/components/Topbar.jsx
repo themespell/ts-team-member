@@ -43,33 +43,25 @@ function Topbar({ type, onCopySettings, onPasteSettings, onUndo, onRedo, canUndo
         {
             key: 'copy',
             label: (
-                <TsButton
-                    label={
-                        <>
-                            <ClipboardCopy /> {translations.copyDesign}
-                            {(!isPro || isLicenseInactive) && <TsProBadge />}
-                        </>
-                    }
-                    disabled={!isPro || isLicenseInactive}
-                    className={!isPro || isLicenseInactive ? "opacity-50 cursor-not-allowed" : ""}
+                <div
+                    className={`tsteam-action-item ${!isPro || isLicenseInactive ? "opacity-50 cursor-not-allowed" : ""}`}
                     onClick={!isPro || isLicenseInactive ? (e) => e.preventDefault() : onCopySettings}
-                />
+                >
+                    <ClipboardCopy size={16} /> {translations.copyDesign}
+                    {(!isPro || isLicenseInactive) && <TsProBadge />}
+                </div>
             ),
         },
         {
             key: 'paste',
             label: (
-                <TsButton
-                    label={
-                        <>
-                            <ClipboardPaste /> {translations.pasteDesign}
-                            {(!isPro || isLicenseInactive) && <TsProBadge />}
-                        </>
-                    }
-                    disabled={!isPro || isLicenseInactive}
-                    className={!isPro || isLicenseInactive ? "opacity-50 cursor-not-allowed" : ""}
+                <div
+                    className={`tsteam-action-item ${!isPro || isLicenseInactive ? "opacity-50 cursor-not-allowed" : ""}`}
                     onClick={!isPro || isLicenseInactive ? (e) => e.preventDefault() : onPasteSettings}
-                />
+                >
+                    <ClipboardPaste size={16} /> {translations.pasteDesign}
+                    {(!isPro || isLicenseInactive) && <TsProBadge />}
+                </div>
             ),
         },
     ];
@@ -117,22 +109,22 @@ function Topbar({ type, onCopySettings, onPasteSettings, onUndo, onRedo, canUndo
                     <Dropdown menu={{ items }} trigger={['click']}>
                         <TsButton
                             label={<><Copy size={16} /> Actions</>}
-                            className="ts-editor-ghost-button"
+                            className="ts-editor-button ts-editor-ghost-button"
                         />
                     </Dropdown>
                     <TsButton
                         label={<><Code size={16} /> Code</>}
-                        className="ts-editor-ghost-button"
+                        className="ts-editor-button ts-editor-ghost-button"
                         onClick={handleCodeClick}
                     />
                     <TsButton
                         label={translations.publish}
-                        className="ts-editor-publish-button"
+                        className="ts-editor-button ts-editor-publish-button"
                         onClick={handlePublishClick}
                     />
                     <TsButton
                         label={<>Close <CircleX size={14} /></>}
-                        className="ts-editor-close-button"
+                        className="ts-editor-button ts-editor-close-button"
                         onClick={handleBacktoAdmin}
                     />
                 </div>

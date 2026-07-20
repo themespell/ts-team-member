@@ -36,11 +36,30 @@ class MemberCategory {
 			return false;
 		}
 
+		$team_member_ids = get_term_meta( $term_id, 'team_members', true );
+		if ( ! is_array( $team_member_ids ) ) {
+			$team_member_ids = array();
+		}
+
+		// Convert IDs to names
+		$team_members = array();
+		foreach ( $team_member_ids as $member_id ) {
+			$name = get_the_title( $member_id );
+			if ( $name ) {
+				$team_members[] = array(
+					'id'   => $member_id,
+					'name' => $name,
+				);
+			}
+		}
+
 		return array(
-			'post_id'     => $category->term_id,
-			'name'        => $category->name,
-			'slug'        => $category->slug,
-			'count'       => $category->count,
+			'post_id'       => $category->term_id,
+			'name'          => $category->name,
+			'slug'          => $category->slug,
+			'count'         => count( $team_members ),
+			'team_members'  => $team_members,
+			'team_member_ids' => $team_member_ids,
 		);
 	}
 
@@ -152,6 +171,13 @@ class MemberCategory {
 		update_term_meta( $term_id, 'category_icon', $icon );
 		update_term_meta( $term_id, 'category_order', $order );
 
+		// Save team members
+		$team_members = isset( $post_data['team_members'] ) ? array_map( 'absint', (array) $post_data['team_members'] ) : array();
+		update_term_meta( $term_id, 'team_members', $team_members );
+
+		// Sync category to each team member
+		$this->sync_team_member_categories( $term_id, $team_members );
+
 		// Return enhanced data
 		$enhanced_category = $this->get_enhanced_category( $term_id );
 
@@ -229,6 +255,13 @@ class MemberCategory {
 		update_term_meta( $term_id, 'category_color', $color );
 		update_term_meta( $term_id, 'category_icon', $icon );
 		update_term_meta( $term_id, 'category_order', $order );
+
+		// Save team members
+		$team_members = isset( $post_data['team_members'] ) ? array_map( 'absint', (array) $post_data['team_members'] ) : array();
+		update_term_meta( $term_id, 'team_members', $team_members );
+
+		// Sync category to each team member
+		$this->sync_team_member_categories( $term_id, $team_members );
 
 		// Return enhanced data
 		$enhanced_category = $this->get_enhanced_category( $term_id );
@@ -362,6 +395,52 @@ class MemberCategory {
 			);
 		} else {
 			wp_send_json_error( array( 'message' => 'Failed to delete category (may already be deleted or in use)' ) );
+		}
+	}
+
+	/**
+	 * Sync category assignment to team members.
+	 * When members are added/removed from a category, update their category field.
+	 */
+	private function sync_team_member_categories( $category_term_id, $team_member_ids ) {
+		$category = get_term( $category_term_id, 'tsteam-member-category' );
+		if ( is_wp_error( $category ) || ! $category ) {
+			return;
+		}
+
+		$category_slug = $category->slug;
+
+		// Get ALL team members to find ones that were removed from this category
+		$args = array(
+			'post_type' => 'tsteam-member',
+			'posts_per_page' => -1,
+			'fields' => 'ids',
+		);
+		$all_member_ids = get_posts( $args );
+
+		// For each member in this category, set their category
+		foreach ( $team_member_ids as $member_id ) {
+			$member_meta = get_post_meta( $member_id, 'tsteam_member_info', true );
+			if ( ! is_array( $member_meta ) ) {
+				$member_meta = array();
+			}
+			$member_meta['category'] = $category_slug;
+			update_post_meta( $member_id, 'tsteam_member_info', $member_meta );
+		}
+
+		// For members NOT in this category but were previously, clear their category
+		foreach ( $all_member_ids as $member_id ) {
+			if ( ! in_array( $member_id, $team_member_ids, true ) ) {
+				$member_meta = get_post_meta( $member_id, 'tsteam_member_info', true );
+				if ( ! is_array( $member_meta ) ) {
+					$member_meta = array();
+				}
+				// Only clear if this was their category
+				if ( isset( $member_meta['category'] ) && $member_meta['category'] === $category_slug ) {
+					$member_meta['category'] = '';
+					update_post_meta( $member_id, 'tsteam_member_info', $member_meta );
+				}
+			}
 		}
 	}
 }

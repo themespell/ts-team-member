@@ -7,6 +7,7 @@ import { googleFonts } from '../../utils/googleFonts';
 import editorFunction from "../../../editor/states/editorFunction.js";
 import get from "lodash/get.js";
 import editorStore from "../../../editor/states/editorStore.js";
+import TsProBadge from '../controls/TsProBadge.jsx';
 
 function TsFont({ label, name, targetedClass, isPro }) {
   const { saveSettings } = editorFunction();
@@ -148,41 +149,42 @@ function TsFont({ label, name, targetedClass, isPro }) {
   return (
       <div className="mb-4">
         {label && (
-            <label className="block text-sm font-medium text-gray-700 mb-2" style={{ color: globalSettings.theme.textColor }}>
-              {label}
-            </label>
-        )}
-        {isPro ? (
-            <Alert banner message="This feature is available for Pro users only." />
-        ) : (
-            <div className="flex items-center gap-2">
-              <Select
-                  placeholder={`Select ${label}`}
-                  value={font}
-                  style={{
-                    width: '100%',
-                    fontFamily: font || undefined
-                  }}
-                  onChange={(newFont) => {
-                    setFont(newFont);
-                    saveSettings(name, newFont);
-                  }}
-                  options={googleFonts}
-              />
-              <Dropdown
-                  menu={{ items }}
-                  trigger={['click']}
-                  placement="bottomRight"
-                  arrow={true}
-                  open={open}
-                  onOpenChange={setOpen}
-              >
-                <a onClick={(e) => e.preventDefault()}>
-                  <Pencil size={20} />
-                </a>
-              </Dropdown>
+            <div className="flex items-center gap-2 mb-2">
+              <label className="block text-sm font-medium text-gray-700" style={{ color: globalSettings.theme.textColor }}>
+                {label}
+              </label>
+              {isPro && <TsProBadge />}
             </div>
         )}
+        <div className={`flex items-center gap-2 ${isPro ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}`}>
+          <Select
+              placeholder={`Select ${label}`}
+              value={font}
+              style={{
+                width: '100%',
+                fontFamily: font || undefined
+              }}
+              onChange={(newFont) => {
+                setFont(newFont);
+                saveSettings(name, newFont);
+              }}
+              options={googleFonts}
+              disabled={isPro}
+          />
+          <Dropdown
+              menu={{ items }}
+              trigger={['click']}
+              placement="bottomRight"
+              arrow={true}
+              open={!isPro && open}
+              onOpenChange={isPro ? undefined : setOpen}
+              disabled={isPro}
+          >
+            <a onClick={(e) => e.preventDefault()}>
+              <Pencil size={20} className={isPro ? 'pointer-events-none' : ''} />
+            </a>
+          </Dropdown>
+        </div>
       </div>
   );
 }

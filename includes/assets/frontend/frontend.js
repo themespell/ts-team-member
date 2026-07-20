@@ -8745,246 +8745,6 @@ var require_frontend = __commonJS({
       console.warn(`Unrecognized input: "${str}". Defaulting to false.`);
       return false;
     }
-    function PhotoIcon({
-      title,
-      titleId,
-      ...props
-    }, svgRef) {
-      return /* @__PURE__ */ reactExports.createElement("svg", Object.assign({
-        xmlns: "http://www.w3.org/2000/svg",
-        viewBox: "0 0 24 24",
-        fill: "currentColor",
-        "aria-hidden": "true",
-        "data-slot": "icon",
-        ref: svgRef,
-        "aria-labelledby": titleId
-      }, props), title ? /* @__PURE__ */ reactExports.createElement("title", {
-        id: titleId
-      }, title) : null, /* @__PURE__ */ reactExports.createElement("path", {
-        fillRule: "evenodd",
-        d: "M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z",
-        clipRule: "evenodd"
-      }));
-    }
-    const ForwardRef$1 = /* @__PURE__ */ reactExports.forwardRef(PhotoIcon);
-    function UserCircleIcon({
-      title,
-      titleId,
-      ...props
-    }, svgRef) {
-      return /* @__PURE__ */ reactExports.createElement("svg", Object.assign({
-        xmlns: "http://www.w3.org/2000/svg",
-        viewBox: "0 0 24 24",
-        fill: "currentColor",
-        "aria-hidden": "true",
-        "data-slot": "icon",
-        ref: svgRef,
-        "aria-labelledby": titleId
-      }, props), title ? /* @__PURE__ */ reactExports.createElement("title", {
-        id: titleId
-      }, title) : null, /* @__PURE__ */ reactExports.createElement("path", {
-        fillRule: "evenodd",
-        d: "M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z",
-        clipRule: "evenodd"
-      }));
-    }
-    const ForwardRef = /* @__PURE__ */ reactExports.forwardRef(UserCircleIcon);
-    const getTranslations = () => {
-      if (!window.tsteam_i18n) {
-        console.error("tsteam_i18n is not defined. Ensure translations are passed via wp_localize_script().");
-        return {};
-      }
-      return {
-        dashboard: window.tsteam_i18n.dashboard || "Dashboard",
-        teamShowcase: window.tsteam_i18n.team_showcase || "Team Showcase",
-        teamMember: window.tsteam_i18n.team_member || "Team Member",
-        memberCategory: window.tsteam_i18n.member_category || "Member Category",
-        tools: window.tsteam_i18n.tools || "Tools",
-        account: window.tsteam_i18n.account || "Account",
-        supportForum: window.tsteam_i18n.support_forum || "Support Forum",
-        getPro: window.tsteam_i18n.get_pro || "Get Pro",
-        grabYourDiscount: window.tsteam_i18n.grab_your_discount || "Grab Your Discount",
-        upgradeToPro: window.tsteam_i18n.upgrade_to_pro || "Upgrade to Pro",
-        documentations: window.tsteam_i18n.documentations || "Documentations",
-        helpAndSupport: window.tsteam_i18n.help_and_support || "Help & Support",
-        videoGuide: window.tsteam_i18n.video_guide || "Video Guide",
-        add: window.tsteam_i18n.add || "Add",
-        create: window.tsteam_i18n.create || "Create",
-        select: window.tsteam_i18n.select || "Select",
-        settings: window.tsteam_i18n.settings || "Settings",
-        update: window.tsteam_i18n.update || "Update",
-        publish: window.tsteam_i18n.publish || "Publish",
-        title: window.tsteam_i18n.title || "Title",
-        shortcode: window.tsteam_i18n.shortcode || "Shortcode",
-        snippet: window.tsteam_i18n.snippet || "Snippet",
-        action: window.tsteam_i18n.action || "Action",
-        edit: window.tsteam_i18n.edit || "Edit",
-        editDesign: window.tsteam_i18n.edit_design || "Edit Design",
-        delete: window.tsteam_i18n.delete || "Delete",
-        image: window.tsteam_i18n.image || "Image",
-        name: window.tsteam_i18n.name || "Name",
-        designation: window.tsteam_i18n.designation || "Designation",
-        description: window.tsteam_i18n.description || "Description",
-        basicInformation: window.tsteam_i18n.basic_information || "Basic Information",
-        memberName: window.tsteam_i18n.member_name || "Member Name",
-        memberDesignation: window.tsteam_i18n.member_designation || "Member Designation",
-        memberEmail: window.tsteam_i18n.member_email || "Member Email",
-        memberMobile: window.tsteam_i18n.member_mobile || "Member Mobile",
-        memberDescription: window.tsteam_i18n.member_description || "Member Description",
-        memberImage: window.tsteam_i18n.member_image || "Member Image",
-        detailsInformation: window.tsteam_i18n.details_information || "Details Information",
-        memberTelephone: window.tsteam_i18n.member_telephone || "Member Telephone",
-        yearsOfExperience: window.tsteam_i18n.years_of_experience || "Years of Experience",
-        company: window.tsteam_i18n.company || "Company",
-        location: window.tsteam_i18n.location || "Location",
-        profileLinks: window.tsteam_i18n.profile_links || "Profile Links",
-        website: window.tsteam_i18n.website || "Website",
-        resumeLink: window.tsteam_i18n.resume_link || "Resume Link",
-        hireLink: window.tsteam_i18n.hire_link || "Hire Link",
-        donationLink: window.tsteam_i18n.donation_link || "Donation Link",
-        videoLink: window.tsteam_i18n.video_link || "Video Link",
-        socialLinks: window.tsteam_i18n.social_links || "Social Links",
-        skills: window.tsteam_i18n.skills || "Skills",
-        showcaseName: window.tsteam_i18n.showcase_name || "Showcase Name",
-        content: window.tsteam_i18n.content || "Content",
-        loadingEditor: window.tsteam_i18n.loading_editor || "Loading Editor",
-        copyDesign: window.tsteam_i18n.copy_design || "Copy Design",
-        pasteDesign: window.tsteam_i18n.paste_design || "Paste Design",
-        viewStyle: window.tsteam_i18n.view_style || "View Style",
-        layout: window.tsteam_i18n.layout || "Layout",
-        detailsStyle: window.tsteam_i18n.details_style || "Details Style",
-        containerWidth: window.tsteam_i18n.container_width || "Container Width",
-        columns: window.tsteam_i18n.columns || "Columns",
-        columnGap: window.tsteam_i18n.column_gap || "Column Gap",
-        style: window.tsteam_i18n.style || "Style",
-        commonStyles: window.tsteam_i18n.common_styles || "Common Styles",
-        backgroundColor: window.tsteam_i18n.background_color || "Background Color",
-        memberNameColor: window.tsteam_i18n.member_name_color || "Member Name Color",
-        memberDesignationColor: window.tsteam_i18n.member_designation_color || "Member Designation Color",
-        memberDescriptionColor: window.tsteam_i18n.member_description_color || "Member Description Color",
-        borderColor: window.tsteam_i18n.border_color || "Border Color",
-        imageBorderColor: window.tsteam_i18n.image_border_color || "Image Border Color",
-        borderWidth: window.tsteam_i18n.border_width || "Border Width",
-        borderRadius: window.tsteam_i18n.border_radius || "Border Radius",
-        imageBorderWidth: window.tsteam_i18n.image_border_width || "Image Border Width",
-        imageBorderRadius: window.tsteam_i18n.image_border_radius || "Image Border Radius",
-        font: window.tsteam_i18n.font || "Font",
-        nameTypography: window.tsteam_i18n.name_typography || "Name Typography",
-        designationTypography: window.tsteam_i18n.designation_typography || "Designation Typography",
-        descriptionTypography: window.tsteam_i18n.description_typography || "Description Typography",
-        detailsTypography: window.tsteam_i18n.details_typography || "Details Typography",
-        social: window.tsteam_i18n.social || "Social",
-        socialIconStyle: window.tsteam_i18n.social_icon_style || "Social Icon Style",
-        customColors: window.tsteam_i18n.custom_colors || "Custom Colors",
-        brandIconOnly: window.tsteam_i18n.brand_icon_only || "Brand Icon Only",
-        brandSoft: window.tsteam_i18n.brand_soft || "Brand Soft",
-        brandSolid: window.tsteam_i18n.brand_solid || "Brand Solid",
-        socialIconBorderRadius: window.tsteam_i18n.social_icon_border_radius || "Social Icon Border Radius",
-        socialIconColor: window.tsteam_i18n.social_icon_color || "Social Icon Color",
-        socialIconBackgroundColor: window.tsteam_i18n.social_icon_background_color || "Social Icon Background Color",
-        motion: window.tsteam_i18n.motion || "Motion",
-        hoverAnimation: window.tsteam_i18n.hover_animation || "Hover Animation",
-        global: window.tsteam_i18n.global || "Global",
-        containerBackgroundColor: window.tsteam_i18n.container_background_color || "Container Background Color",
-        containerMargin: window.tsteam_i18n.container_margin || "Container Margin",
-        containerPadding: window.tsteam_i18n.container_padding || "Container Padding",
-        containerBorderRadius: window.tsteam_i18n.container_border_radius || "Container Border Radius",
-        successfullyUpdated: window.tsteam_i18n.successfully_updated || "Successfully Updated",
-        settingsUpdatedMessage: window.tsteam_i18n.settings_updated_message || "The settings have been successfully updated.",
-        areYouSure: window.tsteam_i18n.are_you_sure || "Are you sure?",
-        deleteConfirmation: window.tsteam_i18n.delete_confirmation || "You're going to delete this",
-        noKeepIt: window.tsteam_i18n.no_keep_it || "No, Keep it.",
-        yesDelete: window.tsteam_i18n.yes_delete || "Yes, Delete!"
-      };
-    };
-    const isPro$1 = !!tsteam_settings.is_pro;
-    const translations = getTranslations();
-    ({
-      token: {
-        colorPrimary: "#703FD6",
-        colorBgContainer: "#fff",
-        colorText: "#000000"
-      },
-      components: {
-        Table: {
-          "headerBg": "#F3EAFB",
-          "headerColor": "#111C5C",
-          "headerBorderRadius": 15,
-          "borderRadius": 15,
-          "boxShadowSecondary": 0
-        },
-        Input: {
-          "colorBorder": "#C1DAF8",
-          "borderRadius": 12,
-          "paddingBlock": 6,
-          "paddingBlockLG": 8
-        }
-      },
-      theme: {
-        primaryColor: "#703FD6",
-        textColor: "#333",
-        borderColor: "#ededed",
-        borderColorLight: "#DFD5F6"
-      },
-      navigation: {
-        dashboard: {
-          link: "?page=tsteam-showcase&path=dashboard",
-          label: "Dashboard",
-          icon: ForwardRef$1
-        },
-        teamShowcase: {
-          link: "?page=tsteam-showcase",
-          label: "Team Showcase",
-          icon: ForwardRef$1
-        },
-        teamMember: {
-          link: "?page=tsteam-showcase&path=team-member",
-          label: "Team Member",
-          icon: ForwardRef
-        }
-      },
-      topbar: {
-        menuitems: {
-          dashboard: {
-            link: "?page=tsteam-showcase&path=dashboard",
-            label: translations.dashboard
-          },
-          teamShowcase: {
-            link: "?page=tsteam-showcase",
-            label: translations.teamShowcase
-          },
-          teamMember: {
-            link: "?page=tsteam-showcase&path=team-member",
-            label: translations.teamMember
-          },
-          memberCategory: {
-            link: "?page=tsteam-showcase&path=member-category",
-            label: translations.memberCategory
-          },
-          tools: {
-            link: "?page=tsteam-showcase&path=tools",
-            label: translations.tools
-          },
-          ...isPro$1 && {
-            account: {
-              link: "admin.php?page=tsteam-admin-account",
-              label: translations.account
-            }
-          },
-          supportForum: {
-            link: "https://wordpress.org/support/plugin/ts-team-member",
-            label: translations.supportForum
-          }
-        },
-        ...isPro$1 ? {} : {
-          proLink: {
-            link: "https://themespell.com/ts-product/ts-team-member/",
-            label: translations.getPro
-          }
-        },
-        version: "1.2.9"
-      }
-    });
     var classnames = { exports: {} };
     /*!
     	Copyright (c) 2018 Jed Watson.
@@ -17173,373 +16933,246 @@ var require_frontend = __commonJS({
         type
       }));
     });
-    var freeGlobal$1 = typeof commonjsGlobal == "object" && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
-    var _freeGlobal = freeGlobal$1;
-    var freeGlobal = _freeGlobal;
-    var freeSelf = typeof self == "object" && self && self.Object === Object && self;
-    var root$3 = freeGlobal || freeSelf || Function("return this")();
-    var _root = root$3;
-    var root$2 = _root;
-    var Symbol$4 = root$2.Symbol;
-    var _Symbol = Symbol$4;
-    var Symbol$3 = _Symbol;
-    var objectProto$4 = Object.prototype;
-    var hasOwnProperty$3 = objectProto$4.hasOwnProperty;
-    var nativeObjectToString$1 = objectProto$4.toString;
-    var symToStringTag$1 = Symbol$3 ? Symbol$3.toStringTag : void 0;
-    function getRawTag$1(value) {
-      var isOwn = hasOwnProperty$3.call(value, symToStringTag$1), tag = value[symToStringTag$1];
-      try {
-        value[symToStringTag$1] = void 0;
-        var unmasked = true;
-      } catch (e2) {
+    function PhotoIcon({
+      title,
+      titleId,
+      ...props
+    }, svgRef) {
+      return /* @__PURE__ */ reactExports.createElement("svg", Object.assign({
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 24 24",
+        fill: "currentColor",
+        "aria-hidden": "true",
+        "data-slot": "icon",
+        ref: svgRef,
+        "aria-labelledby": titleId
+      }, props), title ? /* @__PURE__ */ reactExports.createElement("title", {
+        id: titleId
+      }, title) : null, /* @__PURE__ */ reactExports.createElement("path", {
+        fillRule: "evenodd",
+        d: "M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z",
+        clipRule: "evenodd"
+      }));
+    }
+    const ForwardRef$1 = /* @__PURE__ */ reactExports.forwardRef(PhotoIcon);
+    function UserCircleIcon({
+      title,
+      titleId,
+      ...props
+    }, svgRef) {
+      return /* @__PURE__ */ reactExports.createElement("svg", Object.assign({
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 24 24",
+        fill: "currentColor",
+        "aria-hidden": "true",
+        "data-slot": "icon",
+        ref: svgRef,
+        "aria-labelledby": titleId
+      }, props), title ? /* @__PURE__ */ reactExports.createElement("title", {
+        id: titleId
+      }, title) : null, /* @__PURE__ */ reactExports.createElement("path", {
+        fillRule: "evenodd",
+        d: "M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z",
+        clipRule: "evenodd"
+      }));
+    }
+    const ForwardRef = /* @__PURE__ */ reactExports.forwardRef(UserCircleIcon);
+    const getTranslations = () => {
+      if (!window.tsteam_i18n) {
+        console.error("tsteam_i18n is not defined. Ensure translations are passed via wp_localize_script().");
+        return {};
       }
-      var result = nativeObjectToString$1.call(value);
-      if (unmasked) {
-        if (isOwn) {
-          value[symToStringTag$1] = tag;
-        } else {
-          delete value[symToStringTag$1];
-        }
-      }
-      return result;
-    }
-    var _getRawTag = getRawTag$1;
-    var objectProto$3 = Object.prototype;
-    var nativeObjectToString = objectProto$3.toString;
-    function objectToString$1(value) {
-      return nativeObjectToString.call(value);
-    }
-    var _objectToString = objectToString$1;
-    var Symbol$2 = _Symbol, getRawTag = _getRawTag, objectToString = _objectToString;
-    var nullTag = "[object Null]", undefinedTag = "[object Undefined]";
-    var symToStringTag = Symbol$2 ? Symbol$2.toStringTag : void 0;
-    function baseGetTag$1(value) {
-      if (value == null) {
-        return value === void 0 ? undefinedTag : nullTag;
-      }
-      return symToStringTag && symToStringTag in Object(value) ? getRawTag(value) : objectToString(value);
-    }
-    var _baseGetTag = baseGetTag$1;
-    function isObject$2(value) {
-      var type = typeof value;
-      return value != null && (type == "object" || type == "function");
-    }
-    var isObject_1 = isObject$2;
-    var baseGetTag = _baseGetTag, isObject$1 = isObject_1;
-    var asyncTag = "[object AsyncFunction]", funcTag = "[object Function]", genTag = "[object GeneratorFunction]", proxyTag = "[object Proxy]";
-    function isFunction$1(value) {
-      if (!isObject$1(value)) {
-        return false;
-      }
-      var tag = baseGetTag(value);
-      return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
-    }
-    var isFunction_1 = isFunction$1;
-    var root$1 = _root;
-    var coreJsData$1 = root$1["__core-js_shared__"];
-    var _coreJsData = coreJsData$1;
-    var coreJsData = _coreJsData;
-    var maskSrcKey = function() {
-      var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || "");
-      return uid ? "Symbol(src)_1." + uid : "";
-    }();
-    function isMasked$1(func) {
-      return !!maskSrcKey && maskSrcKey in func;
-    }
-    var _isMasked = isMasked$1;
-    var funcProto$1 = Function.prototype;
-    var funcToString$1 = funcProto$1.toString;
-    function toSource$1(func) {
-      if (func != null) {
-        try {
-          return funcToString$1.call(func);
-        } catch (e2) {
-        }
-        try {
-          return func + "";
-        } catch (e2) {
-        }
-      }
-      return "";
-    }
-    var _toSource = toSource$1;
-    var isFunction = isFunction_1, isMasked = _isMasked, isObject = isObject_1, toSource = _toSource;
-    var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
-    var reIsHostCtor = /^\[object .+?Constructor\]$/;
-    var funcProto = Function.prototype, objectProto$2 = Object.prototype;
-    var funcToString = funcProto.toString;
-    var hasOwnProperty$2 = objectProto$2.hasOwnProperty;
-    var reIsNative = RegExp(
-      "^" + funcToString.call(hasOwnProperty$2).replace(reRegExpChar, "\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, "$1.*?") + "$"
-    );
-    function baseIsNative$1(value) {
-      if (!isObject(value) || isMasked(value)) {
-        return false;
-      }
-      var pattern = isFunction(value) ? reIsNative : reIsHostCtor;
-      return pattern.test(toSource(value));
-    }
-    var _baseIsNative = baseIsNative$1;
-    function getValue$1(object, key) {
-      return object == null ? void 0 : object[key];
-    }
-    var _getValue = getValue$1;
-    var baseIsNative = _baseIsNative, getValue = _getValue;
-    function getNative$2(object, key) {
-      var value = getValue(object, key);
-      return baseIsNative(value) ? value : void 0;
-    }
-    var _getNative = getNative$2;
-    var getNative$1 = _getNative;
-    var nativeCreate$4 = getNative$1(Object, "create");
-    var _nativeCreate = nativeCreate$4;
-    var nativeCreate$3 = _nativeCreate;
-    function hashClear$1() {
-      this.__data__ = nativeCreate$3 ? nativeCreate$3(null) : {};
-      this.size = 0;
-    }
-    var _hashClear = hashClear$1;
-    function hashDelete$1(key) {
-      var result = this.has(key) && delete this.__data__[key];
-      this.size -= result ? 1 : 0;
-      return result;
-    }
-    var _hashDelete = hashDelete$1;
-    var nativeCreate$2 = _nativeCreate;
-    var HASH_UNDEFINED$1 = "__lodash_hash_undefined__";
-    var objectProto$1 = Object.prototype;
-    var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
-    function hashGet$1(key) {
-      var data = this.__data__;
-      if (nativeCreate$2) {
-        var result = data[key];
-        return result === HASH_UNDEFINED$1 ? void 0 : result;
-      }
-      return hasOwnProperty$1.call(data, key) ? data[key] : void 0;
-    }
-    var _hashGet = hashGet$1;
-    var nativeCreate$1 = _nativeCreate;
-    var objectProto = Object.prototype;
-    var hasOwnProperty = objectProto.hasOwnProperty;
-    function hashHas$1(key) {
-      var data = this.__data__;
-      return nativeCreate$1 ? data[key] !== void 0 : hasOwnProperty.call(data, key);
-    }
-    var _hashHas = hashHas$1;
-    var nativeCreate = _nativeCreate;
-    var HASH_UNDEFINED = "__lodash_hash_undefined__";
-    function hashSet$1(key, value) {
-      var data = this.__data__;
-      this.size += this.has(key) ? 0 : 1;
-      data[key] = nativeCreate && value === void 0 ? HASH_UNDEFINED : value;
-      return this;
-    }
-    var _hashSet = hashSet$1;
-    var hashClear = _hashClear, hashDelete = _hashDelete, hashGet = _hashGet, hashHas = _hashHas, hashSet = _hashSet;
-    function Hash$1(entries) {
-      var index = -1, length2 = entries == null ? 0 : entries.length;
-      this.clear();
-      while (++index < length2) {
-        var entry = entries[index];
-        this.set(entry[0], entry[1]);
-      }
-    }
-    Hash$1.prototype.clear = hashClear;
-    Hash$1.prototype["delete"] = hashDelete;
-    Hash$1.prototype.get = hashGet;
-    Hash$1.prototype.has = hashHas;
-    Hash$1.prototype.set = hashSet;
-    var _Hash = Hash$1;
-    function listCacheClear$1() {
-      this.__data__ = [];
-      this.size = 0;
-    }
-    var _listCacheClear = listCacheClear$1;
-    function eq$1(value, other) {
-      return value === other || value !== value && other !== other;
-    }
-    var eq_1 = eq$1;
-    var eq = eq_1;
-    function assocIndexOf$4(array, key) {
-      var length2 = array.length;
-      while (length2--) {
-        if (eq(array[length2][0], key)) {
-          return length2;
-        }
-      }
-      return -1;
-    }
-    var _assocIndexOf = assocIndexOf$4;
-    var assocIndexOf$3 = _assocIndexOf;
-    var arrayProto = Array.prototype;
-    var splice = arrayProto.splice;
-    function listCacheDelete$1(key) {
-      var data = this.__data__, index = assocIndexOf$3(data, key);
-      if (index < 0) {
-        return false;
-      }
-      var lastIndex = data.length - 1;
-      if (index == lastIndex) {
-        data.pop();
-      } else {
-        splice.call(data, index, 1);
-      }
-      --this.size;
-      return true;
-    }
-    var _listCacheDelete = listCacheDelete$1;
-    var assocIndexOf$2 = _assocIndexOf;
-    function listCacheGet$1(key) {
-      var data = this.__data__, index = assocIndexOf$2(data, key);
-      return index < 0 ? void 0 : data[index][1];
-    }
-    var _listCacheGet = listCacheGet$1;
-    var assocIndexOf$1 = _assocIndexOf;
-    function listCacheHas$1(key) {
-      return assocIndexOf$1(this.__data__, key) > -1;
-    }
-    var _listCacheHas = listCacheHas$1;
-    var assocIndexOf = _assocIndexOf;
-    function listCacheSet$1(key, value) {
-      var data = this.__data__, index = assocIndexOf(data, key);
-      if (index < 0) {
-        ++this.size;
-        data.push([key, value]);
-      } else {
-        data[index][1] = value;
-      }
-      return this;
-    }
-    var _listCacheSet = listCacheSet$1;
-    var listCacheClear = _listCacheClear, listCacheDelete = _listCacheDelete, listCacheGet = _listCacheGet, listCacheHas = _listCacheHas, listCacheSet = _listCacheSet;
-    function ListCache$1(entries) {
-      var index = -1, length2 = entries == null ? 0 : entries.length;
-      this.clear();
-      while (++index < length2) {
-        var entry = entries[index];
-        this.set(entry[0], entry[1]);
-      }
-    }
-    ListCache$1.prototype.clear = listCacheClear;
-    ListCache$1.prototype["delete"] = listCacheDelete;
-    ListCache$1.prototype.get = listCacheGet;
-    ListCache$1.prototype.has = listCacheHas;
-    ListCache$1.prototype.set = listCacheSet;
-    var _ListCache = ListCache$1;
-    var getNative = _getNative, root = _root;
-    var Map$2 = getNative(root, "Map");
-    var _Map = Map$2;
-    var Hash = _Hash, ListCache = _ListCache, Map$1 = _Map;
-    function mapCacheClear$1() {
-      this.size = 0;
-      this.__data__ = {
-        "hash": new Hash(),
-        "map": new (Map$1 || ListCache)(),
-        "string": new Hash()
+      return {
+        dashboard: window.tsteam_i18n.dashboard || "Dashboard",
+        teamShowcase: window.tsteam_i18n.team_showcase || "Team Showcase",
+        teamMember: window.tsteam_i18n.team_member || "Team Member",
+        memberCategory: window.tsteam_i18n.member_category || "Member Category",
+        tools: window.tsteam_i18n.tools || "Tools",
+        account: window.tsteam_i18n.account || "Account",
+        supportForum: window.tsteam_i18n.support_forum || "Support Forum",
+        getPro: window.tsteam_i18n.get_pro || "Get Pro",
+        grabYourDiscount: window.tsteam_i18n.grab_your_discount || "Grab Your Discount",
+        upgradeToPro: window.tsteam_i18n.upgrade_to_pro || "Upgrade to Pro",
+        documentations: window.tsteam_i18n.documentations || "Documentations",
+        helpAndSupport: window.tsteam_i18n.help_and_support || "Help & Support",
+        videoGuide: window.tsteam_i18n.video_guide || "Video Guide",
+        add: window.tsteam_i18n.add || "Add",
+        create: window.tsteam_i18n.create || "Create",
+        select: window.tsteam_i18n.select || "Select",
+        settings: window.tsteam_i18n.settings || "Settings",
+        update: window.tsteam_i18n.update || "Update",
+        publish: window.tsteam_i18n.publish || "Publish",
+        title: window.tsteam_i18n.title || "Title",
+        shortcode: window.tsteam_i18n.shortcode || "Shortcode",
+        snippet: window.tsteam_i18n.snippet || "Snippet",
+        action: window.tsteam_i18n.action || "Action",
+        edit: window.tsteam_i18n.edit || "Edit",
+        editDesign: window.tsteam_i18n.edit_design || "Edit Design",
+        delete: window.tsteam_i18n.delete || "Delete",
+        image: window.tsteam_i18n.image || "Image",
+        name: window.tsteam_i18n.name || "Name",
+        designation: window.tsteam_i18n.designation || "Designation",
+        description: window.tsteam_i18n.description || "Description",
+        basicInformation: window.tsteam_i18n.basic_information || "Basic Information",
+        memberName: window.tsteam_i18n.member_name || "Member Name",
+        memberDesignation: window.tsteam_i18n.member_designation || "Member Designation",
+        memberEmail: window.tsteam_i18n.member_email || "Member Email",
+        memberMobile: window.tsteam_i18n.member_mobile || "Member Mobile",
+        memberDescription: window.tsteam_i18n.member_description || "Member Description",
+        memberImage: window.tsteam_i18n.member_image || "Member Image",
+        detailsInformation: window.tsteam_i18n.details_information || "Details Information",
+        memberTelephone: window.tsteam_i18n.member_telephone || "Member Telephone",
+        yearsOfExperience: window.tsteam_i18n.years_of_experience || "Years of Experience",
+        company: window.tsteam_i18n.company || "Company",
+        location: window.tsteam_i18n.location || "Location",
+        profileLinks: window.tsteam_i18n.profile_links || "Profile Links",
+        website: window.tsteam_i18n.website || "Website",
+        resumeLink: window.tsteam_i18n.resume_link || "Resume Link",
+        hireLink: window.tsteam_i18n.hire_link || "Hire Link",
+        donationLink: window.tsteam_i18n.donation_link || "Donation Link",
+        videoLink: window.tsteam_i18n.video_link || "Video Link",
+        socialLinks: window.tsteam_i18n.social_links || "Social Links",
+        skills: window.tsteam_i18n.skills || "Skills",
+        showcaseName: window.tsteam_i18n.showcase_name || "Showcase Name",
+        content: window.tsteam_i18n.content || "Content",
+        loadingEditor: window.tsteam_i18n.loading_editor || "Loading Editor",
+        copyDesign: window.tsteam_i18n.copy_design || "Copy Design",
+        pasteDesign: window.tsteam_i18n.paste_design || "Paste Design",
+        viewStyle: window.tsteam_i18n.view_style || "View Style",
+        layout: window.tsteam_i18n.layout || "Layout",
+        detailsStyle: window.tsteam_i18n.details_style || "Details Style",
+        containerWidth: window.tsteam_i18n.container_width || "Container Width",
+        columns: window.tsteam_i18n.columns || "Columns",
+        columnGap: window.tsteam_i18n.column_gap || "Column Gap",
+        style: window.tsteam_i18n.style || "Style",
+        commonStyles: window.tsteam_i18n.common_styles || "Common Styles",
+        backgroundColor: window.tsteam_i18n.background_color || "Background Color",
+        memberNameColor: window.tsteam_i18n.member_name_color || "Member Name Color",
+        memberDesignationColor: window.tsteam_i18n.member_designation_color || "Member Designation Color",
+        memberDescriptionColor: window.tsteam_i18n.member_description_color || "Member Description Color",
+        borderColor: window.tsteam_i18n.border_color || "Border Color",
+        imageBorderColor: window.tsteam_i18n.image_border_color || "Image Border Color",
+        borderWidth: window.tsteam_i18n.border_width || "Border Width",
+        borderRadius: window.tsteam_i18n.border_radius || "Border Radius",
+        imageBorderWidth: window.tsteam_i18n.image_border_width || "Image Border Width",
+        imageBorderRadius: window.tsteam_i18n.image_border_radius || "Image Border Radius",
+        font: window.tsteam_i18n.font || "Font",
+        nameTypography: window.tsteam_i18n.name_typography || "Name Typography",
+        designationTypography: window.tsteam_i18n.designation_typography || "Designation Typography",
+        descriptionTypography: window.tsteam_i18n.description_typography || "Description Typography",
+        detailsTypography: window.tsteam_i18n.details_typography || "Details Typography",
+        social: window.tsteam_i18n.social || "Social",
+        socialIconStyle: window.tsteam_i18n.social_icon_style || "Social Icon Style",
+        customColors: window.tsteam_i18n.custom_colors || "Custom Colors",
+        brandIconOnly: window.tsteam_i18n.brand_icon_only || "Brand Icon Only",
+        brandSoft: window.tsteam_i18n.brand_soft || "Brand Soft",
+        brandSolid: window.tsteam_i18n.brand_solid || "Brand Solid",
+        socialIconBorderRadius: window.tsteam_i18n.social_icon_border_radius || "Social Icon Border Radius",
+        socialIconColor: window.tsteam_i18n.social_icon_color || "Social Icon Color",
+        socialIconBackgroundColor: window.tsteam_i18n.social_icon_background_color || "Social Icon Background Color",
+        motion: window.tsteam_i18n.motion || "Motion",
+        hoverAnimation: window.tsteam_i18n.hover_animation || "Hover Animation",
+        global: window.tsteam_i18n.global || "Global",
+        containerBackgroundColor: window.tsteam_i18n.container_background_color || "Container Background Color",
+        containerMargin: window.tsteam_i18n.container_margin || "Container Margin",
+        containerPadding: window.tsteam_i18n.container_padding || "Container Padding",
+        containerBorderRadius: window.tsteam_i18n.container_border_radius || "Container Border Radius",
+        successfullyUpdated: window.tsteam_i18n.successfully_updated || "Successfully Updated",
+        settingsUpdatedMessage: window.tsteam_i18n.settings_updated_message || "The settings have been successfully updated.",
+        areYouSure: window.tsteam_i18n.are_you_sure || "Are you sure?",
+        deleteConfirmation: window.tsteam_i18n.delete_confirmation || "You're going to delete this",
+        noKeepIt: window.tsteam_i18n.no_keep_it || "No, Keep it.",
+        yesDelete: window.tsteam_i18n.yes_delete || "Yes, Delete!"
       };
-    }
-    var _mapCacheClear = mapCacheClear$1;
-    function isKeyable$1(value) {
-      var type = typeof value;
-      return type == "string" || type == "number" || type == "symbol" || type == "boolean" ? value !== "__proto__" : value === null;
-    }
-    var _isKeyable = isKeyable$1;
-    var isKeyable = _isKeyable;
-    function getMapData$4(map, key) {
-      var data = map.__data__;
-      return isKeyable(key) ? data[typeof key == "string" ? "string" : "hash"] : data.map;
-    }
-    var _getMapData = getMapData$4;
-    var getMapData$3 = _getMapData;
-    function mapCacheDelete$1(key) {
-      var result = getMapData$3(this, key)["delete"](key);
-      this.size -= result ? 1 : 0;
-      return result;
-    }
-    var _mapCacheDelete = mapCacheDelete$1;
-    var getMapData$2 = _getMapData;
-    function mapCacheGet$1(key) {
-      return getMapData$2(this, key).get(key);
-    }
-    var _mapCacheGet = mapCacheGet$1;
-    var getMapData$1 = _getMapData;
-    function mapCacheHas$1(key) {
-      return getMapData$1(this, key).has(key);
-    }
-    var _mapCacheHas = mapCacheHas$1;
-    var getMapData = _getMapData;
-    function mapCacheSet$1(key, value) {
-      var data = getMapData(this, key), size = data.size;
-      data.set(key, value);
-      this.size += data.size == size ? 0 : 1;
-      return this;
-    }
-    var _mapCacheSet = mapCacheSet$1;
-    var mapCacheClear = _mapCacheClear, mapCacheDelete = _mapCacheDelete, mapCacheGet = _mapCacheGet, mapCacheHas = _mapCacheHas, mapCacheSet = _mapCacheSet;
-    function MapCache$1(entries) {
-      var index = -1, length2 = entries == null ? 0 : entries.length;
-      this.clear();
-      while (++index < length2) {
-        var entry = entries[index];
-        this.set(entry[0], entry[1]);
-      }
-    }
-    MapCache$1.prototype.clear = mapCacheClear;
-    MapCache$1.prototype["delete"] = mapCacheDelete;
-    MapCache$1.prototype.get = mapCacheGet;
-    MapCache$1.prototype.has = mapCacheHas;
-    MapCache$1.prototype.set = mapCacheSet;
-    var _MapCache = MapCache$1;
-    var MapCache = _MapCache;
-    var FUNC_ERROR_TEXT = "Expected a function";
-    function memoize$1(func, resolver) {
-      if (typeof func != "function" || resolver != null && typeof resolver != "function") {
-        throw new TypeError(FUNC_ERROR_TEXT);
-      }
-      var memoized = function() {
-        var args = arguments, key = resolver ? resolver.apply(this, args) : args[0], cache = memoized.cache;
-        if (cache.has(key)) {
-          return cache.get(key);
+    };
+    const isPro$1 = !!tsteam_settings.is_pro;
+    const translations = getTranslations();
+    ({
+      token: {
+        colorPrimary: "#703FD6",
+        colorBgContainer: "#fff",
+        colorText: "#000000"
+      },
+      components: {
+        Table: {
+          "headerBg": "#F3EAFB",
+          "headerColor": "#111C5C",
+          "headerBorderRadius": 15,
+          "borderRadius": 15,
+          "boxShadowSecondary": 0
+        },
+        Input: {
+          "colorBorder": "#C1DAF8",
+          "borderRadius": 12,
+          "paddingBlock": 6,
+          "paddingBlockLG": 8
         }
-        var result = func.apply(this, args);
-        memoized.cache = cache.set(key, result) || cache;
-        return result;
-      };
-      memoized.cache = new (memoize$1.Cache || MapCache)();
-      return memoized;
-    }
-    memoize$1.Cache = MapCache;
-    var memoize_1 = memoize$1;
-    var memoize = memoize_1;
-    var MAX_MEMOIZE_SIZE = 500;
-    function memoizeCapped$1(func) {
-      var result = memoize(func, function(key) {
-        if (cache.size === MAX_MEMOIZE_SIZE) {
-          cache.clear();
+      },
+      theme: {
+        primaryColor: "#703FD6",
+        textColor: "#333",
+        borderColor: "#ededed",
+        borderColorLight: "#DFD5F6"
+      },
+      navigation: {
+        dashboard: {
+          link: "?page=tsteam-showcase&path=dashboard",
+          label: "Dashboard",
+          icon: ForwardRef$1
+        },
+        teamShowcase: {
+          link: "?page=tsteam-showcase",
+          label: "Team Showcase",
+          icon: ForwardRef$1
+        },
+        teamMember: {
+          link: "?page=tsteam-showcase&path=team-member",
+          label: "Team Member",
+          icon: ForwardRef
         }
-        return key;
-      });
-      var cache = result.cache;
-      return result;
-    }
-    var _memoizeCapped = memoizeCapped$1;
-    var memoizeCapped = _memoizeCapped;
-    var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
-    var reEscapeChar = /\\(\\)?/g;
-    memoizeCapped(function(string) {
-      var result = [];
-      if (string.charCodeAt(0) === 46) {
-        result.push("");
+      },
+      topbar: {
+        menuitems: {
+          dashboard: {
+            link: "?page=tsteam-showcase&path=dashboard",
+            label: translations.dashboard
+          },
+          teamShowcase: {
+            link: "?page=tsteam-showcase",
+            label: translations.teamShowcase
+          },
+          teamMember: {
+            link: "?page=tsteam-showcase&path=team-member",
+            label: translations.teamMember
+          },
+          memberCategory: {
+            link: "?page=tsteam-showcase&path=member-category",
+            label: translations.memberCategory
+          },
+          tools: {
+            link: "?page=tsteam-showcase&path=tools",
+            label: translations.tools
+          },
+          ...isPro$1 && {
+            account: {
+              link: "admin.php?page=tsteam-admin-account",
+              label: translations.account
+            }
+          },
+          supportForum: {
+            link: "https://wordpress.org/support/plugin/ts-team-member",
+            label: translations.supportForum
+          }
+        },
+        ...isPro$1 ? {} : {
+          proLink: {
+            link: "https://themespell.com/ts-product/ts-team-member/",
+            label: translations.getPro
+          }
+        },
+        version: "1.2.9"
       }
-      string.replace(rePropName, function(match2, number, quote, subString) {
-        result.push(quote ? subString.replace(reEscapeChar, "$1") : number || match2);
-      });
-      return result;
     });
-    var Symbol$1 = _Symbol;
-    var symbolProto = Symbol$1 ? Symbol$1.prototype : void 0;
-    symbolProto ? symbolProto.toString : void 0;
     const __vite_import_meta_env__$1 = { "BASE_URL": "/", "DEV": false, "MODE": "development-unminified", "PROD": true, "SSR": false };
     const createStoreImpl = (createState) => {
       let state;
@@ -18004,6 +17637,373 @@ var require_frontend = __commonJS({
         }
       }
     }));
+    var freeGlobal$1 = typeof commonjsGlobal == "object" && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
+    var _freeGlobal = freeGlobal$1;
+    var freeGlobal = _freeGlobal;
+    var freeSelf = typeof self == "object" && self && self.Object === Object && self;
+    var root$3 = freeGlobal || freeSelf || Function("return this")();
+    var _root = root$3;
+    var root$2 = _root;
+    var Symbol$4 = root$2.Symbol;
+    var _Symbol = Symbol$4;
+    var Symbol$3 = _Symbol;
+    var objectProto$4 = Object.prototype;
+    var hasOwnProperty$3 = objectProto$4.hasOwnProperty;
+    var nativeObjectToString$1 = objectProto$4.toString;
+    var symToStringTag$1 = Symbol$3 ? Symbol$3.toStringTag : void 0;
+    function getRawTag$1(value) {
+      var isOwn = hasOwnProperty$3.call(value, symToStringTag$1), tag = value[symToStringTag$1];
+      try {
+        value[symToStringTag$1] = void 0;
+        var unmasked = true;
+      } catch (e2) {
+      }
+      var result = nativeObjectToString$1.call(value);
+      if (unmasked) {
+        if (isOwn) {
+          value[symToStringTag$1] = tag;
+        } else {
+          delete value[symToStringTag$1];
+        }
+      }
+      return result;
+    }
+    var _getRawTag = getRawTag$1;
+    var objectProto$3 = Object.prototype;
+    var nativeObjectToString = objectProto$3.toString;
+    function objectToString$1(value) {
+      return nativeObjectToString.call(value);
+    }
+    var _objectToString = objectToString$1;
+    var Symbol$2 = _Symbol, getRawTag = _getRawTag, objectToString = _objectToString;
+    var nullTag = "[object Null]", undefinedTag = "[object Undefined]";
+    var symToStringTag = Symbol$2 ? Symbol$2.toStringTag : void 0;
+    function baseGetTag$1(value) {
+      if (value == null) {
+        return value === void 0 ? undefinedTag : nullTag;
+      }
+      return symToStringTag && symToStringTag in Object(value) ? getRawTag(value) : objectToString(value);
+    }
+    var _baseGetTag = baseGetTag$1;
+    function isObject$2(value) {
+      var type = typeof value;
+      return value != null && (type == "object" || type == "function");
+    }
+    var isObject_1 = isObject$2;
+    var baseGetTag = _baseGetTag, isObject$1 = isObject_1;
+    var asyncTag = "[object AsyncFunction]", funcTag = "[object Function]", genTag = "[object GeneratorFunction]", proxyTag = "[object Proxy]";
+    function isFunction$1(value) {
+      if (!isObject$1(value)) {
+        return false;
+      }
+      var tag = baseGetTag(value);
+      return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
+    }
+    var isFunction_1 = isFunction$1;
+    var root$1 = _root;
+    var coreJsData$1 = root$1["__core-js_shared__"];
+    var _coreJsData = coreJsData$1;
+    var coreJsData = _coreJsData;
+    var maskSrcKey = function() {
+      var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || "");
+      return uid ? "Symbol(src)_1." + uid : "";
+    }();
+    function isMasked$1(func) {
+      return !!maskSrcKey && maskSrcKey in func;
+    }
+    var _isMasked = isMasked$1;
+    var funcProto$1 = Function.prototype;
+    var funcToString$1 = funcProto$1.toString;
+    function toSource$1(func) {
+      if (func != null) {
+        try {
+          return funcToString$1.call(func);
+        } catch (e2) {
+        }
+        try {
+          return func + "";
+        } catch (e2) {
+        }
+      }
+      return "";
+    }
+    var _toSource = toSource$1;
+    var isFunction = isFunction_1, isMasked = _isMasked, isObject = isObject_1, toSource = _toSource;
+    var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+    var reIsHostCtor = /^\[object .+?Constructor\]$/;
+    var funcProto = Function.prototype, objectProto$2 = Object.prototype;
+    var funcToString = funcProto.toString;
+    var hasOwnProperty$2 = objectProto$2.hasOwnProperty;
+    var reIsNative = RegExp(
+      "^" + funcToString.call(hasOwnProperty$2).replace(reRegExpChar, "\\$&").replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, "$1.*?") + "$"
+    );
+    function baseIsNative$1(value) {
+      if (!isObject(value) || isMasked(value)) {
+        return false;
+      }
+      var pattern = isFunction(value) ? reIsNative : reIsHostCtor;
+      return pattern.test(toSource(value));
+    }
+    var _baseIsNative = baseIsNative$1;
+    function getValue$1(object, key) {
+      return object == null ? void 0 : object[key];
+    }
+    var _getValue = getValue$1;
+    var baseIsNative = _baseIsNative, getValue = _getValue;
+    function getNative$2(object, key) {
+      var value = getValue(object, key);
+      return baseIsNative(value) ? value : void 0;
+    }
+    var _getNative = getNative$2;
+    var getNative$1 = _getNative;
+    var nativeCreate$4 = getNative$1(Object, "create");
+    var _nativeCreate = nativeCreate$4;
+    var nativeCreate$3 = _nativeCreate;
+    function hashClear$1() {
+      this.__data__ = nativeCreate$3 ? nativeCreate$3(null) : {};
+      this.size = 0;
+    }
+    var _hashClear = hashClear$1;
+    function hashDelete$1(key) {
+      var result = this.has(key) && delete this.__data__[key];
+      this.size -= result ? 1 : 0;
+      return result;
+    }
+    var _hashDelete = hashDelete$1;
+    var nativeCreate$2 = _nativeCreate;
+    var HASH_UNDEFINED$1 = "__lodash_hash_undefined__";
+    var objectProto$1 = Object.prototype;
+    var hasOwnProperty$1 = objectProto$1.hasOwnProperty;
+    function hashGet$1(key) {
+      var data = this.__data__;
+      if (nativeCreate$2) {
+        var result = data[key];
+        return result === HASH_UNDEFINED$1 ? void 0 : result;
+      }
+      return hasOwnProperty$1.call(data, key) ? data[key] : void 0;
+    }
+    var _hashGet = hashGet$1;
+    var nativeCreate$1 = _nativeCreate;
+    var objectProto = Object.prototype;
+    var hasOwnProperty = objectProto.hasOwnProperty;
+    function hashHas$1(key) {
+      var data = this.__data__;
+      return nativeCreate$1 ? data[key] !== void 0 : hasOwnProperty.call(data, key);
+    }
+    var _hashHas = hashHas$1;
+    var nativeCreate = _nativeCreate;
+    var HASH_UNDEFINED = "__lodash_hash_undefined__";
+    function hashSet$1(key, value) {
+      var data = this.__data__;
+      this.size += this.has(key) ? 0 : 1;
+      data[key] = nativeCreate && value === void 0 ? HASH_UNDEFINED : value;
+      return this;
+    }
+    var _hashSet = hashSet$1;
+    var hashClear = _hashClear, hashDelete = _hashDelete, hashGet = _hashGet, hashHas = _hashHas, hashSet = _hashSet;
+    function Hash$1(entries) {
+      var index = -1, length2 = entries == null ? 0 : entries.length;
+      this.clear();
+      while (++index < length2) {
+        var entry = entries[index];
+        this.set(entry[0], entry[1]);
+      }
+    }
+    Hash$1.prototype.clear = hashClear;
+    Hash$1.prototype["delete"] = hashDelete;
+    Hash$1.prototype.get = hashGet;
+    Hash$1.prototype.has = hashHas;
+    Hash$1.prototype.set = hashSet;
+    var _Hash = Hash$1;
+    function listCacheClear$1() {
+      this.__data__ = [];
+      this.size = 0;
+    }
+    var _listCacheClear = listCacheClear$1;
+    function eq$1(value, other) {
+      return value === other || value !== value && other !== other;
+    }
+    var eq_1 = eq$1;
+    var eq = eq_1;
+    function assocIndexOf$4(array, key) {
+      var length2 = array.length;
+      while (length2--) {
+        if (eq(array[length2][0], key)) {
+          return length2;
+        }
+      }
+      return -1;
+    }
+    var _assocIndexOf = assocIndexOf$4;
+    var assocIndexOf$3 = _assocIndexOf;
+    var arrayProto = Array.prototype;
+    var splice = arrayProto.splice;
+    function listCacheDelete$1(key) {
+      var data = this.__data__, index = assocIndexOf$3(data, key);
+      if (index < 0) {
+        return false;
+      }
+      var lastIndex = data.length - 1;
+      if (index == lastIndex) {
+        data.pop();
+      } else {
+        splice.call(data, index, 1);
+      }
+      --this.size;
+      return true;
+    }
+    var _listCacheDelete = listCacheDelete$1;
+    var assocIndexOf$2 = _assocIndexOf;
+    function listCacheGet$1(key) {
+      var data = this.__data__, index = assocIndexOf$2(data, key);
+      return index < 0 ? void 0 : data[index][1];
+    }
+    var _listCacheGet = listCacheGet$1;
+    var assocIndexOf$1 = _assocIndexOf;
+    function listCacheHas$1(key) {
+      return assocIndexOf$1(this.__data__, key) > -1;
+    }
+    var _listCacheHas = listCacheHas$1;
+    var assocIndexOf = _assocIndexOf;
+    function listCacheSet$1(key, value) {
+      var data = this.__data__, index = assocIndexOf(data, key);
+      if (index < 0) {
+        ++this.size;
+        data.push([key, value]);
+      } else {
+        data[index][1] = value;
+      }
+      return this;
+    }
+    var _listCacheSet = listCacheSet$1;
+    var listCacheClear = _listCacheClear, listCacheDelete = _listCacheDelete, listCacheGet = _listCacheGet, listCacheHas = _listCacheHas, listCacheSet = _listCacheSet;
+    function ListCache$1(entries) {
+      var index = -1, length2 = entries == null ? 0 : entries.length;
+      this.clear();
+      while (++index < length2) {
+        var entry = entries[index];
+        this.set(entry[0], entry[1]);
+      }
+    }
+    ListCache$1.prototype.clear = listCacheClear;
+    ListCache$1.prototype["delete"] = listCacheDelete;
+    ListCache$1.prototype.get = listCacheGet;
+    ListCache$1.prototype.has = listCacheHas;
+    ListCache$1.prototype.set = listCacheSet;
+    var _ListCache = ListCache$1;
+    var getNative = _getNative, root = _root;
+    var Map$2 = getNative(root, "Map");
+    var _Map = Map$2;
+    var Hash = _Hash, ListCache = _ListCache, Map$1 = _Map;
+    function mapCacheClear$1() {
+      this.size = 0;
+      this.__data__ = {
+        "hash": new Hash(),
+        "map": new (Map$1 || ListCache)(),
+        "string": new Hash()
+      };
+    }
+    var _mapCacheClear = mapCacheClear$1;
+    function isKeyable$1(value) {
+      var type = typeof value;
+      return type == "string" || type == "number" || type == "symbol" || type == "boolean" ? value !== "__proto__" : value === null;
+    }
+    var _isKeyable = isKeyable$1;
+    var isKeyable = _isKeyable;
+    function getMapData$4(map, key) {
+      var data = map.__data__;
+      return isKeyable(key) ? data[typeof key == "string" ? "string" : "hash"] : data.map;
+    }
+    var _getMapData = getMapData$4;
+    var getMapData$3 = _getMapData;
+    function mapCacheDelete$1(key) {
+      var result = getMapData$3(this, key)["delete"](key);
+      this.size -= result ? 1 : 0;
+      return result;
+    }
+    var _mapCacheDelete = mapCacheDelete$1;
+    var getMapData$2 = _getMapData;
+    function mapCacheGet$1(key) {
+      return getMapData$2(this, key).get(key);
+    }
+    var _mapCacheGet = mapCacheGet$1;
+    var getMapData$1 = _getMapData;
+    function mapCacheHas$1(key) {
+      return getMapData$1(this, key).has(key);
+    }
+    var _mapCacheHas = mapCacheHas$1;
+    var getMapData = _getMapData;
+    function mapCacheSet$1(key, value) {
+      var data = getMapData(this, key), size = data.size;
+      data.set(key, value);
+      this.size += data.size == size ? 0 : 1;
+      return this;
+    }
+    var _mapCacheSet = mapCacheSet$1;
+    var mapCacheClear = _mapCacheClear, mapCacheDelete = _mapCacheDelete, mapCacheGet = _mapCacheGet, mapCacheHas = _mapCacheHas, mapCacheSet = _mapCacheSet;
+    function MapCache$1(entries) {
+      var index = -1, length2 = entries == null ? 0 : entries.length;
+      this.clear();
+      while (++index < length2) {
+        var entry = entries[index];
+        this.set(entry[0], entry[1]);
+      }
+    }
+    MapCache$1.prototype.clear = mapCacheClear;
+    MapCache$1.prototype["delete"] = mapCacheDelete;
+    MapCache$1.prototype.get = mapCacheGet;
+    MapCache$1.prototype.has = mapCacheHas;
+    MapCache$1.prototype.set = mapCacheSet;
+    var _MapCache = MapCache$1;
+    var MapCache = _MapCache;
+    var FUNC_ERROR_TEXT = "Expected a function";
+    function memoize$1(func, resolver) {
+      if (typeof func != "function" || resolver != null && typeof resolver != "function") {
+        throw new TypeError(FUNC_ERROR_TEXT);
+      }
+      var memoized = function() {
+        var args = arguments, key = resolver ? resolver.apply(this, args) : args[0], cache = memoized.cache;
+        if (cache.has(key)) {
+          return cache.get(key);
+        }
+        var result = func.apply(this, args);
+        memoized.cache = cache.set(key, result) || cache;
+        return result;
+      };
+      memoized.cache = new (memoize$1.Cache || MapCache)();
+      return memoized;
+    }
+    memoize$1.Cache = MapCache;
+    var memoize_1 = memoize$1;
+    var memoize = memoize_1;
+    var MAX_MEMOIZE_SIZE = 500;
+    function memoizeCapped$1(func) {
+      var result = memoize(func, function(key) {
+        if (cache.size === MAX_MEMOIZE_SIZE) {
+          cache.clear();
+        }
+        return key;
+      });
+      var cache = result.cache;
+      return result;
+    }
+    var _memoizeCapped = memoizeCapped$1;
+    var memoizeCapped = _memoizeCapped;
+    var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
+    var reEscapeChar = /\\(\\)?/g;
+    memoizeCapped(function(string) {
+      var result = [];
+      if (string.charCodeAt(0) === 46) {
+        result.push("");
+      }
+      string.replace(rePropName, function(match2, number, quote, subString) {
+        result.push(quote ? subString.replace(reEscapeChar, "$1") : number || match2);
+      });
+      return result;
+    });
+    var Symbol$1 = _Symbol;
+    var symbolProto = Symbol$1 ? Symbol$1.prototype : void 0;
+    symbolProto ? symbolProto.toString : void 0;
     const editorHelper = {
       getViewport: (width) => {
         if (width <= 768) {

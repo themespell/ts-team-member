@@ -1,4 +1,3 @@
-import globalSettings from '../../utils/globalSettings';
 import { Input, Form } from "antd";
 import TsProBadge from './TsProBadge.jsx';
 
@@ -7,17 +6,24 @@ function TsInput({ type, label, name, required, maxLength, disabled = false, sho
   const isLicenseInactive = !!window.tsTeamPro?.is_licence_inactive ?? null;
   const shouldDisable = disabled || (showProBadge && (!isPro || isLicenseInactive));
 
+  const inputStyle = {
+    borderRadius: '10px',
+    padding: '8px 12px',
+    fontSize: '14px',
+    borderColor: '#e0e0e0',
+    transition: 'all 0.2s ease',
+  };
+
   const renderInput = () => {
     switch (type) {
       case 'password':
-        return <Input.Password 
-        style={{
-          borderColor: globalSettings.components.Input.colorBorder,
-          borderRadius: `${globalSettings.components.Input.borderRadius}px`,
-          padding: `${globalSettings.components.Input.paddingBlock}px`,
-        }}
-        placeholder={`Enter ${label.toLowerCase()}`}
-        disabled={shouldDisable} />;
+        return (
+          <Input.Password
+            style={inputStyle}
+            placeholder={`Enter ${label.toLowerCase()}`}
+            disabled={shouldDisable}
+          />
+        );
       case 'description':
         return (
           <Input.TextArea
@@ -26,52 +32,53 @@ function TsInput({ type, label, name, required, maxLength, disabled = false, sho
             maxLength={maxLength}
             disabled={shouldDisable}
             style={{
-              height: maxLength,
+              ...inputStyle,
+              minHeight: Math.min(maxLength || 100, 120),
               resize: 'none',
-              borderColor: globalSettings.components.Input.colorBorder,
-              padding: `${globalSettings.components.Input.paddingBlock}px`,
             }}
           />
         );
       case 'number':
-        return <Input
-        style={{
-          borderColor: globalSettings.components.Input.colorBorder,
-          borderRadius: `${globalSettings.components.Input.borderRadius}px`,
-          padding: `${globalSettings.components.Input.paddingBlock}px`,
-        }}
-        type="number" maxLength={maxLength} placeholder={`Enter ${label.toLowerCase()}`} disabled={shouldDisable} />;
+        return (
+          <Input
+            style={inputStyle}
+            type="number"
+            maxLength={maxLength}
+            placeholder={`Enter ${label.toLowerCase()}`}
+            disabled={shouldDisable}
+          />
+        );
       default:
-        return <Input
-        style={{
-          borderColor: globalSettings.components.Input.colorBorder,
-          borderRadius: `${globalSettings.components.Input.borderRadius}px`,
-          padding: `${globalSettings.components.Input.paddingBlock}px`,
-        }}
-        maxLength={maxLength} placeholder={`Enter ${label.toLowerCase()}`} disabled={shouldDisable} />;
+        return (
+          <Input
+            style={inputStyle}
+            maxLength={maxLength}
+            placeholder={`Enter ${label.toLowerCase()}`}
+            disabled={shouldDisable}
+          />
+        );
     }
   };
 
   return (
-    <>
-      <Form.Item
-        label={
-          <>
-            {label}
-            {showProBadge && (!isPro || isLicenseInactive) && <TsProBadge />}
-          </>
-        }
-        name={name}
-        rules={[
-          {
-            required: required,
-            message: `Please enter ${label.toLowerCase()}!`
-          },
-        ]}
-      >
-        {renderInput()}
-      </Form.Item>
-    </>
+    <Form.Item
+      label={
+        <span className="text-sm font-medium text-[#333]">
+          {label}
+          {showProBadge && (!isPro || isLicenseInactive) && <TsProBadge />}
+        </span>
+      }
+      name={name}
+      rules={[
+        {
+          required: required,
+          message: `Please enter ${label.toLowerCase()}!`,
+        },
+      ]}
+      style={{ marginBottom: 12 }}
+    >
+      {renderInput()}
+    </Form.Item>
   );
 }
 

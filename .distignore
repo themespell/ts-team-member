@@ -8,6 +8,8 @@
 dist
 build-svn.js
 .wordpress-org
+.mimocode
+assets-wporg
 Thumbs.db
 behat.yml
 bin

@@ -20,89 +20,57 @@ function AdminPanel() {
   const isMigrationPage = currentUrl.includes(`&path=migration`);
   const isTeamMemberGenerator = currentUrl.includes(`&path=team-member-generator`);
 
-    if (isDashboardPage) {
-        return (
-            <>
-                <Topbar title={translations.dashboard}/>
-                <div className='tsteam__admin--style overflow-x-auto w-full flex justify-center pt-12 pb-12'>
-                    <div className='flex justify-between gap-8 w-4/6'>
-                        <div className='w-full'>
-                            <Dashboard/>
-                        </div>
-                    </div>
-                </div>
-            </>
-        );
-    } else if (isToolsPage) {
-        return (
-            <>
-                <Topbar title={'Tools'}/>
-                <div className='tsteam__admin--style overflow-x-auto w-full flex justify-center pt-12 pb-12'>
-                    <div className='flex justify-between gap-8 w-4/6'>
-                        <div className='w-full'>
-                            <Tools/>
-                        </div>
-                    </div>
-                </div>
-            </>
-        );
-    } else if (isMigrationPage) {
-        return (
-            <>
-                <Topbar title={'Migration'}/>
-                <div className='tsteam__admin--style overflow-x-auto w-full flex justify-center pt-12 pb-12'>
-                    <div className='flex justify-between gap-8 w-4/6'>
-                        <div className='w-full'>
-                            <Migration/>
-                        </div>
-                    </div>
-                </div>
-            </>
-        );
-    } else if (isTeamMemberGenerator) {
-        return (
-            <>
-                <Topbar title={'Team Member Generator'}/>
-                <div className='tsteam__admin--style overflow-x-auto w-full flex justify-center pt-12 pb-12'>
-                    <div className='flex justify-between gap-8 w-4/6'>
-                        <div className='w-full'>
-                            <TeamMemberGenerator/>
-                        </div>
-                    </div>
-                </div>
-            </>
-        );
-    } else if (isMemberCategoryPage) {
-    return (
-        <>
-            <Topbar title={'Member Category'}/>
-            <div className='tsteam__admin--style overflow-x-auto w-full flex justify-center pt-12 pb-12'>
-                <div className='flex justify-between gap-8 w-4/6'>
-                    <div className='w-full'>
-                        <MemberCategory/>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
-    } else {
-        return (
-            <>
-                <Topbar title={isTeamMemberPage ? translations.teamMember : translations.teamShowcase}/>
-                <div className='tsteam__admin--style overflow-x-auto w-full flex justify-center pt-12 pb-12'>
-                    <div className='flex justify-between gap-8 w-4/6'>
-                        <div className='w-full'>
-                            {isTeamMemberPage ? (
-                                <TeamMember/>
-                            ) : (
-                                <TeamShowcase />
-                            )}
-                        </div>
-                    </div>
-                </div>
-            </>
-        );
-    }
+  let content = <TeamShowcase />;
+  let pageTitle = translations.teamShowcase;
+
+  if (isDashboardPage) {
+    content = <Dashboard />;
+    pageTitle = translations.dashboard;
+  } else if (isToolsPage) {
+    content = <Tools />;
+    pageTitle = 'Tools';
+  } else if (isMigrationPage) {
+    content = <Migration />;
+    pageTitle = 'Migration';
+  } else if (isTeamMemberGenerator) {
+    content = <TeamMemberGenerator />;
+    pageTitle = 'Team Member Generator';
+  } else if (isMemberCategoryPage) {
+    content = <MemberCategory />;
+    pageTitle = 'Member Category';
+  } else if (isTeamMemberPage) {
+    content = <TeamMember />;
+    pageTitle = translations.teamMember;
+  }
+
+  return (
+    <div className="relative">
+      <div className="tsteam__admin--style min-h-screen overflow-x-hidden bg-background">
+        <Topbar />
+
+        <main className="mx-auto w-full max-w-[1400px] px-3 py-4 sm:px-4 sm:py-6 lg:px-6 lg:py-8">
+          {content}
+        </main>
+
+        <footer className="mx-auto w-full max-w-[1400px] px-3 pb-6 pt-4 text-xs text-muted-foreground sm:px-4 lg:px-6">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border/70 pt-6">
+            <span>&copy; 2026 TS Team Member. Crafted for WordPress.</span>
+            <span className="flex items-center gap-3">
+              <a href="https://wordpress.org/support/plugin/ts-team-member" target="_blank" rel="noreferrer" className="hover:text-foreground">
+                Docs
+              </a>
+              <a href="https://themespell.com/ts-team-member" target="_blank" rel="noreferrer" className="hover:text-foreground">
+                Changelog
+              </a>
+              <a href="https://themespell.com/ts-team-member" target="_blank" rel="noreferrer" className="hover:text-foreground">
+                Roadmap
+              </a>
+            </span>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
 }
 
 export default AdminPanel;

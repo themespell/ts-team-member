@@ -8,6 +8,10 @@ function TypographyTab() {
     const { selectedView, carouselSettings, showcaseDetails } = editorStore();
     const { availableLayouts, availableViews, availableDetails } = editorLocal();
 
+    const isPro = !!tsteam_settings.is_pro;
+    const isLicenseInactive = !!window.tsTeamPro?.is_licence_inactive;
+    const isProActive = isPro && !isLicenseInactive;
+
     return (
         <div>
             <TsFont
@@ -27,9 +31,9 @@ function TypographyTab() {
             />
             <TsFont
                 label="Details Typography"
-                name="typography.description"
+                name="typography.details"
                 targetedClass=""
-                isPro={true}
+                isPro={!isProActive}
             />
         </div>
     );
